@@ -1,0 +1,14 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+#ifdef RNW_NEW_ARCH
+namespace SampleCustomComponent
+{
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  runtimeclass DrawingIsland : Windows.Foundation.IClosable
+  {
+    DrawingIsland(Microsoft.UI.Composition.Compositor compositor);
+  }
+} // namespace SampleCustomComponent
+#endif // #ifdef RNW_NEW_ARCH

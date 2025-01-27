@@ -310,7 +310,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
 
       if (FAILED(hr)) {
         // See
-        // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-19041#remarks
+        // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-22621#remarks
         if (hr == WININET_E_CONNECTION_ABORTED) {
           string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
           self->m_errorHandler({errorMessage, ErrorType::Connection});
@@ -382,7 +382,10 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
         scheme = L"https";
       }
 
-      auto origin = winrt::hstring{scheme + L"://" + host + L":" + winrt::to_hstring(port)};
+      // Only add a port if a port is defined
+      winrt::hstring originPort = port != 0 ? L":" + winrt::to_hstring(port) : L"";
+      auto origin = winrt::hstring{scheme + L"://" + host + originPort};
+
       m_socket.SetRequestHeader(L"Origin", std::move(origin));
     }
 

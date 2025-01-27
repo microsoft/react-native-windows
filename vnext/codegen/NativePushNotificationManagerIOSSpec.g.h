@@ -7,17 +7,12 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
-
-struct PushNotificationManagerIOSSpec_Permissions {
-    bool alert;
-    bool badge;
-    bool sound;
-};
 
 struct PushNotificationManagerIOSSpec_Notification {
     std::optional<std::string> alertTitle;
@@ -31,21 +26,18 @@ struct PushNotificationManagerIOSSpec_Notification {
     std::optional<std::string> soundName;
 };
 
+struct PushNotificationManagerIOSSpec_Permissions {
+    bool alert;
+    bool badge;
+    bool sound;
+};
+
 struct PushNotificationManagerIOSSpec_requestPermissions_permission {
     bool alert;
     bool badge;
     bool sound;
 };
 
-
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Permissions*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"alert", &PushNotificationManagerIOSSpec_Permissions::alert},
-        {L"badge", &PushNotificationManagerIOSSpec_Permissions::badge},
-        {L"sound", &PushNotificationManagerIOSSpec_Permissions::sound},
-    };
-    return fieldMap;
-}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Notification*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -58,6 +50,15 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationMan
         {L"applicationIconBadgeNumber", &PushNotificationManagerIOSSpec_Notification::applicationIconBadgeNumber},
         {L"isSilent", &PushNotificationManagerIOSSpec_Notification::isSilent},
         {L"soundName", &PushNotificationManagerIOSSpec_Notification::soundName},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Permissions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"alert", &PushNotificationManagerIOSSpec_Permissions::alert},
+        {L"badge", &PushNotificationManagerIOSSpec_Permissions::badge},
+        {L"sound", &PushNotificationManagerIOSSpec_Permissions::sound},
     };
     return fieldMap;
 }

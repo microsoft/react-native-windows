@@ -32,7 +32,7 @@ const Platform: PlatformType = {
       major: number,
       minor: number,
       patch: number,
-      prerelease: ?string | number,
+      prerelease: ?string,
     |},
     systemName: string,
     isMacCatalyst?: boolean,
@@ -72,10 +72,10 @@ const Platform: PlatformType = {
       ? // $FlowFixMe[incompatible-return]
         spec.win32
       : 'native' in spec
-      ? // $FlowFixMe[incompatible-return]
-        spec.native
-      : // $FlowFixMe[incompatible-return]
-        spec.default,
+        ? // $FlowFixMe[incompatible-return]
+          spec.native
+        : // $FlowFixMe[incompatible-return]
+          spec.default,
 };
 
 module.exports = Platform;

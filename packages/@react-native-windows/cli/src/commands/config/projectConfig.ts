@@ -16,7 +16,7 @@ import * as configUtils from './configUtils';
 
 /*
 
-react-native config will generate the following JSON for app projects that have a
+@react-native-community/cli config will generate the following JSON for app projects that have a
 windows implementation, as a target for auto-linking. This is done heuristically,
 so if the result isn't quite correct, app developers can provide a manual override
 file: react-native.config.js.
@@ -29,7 +29,7 @@ req  - Item is required. If an override file exists, it MUST provide it. If no o
 opt  - Item is optional. If an override file exists, it MAY provide it. If no override file exists, config may try to calculate it.
 
 {
-  folder: string,       // (auto) Absolute path to the app root folder, determined by react-native config, ex: 'c:\path\to\my-app'
+  folder: string,       // (auto) Absolute path to the app root folder, determined by @react-native-community/cli config, ex: 'c:\path\to\my-app'
   sourceDir: string,    // (req) Relative path to the Windows implementation under folder, ex: 'windows'
   solutionFile: string, // (req) Relative path to the app's VS solution file under sourceDir, ex: 'MyApp.sln'
   useWinUI3: boolean    // (opt) If true, use WinUI 3. If false, use Windows XAML and WinUI 2.x. If missing, the value from rnwRoot\PropertySheets\ExperimentalFeatures.props will be used.
@@ -39,7 +39,8 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
     projectLang: string, // (auto) Language of the project, cpp or cs, determined from projectFile
     projectGuid: string, // (auto) Project identifier, determined from projectFile
   },
-  experimentalFeatures: Record<String, string> // (auto) Properties extracted from ExperimentalFeatures.props
+  experimentalFeatures: Record<string, string>, // (auto) Properties extracted from ExperimentalFeatures.props
+  rnwConfig: Record<string, any>, // (auto) Object extracted from 'react-native-windows' property in package.json
 }
 
 Example react-native.config.js for a 'MyApp':
@@ -73,6 +74,7 @@ export interface WindowsProjectConfig {
   project: Project;
   useWinUI3?: boolean;
   experimentalFeatures?: Record<string, string>;
+  rnwConfig?: Record<string, any>;
 }
 
 type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
@@ -234,6 +236,18 @@ export function projectConfigWindows(
       result.experimentalFeatures = result.experimentalFeatures ?? {};
       result.experimentalFeatures.UseExperimentalNuget = useExperimentalNuget;
     }
+
+    result.rnwConfig = configUtils.getRnwConfig(folder, projectFile);
+  }
+
+  if (!result.rnwConfig) {
+    // No rnwConfig, maybe it's actually a lib, try to get some info from it
+    let projectFile = '';
+    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
+    if (foundProjects.length > 0) {
+      projectFile = path.join(sourceDir, foundProjects[0]);
+    }
+    result.rnwConfig = configUtils.getRnwConfig(folder, projectFile);
   }
 
   return result as WindowsProjectConfig;

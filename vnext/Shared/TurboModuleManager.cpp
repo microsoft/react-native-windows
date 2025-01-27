@@ -4,8 +4,27 @@
 #include "TurboModuleManager.h"
 #include "ReactCommon/SampleTurboCxxModule.h"
 
-namespace facebook {
-namespace react {
+#ifdef USE_FABRIC
+#include <react/nativemodule/defaults/DefaultTurboModules.h>
+#include <react/nativemodule/microtasks/NativeMicrotasks.h>
+#endif
+
+namespace facebook::react {
+
+#ifdef USE_FABRIC
+
+NativeMicrotasks::NativeMicrotasks(std::shared_ptr<CallInvoker> jsInvoker)
+    : NativeMicrotasksCxxSpec(std::move(jsInvoker)) {}
+
+void NativeMicrotasks::queueMicrotask(jsi::Runtime &runtime, jsi::Function callback) {
+  assert(false);
+  // Currently using a version of hermes/jsi without queueMicrotask
+  // When we update JSI we can remove all the Microtask code from here, and just rely on the implementation of
+  // the NativeMicrotasks TurboModule from the core NativeMicrotasks.cpp file
+  // runtime.queueMicrotask(callback);
+}
+
+#endif
 
 TurboModuleManager::TurboModuleManager(
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
@@ -30,9 +49,13 @@ std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &mo
     }
   }
 
-  if (moduleName.compare("SampleTurboModule") == 0) {
-    return m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_callInvoker)).first->second;
+#ifdef USE_FABRIC
+  if (auto module = facebook::react::DefaultTurboModules::getTurboModule(moduleName, m_callInvoker)) {
+    m_modules.emplace(moduleName, module);
+    return module;
   }
+#endif
+
   return nullptr;
 }
 
@@ -68,5 +91,4 @@ void TurboModuleManager::onInstanceDestroy() noexcept {
   m_modules.clear();
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

@@ -29,8 +29,9 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void startSurface(
-      const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView,
       facebook::react::SurfaceId surfaceId,
+      const facebook::react::LayoutConstraints &layoutConstraints,
       const std::string &moduleName,
       const folly::dynamic &initialProps) noexcept;
 
@@ -48,13 +49,12 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
-  winrt::Microsoft::ReactNative::CompositionRootView GetCompositionRootView(
-      facebook::react::SurfaceId surfaceId) const noexcept;
+  static winrt::Microsoft::ReactNative::ReactNotificationId<facebook::react::SurfaceId> NotifyMountedId() noexcept;
 
  private:
   void installFabricUIManager() noexcept;
-  void initiateTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator);
-  void performTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator);
+  void initiateTransaction(std::shared_ptr<const facebook::react::MountingCoordinator> mountingCoordinator);
+  void performTransaction(std::shared_ptr<const facebook::react::MountingCoordinator> const &mountingCoordinator);
   void RCTPerformMountInstructions(
       facebook::react::ShadowViewMutationList const &mutations,
       // facebook::react::RCTComponentViewRegistry* registry,
@@ -63,7 +63,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept;
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   std::shared_ptr<facebook::react::Scheduler> m_scheduler;
   std::shared_ptr<facebook::react::SurfaceManager> m_surfaceManager;
   std::mutex m_schedulerMutex; // Protect m_scheduler
@@ -72,17 +72,17 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   ComponentViewRegistry m_registry;
   struct SurfaceInfo {
-    winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> wkRootView{nullptr};
+    winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> wkRootView{nullptr};
   };
 
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(
-      const facebook::react::MountingCoordinator::Shared &mountingCoordinator) override;
-  virtual void schedulerDidRequestPreliminaryViewAllocation(
-      facebook::react::SurfaceId surfaceId,
-      const facebook::react::ShadowNode &shadowView) override;
+      const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) override;
+  virtual void schedulerShouldRenderTransactions(
+      const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) override;
+  virtual void schedulerDidRequestPreliminaryViewAllocation(const facebook::react::ShadowNode &shadowView) override;
   virtual void schedulerDidDispatchCommand(
       facebook::react::ShadowView const &shadowView,
       std::string const &commandName,

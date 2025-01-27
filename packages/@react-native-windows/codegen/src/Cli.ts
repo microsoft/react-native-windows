@@ -69,6 +69,18 @@ const argv = yargs.options({
     describe: 'generate data types in a separate file',
     default: false,
   },
+  componentsWindows: {
+    type: 'boolean',
+    describe: 'generate component cpp files for custom native components',
+    default: false,
+  },
+  internalComponents: {
+    type: 'boolean',
+    describe:
+      'generate non-ABI cpp/h for internal usage of built in native components [Only used within RNW itself]',
+    default: false,
+    hidden: true,
+  },
 }).argv;
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
@@ -91,7 +103,7 @@ const changesNecessary = runCodeGen(<CodeGenOptions>argv);
 
 if (argv.test && changesNecessary) {
   console.error(
-    'There is a change in the output of codegen.  Rerun "react-native codegen-windows" to regenerate.',
+    'There is a change in the output of codegen.  Rerun "npx @react-native-community/cli codegen-windows" to regenerate.',
   );
   process.exit(2);
 }

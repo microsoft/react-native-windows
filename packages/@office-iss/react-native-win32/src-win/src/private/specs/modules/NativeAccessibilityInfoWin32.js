@@ -16,6 +16,12 @@ export interface Spec extends TurboModule {
   +isReduceMotionEnabled: (
     onSuccess: (isReduceMotionEnabled: boolean) => void,
   ) => void;
+  +isInvertColorsEnabled?: (
+    onSuccess: (isInvertColorsEnabled: boolean) => void,
+  ) => void;
+  +isHighTextContrastEnabled?: (
+    onSuccess: (isHighTextContrastEnabled: boolean) => void,
+  ) => void;
   +isTouchExplorationEnabled: (
     onSuccess: (isScreenReaderEnabled: boolean) => void,
   ) => void;
@@ -33,6 +39,9 @@ export interface Spec extends TurboModule {
   +getRecommendedTimeoutMillis?: (
     mSec: number,
     onSuccess: (recommendedTimeoutMillis: number) => void,
+  ) => void;
+  +isGrayscaleEnabled?: (
+    onSuccess: (isGrayscaleEnabled: boolean) => void,
   ) => void;
 }
 

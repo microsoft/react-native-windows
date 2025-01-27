@@ -8,12 +8,12 @@
 #include <winrt/Microsoft.UI.Input.h>
 #endif
 
-#include <Fabric/Composition/CompositionRootView.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionRootAutomationProvider::CompositionRootAutomationProvider(
-    const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept
     : m_wkRootView{rootView} {}
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -26,6 +26,25 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pR
     return E_POINTER;
 
   *pRetVal = nullptr;
+
+  if (!m_island)
+    return E_FAIL;
+
+  *pRetVal = SafeArrayCreateVector(VT_I4, 0, 3);
+  if (*pRetVal == nullptr)
+    return E_OUTOFMEMORY;
+
+  auto rgiRuntimeId = static_cast<int *>((*pRetVal)->pvData);
+
+  rgiRuntimeId[0] = UiaAppendRuntimeId;
+  rgiRuntimeId[1] = 0;
+  rgiRuntimeId[2] = 0;
+
+  if (auto rootView = m_wkRootView.get()) {
+    auto tag = rootView.RootTag();
+    rgiRuntimeId[1] = LODWORD(tag);
+    rgiRuntimeId[2] = HIDWORD(tag);
+  }
 
   return S_OK;
 }
@@ -153,8 +172,18 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_FragmentRoot(IRawElemen
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  AddRef();
-  *pRetVal = this;
+  *pRetVal = nullptr;
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (m_island) {
+    auto parentRoot = m_island.FragmentRootAutomationProvider();
+    auto spFragment = parentRoot.try_as<IRawElementProviderFragmentRoot>();
+    if (spFragment) {
+      *pRetVal = spFragment.detach();
+      return S_OK;
+    }
+  }
+#endif
 
   return S_OK;
 }
@@ -167,10 +196,10 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_ProviderOptions(Provide
   return S_OK;
 }
 
-winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>
 CompositionRootAutomationProvider::rootComponentView() noexcept {
   if (auto rootView = m_wkRootView.get()) {
-    auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView);
+    auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView);
     if (auto view = innerRootView->GetComponentView()) {
       return view;
     }
@@ -189,40 +218,16 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
   *pRetVal = nullptr;
 
   if (auto rootView = rootComponentView()) {
-#ifdef USE_WINUI3
-    if (m_island) {
-      auto cc = m_island.CoordinateConverter();
-      auto local = cc.ConvertScreenToLocal(
-          winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(x), static_cast<int32_t>(y)});
-      auto provider = rootView->UiaProviderFromPoint(
-          {static_cast<LONG>(local.X * m_island.RasterizationScale()),
-           static_cast<LONG>(local.Y * m_island.RasterizationScale())});
-      auto spFragment = provider.try_as<IRawElementProviderFragment>();
-      if (spFragment) {
-        *pRetVal = spFragment.detach();
-      }
-
-      return S_OK;
+    auto local = rootView->ConvertScreenToLocal({static_cast<float>(x), static_cast<float>(y)});
+    auto provider = rootView->UiaProviderFromPoint(
+        {static_cast<LONG>(local.X * rootView->LayoutMetrics().PointScaleFactor),
+         static_cast<LONG>(local.Y * rootView->LayoutMetrics().PointScaleFactor)});
+    auto spFragment = provider.try_as<IRawElementProviderFragment>();
+    if (spFragment) {
+      *pRetVal = spFragment.detach();
     }
-#endif
 
-    if (m_hwnd) {
-      if (!IsWindow(m_hwnd)) {
-        // TODO: Add support for non-HWND based hosting
-        assert(false);
-        return E_FAIL;
-      }
-
-      POINT clientPoint{static_cast<LONG>(x), static_cast<LONG>(y)};
-      ScreenToClient(m_hwnd, &clientPoint);
-
-      auto provider = rootView->UiaProviderFromPoint(clientPoint);
-      auto spFragment = provider.try_as<IRawElementProviderFragment>();
-      if (spFragment) {
-        *pRetVal = spFragment.detach();
-        return S_OK;
-      }
-    }
+    return S_OK;
   }
 
   AddRef();
@@ -273,8 +278,6 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  // Fragment roots do not enable navigation to a parent or siblings; navigation among fragment roots is handled by the
-  // default window providers. Elements in fragments must navigate only to other elements within that fragment.
   if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
     if (auto rootView = rootComponentView()) {
       auto uiaProvider = rootView->EnsureUiaProvider();
@@ -284,6 +287,17 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
         return S_OK;
       }
     }
+  } else if (direction == NavigateDirection_Parent) {
+#ifdef USE_EXPERIMENTAL_WINUI3
+    if (m_island) {
+      auto parent = m_island.ParentAutomationProvider();
+      auto spFragment = parent.try_as<IRawElementProviderFragment>();
+      if (spFragment) {
+        *pRetVal = spFragment.detach();
+        return S_OK;
+      }
+    }
+#endif
   }
   *pRetVal = nullptr;
   return S_OK;

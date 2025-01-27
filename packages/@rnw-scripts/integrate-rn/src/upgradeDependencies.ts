@@ -127,7 +127,7 @@ async function upgradeReactNative(
   const findRnOpts = {searchPath: platformPackages[0].path};
   const origJson = (await findPackage('react-native', findRnOpts))!.json;
   const origTemplateJson = (await findPackage(
-    'react-native/template',
+    '@react-native-community/template',
     findRnOpts,
   ))!.json;
 
@@ -158,7 +158,7 @@ async function upgradeReactNative(
   await runCommand('yarn install');
   const newJson = (await findPackage('react-native', findRnOpts))!.json;
   const newTemplateJson = (await findPackage(
-    'react-native/template',
+    '@react-native-community/template',
     findRnOpts,
   ))!.json;
 
@@ -493,7 +493,10 @@ function bumpSemver(origVersion: string, newVersion: string): string {
     throw new Error(`Unable to bump complicated semver '${origVersion}'`);
   }
 
-  if (origVersion.startsWith(`~`) || origVersion.startsWith('^')) {
+  if (
+    (origVersion.startsWith(`~`) || origVersion.startsWith('^')) &&
+    !(newVersion.startsWith(`~`) || newVersion.startsWith('^'))
+  ) {
     return `${origVersion[0]}${newVersion}`;
   } else {
     return newVersion;

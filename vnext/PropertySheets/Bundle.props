@@ -39,10 +39,13 @@
     <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' == 'true'">--minify false</BundlerExtraArgs>
 
     <!-- Command to use to create a bundle -->
-    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx react-native bundle</BundleCliCommand>
+    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx @react-native-community/cli bundle</BundleCliCommand>
 
     <!-- This should be the app package root, this is where the bundle command will be run from -->
     <BundleCommandWorkingDir Condition="'$(BundleCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</BundleCommandWorkingDir>
+
+    <!-- This timeout is to catch when the bundler hangs and can be increased for larger apps -->
+    <BundleCommandTimeoutMs Condition="'$(BundleCommandTimeoutMs)' == ''">300000</BundleCommandTimeoutMs>
 
     <!-- Entry file of the JS bundle. Defaults to use index.windows.js if it exists, otherwise index.js -->
     <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>

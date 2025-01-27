@@ -7,6 +7,7 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
@@ -16,7 +17,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct LinkingManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Promise<std::string>) noexcept>{0, L"getInitialURL"},
+      Method<void(Promise<std::optional<std::string>>) noexcept>{0, L"getInitialURL"},
       Method<void(std::string, Promise<bool>) noexcept>{1, L"canOpenURL"},
       Method<void(std::string, Promise<void>) noexcept>{2, L"openURL"},
       Method<void(Promise<void>) noexcept>{3, L"openSettings"},
@@ -31,8 +32,8 @@ struct LinkingManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getInitialURL",
-          "    REACT_METHOD(getInitialURL) void getInitialURL(::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(getInitialURL) static void getInitialURL(::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(getInitialURL) void getInitialURL(::React::ReactPromise<std::optional<std::string>> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getInitialURL) static void getInitialURL(::React::ReactPromise<std::optional<std::string>> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "canOpenURL",

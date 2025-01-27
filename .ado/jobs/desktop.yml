@@ -19,10 +19,6 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x64
             UseFabric: false
-          - Name: X64DebugFabric
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            UseFabric: true
           - Name: X64Release
             BuildConfiguration: Release
             BuildPlatform: x64
@@ -31,6 +27,16 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             UseFabric: false
+          - Name: ARM64ECDebug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64EC
+          - Name: ARM64ECRelease
+            BuildConfiguration: Release
+            BuildPlatform: ARM64EC
+          - Name: X64DebugFabric
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            UseFabric: true
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X64DebugFabric
@@ -48,16 +54,20 @@ parameters:
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
-          - Name: Arm64Debug
-            BuildConfiguration: Debug
-            BuildPlatform: ARM64
-          - Name: Arm64Release
-            BuildConfiguration: Release
-            BuildPlatform: ARM64
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
-          - X86ReleaseFabric:
+          - Name: ARM64ECDebug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64EC
+          - Name: ARM64ECRelease
+            BuildConfiguration: Release
+            BuildPlatform: ARM64EC
+          - Name: X64DebugFabric
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            UseFabric: true
+          - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
             BuildConfiguration: Release
             BuildPlatform: x86
             UseFabric: true
@@ -86,8 +96,7 @@ jobs:
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
-                (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
+                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)
             #6799 -
             #       HostFunctionTest              - Crashes under JSI/V8
             #       HostObjectProtoTest           - Crashes under JSI/V8
@@ -99,7 +108,7 @@ jobs:
                 (FullyQualifiedName!~PreparedJavaScriptSourceTest)
 
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+          timeoutInMinutes: 80 # how long to run the job before automatically cancelling - Issue 13442
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
@@ -166,7 +175,7 @@ jobs:
 
             - template: ../templates/discover-google-test-adapter.yml
 
-            - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
+            - ${{ if ne(matrix.BuildPlatform, 'ARM64EC') }}:
               - task: VSTest@2
                 displayName: Run Desktop Unit Tests
                 timeoutInMinutes: 5 # Set smaller timeout , due to hangs
@@ -188,7 +197,7 @@ jobs:
                   failOnMinTestsNotRun: true
 
               # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64')) }}:
+            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64EC')) }}:
               - task: PowerShell@2
                 displayName: Set up test servers
                 inputs:
@@ -239,7 +248,9 @@ jobs:
                   SSLCertThumbPrint: $(TestWebsiteCertificateThumbprint)
                   # IIS Website
                   WebsiteName: RNW Test Website
-                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
+                  # Hard-coding x64 for publish path.
+                  # Our MSBuild customizations cause dotnet commans to assume the default PlatformTarget
+                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
                   WebsitePhysicalPathAuth: WebsiteUserPassThrough
                   CreateOrUpdateAppPoolForWebsite: false
                   ConfigureAuthenticationForWebsite: false

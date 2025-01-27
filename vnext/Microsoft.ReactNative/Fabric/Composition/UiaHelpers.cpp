@@ -42,43 +42,59 @@ HRESULT UiaNavigateHelper(
       }
     } break;
 
-    case NavigateDirection_LastChild:
-      __fallthrough;
-
-    case NavigateDirection_FirstChild: {
+    case NavigateDirection_LastChild: {
       auto children = view.Children();
-      auto index = direction == NavigateDirection_FirstChild ? 0 : children.Size() - 1;
-      if (!children.Size() == 0) {
-        uiaProvider = children.GetAt(index)
-                          .as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
-                          ->EnsureUiaProvider();
+      if (children.Size() != 0) {
+        uint32_t index = children.Size() - 1;
+        do {
+          auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+          if (uiaProvider = child->EnsureUiaProvider()) {
+            break;
+          }
+        } while (index-- != 0);
       }
     } break;
-
+    case NavigateDirection_FirstChild: {
+      auto children = view.Children();
+      if (children.Size() != 0) {
+        uint32_t index = 0;
+        do {
+          auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+          if (uiaProvider = child->EnsureUiaProvider()) {
+            break;
+          }
+        } while (++index != children.Size());
+      }
+    } break;
     case NavigateDirection_NextSibling: {
-      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
       if (parentCV != nullptr) {
         auto children = parentCV->Children();
         auto it = std::find(children.begin(), children.end(), view);
-        if (++it != children.end()) {
-          uiaProvider = (*it)
-                            .as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
-                            ->EnsureUiaProvider();
+
+        while (++it != children.end()) {
+          auto nextchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+          if (uiaProvider = nextchild->EnsureUiaProvider()) {
+            break;
+          }
         }
       }
     } break;
 
     case NavigateDirection_PreviousSibling: {
-      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
       if (parentCV != nullptr) {
         auto children = parentCV->Children();
-        for (auto it = children.end(); it != children.begin(); --it) {
-          if (*it == view) {
-            uiaProvider = (*it)
-                              .as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
-                              ->EnsureUiaProvider();
-            break;
-          }
+        auto it = std::find(children.begin(), children.end(), view);
+
+        if (it != children.begin()) {
+          do {
+            it--;
+            auto prevchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+            if (uiaProvider = prevchild->EnsureUiaProvider()) {
+              break;
+            }
+          } while (it != children.begin());
         }
       }
     } break;
@@ -121,7 +137,9 @@ HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexc
   if (rootCV == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  return rootCV->TrySetFocusedComponent(strongView) ? S_OK : E_FAIL;
+  return rootCV->TrySetFocusedComponent(strongView, winrt::Microsoft::ReactNative::FocusNavigationDirection::None)
+      ? S_OK
+      : E_FAIL;
 }
 
 bool WasUiaPropertyAdvised(winrt::com_ptr<IRawElementProviderSimple> &providerSimple, PROPERTYID propId) noexcept {
@@ -160,6 +178,80 @@ void UpdateUiaProperty(
 
   UiaRaiseAutomationPropertyChangedEvent(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
+}
+
+long GetLiveSetting(const std::string &liveRegion) noexcept {
+  if (liveRegion == "polite") {
+    return LiveSetting::Polite;
+  } else if (liveRegion == "assertive") {
+    return LiveSetting::Assertive;
+  }
+  return LiveSetting::Off;
+}
+
+void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
+  auto strongView = view.view();
+
+  if (!strongView)
+    return;
+
+  auto baseView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+  if (baseView == nullptr)
+    return;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(baseView->props());
+  if (props == nullptr)
+    return;
+
+  auto accessibilityActions = props->accessibilityActions;
+  for (size_t i = 0; i < accessibilityActions.size(); i++) {
+    if (accessibilityActions[i].name == action) {
+      baseView->GetEventEmitter()->onAccessibilityAction(action);
+    }
+  }
+}
+
+ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
+  if (expanded) {
+    return ExpandCollapseState_Expanded;
+  } else {
+    return ExpandCollapseState_Collapsed;
+  }
+}
+
+void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->AddToSelectionItems(simpleProviderPtr);
+}
+
+void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->RemoveFromSelectionItems(simpleProviderPtr);
+}
+
+ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
+  if (state.has_value()) {
+    if (state->checked == facebook::react::AccessibilityState::Checked) {
+      return ToggleState::ToggleState_On;
+    } else if (state->checked == facebook::react::AccessibilityState::Mixed) {
+      return ToggleState::ToggleState_Indeterminate;
+    }
+  }
+  return ToggleState::ToggleState_Off;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

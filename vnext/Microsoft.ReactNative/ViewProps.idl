@@ -8,11 +8,23 @@ import "Theme.idl";
 
 namespace Microsoft.ReactNative {
 
+  namespace Composition.Experimental {
+    [webhosthidden]
+    [experimental]
+    interface IInternalColor {
+      Microsoft.ReactNative.Composition.Experimental.IBrush AsInternalBrush(Microsoft.ReactNative.Composition.Theme theme);
+    }
+  }
+
   [webhosthidden]
   [experimental]
   runtimeclass Color {
     Windows.UI.Color AsWindowsColor(Microsoft.ReactNative.Composition.Theme theme);
-    Microsoft.ReactNative.Composition.IBrush AsBrush(Microsoft.ReactNative.Composition.Theme theme);
+#ifdef USE_WINUI3
+    Microsoft.UI.Composition.CompositionBrush AsBrush(Microsoft.ReactNative.Composition.Theme theme);
+#endif
+
+    Boolean Equals(Color color);
 
     static Color Black();
     static Color Transparent();
@@ -35,13 +47,47 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   [experimental]
   DOC_STRING("Provides access to the properties on standard ViewProps.")
-  runtimeclass ViewProps
+  unsealed runtimeclass ViewProps
   {
     Single Opacity { get; };
-
     Color BackgroundColor { get; };
-
+    String TestId { get; };
+    String AccessibilityLabel { get; };
+    
     // TODO add accessors to all the properties on ViewProps
   };
+
+  [webhosthidden]
+  [experimental]
+  enum ImageSourceType
+  {
+    Invalid = 0,
+    Remote = 1,
+    Local = 2,
+  };
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  runtimeclass ImageSource
+  {
+    ImageSourceType Type { get; };
+    String Uri { get; };
+    String Bundle { get; };
+    Single Scale { get; };
+    Windows.Foundation.Size Size { get; };
+
+    static ImageSource ReadValue(IJSValueReader reader);
+  }
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  runtimeclass ImageProps : ViewProps
+  {
+    Windows.Foundation.Collections.IVectorView<ImageSource> Sources { get; };
+    // TODO add accessors to all the properties on ImageProps
+  }
+  
 
 } // namespace Microsoft. ReactNative

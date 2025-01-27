@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.207",
+  "version": "0.0.0-canary.256",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.82",
-    "@react-native-windows/fs": "^0.0.0-canary.39",
-    "@react-native-windows/package-utils": "^0.0.0-canary.65",
-    "@react-native-windows/telemetry": "^0.0.0-canary.90",
+    "@react-native-windows/codegen": "0.0.0-canary.117",
+    "@react-native-windows/fs": "^0.0.0-canary.61",
+    "@react-native-windows/package-utils": "^0.0.0-canary.87",
+    "@react-native-windows/telemetry": "^0.0.0-canary.116",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
@@ -34,17 +34,16 @@
     "semver": "^7.3.2",
     "shelljs": "^0.8.4",
     "username": "^5.1.0",
-    "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "13.6.0",
-    "@react-native-community/cli-types": "13.6.0",
-    "@rnw-scripts/eslint-config": "1.2.10",
-    "@rnw-scripts/jest-unittest-config": "1.5.8",
-    "@rnw-scripts/just-task": "2.3.26",
+    "@react-native-community/cli-doctor": "15.0.0-alpha.2",
+    "@react-native-community/cli-types": "15.0.0-alpha.2",
+    "@rnw-scripts/eslint-config": "1.2.32",
+    "@rnw-scripts/jest-unittest-config": "1.5.11",
+    "@rnw-scripts/just-task": "2.3.49",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",
@@ -55,14 +54,13 @@
     "@types/prompts": "2.0.10",
     "@types/semver": "^7.3.3",
     "@types/shelljs": "^0.8.8",
-    "@types/uuid": "^8.3.0",
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.57.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
-    "jest": "^29.6.3",
+    "jest": "^29.7.0",
     "prettier": "2.8.8",
     "typescript": "5.0.4"
   },
@@ -78,7 +76,10 @@
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "patch",
+      "premajor",
+      "preminor",
+      "prepatch"
     ]
   },
   "promoteRelease": true,

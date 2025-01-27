@@ -37,7 +37,7 @@ type Props = $ReadOnly<{|
   activeOpacity?: ?number,
   style?: ?ViewStyleProp,
 
-  hostRef?: ?React.Ref<typeof Animated.View>,
+  hostRef?: ?React.RefSetter<React.ElementRef<typeof Animated.View>>,
 |}>;
 
 type State = $ReadOnly<{|
@@ -235,6 +235,13 @@ class TouchableOpacity extends React.Component<Props, State> {
         this.props['aria-expanded'] ?? this.props.accessibilityState?.expanded,
       selected:
         this.props['aria-selected'] ?? this.props.accessibilityState?.selected,
+      readOnly:
+        this.props['aria-readonly'] ?? this.props.accessibilityState?.readOnly, // Windows
+      multiselectable:
+        this.props['aria-multiselectable'] ??
+        this.props.accessibilityState?.multiselectable, // Windows
+      required:
+        this.props['aria-required'] ?? this.props.accessibilityState?.required, // Windows
     };
 
     _accessibilityState =
@@ -295,8 +302,11 @@ class TouchableOpacity extends React.Component<Props, State> {
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         hitSlop={this.props.hitSlop}
         focusable={
-          this.props.focusable !== false && this.props.onPress !== undefined
+          this.props.focusable !== false &&
+          this.props.onPress !== undefined &&
+          !this.props.disabled
         }
+        // $FlowFixMe[prop-missing]
         ref={this.props.hostRef}
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]
@@ -335,13 +345,14 @@ class TouchableOpacity extends React.Component<Props, State> {
 
   componentWillUnmount(): void {
     this.state.pressability.reset();
+    this.state.anim.resetAnimation();
   }
 }
 
-const Touchable: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof Animated.View>,
-> = React.forwardRef((props, ref) => (
+const Touchable: component(
+  ref: React.RefSetter<React.ElementRef<typeof Animated.View>>,
+  ...props: Props
+) = React.forwardRef((props, ref) => (
   <TouchableOpacity {...props} hostRef={ref} />
 ));
 

@@ -34,12 +34,6 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-network-callback');
     expect(dump).toMatchSnapshot();
   });
-  test('An Image component can hve a network callback 2', async () => {
-    const component = await app.findElementByTestID('image-network-callback-2');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-network-callback-2');
-    expect(dump).toMatchSnapshot();
-  });
   test('A network Image example', async () => {
     const component = await app.findElementByTestID('image-network');
     await component.waitForDisplayed({timeout: 5000});
@@ -107,9 +101,9 @@ describe('Image Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('An Image can have a background color', async () => {
-    const component = await app.findElementByTestID('image-background-color');
+    const component = await app.findElementByTestID('background-color-example');
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-background-color');
+    const dump = await dumpVisualTree('background-color-example');
     expect(dump).toMatchSnapshot();
   });
   test('An Image can have custom opacity', async () => {
@@ -142,12 +136,6 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-resize-mode');
     expect(dump).toMatchSnapshot();
   });
-  test('A legacy local image can still render', async () => {
-    const component = await app.findElementByTestID('image-legacy');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-legacy');
-    expect(dump).toMatchSnapshot();
-  });
   test('An Image can have a custom blur radius', async () => {
     const component = await app.findElementByTestID('image-blur-radius');
     await component.waitForDisplayed({timeout: 5000});
@@ -170,6 +158,12 @@ describe('Image Tests', () => {
     const component = await app.findElementByTestID('image-alt');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('image-alt');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Images can be defined as a set using accessibilityPosInSet and accessibilitySetSize', async () => {
+    const component = await app.findElementByTestID('image-set');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-set');
     expect(dump).toMatchSnapshot();
   });
 });

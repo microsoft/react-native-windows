@@ -7,8 +7,8 @@
 import chalk from 'chalk';
 import path from 'path';
 import username from 'username';
-import uuid from 'uuid';
 import childProcess from 'child_process';
+import crypto from 'crypto';
 import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
@@ -18,6 +18,7 @@ import {
   findPropertyValue,
   tryFindPropertyValueAsBoolean,
 } from '../commands/config/configUtils';
+import * as nameHelpers from '../utils/nameHelpers';
 
 import {
   createDir,
@@ -44,11 +45,6 @@ interface NugetPackage {
   id: string;
   version: string;
   privateAssets: boolean;
-}
-
-function pascalCase(str: string) {
-  const camelCase = _.camelCase(str);
-  return camelCase[0].toUpperCase() + camelCase.substr(1);
 }
 
 function resolveRnwPath(subpath: string): string {
@@ -90,15 +86,17 @@ export async function copyProjectTemplateAndReplace(
   const projectType = options.projectType;
   const language = options.language;
 
-  // React-native init only allows alphanumerics in project names, but other
-  // new project tools (like create-react-native-module) are less strict.
-  if (projectType === 'lib') {
-    newProjectName = pascalCase(newProjectName);
+  // @react-native-community/cli init only allows alphanumerics in project names, but other
+  // new project tools (like expo and create-react-native-module) are less strict.
+  // The default (legacy) behavior of this flow is to clean the name rather than throw an error.
+  if (!nameHelpers.isValidProjectName(newProjectName)) {
+    newProjectName = nameHelpers.cleanName(newProjectName);
   }
 
   // Similar to the above, but we want to retain namespace separators
-  if (projectType === 'lib') {
-    namespace = namespace.split(/[.:]+/).map(pascalCase).join('.');
+  // The default (legacy) behavior of this flow is to clean the name rather than throw an error.
+  if (!nameHelpers.isValidProjectNamespace(namespace)) {
+    namespace = nameHelpers.cleanNamespace(namespace);
   }
 
   // Checking if we're overwriting an existing project and re-uses their projectGUID
@@ -162,10 +160,11 @@ export async function copyProjectTemplateAndReplace(
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
-  const projectGuid = existingProjectGuid || uuid.v4();
+  const projectGuid = existingProjectGuid || crypto.randomUUID();
+  const rnwPath = path.dirname(resolveRnwPath('package.json'));
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
-  const packageGuid = uuid.v4();
+  const packageGuid = crypto.randomUUID();
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
 
   let mainComponentName = newProjectName;
@@ -190,6 +189,9 @@ export async function copyProjectTemplateAndReplace(
     languageIsCpp: language === 'cpp',
 
     rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
+    rnwPathFromProjectRoot: path
+      .relative(destPath, rnwPath)
+      .replace(/\//g, '\\'),
 
     mainComponentName: mainComponentName,
 
@@ -203,9 +205,12 @@ export async function copyProjectTemplateAndReplace(
     packageGuid: packageGuid,
     currentUser: currentUser,
 
+    devMode: options.useDevMode,
+
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
-    nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    nuGetADOFeed: true || nugetVersion.startsWith('0.0.0-'), // Temporary true for all new projects until code-signing is restored, see issue #14030
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
@@ -222,7 +227,7 @@ export async function copyProjectTemplateAndReplace(
     autolinkCsReactPackageProviders: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
-      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windows\cli\src\commands\autolinkWindows\autolinkWindows.ts
   };
 
   const commonMappings =
@@ -230,12 +235,7 @@ export async function copyProjectTemplateAndReplace(
       ? [
           // app common mappings
           {
-            from: path.join(
-              srcRootPath,
-              options.useDevMode
-                ? 'metro.devMode.config.js'
-                : 'metro.config.js',
-            ),
+            from: path.join(srcRootPath, 'metro.config.js'),
             to: 'metro.config.js',
           },
           {
@@ -444,7 +444,7 @@ export async function copyProjectTemplateAndReplace(
 
   if (projectType === 'app') {
     console.log(chalk.white.bold('To run your app on UWP:'));
-    console.log(chalk.white('   npx react-native run-windows'));
+    console.log(chalk.white('   npx @react-native-community/cli run-windows'));
   }
 }
 
@@ -463,7 +463,7 @@ export async function installScriptsAndDependencies(options: {
   }
 
   await projectPackage.mergeProps({
-    scripts: {windows: 'react-native run-windows'},
+    scripts: {windows: 'npx @react-native-community/cli run-windows'},
   });
 
   const rnwPackage = await findPackage('react-native-windows');

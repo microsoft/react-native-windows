@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
+import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
@@ -59,7 +59,17 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'ImageWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Image/Tests/ImageWin32Test'),
   },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
   /*
+  {
+    key: 'LayoutConformanceExample',
+    module: require('../examples/LayoutConformance/LayoutConformanceExample')
+      .default,
+  },
   {
     key: 'JSResponderHandlerExample',
     module: require('../examples/JSResponderHandlerExample/JSResponderHandlerExample'),
@@ -67,11 +77,6 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'KeyboardAvoidingViewExample',
     module: require('../examples/KeyboardAvoidingView/KeyboardAvoidingViewExample'),
-  },
-  {
-    key: 'ModalExample',
-    category: 'UI',
-    module: require('../examples/Modal/ModalExample'),
   },
   {
     key: 'NewAppScreenExample',
@@ -148,6 +153,12 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
+  /*
+  {
+    key: 'OSSLibraryExample',
+    module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
+  },
+  */
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -205,6 +216,12 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
   },
+  {
+    key: 'DisplayContentsExample',
+    category: 'UI',
+    module: require('../examples/DisplayContents/DisplayContentsExample')
+      .default,
+  },
   // Only show the link for the example if the API is available.
   typeof IntersectionObserver === 'function'
     ? {
@@ -255,6 +272,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PanResponder/PanResponderExample'),
   },
   {
+    key: 'PixelRatio',
+    category: 'UI',
+    module: require('../examples/PixelRatio/PixelRatioExample'),
+  },
+  /*
+  {
+    key: 'PermissionsExampleAndroid',
+    category: 'Android',
+    module: require('../examples/PermissionsAndroid/PermissionsExample'),
+  },
+  */
+  {
     key: 'PlatformColorExample',
     category: 'UI',
     module: require('../examples/PlatformColor/PlatformColorExample'),
@@ -288,7 +317,28 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'TransformExample',
     category: 'UI',
     module: require('../examples/Transform/TransformExample'),
-  } /*
+  },
+  {
+    key: 'FilterExample',
+    category: 'UI',
+    module: require('../examples/Filter/FilterExample'),
+  },
+  /*
+  {
+    key: 'LinearGradient',
+    category: 'UI',
+    module: require('../examples/LinearGradient/LinearGradientExample'),
+  },
+  {
+    key: 'MixBlendModeExample',
+    category: 'UI',
+    module: require('../examples/MixBlendMode/MixBlendModeExample'),
+  },
+  {
+    key: 'VibrationExample',
+    category: 'Basic',
+    module: require('../examples/Vibration/VibrationExample'),
+  },
   {
     key: 'WebSocketExample',
     category: 'Basic',
@@ -299,9 +349,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
   },
-  {
-  }*/,
-  {
+  */ {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
@@ -330,9 +378,16 @@ if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   });
 }
 
-const Modules: any = {};
+const Playgrounds: Array<RNTesterModuleInfo> = [
+  {
+    key: 'PlaygroundExample',
+    module: require('../examples/Playground/PlaygroundExample'),
+  },
+];
 
-APIs.concat(Components).forEach(Example => {
+const Modules: {[key: string]: RNTesterModule} = {};
+
+[...APIs, ...Components, ...Playgrounds].forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 

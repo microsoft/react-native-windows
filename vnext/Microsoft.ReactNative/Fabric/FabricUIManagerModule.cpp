@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "HandleCommandArgs.g.cpp"
+#include "HandleCommandArgs.g.h"
 #include <AsynchronousEventBeat.h>
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
-#include <ICompositionRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
@@ -28,7 +29,6 @@
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
-#include <react/utils/CoreFeatures.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "DynamicReader.h"
@@ -50,9 +50,7 @@ FabicUIManagerProperty() noexcept {
   return props.Get(FabicUIManagerProperty()).Value();
 }
 
-FabricUIManager::FabricUIManager() {
-  facebook::react::CoreFeatures::enablePropIteratorSetter = true;
-}
+FabricUIManager::FabricUIManager() {}
 
 FabricUIManager::~FabricUIManager() {
   // Make sure that we destroy UI components on UI thread.
@@ -62,9 +60,6 @@ FabricUIManager::~FabricUIManager() {
 }
 
 void FabricUIManager::installFabricUIManager() noexcept {
-  std::shared_ptr<const facebook::react::ReactNativeConfig> config =
-      std::make_shared<const ReactNativeConfigProperties>(m_context.Properties());
-
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
   facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
@@ -74,34 +69,21 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
   facebook::react::RuntimeExecutor runtimeExecutor;
   auto toolbox = facebook::react::SchedulerToolbox{};
+  auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties());
 
-  if (auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties())) {
+  if (runtimeScheduler) {
     contextContainer->insert("RuntimeScheduler", runtimeScheduler);
     runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
       runtimeScheduler->scheduleWork(std::move(callback));
     };
-    facebook::react::EventBeat::Factory synchronousBeatFactory =
-        [runtimeExecutor, context = m_context, runtimeScheduler](
-            facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-          return std::make_unique<SynchronousEventBeat>(ownerBox, context, runtimeExecutor, runtimeScheduler);
-        };
-    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   } else {
     runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
-
-    facebook::react::EventBeat::Factory synchronousBeatFactory =
-        [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-          return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
-        };
-    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   }
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
-      [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-        return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
+      [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
+        return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeScheduler);
       };
-
-  contextContainer->insert("ReactNativeConfig", config);
 
   toolbox.contextContainer = contextContainer;
   toolbox.componentRegistryFactory = [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
@@ -121,16 +103,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
-  toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
-  toolbox.backgroundExecutor = [context = m_context,
-                                dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
-    if (context.UIDispatcher().HasThreadAccess()) {
-      callback();
-      return;
-    }
-
-    dispatcher.Post(std::move(callback));
-  };
+  toolbox.eventBeatFactory = asynchronousBeatFactory;
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
@@ -142,8 +115,9 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
 }
 
 void FabricUIManager::startSurface(
-    const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView,
     facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
   m_surfaceRegistry.insert({surfaceId, {rootView}});
@@ -154,36 +128,28 @@ void FabricUIManager::startSurface(
 
     auto root = rootComponentViewDescriptor.view
                     .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
-    root->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
     root->start(rootView);
   });
 
-  facebook::react::LayoutContext context;
-  facebook::react::LayoutConstraints constraints;
-  context.pointScaleFactor = rootView.ScaleFactor();
-  context.fontSizeMultiplier = rootView.ScaleFactor();
-  constraints.minimumSize.height = rootView.Size().Height;
-  constraints.minimumSize.width = rootView.Size().Width;
-  constraints.maximumSize.height = rootView.Size().Height;
-  constraints.maximumSize.width = rootView.Size().Width;
-  constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
+  facebook::react::LayoutContext layoutContext;
+  layoutContext.pointScaleFactor = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.FontSizeMultiplier();
 
   m_surfaceManager->startSurface(
       surfaceId,
       moduleName,
       initialProps,
-      constraints, // layout constraints
-      context // layout context
+      layoutConstraints,
+      layoutContext // layout context
   );
 }
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
   m_surfaceManager->stopSurface(surfaceId);
-}
-
-winrt::Microsoft::ReactNative::CompositionRootView FabricUIManager::GetCompositionRootView(
-    facebook::react::SurfaceId surfaceId) const noexcept {
-  return m_surfaceRegistry.at(surfaceId).wkRootView.get();
+  auto &rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
+  rootDescriptor.view.as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>()->stop();
+  m_registry.enqueueComponentViewWithComponentHandle(
+      facebook::react::RootShadowNode::Handle(), surfaceId, rootDescriptor);
 }
 
 facebook::react::Size FabricUIManager::measureSurface(
@@ -200,7 +166,17 @@ void FabricUIManager::constraintSurfaceLayout(
   m_surfaceManager->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
 }
 
-void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {}
+winrt::Microsoft::ReactNative::ReactNotificationId<facebook::react::SurfaceId>
+FabricUIManager::NotifyMountedId() noexcept {
+  return {L"ReactNative.Fabric", L"Mounted"};
+}
+
+void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
+  m_context.UIDispatcher().Post([context = m_context, self = shared_from_this(), surfaceId]() {
+    self->m_scheduler->reportMount(surfaceId);
+    context.Notifications().SendNotification(NotifyMountedId(), surfaceId);
+  });
+}
 
 void FabricUIManager::RCTPerformMountInstructions(
     facebook::react::ShadowViewMutationList const &mutations,
@@ -218,20 +194,34 @@ void FabricUIManager::RCTPerformMountInstructions(
       }
 
       case facebook::react::ShadowViewMutation::Delete: {
-        auto &oldChildShadowView = mutation.oldChildShadowView;
-        auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
-        // observerCoordinator.unregisterViewComponentDescriptor(oldChildViewDescriptor, surfaceId);
-        m_registry.enqueueComponentViewWithComponentHandle(
-            oldChildShadowView.componentHandle, oldChildShadowView.tag, oldChildViewDescriptor);
+// #define DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+        winrt::weak_ref<winrt::Microsoft::ReactNative::ComponentView> wkView;
+#endif
+        {
+          auto &oldChildShadowView = mutation.oldChildShadowView;
+          auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
+          // observerCoordinator.unregisterViewComponentDescriptor(oldChildViewDescriptor, surfaceId);
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+          wkView = winrt::make_weak(oldChildViewDescriptor.view);
+#endif
+          m_registry.enqueueComponentViewWithComponentHandle(
+              oldChildShadowView.componentHandle, oldChildShadowView.tag, oldChildViewDescriptor);
+        }
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+        // After handling a delete mutation, nothing should be holding on to the view.  If there is thats an indication
+        // of a leak, or at least something holding on to a view longer than it should
+        assert(!wkView.get());
+#endif
         break;
       }
 
       case facebook::react::ShadowViewMutation::Insert: {
         auto &oldChildShadowView = mutation.oldChildShadowView;
         auto &newChildShadowView = mutation.newChildShadowView;
-        auto &parentShadowView = mutation.parentShadowView;
+        auto &parentTag = mutation.parentTag;
         auto &newChildViewDescriptor = m_registry.componentViewDescriptorWithTag(newChildShadowView.tag);
-        auto parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
+        auto parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentTag);
         auto newChildComponentView =
             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view);
 
@@ -239,18 +229,20 @@ void FabricUIManager::RCTPerformMountInstructions(
         newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
         newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-        newChildViewDescriptor.view.FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
+        newChildComponentView->FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
 
-        parentViewDescriptor.view.MountChildComponentView(*newChildComponentView, mutation.index);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->MountChildComponentView(*newChildComponentView, mutation.index);
         break;
       }
 
       case facebook::react::ShadowViewMutation::Remove: {
         auto &oldChildShadowView = mutation.oldChildShadowView;
-        auto &parentShadowView = mutation.parentShadowView;
+        auto &parentTag = mutation.parentTag;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
-        auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-        parentViewDescriptor.view.UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
+        auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentTag);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;
       }
 
@@ -284,7 +276,8 @@ void FabricUIManager::RCTPerformMountInstructions(
         }
 
         if (mask != winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None) {
-          newChildViewDescriptor.view.FinalizeUpdates(mask);
+          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view)
+              ->FinalizeUpdates(mask);
         }
 
         break;
@@ -293,7 +286,8 @@ void FabricUIManager::RCTPerformMountInstructions(
   }
 }
 
-void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator) {
+void FabricUIManager::performTransaction(
+    std::shared_ptr<const facebook::react::MountingCoordinator> const &mountingCoordinator) {
   auto surfaceId = mountingCoordinator->getSurfaceId();
 
   mountingCoordinator->getTelemetryController().pullTransaction(
@@ -315,7 +309,8 @@ void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::S
       });
 }
 
-void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator) {
+void FabricUIManager::initiateTransaction(
+    std::shared_ptr<const facebook::react::MountingCoordinator> mountingCoordinator) {
   if (m_transactionInFlight) {
     m_followUpTransactionRequired = true;
     return;
@@ -330,7 +325,7 @@ void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::
 }
 
 void FabricUIManager::schedulerDidFinishTransaction(
-    const facebook::react::MountingCoordinator::Shared &mountingCoordinator) {
+    const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) {
   // Should cache this locally
 
   if (m_context.UIDispatcher().HasThreadAccess()) {
@@ -341,9 +336,17 @@ void FabricUIManager::schedulerDidFinishTransaction(
   }
 }
 
-void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
-    facebook::react::SurfaceId surfaceId,
-    const facebook::react::ShadowNode &shadowView) {
+void FabricUIManager::schedulerShouldRenderTransactions(
+    const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) {
+  if (m_context.UIDispatcher().HasThreadAccess()) {
+    initiateTransaction(mountingCoordinator);
+  } else {
+    m_context.UIDispatcher().Post(
+        [mountingCoordinator, self = shared_from_this()]() { self->initiateTransaction(mountingCoordinator); });
+  }
+}
+
+void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(const facebook::react::ShadowNode &shadowView) {
   // iOS does not do this optimization, but Android does.  It maybe that android's allocations are more expensive due to
   // the Java boundary.
   // TODO: We should do some perf tests to see if this is worth doing.
@@ -360,22 +363,44 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
   */
 }
 
+struct HandleCommandArgs : public winrt::Microsoft::ReactNative::implementation::HandleCommandArgsT<HandleCommandArgs> {
+  HandleCommandArgs(winrt::hstring commandName, folly::dynamic const &arg) : m_commandName(commandName), m_args(arg) {}
+
+  winrt::hstring CommandName() const noexcept {
+    return m_commandName;
+  }
+  winrt::Microsoft::ReactNative::IJSValueReader CommandArgs() const noexcept {
+    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_args);
+  }
+  bool Handled() const noexcept {
+    return m_handled;
+  }
+  void Handled(bool value) noexcept {
+    m_handled = value;
+  }
+
+ private:
+  folly::dynamic const &m_args;
+  const winrt::hstring m_commandName;
+  bool m_handled{false};
+};
+
 void FabricUIManager::schedulerDidDispatchCommand(
     facebook::react::ShadowView const &shadowView,
     std::string const &commandName,
     folly::dynamic const &arg) {
   if (m_context.UIDispatcher().HasThreadAccess()) {
     auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
-    descriptor.view.HandleCommand(
-        winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(descriptor.view)
+        ->HandleCommand(winrt::make<HandleCommandArgs>(winrt::to_hstring(commandName), arg));
   } else {
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
             auto view = pThis->m_registry.findComponentViewWithTag(tag);
             if (view) {
-              view.HandleCommand(
-                  winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
+              winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->HandleCommand(
+                  winrt::make<HandleCommandArgs>(winrt::to_hstring(commandName), args));
             }
           }
         });

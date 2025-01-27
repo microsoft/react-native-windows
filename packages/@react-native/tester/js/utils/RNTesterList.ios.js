@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
+import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
@@ -46,6 +46,11 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'KeyboardAvoidingViewExample',
     module: require('../examples/KeyboardAvoidingView/KeyboardAvoidingViewExample'),
+  },
+  {
+    key: 'LayoutConformanceExample',
+    module: require('../examples/LayoutConformance/LayoutConformanceExample')
+      .default,
   },
   {
     key: 'LayoutEventsExample',
@@ -145,6 +150,12 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
+  /*
+  {
+    key: 'OSSLibraryExample',
+    module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
+  },
+  */
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -196,12 +207,22 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Crash/CrashExample'),
   },
   {
+    key: 'CursorExample',
+    module: require('../examples/Cursor/CursorExample'),
+  },
+  {
     key: 'DevSettings',
     module: require('../examples/DevSettings/DevSettingsExample'),
   },
   {
     key: 'Dimensions',
     module: require('../examples/Dimensions/DimensionsExample'),
+  },
+  {
+    key: 'DisplayContentsExample',
+    category: 'UI',
+    module: require('../examples/DisplayContents/DisplayContentsExample')
+      .default,
   },
   // Only show the link for the example if the API is available.
   typeof IntersectionObserver === 'function'
@@ -255,6 +276,10 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PlatformColor/PlatformColorExample'),
   },
   {
+    key: 'PixelRatio',
+    module: require('../examples/PixelRatio/PixelRatioExample'),
+  },
+  {
     key: 'PointerEventsExample',
     module: require('../examples/PointerEvents/PointerEventsExample'),
   },
@@ -281,6 +306,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
   {
     key: 'TransformExample',
     module: require('../examples/Transform/TransformExample'),
+  },
+  {
+    key: 'FilterExample',
+    module: require('../examples/Filter/FilterExample'),
+  },
+  {
+    key: 'LinearGradient',
+    module: require('../examples/LinearGradient/LinearGradientExample'),
+  },
+  {
+    key: 'MixBlendModeExample',
+    module: require('../examples/MixBlendMode/MixBlendModeExample'),
   },
   {
     key: 'TurboModuleExample',
@@ -321,10 +358,16 @@ if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   });
 }
 
-const Modules: {...} = {};
+const Playgrounds: Array<RNTesterModuleInfo> = [
+  {
+    key: 'PlaygroundExample',
+    module: require('../examples/Playground/PlaygroundExample'),
+  },
+];
 
-APIs.concat(Components).forEach(Example => {
-  // $FlowFixMe[prop-missing]
+const Modules: {[key: string]: RNTesterModule} = {};
+
+[...APIs, ...Components, ...Playgrounds].forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 

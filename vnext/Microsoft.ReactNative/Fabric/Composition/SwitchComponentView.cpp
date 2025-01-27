@@ -25,20 +25,18 @@ constexpr float trackStrokeThickness = 1.0f;
 } // namespace SwitchConstants
 
 SwitchComponentView::SwitchComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
+          SwitchComponentView::defaultProps(),
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {
-  m_props = std::make_shared<facebook::react::SwitchProps const>();
-}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
 
 winrt::Microsoft::ReactNative::ComponentView SwitchComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<SwitchComponentView>(compContext, tag, reactContext);
@@ -58,38 +56,31 @@ void SwitchComponentView::UnmountChildComponentView(
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
-void SwitchComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void SwitchComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  Super::HandleCommand(args);
+  if (args.Handled())
+    return;
+  auto commandName = args.CommandName();
   if (commandName == L"setValue") {
     // TODO - Current implementation always aligns with JS value
     // This will be needed when we move to using WinUI controls
-  } else {
-    Super::HandleCommand(commandName, args);
   }
 }
 
 void SwitchComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+  const auto &oldViewProps =
+      *std::static_pointer_cast<const facebook::react::SwitchProps>(oldProps ? oldProps : viewProps());
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::SwitchProps>(props);
-
-  ensureVisual();
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor ||
       oldViewProps.thumbTintColor != newViewProps.thumbTintColor || oldViewProps.value != newViewProps.value ||
       oldViewProps.disabled != newViewProps.disabled) {
     m_visualUpdateRequired = true;
   }
-  if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
-  }
 
-  // update BaseComponentView props
-  updateTransformProps(oldViewProps, newViewProps, m_visual);
   Super::updateProps(props, oldProps);
-  m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
 void SwitchComponentView::updateState(
@@ -99,17 +90,7 @@ void SwitchComponentView::updateState(
 void SwitchComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  // Set Position & Size Properties
-  ensureVisual();
-
-  if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-  }
-
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-  m_visual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 
   if (oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
     handleScaleChange();
@@ -135,17 +116,17 @@ void SwitchComponentView::handleScaleChange() noexcept {
 }
 
 void SwitchComponentView::updateVisuals() noexcept {
-  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+  const auto &props = switchProps();
   auto &theme = *this->theme();
-  winrt::Microsoft::ReactNative::Composition::IBrush defaultColor;
-  winrt::Microsoft::ReactNative::Composition::IBrush fillColor;
-  winrt::Microsoft::ReactNative::Composition::IBrush thumbFill;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush defaultColor;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush fillColor;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush thumbFill;
 
   auto thumbWidth = SwitchConstants::thumbWidth;
   auto thumbHeight = SwitchConstants::thumbWidth;
 
-  if (switchProps->value) {
-    if (switchProps->disabled) {
+  if (props.value) {
+    if (props.disabled) {
       defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOnDisabled");
       fillColor = theme.PlatformBrush("ToggleSwitchFillOnDisabled");
       thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOnDisabled");
@@ -163,7 +144,7 @@ void SwitchComponentView::updateVisuals() noexcept {
       thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOn");
     }
   } else {
-    if (switchProps->disabled) {
+    if (props.disabled) {
       defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOffDisabled");
       fillColor = theme.PlatformBrush("ToggleSwitchFillOffDisabled");
       thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOffDisabled");
@@ -182,7 +163,7 @@ void SwitchComponentView::updateVisuals() noexcept {
     }
   }
 
-  if (switchProps->disabled) {
+  if (props.disabled) {
     thumbWidth = SwitchConstants::thumbWidth;
   } else if (m_pressed) {
     thumbWidth = SwitchConstants::thumbWidthPressed;
@@ -194,18 +175,18 @@ void SwitchComponentView::updateVisuals() noexcept {
     thumbWidth = SwitchConstants::thumbWidth;
   }
 
-  if (!switchProps->disabled && switchProps->thumbTintColor) {
-    thumbFill = theme.Brush(*switchProps->thumbTintColor);
+  if (!props.disabled && props.thumbTintColor) {
+    thumbFill = theme.Brush(*props.thumbTintColor);
   }
 
-  if (!switchProps->disabled && switchProps->onTintColor && switchProps->value) {
-    fillColor = theme.Brush(*switchProps->onTintColor);
-  } else if (!switchProps->disabled && switchProps->tintColor && !switchProps->value) {
-    fillColor = theme.Brush(*switchProps->tintColor);
+  if (!props.disabled && props.onTintColor && props.value) {
+    fillColor = theme.Brush(*props.onTintColor);
+  } else if (!props.disabled && props.tintColor && !props.value) {
+    fillColor = theme.Brush(*props.tintColor);
   }
 
   // switch track - outline
-  if ((!switchProps->onTintColor && switchProps->value) || (!switchProps->tintColor && !switchProps->value)) {
+  if ((!props.onTintColor && props.value) || (!props.tintColor && !props.value)) {
     m_trackVisual.StrokeThickness(std::round(SwitchConstants::trackStrokeThickness * m_layoutMetrics.pointScaleFactor));
     m_trackVisual.StrokeBrush(defaultColor);
   } else {
@@ -217,10 +198,10 @@ void SwitchComponentView::updateVisuals() noexcept {
   float offsetY = ((SwitchConstants::trackHeight - thumbHeight) * m_layoutMetrics.pointScaleFactor) / 2.0f;
 
   if (m_supressAnimationForNextFrame) {
-    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::None);
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::None);
   }
 
-  if (switchProps->value) {
+  if (props.value) {
     m_thumbVisual.Offset(
         {(SwitchConstants::trackWidth - (SwitchConstants::thumbMargin + thumbWidth)) * m_layoutMetrics.pointScaleFactor,
          offsetY,
@@ -235,7 +216,7 @@ void SwitchComponentView::updateVisuals() noexcept {
   m_thumbVisual.Brush(thumbFill);
 
   if (m_supressAnimationForNextFrame) {
-    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb);
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::SwitchThumb);
     m_supressAnimationForNextFrame = false;
   }
 }
@@ -249,47 +230,18 @@ void SwitchComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::Compone
   base_type::FinalizeUpdates(updateMask);
 }
 
-void SwitchComponentView::prepareForRecycle() noexcept {}
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual SwitchComponentView::createVisual() noexcept {
+  auto visual = m_compContext.CreateSpriteVisual();
 
-facebook::react::SharedViewProps SwitchComponentView::viewProps() noexcept {
-  return m_props;
-}
+  m_trackVisual = m_compContext.CreateRoundedRectangleVisual();
+  visual.InsertAt(m_trackVisual, 0);
 
-void SwitchComponentView::ensureVisual() noexcept {
-  if (!m_visual) {
-    m_visual = m_compContext.CreateSpriteVisual();
-    OuterVisual().InsertAt(m_visual, 0);
+  m_thumbVisual = m_compContext.CreateRoundedRectangleVisual();
+  m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::SwitchThumb);
+  m_trackVisual.InsertAt(m_thumbVisual, 0);
 
-    m_trackVisual = m_compContext.CreateRoundedRectangleVisual();
-    m_visual.InsertAt(m_trackVisual, 0);
-
-    m_thumbVisual = m_compContext.CreateRoundedRectangleVisual();
-    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb);
-    m_trackVisual.InsertAt(m_thumbVisual, 0);
-
-    handleScaleChange();
-  }
-}
-
-facebook::react::Tag SwitchComponentView::hitTest(
-    facebook::react::Point pt,
-    facebook::react::Point &localPt,
-    bool ignorePointerEvents) const noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
-    localPt = ptLocal;
-    return Tag();
-  }
-
-  return -1;
-}
-
-winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual() const noexcept {
-  return m_visual;
+  handleScaleChange();
+  return visual;
 }
 
 void SwitchComponentView::onThemeChanged() noexcept {
@@ -304,14 +256,12 @@ void SwitchComponentView::OnPointerPressed(
     return;
   }
 
-  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
-
-  if (!switchProps->disabled) {
+  if (!switchProps().disabled) {
     m_pressed = true;
     m_supressAnimationForNextFrame = true;
 
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong());
+      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
     }
 
     updateVisuals();
@@ -353,38 +303,54 @@ void SwitchComponentView::OnPointerExited(
 }
 
 void SwitchComponentView::OnKeyUp(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (args.Key() == winrt::Windows::System::VirtualKey::Space) {
     if (toggle()) {
       args.Handled(true);
     }
   }
-  Super::OnKeyUp(source, args);
+  Super::OnKeyUp(args);
 }
 
 bool SwitchComponentView::toggle() noexcept {
-  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
-
-  if (switchProps->disabled || !m_eventEmitter)
+  if (switchProps().disabled || !m_eventEmitter)
     return false;
 
   auto switchEventEmitter = std::static_pointer_cast<facebook::react::SwitchEventEmitter const>(m_eventEmitter);
 
   facebook::react::SwitchEventEmitter::OnChange args;
-  args.value = !(switchProps->value);
+  args.value = !(switchProps().value);
   args.target = Tag();
 
   switchEventEmitter->onChange(args);
   return true;
 }
 
-bool SwitchComponentView::focusable() const noexcept {
-  return m_props->focusable;
-}
-
 std::string SwitchComponentView::DefaultControlType() const noexcept {
   return "switch";
+}
+
+facebook::react::SharedViewProps SwitchComponentView::defaultProps() noexcept {
+  static auto const defaultProps = std::make_shared<facebook::react::SwitchProps const>();
+  return defaultProps;
+}
+
+const facebook::react::SwitchProps &SwitchComponentView::switchProps() const noexcept {
+  return *std::static_pointer_cast<const facebook::react::SwitchProps>(viewProps());
+}
+
+// getToggleState method for IToggleProvider
+ToggleState SwitchComponentView::getToggleState() noexcept {
+  if (switchProps().value) {
+    return ToggleState::ToggleState_On;
+  } else {
+    return ToggleState::ToggleState_Off;
+  }
+}
+
+// Toggle method for IToggleProvider
+void SwitchComponentView::Toggle() noexcept {
+  toggle();
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

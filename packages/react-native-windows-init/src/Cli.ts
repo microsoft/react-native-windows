@@ -298,6 +298,33 @@ function installReactNativeWindows(
     );
   }
 
+  const parsedVersion = semver.parse(version);
+  if (parsedVersion) {
+    const newSteps =
+      'Please see https://microsoft.github.io/react-native-windows/docs/getting-started for the latest method for adding RNW to your project.';
+    if (
+      parsedVersion.minor > 75 ||
+      (parsedVersion.minor === 0 &&
+        parsedVersion.prerelease.length > 1 &&
+        parsedVersion.prerelease[0] === 'canary' &&
+        typeof parsedVersion.prerelease[1] === 'number' &&
+        parsedVersion.prerelease[1] > 843)
+    ) {
+      // Full-stop, you can't use the command anymore.
+      throw new CodedError(
+        'UnsupportedReactNativeVersion',
+        `react-native-windows-init only supports react-native-windows <= 0.75. ${newSteps}`,
+      );
+    } else if (parsedVersion.minor === 75) {
+      // You can use the command for now, but it will be deprecated soon.
+      console.warn(
+        chalk.yellow(
+          `Warning: react-native-windows-init will be deprecated for RNW > 0.75. ${newSteps}`,
+        ),
+      );
+    }
+  }
+
   console.log(
     `Installing ${chalk.green('react-native-windows')}@${chalk.cyan(
       version,
@@ -430,7 +457,7 @@ async function startTelemetrySession(
 }
 
 /**
- * Adds the new project's telemetry info by calling and processing `react-native config`.
+ * Adds the new project's telemetry info by calling and processing `npx @react-native-community/cli config`.
  */
 async function addProjectInfoToTelemetry() {
   if (!Telemetry.isEnabled()) {
@@ -439,7 +466,7 @@ async function addProjectInfoToTelemetry() {
 
   try {
     const config = JSON.parse(
-      execSync('npx react-native config', {
+      execSync('npx @react-native-community/cli config', {
         stdio: ['ignore', 'pipe', 'ignore'],
       }).toString(),
     );

@@ -1,8 +1,421 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 30 Mar 2024 05:18:03 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.281
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Initial integrate (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.280
+
+Sat, 11 Jan 2025 06:30:39 GMT
+
+### Changes
+
+- Integrate 12/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.36
+- Bump @rnw-scripts/just-task to v2.3.49
+- Bump react-native-platform-override to v1.9.51
+
+## 0.0.0-canary.279
+
+Fri, 10 Jan 2025 06:23:18 GMT
+
+### Changes
+
+- Integrate 12/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.35
+- Bump @rnw-scripts/just-task to v2.3.48
+- Bump react-native-platform-override to v1.9.50
+
+## 0.0.0-canary.278
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Changes
+
+- Integrate 12/10 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.277
+
+Fri, 20 Dec 2024 06:22:28 GMT
+
+### Changes
+
+- integrate 0.78.0-nightly-20241201-91e217ff5 (email not defined)
+
+## 0.0.0-canary.276
+
+Wed, 18 Dec 2024 06:22:23 GMT
+
+### Changes
+
+- integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e (email not defined)
+
+## 0.0.0-canary.275
+
+Sat, 14 Dec 2024 06:29:12 GMT
+
+### Changes
+
+- integrate RN Nightly 0.77.0-nightly-20241118-3986eefed (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.274
+
+Fri, 06 Dec 2024 06:22:27 GMT
+
+### Changes
+
+- Integrate 10/31 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.273
+
+Sat, 23 Nov 2024 06:23:15 GMT
+
+### Changes
+
+- Integrate 10/20 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.272
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- test integrate 10/15 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.271
+
+Thu, 07 Nov 2024 06:24:18 GMT
+
+### Changes
+
+- Integrate 10/10 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.270
+
+Sat, 02 Nov 2024 05:28:14 GMT
+
+### Changes
+
+- adds default Modal (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.269
+
+Wed, 23 Oct 2024 05:31:16 GMT
+
+### Changes
+
+- Fix ignore files and update cli timeout (jthysell@microsoft.com)
+
+## 0.0.0-canary.268
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.34
+- Bump @rnw-scripts/just-task to v2.3.47
+- Bump react-native-platform-override to v1.9.49
+
+## 0.0.0-canary.267
+
+Wed, 16 Oct 2024 05:20:54 GMT
+
+### Changes
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.266
+
+Thu, 10 Oct 2024 18:14:30 GMT
+
+### Changes
+
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+
+## 0.0.0-canary.265
+
+Mon, 07 Oct 2024 19:54:26 GMT
+
+### Changes
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.33
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-platform-override to v1.9.48
+
+## 0.0.0-canary.263
+
+Thu, 26 Sep 2024 17:38:26 GMT
+
+### Changes
+
+- RN Integration 9/9 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.31
+- Bump @rnw-scripts/just-task to v2.3.44
+- Bump react-native-platform-override to v1.9.46
+
+## 0.0.0-canary.262
+
+Sat, 07 Sep 2024 05:14:10 GMT
+
+### Changes
+
+- switch to optimized text (tatianakapos@microsoft.com)
+- Integrate 8/31 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.261
+
+Thu, 05 Sep 2024 05:13:45 GMT
+
+### Changes
+
+- Integrate 8/20 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.260
+
+Wed, 28 Aug 2024 05:14:44 GMT
+
+### Changes
+
+- integrate 0.76.0-nightly-20240816-17017d2b8 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.259
+
+Thu, 22 Aug 2024 05:24:27 GMT
+
+### Changes
+
+- integrate react native nightly 7-19 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.258
+
+Thu, 08 Aug 2024 05:16:47 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.30
+- Bump @rnw-scripts/just-task to v2.3.43
+- Bump react-native-platform-override to v1.9.45
+
+## 0.0.0-canary.257
+
+Wed, 24 Jul 2024 05:24:34 GMT
+
+### Changes
+
+- integrate 6/14 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.29
+- Bump @rnw-scripts/just-task to v2.3.42
+- Bump react-native-platform-override to v1.9.44
+
+## 0.0.0-canary.256
+
+Wed, 10 Jul 2024 05:15:28 GMT
+
+### Changes
+
+- Integrate 6/13 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.28
+- Bump @rnw-scripts/just-task to v2.3.41
+- Bump react-native-platform-override to v1.9.43
+
+## 0.0.0-canary.255
+
+Fri, 21 Jun 2024 05:17:50 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.42
+
+## 0.0.0-canary.254
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Changes
+
+- Integrate 6/10 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.23
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.27
+- Bump @rnw-scripts/just-task to v2.3.40
+- Bump react-native-platform-override to v1.9.41
+
+## 0.0.0-canary.253
+
+Sat, 08 Jun 2024 05:17:56 GMT
+
+### Changes
+
+- Integrate 5/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.22
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.26
+- Bump @rnw-scripts/just-task to v2.3.39
+- Bump react-native-platform-override to v1.9.40
+
+## 0.0.0-canary.252
+
+Wed, 05 Jun 2024 05:18:09 GMT
+
+### Changes
+
+- Use prettier-plugin-hermes-parser to match upstream settings (email not defined)
+- Bump @rnw-scripts/just-task to v2.3.38
+- Bump react-native-platform-override to v1.9.39
+
+## 0.0.0-canary.251
+
+Tue, 04 Jun 2024 05:18:34 GMT
+
+### Changes
+
+- Integrate 5/25 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.25
+- Bump @rnw-scripts/just-task to v2.3.37
+- Bump react-native-platform-override to v1.9.38
+
+## 0.0.0-canary.250
+
+Sat, 01 Jun 2024 05:21:30 GMT
+
+### Changes
+
+- Integrate 5/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.24
+- Bump @rnw-scripts/just-task to v2.3.36
+- Bump react-native-platform-override to v1.9.37
+
+## 0.0.0-canary.249
+
+Thu, 30 May 2024 05:18:25 GMT
+
+### Changes
+
+- RN Integration 05/11 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.23
+- Bump @rnw-scripts/just-task to v2.3.35
+- Bump react-native-platform-override to v1.9.36
+
+## 0.0.0-canary.248
+
+Thu, 23 May 2024 05:17:48 GMT
+
+### Changes
+
+- RN Integration 04/27 (1422161+marlenecota@users.noreply.github.com)
+- RN Integration 05/02 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.22
+- Bump @rnw-scripts/just-task to v2.3.34
+- Bump react-native-platform-override to v1.9.35
+
+## 0.0.0-canary.247
+
+Wed, 22 May 2024 05:18:16 GMT
+
+### Changes
+
+- RN Integration 04/20 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.21
+- Bump @rnw-scripts/just-task to v2.3.33
+- Bump react-native-platform-override to v1.9.34
+
+## 0.0.0-canary.246
+
+Wed, 15 May 2024 05:14:52 GMT
+
+### Changes
+
+- Remove unneeded scrollview.win32.js override (30809111+acoates-ms@users.noreply.github.com)
+- 0413 integration (email not defined)
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.20
+- Bump @rnw-scripts/just-task to v2.3.32
+- Bump react-native-platform-override to v1.9.33
+
+## 0.0.0-canary.245
+
+Sat, 11 May 2024 05:18:28 GMT
+
+### Changes
+
+- integrate rn nightly 4/5/2024 (email not defined)
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.19
+- Bump @rnw-scripts/just-task to v2.3.31
+- Bump react-native-platform-override to v1.9.32
+
+## 0.0.0-canary.244
+
+Thu, 09 May 2024 05:18:43 GMT
+
+### Changes
+
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.18
+- Bump @rnw-scripts/just-task to v2.3.30
+- Bump react-native-platform-override to v1.9.31
+
+## 0.0.0-canary.243
+
+Sat, 27 Apr 2024 05:16:25 GMT
+
+### Changes
+
+- Fix PaperUIManager (port from windows) (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.242
+
+Fri, 26 Apr 2024 05:16:49 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.30
+
+## 0.0.0-canary.241
+
+Thu, 25 Apr 2024 20:12:41 GMT
+
+### Changes
+
+- Integrate 3/7 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.17
+- Bump @rnw-scripts/just-task to v2.3.29
+- Bump react-native-platform-override to v1.9.29
+
+## 0.0.0-canary.240
+
+Wed, 10 Apr 2024 05:18:18 GMT
+
+### Changes
+
+- integrate 2/29 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.27
+- Bump react-native-platform-override to v1.9.27
 
 ## 0.0.0-canary.239
 

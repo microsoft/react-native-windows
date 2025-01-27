@@ -1,8 +1,320 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Sat, 30 Mar 2024 05:18:04 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.54
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.90
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @react-native-windows/package-utils to v0.0.0-canary.87
+- Bump react-native-platform-override to v1.9.51
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 1.4.53
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.89
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @react-native-windows/package-utils to v0.0.0-canary.86
+- Bump react-native-platform-override to v1.9.50
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 1.4.52
+
+Sat, 19 Oct 2024 05:29:48 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.88
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @react-native-windows/package-utils to v0.0.0-canary.85
+- Bump react-native-platform-override to v1.9.49
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 1.4.51
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Patches
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+
+## 1.4.50
+
+Mon, 07 Oct 2024 19:54:25 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.87
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @react-native-windows/package-utils to v0.0.0-canary.84
+- Bump react-native-platform-override to v1.9.48
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
+
+## 1.4.48
+
+Thu, 26 Sep 2024 17:38:25 GMT
+
+### Patches
+
+- RN Integration 9/9 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.85
+- Bump @react-native-windows/fs to v0.0.0-canary.56
+- Bump @react-native-windows/package-utils to v0.0.0-canary.82
+- Bump react-native-platform-override to v1.9.46
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-unittest-config to v1.5.9
+- Bump @rnw-scripts/just-task to v2.3.44
+
+## 1.4.47
+
+Thu, 08 Aug 2024 05:16:49 GMT
+
+### Patches
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.84
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @react-native-windows/package-utils to v0.0.0-canary.81
+- Bump react-native-platform-override to v1.9.45
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
+
+## 1.4.46
+
+Wed, 24 Jul 2024 05:24:32 GMT
+
+### Patches
+
+- integrate 0.75.0-nightly-20240618-5df5ed1a8 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.83
+- Bump @react-native-windows/fs to v0.0.0-canary.54
+- Bump @react-native-windows/package-utils to v0.0.0-canary.80
+- Bump react-native-platform-override to v1.9.44
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/just-task to v2.3.42
+
+## 1.4.45
+
+Wed, 10 Jul 2024 05:15:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.82
+- Bump @react-native-windows/fs to v0.0.0-canary.53
+- Bump @react-native-windows/package-utils to v0.0.0-canary.79
+- Bump react-native-platform-override to v1.9.43
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/just-task to v2.3.41
+
+## 1.4.44
+
+Fri, 21 Jun 2024 05:17:50 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.9.42
+
+## 1.4.43
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.81
+- Bump @react-native-windows/fs to v0.0.0-canary.52
+- Bump @react-native-windows/package-utils to v0.0.0-canary.78
+- Bump react-native-platform-override to v1.9.41
+- Bump @rnw-scripts/eslint-config to v1.2.23
+- Bump @rnw-scripts/just-task to v2.3.40
+
+## 1.4.42
+
+Sat, 08 Jun 2024 05:17:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.80
+- Bump @react-native-windows/fs to v0.0.0-canary.51
+- Bump @react-native-windows/package-utils to v0.0.0-canary.77
+- Bump react-native-platform-override to v1.9.40
+- Bump @rnw-scripts/eslint-config to v1.2.22
+- Bump @rnw-scripts/just-task to v2.3.39
+
+## 1.4.41
+
+Wed, 05 Jun 2024 05:18:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.79
+- Bump @react-native-windows/fs to v0.0.0-canary.50
+- Bump @react-native-windows/package-utils to v0.0.0-canary.76
+- Bump react-native-platform-override to v1.9.39
+- Bump @rnw-scripts/just-task to v2.3.38
+
+## 1.4.40
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.78
+- Bump @react-native-windows/fs to v0.0.0-canary.49
+- Bump @react-native-windows/package-utils to v0.0.0-canary.75
+- Bump react-native-platform-override to v1.9.38
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/just-task to v2.3.37
+
+## 1.4.39
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.77
+- Bump @react-native-windows/fs to v0.0.0-canary.48
+- Bump @react-native-windows/package-utils to v0.0.0-canary.74
+- Bump react-native-platform-override to v1.9.37
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/just-task to v2.3.36
+
+## 1.4.38
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.76
+- Bump @react-native-windows/fs to v0.0.0-canary.47
+- Bump @react-native-windows/package-utils to v0.0.0-canary.73
+- Bump react-native-platform-override to v1.9.36
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+
+## 1.4.37
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.75
+- Bump @react-native-windows/fs to v0.0.0-canary.46
+- Bump @react-native-windows/package-utils to v0.0.0-canary.72
+- Bump react-native-platform-override to v1.9.35
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/just-task to v2.3.34
+
+## 1.4.36
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.74
+- Bump @react-native-windows/fs to v0.0.0-canary.45
+- Bump @react-native-windows/package-utils to v0.0.0-canary.71
+- Bump react-native-platform-override to v1.9.34
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/just-task to v2.3.33
+
+## 1.4.35
+
+Wed, 15 May 2024 05:14:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.73
+- Bump @react-native-windows/fs to v0.0.0-canary.44
+- Bump @react-native-windows/package-utils to v0.0.0-canary.70
+- Bump react-native-platform-override to v1.9.33
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/just-task to v2.3.32
+
+## 1.4.34
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.72
+- Bump @react-native-windows/fs to v0.0.0-canary.43
+- Bump @react-native-windows/package-utils to v0.0.0-canary.69
+- Bump react-native-platform-override to v1.9.32
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/just-task to v2.3.31
+
+## 1.4.33
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.71
+- Bump @react-native-windows/fs to v0.0.0-canary.42
+- Bump @react-native-windows/package-utils to v0.0.0-canary.68
+- Bump react-native-platform-override to v1.9.31
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
+
+## 1.4.32
+
+Wed, 08 May 2024 05:15:07 GMT
+
+### Patches
+
+- Fix upgradeDependencies when core has a ^ dependency (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.4.31
+
+Fri, 26 Apr 2024 05:16:49 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.9.30
+
+## 1.4.30
+
+Thu, 25 Apr 2024 20:12:44 GMT
+
+### Patches
+
+- Fix bad version bump (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.70
+- Bump @react-native-windows/fs to v0.0.0-canary.41
+- Bump @react-native-windows/package-utils to v0.0.0-canary.67
+- Bump react-native-platform-override to v1.9.29
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/just-task to v2.3.29
+
+## 1.4.28
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.69
+- Bump @react-native-windows/fs to v0.0.0-canary.40
+- Bump @react-native-windows/package-utils to v0.0.0-canary.66
+- Bump react-native-platform-override to v1.9.27
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/just-task to v2.3.27
 
 ## 1.4.27
 

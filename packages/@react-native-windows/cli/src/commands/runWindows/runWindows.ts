@@ -50,7 +50,7 @@ function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
     case 'buildLogDirectory':
       return value === undefined ? false : true; // Strip PII
     case 'msbuildprops':
-      return value === undefined ? 0 : value.split(',').length; // Convert to count
+      return typeof value === 'string' ? value.split(',').length : 0; // Convert to count
     case 'release':
     case 'arch':
     case 'singleproc':
@@ -109,7 +109,7 @@ let evaluateMSBuildPropsCallback:
   | undefined;
 
 /**
- * The function run when calling `react-native run-windows`.
+ * The function run when calling `npx @react-native-community/cli run-windows`.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
@@ -306,7 +306,7 @@ async function runWindowsInternal(
     runWindowsPhase = 'Build';
     if (!slnFile) {
       newError(
-        'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
+        'Visual Studio Solution file not found. Maybe run "npx @react-native-community/cli init-windows" first?',
       );
       throw new CodedError('NoSolution', 'Cannot find solution file');
     }
@@ -352,7 +352,7 @@ async function runWindowsInternal(
     runWindowsPhase = 'Deploy';
     if (!slnFile) {
       newError(
-        'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
+        'Visual Studio Solution file not found. Maybe run "npx @react-native-community/cli init-windows" first?',
       );
       throw new CodedError('NoSolution', 'Cannot find solution file');
     }
@@ -396,7 +396,7 @@ runWindows({
 export const runWindowsCommand: Command = {
   name: 'run-windows',
   description:
-    'Builds your app and starts it on a connected Windows desktop, emulator or device',
+    'Builds your RNW app and starts it on a connected Windows desktop, emulator or device',
   func: runWindows,
   options: runWindowsOptions,
 };

@@ -8,6 +8,7 @@
  * @flow strict-local
  */
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import type {Node} from 'react';
 
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -77,6 +78,9 @@ exports.examples = [
           color="white"
           testID="default_activity_indicator"
           accessibilityLabel="Wait for content to load!"
+          accessibilityPosInSet={1}
+          accessibilitySetSize={1}
+          accessibilityLiveRegion="polite"
           accessible
         />
       );
@@ -166,4 +170,4 @@ exports.examples = [
       return <ActivityIndicator style={styles.centering} size={75} />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

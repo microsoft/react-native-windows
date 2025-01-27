@@ -99,20 +99,21 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
   // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
   auto shadowNodeProps = std::make_shared<AbiViewProps>(
       context, props ? static_cast<AbiViewProps const &>(*props) : *ShadowNodeT::defaultSharedProps(), rawProps);
-  auto viewProps = winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps);
+  auto viewProps =
+      winrt::make<winrt::Microsoft::ReactNative::implementation::ViewProps>(shadowNodeProps, false /*holdRef*/);
   auto userProps =
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
-          ->CreateProps(viewProps);
+          ->CreateProps(viewProps, props ? static_cast<AbiViewProps const &>(*props).UserProps() : nullptr);
   shadowNodeProps->SetUserProps(userProps, viewProps);
 
-  rawProps.iterateOverValues(
-      [&](facebook::react::RawPropsPropNameHash hash, const char *propName, facebook::react::RawValue const &fn) {
-        shadowNodeProps.get()->setProp(context, hash, propName, fn);
-        userProps.SetProp(
-            hash,
-            winrt::to_hstring(propName),
-            winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(folly::dynamic(fn)));
-      });
+  const auto &dynamic = static_cast<folly::dynamic>(rawProps);
+  for (const auto &pair : dynamic.items()) {
+    const auto &propName = pair.first.getString();
+    auto hash = RAW_PROPS_KEY_HASH(propName);
+    shadowNodeProps.get()->setProp(context, hash, propName.c_str(), facebook::react::RawValue(pair.second));
+    userProps.SetProp(
+        hash, winrt::to_hstring(propName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(pair.second));
+  }
 
   return shadowNodeProps;
 };
@@ -156,7 +157,7 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createState(
 facebook::react::ShadowNodeFamily::Shared AbiViewComponentDescriptor::createFamily(
     facebook::react::ShadowNodeFamilyFragment const &fragment) const {
   auto eventEmitter = std::make_shared<const ConcreteEventEmitter>(
-      std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle), eventDispatcher_);
+      std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle, fragment.surfaceId), eventDispatcher_);
   return std::make_shared<facebook::react::ShadowNodeFamily>(
       fragment, std::move(eventEmitter), eventDispatcher_, *this);
 }

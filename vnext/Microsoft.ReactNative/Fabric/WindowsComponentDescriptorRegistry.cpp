@@ -6,7 +6,6 @@
 
 #include <Fabric/AbiComponentDescriptor.h>
 #include <Fabric/AbiViewComponentDescriptor.h>
-#include <Fabric/Composition/Modal/WindowsModalHostViewComponentDescriptor.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
@@ -37,7 +36,6 @@ WindowsComponentDescriptorRegistry::WindowsComponentDescriptorRegistry()
       facebook::react::ActivityIndicatorViewComponentDescriptor>());
   add(facebook::react::concreteComponentDescriptorProvider<facebook::react::DebuggingOverlayComponentDescriptor>());
   add(facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
-  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsModalHostViewComponentDescriptor>());
   add(facebook::react::concreteComponentDescriptorProvider<facebook::react::ParagraphComponentDescriptor>());
   add(facebook::react::concreteComponentDescriptorProvider<facebook::react::RawTextComponentDescriptor>());
   add(facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
@@ -74,9 +72,7 @@ void WindowsComponentDescriptorRegistry::Add(
        m_descriptorFlavors.back()->c_str(),
        std::static_pointer_cast<void const>(m_descriptorFlavors.back()),
        winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(builder)
-               ->IsViewComponent()
-           ? &facebook::react::concreteComponentDescriptorConstructor<AbiViewComponentDescriptor>
-           : &facebook::react::concreteComponentDescriptorConstructor<AbiComponentDescriptor>});
+           ->GetComponentDescriptorProvider()});
 }
 
 winrt::Microsoft::ReactNative::IReactViewComponentBuilder WindowsComponentDescriptorRegistry::GetDescriptor(

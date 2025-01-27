@@ -22,15 +22,16 @@
 #undef GetCurrentTime
 #endif
 
-#ifndef CORE_ABI
-// The IReactInstance.h brings dependency on XAML. Exclude it for the UI technology independent code.
 #include <IReactInstance.h>
-#endif
 
 #include <Shared/IReactRootView.h>
 
 #include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
+
+#ifdef USE_FABRIC
+#include <Fabric/Composition/UriImageManager.h>
+#endif
 
 namespace Mso::React {
 
@@ -182,6 +183,9 @@ struct ReactOptions {
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;
   std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> TurboModuleProvider;
+#ifdef USE_FABRIC
+  std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> UriImageManager;
+#endif
 
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;

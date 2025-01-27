@@ -13,16 +13,57 @@ import "CompositionComponentView.idl";
 
 namespace Microsoft.ReactNative.Composition
 {
+  [webhosthidden]
   [experimental]
-  DOC_STRING("Provides a factory method to create an instance of a ViewComponentView. See @IReactCompositionViewComponentBuilder.SetCreateViewComponentView")
-  delegate Microsoft.ReactNative.Composition.ViewComponentView CompositionViewComponentViewFactory(CreateCompositionComponentViewArgs args);
+  delegate void ViewComponentViewInitializer(ViewComponentView view);
+
+  [webhosthidden]
+  [experimental]
+  delegate void ComponentIslandComponentViewInitializer(ContentIslandComponentView view);
+
+  [webhosthidden]
+  [experimental]
+  delegate void PortalComponentViewInitializer(PortalComponentView view);
+
+  [experimental]
+  [webhosthidden]
+  delegate Microsoft.UI.Composition.Visual CreateVisualDelegate(Microsoft.ReactNative.ComponentView view);
+
+  [experimental]
+  delegate void UpdateLayoutMetricsDelegate(Microsoft.ReactNative.ComponentView source, Microsoft.ReactNative.LayoutMetrics newLayoutMetrics, Microsoft.ReactNative.LayoutMetrics oldLayoutMetrics);
+
+  [experimental]
+  [webhosthidden]
+  delegate Microsoft.UI.Composition.Visual VisualToMountChildrenIntoDelegate(Microsoft.ReactNative.ComponentView view);
+
+  namespace Experimental {
+    [experimental]
+    [webhosthidden]
+    DOC_STRING("This type will be removed in future versions")
+    delegate Microsoft.ReactNative.Composition.Experimental.IVisual IVisualToMountChildrenIntoDelegate(Microsoft.ReactNative.ComponentView view);
+
+    [experimental]
+    [webhosthidden]
+    DOC_STRING("This interface is for use when running react-native-windows using a custom compositor. "
+      "This interface will be removed in future versions")
+    interface IReactCompositionViewComponentInternalBuilder
+    {
+      void SetIVisualToMountChildrenIntoHandler(IVisualToMountChildrenIntoDelegate impl);
+    };
+  }
 
   [webhosthidden]
   [experimental]
   DOC_STRING(".")
   interface IReactCompositionViewComponentBuilder
   {
-    void SetCreateViewComponentView(CompositionViewComponentViewFactory impl);
+    void SetViewComponentViewInitializer(ViewComponentViewInitializer initializer);
+    void SetContentIslandComponentViewInitializer(ComponentIslandComponentViewInitializer initializer);
+    void SetPortalComponentViewInitializer(PortalComponentViewInitializer initializer);
+    void SetCreateVisualHandler(CreateVisualDelegate impl);
+    void SetViewFeatures(ComponentViewFeatures viewFeatures);
+    void SetUpdateLayoutMetricsHandler(UpdateLayoutMetricsDelegate impl);
+    void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl);
   };
 
 } // namespace Microsoft.ReactNative

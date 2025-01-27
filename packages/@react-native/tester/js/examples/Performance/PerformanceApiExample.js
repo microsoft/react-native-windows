@@ -9,14 +9,20 @@
  * @oncall react_native
  */
 
-'use strict';
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import type MemoryInfo from 'react-native/src/private/webapis/performance/MemoryInfo';
 import type ReactNativeStartupTiming from 'react-native/src/private/webapis/performance/ReactNativeStartupTiming';
 
-import RNTesterPage from '../../components/RNTesterPage';
+import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {useEffect} from 'react';
+import {Button, StyleSheet, View} from 'react-native';
 import Performance from 'react-native/src/private/webapis/performance/Performance';
+import {
+  type PerformanceEntry,
+  type PerformanceEventTiming,
+  PerformanceObserver,
+} from 'react-native/src/private/webapis/performance/PerformanceObserver';
 
 const {useState, useCallback} = React;
 const performance = new Performance();
@@ -30,22 +36,20 @@ function MemoryExample(): React.Node {
     setMemoryInfo(performance.memory);
   }, []);
   return (
-    <RNTesterPage noScroll={true} title="performance.memory">
-      <View style={styles.container}>
-        <Button onPress={onGetMemoryInfo} title="Click to update memory info" />
-        <View>
-          <Text>
-            {`jsHeapSizeLimit: ${String(memoryInfo?.jsHeapSizeLimit)} bytes`}
-          </Text>
-          <Text>
-            {`totalJSHeapSize: ${String(memoryInfo?.totalJSHeapSize)} bytes`}
-          </Text>
-          <Text>
-            {`usedJSHeapSize: ${String(memoryInfo?.usedJSHeapSize)} bytes`}
-          </Text>
-        </View>
+    <View style={styles.container}>
+      <Button onPress={onGetMemoryInfo} title="Click to update memory info" />
+      <View>
+        <RNTesterText>
+          {`jsHeapSizeLimit: ${String(memoryInfo?.jsHeapSizeLimit)} bytes`}
+        </RNTesterText>
+        <RNTesterText>
+          {`totalJSHeapSize: ${String(memoryInfo?.totalJSHeapSize)} bytes`}
+        </RNTesterText>
+        <RNTesterText>
+          {`usedJSHeapSize: ${String(memoryInfo?.usedJSHeapSize)} bytes`}
+        </RNTesterText>
       </View>
-    </RNTesterPage>
+    </View>
   );
 }
 
@@ -59,33 +63,169 @@ function StartupTimingExample(): React.Node {
     setStartUpTiming(performance.rnStartupTiming);
   }, []);
   return (
-    <RNTesterPage noScroll={true} title="performance.reactNativeStartupTiming">
-      <View style={styles.container}>
-        <Button
-          onPress={onGetStartupTiming}
-          title="Click to update React startup timing"
-        />
-        <View>
-          <Text>{`startTime: ${String(startUpTiming?.startTime)} ms`}</Text>
-          <Text>{`initializeRuntimeStart: ${String(
-            startUpTiming?.initializeRuntimeStart,
-          )} ms`}</Text>
-          <Text>
-            {`executeJavaScriptBundleEntryPointStart: ${String(
-              startUpTiming?.executeJavaScriptBundleEntryPointStart,
-            )} ms`}
-          </Text>
-          <Text>{`executeJavaScriptBundleEntryPointEnd: ${String(
-            startUpTiming?.executeJavaScriptBundleEntryPointEnd,
-          )} ms`}</Text>
-          <Text>{`initializeRuntimeEnd: ${String(
-            startUpTiming?.initializeRuntimeEnd,
-          )} ms`}</Text>
-          <Text>{`endTime: ${String(startUpTiming?.endTime)} ms`}</Text>
-        </View>
+    <View style={styles.container}>
+      <Button
+        onPress={onGetStartupTiming}
+        title="Click to update React startup timing"
+      />
+      <View>
+        <RNTesterText>{`startTime: ${String(startUpTiming?.startTime)} ms`}</RNTesterText>
+        <RNTesterText>{`initializeRuntimeStart: ${String(
+          startUpTiming?.initializeRuntimeStart,
+        )} ms`}</RNTesterText>
+        <RNTesterText>
+          {`executeJavaScriptBundleEntryPointStart: ${String(
+            startUpTiming?.executeJavaScriptBundleEntryPointStart,
+          )} ms`}
+        </RNTesterText>
+        <RNTesterText>{`executeJavaScriptBundleEntryPointEnd: ${String(
+          startUpTiming?.executeJavaScriptBundleEntryPointEnd,
+        )} ms`}</RNTesterText>
+        <RNTesterText>{`initializeRuntimeEnd: ${String(
+          startUpTiming?.initializeRuntimeEnd,
+        )} ms`}</RNTesterText>
+        <RNTesterText>{`endTime: ${String(startUpTiming?.endTime)} ms`}</RNTesterText>
       </View>
-    </RNTesterPage>
+    </View>
   );
+}
+
+function PerformanceObserverUserTimingExample(): React.Node {
+  const [entries, setEntries] = useState<$ReadOnlyArray<PerformanceEntry>>([]);
+
+  useEffect(() => {
+    const observer = new PerformanceObserver(list => {
+      setEntries(
+        list.getEntries().filter(entry => entry.name.startsWith('rntester-')),
+      );
+    });
+
+    observer.observe({entryTypes: ['mark', 'measure']});
+
+    return () => observer.disconnect();
+  }, []);
+
+  const onPress = useCallback(() => {
+    performance.mark('rntester-mark1');
+    performance.mark('rntester-mark2');
+    performance.measure(
+      'rntester-measure1',
+      'rntester-mark1',
+      'rntester-mark2',
+    );
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Button onPress={onPress} title="Click to log some marks and measures" />
+      <View>
+        {entries.map((entry, index) =>
+          entry.entryType === 'mark' ? (
+            <RNTesterText key={index}>
+              Mark {entry.name}: {entry.startTime.toFixed(2)}
+            </RNTesterText>
+          ) : (
+            <RNTesterText key={index}>
+              Measure {entry.name}: {entry.startTime.toFixed(2)} -{' '}
+              {(entry.startTime + entry.duration).toFixed(2)} (
+              {entry.duration.toFixed(2)}ms)
+            </RNTesterText>
+          ),
+        )}
+      </View>
+    </View>
+  );
+}
+
+function PerformanceObserverEventTimingExample(): React.Node {
+  const [count, setCount] = useState(0);
+
+  const [entries, setEntries] = useState<
+    $ReadOnlyArray<PerformanceEventTiming>,
+  >([]);
+
+  useEffect(() => {
+    const observer = new PerformanceObserver(list => {
+      const newEntries: $ReadOnlyArray<PerformanceEventTiming> =
+        // $FlowExpectedError[incompatible-type] This is guaranteed because we're only observing `event` entry types.
+        list.getEntries();
+      setEntries(newEntries);
+    });
+
+    observer.observe({type: 'event'});
+
+    return () => observer.disconnect();
+  }, []);
+
+  const onPress = useCallback(() => {
+    busyWait(500);
+    // Force a state update to show how/if we're reporting paint times as well.
+    setCount(currentCount => currentCount + 1);
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Button
+        onPress={onPress}
+        title={`Click to force a slow event (clicked ${count} times)`}
+      />
+      <View>
+        {entries.map((entry, index) => (
+          <RNTesterText key={index}>
+            Event: {entry.name}
+            {'\n'}
+            Start: {entry.startTime.toFixed(2)}
+            {'\n'}
+            End: {(entry.startTime + entry.duration).toFixed(2)}
+            {'\n'}
+            Duration: {entry.duration.toFixed(2)}ms{'\n'}
+            Processing start: {entry.processingStart.toFixed(2)} (delay:{' '}
+            {(entry.processingStart - entry.startTime).toFixed(2)}ms){'\n'}
+            Processing end: {entry.processingEnd.toFixed(2)} (duration:{' '}
+            {(entry.processingEnd - entry.processingStart).toFixed(2)}ms){'\n'}
+          </RNTesterText>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function PerformanceObserverLongtaskExample(): React.Node {
+  const [entries, setEntries] = useState<$ReadOnlyArray<PerformanceEntry>>([]);
+
+  useEffect(() => {
+    const observer = new PerformanceObserver(list => {
+      setEntries(list.getEntries());
+    });
+
+    observer.observe({entryTypes: ['longtask']});
+
+    return () => observer.disconnect();
+  }, []);
+
+  const onPress = useCallback(() => {
+    // Wait 1s to force a long task
+    busyWait(1000);
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Button onPress={onPress} title="Click to force a long task" />
+      <View>
+        {entries.map((entry, index) => (
+          <RNTesterText key={index}>
+            Long task {entry.name}: {entry.startTime} -{' '}
+            {entry.startTime + entry.duration} ({entry.duration}ms)
+          </RNTesterText>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function busyWait(ms: number): void {
+  const end = performance.now() + ms;
+  while (performance.now() < end) {}
 }
 
 const styles = StyleSheet.create({
@@ -94,20 +234,40 @@ const styles = StyleSheet.create({
   },
 });
 
-exports.title = 'Performance API Examples';
-exports.category = 'Basic';
-exports.description = 'Shows the performance API provided in React Native';
-exports.examples = [
+export const title = 'Performance API Examples';
+export const category = 'Basic';
+export const description = 'Shows the performance API provided in React Native';
+export const examples: Array<RNTesterModuleExample> = ([
   {
     title: 'performance.memory',
-    render: function (): React.Element<typeof MemoryExample> {
+    render: (): React.Node => {
       return <MemoryExample />;
     },
   },
   {
     title: 'performance.reactNativeStartupTiming',
-    render: function (): React.Element<typeof StartupTimingExample> {
+    render: (): React.Node => {
       return <StartupTimingExample />;
     },
   },
-];
+  {
+    title: 'PerformanceObserver (marks and measures)',
+    render: (): React.Node => {
+      return <PerformanceObserverUserTimingExample />;
+    },
+  },
+  {
+    title: 'PerformanceObserver (events)',
+    render: (): React.Node => {
+      return <PerformanceObserverEventTimingExample />;
+    },
+  },
+  PerformanceObserver.supportedEntryTypes.includes('longtask')
+    ? {
+        title: 'PerformanceObserver (long tasks)',
+        render: (): React.Node => {
+          return <PerformanceObserverLongtaskExample />;
+        },
+      }
+    : null,
+]: Array<?RNTesterModuleExample>).filter(Boolean);

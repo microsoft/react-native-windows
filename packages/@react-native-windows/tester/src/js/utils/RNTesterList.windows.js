@@ -7,7 +7,7 @@
 
 'use strict';
 
-import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
+import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
@@ -63,11 +63,19 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
-  // {
-  //   key: 'ModalExample',
-  //   category: 'UI',
-  //   module: require('../examples/Modal/ModalExample'),
-  // },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
+  {
+    key: 'Drawing Island',
+    module: require('../examples-win/NativeComponents/DrawingIsland'),
+  },
+  {
+    key: 'Moving Light',
+    module: require('../examples-win/NativeComponents/MovingLight'),
+  },
   {
     key: 'Native Component',
     module: require('../examples-win/NativeComponents/NativeComponent'),
@@ -169,6 +177,11 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/XAML/XAMLExample'),
   },
   {
+    key: 'FabricXaml',
+    category: 'UI',
+    module: require('../examples-win/XAML/FabricXamlExample'),
+  },
+  {
     key: 'LegacyControlStyleTest',
     module: require('../examples-win/LegacyTests/ControlStyleTestPage'),
   },
@@ -197,6 +210,12 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
+  /*
+  {
+    key: 'OSSLibraryExample',
+    module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
+  },
+  */
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -264,6 +283,12 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'Dimensions',
     category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
+  },
+  {
+    key: 'DisplayContentsExample',
+    category: 'UI',
+    module: require('../examples/DisplayContents/DisplayContentsExample')
+      .default,
   },
   // Only show the link for the example if the API is available.
   typeof IntersectionObserver === 'function'
@@ -341,6 +366,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PanResponder/PanResponderExample'),
   },
   {
+    key: 'PixelRatio',
+    category: 'UI',
+    module: require('../examples/PixelRatio/PixelRatioExample'),
+  },
+  /*
+  {
+    key: 'PermissionsExampleAndroid',
+    category: 'Android',
+    module: require('../examples/PermissionsAndroid/PermissionsExample'),
+  },
+  */
+  {
     key: 'PlatformColorExample',
     category: 'UI',
     module: require('../examples/PlatformColor/PlatformColorExample'),
@@ -370,6 +407,28 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'UI',
     module: require('../examples/Transform/TransformExample'),
   },
+  {
+    key: 'FilterExample',
+    category: 'UI',
+    module: require('../examples/Filter/FilterExample'),
+  },
+  /*
+  {
+    key: 'LinearGradient',
+    category: 'UI',
+    module: require('../examples/LinearGradient/LinearGradientExample'),
+  },
+  {
+    key: 'MixBlendModeExample',
+    category: 'UI',
+    module: require('../examples/MixBlendMode/MixBlendModeExample'),
+  },
+  {
+    key: 'VibrationExample',
+    category: 'Basic',
+    module: require('../examples/Vibration/VibrationExample'),
+  },
+  */
   {
     key: 'WebSocketExample',
     category: 'Basic',
@@ -410,9 +469,16 @@ if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   });
 }
 
-const Modules: any = {};
+const Playgrounds: Array<RNTesterModuleInfo> = [
+  {
+    key: 'PlaygroundExample',
+    module: require('../examples/Playground/PlaygroundExample'),
+  },
+];
 
-APIs.concat(Components).forEach(Example => {
+const Modules: {[key: string]: RNTesterModule} = {};
+
+[...APIs, ...Components, ...Playgrounds].forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 

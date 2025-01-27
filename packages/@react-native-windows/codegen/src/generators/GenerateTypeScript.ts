@@ -14,6 +14,7 @@ import type {
   NativeModuleParamTypeAnnotation,
   NativeModuleReturnTypeAnnotation,
   NativeModuleSchema,
+  UnsafeAnyTypeAnnotation,
   Nullable,
   SchemaType,
 } from '@react-native/codegen/lib/CodegenSchema';
@@ -61,11 +62,13 @@ function optionalSign<T>(obj: NamedShape<T>): string {
 }
 
 function translateType(
-  type: Nullable<
-    | NativeModuleBaseTypeAnnotation
-    | NativeModuleParamTypeAnnotation
-    | NativeModuleReturnTypeAnnotation
-  >,
+  type:
+    | Nullable<
+        | NativeModuleBaseTypeAnnotation
+        | NativeModuleParamTypeAnnotation
+        | NativeModuleReturnTypeAnnotation
+      >
+    | UnsafeAnyTypeAnnotation,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
@@ -80,7 +83,7 @@ function translateType(
     case 'BooleanTypeAnnotation':
       return 'boolean';
     case 'ArrayTypeAnnotation':
-      if (type.elementType) {
+      if (type.elementType.type !== 'AnyTypeAnnotation') {
         return `${translateType(type.elementType)}[]`;
       } else {
         return `Array`;
@@ -147,7 +150,7 @@ ${type.properties
 function tryGetConstantType(
   nativeModule: NativeModuleSchema,
 ): NativeModuleObjectTypeAnnotation | undefined {
-  const candidates = nativeModule.spec.properties.filter(
+  const candidates = nativeModule.spec.methods.filter(
     prop => prop.name === 'getConstants',
   );
   if (candidates.length === 0) {
@@ -224,7 +227,7 @@ export function generateTypeScript(
           ? ''
           : `  getConstants(): ${translateType(constantType)}`;
 
-      const methods = nativeModule.spec.properties.filter(
+      const methods = nativeModule.spec.methods.filter(
         prop => prop.name !== 'getConstants',
       );
       const membersCode = methods.map(translateMethod).join('');

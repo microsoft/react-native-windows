@@ -283,10 +283,15 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-const Button: React.AbstractComponent<
-  ButtonProps,
-  React.ElementRef<typeof TouchableNativeFeedback | typeof TouchableOpacity>,
-> = React.forwardRef((props: ButtonProps, ref) => {
+const Touchable: typeof TouchableNativeFeedback | typeof TouchableOpacity =
+  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+
+type ButtonRef = React.ElementRef<typeof Touchable>;
+
+const Button: component(
+  ref: React.RefSetter<ButtonRef>,
+  ...props: ButtonProps
+) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
   // Win32
   const {
     accessibilityLabel,
@@ -356,6 +361,7 @@ const Button: React.AbstractComponent<
   );
   const formattedTitle =
     Platform.OS === 'android' ? title.toUpperCase() : title;
+
   const Touchable =
     Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
 
@@ -386,6 +392,9 @@ const Button: React.AbstractComponent<
       disabled={disabled}
       onPress={onPress}
       touchSoundDisabled={touchSoundDisabled}
+      // $FlowFixMe[incompatible-exact]
+      // $FlowFixMe[prop-missing]
+      // $FlowFixMe[incompatible-type-arg]
       ref={ref}>
       <View style={buttonStyles}>
         <Text style={textStyles} disabled={disabled}>

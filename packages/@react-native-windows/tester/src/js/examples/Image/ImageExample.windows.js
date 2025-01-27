@@ -10,64 +10,61 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+import type {ImageProps} from 'react-native/Libraries/Image/ImageProps';
 import type {LayoutEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
-const ImageCapInsetsExample = require('./ImageCapInsetsExample');
-const React = require('react');
-const {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-} = require('react-native');
+import RNTesterButton from '../../components/RNTesterButton';
+import RNTesterText from '../../components/RNTesterText';
+import ImageCapInsetsExample from './ImageCapInsetsExample';
+import React from 'react';
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import * as ReactNativeFeatureFlags from 'react-native/src/private/featureflags/ReactNativeFeatureFlags';
+
+const IMAGE1 =
+  'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png';
+const IMAGE2 =
+  'https://www.facebook.com/ar_effect/external_textures/648609739826677.png';
 
 const base64Icon =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
-const IMAGE_PREFETCH_URL =
-  'https://www.facebook.com/favicon.ico?r=1&t=' + Date.now();
+const dataImageSvg =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
+
+const IMAGE_PREFETCH_URL = `${IMAGE1}?r=1&t=${Date.now()}`;
 const prefetchTask = Image.prefetch(IMAGE_PREFETCH_URL);
 
 type ImageSource = $ReadOnly<{|
   uri: string,
 |}>;
 
-type BlobImageState = {|
-  objectURL: ?string,
-|};
-
 type BlobImageProps = $ReadOnly<{|
   url: string,
 |}>;
 
-class BlobImage extends React.Component<BlobImageProps, BlobImageState> {
-  state: BlobImageState = {
-    objectURL: null,
-  };
+const BlobImage = ({url}: BlobImageProps): React.Node => {
+  const [objectURL, setObjectURL] = React.useState<?string>(null);
 
-  UNSAFE_componentWillMount() {
+  React.useEffect(() => {
     // $FlowFixMe[unused-promise]
     (async () => {
-      const result = await fetch(this.props.url);
+      const result = await fetch(url);
       const blob = await result.blob();
-      const objectURL = URL.createObjectURL(blob);
-      this.setState({objectURL});
+      setObjectURL(URL.createObjectURL(blob));
     })();
-  }
+  }, [url]);
 
-  render(): React.Node {
-    return this.state.objectURL !== null ? (
-      <Image
-        source={{uri: this.state.objectURL}}
-        style={styles.base}
-        testID="image-blob"
-        accessible
-      />
-    ) : (
-      <Text>Object URL not created yet</Text>
-    );
-  }
-}
+  return objectURL !== null ? (
+    <Image
+      source={{uri: objectURL}}
+      style={styles.base}
+      testID="image-blob"
+      accessible
+    />
+  ) : (
+    <Text>Object URL not created yet</Text>
+  );
+};
 
 type BlobImageExampleState = {||};
 
@@ -90,145 +87,128 @@ class BlobImageExample extends React.Component<
   }
 }
 
-type NetworkImageCallbackExampleState = {|
-  events: Array<string>,
-  startLoadPrefetched: boolean,
-  mountTime: number,
-  imageHash: number,
-|};
-
 type NetworkImageCallbackExampleProps = $ReadOnly<{|
   source: ImageSource,
   prefetchedSource: ImageSource,
 |}>;
 
-class NetworkImageCallbackExample extends React.Component<
-  NetworkImageCallbackExampleProps,
-  NetworkImageCallbackExampleState,
-> {
-  state: NetworkImageCallbackExampleState = {
-    events: [],
-    startLoadPrefetched: false,
-    mountTime: Date.now(),
-    imageHash: Date.now(),
+const NetworkImageCallbackExample = ({
+  source,
+  prefetchedSource,
+}: NetworkImageCallbackExampleProps): React.Node => {
+  const [events, setEvents] = React.useState<$ReadOnlyArray<string>>([]);
+  const [startLoadPrefetched, setStartLoadPrefetched] = React.useState(false);
+  const [mountTime, setMountTime] = React.useState(Date.now());
+
+  React.useEffect(() => {
+    setMountTime(Date.now());
+  }, []);
+
+  const _loadEventFired = (event: string) => {
+    setEvents(state => [...state, event]);
   };
 
-  UNSAFE_componentWillMount() {
-    this.setState({mountTime: Date.now()});
-  }
-
-  _loadEventFired = (event: string) => {
-    this.setState(state => ({
-      events: [...state.events, event],
-    }));
-  };
-
-  updateLoadingImageHash = () => {
-    this.setState({imageHash: Date.now()});
-  };
-
-  render(): React.Node {
-    const {mountTime} = this.state;
-    return (
-      <View>
+  return (
+    <View>
+      <Image
+        source={source}
+        style={[styles.base, styles.visibleOverflow]}
+        onError={event => {
+          _loadEventFired(
+            `✘ onError "${event.nativeEvent.error}" (+${Date.now() - mountTime}ms)`,
+          );
+        }}
+        onLoadStart={() =>
+          _loadEventFired(`✔ onLoadStart (+${Date.now() - mountTime}ms)`)
+        }
+        onProgress={event => {
+          const {loaded, total} = event.nativeEvent;
+          const percent = Math.round((loaded / total) * 100);
+          _loadEventFired(
+            `✔ onProgress ${percent}% (+${Date.now() - mountTime}ms)`,
+          );
+        }}
+        onLoad={event => {
+          if (event.nativeEvent.source) {
+            const url = event.nativeEvent.source.uri;
+            _loadEventFired(
+              `✔ onLoad (+${Date.now() - mountTime}ms) for URL ${url}`,
+            );
+          } else {
+            _loadEventFired(`✔ onLoad (+${Date.now() - mountTime}ms)`);
+          }
+        }}
+        onLoadEnd={() => {
+          _loadEventFired(`✔ onLoadEnd (+${Date.now() - mountTime}ms)`);
+          setStartLoadPrefetched(true);
+          prefetchTask.then(
+            () => {
+              _loadEventFired(`✔ prefetch OK (+${Date.now() - mountTime}ms)`);
+              // $FlowFixMe[unused-promise]
+              Image.queryCache([IMAGE_PREFETCH_URL]).then(map => {
+                const result = map[IMAGE_PREFETCH_URL];
+                if (result) {
+                  _loadEventFired(
+                    `✔ queryCache "${result}" (+${Date.now() - mountTime}ms)`,
+                  );
+                } else {
+                  _loadEventFired(
+                    `✘ queryCache (+${Date.now() - mountTime}ms)`,
+                  );
+                }
+              });
+            },
+            error => {
+              _loadEventFired(
+                `✘ prefetch failed (+${Date.now() - mountTime}ms)`,
+              );
+            },
+          );
+        }}
+      />
+      {startLoadPrefetched && (
         <Image
-          source={this.props.source}
+          source={prefetchedSource}
           style={[styles.base, styles.visibleOverflow]}
+          onError={event => {
+            this._loadEventFired(
+              `✘ onError "${event.nativeEvent.error}" (+${Date.now() - mountTime}ms)`,
+            );
+          }}
           testID="image-network-callback"
           accessible
           onLoadStart={() =>
-            this._loadEventFired(`✔ onLoadStart (+${Date.now() - mountTime}ms)`)
+            _loadEventFired(
+              `✔ (prefetched) onLoadStart (+${Date.now() - mountTime}ms)`,
+            )
           }
-          onProgress={event => {
-            const {loaded, total} = event.nativeEvent;
-            const percent = Math.round((loaded / total) * 100);
-            this._loadEventFired(
-              `✔ onProgress ${percent}% (+${Date.now() - mountTime}ms)`,
-            );
-          }}
           onLoad={event => {
             if (event.nativeEvent.source) {
               const url = event.nativeEvent.source.uri;
-              this._loadEventFired(
-                `✔ onLoad (+${Date.now() - mountTime}ms) for URL ${url}`,
+              _loadEventFired(
+                `✔ (prefetched) onLoad (+${
+                  Date.now() - mountTime
+                }ms) for URL ${url}`,
               );
             } else {
-              this._loadEventFired(`✔ onLoad (+${Date.now() - mountTime}ms)`);
-            }
-          }}
-          onLoadEnd={() => {
-            this._loadEventFired(`✔ onLoadEnd (+${Date.now() - mountTime}ms)`);
-            this.setState({startLoadPrefetched: true}, () => {
-              prefetchTask.then(
-                () => {
-                  this._loadEventFired(
-                    `✔ Prefetch OK (+${Date.now() - mountTime}ms)`,
-                  );
-                  // $FlowFixMe[unused-promise]
-                  Image.queryCache([IMAGE_PREFETCH_URL]).then(map => {
-                    const result = map[IMAGE_PREFETCH_URL];
-                    if (result) {
-                      this._loadEventFired(
-                        `✔ queryCache "${result}" (+${
-                          Date.now() - mountTime
-                        }ms)`,
-                      );
-                    } else {
-                      this._loadEventFired(
-                        `✘ queryCache (+${Date.now() - mountTime}ms)`,
-                      );
-                    }
-                  });
-                },
-                error => {
-                  this._loadEventFired(
-                    `✘ Prefetch failed (+${Date.now() - mountTime}ms)`,
-                  );
-                },
+              _loadEventFired(
+                `✔ (prefetched) onLoad (+${Date.now() - mountTime}ms)`,
               );
-            });
+            }
           }}
+          onLoadEnd={() =>
+            _loadEventFired(
+              `✔ (prefetched) onLoadEnd (+${Date.now() - mountTime}ms)`,
+            )
+          }
         />
-        {this.state.startLoadPrefetched ? (
-          <Image
-            source={this.props.prefetchedSource}
-            style={[styles.base, styles.visibleOverflow]}
-            testID="image-network-callback-2"
-            accessible
-            onLoadStart={() =>
-              this._loadEventFired(
-                `✔ (prefetched) onLoadStart (+${Date.now() - mountTime}ms)`,
-              )
-            }
-            onLoad={event => {
-              // Currently this image source feature is only available on iOS.
-              if (event.nativeEvent.source) {
-                const url = event.nativeEvent.source.uri;
-                this._loadEventFired(
-                  `✔ (prefetched) onLoad (+${
-                    Date.now() - mountTime
-                  }ms) for URL ${url}`,
-                );
-              } else {
-                this._loadEventFired(
-                  `✔ (prefetched) onLoad (+${Date.now() - mountTime}ms)`,
-                );
-              }
-            }}
-            onLoadEnd={() =>
-              this._loadEventFired(
-                `✔ (prefetched) onLoadEnd (+${Date.now() - mountTime}ms)`,
-              )
-            }
-          />
-        ) : null}
-        <Text style={styles.networkImageText}>
-          {this.state.events.join('\n')}
-        </Text>
-      </View>
-    );
-  }
-}
+      )}
+      <RNTesterText style={styles.networkImageText} variant="label">
+        {events.join('\n')}
+      </RNTesterText>
+    </View>
+  );
+};
 
 type NetworkImageExampleState = {|
   error: ?string,
@@ -236,12 +216,8 @@ type NetworkImageExampleState = {|
   progress: $ReadOnlyArray<number>,
 |};
 
-type NetworkImageExampleProps = $ReadOnly<{|
-  source: ImageSource,
-|}>;
-
 class NetworkImageExample extends React.Component<
-  NetworkImageExampleProps,
+  ImageProps,
   NetworkImageExampleState,
 > {
   state: NetworkImageExampleState = {
@@ -252,11 +228,11 @@ class NetworkImageExample extends React.Component<
 
   render(): React.Node {
     return this.state.error != null ? (
-      <Text>{this.state.error}</Text>
+      <RNTesterText variant="label">{this.state.error}</RNTesterText>
     ) : (
       <>
         <Image
-          source={this.props.source}
+          {...this.props}
           style={[styles.base, styles.visibleOverflow]}
           testID="image-network"
           accessible
@@ -275,9 +251,10 @@ class NetworkImageExample extends React.Component<
           }}
           onLoad={() => this.setState({loading: false, error: null})}
         />
-        <Text>
+        <RNTesterText variant="label">
+          Progress:{' '}
           {this.state.progress.map(progress => `${progress}%`).join('\n')}
-        </Text>
+        </RNTesterText>
       </>
     );
   }
@@ -316,10 +293,10 @@ class ImageSizeExample extends React.Component<
           testID="image-size"
           accessible
         />
-        <Text>
+        <RNTesterText>
           Actual dimensions:{'\n'}
           Width: {this.state.width}, Height: {this.state.height}
-        </Text>
+        </RNTesterText>
       </View>
     );
   }
@@ -365,27 +342,31 @@ class MultipleSourcesExample extends React.Component<
     return (
       <View>
         <View style={styles.spaceBetweenView}>
-          <Text style={styles.touchableText} onPress={this.decreaseImageSize}>
+          <RNTesterText
+            style={styles.touchableText}
+            onPress={this.decreaseImageSize}>
             Decrease image size
-          </Text>
-          <Text style={styles.touchableText} onPress={this.increaseImageSize}>
+          </RNTesterText>
+          <RNTesterText
+            style={styles.touchableText}
+            onPress={this.increaseImageSize}>
             Increase image size
-          </Text>
+          </RNTesterText>
         </View>
-        <Text>
+        <RNTesterText>
           Container image size: {this.state.width}x{this.state.height}{' '}
-        </Text>
+        </RNTesterText>
         <View style={{height: this.state.height, width: this.state.width}}>
           <Image
             style={styles.flex}
             source={[
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: IMAGE1,
                 width: 38,
                 height: 38,
               },
               {
-                uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                uri: IMAGE2,
                 width: 100,
                 height: 100,
               },
@@ -425,7 +406,53 @@ class LoadingIndicatorSourceExample extends React.Component<
 
   render(): React.Node {
     const loadingImage = {
-      uri: `https://www.facebook.com/ads/pics/successstories.png?hash=${this.state.imageHash}`,
+      uri: `${IMAGE2}?hash=${this.state.imageHash}`,
+    };
+
+    return (
+      <View>
+        <View style={styles.spaceBetweenView}>
+          <RNTesterText style={styles.touchableText} onPress={this.reloadImage}>
+            Refresh Image
+          </RNTesterText>
+        </View>
+        <Image
+          loadingIndicatorSource={this.loaderGif}
+          source={loadingImage}
+          style={styles.base}
+          testID="image-loading-indicator"
+          accessible
+        />
+        <RNTesterText>Image Hash: {this.state.imageHash}</RNTesterText>
+        <RNTesterText>Image URI: {loadingImage.uri}</RNTesterText>
+      </View>
+    );
+  }
+}
+
+type FadeDurationExampleState = {|
+  imageHash: number,
+|};
+
+type FadeDurationExampleProps = $ReadOnly<{||}>;
+
+class FadeDurationExample extends React.Component<
+  FadeDurationExampleProps,
+  FadeDurationExampleState,
+> {
+  state: FadeDurationExampleState = {
+    imageHash: Date.now(),
+  };
+
+  reloadImage = () => {
+    this.setState({
+      imageHash: Date.now(),
+    });
+  };
+
+  render(): React.Node {
+    const loadingImage = {
+      uri: `${IMAGE2}?hash=${this.state.imageHash}`,
     };
 
     return (
@@ -436,14 +463,15 @@ class LoadingIndicatorSourceExample extends React.Component<
           </Text>
         </View>
         <Image
-          loadingIndicatorSource={this.loaderGif}
+          fadeDuration={1500}
           source={loadingImage}
           style={styles.base}
-          testID="image-loading-indicator"
+          testID="image-fade-duration"
           accessible
         />
-        <Text>Image Hash: {this.state.imageHash}</Text>
-        <Text>Image URI: {loadingImage.uri}</Text>
+        <RNTesterText>
+          This image will fade in over the time of 1.5s.
+        </RNTesterText>
       </View>
     );
   }
@@ -499,7 +527,9 @@ class OnLayoutExample extends React.Component<
   render(): React.Node {
     return (
       <View>
-        <Text>Adjust the image size to trigger the OnLayout handler.</Text>
+        <RNTesterText>
+          Adjust the image size to trigger the OnLayout handler.
+        </RNTesterText>
         <View style={styles.spaceBetweenView}>
           <Text style={styles.touchableText} onPress={this.decreaseImageSize}>
             Decrease image size
@@ -508,26 +538,26 @@ class OnLayoutExample extends React.Component<
             Increase image size
           </Text>
         </View>
-        <Text>
+        <RNTesterText>
           Container image size: {this.state.width}x{this.state.height}{' '}
-        </Text>
+        </RNTesterText>
         <View style={{height: this.state.height, width: this.state.width}}>
           <Image
             onLayout={this.onLayoutHandler}
             style={styles.flex}
             source={[
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: IMAGE1,
                 width: 38,
                 height: 38,
               },
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: IMAGE1,
                 width: 76,
                 height: 76,
               },
               {
-                uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                uri: IMAGE2,
                 width: 400,
                 height: 400,
               },
@@ -536,7 +566,9 @@ class OnLayoutExample extends React.Component<
             accessible
           />
         </View>
-        <Text>Layout Handler Message: {this.state.layoutHandlerMessage}</Text>
+        <RNTesterText>
+          Layout Handler Message: {this.state.layoutHandlerMessage}
+        </RNTesterText>
       </View>
     );
   }
@@ -565,9 +597,9 @@ class OnPartialLoadExample extends React.Component<
   render(): React.Node {
     return (
       <View>
-        <Text>
+        <RNTesterText>
           Partial Load Function Executed: {JSON.stringify(this.state.hasLoaded)}
-        </Text>
+        </RNTesterText>
         <Image
           source={{
             uri: `https://images.pexels.com/photos/671557/pexels-photo-671557.jpeg?&buster=${Math.random()}`,
@@ -582,11 +614,102 @@ class OnPartialLoadExample extends React.Component<
   }
 }
 
+const VectorDrawableExample = () => {
+  const isEnabled = ReactNativeFeatureFlags.loadVectorDrawablesOnImages();
+  return (
+    <View style={styles.flex} testID="vector-drawable-example">
+      <RNTesterText>Enabled: {isEnabled ? 'true' : 'false'}</RNTesterText>
+      <View style={styles.horizontal}>
+        <Image
+          source={require('../../assets/ic_android.xml')}
+          style={styles.vectorDrawable}
+        />
+        <Image
+          source={require('../../assets/ic_android.xml')}
+          style={styles.vectorDrawable}
+          tintColor="red"
+        />
+      </View>
+    </View>
+  );
+};
+
+function CacheControlAndroidExample(): React.Node {
+  const [reload, setReload] = React.useState(0);
+
+  const onReload = () => {
+    setReload(prevReload => prevReload + 1);
+  };
+
+  return (
+    <>
+      <View style={styles.horizontal}>
+        <View>
+          <RNTesterText style={styles.resizeModeText}>Default</RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=default',
+              cache: 'default',
+            }}
+            style={styles.base}
+            key={reload}
+          />
+        </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText style={styles.resizeModeText}>Reload</RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=reload',
+              cache: 'reload',
+            }}
+            style={styles.base}
+            key={reload}
+          />
+        </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText style={styles.resizeModeText}>Force-cache</RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=force-cache',
+              cache: 'force-cache',
+            }}
+            style={styles.base}
+            key={reload}
+            onError={e => console.log(e.nativeEvent.error)}
+          />
+        </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText style={styles.resizeModeText}>
+            Only-if-cached
+          </RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=only-if-cached',
+              cache: 'only-if-cached',
+            }}
+            style={styles.base}
+            key={reload}
+            onError={e => console.log(e.nativeEvent.error)}
+          />
+        </View>
+      </View>
+
+      <View style={styles.horizontal}>
+        <View style={styles.cachePolicyAndroidButtonContainer}>
+          <RNTesterButton onPress={onReload}>
+            Re-render image components
+          </RNTesterButton>
+        </View>
+      </View>
+    </>
+  );
+}
+
 const fullImage: ImageSource = {
-  uri: 'https://www.facebook.com/ads/pics/successstories.png',
+  uri: IMAGE2,
 };
 const smallImage = {
-  uri: 'https://www.facebook.com/favicon.ico',
+  uri: IMAGE1,
 };
 
 const styles = StyleSheet.create({
@@ -721,6 +844,9 @@ const styles = StyleSheet.create({
   objectFitScaleDown: {
     objectFit: 'scale-down',
   },
+  objectFitNone: {
+    objectFit: 'none',
+  },
   imageInBundle: {
     borderColor: 'yellow',
     borderWidth: 4,
@@ -783,6 +909,43 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     backgroundColor: 'yellow',
   },
+  boxShadow: {
+    margin: 10,
+  },
+  boxShadowWithBackground: {
+    backgroundColor: 'lightblue',
+    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.5)',
+  },
+  boxShadowMultiOutsetInset: {
+    boxShadow:
+      '-5px -5px 10px 2px rgba(0, 128, 0, 0.5), 5px 5px 10px 2px rgba(128, 0, 0, 0.5), inset orange 0px 0px 20px 0px, black 0px 0px 5px 1px',
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 20,
+  },
+  boxShadowAsymetricallyRounded: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 20,
+    marginRight: 80,
+    marginTop: 40,
+    boxShadow: '80px 0px 10px 0px hotpink',
+    transform: 'rotate(-15deg)',
+  },
+  vectorDrawable: {
+    height: 64,
+    width: 64,
+  },
+  resizedImage: {
+    height: 100,
+    width: '500%',
+  },
+  cachePolicyAndroidButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 10,
+  },
 });
 
 exports.displayName = (undefined: ?string);
@@ -833,9 +996,7 @@ exports.examples = [
         <Image
           width={64}
           height={64}
-          srcSet={
-            'https://www.facebook.com/ads/pics/successstories.png 4x, https://www.facebook.com/favicon.ico 2x'
-          }
+          srcSet={`${IMAGE2} 4x, ${IMAGE1} 2x`}
           style={styles.base}
           testID="image-srcset"
           accessible
@@ -848,14 +1009,7 @@ exports.examples = [
     description: ('If the `source` prop `uri` property is an object URL, ' +
       'then it will be resolved using `BlobProvider` (Android) or `RCTBlobManager` (iOS).': string),
     render: function (): React.Node {
-      return (
-        <BlobImageExample
-          urls={[
-            'https://www.facebook.com/favicon.ico',
-            'https://www.facebook.com/ads/pics/successstories.png',
-          ]}
-        />
-      );
+      return <BlobImageExample urls={[IMAGE1, IMAGE2]} />;
     },
   },
   {
@@ -892,7 +1046,7 @@ exports.examples = [
       return (
         <NetworkImageCallbackExample
           source={{
-            uri: 'https://www.facebook.com/favicon.ico?r=1&t=' + Date.now(),
+            uri: `${IMAGE1}?r=1&t=${Date.now()}`,
           }}
           prefetchedSource={{uri: IMAGE_PREFETCH_URL}}
         />
@@ -905,8 +1059,20 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: 'https://www.facebook.com/favicon_TYPO.ico',
+            uri: IMAGE1 + '_TYPO',
           }}
+        />
+      );
+    },
+  },
+  {
+    title: 'Error Handler for Large Images',
+    render: function (): React.Node {
+      return (
+        <NetworkImageExample
+          resizeMethod="none"
+          // 6000x5340 ~ 128 MB
+          source={require('../../assets/very-large-image.png')}
         />
       );
     },
@@ -917,7 +1083,7 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: 'https://www.facebook.com/favicon.ico?r=1',
+            uri: `${IMAGE1}?r=1`,
           }}
         />
       );
@@ -974,10 +1140,22 @@ exports.examples = [
     platform: 'ios',
   },
   {
+    title: 'Cache Policy',
+    description: `- First image will be loaded and cached.
+- Second image is the same but will be reloaded if re-rendered as the cache policy is set to reload.
+- Third image will never be loaded as the cache policy is set to only-if-cached and the image has not been loaded before.
+  `,
+    render: function (): React.Node {
+      return <CacheControlAndroidExample />;
+    },
+    platform: 'android',
+  },
+  {
     title: 'Borders',
+    name: 'borders',
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal}>
+        <View style={styles.horizontal} testID="borders-example">
           <Image
             source={smallImage}
             style={[styles.base, styles.background, styles.customBorderColor]}
@@ -990,6 +1168,7 @@ exports.examples = [
   },
   {
     title: 'Border Radius',
+    name: 'border-radius',
     render: function (): React.Node {
       return (
         <View style={styles.horizontal} testID="image-border-radius" accessible>
@@ -1027,11 +1206,12 @@ exports.examples = [
   },
   {
     title: 'Background Color',
+    name: 'background-color',
     render: function (): React.Node {
       return (
         <View
           style={styles.horizontal}
-          testID="image-background-color"
+          testID="background-color-example"
           accessible>
           <Image source={smallImage} style={styles.base} />
           <Image
@@ -1045,6 +1225,40 @@ exports.examples = [
           <Image
             style={[styles.base, styles.backgroundColor3]}
             source={smallImage}
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Box Shadow',
+    name: 'box-shadow',
+    render: function (): React.Node {
+      return (
+        <View style={styles.horizontal} testID="box-shadow-example">
+          <Image
+            style={[
+              styles.base,
+              styles.boxShadow,
+              styles.boxShadowWithBackground,
+            ]}
+            source={smallImage}
+          />
+          <Image
+            style={[
+              styles.base,
+              styles.boxShadow,
+              styles.boxShadowMultiOutsetInset,
+            ]}
+            source={smallImage}
+          />
+          <Image
+            style={[
+              styles.base,
+              styles.boxShadow,
+              styles.boxShadowAsymetricallyRounded,
+            ]}
+            source={fullImage}
           />
         </View>
       );
@@ -1124,9 +1338,9 @@ exports.examples = [
               tintColor={'#8e8e93'}
             />
           </View>
-          <Text style={styles.sectionText}>
+          <RNTesterText style={styles.sectionText} variant="label">
             It also works using the `tintColor` style prop
-          </Text>
+          </RNTesterText>
           <View style={styles.horizontal}>
             <Image
               source={require('../../assets/uie_thumb_normal.png')}
@@ -1161,9 +1375,9 @@ exports.examples = [
               ]}
             />
           </View>
-          <Text style={styles.sectionText}>
+          <RNTesterText style={styles.sectionText} variant="label">
             The `tintColor` prop has precedence over the `tintColor` style prop
-          </Text>
+          </RNTesterText>
           <View style={styles.horizontal}>
             <Image
               source={require('../../assets/uie_thumb_normal.png')}
@@ -1202,9 +1416,9 @@ exports.examples = [
               tintColor={'#5ac8fa'}
             />
           </View>
-          <Text style={styles.sectionText}>
+          <RNTesterText style={styles.sectionText} variant="label">
             It also works with downloaded images:
-          </Text>
+          </RNTesterText>
           <View style={styles.horizontal}>
             <Image
               source={smallImage}
@@ -1255,14 +1469,18 @@ exports.examples = [
               <View key={index}>
                 <View style={styles.horizontal}>
                   <View>
-                    <Text style={styles.resizeModeText}>Contain</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Contain
+                    </RNTesterText>
                     <Image
                       style={[styles.resizeMode, styles.objectFitContain]}
                       source={image}
                     />
                   </View>
                   <View style={styles.leftMargin}>
-                    <Text style={styles.resizeModeText}>Cover</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Cover
+                    </RNTesterText>
                     <Image
                       style={[styles.resizeMode, styles.objectFitCover]}
                       source={image}
@@ -1271,16 +1489,31 @@ exports.examples = [
                 </View>
                 <View style={styles.horizontal}>
                   <View>
-                    <Text style={styles.resizeModeText}>Fill</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Fill
+                    </RNTesterText>
                     <Image
                       style={[styles.resizeMode, styles.objectFitFill]}
                       source={image}
                     />
                   </View>
                   <View style={styles.leftMargin}>
-                    <Text style={styles.resizeModeText}>Scale Down</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Scale Down
+                    </RNTesterText>
                     <Image
                       style={[styles.resizeMode, styles.objectFitScaleDown]}
+                      source={image}
+                    />
+                  </View>
+                </View>
+                <View style={styles.horizontal}>
+                  <View>
+                    <RNTesterText style={styles.resizeModeText}>
+                      None
+                    </RNTesterText>
+                    <Image
+                      style={[styles.resizeMode, styles.objectFitNone]}
                       source={image}
                     />
                   </View>
@@ -1304,7 +1537,9 @@ exports.examples = [
               <View key={index}>
                 <View style={styles.horizontal}>
                   <View>
-                    <Text style={styles.resizeModeText}>Contain</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Contain
+                    </RNTesterText>
                     <Image
                       style={styles.resizeMode}
                       resizeMode="contain"
@@ -1312,7 +1547,9 @@ exports.examples = [
                     />
                   </View>
                   <View style={styles.leftMargin}>
-                    <Text style={styles.resizeModeText}>Cover</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Cover
+                    </RNTesterText>
                     <Image
                       style={styles.resizeMode}
                       resizeMode="cover"
@@ -1322,7 +1559,9 @@ exports.examples = [
                 </View>
                 <View style={styles.horizontal}>
                   <View>
-                    <Text style={styles.resizeModeText}>Stretch</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Stretch
+                    </RNTesterText>
                     <Image
                       style={styles.resizeMode}
                       resizeMode="stretch"
@@ -1330,7 +1569,9 @@ exports.examples = [
                     />
                   </View>
                   <View style={styles.leftMargin}>
-                    <Text style={styles.resizeModeText}>Repeat</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Repeat
+                    </RNTesterText>
                     <Image
                       style={styles.resizeMode}
                       resizeMode="repeat"
@@ -1338,10 +1579,24 @@ exports.examples = [
                     />
                   </View>
                   <View style={styles.leftMargin}>
-                    <Text style={styles.resizeModeText}>Center</Text>
+                    <RNTesterText style={styles.resizeModeText}>
+                      Center
+                    </RNTesterText>
                     <Image
                       style={styles.resizeMode}
                       resizeMode="center"
+                      source={image}
+                    />
+                  </View>
+                </View>
+                <View style={styles.horizontal}>
+                  <View>
+                    <RNTesterText style={styles.resizeModeText}>
+                      None
+                    </RNTesterText>
+                    <Image
+                      style={styles.resizeMode}
+                      resizeMode="none"
                       source={image}
                     />
                   </View>
@@ -1379,7 +1634,19 @@ exports.examples = [
         />
       );
     },
-    platform: 'ios',
+  },
+  {
+    title: 'Data Svg image',
+    render: function (): React.Node {
+      return (
+        <Image
+          style={styles.base64}
+          source={{uri: dataImageSvg, width: 48, height: 48}}
+          testID="image-datasvg"
+          accessible
+        />
+      );
+    },
   },
   {
     title: 'Cap Insets',
@@ -1408,6 +1675,8 @@ exports.examples = [
       return <MultipleSourcesExample />;
     },
   },
+  /*
+  // Windows doesn't support legacy image format.
   {
     title: 'Legacy local image',
     description: ('Images shipped with the native bundle, but not managed ' +
@@ -1422,6 +1691,7 @@ exports.examples = [
       );
     },
   },
+*/
   {
     title: 'Bundled images',
     description: 'Images shipped in a separate native bundle',
@@ -1514,22 +1784,38 @@ exports.examples = [
     },
   },
   {
+    title: 'Accessibility Position in Set and Accessibility Set Size',
+    description:
+      'When their are a set of elements the acessibilityPosInSet and accessibilitySetSize props should be used to alert UIA of the set structure',
+    render: function (): React.Node {
+      return (
+        <View accessible testID="image-set">
+          <Image
+            source={fullImage}
+            style={styles.base}
+            accessible
+            accessibilityPosInSet={1}
+            accessibilitySetSize={2}
+            accessibilityLiveRegion="polite"
+          />
+          <Image
+            source={fullImage}
+            style={styles.base}
+            accessible
+            accessibilityPosInSet={2}
+            accessibilitySetSize={2}
+            accessibilityLiveRegion="assertive"
+          />
+        </View>
+      );
+    },
+  },
+  {
     title: 'Fade Duration',
     description:
       ('The time (in miliseconds) that an image will fade in for when it appears (default = 300).': string),
     render: function (): React.Node {
-      return (
-        <>
-          <Image
-            fadeDuration={1500}
-            source={fullImage}
-            style={styles.base}
-            testID="image-fade-duration"
-            accessible
-          />
-          <Text>This image will fade in over the time of 1.5s.</Text>
-        </>
-      );
+      return <FadeDurationExample />;
     },
     platform: 'android',
   },
@@ -1558,4 +1844,54 @@ exports.examples = [
     },
     platform: 'ios',
   },
-];
+  {
+    title: 'Vector Drawable',
+    name: 'vector-drawable',
+    description:
+      'Demonstrating an example of loading a vector drawable asset by name',
+    render: function (): React.Node {
+      return <VectorDrawableExample />;
+    },
+    platform: 'android',
+  },
+  {
+    title: 'Large image with different resize methods',
+    name: 'resize-method',
+    description:
+      'Demonstrating the effects of loading a large image with different resize methods',
+    scrollable: true,
+    render: function (): React.Node {
+      const methods: Array<ImageProps['resizeMethod']> = [
+        'auto',
+        'resize',
+        'scale',
+        'none',
+      ];
+      // Four copies of the same image so we don't serve cached copies of the same image
+      const images = [
+        require('../../assets/large-image-1.png'),
+        require('../../assets/large-image-2.png'),
+        require('../../assets/large-image-3.png'),
+        require('../../assets/large-image-4.png'),
+      ];
+      return (
+        <View testID="resize-method-example">
+          {methods.map((method, index) => (
+            <View
+              key={method}
+              style={{display: 'flex', overflow: 'hidden'}}
+              testID={`resize-method-example-${method ?? ''}`}>
+              <RNTesterText>{method}</RNTesterText>
+              <Image
+                resizeMethod={method}
+                source={images[index]}
+                style={styles.resizedImage}
+              />
+            </View>
+          ))}
+        </View>
+      );
+    },
+    platform: 'android',
+  },
+] as Array<RNTesterModuleExample>;

@@ -14,7 +14,7 @@
 namespace winrt::Microsoft::ReactNative::Composition {
 
 void RenderText(
-    ID2D1DeviceContext &deviceContext,
+    ID2D1RenderTarget &deviceContext,
     ::IDWriteTextLayout &textLayout,
     const facebook::react::AttributedString &attributedString,
     const facebook::react::TextAttributes &textAttributes,

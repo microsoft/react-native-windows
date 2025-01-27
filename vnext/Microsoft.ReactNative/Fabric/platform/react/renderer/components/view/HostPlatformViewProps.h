@@ -24,9 +24,12 @@ class HostPlatformViewProps : public BaseViewProps {
   WindowsViewEvents windowsEvents{};
   bool enableFocusRing{true};
   bool focusable{false};
+  int accessibilityPosInSet{0};
+  int accessibilitySetSize{0};
+  std::string accessibilityLiveRegion{"none"};
 
   // std::optional<std::string> overflowAnchor{};
-  // std::optional<std::string> tooltip{};
+  std::optional<std::string> tooltip{};
   std::vector<HandledKeyEvent> keyDownEvents{};
   std::vector<HandledKeyEvent> keyUpEvents{};
 };

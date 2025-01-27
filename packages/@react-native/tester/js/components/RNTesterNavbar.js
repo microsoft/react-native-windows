@@ -8,11 +8,14 @@
  * @flow strict-local
  */
 
+import type {ScreenTypes} from '../types/RNTesterTypes';
 import type {RNTesterTheme} from './RNTesterTheme';
 
 import {RNTesterThemeContext} from './RNTesterTheme';
 import * as React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+
+type NavBarOnPressHandler = ({screen: ScreenTypes}) => void;
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -37,7 +40,12 @@ const NavbarButton = ({
         style={iconStyle}
         source={isActive ? activeImage : inactiveImage}
       />
-      <Text style={isActive ? styles.activeText : styles.inactiveText}>
+      <Text
+        style={{
+          color: isActive
+            ? theme.NavBarLabelActiveColor
+            : theme.NavBarLabelInactiveColor,
+        }}>
         {label}
       </Text>
     </View>
@@ -48,8 +56,8 @@ const ComponentTab = ({
   isComponentActive,
   handleNavBarPress,
   theme,
-}: $TEMPORARY$object<{
-  handleNavBarPress: (data: {screen: string}) => void,
+}: $ReadOnly<{
+  handleNavBarPress: NavBarOnPressHandler,
   isComponentActive: boolean,
   theme: RNTesterTheme,
 }>) => (
@@ -57,8 +65,29 @@ const ComponentTab = ({
     testID="components-tab"
     label="Components"
     handlePress={() => handleNavBarPress({screen: 'components'})}
-    activeImage={require('./../assets/bottom-nav-components-icon-active.png')}
-    inactiveImage={require('./../assets/bottom-nav-components-icon-inactive.png')}
+    activeImage={theme.NavBarComponentsActiveIcon}
+    inactiveImage={theme.NavBarComponentsInactiveIcon}
+    isActive={isComponentActive}
+    theme={theme}
+    iconStyle={styles.componentIcon}
+  />
+);
+
+const PlaygroundTab = ({
+  isComponentActive,
+  handleNavBarPress,
+  theme,
+}: $ReadOnly<{
+  handleNavBarPress: NavBarOnPressHandler,
+  isComponentActive: boolean,
+  theme: RNTesterTheme,
+}>) => (
+  <NavbarButton
+    testID="playground-tab"
+    label="Playground"
+    handlePress={() => handleNavBarPress({screen: 'playgrounds'})}
+    activeImage={theme.NavBarPlaygroundActiveIcon}
+    inactiveImage={theme.NavBarPlaygroundInactiveIcon}
     isActive={isComponentActive}
     theme={theme}
     iconStyle={styles.componentIcon}
@@ -69,8 +98,8 @@ const APITab = ({
   isAPIActive,
   handleNavBarPress,
   theme,
-}: $TEMPORARY$object<{
-  handleNavBarPress: (data: {screen: string}) => void,
+}: $ReadOnly<{
+  handleNavBarPress: NavBarOnPressHandler,
   isAPIActive: boolean,
   theme: RNTesterTheme,
 }>) => (
@@ -78,8 +107,8 @@ const APITab = ({
     testID="apis-tab"
     label="APIs"
     handlePress={() => handleNavBarPress({screen: 'apis'})}
-    activeImage={require('./../assets/bottom-nav-apis-icon-active.png')}
-    inactiveImage={require('./../assets/bottom-nav-apis-icon-inactive.png')}
+    activeImage={theme.NavBarAPIsActiveIcon}
+    inactiveImage={theme.NavBarAPIsInactiveIcon}
     isActive={isAPIActive}
     theme={theme}
     iconStyle={styles.apiIcon}
@@ -87,7 +116,7 @@ const APITab = ({
 );
 
 type Props = $ReadOnly<{|
-  handleNavBarPress: (data: {screen: string}) => void,
+  handleNavBarPress: NavBarOnPressHandler,
   screen: string,
   isExamplePageOpen: boolean,
 |}>;
@@ -101,12 +130,18 @@ const RNTesterNavbar = ({
 
   const isAPIActive = screen === 'apis' && !isExamplePageOpen;
   const isComponentActive = screen === 'components' && !isExamplePageOpen;
+  const isPlaygroundActive = screen === 'playgrounds';
 
   return (
     <View>
       <View style={styles.buttonContainer}>
         <ComponentTab
           isComponentActive={isComponentActive}
+          handleNavBarPress={handleNavBarPress}
+          theme={theme}
+        />
+        <PlaygroundTab
+          isComponentActive={isPlaygroundActive}
           handleNavBarPress={handleNavBarPress}
           theme={theme}
         />
@@ -123,29 +158,9 @@ const RNTesterNavbar = ({
 export const navBarHeight = 65;
 
 const styles = StyleSheet.create({
-  floatContainer: {
-    flex: 1,
-    zIndex: 2,
-    alignItems: 'center',
-  },
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
-  },
-  floatingButton: {
-    top: -20,
-    width: 50,
-    height: 50,
-    borderRadius: 500,
-    alignContent: 'center',
-    shadowColor: 'black',
-    shadowOffset: {
-      height: 5,
-      width: 0,
-    },
-    shadowOpacity: 0.9,
-    shadowRadius: 10,
-    elevation: 5,
   },
   componentIcon: {
     width: 20,
@@ -157,25 +172,9 @@ const styles = StyleSheet.create({
     height: 20,
     alignSelf: 'center',
   },
-  activeText: {
-    color: '#5E5F62',
-  },
-  inactiveText: {
-    color: '#B1B4BA',
-  },
   activeBar: {
     borderTopWidth: 2,
     borderColor: '#005DFF',
-  },
-  centralBoxCutout: {
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-    top: 0,
-  },
-  centerBox: {
-    flex: 1,
-    height: navBarHeight,
   },
   navButton: {
     flex: 1,

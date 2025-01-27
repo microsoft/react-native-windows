@@ -30,7 +30,9 @@ winrt::Microsoft::ReactNative::IComponentProps AbiProps::UserProps() const noexc
 ShadowNode::ShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept : m_shadowNode(shadowNode) {}
 
 void ShadowNode::EnsureUnsealed() noexcept {
-  m_shadowNode->ensureUnsealed();
+  if (auto shadowNode = m_shadowNode.lock()) {
+    shadowNode->ensureUnsealed();
+  }
 }
 
 winrt::IInspectable ShadowNode::Tag() const noexcept {
@@ -42,20 +44,32 @@ void ShadowNode::Tag(winrt::IInspectable tag) noexcept {
 }
 
 winrt::IInspectable ShadowNode::StateData() const noexcept {
-  auto state = m_shadowNode->getState();
-  react_native_assert(state && "State must not be `nullptr`.");
-  auto abiStateData =
-      static_cast<const facebook::react::ConcreteState<::Microsoft::ReactNative::AbiStateData> *>(state.get())
-          ->getData();
-  return abiStateData.userdata;
+  if (auto shadowNode = m_shadowNode.lock()) {
+    auto state = shadowNode->getState();
+    react_native_assert(state && "State must not be `nullptr`.");
+    auto abiStateData =
+        static_cast<const facebook::react::ConcreteState<::Microsoft::ReactNative::AbiStateData> *>(state.get())
+            ->getData();
+    return abiStateData.userdata;
+  }
+  return nullptr;
 }
 
 void ShadowNode::StateData(winrt::IInspectable tag) noexcept {
-  m_shadowNode->ensureUnsealed();
+  if (auto shadowNode = m_shadowNode.lock()) {
+    shadowNode->ensureUnsealed();
 
-  auto &state = const_cast<facebook::react::State::Shared &>(m_shadowNode->getState());
-  state = std::make_shared<const facebook::react::ConcreteState<::Microsoft::ReactNative::AbiStateData>>(
-      std::make_shared<const ::Microsoft::ReactNative::AbiStateData>(tag), *state);
+    auto &state = const_cast<facebook::react::State::Shared &>(shadowNode->getState());
+    state = std::make_shared<const facebook::react::ConcreteState<::Microsoft::ReactNative::AbiStateData>>(
+        std::make_shared<const ::Microsoft::ReactNative::AbiStateData>(tag), *state);
+  }
+}
+
+winrt::Microsoft::ReactNative::EventEmitter ShadowNode::EventEmitter() const noexcept {
+  if (auto shadowNode = m_shadowNode.lock()) {
+    return winrt::make<winrt::Microsoft::ReactNative::implementation::EventEmitter>(shadowNode->getEventEmitter());
+  }
+  return nullptr;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

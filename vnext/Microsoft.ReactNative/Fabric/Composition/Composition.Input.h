@@ -21,9 +21,17 @@ struct KeyRoutedEventArgs : winrt::implements<
                                 KeyRoutedEventArgs,
                                 winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs,
                                 winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> {
-  KeyRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, uint64_t wParam, int64_t lParam);
+  KeyRoutedEventArgs(
+      facebook::react::Tag tag,
+      uint32_t msg,
+      uint64_t wParam,
+      int64_t lParam,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
 #ifdef USE_WINUI3
-  KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const &args);
+  KeyRoutedEventArgs(
+      facebook::react::Tag tag,
+      winrt::Microsoft::UI::Input::KeyEventArgs const &args,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
 #endif
 
   int32_t OriginalSource() noexcept;
@@ -31,14 +39,16 @@ struct KeyRoutedEventArgs : winrt::implements<
   bool Handled() noexcept;
   void Handled(bool value) noexcept;
   winrt::Windows::System::VirtualKey Key() noexcept;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus KeyStatus() noexcept;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus KeyStatus() noexcept;
   winrt::Windows::System::VirtualKey OriginalKey() noexcept;
+  winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource KeyboardSource() const noexcept;
 
  private:
   facebook::react::Tag m_tag{-1};
   bool m_handled{false};
   winrt::Windows::System::VirtualKey m_key;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus m_keyStatus;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus m_keyStatus;
+  const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource m_source;
 };
 
 struct CharacterReceivedRoutedEventArgs
@@ -46,24 +56,32 @@ struct CharacterReceivedRoutedEventArgs
           CharacterReceivedRoutedEventArgs,
           winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs,
           winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> {
-  CharacterReceivedRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, uint64_t wParam, int64_t lParam);
+  CharacterReceivedRoutedEventArgs(
+      facebook::react::Tag tag,
+      uint32_t msg,
+      uint64_t wParam,
+      int64_t lParam,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
 #ifdef USE_WINUI3
   CharacterReceivedRoutedEventArgs(
       facebook::react::Tag tag,
-      winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args);
+      winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
 #endif
 
   int32_t OriginalSource() noexcept;
   bool Handled() noexcept;
   void Handled(bool value) noexcept;
   int32_t KeyCode() noexcept;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus KeyStatus() noexcept;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus KeyStatus() noexcept;
+  winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource KeyboardSource() const noexcept;
 
  private:
   facebook::react::Tag m_tag{-1};
   bool m_handled{false};
   int32_t m_keycode;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus m_keyStatus;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus m_keyStatus;
+  const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource m_source;
 };
 
 struct Pointer : PointerT<Pointer> {
@@ -180,6 +198,7 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   uint64_t Timestamp() const noexcept;
   winrt::Microsoft::ReactNative::Composition::Input::PointerPoint GetOffsetPoint(
       const winrt::Windows::Foundation::Point &offset) const noexcept;
+  winrt::Microsoft::UI::Input::PointerPoint Inner() const noexcept;
 
  private:
   bool IsPointerMessage(uint32_t message) const noexcept;

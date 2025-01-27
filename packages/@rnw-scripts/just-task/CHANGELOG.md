@@ -1,8 +1,182 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Sat, 30 Mar 2024 05:18:04 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.49
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.32
+
+## 2.3.48
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.31
+
+## 2.3.47
+
+Sat, 19 Oct 2024 05:29:48 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+
+## 2.3.46
+
+Mon, 07 Oct 2024 19:54:27 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.11
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/eslint-config to v1.2.29
+
+## 2.3.44
+
+Thu, 26 Sep 2024 17:38:27 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.9
+- Bump @rnw-scripts/jest-unittest-config to v1.5.9
+- Bump @rnw-scripts/eslint-config to v1.2.27
+
+## 2.3.43
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.26
+
+## 2.3.42
+
+Wed, 24 Jul 2024 05:24:32 GMT
+
+### Patches
+
+- integrate 0.75.0-nightly-20240618-5df5ed1a8 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.25
+
+## 2.3.41
+
+Wed, 10 Jul 2024 05:15:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.24
+
+## 2.3.40
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.23
+
+## 2.3.39
+
+Sat, 08 Jun 2024 05:17:57 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.22
+
+## 2.3.38
+
+Wed, 05 Jun 2024 05:18:09 GMT
+
+### Patches
+
+- Use prettier-plugin-hermes-parser to match upstream settings (erozell@outlook.com)
+
+## 2.3.37
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.21
+
+## 2.3.36
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.20
+
+## 2.3.35
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.19
+
+## 2.3.34
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.18
+
+## 2.3.33
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.17
+
+## 2.3.32
+
+Wed, 15 May 2024 05:14:54 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.16
+
+## 2.3.31
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.15
+
+## 2.3.30
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.14
+
+## 2.3.29
+
+Thu, 25 Apr 2024 20:12:45 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.13
+
+## 2.3.27
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.11
 
 ## 2.3.26
 

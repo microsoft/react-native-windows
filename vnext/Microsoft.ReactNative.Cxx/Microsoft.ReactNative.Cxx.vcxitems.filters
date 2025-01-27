@@ -27,13 +27,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
-    <ClCompile Include="$(Bridging_SourcePath)\LongLivedObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiLoader.cpp">
       <Filter>NodeApiJsi</Filter>
     </ClCompile>
     <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.cpp" />
     <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.cpp" />
     <ClCompile Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.cpp" />
+    <ClCompile Include="$(Bridging_SourcePath)\react\bridging\LongLivedObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -160,6 +160,10 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\EventEmitter.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Function.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Base.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Convert.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h">
       <Filter>TurboModule</Filter>
     </ClInclude>

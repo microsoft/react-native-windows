@@ -7,10 +7,10 @@
 
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactContext.h>
-#include <react/utils/CoreFeatures.h>
 #include <type_traits>
 #include "DynamicReader.h"
 
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 namespace Microsoft::ReactNative {
 
 AbiComponentDescriptor::AbiComponentDescriptor(facebook::react::ComponentDescriptorParameters const &parameters)
@@ -90,7 +90,7 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
   }
 
   if constexpr (std::is_base_of_v<facebook::react::YogaLayoutableShadowNode, ShadowNodeT>) {
-    if (facebook::react::CoreFeatures::excludeYogaFromRawProps) {
+    if (facebook::react::ReactNativeFeatureFlags::excludeYogaFromRawProps()) {
       rawProps.filterYogaStylePropsInDynamicConversion();
     }
   }
@@ -106,17 +106,20 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
       rawProps);
   auto userProps =
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
-          ->CreateProps(nullptr);
+          ->CreateProps(
+              nullptr,
+              props ? static_cast<winrt::Microsoft::ReactNative::implementation::AbiProps const &>(*props).UserProps()
+                    : nullptr);
   shadowNodeProps->SetUserProps(userProps);
 
-  rawProps.iterateOverValues(
-      [&](facebook::react::RawPropsPropNameHash hash, const char *propName, facebook::react::RawValue const &fn) {
-        shadowNodeProps.get()->setProp(context, hash, propName, fn);
-        userProps.SetProp(
-            hash,
-            winrt::to_hstring(propName),
-            winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(folly::dynamic(fn)));
-      });
+  const auto &dynamic = static_cast<folly::dynamic>(rawProps);
+  for (const auto &pair : dynamic.items()) {
+    const auto &propName = pair.first.getString();
+    auto hash = RAW_PROPS_KEY_HASH(propName);
+    shadowNodeProps.get()->setProp(context, hash, propName.c_str(), facebook::react::RawValue(pair.second));
+    userProps.SetProp(
+        hash, winrt::to_hstring(propName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(pair.second));
+  }
 
   return shadowNodeProps;
 };
@@ -162,7 +165,7 @@ facebook::react::State::Shared AbiComponentDescriptor::createState(
 facebook::react::ShadowNodeFamily::Shared AbiComponentDescriptor::createFamily(
     facebook::react::ShadowNodeFamilyFragment const &fragment) const {
   auto eventEmitter = std::make_shared<const ConcreteEventEmitter>(
-      std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle), eventDispatcher_);
+      std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle, fragment.surfaceId), eventDispatcher_);
   return std::make_shared<facebook::react::ShadowNodeFamily>(
       fragment, std::move(eventEmitter), eventDispatcher_, *this);
 }

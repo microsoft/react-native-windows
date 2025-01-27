@@ -107,8 +107,9 @@ class RNTesterPlatformTestEventRecorder {
   ): $ReadOnly<{[targetName: string]: ViewProps}> {
     // Yes this method exists as a class's prototype method but it will still only be used
     // in functional components
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useMemo(() => {
+    // prettier-ignore
+    // $FlowFixMe[react-rule-hook]
+    return useMemo(() => { // eslint-disable-line react-hooks/rules-of-hooks
       const result: {[targetName: string]: ViewProps} = {};
       for (const targetName of targetNames) {
         const recordedEventHandler =
@@ -117,15 +118,16 @@ class RNTesterPlatformTestEventRecorder {
             (event, eventType) =>
               callback && callback(event, eventType, targetName),
           );
+        // $FlowFixMe[incompatible-call]
         const eventListenerProps = this.relevantEvents.reduce(
-          (acc, eventName) => {
+          (acc: ViewProps, eventName) => {
             const eventPropName =
               'on' + eventName[0].toUpperCase() + eventName.slice(1);
             return {
               ...acc,
-              [eventPropName]: e => {
+              [eventPropName]: (e => {
                 recordedEventHandler(e, eventName);
-              },
+              }) as $FlowFixMe,
             };
           },
           {},

@@ -8,7 +8,7 @@ import path from 'path';
 
 import MSBuildTools from './msbuildtools';
 import Version from './version';
-import {newError} from './commandWithProgress';
+import {newError, newWarn} from './commandWithProgress';
 import {
   RunWindowsOptions,
   BuildConfig,
@@ -28,12 +28,12 @@ export async function buildSolution(
   buildLogDirectory?: string,
   singleproc?: boolean,
 ) {
-  const minVersion = new Version(10, 0, 19041, 0);
+  const minVersion = new Version(10, 0, 22621, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
   if (!allVersions.some(v => v.gte(minVersion))) {
     throw new CodedError(
       'MinSDKVersionNotMet',
-      'Must have a minimum Windows SDK version 10.0.19041.0 installed',
+      'Must have a minimum Windows SDK version 10.0.22621.0 installed',
     );
   }
 
@@ -57,7 +57,7 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
     return path.join(options.root, options.sln);
   }
 
-  // Check the answer from react-native config
+  // Check the answer from @react-native-community/cli config
   const windowsAppConfig = config.project.windows;
   if (!windowsAppConfig) {
     throw new CodedError(
@@ -88,7 +88,7 @@ export function getAppProjectFile(options: RunWindowsOptions, config: Config) {
     return path.join(options.root, options.proj);
   }
 
-  // Check the answer from react-native config
+  // Check the answer from @react-native-community/cli config
   const windowsAppConfig = config.project.windows;
   const configProject = windowsAppConfig.project;
 
@@ -122,11 +122,15 @@ export function parseMsBuildProps(
   options: RunWindowsOptions,
 ): Record<string, string> {
   const result: Record<string, string> = {};
-  if (options.msbuildprops) {
+  if (typeof options.msbuildprops === 'string') {
     const props = options.msbuildprops.split(',');
     for (const prop of props) {
       const propAssignment = prop.split('=');
-      result[propAssignment[0]] = propAssignment[1];
+      if (propAssignment.length === 2 && propAssignment[0].trim().length > 0) {
+        result[propAssignment[0].trim()] = propAssignment[1].trim();
+      } else if (options.logging === true) {
+        newWarn(`Unable to parse msbuildprop: '${prop}'`);
+      }
     }
   }
   return result;

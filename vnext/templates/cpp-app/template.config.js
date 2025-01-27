@@ -7,10 +7,10 @@
  */
 
 const chalk = require('chalk');
+const crypto = require('crypto');
 const existsSync = require('fs').existsSync;
 const path = require('path');
 const username = require('username');
-const uuid = require('uuid');
 const util = require('util');
 
 const glob = util.promisify(require('glob'));
@@ -20,7 +20,11 @@ const templateUtils = require('../templateUtils');
 async function preInstall(config = {}, options = {}) {}
 
 async function getFileMappings(config = {}, options = {}) {
-  const {rnwVersion, devMode} = templateUtils.getRnwInfo(config, options);
+  const projectRoot = config?.root ?? process.cwd();
+  const {rnwPath, rnwVersion, devMode, isCanary} = templateUtils.getRnwInfo(
+    config,
+    options,
+  );
 
   const projectName =
     config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyApp';
@@ -29,8 +33,8 @@ async function getFileMappings(config = {}, options = {}) {
   const projectGuid =
     config?.project?.windows?.project?.projectGuid
       ?.replace('{', '')
-      .replace('}', '') ?? uuid.v4();
-  const packageGuid = uuid.v4();
+      .replace('}', '') ?? crypto.randomUUID();
+  const packageGuid = crypto.randomUUID();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
 
   const appJsonPath = path.join(config?.root ?? process.cwd(), 'app.json');
@@ -48,6 +52,9 @@ async function getFileMappings(config = {}, options = {}) {
     namespaceCpp: namespaceCpp,
 
     rnwVersion: rnwVersion,
+    rnwPathFromProjectRoot: path
+      .relative(projectRoot, rnwPath)
+      .replace(/\//g, '\\'),
 
     mainComponentName,
 
@@ -64,7 +71,17 @@ async function getFileMappings(config = {}, options = {}) {
 
     devMode,
 
+    useNuGets: !devMode, // default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
+    addReactNativePublicAdoFeed: true || isCanary, // Temporary true for all new projects until code-signing is restored, see issue #14030
+
     cppNugetPackages,
+
+    // autolinking template variables
+    autolinkPropertiesForProps: '',
+    autolinkProjectReferencesForTargets: '',
+    autolinkCppIncludes: '',
+    autolinkCppPackageProviders:
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windows\cli\src\commands\autolinkWindows\autolinkWindows.ts
   };
 
   let fileMappings = [];
@@ -109,11 +126,11 @@ async function postInstall(config = {}, options = {}) {
   // Update package.json with new scripts and dependencies
   await templateUtils.updateProjectPackageJson(config, options, {
     scripts: {
-      windows: 'react-native run-windows',
+      windows: 'npx @react-native-community/cli run-windows',
       'test:windows': 'jest --config jest.config.windows.js',
     },
     devDependencies: {
-      '@rnx-kit/jest-preset': '^0.1.16',
+      '@rnx-kit/jest-preset': '^0.1.17',
     },
   });
 
@@ -121,7 +138,7 @@ async function postInstall(config = {}, options = {}) {
   await templateUtils.runNpmInstall(config, options);
 
   console.log(chalk.white.bold('To run your new windows app:'));
-  console.log(chalk.white('   npx react-native run-windows'));
+  console.log(chalk.white('   npx @react-native-community/cli run-windows'));
 }
 
 module.exports = {

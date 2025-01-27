@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Threading/BatchingQueueThread.h"
 #include <cxxreact/Instance.h>
-#include <cxxreact/SystraceSection.h>
+#include <cxxreact/TraceSection.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 #include <cassert>
 
@@ -16,7 +16,9 @@ BatchingQueueCallInvoker::BatchingQueueCallInvoker(
     std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread)
     : m_queueThread(queueThread) {}
 
-void BatchingQueueCallInvoker::invokeAsync(const std::string &methodName, std::function<void()> &&func) noexcept {
+void BatchingQueueCallInvoker::invokeAsync(
+    const std::string &methodName,
+    facebook::react::NativeMethodCallFunc &&func) noexcept {
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
 
@@ -39,9 +41,9 @@ void BatchingQueueCallInvoker::EnsureQueue() noexcept {
 void BatchingQueueCallInvoker::PostBatch() noexcept {
   if (m_taskQueue) {
     m_queueThread->runOnQueue([taskQueue{std::move(m_taskQueue)}]() noexcept {
-      SystraceSection s1("BatchingQueueCallInvoker::PostBatch");
+      TraceSection s1("BatchingQueueCallInvoker::PostBatch");
       for (auto &task : *taskQueue) {
-        SystraceSection s2("BatchingQueueCallInvoker::PostBatch::Task");
+        TraceSection s2("BatchingQueueCallInvoker::PostBatch::Task");
         task();
         task = nullptr;
       }
@@ -58,7 +60,9 @@ void BatchingQueueCallInvoker::quitSynchronous() noexcept {
   m_queueThread->quitSynchronous();
 }
 
-void BatchingQueueCallInvoker::invokeSync(const std::string &methodName, std::function<void()> &&func) noexcept {
+void BatchingQueueCallInvoker::invokeSync(
+    const std::string &methodName,
+    facebook::react::NativeMethodCallFunc &&func) noexcept {
   assert(false && "Not supported");
   std::terminate();
 }

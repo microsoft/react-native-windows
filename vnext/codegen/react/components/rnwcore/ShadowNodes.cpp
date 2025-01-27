@@ -14,10 +14,8 @@ namespace facebook::react {
 
 extern const char ActivityIndicatorViewComponentName[] = "ActivityIndicatorView";
 extern const char AndroidDrawerLayoutComponentName[] = "AndroidDrawerLayout";
-extern const char AndroidHorizontalScrollContentViewComponentName[] = "AndroidHorizontalScrollContentView";
 extern const char AndroidSwipeRefreshLayoutComponentName[] = "AndroidSwipeRefreshLayout";
 extern const char DebuggingOverlayComponentName[] = "DebuggingOverlay";
-extern const char AndroidPopupMenuComponentName[] = "AndroidPopupMenu";
 extern const char PullToRefreshViewComponentName[] = "PullToRefreshView";
 extern const char SwitchComponentName[] = "Switch";
 extern const char UnimplementedNativeViewComponentName[] = "UnimplementedNativeView";

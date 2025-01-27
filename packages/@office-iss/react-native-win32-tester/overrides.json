@@ -5,19 +5,19 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240221-a1171f79f",
+  "baseVersion": "0.78.0-nightly-20250113-d4407d6f7",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
       "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
-      "baseHash": "d3b62b2faecf0aa449cb438b3e09064b7ae5102f"
+      "baseHash": "89c6ddc496c9254e6b54e83a70825289cc429ec1"
     },
     {
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "749b9de3afedb843fe9fe8c63c2e910b9f4e4c29"
+      "baseHash": "2b12495e7371031510b53ebcccdad627363c36ad"
     },
     {
       "type": "platform",
@@ -42,7 +42,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "3ca30c3da9875e8f01acfdb575658d9996243185"
+      "baseHash": "d007fb16f30b2630ba84a5fa61e4190c6d9a18b1"
     }
   ]
 }

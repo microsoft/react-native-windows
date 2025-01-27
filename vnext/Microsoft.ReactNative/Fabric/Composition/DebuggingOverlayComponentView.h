@@ -13,7 +13,7 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct DebuggingOverlayComponentView
     : DebuggingOverlayComponentViewT<DebuggingOverlayComponentView, ViewComponentView> {
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -25,12 +25,11 @@ struct DebuggingOverlayComponentView
       uint32_t index) noexcept override;
 
   DebuggingOverlayComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
-      override;
+  void HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept override;
 
  private:
   uint32_t m_activeOverlays{0};

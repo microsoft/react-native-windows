@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <RunCodegenWindows Condition="'$(RunCodegenWindows)' == ''">true</RunCodegenWindows>
-    <CodegenCommand Condition="'$(CodegenCommand)' == ''">npx react-native codegen-windows</CodegenCommand>
+    <CodegenCommand Condition="'$(CodegenCommand)' == ''">npx --yes @react-native-community/cli codegen-windows</CodegenCommand>
     <CodegenCommandWorkingDir Condition="'$(CodegenCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</CodegenCommandWorkingDir>
     <CodegenCommandArgs Condition="'$(CodegenCommandArgs)' == ''">--logging</CodegenCommandArgs>
   </PropertyGroup>

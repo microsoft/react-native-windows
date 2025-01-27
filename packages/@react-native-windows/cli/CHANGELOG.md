@@ -1,8 +1,511 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 30 Mar 2024 05:18:03 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.256
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.117
+
+## 0.0.0-canary.255
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.116
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @react-native-windows/package-utils to v0.0.0-canary.87
+- Bump @react-native-windows/telemetry to v0.0.0-canary.116
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 0.0.0-canary.254
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.115
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @react-native-windows/package-utils to v0.0.0-canary.86
+- Bump @react-native-windows/telemetry to v0.0.0-canary.115
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 0.0.0-canary.253
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.114
+
+## 0.0.0-canary.252
+
+Wed, 08 Jan 2025 06:31:14 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.113
+
+## 0.0.0-canary.251
+
+Wed, 11 Dec 2024 06:21:14 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.112
+
+## 0.0.0-canary.250
+
+Tue, 10 Dec 2024 06:29:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.114
+
+## 0.0.0-canary.249
+
+Sat, 23 Nov 2024 06:23:16 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.113
+
+## 0.0.0-canary.248
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.112
+
+## 0.0.0-canary.247
+
+Fri, 08 Nov 2024 06:20:38 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.111
+
+## 0.0.0-canary.246
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.110
+
+## 0.0.0-canary.245
+
+Sat, 02 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.109
+
+## 0.0.0-canary.244
+
+Fri, 01 Nov 2024 05:22:36 GMT
+
+### Changes
+
+- Update RNW CLI to preserve and re-use `init-windows` arguments (jthysell@microsoft.com)
+
+## 0.0.0-canary.243
+
+Sat, 26 Oct 2024 05:28:06 GMT
+
+### Changes
+
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
+
+## 0.0.0-canary.242
+
+Sat, 19 Oct 2024 05:29:46 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.108
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @react-native-windows/package-utils to v0.0.0-canary.85
+- Bump @react-native-windows/telemetry to v0.0.0-canary.111
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.241
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.107
+
+## 0.0.0-canary.240
+
+Thu, 10 Oct 2024 18:14:30 GMT
+
+### Changes
+
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+- Create hybrid CppLib props/targets (jthysell@microsoft.com)
+
+## 0.0.0-canary.239
+
+Mon, 07 Oct 2024 19:54:26 GMT
+
+### Changes
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.106
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @react-native-windows/package-utils to v0.0.0-canary.84
+- Bump @react-native-windows/telemetry to v0.0.0-canary.110
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
+
+## 0.0.0-canary.237
+
+Thu, 26 Sep 2024 17:38:27 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.104
+- Bump @react-native-windows/fs to v0.0.0-canary.56
+- Bump @react-native-windows/package-utils to v0.0.0-canary.82
+- Bump @react-native-windows/telemetry to v0.0.0-canary.108
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-unittest-config to v1.5.9
+- Bump @rnw-scripts/just-task to v2.3.44
+
+## 0.0.0-canary.236
+
+Mon, 16 Sep 2024 21:21:15 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.103
+
+## 0.0.0-canary.235
+
+Sat, 07 Sep 2024 05:14:11 GMT
+
+### Changes
+
+- Fix parsing of empty build props in run-windows (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.102
+
+## 0.0.0-canary.234
+
+Fri, 06 Sep 2024 05:14:01 GMT
+
+### Changes
+
+- [Fabric] Add native component codegen (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.101
+
+## 0.0.0-canary.233
+
+Tue, 27 Aug 2024 05:13:39 GMT
+
+### Changes
+
+- Fix run-windows --singleproc to override high memory (jthysell@microsoft.com)
+- Improve new project name(space) validation and cleaning (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.107
+
+## 0.0.0-canary.232
+
+Wed, 21 Aug 2024 05:14:40 GMT
+
+### Changes
+
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+
+## 0.0.0-canary.231
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Changes
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+
+## 0.0.0-canary.230
+
+Wed, 14 Aug 2024 05:14:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.100
+
+## 0.0.0-canary.229
+
+Thu, 08 Aug 2024 05:16:48 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.99
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @react-native-windows/package-utils to v0.0.0-canary.81
+- Bump @react-native-windows/telemetry to v0.0.0-canary.106
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
+
+## 0.0.0-canary.228
+
+Fri, 26 Jul 2024 05:14:21 GMT
+
+### Changes
+
+- Use Node's UUIDv4 implementation (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.227
+
+Wed, 24 Jul 2024 05:24:35 GMT
+
+### Changes
+
+- integrate 0.75.0-nightly-20240618-5df5ed1a8 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.98
+- Bump @react-native-windows/fs to v0.0.0-canary.54
+- Bump @react-native-windows/package-utils to v0.0.0-canary.80
+- Bump @react-native-windows/telemetry to v0.0.0-canary.105
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/just-task to v2.3.42
+
+## 0.0.0-canary.226
+
+Wed, 10 Jul 2024 05:15:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.97
+- Bump @react-native-windows/fs to v0.0.0-canary.53
+- Bump @react-native-windows/package-utils to v0.0.0-canary.79
+- Bump @react-native-windows/telemetry to v0.0.0-canary.104
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/just-task to v2.3.41
+
+## 0.0.0-canary.225
+
+Fri, 28 Jun 2024 05:15:51 GMT
+
+### Changes
+
+- Fixed typos and improved uniformity of RNW CLI command help (jthysell@microsoft.com)
+
+## 0.0.0-canary.224
+
+Sat, 22 Jun 2024 05:15:16 GMT
+
+### Changes
+
+- Fix bug with specifying min VS versions for run-windows (jthysell@microsoft.com)
+
+## 0.0.0-canary.223
+
+Fri, 21 Jun 2024 05:17:50 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.96
+
+## 0.0.0-canary.222
+
+Wed, 19 Jun 2024 05:14:43 GMT
+
+### Changes
+
+- Enable devMode with react-native init-windows old/* templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.221
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.95
+- Bump @react-native-windows/fs to v0.0.0-canary.52
+- Bump @react-native-windows/package-utils to v0.0.0-canary.78
+- Bump @react-native-windows/telemetry to v0.0.0-canary.103
+- Bump @rnw-scripts/eslint-config to v1.2.23
+- Bump @rnw-scripts/just-task to v2.3.40
+
+## 0.0.0-canary.220
+
+Sat, 08 Jun 2024 05:17:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.94
+- Bump @react-native-windows/fs to v0.0.0-canary.51
+- Bump @react-native-windows/package-utils to v0.0.0-canary.77
+- Bump @react-native-windows/telemetry to v0.0.0-canary.102
+- Bump @rnw-scripts/eslint-config to v1.2.22
+- Bump @rnw-scripts/just-task to v2.3.39
+
+## 0.0.0-canary.219
+
+Wed, 05 Jun 2024 05:18:09 GMT
+
+### Changes
+
+- Upgrade to Windows SDK 10.0.22621.0 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.93
+- Bump @react-native-windows/fs to v0.0.0-canary.50
+- Bump @react-native-windows/package-utils to v0.0.0-canary.76
+- Bump @react-native-windows/telemetry to v0.0.0-canary.101
+- Bump @rnw-scripts/just-task to v2.3.38
+
+## 0.0.0-canary.218
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.92
+- Bump @react-native-windows/fs to v0.0.0-canary.49
+- Bump @react-native-windows/package-utils to v0.0.0-canary.75
+- Bump @react-native-windows/telemetry to v0.0.0-canary.100
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/just-task to v2.3.37
+
+## 0.0.0-canary.217
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.91
+- Bump @react-native-windows/fs to v0.0.0-canary.48
+- Bump @react-native-windows/package-utils to v0.0.0-canary.74
+- Bump @react-native-windows/telemetry to v0.0.0-canary.99
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/just-task to v2.3.36
+
+## 0.0.0-canary.216
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.90
+- Bump @react-native-windows/fs to v0.0.0-canary.47
+- Bump @react-native-windows/package-utils to v0.0.0-canary.73
+- Bump @react-native-windows/telemetry to v0.0.0-canary.98
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+
+## 0.0.0-canary.215
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.89
+- Bump @react-native-windows/fs to v0.0.0-canary.46
+- Bump @react-native-windows/package-utils to v0.0.0-canary.72
+- Bump @react-native-windows/telemetry to v0.0.0-canary.97
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/just-task to v2.3.34
+
+## 0.0.0-canary.214
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.88
+- Bump @react-native-windows/fs to v0.0.0-canary.45
+- Bump @react-native-windows/package-utils to v0.0.0-canary.71
+- Bump @react-native-windows/telemetry to v0.0.0-canary.96
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/just-task to v2.3.33
+
+## 0.0.0-canary.213
+
+Wed, 15 May 2024 05:14:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.87
+- Bump @react-native-windows/fs to v0.0.0-canary.44
+- Bump @react-native-windows/package-utils to v0.0.0-canary.70
+- Bump @react-native-windows/telemetry to v0.0.0-canary.95
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/just-task to v2.3.32
+
+## 0.0.0-canary.212
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.86
+- Bump @react-native-windows/fs to v0.0.0-canary.43
+- Bump @react-native-windows/package-utils to v0.0.0-canary.69
+- Bump @react-native-windows/telemetry to v0.0.0-canary.94
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/just-task to v2.3.31
+
+## 0.0.0-canary.211
+
+Thu, 09 May 2024 05:18:43 GMT
+
+### Changes
+
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.85
+- Bump @react-native-windows/fs to v0.0.0-canary.42
+- Bump @react-native-windows/package-utils to v0.0.0-canary.68
+- Bump @react-native-windows/telemetry to v0.0.0-canary.93
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
+
+## 0.0.0-canary.210
+
+Fri, 26 Apr 2024 05:16:48 GMT
+
+### Changes
+
+- CodeQL fixes (email not defined)
+
+## 0.0.0-canary.209
+
+Thu, 25 Apr 2024 20:12:42 GMT
+
+### Changes
+
+- Fix bad version bump (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.84
+- Bump @react-native-windows/fs to v0.0.0-canary.41
+- Bump @react-native-windows/package-utils to v0.0.0-canary.67
+- Bump @react-native-windows/telemetry to v0.0.0-canary.92
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/just-task to v2.3.29
+
+## 0.0.0-canary.208
+
+Wed, 10 Apr 2024 05:18:18 GMT
+
+### Changes
+
+- fix cli version (yajurgrover24@gmail.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.83
+- Bump @react-native-windows/fs to v0.0.0-canary.40
+- Bump @react-native-windows/package-utils to v0.0.0-canary.66
+- Bump @react-native-windows/telemetry to v0.0.0-canary.91
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/just-task to v2.3.27
 
 ## 0.0.0-canary.207
 

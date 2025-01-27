@@ -7,6 +7,7 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
@@ -17,7 +18,7 @@ struct PlatformConstantsIOSSpec_PlatformConstantsIOS_reactNativeVersion {
     double major;
     double minor;
     double patch;
-    std::optional<double> prerelease;
+    std::optional<std::string> prerelease;
 };
 
 struct PlatformConstantsIOSSpec_PlatformConstantsIOS {

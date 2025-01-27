@@ -4,15 +4,15 @@
     "native,Version=v0.0": {
       "boost": {
         "type": "Direct",
-        "requested": "[1.76.0, )",
-        "resolved": "1.76.0",
-        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+        "requested": "[1.83.0, )",
+        "resolved": "1.83.0",
+        "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
       "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn": {
         "type": "Direct",
-        "requested": "[1.8.1, )",
-        "resolved": "1.8.1",
-        "contentHash": "hNotg7kHzCUYs2baQ2D4HcVwWLlYiDzHnXDAb7i8OkeCCSXTu+EfOgJ8xW07Lyh87HcWLt2S5hT6G6D/pP2BLg=="
+        "requested": "[1.8.1.7, )",
+        "resolved": "1.8.1.7",
+        "contentHash": "FxNwT4YpsGdqforqFSTGc5f/e+qfRJ+1wf5G1w0nEEkT5pr5M95E5+fOuswpPUGXPZIXM+M7BSVGnCRcQZjomA=="
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
@@ -23,7 +23,7 @@
       "common": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )"
+          "boost": "[1.83.0, )"
         }
       },
       "fmt": {
@@ -32,7 +32,7 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
+          "boost": "[1.83.0, )",
           "fmt": "[1.0.0, )"
         }
       },
@@ -40,7 +40,7 @@
         "type": "Project",
         "dependencies": {
           "Folly": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "boost": "[1.83.0, )"
         }
       }
     },

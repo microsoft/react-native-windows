@@ -7,13 +7,18 @@
 'use strict';
 
 import type {
+  NativeModuleEventEmitterShape,
   NativeModuleFunctionTypeAnnotation,
   NativeModulePropertyShape,
   NativeModuleSchema,
 } from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap} from './AliasManaging';
 import type {CppCodegenOptions} from './ObjectTypes';
-import {translateArgs, translateSpecArgs} from './ParamTypes';
+import {
+  translateArgs,
+  translateSpecArgs,
+  translateEventEmitterArgs,
+} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
 function isMethodSync(funcType: NativeModuleFunctionTypeAnnotation) {
@@ -32,6 +37,7 @@ function getPossibleMethodSignatures(
 ): string[] {
   const args = translateArgs(funcType.params, aliases, baseAliasName, options);
   if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (funcType.returnTypeAnnotation.elementType) {
       args.push(
         `::React::ReactPromise<${translateImplReturnType(
@@ -87,13 +93,13 @@ function translatePossibleMethodSignatures(
 }
 
 function renderProperties(
-  properties: ReadonlyArray<NativeModulePropertyShape>,
+  methods: ReadonlyArray<NativeModulePropertyShape>,
   aliases: AliasMap,
   tuple: boolean,
   options: CppCodegenOptions,
-): string {
+): {code: string; numberOfProperties: number} {
   // TODO: generate code for constants
-  return properties
+  const properties = methods
     .filter(prop => prop.name !== 'getConstants')
     .map((prop, index) => {
       // TODO: prop.optional === true
@@ -119,6 +125,7 @@ function renderProperties(
       );
 
       if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (funcType.returnTypeAnnotation.elementType) {
           traversedArgs.push(
             `Promise<${translateSpecReturnType(
@@ -151,6 +158,67 @@ function renderProperties(
             options,
           )});`;
       }
+    });
+
+  return {code: properties.join('\n'), numberOfProperties: properties.length};
+}
+
+function getPossibleEventEmitterSignatures(
+  eventEmitter: NativeModuleEventEmitterShape,
+  aliases: AliasMap,
+  options: CppCodegenOptions,
+): string[] {
+  const traversedArgs = translateEventEmitterArgs(
+    eventEmitter.typeAnnotation.typeAnnotation,
+    aliases,
+    eventEmitter.name,
+    options,
+  );
+  return [
+    `REACT_EVENT(${eventEmitter.name}) std::function<void(${traversedArgs})> ${eventEmitter.name};`,
+  ];
+}
+
+function translatePossibleEventSignatures(
+  eventEmitter: NativeModuleEventEmitterShape,
+  aliases: AliasMap,
+  options: CppCodegenOptions,
+): string {
+  return getPossibleEventEmitterSignatures(eventEmitter, aliases, options)
+    .map(sig => `"    ${sig}\\n"`)
+    .join('\n          ');
+}
+
+function renderEventEmitters(
+  eventEmitters: ReadonlyArray<NativeModuleEventEmitterShape>,
+  indexOffset: number,
+  aliases: AliasMap,
+  tuple: boolean,
+  options: CppCodegenOptions,
+): string {
+  return eventEmitters
+    .map((eventEmitter, index) => {
+      const traversedArgs = translateEventEmitterArgs(
+        eventEmitter.typeAnnotation.typeAnnotation,
+        aliases,
+        eventEmitter.name,
+        options,
+      );
+
+      if (tuple) {
+        return `      EventEmitter<void(${traversedArgs})>{${
+          index + indexOffset
+        }, L"${eventEmitter.name}"},`;
+      } else {
+        return `    REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(
+          ${index + indexOffset},
+          "${eventEmitter.name}",
+          ${translatePossibleEventSignatures(
+            eventEmitter,
+            aliases,
+            options,
+          )});`;
+      }
     })
     .join('\n');
 }
@@ -159,19 +227,44 @@ export function generateValidateMethods(
   nativeModule: NativeModuleSchema,
   aliases: AliasMap,
   options: CppCodegenOptions,
-): [string, string] {
-  const properties = nativeModule.spec.properties;
+): {
+  traversedProperties: string;
+  traversedEventEmitters: string;
+  traversedPropertyTuples: string;
+  traversedEventEmitterTuples: string;
+} {
+  const methods = nativeModule.spec.methods;
+  const eventEmitters = nativeModule.spec.eventEmitters;
   const traversedProperties = renderProperties(
-    properties,
+    methods,
+    aliases,
+    false,
+    options,
+  );
+  const traversedEventEmitters = renderEventEmitters(
+    eventEmitters,
+    traversedProperties.numberOfProperties,
     aliases,
     false,
     options,
   );
   const traversedPropertyTuples = renderProperties(
-    properties,
+    methods,
     aliases,
     true,
     options,
   );
-  return [traversedPropertyTuples, traversedProperties];
+  const traversedEventEmitterTuples = renderEventEmitters(
+    eventEmitters,
+    traversedProperties.numberOfProperties,
+    aliases,
+    true,
+    options,
+  );
+  return {
+    traversedPropertyTuples: traversedPropertyTuples.code,
+    traversedEventEmitterTuples,
+    traversedProperties: traversedProperties.code,
+    traversedEventEmitters,
+  };
 }

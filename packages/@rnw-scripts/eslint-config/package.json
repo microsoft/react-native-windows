@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/eslint-config",
-  "version": "1.2.10",
+  "version": "1.2.32",
   "license": "MIT",
   "main": "eslintrc.js",
   "repository": {
@@ -9,12 +9,13 @@
     "directory": "packages/@rnw-scripts/eslint-config"
   },
   "dependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/eslint-parser": "^7.20.0",
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@react-native/eslint-config": "0.75.0-nightly-20240221-a1171f79f",
+    "@react-native/eslint-config": "0.78.0-nightly-20241231-a3c8e2137",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-ft-flow": "^2.0.1"
+    "eslint-plugin-ft-flow": "^2.0.1",
+    "hermes-eslint": "0.23.1"
   },
   "devDependencies": {
     "eslint": "^8.19.0",

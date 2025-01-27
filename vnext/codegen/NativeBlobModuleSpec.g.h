@@ -7,6 +7,7 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
@@ -28,9 +29,6 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(BlobModuleSpec_Cons
 }
 
 struct BlobModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto constants = std::tuple{
-      TypedConstant<BlobModuleSpec_Constants>{0},
-  };
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"addNetworkingHandler"},
       Method<void(double) noexcept>{1, L"addWebSocketHandler"},
@@ -42,14 +40,7 @@ struct BlobModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto constantCheckResults = CheckConstants<TModule, BlobModuleSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, BlobModuleSpec>();
-
-    REACT_SHOW_CONSTANT_SPEC_ERRORS(
-          0,
-          "BlobModuleSpec_Constants",
-          "    REACT_GET_CONSTANTS(GetConstants) BlobModuleSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
-          "    REACT_GET_CONSTANTS(GetConstants) static BlobModuleSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,

@@ -72,12 +72,14 @@ jobs:
               parameters:
                 package: packages/e2e-test-app
                 feature: UseHermes
-                value: ${{ not(coalesce(matrix.UseChakra, false)) }}
+                ${{ if eq(matrix.UseChakra, true) }}:
+                  value: false
+                ${{ else }}:
+                  value: true
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
-                certificateName: reactUWPTestAppEncodedKey
                 buildConfiguration: Release
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
@@ -185,7 +187,6 @@ jobs:
               - template: ../templates/run-windows-with-certificates.yml
                 parameters:
                   buildEnvironment: ${{ parameters.BuildEnvironment }}
-                  certificateName: reactUWPTestAppEncodedKey
                   buildConfiguration: Release
                   buildPlatform: ${{ matrix.BuildPlatform }}
                   buildLogDirectory: $(BuildLogDirectory)
@@ -199,6 +200,7 @@ jobs:
                   yarn e2etest
                 displayName: yarn e2etest
                 workingDirectory: packages/e2e-test-app-fabric
+                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
               - script: npx jest --clearCache
                 displayName: clear jest cache
@@ -209,6 +211,7 @@ jobs:
                 displayName: Update snapshots
                 workingDirectory: packages/e2e-test-app-fabric
                 condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
               - task: PowerShell@2
                 displayName: Stop tracing

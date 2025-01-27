@@ -23,48 +23,6 @@ import {IKeyboardProps} from '../Keyboard/KeyboardExtProps'; // Windows
 import {Touchable} from '../Touchable/Touchable';
 import {AccessibilityProps} from './ViewAccessibility';
 
-export type TVParallaxProperties = {
-  /**
-   * If true, parallax effects are enabled.  Defaults to true.
-   */
-  enabled?: boolean | undefined;
-
-  /**
-   * Defaults to 2.0.
-   */
-  shiftDistanceX?: number | undefined;
-
-  /**
-   * Defaults to 2.0.
-   */
-  shiftDistanceY?: number | undefined;
-
-  /**
-   * Defaults to 0.05.
-   */
-  tiltAngle?: number | undefined;
-
-  /**
-   * Defaults to 1.0
-   */
-  magnification?: number | undefined;
-
-  /**
-   * Defaults to 1.0
-   */
-  pressMagnification?: number | undefined;
-
-  /**
-   * Defaults to 0.3
-   */
-  pressDuration?: number | undefined;
-
-  /**
-   * Defaults to 0.3
-   */
-  pressDelay?: number | undefined;
-};
-
 export interface TVViewPropsIOS {
   /**
    * *(Apple TV only)* When set to true, this view will be focusable
@@ -80,13 +38,6 @@ export interface TVViewPropsIOS {
    * @platform ios
    */
   hasTVPreferredFocus?: boolean | undefined;
-
-  /**
-   * *(Apple TV only)* Object with properties to control Apple TV parallax effects.
-   *
-   * @platform ios
-   */
-  tvParallaxProperties?: TVParallaxProperties | undefined;
 
   /**
    * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 2.0.
@@ -140,6 +91,13 @@ export interface ViewPropsAndroid {
   collapsable?: boolean | undefined;
 
   /**
+   * Setting to false prevents direct children of the view from being removed
+   * from the native view hierarchy, similar to the effect of setting
+   * `collapsable={false}` on each child.
+   */
+  collapsableChildren?: boolean | undefined;
+
+  /**
    * Whether this view should render itself (and all of its children) into a single hardware texture on the GPU.
    *
    * On Android, this is useful for animations and interactions that only modify opacity, rotation, translation, and/or scale:
@@ -167,16 +125,16 @@ export interface ViewPropsAndroid {
 
 // [Windows
 
-export enum EventPhase {
-  None = 0,
-  Capturing,
-  AtTarget,
-  Bubbling,
+export namespace EventPhase {
+  export const None = 0;
+  export const Capturing = 1;
+  export const AtTarget = 2;
+  export const Bubbling = 3;
 }
 
-export enum HandledEventPhase {
-  Capturing = EventPhase.Capturing,
-  Bubbling = EventPhase.Bubbling,
+export namespace HandledEventPhase {
+  const Capturing = EventPhase.Capturing;
+  const Bubbling = EventPhase.Bubbling;
 }
 
 export interface INativeKeyboardEvent {
@@ -186,7 +144,11 @@ export interface INativeKeyboardEvent {
   shiftKey: boolean;
   key: string;
   code: string;
-  eventPhase: EventPhase;
+  eventPhase:
+    | EventPhase.None
+    | EventPhase.Capturing
+    | EventPhase.AtTarget
+    | EventPhase.Bubbling;
 }
 
 export interface IHandledKeyboardEvent {
@@ -195,7 +157,7 @@ export interface IHandledKeyboardEvent {
   metaKey?: boolean;
   shiftKey?: boolean;
   code: string;
-  handledEventPhase?: HandledEventPhase;
+  handledEventPhase?: EventPhase.Capturing | EventPhase.Bubbling;
 }
 
 export type IKeyboardEvent = NativeSyntheticEvent<INativeKeyboardEvent>;

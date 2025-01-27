@@ -12,4 +12,7 @@ bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::S
 std::string FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool fShift, bool fCaps);
 std::string CodeFromVirtualKey(winrt::Windows::System::VirtualKey virtualKey);
 
+const std::string GetOrUnidentifiedCode(winrt::Windows::System::VirtualKey virtualKey);
+const std::string GetOrUnidentifiedKey(winrt::Windows::System::VirtualKey virtualKey);
+
 } // namespace Microsoft::ReactNative

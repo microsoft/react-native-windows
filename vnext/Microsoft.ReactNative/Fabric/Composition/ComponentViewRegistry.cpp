@@ -15,8 +15,6 @@
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/DebuggingOverlayComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
-#include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
-#include <Fabric/Composition/Modal/WindowsModalHostViewShadowNode.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
@@ -42,7 +40,7 @@ void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactConte
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext) noexcept {
   // TODO implement recycled components like core does
 
   winrt::Microsoft::ReactNative::ComponentView view{nullptr};
@@ -58,9 +56,6 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView::Create(
-        compContext, tag, m_context);
-  } else if (componentHandle == facebook::react::WindowsModalHostViewShadowNode::Handle()) {
-    view = winrt::Microsoft::ReactNative::Composition::implementation::WindowsModalHostComponentView::Create(
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView::Create(
@@ -120,6 +115,12 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
     ComponentViewDescriptor componentViewDescriptor) noexcept {
   assert(m_registry.find(tag) != m_registry.end());
 
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentViewDescriptor.view)
+      ->prepareForRecycle();
+
   m_registry.erase(tag);
+
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentViewDescriptor.view)
+      ->onDestroying();
 }
 } // namespace Microsoft::ReactNative

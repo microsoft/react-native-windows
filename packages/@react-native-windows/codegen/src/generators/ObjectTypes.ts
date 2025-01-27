@@ -12,6 +12,9 @@ import type {
   NativeModuleUnionTypeAnnotation,
   NativeModuleStringTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
+  NativeModuleStringLiteralTypeAnnotation,
+  StringLiteralUnionTypeAnnotation,
+  UnsafeAnyTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
 import {
@@ -45,12 +48,17 @@ function translateUnionReturnType(
   }
 }
 
+// eslint-disable-next-line complexity
 export function translateFieldOrReturnType(
-  type: Nullable<
-    | NativeModuleBaseTypeAnnotation
-    | NativeModuleStringTypeAnnotation
-    | NativeModuleFunctionTypeAnnotation
-  >,
+  type:
+    | Nullable<
+        | NativeModuleBaseTypeAnnotation
+        | NativeModuleStringTypeAnnotation
+        | NativeModuleFunctionTypeAnnotation
+        | NativeModuleStringLiteralTypeAnnotation
+        | StringLiteralUnionTypeAnnotation
+      >
+    | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   callerName: 'translateField' | 'translateReturnType',
@@ -60,6 +68,8 @@ export function translateFieldOrReturnType(
   const returnType = type.type;
   switch (type.type) {
     case 'StringTypeAnnotation':
+    case 'StringLiteralTypeAnnotation':
+    case 'StringLiteralUnionTypeAnnotation':
       return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':
@@ -70,7 +80,7 @@ export function translateFieldOrReturnType(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      if (type.elementType) {
+      if (type.elementType.type !== 'AnyTypeAnnotation') {
         return `std::vector<${translateFieldOrReturnType(
           type.elementType,
           aliases,
@@ -104,11 +114,14 @@ export function translateFieldOrReturnType(
         callerName,
         options,
       )}>`;
+    case 'FunctionTypeAnnotation':
     case 'MixedTypeAnnotation':
       return '';
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(type, options);
+    case 'AnyTypeAnnotation':
+      return '::React::JSValue?';
     default:
       throw new Error(`Unhandled type in ${callerName}: ${returnType}`);
   }

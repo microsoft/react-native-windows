@@ -1,9 +1,10 @@
 <Project>
   <PropertyGroup Condition="'$(SolutionName)'=='ReactWindows-Desktop'">
-    <UseFabric>false</UseFabric>
+    <RnwNewArch>false</RnwNewArch>
+    <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
+    <WindowsAppSdkAutoInitialize>false</WindowsAppSdkAutoInitialize>
   </PropertyGroup>
   <PropertyGroup>
-    <EnableSourceLink>true</EnableSourceLink>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 </Project>

@@ -24,9 +24,10 @@ const headerTemplate = `/*
  * in a way that also verifies at compile time that the native module matches the interface required
  * by the TurboModule JS spec.
  */
-#pragma once`;
+#pragma once
+// clang-format off`;
 
-const specTemplate = `::_MODULE_CUSTPM_TYPES_REFLECTION_::
+const specTemplate = `::_MODULE_CUSTOM_TYPES_REFLECTION_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 ::_MODULE_MEMBERS_TUPLES_::
 
@@ -46,7 +47,7 @@ ${headerTemplate}
 #include <vector>
 
 namespace ::_NAMESPACE_:: {
-::_MODULE_CUSTPM_TYPES_::
+::_MODULE_CUSTOM_TYPES_::
 } // namespace ::_NAMESPACE_::
 `;
 
@@ -71,7 +72,7 @@ ${headerTemplate}
 #include <tuple>
 
 namespace ::_NAMESPACE_:: {
-::_MODULE_CUSTPM_TYPES_::
+::_MODULE_CUSTOM_TYPES_::
 ${specTemplate}
 };
 
@@ -118,11 +119,16 @@ export function createNM2Generator({
         });
         let tuples = `
   static constexpr auto methods = std::tuple{
-${methods[0]}
+${methods.traversedPropertyTuples}${
+          methods.traversedEventEmitterTuples ? '\n' : ''
+        }${methods.traversedEventEmitterTuples}
   };`;
         let checks = `
     constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();`;
-        let errors = methods[1];
+        let errors =
+          methods.traversedProperties +
+          (methods.traversedEventEmitters ? '\n' : '') +
+          methods.traversedEventEmitters;
 
         // prepare constants
         const constants = generateValidateConstants(nativeModule, aliases);
@@ -147,8 +153,8 @@ ${errors}`;
 
         const replaceContent = function (template: string): string {
           return template
-            .replace(/::_MODULE_CUSTPM_TYPES_::/g, customTypes)
-            .replace(/::_MODULE_CUSTPM_TYPES_REFLECTION_::/g, customReflection)
+            .replace(/::_MODULE_CUSTOM_TYPES_::/g, customTypes)
+            .replace(/::_MODULE_CUSTOM_TYPES_REFLECTION_::/g, customReflection)
             .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substring(1))
             .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substring(1))
             .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)

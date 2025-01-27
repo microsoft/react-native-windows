@@ -20,11 +20,8 @@ namespace facebook::react {
 class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
   WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
-      : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters) {
-    // Every single `WindowsTextInputShadowNode` will have a reference to
-    // a shared `TextLayoutManager`.
-    m_textLayoutManager = std::make_shared<TextLayoutManager>(contextContainer_);
-  }
+      : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters),
+        textLayoutManager_(std::make_shared<TextLayoutManager>(contextContainer_)) {}
 
   /*
 virtual State::Shared createInitialState(
@@ -71,11 +68,9 @@ virtual State::Shared createInitialState(
   void adopt(ShadowNode &shadowNode) const override {
     auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(shadowNode);
 
-    // `ParagraphShadowNode` uses `TextLayoutManager` to measure text content
+    // `TextInputShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
-    textInputShadowNode.setTextLayoutManager(m_textLayoutManager);
-
-    textInputShadowNode.setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
+    textInputShadowNode.setTextLayoutManager(textLayoutManager_);
 
     /*
             int surfaceId = textInputShadowNode.getSurfaceId();
@@ -97,26 +92,24 @@ virtual State::Shared createInitialState(
           !textInputProps.hasPaddingHorizontal) {
         changedPadding = true;
         style.setPadding(
-            YGEdgeStart, yoga::CompactValue::of<YGUnitPoint>(theme.start));
+            yoga::Edge::Start, yoga::StyleLength::points(theme.start));
       }
       if (!textInputProps.hasPadding && !textInputProps.hasPaddingEnd &&
           !textInputProps.hasPaddingRight &&
           !textInputProps.hasPaddingHorizontal) {
         changedPadding = true;
-        style.setPadding(
-            YGEdgeEnd, yoga::CompactValue::of<YGUnitPoint>(theme.end));
+        style.setPadding(yoga::Edge::End, yoga::StyleLength::points(theme.end));
       }
       if (!textInputProps.hasPadding && !textInputProps.hasPaddingTop &&
           !textInputProps.hasPaddingVertical) {
         changedPadding = true;
-        style.setPadding(
-            YGEdgeTop, yoga::CompactValue::of<YGUnitPoint>(theme.top));
+        style.setPadding(yoga::Edge::Top, yoga::StyleLength::points(theme.top));
       }
       if (!textInputProps.hasPadding && !textInputProps.hasPaddingBottom &&
           !textInputProps.hasPaddingVertical) {
         changedPadding = true;
         style.setPadding(
-            YGEdgeBottom, yoga::CompactValue::of<YGUnitPoint>(theme.bottom));
+            yoga::Edge::Bottom, yoga::StyleLength::points(theme.bottom));
       }
 
       // If the TextInput initially does not have paddingLeft or paddingStart, a
@@ -127,12 +120,12 @@ virtual State::Shared createInitialState(
       if ((textInputProps.hasPadding || textInputProps.hasPaddingLeft ||
            textInputProps.hasPaddingHorizontal) &&
           !textInputProps.hasPaddingStart) {
-        style.setPadding(YGEdgeStart, yoga::CompactValue::ofUndefined());
+        style.setPadding(yoga::Edge::Start, yoga::StyleLength::undefined());
       }
       if ((textInputProps.hasPadding || textInputProps.hasPaddingRight ||
            textInputProps.hasPaddingHorizontal) &&
           !textInputProps.hasPaddingEnd) {
-        style.setPadding(YGEdgeEnd, yoga::CompactValue::ofUndefined());
+        style.setPadding(yoga::Edge::End, yoga::StyleLength::undefined());
       }
 
       // Note that this is expensive: on every adopt, we need to set the Yoga
@@ -163,7 +156,7 @@ virtual State::Shared createInitialState(
   // TODO T68526882: Unify with Binding::UIManagerJavaDescriptor
   constexpr static auto UIManagerJavaDescriptor = "com/facebook/react/fabric/FabricUIManager";
 
-  SharedTextLayoutManager m_textLayoutManager;
+  const std::shared_ptr<TextLayoutManager> textLayoutManager_;
   mutable std::unordered_map<int, ThemePadding> surfaceIdToThemePaddingMap_;
 };
 

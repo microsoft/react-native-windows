@@ -6,17 +6,27 @@
 namespace Microsoft::ReactNative {
 
 SynchronousEventBeat::SynchronousEventBeat(
-    facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
+    std::shared_ptr<facebook::react::EventBeat::OwnerBox> const ownerBox,
     const winrt::Microsoft::ReactNative::ReactContext &context,
     facebook::react::RuntimeExecutor runtimeExecutor,
     std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler)
-    : EventBeat(ownerBox),
+    : EventBeat(ownerBox, *runtimeScheduler),
       m_context(context),
       m_runtimeExecutor(runtimeExecutor),
       m_runtimeScheduler(std::move(runtimeScheduler)) {}
 
+void SynchronousEventBeat::beat(facebook::jsi::Runtime &runtime) const {
+  if (!this->isEventBeatRequested_) {
+    return;
+  }
+  isEventBeatRequested_ = false;
+  if (beatCallback_) {
+    beatCallback_(runtime);
+  }
+}
+
 void SynchronousEventBeat::induce() const {
-  if (!isRequested_) {
+  if (!isEventBeatRequested_) {
     return;
   }
 
@@ -26,7 +36,7 @@ void SynchronousEventBeat::induce() const {
 }
 
 void SynchronousEventBeat::lockExecutorAndBeat() const {
-  if (!this->isRequested_) {
+  if (!this->isEventBeatRequested_) {
     return;
   }
 

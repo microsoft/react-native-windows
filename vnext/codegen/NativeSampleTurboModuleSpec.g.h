@@ -7,11 +7,18 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
+
+struct SampleTurboModuleSpec_ObjectStruct {
+    double a;
+    std::string b;
+    std::optional<std::string> c;
+};
 
 struct SampleTurboModuleSpec_Constants {
     bool const1;
@@ -19,6 +26,15 @@ struct SampleTurboModuleSpec_Constants {
     std::string const3;
 };
 
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SampleTurboModuleSpec_ObjectStruct*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"a", &SampleTurboModuleSpec_ObjectStruct::a},
+        {L"b", &SampleTurboModuleSpec_ObjectStruct::b},
+        {L"c", &SampleTurboModuleSpec_ObjectStruct::c},
+    };
+    return fieldMap;
+}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SampleTurboModuleSpec_Constants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -52,6 +68,10 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void() noexcept>{15, L"voidFuncAssert"},
       SyncMethod<::React::JSValue(::React::JSValue) noexcept>{16, L"getObjectAssert"},
       Method<void(Promise<void>) noexcept>{17, L"promiseAssert"},
+      EventEmitter<void(void)>{18, L"onPress"},
+      EventEmitter<void(std::string)>{19, L"onClick"},
+      EventEmitter<void(SampleTurboModuleSpec_ObjectStruct)>{20, L"onChange"},
+      EventEmitter<void(std::vector<SampleTurboModuleSpec_ObjectStruct>)>{21, L"onSubmit"},
   };
 
   template <class TModule>
@@ -155,6 +175,22 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "promiseAssert",
           "    REACT_METHOD(promiseAssert) void promiseAssert(::React::ReactPromise<void> &&result) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(promiseAssert) static void promiseAssert(::React::ReactPromise<void> &&result) noexcept { /* implementation */ }\n");
+    REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(
+          18,
+          "onPress",
+          "    REACT_EVENT(onPress) std::function<void(void)> onPress;\n");
+    REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(
+          19,
+          "onClick",
+          "    REACT_EVENT(onClick) std::function<void(std::string)> onClick;\n");
+    REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(
+          20,
+          "onChange",
+          "    REACT_EVENT(onChange) std::function<void(SampleTurboModuleSpec_ObjectStruct)> onChange;\n");
+    REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(
+          21,
+          "onSubmit",
+          "    REACT_EVENT(onSubmit) std::function<void(std::vector<SampleTurboModuleSpec_ObjectStruct>)> onSubmit;\n");
   }
 };
 

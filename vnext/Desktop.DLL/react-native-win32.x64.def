@@ -63,8 +63,8 @@ EXPORTS
 ?Hash128@SpookyHashV2@hash@folly@@SAXPEBX_KPEA_K2@Z
 ??1Instance@react@facebook@@UEAA@XZ
 ??1InstanceTargetDelegate@jsinspector_modern@react@facebook@@UEAA@XZ
-?invokeAsync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
-?invokeSync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
+?invokeAsync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXAEAVRuntime@jsi@facebook@@@Z@std@@@Z
+?invokeSync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXAEAVRuntime@jsi@facebook@@@Z@std@@@Z
 
 MicrosoftReactSetRuntimeOptionBool
 MicrosoftReactSetRuntimeOptionInt
@@ -80,6 +80,7 @@ YGConfigGetUseWebDefaults
 YGConfigIsExperimentalFeatureEnabled
 YGConfigNew
 YGConfigSetContext
+YGConfigSetErrata
 YGConfigSetExperimentalFeatureEnabled
 YGConfigSetLogger
 YGConfigSetPointScaleFactor

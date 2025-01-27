@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <RunAutolinkCheck Condition="'$(RunAutolinkCheck)' == ''">true</RunAutolinkCheck>
-    <AutolinkCommand Condition="'$(AutolinkCommand)' == ''">npx react-native autolink-windows</AutolinkCommand>
+    <AutolinkCommand Condition="'$(AutolinkCommand)' == ''">npx --yes @react-native-community/cli autolink-windows</AutolinkCommand>
     <AutolinkCommandWorkingDir Condition="'$(AutolinkCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</AutolinkCommandWorkingDir>
     <AutolinkCommandArgs Condition="'$(AutolinkCommandArgs)' == '' And '$(SolutionPath)' != '' And '$(SolutionPath)' != '*Undefined*' And '$(ProjectPath)' != ''">--check --sln "$([MSBuild]::MakeRelative($(AutolinkCommandWorkingDir), $(SolutionPath)))" --proj "$([MSBuild]::MakeRelative($(AutolinkCommandWorkingDir), $(ProjectPath)))"</AutolinkCommandArgs>
     <AutolinkCommandArgs Condition="'$(AutolinkCommandArgs)' == ''">--check</AutolinkCommandArgs>

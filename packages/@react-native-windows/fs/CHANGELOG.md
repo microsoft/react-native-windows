@@ -1,8 +1,199 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Sat, 30 Mar 2024 05:18:04 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.61
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 0.0.0-canary.60
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 0.0.0-canary.59
+
+Sat, 19 Oct 2024 05:29:46 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.58
+
+Mon, 07 Oct 2024 19:54:27 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
+
+## 0.0.0-canary.56
+
+Thu, 26 Sep 2024 17:38:27 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/just-task to v2.3.44
+
+## 0.0.0-canary.55
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
+
+## 0.0.0-canary.54
+
+Wed, 24 Jul 2024 05:24:36 GMT
+
+### Changes
+
+- integrate 0.75.0-nightly-20240618-5df5ed1a8 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/just-task to v2.3.42
+
+## 0.0.0-canary.53
+
+Wed, 10 Jul 2024 05:15:30 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/just-task to v2.3.41
+
+## 0.0.0-canary.52
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.23
+- Bump @rnw-scripts/just-task to v2.3.40
+
+## 0.0.0-canary.51
+
+Sat, 08 Jun 2024 05:17:57 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.22
+- Bump @rnw-scripts/just-task to v2.3.39
+
+## 0.0.0-canary.50
+
+Wed, 05 Jun 2024 05:18:11 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.38
+
+## 0.0.0-canary.49
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/just-task to v2.3.37
+
+## 0.0.0-canary.48
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/just-task to v2.3.36
+
+## 0.0.0-canary.47
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+
+## 0.0.0-canary.46
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/just-task to v2.3.34
+
+## 0.0.0-canary.45
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/just-task to v2.3.33
+
+## 0.0.0-canary.44
+
+Wed, 15 May 2024 05:14:54 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/just-task to v2.3.32
+
+## 0.0.0-canary.43
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/just-task to v2.3.31
+
+## 0.0.0-canary.42
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
+
+## 0.0.0-canary.41
+
+Thu, 25 Apr 2024 20:12:42 GMT
+
+### Changes
+
+- Fix bad version bump (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/just-task to v2.3.29
+
+## 0.0.0-canary.40
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/just-task to v2.3.27
 
 ## 0.0.0-canary.39
 

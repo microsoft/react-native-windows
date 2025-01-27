@@ -5,16 +5,21 @@
  * @format
  */
 
-import type {Double, DirectEventHandler, Int32} from '../../Types/CodegenTypes';
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
-import type {ViewProps} from '../View/ViewPropTypes';
+import type {
+  DirectEventHandler,
+  Double,
+  Int32,
+} from 'react-native/Libraries/Types/CodegenTypes';
 
-type DismissEvent = $ReadOnly<{|
+import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+
+type DismissEvent = $ReadOnly<{
   isOpen?: boolean,
-|}>;
+}>;
 
-type NativeProps = $ReadOnly<{|
+type NativeProps = $ReadOnly<{
   ...ViewProps,
 
   // Props
@@ -36,7 +41,7 @@ type NativeProps = $ReadOnly<{|
   verticalOffset?: Double,
 
   // Events
-|}>;
+}>;
 
 type NativeType = HostComponent<NativeProps>;
 

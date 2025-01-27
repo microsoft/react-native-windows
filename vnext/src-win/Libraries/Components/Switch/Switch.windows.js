@@ -130,15 +130,18 @@ const returnsTrue = () => true;
   ```
  */
 
-const SwitchWithForwardedRef: React.AbstractComponent<
-  Props,
-  React.ElementRef<
-    typeof SwitchNativeComponent | typeof AndroidSwitchNativeComponent,
-  >,
-> = React.forwardRef(function Switch(props, forwardedRef): React.Node {
+type SwitchRef = React.ElementRef<
+  typeof SwitchNativeComponent | typeof AndroidSwitchNativeComponent,
+>;
+
+const SwitchWithForwardedRef: component(
+  ref: React.RefSetter<SwitchRef>,
+  ...props: Props
+) = React.forwardRef(function Switch(props, forwardedRef): React.Node {
   const {
     disabled,
     focusable, // [Windows]
+    accessible, // [Windows]
     ios_backgroundColor,
     onChange,
     onValueChange,
@@ -244,6 +247,7 @@ const SwitchWithForwardedRef: React.AbstractComponent<
         {...restProps}
         {...platformProps}
         focusable={focusable === undefined ? true : focusable} // [Windows]
+        accessible={accessible === undefined ? true : accessible} // [Windows]
         accessibilityRole={props.accessibilityRole ?? 'switch'}
         onChange={handleChange}
         onResponderTerminationRequest={returnsFalse}

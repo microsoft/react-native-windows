@@ -3,10 +3,8 @@
 
   <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
     <UseHermes>true</UseHermes>
-    <UseFabric>true</UseFabric>
     <UseWinUI3>false</UseWinUI3>
     <UseExperimentalWinUI3>false</UseExperimentalWinUI3>
-    <EnableSourceLink>true</EnableSourceLink>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 
@@ -20,7 +18,8 @@
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI3 for fabric" Condition="'$(SolutionName)'=='playground-composition'">
-    <UseWinUI3>true</UseWinUI3>
+    <RnwNewArch>true</RnwNewArch>
+    <UseExperimentalNuget>false</UseExperimentalNuget>
   </PropertyGroup>
 
 </Project>

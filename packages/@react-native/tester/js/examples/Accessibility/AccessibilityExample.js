@@ -13,13 +13,13 @@
 import type {PressEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/EventEmitter';
 
-const RNTesterBlock = require('../../components/RNTesterBlock');
-const checkImageSource = require('./check.png');
-const mixedCheckboxImageSource = require('./mixed.png');
-const uncheckImageSource = require('./uncheck.png');
-const React = require('react');
-const {createRef} = require('react');
-const {
+import RNTesterBlock from '../../components/RNTesterBlock';
+import RNTesterText from '../../components/RNTesterText';
+import checkImageSource from './check.png';
+import mixedCheckboxImageSource from './mixed.png';
+import uncheckImageSource from './uncheck.png';
+import React, {createRef} from 'react';
+import {
   AccessibilityInfo,
   Alert,
   Button,
@@ -29,13 +29,12 @@ const {
   ScrollView,
   StyleSheet,
   Switch,
-  Text,
   TextInput,
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} = require('react-native');
+} from 'react-native';
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -106,29 +105,37 @@ class AccessibilityExample extends React.Component<{}> {
     return (
       <View style={styles.sectionContainer}>
         <RNTesterBlock title="TextView without label">
-          <Text>
+          <RNTesterText>
             Text's accessibilityLabel is the raw text itself unless it is set
             explicitly.
-          </Text>
+          </RNTesterText>
         </RNTesterBlock>
 
         <RNTesterBlock title="TextView with label">
-          <Text accessibilityLabel="I have label, so I read it instead of embedded text.">
+          <RNTesterText accessibilityLabel="I have label, so I read it instead of embedded text.">
             This text component's accessibilityLabel is set explicitly.
-          </Text>
+          </RNTesterText>
         </RNTesterBlock>
 
         <RNTesterBlock title="Nonaccessible view with TextViews">
           <View>
-            <Text style={{color: 'green'}}>This is text one.</Text>
-            <Text style={{color: 'blue'}}>This is text two.</Text>
+            <RNTesterText style={{color: 'green'}}>
+              This is text one.
+            </RNTesterText>
+            <RNTesterText style={{color: 'blue'}}>
+              This is text two.
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
         <RNTesterBlock title="Accessible view with TextViews without label">
           <View accessible={true}>
-            <Text style={{color: 'green'}}>This is text one.</Text>
-            <Text style={{color: 'blue'}}>This is text two.</Text>
+            <RNTesterText style={{color: 'green'}}>
+              This is text one.
+            </RNTesterText>
+            <RNTesterText style={{color: 'blue'}}>
+              This is text two.
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
@@ -136,25 +143,33 @@ class AccessibilityExample extends React.Component<{}> {
           <View
             accessible={true}
             accessibilityLabel="I have label, so I read it instead of embedded text.">
-            <Text style={{color: 'green'}}>This is text one.</Text>
-            <Text style={{color: 'blue'}}>This is text two.</Text>
+            <RNTesterText style={{color: 'green'}}>
+              This is text one.
+            </RNTesterText>
+            <RNTesterText style={{color: 'blue'}}>
+              This is text two.
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
         <RNTesterBlock title="View with hidden children from accessibility tree.">
           <View aria-hidden>
-            <Text>
+            <RNTesterText>
               This view's children are hidden from the accessibility tree
-            </Text>
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
         {/* Android screen readers will say the accessibility hint instead of the text
-           since the view doesn't have a label. */}
+                   since the view doesn't have a label. */}
         <RNTesterBlock title="Accessible view with TextViews with hint">
           <View accessibilityHint="Accessibility hint." accessible={true}>
-            <Text style={{color: 'green'}}>This is text one.</Text>
-            <Text style={{color: 'blue'}}>This is text two.</Text>
+            <RNTesterText style={{color: 'green'}}>
+              This is text one.
+            </RNTesterText>
+            <RNTesterText style={{color: 'blue'}}>
+              This is text two.
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
@@ -163,17 +178,23 @@ class AccessibilityExample extends React.Component<{}> {
             accessibilityLabel="Accessibility label."
             accessibilityHint="Accessibility hint."
             accessible={true}>
-            <Text style={{color: 'green'}}>This is text one.</Text>
-            <Text style={{color: 'blue'}}>This is text two.</Text>
+            <RNTesterText style={{color: 'green'}}>
+              This is text one.
+            </RNTesterText>
+            <RNTesterText style={{color: 'blue'}}>
+              This is text two.
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
         <RNTesterBlock title="Text with accessibilityRole = header">
-          <Text accessibilityRole="header">This is a title.</Text>
+          <RNTesterText accessibilityRole="header">
+            This is a title.
+          </RNTesterText>
         </RNTesterBlock>
 
         <RNTesterBlock title="Text with role = heading">
-          <Text role="heading">This is a title.</Text>
+          <RNTesterText role="heading">This is a title.</RNTesterText>
         </RNTesterBlock>
 
         <RNTesterBlock title="Touchable with accessibilityRole = link">
@@ -181,7 +202,7 @@ class AccessibilityExample extends React.Component<{}> {
             onPress={() => Alert.alert('Link has been clicked!')}
             accessibilityRole="link">
             <View>
-              <Text>Click me</Text>
+              <RNTesterText>Click me</RNTesterText>
             </View>
           </TouchableOpacity>
         </RNTesterBlock>
@@ -190,7 +211,7 @@ class AccessibilityExample extends React.Component<{}> {
           <TouchableOpacity
             onPress={() => Alert.alert('Button has been pressed!')}
             accessibilityRole="button">
-            <Text>Click me</Text>
+            <RNTesterText>Click me</RNTesterText>
           </TouchableOpacity>
         </RNTesterBlock>
 
@@ -201,9 +222,9 @@ class AccessibilityExample extends React.Component<{}> {
             accessibilityState={{disabled: true}}
             disabled={true}>
             <View>
-              <Text>
+              <RNTesterText>
                 I am disabled. Clicking me will not trigger any action.
-              </Text>
+              </RNTesterText>
             </View>
           </TouchableOpacity>
         </RNTesterBlock>
@@ -214,9 +235,9 @@ class AccessibilityExample extends React.Component<{}> {
             accessibilityLabel={'You are pressing Disabled TouchableOpacity'}
             accessibilityState={{disabled: true}}>
             <View>
-              <Text>
+              <RNTesterText>
                 I am disabled. Clicking me will not trigger any action.
-              </Text>
+              </RNTesterText>
             </View>
           </TouchableOpacity>
         </RNTesterBlock>
@@ -224,7 +245,7 @@ class AccessibilityExample extends React.Component<{}> {
           <View
             accessible={true}
             accessibilityState={{selected: true, disabled: true}}>
-            <Text>This view is selected and disabled.</Text>
+            <RNTesterText>This view is selected and disabled.</RNTesterText>
           </View>
         </RNTesterBlock>
 
@@ -235,7 +256,9 @@ class AccessibilityExample extends React.Component<{}> {
             accessibilityRole="button"
             accessibilityState={{selected: true}}
             accessibilityHint="Accessibility hint.">
-            <Text>Accessible view with label, hint, role, and state</Text>
+            <RNTesterText>
+              Accessible view with label, hint, role, and state
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
@@ -246,19 +269,21 @@ class AccessibilityExample extends React.Component<{}> {
             accessibilityRole="button"
             aria-selected={true}
             accessibilityHint="Accessibility hint.">
-            <Text>Accessible view with label, hint, role, and state</Text>
+            <RNTesterText>
+              Accessible view with label, hint, role, and state
+            </RNTesterText>
           </View>
         </RNTesterBlock>
 
         <RNTesterBlock title="TextInput with accessibilityLabelledBy attribute">
           <View>
-            <Text nativeID="formLabel1">Mail Address</Text>
+            <RNTesterText nativeID="formLabel1">Mail Address</RNTesterText>
             <TextInput
               accessibilityLabel="input test1"
               accessibilityLabelledBy="formLabel1"
               style={styles.default}
             />
-            <Text nativeID="formLabel2">First Name</Text>
+            <RNTesterText nativeID="formLabel2">First Name</RNTesterText>
             <TextInput
               accessibilityLabel="input test2"
               accessibilityLabelledBy={['formLabel2', 'formLabel3']}
@@ -269,7 +294,9 @@ class AccessibilityExample extends React.Component<{}> {
         </RNTesterBlock>
         <RNTesterBlock title="Switch with accessibilityLabelledBy attribute">
           <View>
-            <Text nativeID="formLabel4">Enable Notifications</Text>
+            <RNTesterText nativeID="formLabel4">
+              Enable Notifications
+            </RNTesterText>
             <Switch
               value={true}
               accessibilityLabel="switch test1"
@@ -289,10 +316,10 @@ class AutomaticContentGrouping extends React.Component<{}> {
         <RNTesterBlock title="The parent and the children have a different role">
           <TouchableNativeFeedback accessible={true} accessibilityRole="button">
             <View accessible={false}>
-              <Text accessibilityRole="image" accessible={false}>
+              <RNTesterText accessibilityRole="image" accessible={false}>
                 Text number 1 with a role
-              </Text>
-              <Text accessible={false}>Text number 2</Text>
+              </RNTesterText>
+              <RNTesterText accessible={false}>Text number 2</RNTesterText>
             </View>
           </TouchableNativeFeedback>
         </RNTesterBlock>
@@ -320,10 +347,11 @@ class AutomaticContentGrouping extends React.Component<{}> {
             }}
             accessibilityRole="button">
             <View>
-              <Text accessible={false}>Text number 1</Text>
-              <Text accessible={false}>
-                Text number 2<Text accessible={false}>Text number 3</Text>
-              </Text>
+              <RNTesterText accessible={false}>Text number 1</RNTesterText>
+              <RNTesterText accessible={false}>
+                Text number 2
+                <RNTesterText accessible={false}>Text number 3</RNTesterText>
+              </RNTesterText>
             </View>
           </TouchableNativeFeedback>
         </RNTesterBlock>
@@ -333,12 +361,12 @@ class AutomaticContentGrouping extends React.Component<{}> {
             accessible={true}
             accessibilityRole="button"
             accessibilityState={{checked: true}}>
-            <Text
+            <RNTesterText
               accessible={false}
               accessibilityState={{checked: true, disabled: false}}>
               Text number 1
-            </Text>
-            <Text
+            </RNTesterText>
+            <RNTesterText
               style={styles.smallRedSquare}
               accessible={false}
               accessibilityState={{checked: false, disabled: true}}
@@ -351,7 +379,7 @@ class AutomaticContentGrouping extends React.Component<{}> {
         <RNTesterBlock title="One of the children has accessibilityLabel, role, state, and accessibilityValue.">
           <View accessible={true} accessibilityRole="button">
             <View>
-              <Text accessible={false}>Text number 1</Text>
+              <RNTesterText accessible={false}>Text number 1</RNTesterText>
               <TouchableNativeFeedback
                 focusable={true}
                 onPress={() => console.warn('onPress child')}
@@ -359,8 +387,10 @@ class AutomaticContentGrouping extends React.Component<{}> {
                 accessibilityLabel="this is my label"
                 accessibilityRole="image"
                 accessibilityState={{disabled: true}}
-                accessibilityValue={{text: 'this is the accessibility value'}}>
-                <Text accessible={false}>Text number 3</Text>
+                accessibilityValue={{
+                  text: 'this is the accessibility value',
+                }}>
+                <RNTesterText accessible={false}>Text number 3</RNTesterText>
               </TouchableNativeFeedback>
             </View>
           </View>
@@ -379,12 +409,13 @@ class AutomaticContentGrouping extends React.Component<{}> {
 
         <RNTesterBlock title="The parents include three levels of nested Components.">
           <TouchableNativeFeedback accessible={true} accessibilityRole="button">
-            <Text accessible={false}>
+            <RNTesterText accessible={false}>
               Text number 2
-              <Text accessible={false}>
-                Text number 3<Text accessible={false}>Text number 4</Text>
-              </Text>
-            </Text>
+              <RNTesterText accessible={false}>
+                Text number 3
+                <RNTesterText accessible={false}>Text number 4</RNTesterText>
+              </RNTesterText>
+            </RNTesterText>
           </TouchableNativeFeedback>
         </RNTesterBlock>
 
@@ -394,7 +425,7 @@ class AutomaticContentGrouping extends React.Component<{}> {
             accessible={true}
             accessibilityRole="button">
             <View>
-              <Text
+              <RNTesterText
                 style={styles.smallRedSquare}
                 accessibilityLabel="this is the child Text accessibilityLabel"
                 accessible={false}
@@ -405,7 +436,7 @@ class AutomaticContentGrouping extends React.Component<{}> {
 
         <RNTesterBlock title="One of the child has accessibilityHint (hasText triggers the announcement).">
           <View accessible={true} accessibilityRole="button">
-            <Text
+            <RNTesterText
               style={styles.smallRedSquare}
               accessible={false}
               accessibilityHint="this child Text does not have text, but has hint and should be announced by TalkBack"
@@ -428,7 +459,7 @@ class CheckboxExample extends React.Component<
   };
 
   _onCheckboxPress = () => {
-    let checkboxState: boolean | $TEMPORARY$string<'mixed'> = false;
+    let checkboxState: boolean | string = false;
     if (this.state.checkboxState === false) {
       checkboxState = 'mixed';
     } else if (this.state.checkboxState === 'mixed') {
@@ -438,7 +469,7 @@ class CheckboxExample extends React.Component<
     }
 
     this.setState({
-      checkboxState: checkboxState,
+      checkboxState,
     });
   };
 
@@ -450,7 +481,7 @@ class CheckboxExample extends React.Component<
         accessibilityRole="checkbox"
         accessibilityState={{checked: this.state.checkboxState}}
         accessibilityHint="click me to change state">
-        <Text>Checkbox example</Text>
+        <RNTesterText>Checkbox example</RNTesterText>
       </TouchableOpacity>
     );
   }
@@ -470,7 +501,7 @@ class SwitchExample extends React.Component<
     const switchState = !this.state.switchState;
 
     this.setState({
-      switchState: switchState,
+      switchState,
     });
   };
 
@@ -482,7 +513,7 @@ class SwitchExample extends React.Component<
         accessibilityRole="switch"
         accessibilityState={{checked: this.state.switchState}}
         accessible={true}>
-        <Text>Switch example</Text>
+        <RNTesterText>Switch example</RNTesterText>
       </TouchableOpacity>
     );
   }
@@ -517,7 +548,7 @@ class SelectionExample extends React.Component<
     if (!isEnabled) {
       accessibilityHint = 'use the button on the right to enable selection';
     }
-    let buttonTitle = isEnabled ? 'Disable selection' : 'Enable selection';
+    const buttonTitle = isEnabled ? 'Disable selection' : 'Enable selection';
     const touchableHint = ` (touching the TouchableOpacity will ${
       isSelected ? 'disable' : 'enable'
     } accessibilityState.selected)`;
@@ -542,9 +573,9 @@ class SelectionExample extends React.Component<
           }}
           style={styles.touchable}
           accessibilityHint={accessibilityHint}>
-          <Text style={{color: 'white'}}>
+          <RNTesterText style={{color: 'white'}}>
             {`Selectable TouchableOpacity Example ${touchableHint}`}
-          </Text>
+          </RNTesterText>
         </TouchableOpacity>
         <TextInput
           accessibilityLabel="element 20"
@@ -583,7 +614,7 @@ class ExpandableElementExample extends React.Component<
     const expandState = !this.state.expandState;
 
     this.setState({
-      expandState: expandState,
+      expandState,
     });
   };
 
@@ -594,7 +625,7 @@ class ExpandableElementExample extends React.Component<
         accessibilityLabel="element 18"
         accessibilityState={{expanded: this.state.expandState}}
         accessibilityHint="click me to change state">
-        <Text>Expandable element example</Text>
+        <RNTesterText>Expandable element example</RNTesterText>
       </TouchableOpacity>
     );
   }
@@ -629,7 +660,7 @@ class NestedCheckBox extends React.Component<
     }
     setTimeout(() => {
       this.setState({
-        checkbox1: checkbox1,
+        checkbox1,
         checkbox2: checkbox1,
         checkbox3: checkbox1,
       });
@@ -640,13 +671,13 @@ class NestedCheckBox extends React.Component<
     const checkbox2 = !this.state.checkbox2;
 
     this.setState({
-      checkbox2: checkbox2,
+      checkbox2,
       checkbox1:
         checkbox2 && this.state.checkbox3
           ? true
           : checkbox2 || this.state.checkbox3
-          ? 'mixed'
-          : false,
+            ? 'mixed'
+            : false,
     });
   };
 
@@ -654,13 +685,13 @@ class NestedCheckBox extends React.Component<
     const checkbox3 = !this.state.checkbox3;
 
     this.setState({
-      checkbox3: checkbox3,
+      checkbox3,
       checkbox1:
         this.state.checkbox2 && checkbox3
           ? true
           : this.state.checkbox2 || checkbox3
-          ? 'mixed'
-          : false,
+            ? 'mixed'
+            : false,
     });
   };
 
@@ -680,11 +711,11 @@ class NestedCheckBox extends React.Component<
               this.state.checkbox1 === 'mixed'
                 ? mixedCheckboxImageSource
                 : this.state.checkbox1
-                ? checkImageSource
-                : uncheckImageSource
+                  ? checkImageSource
+                  : uncheckImageSource
             }
           />
-          <Text>Meat</Text>
+          <RNTesterText>Meat</RNTesterText>
         </TouchableOpacity>
         <TouchableOpacity
           style={{flex: 1, flexDirection: 'row'}}
@@ -698,7 +729,7 @@ class NestedCheckBox extends React.Component<
               this.state.checkbox2 ? checkImageSource : uncheckImageSource
             }
           />
-          <Text>Beef</Text>
+          <RNTesterText>Beef</RNTesterText>
         </TouchableOpacity>
         <TouchableOpacity
           style={{flex: 1, flexDirection: 'row'}}
@@ -712,7 +743,7 @@ class NestedCheckBox extends React.Component<
               this.state.checkbox3 ? checkImageSource : uncheckImageSource
             }
           />
-          <Text>Bacon</Text>
+          <RNTesterText>Bacon</RNTesterText>
         </TouchableOpacity>
       </View>
     );
@@ -722,25 +753,25 @@ class NestedCheckBox extends React.Component<
 class AccessibilityRoleAndStateExample extends React.Component<{}> {
   render(): React.Node {
     const content = [
-      <Text key={1}>This is some text</Text>,
-      <Text key={2}>This is some text</Text>,
-      <Text key={3}>This is some text</Text>,
-      <Text key={4}>This is some text</Text>,
-      <Text key={5}>This is some text</Text>,
-      <Text key={6}>This is some text</Text>,
-      <Text key={7}>This is some text</Text>,
+      <RNTesterText key={1}>This is some text</RNTesterText>,
+      <RNTesterText key={2}>This is some text</RNTesterText>,
+      <RNTesterText key={3}>This is some text</RNTesterText>,
+      <RNTesterText key={4}>This is some text</RNTesterText>,
+      <RNTesterText key={5}>This is some text</RNTesterText>,
+      <RNTesterText key={6}>This is some text</RNTesterText>,
+      <RNTesterText key={7}>This is some text</RNTesterText>,
     ];
 
     return (
       <View style={styles.sectionContainer}>
         <RNTesterBlock title="ScrollView with grid role">
           <ScrollView accessibilityRole="grid" style={styles.scrollView}>
-            {content}
+            <RNTesterText>{content}</RNTesterText>
           </ScrollView>
         </RNTesterBlock>
         <RNTesterBlock title="ScrollView with scrollview role">
           <ScrollView accessibilityRole="scrollview" style={styles.scrollView}>
-            {content}
+            <RNTesterText>{content}</RNTesterText>
           </ScrollView>
         </RNTesterBlock>
         <RNTesterBlock title="HorizontalScrollView with horizontalscrollview role">
@@ -748,7 +779,7 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
             horizontal
             accessibilityRole="horizontalscrollview"
             style={styles.scrollView}>
-            {content}
+            <RNTesterText>{content}</RNTesterText>
           </ScrollView>
         </RNTesterBlock>
         <RNTesterBlock title="accessibilityRole with View Component">
@@ -757,127 +788,129 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
               accessibilityLabel="element 1"
               accessibilityRole="alert"
               accessible={true}>
-              <Text>Alert example</Text>
+              <RNTesterText>Alert example</RNTesterText>
             </View>
             <CheckboxExample />
             <View
               accessibilityLabel="element 3"
               accessibilityRole="combobox"
               accessible={true}>
-              <Text>Combobox example</Text>
+              <RNTesterText>Combobox example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 4"
               accessibilityRole="menu"
               accessible={true}>
-              <Text>Menu example</Text>
+              <RNTesterText>Menu example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 5"
               accessibilityRole="menubar"
               accessible={true}>
-              <Text>Menu bar example</Text>
+              <RNTesterText>Menu bar example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 6"
               accessibilityRole="menuitem"
               accessible={true}>
-              <Text>Menu item example</Text>
+              <RNTesterText>Menu item example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 7"
               accessibilityRole="progressbar"
               accessible={true}>
-              <Text>Progress bar example</Text>
+              <RNTesterText>Progress bar example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 8"
               accessibilityRole="radio"
               accessible={true}>
-              <Text>Radio button example</Text>
+              <RNTesterText>Radio button example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 9"
               accessibilityRole="radiogroup"
               accessible={true}>
-              <Text>Radio group example</Text>
+              <RNTesterText>Radio group example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 10"
               accessibilityRole="scrollbar"
               accessible={true}>
-              <Text>Scrollbar example</Text>
+              <RNTesterText>Scrollbar example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 11"
               accessibilityRole="spinbutton"
               accessible={true}>
-              <Text>Spin button example</Text>
+              <RNTesterText>Spin button example</RNTesterText>
             </View>
             <SwitchExample />
             <View
               accessibilityLabel="element 13"
               accessibilityRole="tab"
               accessible={true}>
-              <Text>Tab example</Text>
+              <RNTesterText>Tab example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 14"
               accessibilityRole="tablist"
               accessible={true}>
-              <Text>Tab list example</Text>
+              <RNTesterText>Tab list example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 15"
               accessibilityRole="timer"
               accessible={true}>
-              <Text>Timer example</Text>
+              <RNTesterText>Timer example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 16"
               accessibilityRole="toolbar"
               accessible={true}>
-              <Text>Toolbar example</Text>
+              <RNTesterText>Toolbar example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 17"
               accessibilityState={{busy: true}}
               accessible={true}>
-              <Text>State busy example</Text>
+              <RNTesterText>State busy example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 18"
               accessibilityRole="dropdownlist"
               accessible={true}>
-              <Text>Drop Down List example</Text>
+              <RNTesterText>Drop Down List example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 19"
               accessibilityRole="pager"
               accessible={true}>
-              <Text>Pager example</Text>
+              <RNTesterText>Pager example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 20"
               accessibilityRole="togglebutton"
               accessible={true}>
-              <Text>Toggle Button example</Text>
+              <RNTesterText>Toggle Button example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 21"
               accessibilityRole="viewgroup"
               accessible={true}>
-              <Text>Viewgroup example</Text>
+              <RNTesterText>Viewgroup example</RNTesterText>
             </View>
             <View
               accessibilityLabel="element 22"
               accessibilityRole="webview"
               accessible={true}>
-              <Text>Webview example</Text>
+              <RNTesterText>Webview example</RNTesterText>
             </View>
             <ExpandableElementExample />
             <SelectionExample />
-            <Text>Nested checkbox with delayed state change</Text>
+            <RNTesterText>
+              Nested checkbox with delayed state change
+            </RNTesterText>
             <NestedCheckBox />
           </View>
         </RNTesterBlock>
@@ -901,7 +934,7 @@ class AccessibilityActionsExample extends React.Component<{}> {
                   break;
               }
             }}>
-            <Text>Click me</Text>
+            <RNTesterText>Click me</RNTesterText>
           </View>
         </RNTesterBlock>
 
@@ -926,7 +959,7 @@ class AccessibilityActionsExample extends React.Component<{}> {
                   break;
               }
             }}>
-            <Text>This view supports many actions.</Text>
+            <RNTesterText>This view supports many actions.</RNTesterText>
           </View>
         </RNTesterBlock>
 
@@ -945,7 +978,7 @@ class AccessibilityActionsExample extends React.Component<{}> {
                   break;
               }
             }}>
-            <Text>Slider</Text>
+            <RNTesterText>Slider</RNTesterText>
           </View>
         </RNTesterBlock>
 
@@ -973,7 +1006,7 @@ class AccessibilityActionsExample extends React.Component<{}> {
             onPress={() => Alert.alert('Button has been pressed!')}
             accessibilityRole="button">
             <View>
-              <Text>Click me</Text>
+              <RNTesterText>Click me</RNTesterText>
             </View>
           </TouchableWithoutFeedback>
         </RNTesterBlock>
@@ -1001,7 +1034,7 @@ class AccessibilityActionsExample extends React.Component<{}> {
         </RNTesterBlock>
 
         <RNTesterBlock title="Text with custom accessibility actions">
-          <Text
+          <RNTesterText
             accessible={true}
             accessibilityActions={[
               {name: 'activate', label: 'activate label'},
@@ -1018,7 +1051,7 @@ class AccessibilityActionsExample extends React.Component<{}> {
               }
             }}>
             Text
-          </Text>
+          </RNTesterText>
         </RNTesterBlock>
       </View>
     );
@@ -1078,7 +1111,7 @@ class FakeSliderExample extends React.Component<{}, FakeSliderExampleState> {
             now: this.state.current,
             max: 100,
           }}>
-          <Text>Fake Slider</Text>
+          <RNTesterText>Fake Slider {this.state.current}</RNTesterText>
         </View>
         <TouchableWithoutFeedback
           accessible={true}
@@ -1105,7 +1138,7 @@ class FakeSliderExample extends React.Component<{}, FakeSliderExampleState> {
           }}
           accessibilityValue={{text: this.state.textualValue}}>
           <View>
-            <Text>Equalizer</Text>
+            <RNTesterText>Equalizer {this.state.textualValue}</RNTesterText>
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -1164,7 +1197,7 @@ class FakeSliderExampleForAccessibilityValue extends React.Component<
           aria-valuemin={0}
           aria-valuetext={'slider aria value text'}
           aria-valuenow={this.state.current}>
-          <Text>Fake Slider</Text>
+          <RNTesterText>Fake Slider {this.state.current}</RNTesterText>
         </View>
         <TouchableWithoutFeedback
           accessible={true}
@@ -1191,7 +1224,7 @@ class FakeSliderExampleForAccessibilityValue extends React.Component<
           }}
           accessibilityValue={{text: this.state.textualValue}}>
           <View>
-            <Text>Equalizer</Text>
+            <RNTesterText>Equalizer {this.state.textualValue}</RNTesterText>
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -1271,7 +1304,7 @@ class AnnounceForAccessibility extends React.Component<{}> {
 }
 
 function SetAccessibilityFocusExample(props: {}): React.Node {
-  const myRef = React.useRef<?React.ElementRef<typeof Text>>(null);
+  const myRef = React.useRef<?React.ElementRef<typeof RNTesterText>>(null);
 
   const onPress = () => {
     if (myRef && myRef.current) {
@@ -1281,10 +1314,11 @@ function SetAccessibilityFocusExample(props: {}): React.Node {
 
   return (
     <View>
-      <Text ref={myRef}>
+      {/* $FlowFixMe[prop-missing] */}
+      <RNTesterText ref={myRef}>
         SetAccessibilityFocus on native element. This should get focus after
         clicking the button!
-      </Text>
+      </RNTesterText>
       <Button title={'Click'} onPress={onPress} />
     </View>
   );
@@ -1300,18 +1334,6 @@ class EnabledExamples extends React.Component<{}> {
               <EnabledExample
                 test="bold text"
                 eventListener="boldTextChanged"
-              />
-            </RNTesterBlock>
-            <RNTesterBlock title="isGrayScaleEnabled()">
-              <EnabledExample
-                test="gray scale"
-                eventListener="grayscaleChanged"
-              />
-            </RNTesterBlock>
-            <RNTesterBlock title="isInvertColorsEnabled()">
-              <EnabledExample
-                test="invert colors"
-                eventListener="invertColorsChanged"
               />
             </RNTesterBlock>
             <RNTesterBlock title="isReduceTransparencyEnabled()">
@@ -1343,11 +1365,21 @@ class EnabledExamples extends React.Component<{}> {
           />
         </RNTesterBlock>
 
+        <RNTesterBlock title="isInvertColorsEnabled()">
+          <EnabledExample
+            test="invert colors"
+            eventListener="invertColorsChanged"
+          />
+        </RNTesterBlock>
+
         <RNTesterBlock title="isScreenReaderEnabled()">
           <EnabledExample
             test="screen reader"
             eventListener="screenReaderChanged"
           />
+        </RNTesterBlock>
+        <RNTesterBlock title="isGrayScaleEnabled()">
+          <EnabledExample test="gray scale" eventListener="grayscaleChanged" />
         </RNTesterBlock>
       </View>
     );
@@ -1365,7 +1397,7 @@ class ImportantForAccessibilityExamples extends React.Component<{}> {
               source={require('../../assets/trees.jpg')}
               resizeMode="cover"
               style={styles.ImageBackground}>
-              <Text style={styles.text}>not accessible</Text>
+              <RNTesterText style={styles.text}>not accessible</RNTesterText>
             </ImageBackground>
           </View>
         </RNTesterBlock>
@@ -1376,7 +1408,7 @@ class ImportantForAccessibilityExamples extends React.Component<{}> {
               source={require('../../assets/trees.jpg')}
               resizeMode="cover"
               style={styles.ImageBackground}>
-              <Text style={styles.text}>accessible</Text>
+              <RNTesterText style={styles.text}>accessible</RNTesterText>
             </ImageBackground>
           </View>
         </RNTesterBlock>
@@ -1448,10 +1480,10 @@ class EnabledExample extends React.Component<
   render(): React.Node {
     return (
       <View>
-        <Text>
+        <RNTesterText>
           The {this.props.test} is{' '}
           {this.state.isEnabled ? 'enabled' : 'disabled'}
-        </Text>
+        </RNTesterText>
         <Button
           title={this.state.isEnabled ? 'disable' : 'enable'}
           onPress={this._handleToggled}
@@ -1523,6 +1555,7 @@ function DisplayOptionStatusExample({
   React.useEffect(() => {
     const listener = AccessibilityInfo.addEventListener(
       // $FlowFixMe[prop-missing]
+      // $FlowFixMe[invalid-computed-prop]
       notification,
       setStatusEnabled,
     );
@@ -1536,11 +1569,11 @@ function DisplayOptionStatusExample({
   }, [optionChecker, notification]);
   return (
     <View>
-      <Text>
+      <RNTesterText>
         {optionName}
         {' is '}
         {statusEnabled ? 'enabled' : 'disabled'}.
-      </Text>
+      </RNTesterText>
     </View>
   );
 }
@@ -1552,9 +1585,9 @@ function AccessibilityExpandedExample(): React.Node {
   return (
     <View style={styles.sectionContainer}>
       <RNTesterBlock title="Collapse/Expanded state change (Paper)">
-        <Text>
+        <RNTesterText>
           The following component announces expanded/collapsed state correctly
-        </Text>
+        </RNTesterText>
         <Button
           onPress={() => setExpanded(!expand)}
           accessibilityState={{expanded: expand}}
@@ -1574,12 +1607,14 @@ function AccessibilityExpandedExample(): React.Node {
       </RNTesterBlock>
 
       <RNTesterBlock title="Screenreader announces the visible text">
-        <Text>Announcing expanded/collapse and the visible text.</Text>
+        <RNTesterText>
+          Announcing expanded/collapse and the visible text.
+        </RNTesterText>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setExpanded(!expand)}
           accessibilityState={{expanded: expand}}>
-          <Text>Click me to change state</Text>
+          <RNTesterText>Click me to change state</RNTesterText>
         </TouchableOpacity>
       </RNTesterBlock>
 
@@ -1588,10 +1623,22 @@ function AccessibilityExpandedExample(): React.Node {
           accessibilityState={{expanded: true}}
           accessible={true}>
           <View>
-            <Text>Clicking me does not change state</Text>
+            <RNTesterText>Clicking me does not change state</RNTesterText>
           </View>
         </TouchableWithoutFeedback>
       </RNTesterBlock>
+    </View>
+  );
+}
+
+function AccessibilityTextInputWithArialabelledByAttributeExample(): React.Node {
+  return (
+    <View>
+      <RNTesterText nativeID="testAriaLabelledBy"> Phone Number</RNTesterText>
+      <TextInput
+        aria-labelledby={'testAriaLabelledBy'}
+        style={styles.default}
+      />
     </View>
   );
 }
@@ -1602,80 +1649,80 @@ exports.description = 'Examples of using Accessibility APIs.';
 exports.examples = [
   {
     title: 'Accessibility expanded',
-    render(): React.Element<typeof AccessibilityExpandedExample> {
+    render(): React.MixedElement {
       return <AccessibilityExpandedExample />;
     },
   },
   {
     title: 'Accessibility elements',
-    render(): React.Element<typeof AccessibilityExample> {
+    render(): React.MixedElement {
       return <AccessibilityExample />;
     },
   },
   {
     title: 'Automatic Content Grouping',
-    render(): React.Element<typeof AutomaticContentGrouping> {
+    render(): React.MixedElement {
       return <AutomaticContentGrouping />;
     },
   },
   {
     title: 'New accessibility roles and states',
-    render(): React.Element<typeof AccessibilityRoleAndStateExample> {
+    render(): React.MixedElement {
       return <AccessibilityRoleAndStateExample />;
     },
   },
   {
     title: 'Accessibility action examples',
-    render(): React.Element<typeof AccessibilityActionsExample> {
+    render(): React.MixedElement {
       return <AccessibilityActionsExample />;
     },
   },
   {
     title: 'Fake Slider Example',
-    render(): React.Element<typeof FakeSliderExample> {
+    render(): React.MixedElement {
       return <FakeSliderExample />;
     },
   },
   {
     title: 'Fake SliderExample For AccessibilityValue',
-    render(): React.Element<typeof FakeSliderExampleForAccessibilityValue> {
+    render(): React.MixedElement {
       return <FakeSliderExampleForAccessibilityValue />;
     },
   },
   {
     title: 'Check if the display options are enabled',
-    render(): React.Element<typeof DisplayOptionsStatusExample> {
+    render(): React.MixedElement {
       return <DisplayOptionsStatusExample />;
     },
   },
   {
     title: 'Check if the screen reader announces',
-    render(): React.Element<typeof AnnounceForAccessibility> {
+    render(): React.MixedElement {
       return <AnnounceForAccessibility />;
     },
   },
   {
     title: 'Check if accessibility is focused',
-    render(): React.Element<typeof SetAccessibilityFocusExample> {
+    render(): React.MixedElement {
       return <SetAccessibilityFocusExample />;
     },
   },
   {
     title: 'Check if these properties are enabled',
-    render(): React.Element<typeof EnabledExamples> {
+    render(): React.MixedElement {
       return <EnabledExamples />;
     },
   },
   {
     title: 'Testing importantForAccessibility',
-    render(): React.Element<typeof ImportantForAccessibilityExamples> {
+    render(): React.MixedElement {
       return <ImportantForAccessibilityExamples />;
     },
   },
   {
     title:
       'Check if accessibilityState disabled is announced when the screenreader focus moves on the image',
-    render(): React.Element<typeof Image> {
+    render(): React.MixedElement {
       return (
         <Image
           accessible={true}
@@ -1688,17 +1735,9 @@ exports.examples = [
     },
   },
   {
-    title: 'TextInput with aria-labelledby attribute"',
-    render(): React.Element<typeof View> {
-      return (
-        <View>
-          <Text nativeID="testAriaLabelledBy">Phone Number</Text>
-          <TextInput
-            aria-labelledby={'testAriaLabelledBy'}
-            style={styles.default}
-          />
-        </View>
-      );
+    title: 'TextInput with aria-labelledby attribute',
+    render(): React.MixedElement {
+      return <AccessibilityTextInputWithArialabelledByAttributeExample />;
     },
   },
 ];

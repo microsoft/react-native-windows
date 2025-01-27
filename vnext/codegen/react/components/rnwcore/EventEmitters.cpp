@@ -71,15 +71,6 @@ $payload.setProperty(runtime, "target", $event.target);
 
 
 
-void AndroidPopupMenuEventEmitter::onSelectionChange(OnSelectionChange $event) const {
-  dispatchEvent("selectionChange", [$event=std::move($event)](jsi::Runtime &runtime) {
-    auto $payload = jsi::Object(runtime);
-    $payload.setProperty(runtime, "item", $event.item);
-    return $payload;
-  });
-}
-
-
 
 void PullToRefreshViewEventEmitter::onRefresh(OnRefresh $event) const {
   dispatchEvent("refresh", [](jsi::Runtime &runtime) {

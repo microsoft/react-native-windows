@@ -13,9 +13,7 @@ import type {AbstractImageIOS, ImageIOS} from './ImageTypes.flow';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
-import type {ImageProps as ImagePropsType} from './ImageProps';
-
-import type {ImageStyle, ImageStyleProp} from '../StyleSheet/StyleSheet';
+import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
 import NativeImageLoaderWin32 from './NativeImageLoaderWin32'; // [Win32] Replace iOS
 
 import {createRootTag} from '../ReactNative/RootTag';
@@ -34,7 +32,7 @@ import * as React from 'react';
 
 function getSize(
   uri: string,
-  success: (width: number, height: number) => void,
+  success?: (width: number, height: number) => void,
   // $FlowFixMe[unclear-type]
   failure?: (error: any) => void,
 ) {
@@ -45,7 +43,7 @@ function getSize(
     .catch(
       failure ||
         function () {
-          console.warn('Failed to get size for image ' + uri);
+          console.warn('Failed to get size for image: ' + uri);
         },
     );
   */
@@ -55,6 +53,7 @@ function getSize(
     (width: number, height: number, err?: string) => {
       // $FlowFixMe[sketchy-null-string]
       if (!err) {
+        // $FlowFixMe[not-a-function]
         success(width, height);
       } else {
         if (failure) {
@@ -71,12 +70,13 @@ function getSize(
 function getSizeWithHeaders(
   uri: string,
   headers: {[string]: string, ...},
-  success: (width: number, height: number) => void,
+  success?: (width: number, height: number) => void,
   failure?: (error: mixed) => void,
   // $FlowFixMe[unclear-type]
 ): any {
   return NativeImageLoaderWin32.getSizeWithHeaders(uri, headers)
     .then(function (sizes) {
+      // $FlowFixMe[not-a-function]
       success(sizes.width, sizes.height);
     })
     .catch(
@@ -129,38 +129,27 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     height: undefined,
   };
 
+  let style: ImageStyleProp;
   let sources;
-  let style: ImageStyle;
-
   if (Array.isArray(source)) {
-    style =
-      flattenStyle<ImageStyleProp>([styles.base, props.style]) ||
-      ({}: ImageStyle);
+    style = [styles.base, props.style];
     sources = source;
   } else {
     const {uri} = source;
-    const width = source.width ?? props.width;
-    const height = source.height ?? props.height;
-    style =
-      flattenStyle<ImageStyleProp>([
-        {width, height},
-        styles.base,
-        props.style,
-      ]) || ({}: ImageStyle);
-    sources = [source];
-
     if (uri === '') {
       console.warn('source.uri should not be an empty string');
     }
+    const width = source.width ?? props.width;
+    const height = source.height ?? props.height;
+    style = [{width, height}, styles.base, props.style];
+    sources = [source];
   }
 
-  const objectFit =
-    style.objectFit != null
-      ? convertObjectFitToResizeMode(style.objectFit)
-      : null;
+  const flattenedStyle = flattenStyle<ImageStyleProp>(style);
+  const objectFit = convertObjectFitToResizeMode(flattenedStyle?.objectFit);
   const resizeMode =
-    objectFit || props.resizeMode || style.resizeMode || 'cover';
-  const tintColor = props.tintColor ?? style.tintColor;
+    objectFit || props.resizeMode || flattenedStyle?.resizeMode || 'cover';
+  const tintColor = props.tintColor ?? flattenedStyle?.tintColor;
 
   if (props.children != null) {
     throw new Error(
@@ -175,9 +164,7 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     'aria-multiselectable': ariaMultiselectable, // Win32
     'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
-    height,
     src,
-    width,
     ...restProps
   } = props;
 

@@ -6,10 +6,10 @@
  * @format
  */
 
+const crypto = require('crypto');
 const existsSync = require('fs').existsSync;
 const path = require('path');
 const username = require('username');
-const uuid = require('uuid');
 const util = require('util');
 
 const glob = util.promisify(require('glob'));
@@ -75,7 +75,11 @@ async function getFileMappings(config = {}, options = {}) {
     options,
   );
 
-  const {rnwVersion, devMode} = templateUtils.getRnwInfo(libConfig, libOptions);
+  const projectRoot = libConfig.root ?? process.cwd();
+  const {rnwPath, rnwVersion, devMode, isCanary} = templateUtils.getRnwInfo(
+    libConfig,
+    libOptions,
+  );
 
   const projectName =
     libConfig?.project?.windows?.projects[0]?.projectName ??
@@ -86,7 +90,7 @@ async function getFileMappings(config = {}, options = {}) {
   const projectGuid =
     libConfig?.project?.windows?.projects[0]?.projectGuid
       ?.replace('{', '')
-      .replace('}', '') ?? uuid.v4();
+      .replace('}', '') ?? crypto.randomUUID();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
 
   const cppNugetPackages = [];
@@ -101,6 +105,9 @@ async function getFileMappings(config = {}, options = {}) {
     namespaceCpp: namespaceCpp,
 
     rnwVersion: rnwVersion,
+    rnwPathFromProjectRoot: path
+      .relative(projectRoot, rnwPath)
+      .replace(/\//g, '\\'),
 
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
@@ -111,6 +118,9 @@ async function getFileMappings(config = {}, options = {}) {
     currentUser,
 
     devMode,
+
+    useNuGets: !devMode, // default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
+    addReactNativePublicAdoFeed: true || isCanary, // Temporary true for all new projects until code-signing is restored, see issue #14030
 
     cppNugetPackages,
   };
@@ -189,15 +199,21 @@ async function postInstall(config = {}, options = {}) {
   const namespaceCpp = namespace.replace(/\./g, '::');
 
   // Update package.json codegen
-  await templateUtils.updateProjectPackageJson(libConfig, libOptions, {
-    codegenConfig: {
-      windows: {
-        namespace: namespaceCpp + 'Codegen',
-        outputDirectory: `windows/${projectName}/codegen`,
-        separateDataTypes: true,
+  await templateUtils.updateProjectPackageJson(
+    libConfig,
+    libOptions,
+    {
+      codegenConfig: {
+        windows: {
+          namespace: namespaceCpp + 'Codegen',
+          outputDirectory: `windows/${projectName}/codegen`,
+          separateDataTypes: true,
+        },
       },
     },
-  });
+    true, // save options from command
+    true, // if a "files" property exists, make sure "windows" is included
+  );
 
   if (exExists) {
     const {rnwVersion} = templateUtils.getRnwInfo(exConfig, exOptions);
@@ -205,14 +221,14 @@ async function postInstall(config = {}, options = {}) {
     // Update example package.json with new scripts and dependencies
     await templateUtils.updateProjectPackageJson(exConfig, exOptions, {
       scripts: {
-        windows: 'react-native run-windows',
+        windows: 'npx @react-native-community/cli run-windows',
         'test:windows': 'jest --config jest.config.windows.js',
       },
       dependencies: {
         'react-native-windows': rnwVersion,
       },
       devDependencies: {
-        '@rnx-kit/jest-preset': '^0.1.16',
+        '@rnx-kit/jest-preset': '^0.1.17',
       },
     });
 

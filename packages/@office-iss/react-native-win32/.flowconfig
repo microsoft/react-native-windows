@@ -14,7 +14,6 @@
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
@@ -55,14 +54,19 @@
 .*/node_modules/sample-apps/.*
 .*/node_modules/playground/.*
 
-; Ignore templates for 'react-native init'
-<PROJECT_ROOT>/template/.*
+<PROJECT_ROOT>/packages/react-native/sdks/.*
+
+; Ignore the codegen e2e tests
+<PROJECT_ROOT>/packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
 
 ; Ignore the Dangerfile
 <PROJECT_ROOT>/packages/react-native-bots/dangerfile.js
 
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
+
+; Ignore cache files
+.*/node_modules/.cache*
 
 ; Ignore the src-win folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src-win/.*
@@ -81,6 +85,12 @@
 ; Generated build output
 <PROJECT_ROOT>/packages/.*/dist
 
+; helloworld
+<PROJECT_ROOT>/packages/helloworld/ios/Pods/
+
+; Ignore rn-tester Pods
+<PROJECT_ROOT>/packages/rn-tester/Pods/
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
@@ -96,7 +106,6 @@ flow/
 ../../../node_modules/.flow/flow-typed/
 
 [options]
-experimental.global_find_ref=true
 enums=true
 casting_syntax=both
 
@@ -122,7 +131,7 @@ module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.w
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>\/1'
 module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
-module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
+module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\|xml\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
@@ -130,6 +139,7 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
+ban_spread_key_props=true
 
 sharedmemory.hash_table_pow=21
 
@@ -154,4 +164,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.229.0
+^0.258.1

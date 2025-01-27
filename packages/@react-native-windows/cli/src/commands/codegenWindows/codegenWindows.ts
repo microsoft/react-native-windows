@@ -150,6 +150,8 @@ export class CodeGenWindows {
           jsRootPathRelative ? '/' : ''
         }**/*Native*.[jt]s`,
       ],
+      componentsWindows: generators.indexOf('componentsWindows') !== -1,
+      internalComponents: generators.indexOf('internalComponents') !== -1,
       cppStringType,
       separateDataTypes,
       libraryName: projectName,
@@ -213,7 +215,7 @@ async function getExtraProps(): Promise<Record<string, any>> {
 }
 
 /**
- * The function run when calling `react-native codegen-windows`.
+ * The function run when calling `npx @react-native-community/cli codegen-windows`.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
@@ -275,7 +277,7 @@ export async function codegenWindowsInternal(
         )}ms)`,
       );
     } else if (options.check) {
-      const codegenCommand = 'npx react-native codegen-windows';
+      const codegenCommand = 'npx @react-native-community/cli codegen-windows';
       console.log(
         `${chalk.yellow(
           'Warning:',
@@ -315,7 +317,7 @@ export async function codegenWindowsInternal(
  */
 export const codegenCommand: Command = {
   name: 'codegen-windows',
-  description: 'Runs Windows-specific codegen',
+  description: 'Runs Windows-specific codegen for native modules',
   func: codegenWindows,
   options: codegenOptions,
 };

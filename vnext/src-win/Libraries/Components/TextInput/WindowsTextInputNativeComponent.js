@@ -385,15 +385,6 @@ export type NativeProps = $ReadOnly<{|
     |}>,
   >,
 
-  onTextInput?: ?BubblingEventHandler<
-    $ReadOnly<{|
-      target: Int32,
-      text: string,
-      previousText: string,
-      range: $ReadOnly<{|start: Double, end: Double|}>,
-    |}>,
-  >,
-
   /**
    * Callback that is called when text input ends.
    */
@@ -647,10 +638,34 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
   uiViewClassName: 'WindowsTextInput',
   bubblingEventTypes: {
-    topTextInput: {
+    topBlur: {
       phasedRegistrationNames: {
-        bubbled: 'onTextInput',
-        captured: 'onTextInputCapture',
+        bubbled: 'onBlur',
+        captured: 'onBlurCapture',
+      },
+    },
+    topEndEditing: {
+      phasedRegistrationNames: {
+        bubbled: 'onEndEditing',
+        captured: 'onEndEditingCapture',
+      },
+    },
+    topFocus: {
+      phasedRegistrationNames: {
+        bubbled: 'onFocus',
+        captured: 'onFocusCapture',
+      },
+    },
+    topKeyPress: {
+      phasedRegistrationNames: {
+        bubbled: 'onKeyPress',
+        captured: 'onKeyPressCapture',
+      },
+    },
+    topSubmitEditing: {
+      phasedRegistrationNames: {
+        bubbled: 'onSubmitEditing',
+        captured: 'onSubmitEditingCapture',
       },
     },
   },

@@ -19,8 +19,8 @@ static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getConst
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_logAction(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->logAction(
     rt,
-    args[0].asString(rt),
-    jsi::Value(rt, args[1])
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : jsi::Value(rt, args[1])
   );
   return jsi::Value::undefined();
 }
@@ -33,52 +33,52 @@ static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_voidFunc
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getBool(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getBool(
     rt,
-    args[0].asBool()
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
   );
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getNumber(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getNumber(
     rt,
-    args[0].asNumber()
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
   );
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getString(
     rt,
-    args[0].asString(rt)
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
   );
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getArray(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getArray(
     rt,
-    args[0].asObject(rt).asArray(rt)
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asArray(rt)
   );
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getObject(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getObject(
     rt,
-    args[0].asObject(rt)
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt)
   );
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getValue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getValue(
     rt,
-    args[0].asNumber(),
-    args[1].asString(rt),
-    args[2].asObject(rt)
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asString(rt),
+    count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asObject(rt)
   );
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getValueWithCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getValueWithCallback(
     rt,
-    args[0].asObject(rt).asFunction(rt)
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asFunction(rt)
   );
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getValueWithPromise(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getValueWithPromise(
     rt,
-    args[0].asBool()
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
   );
 }
 

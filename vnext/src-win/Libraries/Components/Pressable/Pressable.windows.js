@@ -75,6 +75,9 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
   /**
    * A value indicating whether the accessibility elements contained within
    * this accessibility element are hidden.
@@ -240,13 +243,16 @@ type Props = $ReadOnly<{|
   'aria-label'?: ?string,
 |}>;
 
+type Instance = React.ElementRef<typeof View>;
+
 /**
  * Component used to build display components that should respond to whether the
  * component is currently pressed or not.
  */
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-function Pressable(props: Props, forwardedRef): React.Node {
+function Pressable(
+  props: Props,
+  forwardedRef: React.RefSetter<Instance>,
+): React.Node {
   const {
     accessible,
     accessibilityState,
@@ -259,6 +265,9 @@ function Pressable(props: Props, forwardedRef): React.Node {
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
+    'aria-readonly': ariaReadOnly,
+    'aria-multiselectable': ariaMultiselectable, // Windows
+    'aria-required': ariaRequired, // Windows
     cancelable,
     children,
     delayHoverIn,
@@ -286,12 +295,15 @@ function Pressable(props: Props, forwardedRef): React.Node {
     ...restProps
   } = props;
 
-  const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
+  const viewRef = useRef<Instance | null>(null);
   const mergedRef = useMergeRefs(forwardedRef, viewRef);
 
   const android_rippleConfig = useAndroidRippleForView(android_ripple, viewRef);
 
   const [pressed, setPressed] = usePressState(testOnly_pressed === true);
+
+  const shouldUpdatePressed =
+    typeof children === 'function' || typeof style === 'function';
 
   let _accessibilityState = {
     busy: ariaBusy ?? accessibilityState?.busy,
@@ -299,6 +311,9 @@ function Pressable(props: Props, forwardedRef): React.Node {
     disabled: ariaDisabled ?? accessibilityState?.disabled,
     expanded: ariaExpanded ?? accessibilityState?.expanded,
     selected: ariaSelected ?? accessibilityState?.selected,
+    readOnly: ariaReadOnly ?? accessibilityState?.readOnly,
+    multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+    required: ariaRequired ?? accessibilityState?.required, // Windows
   };
 
   _accessibilityState =
@@ -349,7 +364,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressIn(event);
         }
-        setPressed(true);
+        shouldUpdatePressed && setPressed(true);
         if (onPressIn != null) {
           onPressIn(event);
         }
@@ -359,7 +374,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressOut(event);
         }
-        setPressed(false);
+        shouldUpdatePressed && setPressed(false);
         if (onPressOut != null) {
           onPressOut(event);
         }
@@ -394,6 +409,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // Windows]
       pressRetentionOffset,
       setPressed,
+      shouldUpdatePressed,
       unstable_pressDelay,
     ],
   );
@@ -419,7 +435,7 @@ function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
 const MemoedPressable = React.memo(React.forwardRef(Pressable));
 MemoedPressable.displayName = 'Pressable';
 
-export default (MemoedPressable: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof View>,
->);
+export default (MemoedPressable: component(
+  ref: React.RefSetter<React.ElementRef<typeof View>>,
+  ...props: Props
+));

@@ -217,8 +217,12 @@ exports.examples = [
                 testID="accessibility_props"
                 title="Submit Application"
                 accessibilityLabel="Press to submit your application!"
-                accessibilityRole="Button"
+                accessibilityRole="button"
                 accessibilityHint="Submit Button"
+                accessibilityPosInSet={1}
+                accessibilitySetSize={1}
+                accessibilityLiveRegion="assertive"
+                accessibilityValue={{Text: 'Submit Application'}}
               />
             );
           }}

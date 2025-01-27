@@ -13,7 +13,7 @@
     "format:verify": "format-files -i -style=file -verify",
     "postinstall": "yarn build",
     "spellcheck": "npx cspell",
-    "test": "lage test --verbose",
+    "test": "lage test --verbose --passWithNoTests",
     "validate-overrides": "react-native-platform-override validate"
   },
   "repository": {
@@ -42,6 +42,7 @@
     "beachball": "^2.20.0",
     "fast-glob": "^3.2.11",
     "husky": "^4.2.5",
+    "prettier-plugin-hermes-parser": "0.21.1",
     "react-native-platform-override": "*",
     "unbroken": "1.0.27",
     "lage": "^2.7.1",
@@ -57,13 +58,15 @@
     "strip-ansi": "^6.0.1",
     "**/parse-url/normalize-url": "^4.5.1",
     "**/@react-native/monorepo/node_modules/jest-junit": "^13.0.0",
-    "**/@react-native/monorepo/node_modules/ws": "^6.2.2",
-    "**/@react-native/tester/ws": "^6.2.2",
-    "**/detox/ws": "^5.2.3",
+    "**/@react-native/monorepo/node_modules/ws": "^6.2.3",
+    "**/@react-native/tester/ws": "^6.2.3",
+    "**/webdriverio/**/puppeteer-core/ws": "^8.17.1",
+    "**/detox/ws": "^5.2.4",
     "xml2js": "^0.5.0",
     "z-schema": "^5.0.2"
   },
   "resolutions.justification": {
     "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

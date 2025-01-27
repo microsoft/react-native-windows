@@ -19,6 +19,7 @@ import warnOnce from '../../Utilities/warnOnce';
  * Basic View component with additional Win32 specific functionality
  */
 
+// $FlowFixMe[prop-missing]
 const ViewWin32: React.AbstractComponent<
   ViewProps,
   React.ElementRef<typeof View>,
@@ -113,9 +114,9 @@ const ViewWin32: React.AbstractComponent<
           ? // $FlowFixMe[exponential-spread]
             {accessibilityDescribedBy: describedByTarget}
           : // $FlowFixMe[exponential-spread]
-          typeof accessibilityDescribedBy === 'string'
-          ? {accessibilityDescribedBy}
-          : {})}
+            typeof accessibilityDescribedBy === 'string'
+            ? {accessibilityDescribedBy}
+            : {})}
         {...(typeof accessibilityControls === 'string'
           ? {accessibilityControls}
           : {})}

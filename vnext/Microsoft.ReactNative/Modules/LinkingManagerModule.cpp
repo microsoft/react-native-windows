@@ -109,11 +109,11 @@ void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
   // no-op
 }
 
-/*static*/ void LinkingManager::getInitialURL(::React::ReactPromise<std::string> &&result) noexcept {
+/*static*/ void LinkingManager::getInitialURL(::React::ReactPromise<std::optional<std::string>> &&result) noexcept {
   if (s_initialUri) {
     result.Resolve(to_string(s_initialUri.AbsoluteUri()));
   } else {
-    result.Resolve("");
+    result.Resolve(std::nullopt);
   }
 }
 

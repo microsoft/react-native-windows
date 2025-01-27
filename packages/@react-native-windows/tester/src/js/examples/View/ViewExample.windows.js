@@ -12,9 +12,10 @@
 
 import type {RNTesterModule} from '../../types/RNTesterTypes';
 
+import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
 
-import {Alert, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Platform, Pressable, StyleSheet, View} from 'react-native';
 
 class ViewBorderStyleExample extends React.Component<
   $ReadOnly<{||}>,
@@ -40,7 +41,9 @@ class ViewBorderStyleExample extends React.Component<
                   }
                 : null,
             ]}>
-            <Text style={{fontSize: 11}}>Dashed border style</Text>
+            <RNTesterText style={{fontSize: 11}}>
+              Dashed border style
+            </RNTesterText>
           </View>
           <View
             style={[
@@ -56,7 +59,9 @@ class ViewBorderStyleExample extends React.Component<
                   }
                 : null,
             ]}>
-            <Text style={{fontSize: 11}}>Dotted border style</Text>
+            <RNTesterText style={{fontSize: 11}}>
+              Dotted border style
+            </RNTesterText>
           </View>
         </View>
       </Pressable>
@@ -93,7 +98,7 @@ class OffscreenAlphaCompositing extends React.Component<
         testID="offscreen-alpha-compositing-button"
         onPress={this._handlePress}>
         <View>
-          <Text style={{paddingBottom: 10}}>Blobs</Text>
+          <RNTesterText style={{paddingBottom: 10}}>Blobs</RNTesterText>
           <View
             style={{opacity: 1.0, paddingBottom: 30}}
             needsOffscreenAlphaCompositing={this.state.active}>
@@ -114,13 +119,13 @@ class OffscreenAlphaCompositing extends React.Component<
               ]}
             />
           </View>
-          <Text style={{paddingBottom: 10}}>
+          <RNTesterText style={{paddingBottom: 10}}>
             Same blobs, but their shared container have 0.5 opacity
-          </Text>
-          <Text style={{paddingBottom: 10}}>
+          </RNTesterText>
+          <RNTesterText style={{paddingBottom: 10}}>
             Tap to {this.state.active ? 'activate' : 'deactivate'}{' '}
             needsOffscreenAlphaCompositing
-          </Text>
+          </RNTesterText>
           <View
             style={{opacity: 0.8}}
             needsOffscreenAlphaCompositing={this.state.active}>
@@ -176,7 +181,9 @@ class ZIndexExample extends React.Component<
     return (
       <Pressable testID="z-index-button" onPress={this._handlePress}>
         <View>
-          <Text style={{paddingBottom: 10}}>Tap to flip sorting order</Text>
+          <RNTesterText style={{paddingBottom: 10}}>
+            Tap to flip sorting order
+          </RNTesterText>
           <View
             style={[
               ZIndexExampleStyles.zIndex,
@@ -186,7 +193,7 @@ class ZIndexExample extends React.Component<
                 zIndex: indices[0],
               },
             ]}>
-            <Text>ZIndex {indices[0]}</Text>
+            <RNTesterText>ZIndex {indices[0]}</RNTesterText>
           </View>
           <View
             style={[
@@ -197,7 +204,7 @@ class ZIndexExample extends React.Component<
                 zIndex: indices[1],
               },
             ]}>
-            <Text>ZIndex {indices[1]}</Text>
+            <RNTesterText>ZIndex {indices[1]}</RNTesterText>
           </View>
           <View
             style={[
@@ -208,7 +215,7 @@ class ZIndexExample extends React.Component<
                 zIndex: indices[2],
               },
             ]}>
-            <Text>ZIndex {indices[2]}</Text>
+            <RNTesterText>ZIndex {indices[2]}</RNTesterText>
           </View>
           <View
             style={[
@@ -219,7 +226,7 @@ class ZIndexExample extends React.Component<
                 zIndex: indices[3],
               },
             ]}>
-            <Text>ZIndex {indices[3]}</Text>
+            <RNTesterText>ZIndex {indices[3]}</RNTesterText>
           </View>
         </View>
       </Pressable>
@@ -317,9 +324,9 @@ class DisplayNoneStyle extends React.Component<
     return (
       <Pressable testID="display-none-button" onPress={this._handlePress}>
         <View>
-          <Text style={{paddingBottom: 10}}>
+          <RNTesterText style={{paddingBottom: 10}}>
             Press to toggle `display: none`
-          </Text>
+          </RNTesterText>
           <View
             style={{
               height: 50,
@@ -406,50 +413,87 @@ class FlexGapExample extends React.Component<$ReadOnly<{|testID?: ?string|}>> {
   }
 }
 
-function LayoutConformanceExample({
-  testID,
-}: $ReadOnly<{testID: ?string}>): React.Node {
-  return (
-    <View
-      style={{flexDirection: 'row', gap: 10}}
-      testID="view-test-layout-conformance"
-      accessible
-      accessibilityLabel="Layout Conformance Example">
-      <View>
-        <Text>Unset</Text>
-        <LayoutConformanceBox />
-      </View>
-      <View experimental_layoutConformance="classic">
-        <Text>Classic</Text>
-        <LayoutConformanceBox />
-      </View>
-      <View experimental_layoutConformance="strict">
-        <Text>Strict</Text>
-        <LayoutConformanceBox />
-      </View>
-    </View>
-  );
-}
+function BoxShadowExample(): React.Node {
+  const defaultStyleSize = {width: 75, height: 75};
 
-function LayoutConformanceBox(): React.Node {
   return (
-    <View
-      style={{
-        backgroundColor: 'blue',
-        width: 60,
-        height: 60,
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-        }}>
+    <View testID="view-test-box-shadow" style={{gap: 20}}>
+      <View style={{flexDirection: 'row', gap: 15}}>
         <View
           style={{
-            height: 30,
+            ...defaultStyleSize,
+            borderRadius: 10,
+            borderWidth: 5,
+            borderColor: 'red',
+            boxShadow: '0 0 10px 0 black',
+          }}
+        />
+        <View
+          style={{
+            ...defaultStyleSize,
+            borderRadius: 30,
+            borderWidth: 5,
+            borderColor: 'red',
+            boxShadow: 'inset 0 0 10px 0 black',
+          }}
+        />
+        <View
+          style={{
+            ...defaultStyleSize,
+            borderRadius: 30,
+            borderWidth: 5,
+            borderColor: 'red',
+            boxShadow:
+              'inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black',
+          }}
+        />
+      </View>
+      <View style={{flexDirection: 'row', gap: 15}}>
+        <View
+          style={{
+            ...defaultStyleSize,
+            boxShadow: '0px 0px 5px 5px black',
+          }}>
+          <View
+            style={{
+              left: -10,
+              width: 25,
+              height: 25,
+              backgroundColor: 'cyan',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            ...defaultStyleSize,
             backgroundColor: 'red',
-            flexGrow: 1,
+            boxShadow: 'inset 0px 0px 5px 5px black',
+          }}
+        />
+        <View style={{...defaultStyleSize, flexDirection: 'row'}}>
+          <View style={{width: 25, height: 25, backgroundColor: 'cyan'}} />
+          <View
+            style={{
+              ...defaultStyleSize,
+              boxShadow: ' 0px 0px 20px 5px black',
+            }}
+          />
+          <View style={{width: 25, height: 25, backgroundColor: 'cyan'}} />
+        </View>
+      </View>
+      <View style={{flexDirection: 'row', gap: 15}}>
+        <View
+          style={{
+            ...defaultStyleSize,
+            backgroundColor: 'green',
+            boxShadow: '0px 10px',
+          }}
+        />
+        <View
+          style={{
+            ...defaultStyleSize,
+            backgroundColor: 'orange',
+            boxShadow: '5px 5px 5px 0px rgba(0, 0, 0, 0)',
           }}
         />
       </View>
@@ -463,6 +507,7 @@ class AccessibilityExample extends React.Component<
 > {
   state: {tap: number} = {
     tap: 0,
+    expanded: true,
   };
 
   render(): React.Node {
@@ -471,35 +516,52 @@ class AccessibilityExample extends React.Component<
         accessibilityLabel="A View with accessibility values"
         accessibilityHint="Accessibility Hint"
         accessibilityRole="button"
-        accessibilityValue={0}
+        accessibilityValue={{now: this.state.tap}}
         accessibilityActions={[
-          {name: 'cut', label: 'cut'},
-          {name: 'copy', label: 'copy'},
-          {name: 'paste', label: 'paste'},
+          {name: 'expand', label: 'expand'},
+          {name: 'collapse', label: 'collapse'},
         ]}
+        accessibilityState={{
+          expanded: this.state.expanded,
+          busy: true,
+          checked: true,
+        }}
+        accessibilityPosInSet={1}
+        accessibilitySetSize={1}
+        accessibilityLiveRegion="polite"
         testID="accessibility"
         accessible
         focusable
         onAccessibilityAction={event => {
           switch (event.nativeEvent.actionName) {
-            case 'cut':
-              Alert.alert('Alert', 'cut action success');
+            case 'expand':
+              this.setState({expanded: true});
               break;
-            case 'copy':
-              Alert.alert('Alert', 'copy action success');
-              break;
-            case 'paste':
-              Alert.alert('Alert', 'paste action success');
-              break;
+            case 'collapse':
+              this.setState({expanded: false});
           }
         }}
         onAccessibilityTap={() => {
           this.setState({tap: this.state.tap + 1});
+        }}
+        onPress={() => {
+          this.setState({expanded: !this.state.expanded});
+          console.log('Pressed');
         }}>
-        <Text>A View with accessibility values.</Text>
-        <Text>Current Number of Accessibility Taps: {this.state.tap}</Text>
+        <RNTesterText>A View with accessibility values.</RNTesterText>
+        <RNTesterText>
+          Current Number of Accessibility Taps: {this.state.tap}
+        </RNTesterText>
         <View importantForAccessibility="no-hide-descendants">
-          <Text>This element should be hidden from accessibility.</Text>
+          <RNTesterText>
+            This element should be hidden from accessibility.
+          </RNTesterText>
+        </View>
+        <View accessible accessibilityValue={{now: this.state.tap}}>
+          <RNTesterText>
+            This sub-view should not have an accessibility value. It's control
+            type does not support the value pattern.
+          </RNTesterText>
         </View>
       </View>
     );
@@ -537,6 +599,37 @@ class HitSlopExample extends React.Component<
   }
 }
 
+function BoxSizingExample(): React.Node {
+  const styles = StyleSheet.create({
+    boxSizingBox: {
+      padding: 5,
+      backgroundColor: 'green',
+      borderWidth: 5,
+      margin: 10,
+      width: 50,
+      height: 25,
+    },
+    boxSizingChild: {
+      backgroundColor: 'red',
+      width: '100%',
+      height: '100%',
+    },
+  });
+
+  return (
+    <View testID={'view-test-box-sizing'}>
+      <RNTesterText>Content box 50x25</RNTesterText>
+      <View style={[styles.boxSizingBox, {boxSizing: 'content-box'}]}>
+        <View style={styles.boxSizingChild} />
+      </View>
+      <RNTesterText>Border box 50x25</RNTesterText>
+      <View style={[styles.boxSizingBox, {boxSizing: 'border-box'}]}>
+        <View style={styles.boxSizingChild} />
+      </View>
+    </View>
+  );
+}
+
 export default ({
   title: 'View',
   documentationURL: 'https://reactnative.dev/docs/view',
@@ -555,7 +648,7 @@ export default ({
             style={{backgroundColor: '#527FE4', padding: 5}}
             accessible
             accessibilityLabel="Background Color Example">
-            <Text style={{fontSize: 11}}>Blue background</Text>
+            <RNTesterText style={{fontSize: 11}}>Blue background</RNTesterText>
           </View>
         );
       },
@@ -570,7 +663,7 @@ export default ({
             style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}
             accessible
             accessibilityLabel="Border Example">
-            <Text style={{fontSize: 11}}>5px blue border</Text>
+            <RNTesterText style={{fontSize: 11}}>5px blue border</RNTesterText>
           </View>
         );
       },
@@ -593,18 +686,22 @@ export default ({
             accessible
             accessibilityLabel="Padding/Margin Example">
             <View style={[styles.box, {padding: 5}]}>
-              <Text style={{fontSize: 11}}>5px padding</Text>
+              <RNTesterText style={{fontSize: 11}}>5px padding</RNTesterText>
             </View>
             <View style={[styles.box, {margin: 5}]}>
-              <Text style={{fontSize: 11}}>5px margin</Text>
+              <RNTesterText style={{fontSize: 11}}>5px margin</RNTesterText>
             </View>
             <View
               style={[
                 styles.box,
                 {margin: 5, padding: 5, alignSelf: 'flex-start'},
               ]}>
-              <Text style={{fontSize: 11}}>5px margin and padding,</Text>
-              <Text style={{fontSize: 11}}>widthAutonomous=true</Text>
+              <RNTesterText style={{fontSize: 11}}>
+                5px margin and padding,
+              </RNTesterText>
+              <RNTesterText style={{fontSize: 11}}>
+                widthAutonomous=true
+              </RNTesterText>
             </View>
           </View>
         );
@@ -620,11 +717,11 @@ export default ({
             accessible
             accessibilityLabel="Border Radius Example">
             <View style={{borderWidth: 0.5, borderRadius: 5, padding: 5}}>
-              <Text style={{fontSize: 11}}>
+              <RNTesterText style={{fontSize: 11}}>
                 Too much use of `borderRadius` (especially large radii) on
                 anything which is scrolling may result in dropped frames. Use
                 sparingly.
-              </Text>
+              </RNTesterText>
             </View>
             {Platform.OS === 'ios' && (
               <View
@@ -635,9 +732,9 @@ export default ({
                   backgroundColor: '#527FE4',
                   borderCurve: 'continuous',
                 }}>
-                <Text style={{fontSize: 16, color: 'white'}}>
+                <RNTesterText style={{fontSize: 16, color: 'white'}}>
                   View with continuous border curve
-                </Text>
+                </RNTesterText>
               </View>
             )}
           </View>
@@ -744,6 +841,123 @@ export default ({
       },
     },
     {
+      title: 'Rounded Borders (Percentages)',
+      name: 'rounded-borders-percentages',
+      render(): React.Node {
+        return (
+          <View
+            testID="view-test-rounded-borders-percentages"
+            style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: '50%',
+                borderWidth: 1,
+                marginRight: 10,
+              }}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: '50%',
+                borderWidth: 10,
+                marginRight: 10,
+              }}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderTopLeftRadius: '10%',
+                borderTopRightRadius: '20%',
+                borderBottomRightRadius: '50%',
+                borderBottomLeftRadius: '100%',
+                borderWidth: 1,
+                marginRight: 10,
+              }}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderTopLeftRadius: '10%',
+                borderTopRightRadius: '20%',
+                borderBottomRightRadius: '50%',
+                borderBottomLeftRadius: '100%',
+                borderWidth: 10,
+                marginRight: 10,
+              }}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderLeftWidth: 6,
+                borderTopWidth: 6,
+                borderTopLeftRadius: '40%',
+              }}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRightWidth: 6,
+                borderTopWidth: 6,
+                borderTopRightRadius: '40%',
+              }}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderBottomWidth: 6,
+                borderLeftWidth: 6,
+                borderBottomLeftRadius: '40%',
+              }}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderBottomWidth: 6,
+                borderRightWidth: 6,
+                borderBottomRightRadius: '40%',
+              }}
+            />
+            <View
+              style={{
+                width: 100,
+                height: 50,
+                borderWidth: 6,
+                borderRadius: '100%',
+              }}
+            />
+            <View
+              style={{
+                width: 100,
+                height: 50,
+                borderWidth: 6,
+                borderTopLeftRadius: '10%',
+                borderTopRightRadius: '20%',
+                borderBottomRightRadius: '50%',
+                borderBottomLeftRadius: '100%',
+              }}
+            />
+            <View
+              style={{
+                width: 100,
+                height: 50,
+                borderWidth: 6,
+                borderRadius: '0%',
+              }}
+            />
+          </View>
+        );
+      },
+    },
+    {
       title: 'Overflow',
       name: 'overflow',
       render(): React.Node {
@@ -771,17 +985,17 @@ export default ({
             accessibilityLabel="Rounded Borders Example">
             <View style={styles.container}>
               <View style={[StyleSheet.absoluteFill]}>
-                <Text style={styles.content}>undefined</Text>
+                <RNTesterText style={styles.content}>undefined</RNTesterText>
               </View>
             </View>
             <View style={styles.container}>
               <View style={[StyleSheet.absoluteFill, {overflow: 'hidden'}]}>
-                <Text style={styles.content}>hidden</Text>
+                <RNTesterText style={styles.content}>hidden</RNTesterText>
               </View>
             </View>
             <View style={styles.container}>
               <View style={[StyleSheet.absoluteFill, {overflow: 'visible'}]}>
-                <Text style={styles.content}>visible</Text>
+                <RNTesterText style={styles.content}>visible</RNTesterText>
               </View>
             </View>
           </View>
@@ -798,25 +1012,25 @@ export default ({
             accessible
             accessibilityLabel="Opacity Example">
             <View style={{opacity: 0}}>
-              <Text>Opacity 0</Text>
+              <RNTesterText>Opacity 0</RNTesterText>
             </View>
             <View style={{opacity: 0.1}}>
-              <Text>Opacity 0.1</Text>
+              <RNTesterText>Opacity 0.1</RNTesterText>
             </View>
             <View style={{opacity: 0.3}}>
-              <Text>Opacity 0.3</Text>
+              <RNTesterText>Opacity 0.3</RNTesterText>
             </View>
             <View style={{opacity: 0.5}}>
-              <Text>Opacity 0.5</Text>
+              <RNTesterText>Opacity 0.5</RNTesterText>
             </View>
             <View style={{opacity: 0.7}}>
-              <Text>Opacity 0.7</Text>
+              <RNTesterText>Opacity 0.7</RNTesterText>
             </View>
             <View style={{opacity: 0.9}}>
-              <Text>Opacity 0.9</Text>
+              <RNTesterText>Opacity 0.9</RNTesterText>
             </View>
             <View style={{opacity: 1}}>
-              <Text>Opacity 1</Text>
+              <RNTesterText>Opacity 1</RNTesterText>
             </View>
           </View>
         );
@@ -859,9 +1073,9 @@ export default ({
             testID="view-test-backface-visibility"
             accessible
             accessibilityLabel="Backface Visibility Example">
-            <Text style={{paddingBottom: 10}}>
+            <RNTesterText style={{paddingBottom: 10}}>
               View #1, front is visible, back is hidden.
-            </Text>
+            </RNTesterText>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <View
                 style={{
@@ -872,7 +1086,7 @@ export default ({
                   backgroundColor: 'blue',
                   backfaceVisibility: 'hidden',
                 }}>
-                <Text>Front</Text>
+                <RNTesterText>Front</RNTesterText>
               </View>
               <View
                 style={{
@@ -886,12 +1100,12 @@ export default ({
                   position: 'absolute',
                   top: 0,
                 }}>
-                <Text>Back (You should not see this)</Text>
+                <RNTesterText>Back (You should not see this)</RNTesterText>
               </View>
             </View>
-            <Text style={{paddingVertical: 10}}>
+            <RNTesterText style={{paddingVertical: 10}}>
               View #2, front is hidden, back is visible.
-            </Text>
+            </RNTesterText>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <View
                 style={{
@@ -902,7 +1116,7 @@ export default ({
                   backgroundColor: 'blue',
                   backfaceVisibility: 'hidden',
                 }}>
-                <Text>Front (You should not see this)</Text>
+                <RNTesterText>Front (You should not see this)</RNTesterText>
               </View>
               <View
                 style={{
@@ -915,7 +1129,7 @@ export default ({
                   position: 'absolute',
                   top: 0,
                 }}>
-                <Text>Back</Text>
+                <RNTesterText>Back</RNTesterText>
               </View>
             </View>
           </View>
@@ -933,7 +1147,7 @@ export default ({
             style={{backgroundColor: '#527FE4', padding: 5}}
             accessible
             accessibilityLabel="Aria-Label Example">
-            <Text style={{fontSize: 11}}>Blue background</Text>
+            <RNTesterText style={{fontSize: 11}}>Blue background</RNTesterText>
           </View>
         );
       },
@@ -950,19 +1164,19 @@ export default ({
       name: 'insets',
       render(): React.Node {
         return (
-          <View testID="view-test-insets" style={{rowGap: 10}} accessible>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+          <View testID="view-test-insets" style={{rowGap: 5}} accessible>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
                   padding: 5,
                   position: 'absolute',
-                  inset: 10,
+                  inset: 5,
                 }}>
-                <Text style={{fontSize: 11}}>inset 10</Text>
+                <RNTesterText style={{fontSize: 11}}>inset 5</RNTesterText>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -970,10 +1184,10 @@ export default ({
                   position: 'absolute',
                   insetBlock: 5,
                 }}>
-                <Text style={{fontSize: 11}}>insetBlock 5</Text>
+                <RNTesterText style={{fontSize: 11}}>insetBlock 5</RNTesterText>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -981,10 +1195,12 @@ export default ({
                   position: 'absolute',
                   insetBlockEnd: 5,
                 }}>
-                <Text style={{fontSize: 11}}>insetBlockEnd 5</Text>
+                <RNTesterText style={{fontSize: 11}}>
+                  insetBlockEnd 5
+                </RNTesterText>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -992,10 +1208,12 @@ export default ({
                   position: 'absolute',
                   insetBlockStart: 5,
                 }}>
-                <Text style={{fontSize: 11}}>insetBlockStart 5</Text>
+                <RNTesterText style={{fontSize: 11}}>
+                  insetBlockStart 5
+                </RNTesterText>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1003,10 +1221,12 @@ export default ({
                   position: 'absolute',
                   insetInline: 5,
                 }}>
-                <Text style={{fontSize: 11}}>insetInline 5</Text>
+                <RNTesterText style={{fontSize: 11}}>
+                  insetInline 5
+                </RNTesterText>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1014,10 +1234,12 @@ export default ({
                   position: 'absolute',
                   insetInlineEnd: 5,
                 }}>
-                <Text style={{fontSize: 11}}>insetInlineEnd 5</Text>
+                <RNTesterText style={{fontSize: 11}}>
+                  insetInlineEnd 5
+                </RNTesterText>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1025,7 +1247,9 @@ export default ({
                   position: 'absolute',
                   insetInlineStart: 5,
                 }}>
-                <Text style={{fontSize: 11}}>insetInlineStart 5</Text>
+                <RNTesterText style={{fontSize: 11}}>
+                  insetInlineStart 5
+                </RNTesterText>
               </View>
             </View>
           </View>
@@ -1053,7 +1277,9 @@ export default ({
                   left: 10,
                   right: 10,
                 }}>
-                <Text style={{fontSize: 11}}>borderBlockColor orange</Text>
+                <RNTesterText style={{fontSize: 11}}>
+                  borderBlockColor orange
+                </RNTesterText>
               </View>
             </View>
             <View style={{position: 'relative', height: 65, borderWidth: 1}}>
@@ -1068,8 +1294,12 @@ export default ({
                   left: 10,
                   right: 10,
                 }}>
-                <Text style={{fontSize: 11}}>borderBlockStartColor purple</Text>
-                <Text style={{fontSize: 11}}>borderBlockEndColor green</Text>
+                <RNTesterText style={{fontSize: 11}}>
+                  borderBlockStartColor purple
+                </RNTesterText>
+                <RNTesterText style={{fontSize: 11}}>
+                  borderBlockEndColor green
+                </RNTesterText>
               </View>
             </View>
           </View>
@@ -1077,9 +1307,14 @@ export default ({
       },
     },
     {
-      title: 'Layout conformance',
-      name: 'layout-conformance',
-      render: LayoutConformanceExample,
+      title: 'Box Shadow',
+      name: 'box-shadow',
+      render: BoxShadowExample,
+    },
+    {
+      title: 'Box Sizing',
+      name: 'box-sizing',
+      render: BoxSizingExample,
     },
     // [Windows
     {
@@ -1091,7 +1326,7 @@ export default ({
             testID="nativeid"
             accessible
             accessibilityLabel="NativeID Example">
-            <Text>A View with a nativeID "native-id-view"</Text>
+            <RNTesterText>A View with a nativeID "native-id-view"</RNTesterText>
           </View>
         );
       },
@@ -1137,18 +1372,18 @@ export default ({
             testID="tool-tip"
             accessible
             accessibilityLabel="Tooltip Example">
-            <Text style={{fontSize: 11}}>
+            <RNTesterText style={{fontSize: 11}}>
               This Parent View has tooltip "Parent View"
-            </Text>
+            </RNTesterText>
             <View tooltip="Child View 1">
-              <Text style={{fontSize: 11}}>
+              <RNTesterText style={{fontSize: 11}}>
                 This view has tooltip "Child View 1"
-              </Text>
+              </RNTesterText>
             </View>
             <View tooltip="Child View 2">
-              <Text style={{fontSize: 11}}>
+              <RNTesterText style={{fontSize: 11}}>
                 This view has tooltip "Child View 2"
-              </Text>
+              </RNTesterText>
             </View>
           </View>
         );

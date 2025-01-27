@@ -8,16 +8,26 @@
 #include "ReactHost/ReactInstanceWin.h"
 #include "ReactNativeHost.h"
 #include "Utils/Helpers.h"
-#include "XamlUtils.h"
 
 #ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <winrt/Windows.UI.Composition.h>
-#endif
+#else
 #include <UI.Xaml.Controls.Primitives.h>
+#include "XamlUtils.h"
+#endif
 
 namespace Microsoft::ReactNative {
+
+LogBox::~LogBox() {
+#ifdef USE_FABRIC
+  if (m_hwnd) {
+    m_context.UIDispatcher().Post([hwnd = m_hwnd]() { DestroyWindow(hwnd); });
+    m_hwnd = nullptr;
+  }
+#endif
+}
 
 #ifdef USE_FABRIC
 constexpr PCWSTR c_logBoxWindowClassName = L"MS_REACTNATIVE_LOGBOX";
@@ -112,7 +122,7 @@ void LogBox::ShowOnUIThread() noexcept {
   auto host = React::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
   if (!host)
     return;
-
+#ifndef USE_FABRIC
   if (!IsFabricEnabled(m_context.Properties().Handle())) {
     m_logBoxContent = React::ReactRootView();
     m_logBoxContent.ComponentName(L"LogBox");
@@ -161,7 +171,7 @@ void LogBox::ShowOnUIThread() noexcept {
     m_popup.Child(m_logBoxContent);
     m_popup.IsOpen(true);
   }
-#ifdef USE_FABRIC
+#else
   else {
     RegisterWndClass();
 
@@ -203,7 +213,7 @@ void LogBox::HideOnUIThread() noexcept {
   if (m_hwnd) {
     ::ShowWindow(m_hwnd, SW_HIDE);
   }
-#endif // USE_FABRIC
+#else // USE_FABRIC
   if (m_popup) {
     m_popup.Closed(m_tokenClosed);
     m_sizeChangedRevoker.revoke();
@@ -211,6 +221,7 @@ void LogBox::HideOnUIThread() noexcept {
     m_popup = nullptr;
     m_logBoxContent = nullptr;
   }
+#endif // USE_FABRIC
 }
 
 void LogBox::Initialize(React::ReactContext const &reactContext) noexcept {

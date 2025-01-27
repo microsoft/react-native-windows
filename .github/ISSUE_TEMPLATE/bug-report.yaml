@@ -35,8 +35,8 @@ body:
     attributes:
       label: CLI version
       description: |
-        Run the command `npx react-native --version` in your terminal and copy the results here
-      value: "npx react-native -v"
+        Run the command `npx @react-native-community/cli --version` in your terminal and copy the results here
+      value: "npx @react-native-community/cli -v"
     id: cli
   - type: textarea
     validations:
@@ -44,10 +44,15 @@ body:
     attributes:
       label: Environment
       description: |
-        Run the command `npx react-native info` in your terminal and copy the results here
-      value: "npx react-native info"
+        Run the command `npx @react-native-community/cli info` in your terminal and copy the results here
+      value: "npx @react-native-community/cli info"
       render: markdown
     id: env
+  - type: textarea
+    attributes:
+      label: Community Modules
+      description: Describe what you community modules you have added to your project. Not sure? Look at your app's `package.json` and share what's in the "dependencies" section.
+    id: modules
   - type: dropdown
     attributes:
       label: Target Platform Version
@@ -56,6 +61,9 @@ body:
         - "10.0.15063"
         - "10.0.16299"
         - "10.0.19041"
+        - "10.0.22000"
+        - "10.0.22321"
+        - "10.0.22621"
     id: sdk
   - type: dropdown
     attributes:
@@ -90,7 +98,7 @@ body:
     attributes:
       value: |
         **Troubleshooting**
-        If you see build failure on `react-native run-windows`, please try again with `react-native run-windows --logging` and provide the output.
+        If you see build failure on `npx @react-native-community/cli run-windows`, please try again with `npx @react-native-community/cli run-windows --logging` and provide the output.
     id: troubleshoot
   - type: textarea
     attributes:
@@ -100,4 +108,4 @@ body:
         You may provide a screenshot of the application if you think it is relevant to your bug report.
         [Here are some tips for providing a minimal example](https://stackoverflow.com/help/mcve).
     id: code
-    
+

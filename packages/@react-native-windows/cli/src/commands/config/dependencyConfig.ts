@@ -16,7 +16,7 @@ import * as configUtils from './configUtils';
 
 /*
 
-react-native config will generate the following JSON for each native module dependency
+@react-native-community/cli config will generate the following JSON for each native module dependency
 under node_modules that has a Windows implementation, in order to support auto-linking.
 This is done heuristically, so if the result isn't quite correct, native module developers
 can provide a manual override file: react-native.config.js.
@@ -29,7 +29,7 @@ req  - Item is required. If an override file exists, it MUST provide it. If no o
 opt  - Item is optional. If an override file exists, it MAY provide it. If no override file exists, config may try to calculate it.
 
 {
-  folder: string,       // (auto) Absolute path to the module root folder, determined by react-native config, ex: 'c:\path\to\app-name\node_modules\my-module'
+  folder: string,       // (auto) Absolute path to the module root folder, determined by @react-native-community/cli config, ex: 'c:\path\to\app-name\node_modules\my-module'
   sourceDir: string,    // (opt, req if projects defined) Relative path to the Windows implementation under folder, ex: 'windows'
   solutionFile: string, // (opt) Relative path to the module's VS solution file under sourceDir, ex: 'MyModule.sln'
   projects: [ // (opt) Array of VS projects that must be added to the consuming app's solution file, so they are built
@@ -55,6 +55,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
       csPackageProviders: [],  // (req) Array of fully qualified cs IReactPackageProviders, ie: 'NugetModule.ReactPackageProvider'
     },
   ],
+  rnwConfig: Record<string, any>, // (auto) Object extracted from 'react-native-windows' property in package.json
 }
 
 Example react-native.config.js for a 'MyModule':
@@ -105,6 +106,7 @@ export interface WindowsDependencyConfig {
   solutionFile?: string | null;
   projects: ProjectDependency[];
   nugetPackages: NuGetPackageDependency[];
+  rnwConfig?: Record<string, any>;
 }
 
 /**
@@ -322,6 +324,8 @@ export function dependencyConfigWindows(
           csNamespaces,
           csPackageProviders,
         });
+
+        result.rnwConfig ??= configUtils.getRnwConfig(folder, projectFile);
       } else {
         const projectPath = path.relative(sourceDir, projectFile);
         result.projects.push({

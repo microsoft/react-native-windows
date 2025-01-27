@@ -76,4 +76,10 @@ describe('Touchable Tests', () => {
     const dump = await dumpVisualTree('touchable_hit_slop_button');
     expect(dump).toMatchSnapshot();
   });
+  test('Touchables can be defined in a set using accessibilityPosInSet and accessibilitySetSize', async () => {
+    const component = await app.findElementByTestID('touchable_set');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('touchable_set');
+    expect(dump).toMatchSnapshot();
+  });
 });

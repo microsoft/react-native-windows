@@ -19,7 +19,7 @@
 #include <Utils/PropertyUtils.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
-#include <cxxreact/SystraceSection.h>
+#include <cxxreact/TraceSection.h>
 
 namespace winrt {
 using namespace xaml;
@@ -308,7 +308,7 @@ void ViewManagerBase::UpdateProperties(
   }
 
   {
-    SystraceSection s("ViewManagerBase::OnPropertiesUpdated");
+    TraceSection s("ViewManagerBase::OnPropertiesUpdated");
     OnPropertiesUpdated(nodeToUpdate);
   }
 }

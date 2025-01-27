@@ -35,15 +35,15 @@ winrt::Windows::UI::Color Theme::PlatformColor(const std::string &) noexcept {
   return {};
 }
 
-winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(winrt::hstring) noexcept {
+winrt::Microsoft::UI::Composition::CompositionBrush Theme::PlatformBrush(winrt::hstring) noexcept {
   return nullptr;
 }
 
-winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(const std::string &) noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::PlatformBrush(const std::string &) noexcept {
   return nullptr;
 }
 
-winrt::Microsoft::ReactNative::Composition::IBrush Theme::Brush(const facebook::react::Color &) noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::Brush(const facebook::react::Color &) noexcept {
   return nullptr;
 }
 
@@ -74,12 +74,8 @@ winrt::Microsoft::ReactNative::Composition::Theme Theme::EmptyTheme() noexcept {
   return nullptr;
 }
 
-/*static*/ void Theme::SetDefaultTheme(
+/*static*/ void Theme::SetDefaultResources(
     const winrt::Microsoft::ReactNative::ReactInstanceSettings &,
-    const winrt::Microsoft::ReactNative::Composition::Theme &) noexcept {}
-
-/*static*/ IReactPropertyName Theme::ThemeChangedEventName() noexcept {
-  return nullptr;
-}
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept {}
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

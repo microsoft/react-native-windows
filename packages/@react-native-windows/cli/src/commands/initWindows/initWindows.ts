@@ -29,6 +29,7 @@ import {
   endTelemetrySession,
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
+import * as nameHelpers from '../../utils/nameHelpers';
 import {InitOptions, initOptions} from './initWindowsOptions';
 
 export interface TemplateFileMapping {
@@ -51,11 +52,13 @@ export interface InitWindowsTemplateConfig {
 
 export class InitWindows {
   protected readonly rnwPath: string;
+  protected readonly rnwConfig?: Record<string, any>;
   protected readonly templates: Map<string, InitWindowsTemplateConfig> =
     new Map();
 
   constructor(readonly config: Config, readonly options: InitOptions) {
     this.rnwPath = pathHelpers.resolveRnwRoot(this.config.root);
+    this.rnwConfig = this.config.project.windows?.rnwConfig;
   }
 
   protected verboseMessage(message: any) {
@@ -67,7 +70,7 @@ export class InitWindows {
     for (const file of await glob('**/template.config.js', {
       cwd: templatesRoot,
     })) {
-      const templateName = path.dirname(file).replace('\\', '/');
+      const templateName = path.dirname(file).replace(/[\\]/g, '/');
       const templateConfig: InitWindowsTemplateConfig = require(path.join(
         templatesRoot,
         file,
@@ -92,18 +95,6 @@ export class InitWindows {
       'NoDefaultTemplate',
       'No template specified and no default template found.',
     );
-  }
-
-  protected pascalCase(str: string): string {
-    const camelCase = _.camelCase(str);
-    return camelCase[0].toUpperCase() + camelCase.substr(1);
-  }
-
-  protected isValidProjectName(name: string): boolean {
-    if (name.match(/^[a-z][a-z0-9]*$/gi)) {
-      return true;
-    }
-    return false;
   }
 
   protected getReactNativeProjectName(projectDir: string): string {
@@ -136,15 +127,38 @@ export class InitWindows {
     return name;
   }
 
+  protected printTemplateList() {
+    if (this.templates.size === 0) {
+      console.log('\nNo templates found.\n');
+      return;
+    }
+
+    for (const [key, value] of this.templates.entries()) {
+      const defaultLabel = value.isDefault ? chalk.yellow('[Default] ') : '';
+      console.log(
+        `\n${key} - ${value.name}\n    ${defaultLabel}${value.description}`,
+      );
+    }
+    console.log(`\n`);
+  }
+
+  // eslint-disable-next-line complexity
   public async run(spinner: Ora) {
     await this.loadTemplates();
 
     spinner.info();
 
-    this.options.template ??= this.getDefaultTemplateName();
+    if (this.options.list) {
+      this.printTemplateList();
+      return;
+    }
+
+    this.options.template ??=
+      (this.rnwConfig?.['init-windows']?.template as string | undefined) ??
+      this.getDefaultTemplateName();
 
     spinner.info(`Using template '${this.options.template}'...`);
-    if (!this.templates.has(this.options.template.replace('\\', '/'))) {
+    if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
       throw new CodedError(
         'InvalidTemplateName',
         `Unable to find template '${this.options.template}'.`,
@@ -152,21 +166,63 @@ export class InitWindows {
     }
     const templateConfig = this.templates.get(this.options.template)!;
 
-    if (this.options.name && !this.isValidProjectName(this.options.name)) {
+    // Check if there's a passed-in project name and if it's valid
+    if (
+      this.options.name &&
+      !nameHelpers.isValidProjectName(this.options.name)
+    ) {
       throw new CodedError(
         'InvalidProjectName',
-        `The specified name is not a valid identifier`,
+        `The specified name '${this.options.name}' is not a valid identifier`,
       );
     }
 
+    // If no project name is provided, check previously used name or calculate a name and clean if necessary
     if (!this.options.name) {
-      const projectName = this.getReactNativeProjectName(this.config.root);
-      this.options.name = this.isValidProjectName(projectName)
+      const projectName =
+        (this.rnwConfig?.['init-windows']?.name as string | undefined) ??
+        this.getReactNativeProjectName(this.config.root);
+      this.options.name = nameHelpers.isValidProjectName(projectName)
         ? projectName
-        : this.pascalCase(projectName);
+        : nameHelpers.cleanName(projectName);
     }
 
-    this.options.namespace ??= this.options.name;
+    // Final check that the project name is valid
+    if (!nameHelpers.isValidProjectName(this.options.name)) {
+      throw new CodedError(
+        'InvalidProjectName',
+        `The name '${this.options.name}' is not a valid identifier`,
+      );
+    }
+
+    // Check if there's a passed-in project namespace and if it's valid
+    if (
+      this.options.namespace &&
+      !nameHelpers.isValidProjectNamespace(this.options.namespace)
+    ) {
+      throw new CodedError(
+        'InvalidProjectNamespace',
+        `The specified namespace '${this.options.namespace}' is not a valid identifier`,
+      );
+    }
+
+    // If no project namespace is provided, check previously used namespace or use the project name and clean if necessary
+    if (!this.options.namespace) {
+      const namespace =
+        (this.rnwConfig?.['init-windows']?.namespace as string | undefined) ??
+        this.options.name;
+      this.options.namespace = nameHelpers.isValidProjectNamespace(namespace)
+        ? namespace
+        : nameHelpers.cleanNamespace(namespace);
+    }
+
+    // Final check that the project namespace is valid
+    if (!nameHelpers.isValidProjectNamespace(this.options.namespace)) {
+      throw new CodedError(
+        'InvalidProjectNamespace',
+        `The namespace '${this.options.namespace}' is not a valid identifier`,
+      );
+    }
 
     if (templateConfig.preInstall) {
       spinner.info(`Running ${this.options.template} preInstall()...`);
@@ -238,6 +294,7 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
     case 'template':
     case 'overwrite':
     case 'telemetry':
+    case 'list':
       return value === undefined ? false : value; // Return value
   }
 }
@@ -252,7 +309,7 @@ async function getExtraProps(): Promise<Record<string, any>> {
 }
 
 /**
- * The function run when calling `react-native init-windows`.
+ * The function run when calling `npx @react-native-community/cli init-windows`.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
@@ -323,7 +380,7 @@ export async function initWindowsInternal(
  */
 export const initCommand: Command = {
   name: 'init-windows',
-  description: 'Initializes a new RNW project from a given template.',
+  description: 'Initializes a new RNW project from a given template',
   func: initWindows,
   options: initOptions,
 };

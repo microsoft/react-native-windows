@@ -119,7 +119,7 @@ export default class MSBuildTools {
     // doesn't lead to dramatic performance gains (See #4739). Only enable
     // parallel builds on machines with >16GB of memory to avoid OOM errors
     const highMemory = totalmem() > 16 * 1024 * 1024 * 1024;
-    const enableParallelBuilds = singleproc === false || highMemory;
+    const enableParallelBuilds = singleproc !== true && highMemory;
 
     if (enableParallelBuilds) {
       args.push('/maxCpuCount');
@@ -200,7 +200,10 @@ export default class MSBuildTools {
       'Microsoft.Component.MSBuild',
       getVCToolsByArch(buildArch),
     ];
-    const minVersion = process.env.VisualStudioVersion || '17.0';
+    const minVersion =
+      process.env.MinimumVisualStudioVersion ||
+      process.env.VisualStudioVersion ||
+      '17.11.0';
     const vsInstallation = findLatestVsInstall({
       requires,
       minVersion,
@@ -209,7 +212,16 @@ export default class MSBuildTools {
     });
 
     if (!vsInstallation) {
-      if (process.env.VisualStudioVersion != null) {
+      if (process.env.MinimumVisualStudioVersion != null) {
+        throw new CodedError(
+          'NoMSBuild',
+          `MSBuild tools not found for version ${process.env.MinimumVisualStudioVersion} (from environment). Make sure all required components have been installed`,
+          {
+            MinimumVisualStudioVersionFromEnv:
+              process.env.MinimumVisualStudioVersion,
+          },
+        );
+      } else if (process.env.VisualStudioVersion != null) {
         throw new CodedError(
           'NoMSBuild',
           `MSBuild tools not found for version ${process.env.VisualStudioVersion} (from environment). Make sure all required components have been installed`,

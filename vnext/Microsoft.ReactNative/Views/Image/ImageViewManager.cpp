@@ -114,7 +114,7 @@ const wchar_t *ImageViewManager::GetName() const {
 }
 
 XamlView ImageViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
-  return ReactImage::Create().as<winrt::Grid>();
+  return ReactImage::Create(GetReactContext()).as<winrt::Grid>();
 }
 
 ShadowNode *ImageViewManager::createShadow() const {

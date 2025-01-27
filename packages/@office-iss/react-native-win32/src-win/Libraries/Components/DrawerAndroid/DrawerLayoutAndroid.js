@@ -5,8 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @format
+ * @flow strict-local
  */
 
 'use strict';
 
-module.exports = require('../UnimplementedViews/UnimplementedView');
+// $FlowFixMe[cannot-resolve-module]
+import typeof DrawerLayoutAndroid from './DrawerLayoutAndroid.android';
+
+module.exports =
+  require('../UnimplementedViews/UnimplementedView') as $FlowFixMe as DrawerLayoutAndroid;

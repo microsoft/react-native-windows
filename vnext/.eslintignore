@@ -5,13 +5,13 @@
 /jest
 /lib
 /Libraries
-/src
 /local-cli/lib
 /local-cli/lib-commonjs
 /packages
 /Microsoft.ReactNative.IntegrationTests/SyntaxError.js
 /ReactCopies
 /RNTester.d.ts
+/src
 /src-win/rntypes
 /rntypes
 /target

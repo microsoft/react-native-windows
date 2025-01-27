@@ -61,17 +61,17 @@ export interface RunWindowsOptions {
 export const runWindowsOptions: CommandOption[] = [
   {
     name: '--release',
-    description: 'Specifies a release build',
+    description: 'Specifies a Release build',
   },
   {
     name: '--root [string]',
     description:
-      'Override the root directory for the windows build which contains the windows folder.',
+      'Override the root directory for the project which contains the windows folder',
     default: config => config.root,
   },
   {
     name: '--arch [string]',
-    description: 'The build architecture (ARM64, x86, x64)',
+    description: 'The build architecture, i.e. ARM64, x86, x64',
     default: parseBuildArch(deviceArchitecture()),
     parse: parseBuildArch,
   },
@@ -89,24 +89,24 @@ export const runWindowsOptions: CommandOption[] = [
   },
   {
     name: '--target [string]',
-    description: 'Deploys the app to the specified GUID for a device.',
+    description: 'Deploys the app to the specified GUID for a device',
   },
   {
     name: '--remote-debugging',
-    description: 'Deploys the app in remote debugging mode.',
+    description: '(Deprecated) Deploys the app in remote debugging mode',
   },
   {
     name: '--logging',
-    description: 'Enables logging',
+    description: 'Verbose output logging',
   },
   {
     name: '--no-packager',
-    description: 'Do not launch packager while building',
+    description: 'Do not launch the packager while building',
   },
   {
     name: '--bundle',
     description:
-      'Enable Bundle configuration and it would be ReleaseBundle/DebugBundle other than Release/Debug',
+      'Enable Bundle configuration, i.e. ReleaseBundle/DebugBundle rather than Release/Debug',
   },
   {
     name: '--no-launch',
@@ -126,28 +126,28 @@ export const runWindowsOptions: CommandOption[] = [
   },
   {
     name: '--deploy-from-layout',
-    description: 'Force deploy from layout',
+    description: 'Force deploy from layout even in Release builds',
   },
   {
     name: '--sln [string]',
     description:
-      "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
+      "Override the app solution file determined by 'npx @react-native-community/cli config', i.e. windows\\myApp.sln",
     default: undefined,
   },
   {
     name: '--proj [string]',
     description:
-      "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
+      "Override the app project file determined by 'npx @react-native-community/cli config', i.e. windows\\myApp\\myApp.vcxproj",
     default: undefined,
   },
   {
     name: '--msbuildprops [string]',
     description:
-      'Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2',
+      'Comma separated props to pass to MSBuild, eg: prop1=value1,prop2=value2',
   },
   {
     name: '--buildLogDirectory [string]',
-    description: 'Optional directory where msbuild log files should be stored',
+    description: 'Optional directory where MSBuild log files should be stored',
   },
   {
     name: '--info',

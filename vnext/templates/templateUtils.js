@@ -30,6 +30,8 @@ function getRnwInfo(config = {}, options = {}) {
 
   const devMode = existsSync(path.join(rnwPath, 'src-win'));
 
+  const isCanary = rnwVersion.includes('canary');
+
   if (options?.logging) {
     console.log(
       `Found react-native-windows@${rnwVersion} at ${rnwPath}${
@@ -38,7 +40,7 @@ function getRnwInfo(config = {}, options = {}) {
     );
   }
 
-  return {rnwPath, rnwVersion, devMode};
+  return {rnwPath, rnwVersion, devMode, isCanary};
 }
 
 function getWindowsProjectConfig(root) {
@@ -108,11 +110,16 @@ async function runNpmInstall(config = {}, options = {}) {
   }
 }
 
-async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
+async function updateProjectPackageJson(
+  config = {},
+  options = {},
+  props = {},
+  saveOptions = true,
+  ensureWindowsInFiles = false,
+) {
   const projectRoot = config?.root ?? process.cwd();
-  const projectPackage = await pkgUtils.WritableNpmPackage.fromPath(
-    projectRoot,
-  );
+  const projectPackage =
+    await pkgUtils.WritableNpmPackage.fromPath(projectRoot);
 
   if (!projectPackage) {
     throw new Error(
@@ -120,9 +127,28 @@ async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
     );
   }
 
+  if (saveOptions) {
+    props['react-native-windows'] = {
+      'init-windows': {
+        name: options.name,
+        namespace: options.namespace,
+        template: options.template,
+      },
+    };
+  }
+
   if (options?.logging) {
     console.log(`Modifying ${path.join(projectRoot, 'package.json')}...`);
   }
+
+  // add "windows" to files if property exists
+  if (ensureWindowsInFiles && projectPackage.json.files !== undefined) {
+    props.files = projectPackage.json.files;
+    if (!props.files.includes('windows')) {
+      props.files.push('windows');
+    }
+  }
+
   await projectPackage.mergeProps(props);
 }
 

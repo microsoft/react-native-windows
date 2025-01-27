@@ -22,7 +22,7 @@ export class Metro {
       // Thus, can we check if port 8081 is already in use?
 
       const repoRootDir = path.normalize(`${__dirname}\\..\\..`);
-      const metroScript = `${repoRootDir}\\node_modules\\react-native\\cli.js`;
+      const metroScript = `${repoRootDir}\\node_modules\\@react-native-community\\cli\\build\\bin.js`;
       const metroCurrentDir = `${repoRootDir}\\packages\\playground`;
 
       testLog.message(`Metro script "${metroScript}"`);

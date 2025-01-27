@@ -16,36 +16,99 @@
 #include <UIAutomation.h>
 #include <windows.ui.composition.interop.h>
 
+#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Composition.h>
 
 #include <DesktopWindowBridge.h>
 #include "App.xaml.h"
+#include "AutoDraw.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
-#if USE_WINUI3
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
-#endif
 
-#if USE_WINUI3
+// Includes from sample-custom-component
+#include <winrt/SampleCustomComponent.h>
+
 winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQueueController{nullptr};
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
-#endif
 
 void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
+
+/**
+ * This ImageHandler will accept images with a uri using the ellipse protocol and render an ellipse image
+ *
+ *   <Image
+ *      style={{width: 400, height: 200}}
+ *      source={{uri: 'customimage://test'}}
+ *   />
+ *
+ * This allows applications to provide custom image rendering pipelines.
+ */
+struct EllipseImageHandler
+    : winrt::implements<EllipseImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
+  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
+    return uri.SchemeName() == L"ellipse";
+  }
+
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+  GetImageResponseAsync(
+      const winrt::Microsoft::ReactNative::IReactContext &context,
+      const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
+    co_return winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactoryImageResponse(
+        [uri = imageSource.Uri(), size = imageSource.Size(), scale = imageSource.Scale(), context](
+            const winrt::Microsoft::ReactNative::IReactContext & /*reactContext*/,
+            const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
+            -> winrt::Microsoft::ReactNative::Composition::Experimental::IBrush {
+          auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::
+              MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
+          auto drawingBrush = compositionContext.CreateDrawingSurfaceBrush(
+              size,
+              winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+              winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+          POINT pt;
+          Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, scale, &pt);
+          auto renderTarget = autoDraw.GetRenderTarget();
+
+          winrt::com_ptr<ID2D1SolidColorBrush> brush;
+          renderTarget->CreateSolidColorBrush({1.0f, 0.0f, 0.0f, 1.0f}, brush.put());
+          renderTarget->DrawEllipse(
+              {{(pt.x + size.Width / 2) / scale, (pt.y + size.Height / 2) / scale},
+               (size.Width / 2) / scale,
+               (size.Height / 2) / scale},
+              brush.get());
+
+          return drawingBrush;
+        });
+  }
+};
+
+struct EllipseReactPackageProvider
+    : winrt::implements<EllipseReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+ public: // IReactPackageProvider
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
+    // Register ellipse: uri handler for images
+    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddUriImageProvider(
+        winrt::make<EllipseImageHandler>());
+  }
+};
 
 // Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
+#ifdef USE_EXPERIMENTAL_WINUI3
     RegisterCustomComponent(packageBuilder);
+#else
+    UNREFERENCED_PARAMETER(packageBuilder);
+#endif // USE_EXPERIMENTAL_WINUI3
   }
 };
 
@@ -62,10 +125,13 @@ struct WindowData {
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
+  winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_bridge{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_useLiftedComposition{true};
+  bool m_sizeToContent{false};
+  bool m_forceRTL{false};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
   LONG m_height{0};
   LONG m_width{0};
@@ -133,6 +199,11 @@ struct WindowData {
     return winrt::Microsoft::UI::GetWindowIdFromWindow(childHwnd);
   }
 
+  void ApplyConstraintsForContentSizedWindow(winrt::Microsoft::ReactNative::LayoutConstraints &constraints) {
+    constraints.MinimumSize = {300, 300};
+    constraints.MaximumSize = {1000, 1000};
+  }
+
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
     switch (id) {
       case IDM_OPENJSFILE: {
@@ -155,12 +226,14 @@ struct WindowData {
               std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System
-          // Composition So our custom components do not run when running on lifted composition. This can be enabled in
-          // lifted once we have a VisualSiteBridge that works in lifted
-          if (!m_useLiftedComposition) {
-            host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-          }
+          // Some of the images in RNTester require a user-agent header to properly fetch
+          winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
+              host.InstanceSettings(), L"React Native Windows Playground");
+
+          host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+
+          host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
+
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
@@ -170,53 +243,75 @@ struct WindowData {
 
           if (!m_compRootView) {
             if (windowData->m_useLiftedComposition) {
-              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(g_liftedCompositor);
+              m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(g_liftedCompositor);
             } else {
-              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+              m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland();
             }
 
             if (windowData->m_useLiftedComposition) {
-              // By using the MicrosoftCompositionContextHelper here, React Native Windows will use Lifted Visuals for
-              // its tree.
-              winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-                  InstanceSettings().Properties(),
-                  winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateContext(
-                      g_liftedCompositor));
+              // By setting the compositor here we opt into using the new architecture.
+              winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
+                  InstanceSettings(), g_liftedCompositor);
 
-              auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+              // Register ellipse:// uri hander for images
+              host.PackageProviders().Append(winrt::make<EllipseReactPackageProvider>());
+
+              m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
                   g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+
+              if (m_forceRTL) {
+                m_bridge.LayoutDirectionOverride(winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
+              }
 
               auto appContent = m_compRootView.Island();
 
-              auto invScale = 1.0f / ScaleFactor(hwnd);
-              m_compRootView.RootVisual().Scale({invScale, invScale, invScale});
-
-              /*
-                // Future versions of WinAppSDK will have more capabilities around scale and size
-                auto site = bridge.Site();
-                auto siteWindow = site.Environment();
-                auto displayScale = siteWindow.DisplayScale();
-
-                site.ParentScale(displayScale);
-                site.ActualSize({m_width / displayScale, m_height / displayScale});
-                site.ClientSize({m_width / displayScale, m_height / displayScale});
-              */
-
-              bridge.Connect(appContent);
-              bridge.Show();
+              m_bridge.Connect(appContent);
+              m_bridge.Show();
 
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+              winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+              constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
+              constraints.MaximumSize =
+                  constraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
 
-              bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+              if (m_sizeToContent) {
+                ApplyConstraintsForContentSizedWindow(constraints);
+
+                // Disable user sizing of the hwnd
+                ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
+                m_compRootView.SizeChanged(
+                    [hwnd](auto sender, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                      RECT rcClient, rcWindow;
+                      GetClientRect(hwnd, &rcClient);
+                      GetWindowRect(hwnd, &rcWindow);
+
+                      SetWindowPos(
+                          hwnd,
+                          nullptr,
+                          0,
+                          0,
+                          static_cast<int>(args.Size().Width) + rcClient.left - rcClient.right + rcWindow.right -
+                              rcWindow.left,
+                          static_cast<int>(args.Size().Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
+                              rcWindow.top,
+                          SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                    });
+              }
+              m_compRootView.Arrange(constraints, {0, 0});
+
+              m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
             } else if (!m_target) {
-              // By using the SystemCompositionContextHelper here, React Native Windows will use System Visuals for its
-              // tree.
-              winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-                  InstanceSettings().Properties(),
-                  winrt::Microsoft::ReactNative::Composition::SystemCompositionContextHelper::CreateContext(
-                      g_compositor));
+              // General users of RNW should never set CompositionContext - this is an advanced usage to inject another
+              // composition implementation. By using the SystemCompositionContextHelper here, React Native Windows will
+              // use System Visuals for its tree.
+              winrt::Microsoft::ReactNative::ReactPropertyBag(InstanceSettings().Properties())
+                  .Set(
+                      winrt::Microsoft::ReactNative::ReactPropertyId<
+                          winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
+                          L"ReactNative.Composition", L"CompositionContext"},
+                      winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::
+                          CreateContext(g_compositor));
 
               auto interop = g_compositor.as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>();
               winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
@@ -231,22 +326,21 @@ struct WindowData {
               root.RelativeSizeAdjustment({1.0f, 1.0f});
               root.Offset({0, 0, 0});
               m_target.Root(root);
-              m_compRootView.SetWindow(reinterpret_cast<uint64_t>(hwnd));
-              m_compRootView.RootVisual(
-                  winrt::Microsoft::ReactNative::Composition::SystemCompositionContextHelper::CreateVisual(root));
+              m_compRootView
+                  .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+                  .SetWindow(reinterpret_cast<uint64_t>(hwnd));
+              m_compRootView
+                  .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+                  .InternalRootVisual(winrt::Microsoft::ReactNative::Composition::Experimental::
+                                          SystemCompositionContextHelper::CreateVisual(root));
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+              winrt::Microsoft::ReactNative::LayoutConstraints contraints;
+              contraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
+              contraints.MaximumSize =
+                  contraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
+              m_compRootView.Arrange(contraints, {0, 0});
             }
           }
-
-          /*
-           * Uncomment this to run using the bridge.  This isn't publicly exposed, and isn't a mode that we will
-           * support (Fabric will always be bridgeless for windows.)  But it can be useful for internal bug diagnosis.
-           */
-          /*
-          winrt::Microsoft::ReactNative::ReactPropertyBag{host.InstanceSettings().Properties()}.Set(
-              winrt::Microsoft::ReactNative::ReactPropertyId<bool>(L"ReactNative", L"IsBridgeless"), true);
-          */
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
@@ -278,6 +372,33 @@ struct WindowData {
       case IDM_SETTINGS:
         DialogBoxParam(s_instance, MAKEINTRESOURCE(IDD_SETTINGSBOX), hwnd, &Settings, reinterpret_cast<INT_PTR>(this));
         break;
+      case IDM_UNLOAD: {
+        auto async = Host().UnloadInstance();
+        async.Completed([&, uidispatch = InstanceSettings().UIDispatcher()](
+                            auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
+          OutputDebugStringA("Instance Unload completed\n");
+
+          uidispatch.Post([&]() {
+            if (m_bridge) {
+              m_bridge.Close();
+              m_bridge = nullptr;
+            }
+          });
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+        });
+        m_compRootView = nullptr;
+        m_instanceSettings = nullptr;
+        m_host = nullptr;
+      } break;
+      case IDM_TOGGLE_LAYOUT_DIRECTION: {
+        if (m_bridge) {
+          m_bridge.LayoutDirectionOverride(
+              (m_forceRTL) ? winrt::Microsoft::UI::Content::ContentLayoutDirection::LeftToRight
+                           : winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
+        }
+        m_forceRTL = !m_forceRTL;
+      }
     }
 
     return 0;
@@ -297,17 +418,24 @@ struct WindowData {
         if (m_compRootView) {
           winrt::Windows::Foundation::Size size{m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
           if (!IsIconic(hwnd)) {
-            m_compRootView.Arrange(size);
-            m_compRootView.Size(size);
+            winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
+            constraints.MinimumSize = constraints.MaximumSize = size;
+            if (m_sizeToContent) {
+              ApplyConstraintsForContentSizedWindow(constraints);
+            }
+            m_compRootView.Arrange(constraints, {0, 0});
           }
         }
       }
     }
   }
 
-  LRESULT TranslateMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
+  LRESULT TranslateMessage(HWND /*hwnd*/, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
     if (!m_useLiftedComposition && m_compRootView) {
-      return static_cast<LRESULT>(m_compRootView.SendMessage(message, wparam, lparam));
+      return static_cast<LRESULT>(
+          m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+              .SendMessage(message, wparam, lparam));
     }
     return 0;
   }
@@ -391,6 +519,7 @@ struct WindowData {
         CheckDlgButton(hwnd, IDC_FASTREFRESH, boolToCheck(self->InstanceSettings().UseFastRefresh()));
         CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->InstanceSettings().UseDirectDebugger()));
         CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->InstanceSettings().DebuggerBreakOnNextLine()));
+        CheckDlgButton(hwnd, IDC_SIZETOCONTENT, boolToCheck(self->m_sizeToContent));
 
         auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
         SetWindowTextW(portEditControl, std::to_wstring(self->InstanceSettings().DebuggerPort()).c_str());
@@ -414,6 +543,7 @@ struct WindowData {
             self->InstanceSettings().UseDirectDebugger(IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED);
             self->InstanceSettings().DebuggerBreakOnNextLine(
                 IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED);
+            self->m_sizeToContent = (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED);
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
@@ -466,21 +596,45 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
           hwnd, LOWORD(wparam), reinterpret_cast<HWND>(lparam), HIWORD(wparam));
     }
     case WM_DESTROY: {
+      auto data = WindowData::GetFromWindow(hwnd);
+      // Before we shutdown the application - gracefully unload the ReactNativeHost instance
+      bool shouldPostQuitMessage = true;
+      if (data->m_host) {
+        shouldPostQuitMessage = false;
+
+        winrt::Microsoft::ReactNative::ReactPropertyBag properties(data->m_host.InstanceSettings().Properties());
+
+        properties.Remove(winrt::Microsoft::ReactNative::ReactPropertyId<
+                          winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
+            L"ReactNative.Composition", L"CompositionContext"});
+
+        auto async = data->m_host.UnloadInstance();
+        async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+        });
+        data->m_compRootView = nullptr;
+        data->m_instanceSettings = nullptr;
+        data->m_host = nullptr;
+      }
+
       delete WindowData::GetFromWindow(hwnd);
       SetProp(hwnd, WindowDataProperty, 0);
-      PostQuitMessage(0);
+      if (shouldPostQuitMessage) {
+        PostQuitMessage(0);
+      }
       return 0;
     }
     case WM_NCCREATE: {
       auto cs = reinterpret_cast<CREATESTRUCT *>(lparam);
-      auto windowData = static_cast<WindowData *>(cs->lpCreateParams);
+      windowData = static_cast<WindowData *>(cs->lpCreateParams);
       WINRT_ASSERT(windowData);
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
     case WM_GETOBJECT: {
       if (!windowData->m_useLiftedComposition && lparam == UiaRootObjectId) {
-        auto windowData = WindowData::GetFromWindow(hwnd);
         if (windowData == nullptr || !windowData->m_compRootView)
           break;
 
@@ -494,7 +648,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       }
     }
     case WM_WINDOWPOSCHANGED: {
-      auto windowData = WindowData::GetFromWindow(hwnd);
       windowData->UpdateSize(hwnd);
 
       winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
@@ -508,7 +661,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
-int RunPlayground(int showCmd, bool useWebDebugger) {
+int RunPlayground(int showCmd, bool /*useWebDebugger*/) {
   constexpr PCWSTR appName = L"React Native Playground (Composition)";
 
   auto windowData = std::make_unique<WindowData>();
@@ -533,9 +686,15 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   UpdateWindow(hwnd);
   SetFocus(hwnd);
 
-  HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_COMPOSITION));
-
   g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
+
+  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
+  // know the message loop has finished.
+  g_liftedDispatcherQueueController.ShutdownQueue();
+
+  // Destroy all Composition objects
+  g_compositor.Close();
+  g_compositor = nullptr;
 
   return 0;
 }
@@ -573,7 +732,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
           winrt::put_abi(g_dispatcherQueueController))));
   g_compositor = winrt::Windows::UI::Composition::Compositor();
 
-#ifdef USE_WINUI3
   // Create a Lifted (WinAppSDK) DispatcherQueue for this thread.  This is needed for
   // Microsoft.UI.Composition, Content, and Input APIs.
   g_liftedDispatcherQueueController =
@@ -585,7 +743,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
   // in Microsoft.ui.xaml.controls.dll.
   auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
-#endif
 #endif
 
   return RunPlayground(showCmd, false);

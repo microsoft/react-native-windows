@@ -77,13 +77,6 @@ DebuggingOverlayProps::DebuggingOverlayProps(
 
     
       {}
-AndroidPopupMenuProps::AndroidPopupMenuProps(
-    const PropsParserContext &context,
-    const AndroidPopupMenuProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    menuItems(convertRawProp(context, rawProps, "menuItems", sourceProps.menuItems, {}))
-      {}
 AndroidProgressBarProps::AndroidProgressBarProps(
     const PropsParserContext &context,
     const AndroidProgressBarProps &sourceProps,
@@ -124,10 +117,11 @@ ModalHostViewProps::ModalHostViewProps(
     presentationStyle(convertRawProp(context, rawProps, "presentationStyle", sourceProps.presentationStyle, {ModalHostViewPresentationStyle::FullScreen})),
     transparent(convertRawProp(context, rawProps, "transparent", sourceProps.transparent, {false})),
     statusBarTranslucent(convertRawProp(context, rawProps, "statusBarTranslucent", sourceProps.statusBarTranslucent, {false})),
+    navigationBarTranslucent(convertRawProp(context, rawProps, "navigationBarTranslucent", sourceProps.navigationBarTranslucent, {false})),
     hardwareAccelerated(convertRawProp(context, rawProps, "hardwareAccelerated", sourceProps.hardwareAccelerated, {false})),
     visible(convertRawProp(context, rawProps, "visible", sourceProps.visible, {false})),
     animated(convertRawProp(context, rawProps, "animated", sourceProps.animated, {false})),
-    supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", sourceProps.supportedOrientations, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)})),
+    supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", ModalHostViewSupportedOrientationsMaskWrapped{ .value = sourceProps.supportedOrientations }, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)}).value),
     identifier(convertRawProp(context, rawProps, "identifier", sourceProps.identifier, {0}))
       {}
 SafeAreaViewProps::SafeAreaViewProps(

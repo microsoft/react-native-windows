@@ -8,7 +8,7 @@ namespace Microsoft.ReactNative.Composition.Input
 {
   interface KeyboardSource
   {
-    Windows.UI.Core.CoreVirtualKeyStates GetKeyState(Windows.System.VirtualKey key);
+    Microsoft.UI.Input.VirtualKeyStates GetKeyState(Windows.System.VirtualKey key);
   }
 
   interface RoutedEventArgs
@@ -21,15 +21,17 @@ namespace Microsoft.ReactNative.Composition.Input
     String DeviceId { get; };
     Boolean Handled { get; set; };
     Windows.System.VirtualKey Key { get; };
-    Windows.UI.Core.CorePhysicalKeyStatus KeyStatus { get; };
+    Microsoft.UI.Input.PhysicalKeyStatus KeyStatus { get; };
     Windows.System.VirtualKey OriginalKey { get; };
+    KeyboardSource KeyboardSource { get; };
   }
 
   interface CharacterReceivedRoutedEventArgs requires RoutedEventArgs
   {
     Boolean Handled { get; set; };
-    Windows.UI.Core.CorePhysicalKeyStatus KeyStatus { get; };
+    Microsoft.UI.Input.PhysicalKeyStatus KeyStatus { get; };
     Int32 KeyCode { get; };
+    KeyboardSource KeyboardSource { get; };
   };
 
   interface IPointerPointTransform
@@ -104,6 +106,7 @@ namespace Microsoft.ReactNative.Composition.Input
     UInt64 Timestamp { get; };
     PointerPoint GetOffsetPoint(
         Windows.Foundation.Point offset);
+    Microsoft.UI.Input.PointerPoint Inner { get; };
   };
 
   runtimeclass PointerRoutedEventArgs : RoutedEventArgs

@@ -17,7 +17,7 @@ import type {
   AccessibilityState,
   Role,
 } from '../Components/View/ViewAccessibility';
-import type {TextStyleProp} from '../StyleSheet/StyleSheet';
+import type {ColorValue, TextStyleProp} from '../StyleSheet/StyleSheet';
 import type {
   LayoutEvent,
   PointerEvent,
@@ -26,23 +26,23 @@ import type {
 } from '../Types/CoreEventTypes';
 import type {Node} from 'react';
 
-export type PressRetentionOffset = $ReadOnly<{|
+export type PressRetentionOffset = $ReadOnly<{
   top: number,
   left: number,
   bottom: number,
   right: number,
-|}>;
+}>;
 
-type PointerEventProps = $ReadOnly<{|
+type PointerEventProps = $ReadOnly<{
   onPointerEnter?: (event: PointerEvent) => void,
   onPointerLeave?: (event: PointerEvent) => void,
   onPointerMove?: (event: PointerEvent) => void,
-|}>;
+}>;
 
 /**
  * @see https://reactnative.dev/docs/text#reference
  */
-export type TextProps = $ReadOnly<{|
+export type TextProps = $ReadOnly<{
   ...PointerEventProps,
 
   /**
@@ -97,6 +97,9 @@ export type TextProps = $ReadOnly<{|
   'aria-posinset'?: ?number, // Windows
   'aria-setsize'?: ?number, // Windows
   'aria-level'?: ?number, // Windows
+  'aria-readonly'?: ?boolean, // Windows
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
 
   /**
    * Represents the nativeID of the associated label text. When the assistive technology focuses on the component with this props, the text is read aloud.
@@ -219,7 +222,7 @@ export type TextProps = $ReadOnly<{|
    *
    * See https://reactnative.dev/docs/text#selectioncolor
    */
-  selectionColor?: ?string,
+  selectionColor?: ?ColorValue,
 
   dataDetectorType?: ?('phoneNumber' | 'link' | 'email' | 'none' | 'all'),
 
@@ -272,4 +275,4 @@ export type TextProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/text.html#linebreakstrategyios
    */
   lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
-|}>;
+}>;

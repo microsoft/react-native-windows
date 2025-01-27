@@ -46,10 +46,11 @@ comp::Compositor NativeAnimatedNodeManager::Compositor() const noexcept {
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
   if (compositionContext) {
-    return winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(compositionContext);
+    return winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerCompositor(
+        compositionContext);
   }
 #endif
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   // TODO: Islands - need to get the XamlView associated with this animation in order to
   // use the compositor Microsoft::ReactNative::GetCompositor(xamlView)
   return Microsoft::ReactNative::GetCompositor();

@@ -40,17 +40,6 @@ using AndroidDrawerLayoutShadowNode = ConcreteViewShadowNode<
     AndroidDrawerLayoutEventEmitter,
     AndroidDrawerLayoutState>;
 
-JSI_EXPORT extern const char AndroidHorizontalScrollContentViewComponentName[];
-
-/*
- * `ShadowNode` for <AndroidHorizontalScrollContentView> component.
- */
-using AndroidHorizontalScrollContentViewShadowNode = ConcreteViewShadowNode<
-    AndroidHorizontalScrollContentViewComponentName,
-    AndroidHorizontalScrollContentViewProps,
-    AndroidHorizontalScrollContentViewEventEmitter,
-    AndroidHorizontalScrollContentViewState>;
-
 JSI_EXPORT extern const char AndroidSwipeRefreshLayoutComponentName[];
 
 /*
@@ -72,17 +61,6 @@ using DebuggingOverlayShadowNode = ConcreteViewShadowNode<
     DebuggingOverlayProps,
     DebuggingOverlayEventEmitter,
     DebuggingOverlayState>;
-
-JSI_EXPORT extern const char AndroidPopupMenuComponentName[];
-
-/*
- * `ShadowNode` for <AndroidPopupMenu> component.
- */
-using AndroidPopupMenuShadowNode = ConcreteViewShadowNode<
-    AndroidPopupMenuComponentName,
-    AndroidPopupMenuProps,
-    AndroidPopupMenuEventEmitter,
-    AndroidPopupMenuState>;
 
 JSI_EXPORT extern const char PullToRefreshViewComponentName[];
 

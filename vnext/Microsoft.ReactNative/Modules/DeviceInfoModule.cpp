@@ -36,7 +36,7 @@ DeviceInfoHolder::DeviceInfoHolder(const Mso::React::IReactContext &context) : m
 }
 
 void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &context) noexcept {
-  if (xaml::TryGetCurrentApplication() || IsFabricEnabled(context.Properties())) {
+  if (xaml::TryGetCurrentUwpXamlApplication() || IsFabricEnabled(context.Properties())) {
     auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>(context);
 
     deviceInfoHolder->updateDeviceInfo();
@@ -51,7 +51,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
     }
 #endif
 
-    if (xaml::TryGetCurrentApplication()) {
+    if (xaml::TryGetCurrentUwpXamlApplication()) {
       if (auto window = xaml::Window::Current()) {
         auto const &coreWindow = window.CoreWindow();
 
@@ -157,7 +157,7 @@ void DeviceInfoHolder::SetCallback(
 }
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {
-  if (xaml::TryGetCurrentApplication() && xaml::Window::Current()) {
+  if (xaml::TryGetCurrentUwpXamlApplication() && xaml::Window::Current()) {
     auto const window = xaml::Window::Current().CoreWindow();
 
     m_windowWidth = window.Bounds().Width;

@@ -16,7 +16,7 @@
 namespace winrt::Microsoft::ReactNative::Composition {
 
 void RenderText(
-    ID2D1DeviceContext &deviceContext,
+    ID2D1RenderTarget &deviceContext,
     ::IDWriteTextLayout &textLayout,
     const facebook::react::AttributedString &attributedString,
     const facebook::react::TextAttributes &textAttributes,
@@ -26,7 +26,6 @@ void RenderText(
   float offsetX = offset.x / pointScaleFactor;
   float offsetY = offset.y / pointScaleFactor;
 
-  assert(deviceContext.GetUnitMode() == D2D1_UNIT_MODE_DIPS);
   const auto dpi = pointScaleFactor * 96.0f;
   float oldDpiX, oldDpiY;
   deviceContext.GetDpi(&oldDpiX, &oldDpiY);

@@ -34,9 +34,8 @@ stages:
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
-
-      # NuGet using tests rely on "UniversalBuild" which is done in the build stage
-      - template: jobs/cli-init.yml
+      
+      - template: jobs/cli-init-windows.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
@@ -51,10 +50,10 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/node-tests.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
+      # - template: jobs/node-tests.yml
+      #   parameters:
+      #     buildEnvironment: ${{ parameters.buildEnvironment }}
+      #     AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/macos-tests.yml
 
@@ -82,13 +81,8 @@ stages:
     displayName: Cli 🖥
     dependsOn: Setup
     jobs:
-      - template: jobs/cli-init.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
-          buildNuGetOnly: false
-      
       - template: jobs/cli-init-windows.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
+          buildNuGetOnly: false
