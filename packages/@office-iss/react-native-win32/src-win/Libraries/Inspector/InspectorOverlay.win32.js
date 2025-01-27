@@ -13,11 +13,8 @@
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {InspectedElement} from './Inspector';
 
-<<<<<<< Upstream
 import React from 'react';
-=======
 // import Dimensions from '../Utilities/Dimensions'; [Win32]
->>>>>>> Override
 
 const View = require('../Components/View/View');
 const StyleSheet = require('../StyleSheet/StyleSheet');

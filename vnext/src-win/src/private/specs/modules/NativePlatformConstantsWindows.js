@@ -19,31 +19,10 @@ export type ReactNativeVersionAndroid = {
   prerelease: ?string,
 };
 
-<<<<<<< Upstream
-export type PlatformConstantsAndroid = {
-  isTesting: boolean,
-  isDisableAnimations?: boolean,
-  reactNativeVersion: ReactNativeVersionAndroid,
-  Version: number,
-  Release: string,
-  Serial: string,
-  Fingerprint: string,
-  Model: string,
-  ServerHost?: string,
-  uiMode: string,
-  Brand: string,
-  Manufacturer: string,
-};
-=======
 export type PlatformConstantsWindows = {|
   isTesting: boolean,
   isDisableAnimations?: boolean,
-  reactNativeVersion: {|
-    major: number,
-    minor: number,
-    patch: number,
-    prerelease: ?string,
-  |},
+  reactNativeVersion: ReactNativeVersionAndroid,
   reactNativeWindowsVersion: {|
     major: number,
     minor: number,
@@ -51,7 +30,6 @@ export type PlatformConstantsWindows = {|
   |},
   osVersion: number,
 |};
->>>>>>> Override
 
 export interface Spec extends TurboModule {
   +getConstants: () => PlatformConstantsWindows;

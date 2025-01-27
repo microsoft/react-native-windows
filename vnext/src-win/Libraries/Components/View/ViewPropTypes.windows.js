@@ -468,9 +468,6 @@ type IOSViewProps = $ReadOnly<{
   shouldRasterizeIOS?: ?boolean,
 }>;
 
-<<<<<<< Upstream
-export type ViewProps = $ReadOnly<{
-=======
 // [Windows
 export const EventPhase = {
   None: 0,
@@ -535,8 +532,7 @@ type WindowsViewProps = $ReadOnly<{|
 |}>;
 // Windows]
 
-export type ViewProps = $ReadOnly<{|
->>>>>>> Override
+export type ViewProps = $ReadOnly<{
   ...DirectEventProps,
   ...GestureResponderEventProps,
   ...MouseEventProps,

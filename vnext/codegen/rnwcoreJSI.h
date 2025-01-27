@@ -6127,6 +6127,68 @@ struct NativePlatformConstantsWindowsPlatformConstantsWindowsBridging {
   }
 };
 
+
+
+#pragma mark - NativePlatformConstantsWindowsReactNativeVersionAndroid
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativePlatformConstantsWindowsReactNativeVersionAndroid {
+  P0 major;
+  P1 minor;
+  P2 patch;
+  P3 prerelease;
+  bool operator==(const NativePlatformConstantsWindowsReactNativeVersionAndroid &other) const {
+    return major == other.major && minor == other.minor && patch == other.patch && prerelease == other.prerelease;
+  }
+};
+
+template <typename T>
+struct NativePlatformConstantsWindowsReactNativeVersionAndroidBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.major)>(rt, value.getProperty(rt, "major"), jsInvoker),
+      bridging::fromJs<decltype(types.minor)>(rt, value.getProperty(rt, "minor"), jsInvoker),
+      bridging::fromJs<decltype(types.patch)>(rt, value.getProperty(rt, "patch"), jsInvoker),
+      bridging::fromJs<decltype(types.prerelease)>(rt, value.getProperty(rt, "prerelease"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double majorToJs(jsi::Runtime &rt, decltype(types.major) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double minorToJs(jsi::Runtime &rt, decltype(types.minor) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double patchToJs(jsi::Runtime &rt, decltype(types.patch) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> prereleaseToJs(jsi::Runtime &rt, decltype(types.prerelease) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "major", bridging::toJs(rt, value.major, jsInvoker));
+    result.setProperty(rt, "minor", bridging::toJs(rt, value.minor, jsInvoker));
+    result.setProperty(rt, "patch", bridging::toJs(rt, value.patch, jsInvoker));
+    result.setProperty(rt, "prerelease", bridging::toJs(rt, value.prerelease, jsInvoker));
+    return result;
+  }
+};
+
 class JSI_EXPORT NativePlatformConstantsWindowsCxxSpecJSI : public TurboModule {
 protected:
   NativePlatformConstantsWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);

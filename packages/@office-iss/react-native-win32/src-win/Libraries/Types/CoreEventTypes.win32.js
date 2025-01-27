@@ -231,13 +231,9 @@ export interface NativePointerEvent extends NativeMouseEvent {
 export type PointerEvent = SyntheticEvent<NativePointerEvent>;
 
 export type PressEvent = ResponderSyntheticEvent<
-<<<<<<< Upstream
   $ReadOnly<{
-=======
-  $ReadOnly<{|
     altKey: ?boolean, // TODO(macOS)
     button: ?number, // TODO(macOS)
->>>>>>> Override
     changedTouches: $ReadOnlyArray<$PropertyType<PressEvent, 'nativeEvent'>>,
     ctrlKey: ?boolean, // TODO(macOS)
     force?: number,
@@ -284,12 +280,8 @@ export type ScrollEvent = SyntheticEvent<
     }>,
     zoomScale?: number,
     responderIgnoreScroll?: boolean,
-<<<<<<< Upstream
-  }>,
-=======
     key?: string, // TODO(macOS)
-  |}>,
->>>>>>> Override
+  }>,
 >;
 
 export type BlurEvent = SyntheticEvent<
@@ -308,13 +300,9 @@ export type FocusEvent = SyntheticEvent<
 // introduced for react-native-web. Replace typings with our values to catch
 // anything dependent on react-native-web specific values
 export type MouseEvent = SyntheticEvent<
-<<<<<<< Upstream
   $ReadOnly<{
-=======
-  $ReadOnly<{|
     target: number,
     identifier: number,
->>>>>>> Override
     clientX: number,
     clientY: number,
     pageX: number,
@@ -322,9 +310,6 @@ export type MouseEvent = SyntheticEvent<
     locationX: number,
     locationY: number,
     timestamp: number,
-<<<<<<< Upstream
-  }>,
-=======
     pointerType: string,
     force: number,
     isLeftButton: boolean,
@@ -336,7 +321,7 @@ export type MouseEvent = SyntheticEvent<
     shiftKey: boolean,
     ctrlKey: boolean,
     altKey: boolean,
-  |}>,
+  }>,
 >;
 // Windows]
 
@@ -351,6 +336,5 @@ export type KeyEvent = SyntheticEvent<
     code: string,
     eventPhase: number,
   |}>,
->>>>>>> Override
 >;
 // Windows]

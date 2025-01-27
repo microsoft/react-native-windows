@@ -174,17 +174,7 @@ type ButtonProps = $ReadOnly<{
   importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
   accessibilityHint?: ?string,
   accessibilityLanguage?: ?Stringish,
-<<<<<<< Upstream
 }>;
-=======
-  // [Windows
-  /**
-    Set the order in which elements receive focus when the user navigates through them by pressing Tab.
-   */
-  tabIndex?: ?number,
-  // Windows]
-|}>;
->>>>>>> Override
 
 /**
   A basic button component that should render nicely on any platform. Supports a

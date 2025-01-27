@@ -30,29 +30,15 @@ const Platform: PlatformType = {
       minor: number,
       patch: number,
       prerelease: ?string,
-<<<<<<< Upstream
-    },
-    Version: number,
-    Release: string,
-    Serial: string,
-    Fingerprint: string,
-    Model: string,
-    ServerHost?: string,
-    uiMode: string,
-    Brand: string,
-    Manufacturer: string,
-  } {
-=======
     |},
-    reactNativeWindowsVersion: {|
+    reactNativeWindowsVersion: {
       // [Windows]
       major: number,
       minor: number,
       patch: number,
-    |},
+    },
     osVersion: number,
   |} {
->>>>>>> Override
     // $FlowFixMe[object-this-reference]
     if (this.__constants == null) {
       // $FlowFixMe[object-this-reference]

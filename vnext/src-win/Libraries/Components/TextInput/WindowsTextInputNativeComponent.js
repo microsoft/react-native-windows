@@ -610,9 +610,6 @@ export type NativeProps = $ReadOnly<{
    */
   mostRecentEventCount: Int32,
   text?: ?string,
-<<<<<<< Upstream
-}>;
-=======
 
   // @windows
   clearTextOnFocus?: ?boolean,
@@ -628,8 +625,7 @@ export type NativeProps = $ReadOnly<{
 
   // @windows
   // submitKeyEvents?
-|}>;
->>>>>>> Override
+}>;
 
 type NativeType = HostComponent<NativeProps>;
 

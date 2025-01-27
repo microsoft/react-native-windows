@@ -87,9 +87,6 @@ type Props = $ReadOnly<{
   rejectResponderTermination?: ?boolean,
   testID?: ?string,
   touchSoundDisabled?: ?boolean,
-<<<<<<< Upstream
-}>;
-=======
   accessibilityPosInSet?: ?number, // [Windows]
   accessibilitySetSize?: ?number, // [Windows]
   onAccessibilityTap?: ?() => void, // [Windows]
@@ -98,8 +95,7 @@ type Props = $ReadOnly<{
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
   hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>, // [Windows]
-|}>;
->>>>>>> Override
+}>;
 
 const PASSTHROUGH_PROPS = [
   'accessibilityActions',

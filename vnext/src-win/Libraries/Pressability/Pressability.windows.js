@@ -146,9 +146,6 @@ export type PressabilityConfig = $ReadOnly<{
    * while this pressable is responder.
    */
   blockNativeResponder?: ?boolean,
-<<<<<<< Upstream
-}>;
-=======
 
   // [Windows
   /**
@@ -165,8 +162,7 @@ export type PressabilityConfig = $ReadOnly<{
    */
   onMouseLeave?: ?(event: MouseEvent) => mixed,
   // Windows]
-|}>;
->>>>>>> Override
+}>;
 
 export type EventHandlers = $ReadOnly<{
   onBlur: (event: BlurEvent) => void,
@@ -182,15 +178,11 @@ export type EventHandlers = $ReadOnly<{
   onResponderTerminate: (event: PressEvent) => void,
   onResponderTerminationRequest: () => boolean,
   onStartShouldSetResponder: () => boolean,
-<<<<<<< Upstream
-}>;
-=======
   // [Windows
   onKeyUp: (event: KeyEvent) => void,
   onKeyDown: (event: KeyEvent) => void,
   // Windows]
-|}>;
->>>>>>> Override
+}>;
 
 type TouchState =
   | 'NOT_RESPONDER'

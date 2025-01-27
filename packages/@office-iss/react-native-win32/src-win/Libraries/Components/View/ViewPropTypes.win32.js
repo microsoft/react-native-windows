@@ -468,9 +468,6 @@ type IOSViewProps = $ReadOnly<{
   shouldRasterizeIOS?: ?boolean,
 }>;
 
-<<<<<<< Upstream
-export type ViewProps = $ReadOnly<{
-=======
 // [Windows
 
 export type HandledKeyboardEvent = $ReadOnly<{|
@@ -530,8 +527,7 @@ type WindowsViewProps = $ReadOnly<{|
 |}>;
 // Windows]
 
-export type ViewProps = $ReadOnly<{|
->>>>>>> Override
+export type ViewProps = $ReadOnly<{
   ...DirectEventProps,
   ...GestureResponderEventProps,
   ...MouseEventProps,
@@ -709,9 +705,6 @@ export type ViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#removeclippedsubviews
    */
   removeClippedSubviews?: ?boolean,
-<<<<<<< Upstream
-}>;
-=======
 
   /**
    * Specifies the nativeID of the associated label text. When the assistive technology focuses on the component with this props, the text is read aloud.
@@ -735,5 +728,4 @@ export type ViewProps = $ReadOnly<{|
    * @platform win32
    */
   accessibilityControls?: ?string,
-|}>;
->>>>>>> Override
+}>;

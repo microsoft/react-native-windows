@@ -28,24 +28,14 @@ type IOSPlatform = {
     interfaceIdiom: string,
     isTesting: boolean,
     isDisableAnimations?: boolean,
-<<<<<<< Upstream
-    osVersion: string,
-    reactNativeVersion: {
-=======
     osVersion: number,
     systemName: string,
-    reactNativeVersion: {|
->>>>>>> Override
+    reactNativeVersion: {
       major: number,
       minor: number,
       patch: number,
       prerelease: ?string,
-<<<<<<< Upstream
     },
-    systemName: string,
-=======
-    |},
->>>>>>> Override
     isMacCatalyst?: boolean,
   },
   // $FlowFixMe[unsafe-getters-setters]

@@ -493,10 +493,6 @@ type AndroidProps = $ReadOnly<{
   underlineColorAndroid?: ?ColorValue,
 }>;
 
-<<<<<<< Upstream
-export type Props = $ReadOnly<{
-  ...$Diff<ViewProps, $ReadOnly<{style: ?ViewStyleProp}>>,
-=======
 // [Windows
 
 type SubmitKeyEvent = $ReadOnly<{|
@@ -523,9 +519,8 @@ type WindowsProps = $ReadOnly<{|
 
 // Windows]
 
-export type Props = $ReadOnly<{|
-  ...$Diff<ViewProps, $ReadOnly<{|style: ?ViewStyleProp|}>>,
->>>>>>> Override
+export type Props = $ReadOnly<{
+  ...$Diff<ViewProps, $ReadOnly<{style: ?ViewStyleProp}>>,
   ...IOSProps,
   ...AndroidProps,
   ...WindowsProps, // [Windows]
