@@ -22,7 +22,7 @@
   "dependencies": {
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
-    "react-native": "0.78.0-nightly-20250113-d4407d6f7",
+    "react-native": "0.78.0-rc.0",
     "react-native-windows": "0.78.0-preview.0"
   },
   "devDependencies": {
