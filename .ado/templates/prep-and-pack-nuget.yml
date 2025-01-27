@@ -3,6 +3,7 @@ parameters:
     type: string
   - name: artifactName2
     type: string
+    default: ''
   - name: slices
     type: object
 
