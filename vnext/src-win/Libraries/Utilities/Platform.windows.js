@@ -30,7 +30,7 @@ const Platform: PlatformType = {
       minor: number,
       patch: number,
       prerelease: ?string,
-    |},
+    },
     reactNativeWindowsVersion: {
       // [Windows]
       major: number,
