@@ -622,7 +622,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
-        "AutomationId": "Ice Cream",
+        "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
@@ -631,7 +631,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
-            "Name": "Ice Cream",
+            "Name": "Brownie",
           },
         ],
       },
@@ -770,7 +770,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
           {
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {
-              "TestId": "Ice Cream",
+              "TestId": "Brownie",
             },
             "__Children": [
               {
@@ -1137,7 +1137,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                               "Brush Type": "ColorBrush",
                               "Color": "rgba(255, 192, 203, 255)",
                             },
-                            "Comment": "Ice Cream",
+                            "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
@@ -1379,7 +1379,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
-        "AutomationId": "Ice Cream",
+        "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
@@ -1388,7 +1388,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
-            "Name": "Ice Cream",
+            "Name": "Brownie",
           },
         ],
       },
@@ -1527,7 +1527,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           {
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {
-              "TestId": "Ice Cream",
+              "TestId": "Brownie",
             },
             "__Children": [
               {
@@ -1894,7 +1894,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                               "Brush Type": "ColorBrush",
                               "Color": "rgba(255, 192, 203, 255)",
                             },
-                            "Comment": "Ice Cream",
+                            "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
@@ -2196,7 +2196,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "Name": "Separator for leading Cheesecake and trailing undefined has not been pressed",
       },
       {
-        "AutomationId": "Ice Cream",
+        "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
@@ -2205,7 +2205,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
-            "Name": "Ice Cream",
+            "Name": "Brownie",
           },
         ],
       },
@@ -2444,7 +2444,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
           {
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {
-              "TestId": "Ice Cream",
+              "TestId": "Brownie",
             },
             "__Children": [
               {
@@ -3101,7 +3101,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                               "Brush Type": "ColorBrush",
                               "Color": "rgba(255, 192, 203, 255)",
                             },
-                            "Comment": "Ice Cream",
+                            "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
@@ -3248,7 +3248,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
-        "Name": "Ice Cream",
+        "Name": "Brownie",
       },
       {
         "AutomationId": "",
@@ -4919,7 +4919,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
-        "AutomationId": "Ice Cream",
+        "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
@@ -4928,7 +4928,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
-            "Name": "Ice Cream",
+            "Name": "Brownie",
           },
         ],
       },
@@ -5067,7 +5067,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           {
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {
-              "TestId": "Ice Cream",
+              "TestId": "Brownie",
             },
             "__Children": [
               {
@@ -5434,7 +5434,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                               "Brush Type": "ColorBrush",
                               "Color": "rgba(255, 192, 203, 255)",
                             },
-                            "Comment": "Ice Cream",
+                            "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
@@ -5676,7 +5676,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
-        "AutomationId": "Ice Cream",
+        "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
@@ -5685,7 +5685,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
-            "Name": "Ice Cream",
+            "Name": "Brownie",
           },
         ],
       },
@@ -5824,7 +5824,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
           {
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {
-              "TestId": "Ice Cream",
+              "TestId": "Brownie",
             },
             "__Children": [
               {
@@ -6191,7 +6191,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                               "Brush Type": "ColorBrush",
                               "Color": "rgba(255, 192, 203, 255)",
                             },
-                            "Comment": "Ice Cream",
+                            "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
