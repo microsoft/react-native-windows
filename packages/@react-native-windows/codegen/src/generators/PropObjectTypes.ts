@@ -23,7 +23,6 @@ export function translateComponentPropsFieldType(type: PropTypeAnnotation,
     case 'BooleanTypeAnnotation':
       return { type: 'bool', initializer: type.default ? `{${type.default}}` : '{}', alreadySupportsOptionalOrHasDefault: !!type.default };
     case 'ArrayTypeAnnotation':
-
       let arrayTemplateArg = '';
       switch (type.elementType.type) {
         case 'BooleanTypeAnnotation':
@@ -143,7 +142,7 @@ export function translateComponentEventType(type: EventTypeAnnotation,
           case 'ObjectTypeAnnotation':
             arrayTemplateArg = translateComponentEventType(type.elementType, aliases, baseAliasName, options).type;
             break;
-          case 'StringEnumTypeAnnotation':
+          case 'StringLiteralUnionTypeAnnotation':
             arrayTemplateArg = options.cppStringType; // TODO - better enum type handling than just passing a string
             break;
           default:
@@ -158,7 +157,7 @@ export function translateComponentEventType(type: EventTypeAnnotation,
     case 'MixedTypeAnnotation': {
       return { type: 'winrt::Microsoft::ReactNative::JSValue', initializer: '{nullptr}', alreadySupportsOptionalOrHasDefault: true };
     }
-    case 'StringEnumTypeAnnotation':
+    case 'StringLiteralUnionTypeAnnotation':
       return { type: options.cppStringType, initializer: '' };  // TODO - better enum type handling than just passing a string
     default:
       throw new Error(`Unhandled type: ${(type as any).type}`);
@@ -200,18 +199,9 @@ export function translateCommandParamType(type: CommandParamTypeAnnotation,
           case 'StringTypeAnnotation':
             arrayTemplateArg = options.cppStringType;
             break;
-          case 'ArrayTypeAnnotation':
-            const innerType = translateCommandParamType(type.elementType, aliases, baseAliasName, options);
-            arrayTemplateArg = `std::vector<${innerType.type}>`;
-            break;
-          case 'ReservedPropTypeAnnotation':
+          case 'MixedTypeAnnotation':
+            // TODO - not sure what exact value to be used here
             arrayTemplateArg = 'winrt::Microsoft::ReactNative::JSValue';
-            break;
-          case 'ObjectTypeAnnotation':
-            arrayTemplateArg = 'winrt::Microsoft::ReactNative::JSValueObject'; // TODO - better typing
-            break;
-          case 'StringEnumTypeAnnotation':
-            arrayTemplateArg = options.cppStringType; // TODO - better enum type handling than just passing a string
             break;
           case 'GenericTypeAnnotation' as any: // TODO verify schema - Getting this type when running codegen on all the built in types
             arrayTemplateArg = 'winrt::Microsoft::ReactNative::JSValue';

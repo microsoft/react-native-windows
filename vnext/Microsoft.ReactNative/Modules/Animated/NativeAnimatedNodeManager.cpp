@@ -50,7 +50,7 @@ comp::Compositor NativeAnimatedNodeManager::Compositor() const noexcept {
         compositionContext);
   }
 #endif
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   // TODO: Islands - need to get the XamlView associated with this animation in order to
   // use the compositor Microsoft::ReactNative::GetCompositor(xamlView)
   return Microsoft::ReactNative::GetCompositor();

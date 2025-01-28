@@ -1,8 +1,45 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 13 Jan 2025 18:43:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 25 Jan 2025 06:30:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.913
+
+Sat, 25 Jan 2025 06:30:25 GMT
+
+### Changes
+
+- RNIsland UIA fragment root should report parents fragment root (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when currently focused element gets marked as enableFocusRing=false (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.912
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Remove Paper-only code from Fabric builds of Microsoft.ReactNative (jthysell@microsoft.com)
+- Initial integrate (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.256
+- Bump @react-native-windows/codegen to v0.0.0-canary.117
+
+## 0.0.0-canary.911
+
+Wed, 22 Jan 2025 06:28:02 GMT
+
+### Changes
+
+- Remove Fork of Layoutable Shadow Node (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.910
+
+Thu, 16 Jan 2025 06:21:27 GMT
+
+### Changes
+
+- Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true (50150435+JesseCol@users.noreply.github.com)
 
 ## 0.0.0-canary.909
 

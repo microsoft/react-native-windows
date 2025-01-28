@@ -168,11 +168,14 @@ void ComponentView::updateProps(
       m_componentHostingFocusVisual->hostFocusVisual(false, get_strong());
     }
 
-    if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->updateProps(oldViewProps, newViewProps);
-    }
-    if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive) {
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->updateProps(oldViewProps, newViewProps);
+    // We have to check m_componentHostingFocusVisual again, as it can be set to null by above hostFocusVisual call
+    if (m_componentHostingFocusVisual) {
+      if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
+        m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->updateProps(oldViewProps, newViewProps);
+      }
+      if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive) {
+        m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->updateProps(oldViewProps, newViewProps);
+      }
     }
   }
   if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {

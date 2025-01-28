@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.256
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.117
 
 ## 0.0.0-canary.255
 

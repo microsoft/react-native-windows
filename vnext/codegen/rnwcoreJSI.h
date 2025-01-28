@@ -26,8 +26,6 @@ public:
   virtual bool disableEventLoopOnBridgeless(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
-  virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
-  virtual bool enableAndroidLineHeightCentering(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
   virtual bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) = 0;
@@ -53,7 +51,6 @@ public:
   virtual bool fixDifferentiatorEmittingUpdatesWithWrongParentTag(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
@@ -146,22 +143,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableAccumulatedUpdatesInRawPropsAndroid, jsInvoker_, instance_);
-    }
-    bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableAlignItemsBaselineOnFabricIOS) == 1,
-          "Expected enableAlignItemsBaselineOnFabricIOS(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableAlignItemsBaselineOnFabricIOS, jsInvoker_, instance_);
-    }
-    bool enableAndroidLineHeightCentering(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableAndroidLineHeightCentering) == 1,
-          "Expected enableAndroidLineHeightCentering(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableAndroidLineHeightCentering, jsInvoker_, instance_);
     }
     bool enableBridgelessArchitecture(jsi::Runtime &rt) override {
       static_assert(
@@ -362,14 +343,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid, jsInvoker_, instance_);
-    }
-    bool fuseboxEnabledDebug(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fuseboxEnabledDebug) == 1,
-          "Expected fuseboxEnabledDebug(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fuseboxEnabledDebug, jsInvoker_, instance_);
     }
     bool fuseboxEnabledRelease(jsi::Runtime &rt) override {
       static_assert(
@@ -2640,6 +2613,69 @@ private:
 };
 
 
+  class JSI_EXPORT NativeCPUTimeCxxSpecJSI : public TurboModule {
+protected:
+  NativeCPUTimeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual double getCPUTimeNanos(jsi::Runtime &rt) = 0;
+  virtual bool hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeCPUTimeCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "CPUTimeCxx";
+
+protected:
+  NativeCPUTimeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeCPUTimeCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeCPUTimeCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeCPUTimeCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    double getCPUTimeNanos(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getCPUTimeNanos) == 1,
+          "Expected getCPUTimeNanos(...) to have 1 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::getCPUTimeNanos, jsInvoker_, instance_);
+    }
+    bool hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::hasAccurateCPUTimeNanosForBenchmarks) == 1,
+          "Expected hasAccurateCPUTimeNanosForBenchmarks(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::hasAccurateCPUTimeNanosForBenchmarks, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeCPUTimeCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeDeviceEventManagerCxxSpecJSI : public TurboModule {
 protected:
   NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -3876,6 +3912,152 @@ private:
 
   private:
     friend class NativeExceptionsManagerCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - NativeFantomRenderFormatOptions
+
+template <typename P0, typename P1>
+struct NativeFantomRenderFormatOptions {
+  P0 includeRoot;
+  P1 includeLayoutMetrics;
+  bool operator==(const NativeFantomRenderFormatOptions &other) const {
+    return includeRoot == other.includeRoot && includeLayoutMetrics == other.includeLayoutMetrics;
+  }
+};
+
+template <typename T>
+struct NativeFantomRenderFormatOptionsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.includeRoot)>(rt, value.getProperty(rt, "includeRoot"), jsInvoker),
+      bridging::fromJs<decltype(types.includeLayoutMetrics)>(rt, value.getProperty(rt, "includeLayoutMetrics"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool includeRootToJs(jsi::Runtime &rt, decltype(types.includeRoot) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool includeLayoutMetricsToJs(jsi::Runtime &rt, decltype(types.includeLayoutMetrics) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "includeRoot", bridging::toJs(rt, value.includeRoot, jsInvoker));
+    result.setProperty(rt, "includeLayoutMetrics", bridging::toJs(rt, value.includeLayoutMetrics, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeFantomCxxSpecJSI : public TurboModule {
+protected:
+  NativeFantomCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void startSurface(jsi::Runtime &rt, double surfaceId, double viewportWidth, double viewportHeight, double devicePixelRatio) = 0;
+  virtual void stopSurface(jsi::Runtime &rt, double surfaceId) = 0;
+  virtual jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) = 0;
+  virtual void flushMessageQueue(jsi::Runtime &rt) = 0;
+  virtual jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) = 0;
+  virtual void reportTestSuiteResultsJSON(jsi::Runtime &rt, jsi::String results) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeFantomCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeFantomCxx";
+
+protected:
+  NativeFantomCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeFantomCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeFantomCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeFantomCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void startSurface(jsi::Runtime &rt, double surfaceId, double viewportWidth, double viewportHeight, double devicePixelRatio) override {
+      static_assert(
+          bridging::getParameterCount(&T::startSurface) == 5,
+          "Expected startSurface(...) to have 5 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::startSurface, jsInvoker_, instance_, std::move(surfaceId), std::move(viewportWidth), std::move(viewportHeight), std::move(devicePixelRatio));
+    }
+    void stopSurface(jsi::Runtime &rt, double surfaceId) override {
+      static_assert(
+          bridging::getParameterCount(&T::stopSurface) == 2,
+          "Expected stopSurface(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::stopSurface, jsInvoker_, instance_, std::move(surfaceId));
+    }
+    jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) override {
+      static_assert(
+          bridging::getParameterCount(&T::getMountingManagerLogs) == 2,
+          "Expected getMountingManagerLogs(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getMountingManagerLogs, jsInvoker_, instance_, std::move(surfaceId));
+    }
+    void flushMessageQueue(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::flushMessageQueue) == 1,
+          "Expected flushMessageQueue(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::flushMessageQueue, jsInvoker_, instance_);
+    }
+    jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) override {
+      static_assert(
+          bridging::getParameterCount(&T::getRenderedOutput) == 3,
+          "Expected getRenderedOutput(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::String>(
+          rt, &T::getRenderedOutput, jsInvoker_, instance_, std::move(surfaceId), std::move(config));
+    }
+    void reportTestSuiteResultsJSON(jsi::Runtime &rt, jsi::String results) override {
+      static_assert(
+          bridging::getParameterCount(&T::reportTestSuiteResultsJSON) == 2,
+          "Expected reportTestSuiteResultsJSON(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::reportTestSuiteResultsJSON, jsInvoker_, instance_, std::move(results));
+    }
+
+  private:
+    friend class NativeFantomCxxSpec;
     T *instance_;
   };
 
