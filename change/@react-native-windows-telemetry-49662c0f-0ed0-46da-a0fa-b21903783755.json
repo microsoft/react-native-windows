@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Promote 0.78 to preview",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

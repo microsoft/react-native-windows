@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/find-repo-root
 
-<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 28 Jan 2025 18:55:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.0-preview.1
+
+Tue, 28 Jan 2025 18:55:49 GMT
+
+### Changes
+
+- Promote 0.78 to preview (email not defined)
+- Bump @react-native-windows/fs to v0.78.0-preview.1
 
 ## 0.0.0-canary.90
 

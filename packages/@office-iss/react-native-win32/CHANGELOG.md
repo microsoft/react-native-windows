@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 28 Jan 2025 18:55:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.0-preview.1
+
+Tue, 28 Jan 2025 18:55:49 GMT
+
+### Changes
+
+- Promote 0.78 to preview (email not defined)
 
 ## 0.0.0-canary.281
 
