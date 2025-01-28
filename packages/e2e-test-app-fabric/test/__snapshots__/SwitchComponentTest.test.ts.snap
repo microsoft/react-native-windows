@@ -299,6 +299,43 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 }
 `;
 
+exports[`SwitchTests Switches can be disabled, initial false 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "disabled-initial-off",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "disabled-initial-off",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "disabled-initial-off",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 {
   "Automation Tree": {
@@ -365,6 +402,44 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
           {
             "Offset": "4, 4, 0",
             "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "on-off-initial-off",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "on-off-initial-off",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "on-off-initial-off",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "22, 3, 0",
+            "Size": "14, 14",
             "Visual Type": "Visual",
           },
         ],
