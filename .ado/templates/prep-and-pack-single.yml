@@ -41,6 +41,9 @@ parameters:
 
 steps:
 
+  - powershell: gci $(System.DefaultWorkingDirectory)/NugetRoot
+    displayName: List files in NugetRoot
+
   - ${{ if ne(parameters.slices, '') }}:
     - powershell: >
         .\StripAdditionalPlatformsFromNuspec.ps1
@@ -49,7 +52,7 @@ steps:
         -slices (ConvertFrom-Json '${{ parameters.slices }}')
         -debug
       displayName: '${{ parameters.outputPackage }} - Strip slices from nuspec'
-      workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
+      workingDirectory: $(System.DefaultWorkingDirectory)/NugetRoot
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
@@ -61,7 +64,7 @@ steps:
         AuthAKVName: 'rnw-keyvault' 
         AuthCertName: 'React-Native-ESRP-App-Authentication' 
         AuthSignCertName: 'React-Native-PRSS-Authentication'
-        FolderPath: $(System.DefaultWorkingDirectory)/ReactWindows
+        FolderPath: $(System.DefaultWorkingDirectory)/NugetRoot
         # Recursively finds files matching these patterns:
         ${{ if ne(parameters.binariesToSign, '') }}:
           Pattern: ${{ parameters.binariesToSign }}
@@ -102,7 +105,7 @@ steps:
     inputs:
       command: pack
       verbosityPack: 'Detailed'
-      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.outputPackage }}.nuspec
+      packagesToPack: $(System.DefaultWorkingDirectory)/NugetRoot/${{ parameters.outputPackage }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
