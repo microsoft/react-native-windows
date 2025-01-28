@@ -230,6 +230,11 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     m_popUp = m_bridge.TryCreatePopupSiteBridge();
     m_popUp.Connect(contentIsland);
 
+    // set the top-level windows as the new hwnd
+    winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+        view.ReactContext().Properties(),
+        reinterpret_cast<uint64_t>(winrt::Microsoft::UI::GetWindowFromWindowId(m_popUp.WindowId())));
+
     auto navHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(
         m_popUp.as<winrt::Microsoft::UI::Content::IContentSiteBridge>());
     m_departFocusToken = navHost.DepartFocusRequested(
@@ -240,7 +245,6 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
           }
         });
 
-    m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 #else
     auto presenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::CreateForDialog();
     presenter.SetBorderAndTitleBar(true, false);
