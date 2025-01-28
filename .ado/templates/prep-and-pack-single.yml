@@ -41,6 +41,9 @@ parameters:
 
 steps:
 
+  - powershell: gci $(System.DefaultWorkingDirectory)/NugetRoot
+    displayName: List files in NugetRoot
+
   - ${{ if ne(parameters.slices, '') }}:
     - powershell: >
         .\StripAdditionalPlatformsFromNuspec.ps1
@@ -61,7 +64,7 @@ steps:
         AuthAKVName: 'rnw-keyvault' 
         AuthCertName: 'React-Native-ESRP-App-Authentication' 
         AuthSignCertName: 'React-Native-PRSS-Authentication'
-        FolderPath: $(System.DefaultWorkingDirectory)/ReactWindows
+        FolderPath: $(System.DefaultWorkingDirectory)/NugetRoot
         # Recursively finds files matching these patterns:
         ${{ if ne(parameters.binariesToSign, '') }}:
           Pattern: ${{ parameters.binariesToSign }}
