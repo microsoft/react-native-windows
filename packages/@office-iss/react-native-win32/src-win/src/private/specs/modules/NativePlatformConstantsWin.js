@@ -19,7 +19,7 @@ export type ReactNativeVersionAndroid = {
   prerelease: ?string,
 };
 
-export type PlatformConstantsWin32 = {  
+export type PlatformConstantsWin32 = {
   isTesting: boolean,
   isDisableAnimations?: boolean,
   reactNativeVersion: ReactNativeVersionAndroid,
