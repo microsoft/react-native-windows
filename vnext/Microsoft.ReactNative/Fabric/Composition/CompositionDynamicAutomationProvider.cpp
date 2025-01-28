@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
+#include <Fabric/platform/react/renderer/graphics/HostPlatformColor.h>
 #include <Unicode.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
@@ -25,6 +27,7 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
   }
+  EnsureTextRangeProvider();
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
@@ -241,6 +244,20 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     *pRetVal = static_cast<ISelectionItemProvider *>(this);
     AddRef();
   }
+
+  if (patternId == UIA_TextPatternId &&
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
+    *pRetVal = static_cast<ITextProvider *>(this);
+    AddRef();
+  }
+
+  /*
+  if (patternId == UIA_TextPattern2Id &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    *pRetVal = static_cast<ITextProvider2 *>(this);
+    AddRef();
+  }*/
 
   return S_OK;
 }
@@ -716,7 +733,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelectionRequired(
   return S_OK;
 }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
+/*HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
   auto strongView = m_view.view();
 
   if (!strongView)
@@ -742,7 +759,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
     SafeArrayPutElement(*pRetVal, &pos, m_selectionItems.at(selectedItems.at(i)).get());
   }
   return S_OK;
-}
+}*/
 
 void CompositionDynamicAutomationProvider::AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
   if (std::find(m_selectionItems.begin(), m_selectionItems.end(), item) != m_selectionItems.end()) {
@@ -836,6 +853,362 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Select() {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
   DispatchAccessibilityAction(m_view, "select");
+  return S_OK;
+}
+
+void CompositionDynamicAutomationProvider::EnsureTextRangeProvider() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return;
+
+  if (!m_textRangeProvider) {
+    auto provider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>());
+    m_textRangeProvider = provider.try_as<ITextRangeProvider>();
+  }
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_DocumentRange(ITextRangeProvider **pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  EnsureTextRangeProvider();
+
+  if (m_textRangeProvider == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  *pRetVal = m_textRangeProvider.get();
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_SupportedTextSelection(SupportedTextSelection *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    *pRetVal = SupportedTextSelection_Single;
+  } else if (
+      auto textView =
+          strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
+    auto props = std::static_pointer_cast<const facebook::react::ParagraphProps>(textView->props());
+    if (props == nullptr)
+      return UIA_E_ELEMENTNOTAVAILABLE;
+    *pRetVal = props->isSelectable ? SupportedTextSelection_Single : SupportedTextSelection_None;
+  } else {
+    *pRetVal = SupportedTextSelection_None;
+  }
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
+  // represents currently selected text in a text based control
+  // an array of pointers to ITextRangeProviders
+  // no-op
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 1);
+  if (m_textRangeProvider == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  SafeArrayPutElement(*pRetVal, 0, m_textRangeProvider.get());
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetVisibleRanges(SAFEARRAY **pRetVal) {
+  // if text is empty return empty array
+  // otherwise return an array of ITextRangeProviders for the sections of text on the screen
+  // theoretically content that isn't on the screen shouldn't be included in the ranges, unclear how we can assess that
+  // no-op
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 1);
+  if (m_textRangeProvider == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  SafeArrayPutElement(*pRetVal, 0, m_textRangeProvider.get());
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromChild(
+    IRawElementProviderSimple *childElement,
+    ITextRangeProvider **pRetVal) {
+  // no-op
+  *pRetVal = nullptr;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromPoint(UiaPoint point, ITextRangeProvider **pRetVal) {
+  // no-op
+  if (m_textRangeProvider == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  *pRetVal = m_textRangeProvider.get();
+  return S_OK;
+}
+
+/* HRESULT __stdcall CompositionDynamicAutomationProvider::GetCaretRange(
+    BOOL *isActive,
+    ITextRangeProvider **pRetVal) {
+  // no-op
+  *pRetVal = nullptr;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromAnnotation(
+    IRawElementProviderSimple *annotationElement,
+    ITextRangeProvider **pRetVal) {
+  // no-op
+  *pRetVal = nullptr;
+  return S_OK;
+}*/
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Clone(ITextRangeProvider **pRetVal) {
+  // no-op
+  *pRetVal = nullptr;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Compare(ITextRangeProvider *range, BOOL *pRetVal) {
+  // no-op
+  *pRetVal = false;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::CompareEndpoints(
+    TextPatternRangeEndpoint endpoint,
+    ITextRangeProvider *targetRange,
+    TextPatternRangeEndpoint targetEndpoint,
+    int *pRetVal) {
+  // no-op
+  *pRetVal = 0;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::ExpandToEnclosingUnit(TextUnit unit) {
+  // no-op
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::FindAttribute(
+    TEXTATTRIBUTEID attributeId,
+    VARIANT val,
+    BOOL backward,
+    ITextRangeProvider **pRetVal) {
+  *pRetVal = nullptr;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::FindText(
+    BSTR text,
+    BOOL backward,
+    BOOL ignoreCase,
+    ITextRangeProvider **pRetVal) {
+  // no-op
+  *pRetVal = nullptr;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetAttributeValue(
+    TEXTATTRIBUTEID attributeId,
+    VARIANT *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ParagraphProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  if (attributeId == UIA_BackgroundColorAttributeId) {
+    pRetVal->vt = VT_I4;
+    pRetVal->lVal = (*props->textAttributes.backgroundColor).AsColorRefWithAlpha();
+  } else if (attributeId == UIA_CapStyleAttributeId) {
+    pRetVal->vt = VT_I4;
+    auto fontVariant = facebook::react::FontVariant::Default;
+    auto textTransform = facebook::react::TextTransform::None;
+    if (props->textAttributes.fontVariant.has_value()) {
+      fontVariant = props->textAttributes.fontVariant.value();
+    }
+    if (props->textAttributes.textTransform.has_value()) {
+      textTransform = props->textAttributes.textTransform.value();
+    }
+    if (fontVariant == facebook::react::FontVariant::SmallCaps) {
+      return CapStyle_SmallCap;
+    } else if (textTransform == facebook::react::TextTransform::Capitalize) {
+      return CapStyle_Titling;
+    } else if (textTransform == facebook::react::TextTransform::Lowercase) {
+      return CapStyle_None;
+    } else if (textTransform == facebook::react::TextTransform::Uppercase) {
+      return CapStyle_AllCap;
+    }
+  } else if (attributeId == UIA_FontNameAttributeId) {
+    pRetVal->vt = VT_BSTR;
+    auto fontName = props->textAttributes.fontFamily;
+    if (fontName.empty()) {
+      fontName = "Segoe UI";
+    }
+    std::wstring wfontName(fontName.begin(), fontName.end());
+    pRetVal->bstrVal = SysAllocString(wfontName.c_str());
+  } else if (attributeId == UIA_FontSizeAttributeId) {
+    pRetVal->vt = VT_R8;
+    pRetVal->dblVal = props->textAttributes.fontSize;
+  } else if (attributeId == UIA_FontWeightAttributeId) {
+    if (props->textAttributes.fontWeight.has_value()) {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = static_cast<long>(props->textAttributes.fontWeight.value());
+    }
+  } else if (attributeId == UIA_ForegroundColorAttributeId) {
+    pRetVal->vt = VT_I4;
+    pRetVal->lVal = (*props->textAttributes.foregroundColor).AsColorRefWithAlpha();
+  } else if (attributeId == UIA_IsItalicAttributeId) {
+    pRetVal->vt = VT_BOOL;
+    pRetVal->boolVal = (props->textAttributes.fontStyle.has_value() &&
+                        props->textAttributes.fontStyle.value() == facebook::react::FontStyle::Italic)
+        ? VARIANT_TRUE
+        : VARIANT_FALSE;
+  } else if (attributeId == UIA_IsReadOnlyAttributeId) {
+    pRetVal->vt = VT_BOOL;
+    pRetVal->boolVal = VARIANT_TRUE;
+  } else if (attributeId == UIA_HorizontalTextAlignmentAttributeId) {
+    pRetVal->vt = VT_I4;
+    auto textAlign = facebook::react::TextAlignment::Center;
+    if (props->textAttributes.alignment.has_value()) {
+      textAlign = props->textAttributes.alignment.value();
+    }
+    if (textAlign == facebook::react::TextAlignment::Left) {
+      pRetVal->lVal = HorizontalTextAlignment_Left;
+    } else if (textAlign == facebook::react::TextAlignment::Right) {
+      pRetVal->lVal = HorizontalTextAlignment_Right;
+    } else if (textAlign == facebook::react::TextAlignment::Center) {
+      pRetVal->lVal = HorizontalTextAlignment_Centered;
+    } else if (textAlign == facebook::react::TextAlignment::Justified) {
+      pRetVal->lVal = HorizontalTextAlignment_Justified;
+    } else if (textAlign == facebook::react::TextAlignment::Natural) {
+      pRetVal->lVal = HorizontalTextAlignment_Left;
+    }
+  } else if (attributeId == UIA_MarginBottomAttributeId) {
+    pRetVal->vt = VT_R8;
+    // TODO
+  } else if (attributeId == UIA_MarginLeadingAttributeId) {
+    pRetVal->vt = VT_R8;
+    // TODO
+  } else if (attributeId == UIA_MarginTopAttributeId) {
+    pRetVal->vt = VT_R8;
+    // TODO
+  } else if (attributeId == UIA_MarginTrailingAttributeId) {
+    pRetVal->vt = VT_R8;
+    // TODO
+  } else if (attributeId == UIA_StrikethroughColorAttributeId) {
+    if (props->textAttributes.textDecorationLineType.has_value() &&
+        (props->textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::Strikethrough ||
+         props->textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = (*props->textAttributes.textDecorationColor).AsColorRefWithAlpha();
+    }
+  } else if (attributeId == UIA_StrikethroughStyleAttributeId) {
+    if (props->textAttributes.textDecorationLineType.has_value() &&
+        (props->textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::Strikethrough ||
+         props->textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
+      pRetVal->vt = VT_I4;
+      auto style = props->textAttributes.textDecorationStyle.value();
+      pRetVal->lVal = GetTextDecorationLineStyle(style);
+    }
+  } else if (attributeId == UIA_UnderlineColorAttributeId) {
+    if (props->textAttributes.textDecorationLineType.has_value() &&
+        (props->textAttributes.textDecorationLineType.value() == facebook::react::TextDecorationLineType::Underline ||
+         props->textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = (*props->textAttributes.textDecorationColor).AsColorRefWithAlpha();
+    }
+  } else if (attributeId == UIA_UnderlineStyleAttributeId) {
+    if (props->textAttributes.textDecorationLineType.has_value() &&
+        (props->textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::Strikethrough ||
+         props->textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
+      pRetVal->vt = VT_I4;
+      auto style = props->textAttributes.textDecorationStyle.value();
+      pRetVal->lVal = GetTextDecorationLineStyle(style);
+    }
+  }
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetBoundingRectangles(SAFEARRAY **pRetVal) {
+  // no-op
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 0); // HERE
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetChildren(SAFEARRAY **pRetVal) {
+  // no-op
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 0);
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetEnclosingElement(IRawElementProviderSimple **pRetVal) {
+  // no-op
+  *pRetVal = nullptr; // HERE?
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetText(int maxLength, BSTR *pRetVal) {
+  // returns text or truncates if too long
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  auto paragraphView =
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>();
+
+  if (!paragraphView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto text = paragraphView->DefaultAccessibleName();
+  std::wstring wtext(text.begin(), text.end());
+  *pRetVal = SysAllocString(wtext.c_str());
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Move(TextUnit unit, int count, int *pRetVal) {
+  // no-op
+  *pRetVal = 0;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::MoveEndpointByRange(
+    TextPatternRangeEndpoint endpoint,
+    ITextRangeProvider *targetRange,
+    TextPatternRangeEndpoint targetEndpoint) {
+  // no-op
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::MoveEndpointByUnit(
+    TextPatternRangeEndpoint endpoint,
+    TextUnit unit,
+    int count,
+    int *pRetVal) {
+  // no-op
+  *pRetVal = 0;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView(BOOL alignToTop) {
+  // no-op
   return S_OK;
 }
 

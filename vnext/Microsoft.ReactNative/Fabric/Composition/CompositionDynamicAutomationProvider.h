@@ -20,7 +20,9 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IToggleProvider,
                                                  IExpandCollapseProvider,
                                                  ISelectionProvider,
-                                                 ISelectionItemProvider> {
+                                                 ISelectionItemProvider,
+                                                 ITextProvider,
+                                                 ITextRangeProvider> {
  public:
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
@@ -80,11 +82,60 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall RemoveFromSelection() override;
   virtual HRESULT __stdcall Select() override;
 
+  // inherited via ITextProvider
+  virtual HRESULT __stdcall get_DocumentRange(ITextRangeProvider **pRetVal) override;
+  virtual HRESULT __stdcall get_SupportedTextSelection(SupportedTextSelection *pRetVal) override;
+  // virtual HRESULT __stdcall GetSelection(SAFEARRAY **pRetVal) override;
+  virtual HRESULT __stdcall GetVisibleRanges(SAFEARRAY **pRetVal) override;
+  virtual HRESULT __stdcall RangeFromChild(IRawElementProviderSimple *childElement, ITextRangeProvider **pRetVal)
+      override;
+  virtual HRESULT __stdcall RangeFromPoint(UiaPoint point, ITextRangeProvider **pRetVal) override;
+
+  // inherited via ITextProvider2
+  /* virtual HRESULT __stdcall GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) override;
+  virtual HRESULT __stdcall RangeFromAnnotation(
+      IRawElementProviderSimple *annotationElement,
+      ITextRangeProvider **pRetVal) override;*/
+
+  // inherited via ITextRangeProvider
+  virtual HRESULT __stdcall Clone(ITextRangeProvider **pRetVal) override;
+  virtual HRESULT __stdcall Compare(ITextRangeProvider *range, BOOL *pRetVal) override;
+  virtual HRESULT __stdcall CompareEndpoints(
+      TextPatternRangeEndpoint endpoint,
+      ITextRangeProvider *targetRange,
+      TextPatternRangeEndpoint targetEndpoint,
+      int *pRetVal) override;
+  virtual HRESULT __stdcall ExpandToEnclosingUnit(TextUnit unit) override;
+  virtual HRESULT __stdcall FindAttribute(
+      TEXTATTRIBUTEID attributeId,
+      VARIANT val,
+      BOOL backward,
+      ITextRangeProvider **pRetVal) override;
+  virtual HRESULT __stdcall FindText(BSTR text, BOOL backward, BOOL ignoreCase, ITextRangeProvider **pRetVal) override;
+  virtual HRESULT __stdcall GetAttributeValue(TEXTATTRIBUTEID attributeId, VARIANT *pRetVal) override;
+  virtual HRESULT __stdcall GetBoundingRectangles(SAFEARRAY **pRetVal) override;
+  virtual HRESULT __stdcall GetChildren(SAFEARRAY **pRetVal) override;
+  virtual HRESULT __stdcall GetEnclosingElement(IRawElementProviderSimple **pRetVal) override;
+  virtual HRESULT __stdcall GetText(int maxLength, BSTR *pRetVal) override;
+  virtual HRESULT __stdcall Move(TextUnit unit, int count, int *pRetVal) override;
+  virtual HRESULT __stdcall MoveEndpointByRange(
+      TextPatternRangeEndpoint endpoint,
+      ITextRangeProvider *targetRange,
+      TextPatternRangeEndpoint targetEndpoint) override;
+  virtual HRESULT __stdcall MoveEndpointByUnit(
+      TextPatternRangeEndpoint endpoint,
+      TextUnit unit,
+      int count,
+      int *pRetVal) override;
+  virtual HRESULT __stdcall ScrollIntoView(BOOL alignToTop) override;
+
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
+  void EnsureTextRangeProvider();
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
+  winrt::com_ptr<ITextRangeProvider> m_textRangeProvider;
   std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
 };
 
