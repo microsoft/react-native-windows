@@ -440,9 +440,9 @@ extends:
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
               artifactName: ReactWindows
+              artifactName2: ReactWindowsFabric
               publishCommitId: $(publishCommitId)
               npmVersion: $(npmVersion)
-              nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
               packMicrosoftReactNative: true
               packMicrosoftReactNativeCxx: true
               packMicrosoftReactNativeManaged: true
@@ -463,38 +463,12 @@ extends:
                 - platform: ARM64
                   configuration: Debug
 
-          - template: .ado/templates/prep-and-pack-nuget.yml@self
-            parameters:
-              artifactName: ReactWindowsFabric
-              publishCommitId: $(publishCommitId)
-              npmVersion: $(npmVersion)-Fabric
-              nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
-              packMicrosoftReactNative: true
-              packMicrosoftReactNativeCxx: true
-              # packMicrosoftReactNativeManaged: true
-              # packMicrosoftReactNativeManagedCodeGen: true
-              ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
-              slices:
-                - platform: x64
-                  configuration: Release
-                - platform: x86
-                  configuration: Release
-                - platform: ARM64
-                  configuration: Release
-                - platform: x64
-                  configuration: Debug
-                - platform: x86
-                  configuration: Debug
-                - platform: ARM64
-                  configuration: Debug
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
               artifactName: Desktop
               publishCommitId: $(publishCommitId)
               npmVersion: $(npmVersion)
-              nugetroot: $(System.DefaultWorkingDirectory)\Desktop
               packDesktop: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
                 signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
@@ -517,7 +491,6 @@ extends:
               artifactName: DesktopFabric
               publishCommitId: $(publishCommitId)
               npmVersion: $(npmVersion)-Fabric
-              nugetroot: $(System.DefaultWorkingDirectory)\Desktop
               packDesktop: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
                 signMicrosoft: false # Temporarily disabled for all builds, see issue #14030

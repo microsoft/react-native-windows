@@ -1,18 +1,18 @@
 {
-  "baseVersion": "0.78.0-nightly-20241231-a3c8e2137",
+  "baseVersion": "0.78.0-nightly-20250113-d4407d6f7",
   "overrides": [
     {
       "type": "copy",
       "directory": "js/assets",
       "baseDirectory": "packages/rn-tester/js/assets",
-      "baseHash": "df281efde1644fd57de5929cbdaf07735038cff4",
+      "baseHash": "04daed1a56145c5499e6d4b49513e9a181f9e569",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "e7012fe1efaff2b2884e29e0195125fed43f8103",
+      "baseHash": "d3434b14e1358290362abc7ef289243d9e66e8e1",
       "issue": 4054
     },
     {
@@ -54,7 +54,7 @@
       "type": "copy",
       "directory": "js/examples/AnimatedGratuitousApp",
       "baseDirectory": "packages/rn-tester/js/examples/AnimatedGratuitousApp",
-      "baseHash": "dc639e5e6883f31b2ba32ad4c1a49123b55ffaac",
+      "baseHash": "d9f91a2c3d2cbb44b04b74dc10454280962b1de9",
       "issue": 4054
     },
     {
@@ -75,7 +75,7 @@
       "type": "copy",
       "directory": "js/examples/Border",
       "baseDirectory": "packages/rn-tester/js/examples/Border",
-      "baseHash": "218a8b79fac6d0a32b0a924a13ddb467d5593f69",
+      "baseHash": "5abfca6522407f53ee97231ae2c1e3f9014cd459",
       "issue": 4054
     },
     {
@@ -159,7 +159,7 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "1a94cb3cab541a0e6467154eeab286d56335798f",
+      "baseHash": "1f01708a3651bee3f6a4df97a9c5964b81bf043b",
       "issue": 4054
     },
     {
@@ -439,15 +439,50 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "e96ac71b68224213487aab7029381e5f8c99c3c9",
+      "baseHash": "d1e17fc8ba110c86804569969dbda99af0e7ac3e",
       "issue": 4054
     },
     {
       "type": "copy",
-      "directory": "js/examples/TextInput",
-      "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "10ab7bfc3837289199ec10a63c1061ee6ea80bee",
-      "issue": 4054
+      "file": "js/examples/TextInput/ExampleTextInput.js",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/ExampleTextInput.js",
+      "baseHash": "5175c63fd2de760adc595158a3e815497f296b27",
+      "issue": 14292
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/TextInput/TextInputExample.android.js",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
+      "baseHash": "fcd8e5e42372bb200be07d8339c644e76dfdb12e",
+      "issue": 14292
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/TextInput/TextInputExample.ios.js",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.ios.js",
+      "baseHash": "1a0722932f22f96501391d759b5ccde095c3bdf5",
+      "issue": 14292
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/TextInput/TextInputExample.js.flow",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.js.flow",
+      "baseHash": "3b2283c808b5cfdb81e76d66280915c70c8bcae0",
+      "issue": 14292
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/TextInput/TextInputKeyProp.js",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputKeyProp.js",
+      "baseHash": "4b20afdadfeba3e1a039525860f14c31161c3382",
+      "issue": 14292
+    },
+    {
+      "type": "patch",
+      "file": "js/examples/TextInput/TextInputSharedExamples.js",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
+      "baseHash": "f8b28746822f0d00afaa6d8372c8436cdcbd6473",
+      "issue": 14291
     },
     {
       "type": "copy",

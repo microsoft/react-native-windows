@@ -2,6 +2,111 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Jan 2025 20:34:32 GMT",
+      "version": "0.0.0-canary.914",
+      "tag": "react-native-windows_v0.0.0-canary.914",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c3356415df3c81199b56ec98a2e59e2294484f58",
+            "comment": "Merge New and Old Arch Microsoft.ReactNative Nuget packages"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Jan 2025 06:30:25 GMT",
+      "version": "0.0.0-canary.913",
+      "tag": "react-native-windows_v0.0.0-canary.913",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b43870711f08caa9b45139399f911bffb2769118",
+            "comment": "RNIsland UIA fragment root should report parents fragment root"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "47c5cd445676d80a5e864f5fbc7bcbc10490a0e4",
+            "comment": "Fix crash when currently focused element gets marked as enableFocusRing=false"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b43870711f08caa9b45139399f911bffb2769118",
+            "comment": "Fix crash running on server 2016"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jan 2025 06:24:57 GMT",
+      "version": "0.0.0-canary.912",
+      "tag": "react-native-windows_v0.0.0-canary.912",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3cba4c4122ceb628423c14245f92560f65cbdfe5",
+            "comment": "Remove Paper-only code from Fabric builds of Microsoft.ReactNative"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "89cd613955a195a4aa0b1851306ef4e715d609f7",
+            "comment": "Initial integrate"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.256",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.117",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Jan 2025 06:28:02 GMT",
+      "version": "0.0.0-canary.911",
+      "tag": "react-native-windows_v0.0.0-canary.911",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "953372ac95154d9e9a3f071096c6df856ddc32e2",
+            "comment": "Remove Fork of Layoutable Shadow Node"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Jan 2025 06:21:27 GMT",
+      "version": "0.0.0-canary.910",
+      "tag": "react-native-windows_v0.0.0-canary.910",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "50150435+JesseCol@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6eb1e4736bdfeaad371c672fdc62e381ec9c5a4a",
+            "comment": "Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jan 2025 18:43:00 GMT",
       "version": "0.0.0-canary.909",
       "tag": "react-native-windows_v0.0.0-canary.909",

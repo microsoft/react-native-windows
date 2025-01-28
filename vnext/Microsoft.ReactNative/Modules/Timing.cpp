@@ -124,7 +124,7 @@ void TimerRegistry::setTimerManager(std::weak_ptr<facebook::react::TimerManager>
 void Timing::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
   m_properties = reactContext.Properties().Handle();
-  m_usePostForRendering = !xaml::TryGetCurrentApplication();
+  m_usePostForRendering = !xaml::TryGetCurrentUwpXamlApplication();
   m_uiDispatcher = m_context.UIDispatcher().Handle();
 }
 
@@ -133,7 +133,7 @@ void Timing::InitializeBridgeless(
     const winrt::Microsoft::ReactNative::IReactPropertyBag &properties) noexcept {
   m_timerRegistry = timerRegistry;
   m_properties = properties;
-  m_usePostForRendering = !xaml::TryGetCurrentApplication();
+  m_usePostForRendering = !xaml::TryGetCurrentUwpXamlApplication();
   m_uiDispatcher = {properties.Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                         .try_as<winrt::Microsoft::ReactNative::IReactDispatcher>()};
 }
