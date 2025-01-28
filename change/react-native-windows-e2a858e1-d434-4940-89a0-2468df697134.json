@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Merge New and Old Arch Microsoft.ReactNative Nuget packages",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
