@@ -3248,7 +3248,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
-        "Name": "Brownie",
+        "Name": "Ice Cream",
       },
       {
         "AutomationId": "",
