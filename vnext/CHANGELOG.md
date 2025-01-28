@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 28 Jan 2025 20:34:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.914
+
+Tue, 28 Jan 2025 20:34:32 GMT
+
+### Changes
+
+- Merge New and Old Arch Microsoft.ReactNative Nuget packages (jthysell@microsoft.com)
+
+## 0.0.0-canary.913
+
+Sat, 25 Jan 2025 06:30:25 GMT
+
+### Changes
+
+- RNIsland UIA fragment root should report parents fragment root (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when currently focused element gets marked as enableFocusRing=false (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.912
 
