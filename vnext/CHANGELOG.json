@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Jan 2025 20:34:32 GMT",
+      "version": "0.0.0-canary.914",
+      "tag": "react-native-windows_v0.0.0-canary.914",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c3356415df3c81199b56ec98a2e59e2294484f58",
+            "comment": "Merge New and Old Arch Microsoft.ReactNative Nuget packages"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Jan 2025 06:30:25 GMT",
       "version": "0.0.0-canary.913",
       "tag": "react-native-windows_v0.0.0-canary.913",
