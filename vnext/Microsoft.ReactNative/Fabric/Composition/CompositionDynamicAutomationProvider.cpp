@@ -32,47 +32,7 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
     const winrt::Microsoft::UI::Content::ChildSiteLink &childSiteLink) noexcept
-    : m_view{componentView}, m_childSiteLink{childSiteLink} {
-  // These events are raised in response to the child ContentIsland asking for providers.
-  // For example, the ContentIsland.FragmentRootAutomationProvider property will return
-  // the provider we provide here in FragmentRootAutomationProviderRequested.
-
-  m_fragmentRootAutomationProviderRequestedRevoker = m_childSiteLink.FragmentRootAutomationProviderRequested(
-      [this](
-          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The child island's fragment tree doesn't have its own root.
-        // Here's how we can provide the correct root to the child's UIA logic.
-        winrt::com_ptr<IRawElementProviderFragmentRoot> fragmentRoot = nullptr;
-        HRESULT hr = this->get_FragmentRoot(fragmentRoot.put());
-        args.AutomationProvider(fragmentRoot.as<IInspectable>());
-        args.Handled(true);
-      });
-
-  m_parentAutomationProviderRequestedRevoker = m_childSiteLink.ParentAutomationProviderRequested(
-      [this](
-          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        args.AutomationProvider(*this);
-        args.Handled(true);
-      });
-
-  m_nextSiblingAutomationProviderRequestedRevoker = m_childSiteLink.NextSiblingAutomationProviderRequested(
-      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-        args.AutomationProvider(nullptr);
-        args.Handled(true);
-      });
-
-  m_previousSiblingAutomationProviderRequestedRevoker = m_childSiteLink.PreviousSiblingAutomationProviderRequested(
-      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-        args.AutomationProvider(nullptr);
-        args.Handled(true);
-      });
-}
+    : m_view{componentView}, m_childSiteLink{childSiteLink} {}
 #endif // USE_EXPERIMENTAL_WINUI3
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(

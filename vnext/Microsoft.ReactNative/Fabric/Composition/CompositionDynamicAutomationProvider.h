@@ -95,14 +95,6 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 #ifdef USE_EXPERIMENTAL_WINUI3
   // Non-null when this UIA node is the peer of a ContentIslandComponentView.
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
-  winrt::Microsoft::UI::Content::ChildSiteLink::FragmentRootAutomationProviderRequested_revoker
-      m_fragmentRootAutomationProviderRequestedRevoker;
-  winrt::Microsoft::UI::Content::ChildSiteLink::ParentAutomationProviderRequested_revoker
-      m_parentAutomationProviderRequestedRevoker;
-  winrt::Microsoft::UI::Content::ChildSiteLink::NextSiblingAutomationProviderRequested_revoker
-      m_nextSiblingAutomationProviderRequestedRevoker;
-  winrt::Microsoft::UI::Content::ChildSiteLink::PreviousSiblingAutomationProviderRequested_revoker
-      m_previousSiblingAutomationProviderRequestedRevoker;
 #endif
 };
 

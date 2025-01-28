@@ -64,7 +64,14 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 #ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
-  winrt::Microsoft::UI::Input::InputFocusNavigationHost::DepartFocusRequested_revoker m_departFocusRequestedRevoker;
+  winrt::event_token m_navigationHostDepartFocusRequestedToken{};
+
+  // Automation
+  void ConfigureChildSiteLinkAutomation() noexcept;
+  winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};
+  winrt::event_token m_parentAutomationProviderRequestedToken{};
+  winrt::event_token m_nextSiblingAutomationProviderRequestedToken{};
+  winrt::event_token m_previousSiblingAutomationProviderRequestedToken{};
 #endif
 };
 

@@ -53,19 +53,18 @@ void ContentIslandComponentView::OnMounted() noexcept {
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 
-  m_departFocusRequestedRevoker =
-      m_navigationHost.DepartFocusRequested(winrt::auto_revoke, [wkThis = get_weak()](const auto &, const auto &args) {
+  m_navigationHostDepartFocusRequestedToken =
+      m_navigationHost.DepartFocusRequested([wkThis = get_weak()](const auto &, const auto &args) {
         if (auto strongThis = wkThis.get()) {
-          const bool next = (args.Request().Reason() == winrt::Microsoft::UI::Input::FocusNavigationReason::First);
+          const bool next = (args.Request().Reason() != winrt::Microsoft::UI::Input::FocusNavigationReason::Last);
           strongThis->rootComponentView()->TryMoveFocus(next);
           args.Result(winrt::Microsoft::UI::Input::FocusNavigationResult::Moved);
         }
       });
 
-  // This automation mode must be set before connecting the child content island.
-  // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
-  // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
-  m_childSiteLink.AutomationTreeOption(winrt::Microsoft::UI::Content::AutomationTreeOptions::FragmentBased);
+  // We configure automation even if there's no UIA client at this point, because it's possible the first UIA
+  // request we'll get will be for a child of this island calling upward in the UIA tree.
+  ConfigureChildSiteLinkAutomation();
 
   if (m_islandToConnect) {
     m_childSiteLink.Connect(m_islandToConnect);
@@ -91,7 +90,10 @@ void ContentIslandComponentView::OnMounted() noexcept {
 void ContentIslandComponentView::OnUnmounted() noexcept {
   m_layoutMetricChangedRevokers.clear();
 #ifdef USE_EXPERIMENTAL_WINUI3
-  m_departFocusRequestedRevoker.revoke();
+  if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
+    m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
+    m_navigationHostDepartFocusRequestedToken = {};
+  }
 #endif
 }
 
@@ -138,19 +140,56 @@ bool ContentIslandComponentView::focusable() const noexcept {
 #endif
 }
 
+// Helper to convert a FocusNavigationDirection to a FocusNavigationReason.
+winrt::Microsoft::UI::Input::FocusNavigationReason GetFocusNavigationReason(
+    winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
+  switch (direction) {
+    case winrt::Microsoft::ReactNative::FocusNavigationDirection::First:
+    case winrt::Microsoft::ReactNative::FocusNavigationDirection::Next:
+      return winrt::Microsoft::UI::Input::FocusNavigationReason::First;
+    case winrt::Microsoft::ReactNative::FocusNavigationDirection::Last:
+    case winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous:
+      return winrt::Microsoft::UI::Input::FocusNavigationReason::Last;
+  }
+  return winrt::Microsoft::UI::Input::FocusNavigationReason::Restore;
+}
+
 void ContentIslandComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
-  (void)args;
-  // TODO: Need to make sure we handle shift-tab as well (which should use "Last" instead of "First")
-  m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
-      winrt::Microsoft::UI::Input::FocusNavigationReason::First));
+  auto gotFocusEventArgs = args.as<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>();
+  const auto navigationReason = GetFocusNavigationReason(gotFocusEventArgs->Direction());
+  m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
 #else
   return Super::onGotFocus(args);
-#endif
+#endif // USE_EXPERIMENTAL_WINUI3
 }
 
 ContentIslandComponentView::~ContentIslandComponentView() noexcept {
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
+    m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
+    m_navigationHostDepartFocusRequestedToken = {};
+  }
+  if (m_childSiteLink) {
+    if (m_fragmentRootAutomationProviderRequestedToken) {
+      m_childSiteLink.FragmentRootAutomationProviderRequested(m_fragmentRootAutomationProviderRequestedToken);
+      m_fragmentRootAutomationProviderRequestedToken = {};
+    }
+    if (m_parentAutomationProviderRequestedToken) {
+      m_childSiteLink.ParentAutomationProviderRequested(m_parentAutomationProviderRequestedToken);
+      m_parentAutomationProviderRequestedToken = {};
+    }
+    if (m_nextSiblingAutomationProviderRequestedToken) {
+      m_childSiteLink.NextSiblingAutomationProviderRequested(m_nextSiblingAutomationProviderRequestedToken);
+      m_nextSiblingAutomationProviderRequestedToken = {};
+    }
+    if (m_previousSiblingAutomationProviderRequestedToken) {
+      m_childSiteLink.PreviousSiblingAutomationProviderRequested(m_previousSiblingAutomationProviderRequestedToken);
+      m_previousSiblingAutomationProviderRequestedToken = {};
+    }
+  }
+#endif // USE_EXPERIMENTAL_WINUI3
   if (m_islandToConnect) {
     m_islandToConnect.Close();
   }
@@ -190,11 +229,65 @@ void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::Co
   } else {
     m_islandToConnect = contentIsland;
   }
-#endif
+#endif // USE_EXPERIMENTAL_WINUI3
 }
 
 void ContentIslandComponentView::prepareForRecycle() noexcept {
   Super::prepareForRecycle();
 }
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
+  // This automation mode must be set before connecting the child ContentIsland.
+  // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
+  // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
+  m_childSiteLink.AutomationTreeOption(winrt::Microsoft::UI::Content::AutomationTreeOptions::FragmentBased);
+
+  // These events are raised in response to the child ContentIsland asking for providers.
+  // For example, the ContentIsland.FragmentRootAutomationProvider property will return
+  // the provider we provide here in FragmentRootAutomationProviderRequested.
+
+  // We capture "this" as a raw pointer because ContentIslandComponentView doesn't currently support weak ptrs.
+  // It's safe because we disconnect these events in the destructor.
+
+  m_fragmentRootAutomationProviderRequestedToken = m_childSiteLink.FragmentRootAutomationProviderRequested(
+      [this](
+          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        // The child island's fragment tree doesn't have its own fragment root.
+        // Here's how we can provide the correct fragment root to the child's UIA logic.
+        winrt::com_ptr<IRawElementProviderFragmentRoot> fragmentRoot{nullptr};
+        auto uiaProvider = this->EnsureUiaProvider();
+        uiaProvider.as<IRawElementProviderFragment>()->get_FragmentRoot(fragmentRoot.put());
+        args.AutomationProvider(fragmentRoot.as<IInspectable>());
+        args.Handled(true);
+      });
+
+  m_parentAutomationProviderRequestedToken = m_childSiteLink.ParentAutomationProviderRequested(
+      [this](
+          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        auto uiaProvider = this->EnsureUiaProvider();
+        args.AutomationProvider(uiaProvider);
+        args.Handled(true);
+      });
+
+  m_nextSiblingAutomationProviderRequestedToken = m_childSiteLink.NextSiblingAutomationProviderRequested(
+      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
+        args.AutomationProvider(nullptr);
+        args.Handled(true);
+      });
+
+  m_previousSiblingAutomationProviderRequestedToken = m_childSiteLink.PreviousSiblingAutomationProviderRequested(
+      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
+        args.AutomationProvider(nullptr);
+        args.Handled(true);
+      });
+}
+#endif // USE_EXPERIMENTAL_WINUI3
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
