@@ -174,12 +174,12 @@ type ButtonProps = $ReadOnly<{
   importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
   accessibilityHint?: ?string,
   accessibilityLanguage?: ?Stringish,
-    // [Windows
+  // [Windows
   /**
     Set the order in which elements receive focus when the user navigates through them by pressing Tab.
    */
-    tabIndex?: ?number,
-    // Windows]
+  tabIndex?: ?number,
+  // Windows]
 }>;
 
 /**
