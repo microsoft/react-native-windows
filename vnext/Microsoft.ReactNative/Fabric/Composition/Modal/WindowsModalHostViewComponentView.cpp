@@ -37,6 +37,13 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       m_window.Destroy();
       m_window = nullptr;
     }
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+    if (m_popUp) {
+      m_popUp.Close();
+      m_popUp = nullptr;
+    }
+#endif
   }
 
   void InitializePortalViewComponent(
@@ -85,7 +92,6 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
  private:
   void OnMounted(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
     m_mounted = true;
-
     if (m_showQueued) {
       ShowOnUIThread(view);
     }
@@ -108,11 +114,20 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     int32_t yCor = static_cast<int32_t>(
         (parentRC.top + parentRC.bottom - layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor) / 2);
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+    winrt::Windows::Graphics::RectInt32 rect2{
+        (int)xCor,
+        (int)yCor,
+        static_cast<int32_t>(layoutMetrics.Frame.Width * (layoutMetrics.PointScaleFactor)),
+        static_cast<int32_t>(layoutMetrics.Frame.Height * (layoutMetrics.PointScaleFactor))};
+    m_popUp.MoveAndResize(rect2);
+#else
     // Adjust window position and size
     m_window.ResizeClient(
         {static_cast<int32_t>(layoutMetrics.Frame.Width * (layoutMetrics.PointScaleFactor)),
          static_cast<int32_t>(layoutMetrics.Frame.Height * (layoutMetrics.PointScaleFactor))});
     m_window.Move({xCor, yCor});
+#endif
   };
 
   void ShowOnUIThread(const winrt::Microsoft::ReactNative::ComponentView &view) {
@@ -121,6 +136,24 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
     m_showQueued = false;
     EnsureModalCreated(view);
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+    if (m_popUp) {
+      m_bridge.Enable();
+      m_popUp.Show();
+
+      auto navHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(
+          m_popUp.as<winrt::Microsoft::UI::Content::IContentSiteBridge>());
+      auto result = navHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
+          winrt::Microsoft::UI::Input::FocusNavigationReason::First));
+
+      // dispatch onShow event
+      if (auto eventEmitter = EventEmitter()) {
+        ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnShow eventArgs;
+        eventEmitter->onShow(eventArgs);
+      }
+    }
+#endif
 
     if (m_window && !m_window.IsVisible()) {
       m_bridge.Enable();
@@ -146,6 +179,12 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       m_window.Hide();
     }
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+    if (m_popUp) {
+      m_popUp.Hide();
+    }
+#endif
+
     // dispatch onDismiss event
     if (auto eventEmitter = EventEmitter()) {
       ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnDismiss eventArgs;
@@ -168,6 +207,11 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       return;
     }
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+    if (m_popUp) {
+      return;
+    }
+#endif
     // get the root hwnd
     m_prevWindowID =
         winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(view.ReactContext().Properties());
@@ -175,6 +219,33 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     m_parentHwnd =
         view.as<::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop>()->GetHwndForParenting();
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+    m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+        view.Parent().as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor(),
+        winrt::Microsoft::UI::GetWindowIdFromWindow(m_parentHwnd));
+    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(
+        view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>());
+    auto contentIsland = m_reactNativeIsland.Island();
+
+    m_popUp = m_bridge.TryCreatePopupSiteBridge();
+    m_popUp.Connect(contentIsland);
+
+    // set the top-level windows as the new hwnd
+    winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+        view.ReactContext().Properties(),
+        reinterpret_cast<uint64_t>(winrt::Microsoft::UI::GetWindowFromWindowId(m_popUp.WindowId())));
+
+    auto navHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(
+        m_popUp.as<winrt::Microsoft::UI::Content::IContentSiteBridge>());
+    m_departFocusToken = navHost.DepartFocusRequested(
+        [wkView = winrt::make_weak(view)](
+            const auto &sender, const winrt::Microsoft::UI::Input::FocusNavigationRequestEventArgs &args) {
+          if (auto strongView = wkView.get()) {
+            TrySetFocus(strongView.Parent());
+          }
+        });
+
+#else
     auto presenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::CreateForDialog();
     presenter.SetBorderAndTitleBar(true, false);
     presenter.IsModal(true);
@@ -202,9 +273,11 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
             TrySetFocus(strongView.Parent());
           }
         });
+    m_bridge.Connect(contentIsland);
+
+#endif
 
     m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-    m_bridge.Connect(contentIsland);
     AdjustWindowSize(view.LayoutMetrics());
     m_bridge.Show();
   }
@@ -226,6 +299,9 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   winrt::event_token m_departFocusToken;
   winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_bridge{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland{nullptr};
+#ifdef USE_EXPERIMENTAL_WINUI3
+  winrt::Microsoft::UI::Content::PopupWindowSiteBridge m_popUp{nullptr};
+#endif
 };
 
 void RegisterWindowsModalHostNativeComponent(
