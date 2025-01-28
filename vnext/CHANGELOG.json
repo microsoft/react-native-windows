@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 25 Jan 2025 06:30:25 GMT",
+      "version": "0.0.0-canary.913",
+      "tag": "react-native-windows_v0.0.0-canary.913",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b43870711f08caa9b45139399f911bffb2769118",
+            "comment": "RNIsland UIA fragment root should report parents fragment root"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "47c5cd445676d80a5e864f5fbc7bcbc10490a0e4",
+            "comment": "Fix crash when currently focused element gets marked as enableFocusRing=false"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b43870711f08caa9b45139399f911bffb2769118",
+            "comment": "Fix crash running on server 2016"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2025 06:24:57 GMT",
       "version": "0.0.0-canary.912",
       "tag": "react-native-windows_v0.0.0-canary.912",
