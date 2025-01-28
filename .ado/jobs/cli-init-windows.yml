@@ -307,6 +307,7 @@ jobs:
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
+                - UniversalBuild${{ matrix.platform }}Release
                 - UniversalBuild${{ matrix.platform }}ReleaseFabric
 
             variables: [template: ../variables/windows.yml]
