@@ -6481,9 +6481,9 @@ get-intrinsic@^1.1.3, get-intrinsic@^1.2.1, get-intrinsic@^1.2.3, get-intrinsic@
     hasown "^2.0.0"
 
 get-monorepo-packages@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/get-monorepo-packages/-/get-monorepo-packages-1.2.0.tgz#3eee88d30b11a5f65955dec6ae331958b2a168e4"
-  integrity sha512-aDP6tH+eM3EuVSp3YyCutOcFS4Y9AhRRH9FAd+cjtR/g63Hx+DCXdKoP1ViRPUJz5wm+BOEXB4FhoffGHxJ7jQ==
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/get-monorepo-packages/-/get-monorepo-packages-1.3.0.tgz#4fd82bff2290765b9ef2e08856c9f1e63f21b5eb"
+  integrity sha512-A/s881nNcKhoM7RgkvYFTOtGO+dy4EWbyRaatncPEhhlJAaZRlpfHwuT68p5GJenEt81nnjJOwGg0WKLkR5ZdQ==
   dependencies:
     globby "^7.1.1"
     load-json-file "^4.0.0"
