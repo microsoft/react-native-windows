@@ -75,12 +75,24 @@ jobs:
             #12714 -  Disable for first deployment of test website.
             #         RNTesterIntegrationTests::WebSocket
             #         RNTesterIntegrationTests::WebSocketBlob
+            #14217 - Reneable RNTesterIntegrationTests
+            #         RNTesterIntegrationTests::Dummy
+            #         RNTesterIntegrationTests::Fetch
+            #         RNTesterIntegrationTests::XHRSample
+            #         RNTesterIntegrationTests::Blob
+            #         RNTesterIntegrationTests::Logging
             - name: Desktop.IntegrationTests.Filter
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)
+                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
+                (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Fetch)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Logging)
             #6799 -
             #       HostFunctionTest              - Crashes under JSI/V8
             #       HostObjectProtoTest           - Crashes under JSI/V8
