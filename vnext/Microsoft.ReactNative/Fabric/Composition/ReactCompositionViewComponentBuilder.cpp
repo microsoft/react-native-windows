@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "ReactCompositionViewComponentBuilder.h"
+#include <Fabric/AbiViewComponentDescriptor.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ContentIslandComponentView.h>
 #include <Fabric/Composition/PortalComponentView.h>
@@ -128,7 +129,7 @@ void ReactCompositionViewComponentBuilder::SetPortalComponentViewInitializer(
   };
   m_descriptorConstructorFactory = []() {
     return &facebook::react::concreteComponentDescriptorConstructor<
-        ::Microsoft::ReactNative::AbiViewComponentDescriptor>;
+        ::Microsoft::ReactNative::AbiPortalComponentDescriptor>;
   };
 }
 
