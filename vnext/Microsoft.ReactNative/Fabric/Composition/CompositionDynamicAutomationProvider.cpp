@@ -7,6 +7,7 @@
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
+#include <winrt/Microsoft.UI.Content.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
 
@@ -37,11 +38,28 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
   }
 }
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
+    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
+    const winrt::Microsoft::UI::Content::ChildSiteLink &childSiteLink) noexcept
+    : m_view{componentView}, m_childSiteLink{childSiteLink} {}
+#endif // USE_EXPERIMENTAL_WINUI3
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
     IRawElementProviderFragment **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (m_childSiteLink) {
+    if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
+      auto fragment = m_childSiteLink.AutomationProvider().try_as<IRawElementProviderFragment>();
+      *pRetVal = fragment.detach();
+      return S_OK;
+    }
+  }
+#endif // USE_EXPERIMENTAL_WINUI3
 
   return UiaNavigateHelper(m_view.view(), direction, *pRetVal);
 }
