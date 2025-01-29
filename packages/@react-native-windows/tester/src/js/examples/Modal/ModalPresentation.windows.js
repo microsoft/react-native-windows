@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   modalContainer: {
-    flex: 1,
+    //flex: 1, // [Windows] - This will cause the modal to stretch to be as tall as the availiable space given to it.
     justifyContent: 'center',
     padding: 20,
   },

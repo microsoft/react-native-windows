@@ -14,6 +14,24 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+struct ModalHostState
+    : winrt::implements<ModalHostState, winrt::Microsoft::ReactNative::Composition::IPortalStateData> {
+  ModalHostState(winrt::Microsoft::ReactNative::LayoutConstraints layoutConstraints, float scaleFactor)
+      : m_layoutConstraints(layoutConstraints), m_pointScaleFactor(scaleFactor) {}
+
+  winrt::Microsoft::ReactNative::LayoutConstraints LayoutConstraints() const noexcept {
+    return m_layoutConstraints;
+  }
+
+  float PointScaleFactor() const noexcept {
+    return m_pointScaleFactor;
+  }
+
+ private:
+  float m_pointScaleFactor{1.0f};
+  winrt::Microsoft::ReactNative::LayoutConstraints m_layoutConstraints;
+};
+
 struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::Foundation::IInspectable>,
                        ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView> {
   ~ModalHostView() {
@@ -72,13 +90,32 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView>::UpdateProps(view, newProps, oldProps);
   }
 
-  void UpdateLayoutMetrics(
-      const winrt::Microsoft::ReactNative::ComponentView &view,
-      const winrt::Microsoft::ReactNative::LayoutMetrics &newLayoutMetrics,
-      const winrt::Microsoft::ReactNative::LayoutMetrics & /*oldLayoutMetrics*/) noexcept override {
-    if (m_window) {
-      AdjustWindowSize(newLayoutMetrics);
-    }
+  void UpdateState(
+      const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept override {
+    m_state = newState;
+  }
+
+  void MountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+      const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept override {
+    AdjustWindowSize(args.Child().LayoutMetrics());
+    assert(!m_childLayoutMetricsToken);
+    m_childLayoutMetricsToken = args.Child().LayoutMetricsChanged(
+        [wkThis = get_weak()](
+            auto &sender, const winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs &layoutMetricsChangedArgs) {
+          if (auto strongThis = wkThis.get()) {
+            strongThis->AdjustWindowSize(layoutMetricsChangedArgs.NewLayoutMetrics());
+          }
+        });
+  }
+
+  void UnmountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+      const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept override {
+    assert(m_childLayoutMetricsToken);
+    args.Child().LayoutMetricsChanged(m_childLayoutMetricsToken);
+    m_childLayoutMetricsToken.value = 0;
   }
 
   void FinalizeUpdate(
@@ -102,6 +139,14 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   }
 
   void AdjustWindowSize(const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics) noexcept {
+#ifdef USE_EXPERIMENTAL_WINUI3
+    if (!m_popUp) {
+#else
+    if (!m_window) {
+#endif
+      return;
+    }
+
     if (layoutMetrics.Frame.Width == 0 && layoutMetrics.Frame.Height == 0) {
       return;
     }
@@ -219,12 +264,13 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     m_parentHwnd =
         view.as<::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop>()->GetHwndForParenting();
 
+    auto portal = view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>();
+
 #ifdef USE_EXPERIMENTAL_WINUI3
     m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
         view.Parent().as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor(),
         winrt::Microsoft::UI::GetWindowIdFromWindow(m_parentHwnd));
-    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(
-        view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>());
+    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(portal);
     auto contentIsland = m_reactNativeIsland.Island();
 
     m_popUp = m_bridge.TryCreatePopupSiteBridge();
@@ -261,8 +307,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     // create a react native island - code taken from CompositionHwndHost
     m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
         view.Parent().as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor(), m_window.Id());
-    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(
-        view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>());
+    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(portal);
     auto contentIsland = m_reactNativeIsland.Island();
 
     auto navHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(m_bridge);
@@ -278,8 +323,51 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 #endif
 
     m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-    AdjustWindowSize(view.LayoutMetrics());
+
+    m_islandStateChangedToken =
+        contentIsland.StateChanged([weakThis = get_weak()](
+                                       winrt::Microsoft::UI::Content::ContentIsland const &island,
+                                       winrt::Microsoft::UI::Content::ContentIslandStateChangedEventArgs const &args) {
+          if (auto pThis = weakThis.get()) {
+            if (args.DidRasterizationScaleChange() || args.DidLayoutDirectionChange()) {
+              pThis->UpdateConstraints();
+            }
+          }
+        });
+
+    UpdateConstraints();
+
+    if (portal.ContentRoot().Children().Size()) {
+      AdjustWindowSize(portal.ContentRoot().Children().GetAt(0).LayoutMetrics());
+    }
     m_bridge.Show();
+  }
+
+  void UpdateConstraints() noexcept {
+    auto displayArea = winrt::Microsoft::UI::Windowing::DisplayArea::GetFromDisplayId(
+        m_bridge.SiteView().EnvironmentView().DisplayId());
+    auto workArea = displayArea.WorkArea();
+
+    float scale = m_reactNativeIsland.Island().RasterizationScale();
+
+    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    constraints.MinimumSize = {0, 0};
+    // Constrain the size of the modal to 90% of the screen size
+    constraints.MaximumSize = {
+        static_cast<float>((workArea.Width / scale) * 0.9), static_cast<float>((workArea.Height / scale) * 0.9)};
+    constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
+
+    auto layoutDirection = m_reactNativeIsland.Island().LayoutDirection();
+    if (layoutDirection == winrt::Microsoft::UI::Content::ContentLayoutDirection::LeftToRight)
+      constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+    else if (layoutDirection == winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft)
+      constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::RightToLeft;
+
+    // By setting a custom contraint here the behavior of the modal slightly changes.
+    // When no constraint is set (maxSize is std::numeric_limits<Float>::infinity()), yoga will layout the content to a
+    // desired size If we provide a specific max size, then contents with a flex:1 will expand to fill that size. We
+    // might want to provide a windows specific property to control this behavior.
+    m_state.UpdateState(winrt::make<ModalHostState>(constraints, m_reactNativeIsland.Island().RasterizationScale()));
   }
 
   static void TrySetFocus(const winrt::Microsoft::ReactNative::ComponentView &view) {
@@ -295,8 +383,11 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   bool m_showTitleBar{false};
   bool m_showQueued{false};
   bool m_mounted{false};
+  winrt::event_token m_islandStateChangedToken;
   winrt::Microsoft::UI::Input::InputFocusNavigationHost::DepartFocusRequested_revoker m_departFocusRevoker;
   winrt::event_token m_departFocusToken;
+  winrt::event_token m_childLayoutMetricsToken;
+  winrt::Microsoft::ReactNative::IComponentState m_state{nullptr};
   winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_bridge{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland{nullptr};
 #ifdef USE_EXPERIMENTAL_WINUI3
