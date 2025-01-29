@@ -120,14 +120,15 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
             ->CreateProps(viewProps, props ? static_cast<AbiViewProps const &>(*props).UserProps() : nullptr);
     shadowNodeProps->SetUserProps(userProps, viewProps);
 
-    const auto &dynamic = static_cast<folly::dynamic>(rawProps);
-    for (const auto &pair : dynamic.items()) {
-      const auto &propName = pair.first.getString();
-      auto hash = RAW_PROPS_KEY_HASH(propName);
-      shadowNodeProps.get()->setProp(context, hash, propName.c_str(), facebook::react::RawValue(pair.second));
-      userProps.SetProp(
-          hash, winrt::to_hstring(propName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(pair.second));
-    }
+    rawProps.iterateOverValues(
+        [&](facebook::react::RawPropsPropNameHash hash, const char *propName, facebook::react::RawValue const &fn) {
+          shadowNodeProps.get()->setProp(context, hash, propName, fn);
+          userProps.SetProp(
+              hash,
+              winrt::to_hstring(propName),
+              winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(folly::dynamic(fn)));
+        });
+
     return shadowNodeProps;
   }
 

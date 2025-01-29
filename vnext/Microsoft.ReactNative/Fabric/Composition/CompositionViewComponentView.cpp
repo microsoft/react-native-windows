@@ -583,29 +583,15 @@ facebook::react::BorderMetrics ComponentView::focusBorderMetrics(
   metrics.borderColors.bottom = metrics.borderColors.left = metrics.borderColors.right = metrics.borderColors.top =
       innerColor;
 
-  metrics.borderRadii.bottomLeft.horizontal =
-      (metrics.borderRadii.bottomLeft.horizontal ? metrics.borderRadii.bottomLeft.horizontal : FOCUS_VISUAL_RADIUS) +
+  metrics.borderRadii.bottomLeft =
+      (metrics.borderRadii.bottomLeft ? metrics.borderRadii.bottomLeft : FOCUS_VISUAL_RADIUS) +
       FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  metrics.borderRadii.bottomLeft.vertical =
-      (metrics.borderRadii.bottomLeft.vertical ? metrics.borderRadii.bottomLeft.vertical : FOCUS_VISUAL_RADIUS) +
+  metrics.borderRadii.bottomRight =
+      (metrics.borderRadii.bottomRight ? metrics.borderRadii.bottomRight : FOCUS_VISUAL_RADIUS) +
       FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  metrics.borderRadii.bottomRight.horizontal =
-      (metrics.borderRadii.bottomRight.horizontal ? metrics.borderRadii.bottomRight.horizontal : FOCUS_VISUAL_RADIUS) +
+  metrics.borderRadii.topLeft = (metrics.borderRadii.topLeft ? metrics.borderRadii.topLeft : FOCUS_VISUAL_RADIUS) +
       FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  metrics.borderRadii.bottomRight.vertical =
-      (metrics.borderRadii.bottomRight.vertical ? metrics.borderRadii.bottomRight.vertical : FOCUS_VISUAL_RADIUS) +
-      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  metrics.borderRadii.topLeft.horizontal =
-      (metrics.borderRadii.topLeft.horizontal ? metrics.borderRadii.topLeft.horizontal : FOCUS_VISUAL_RADIUS) +
-      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  metrics.borderRadii.topLeft.vertical =
-      (metrics.borderRadii.topLeft.vertical ? metrics.borderRadii.topLeft.vertical : FOCUS_VISUAL_RADIUS) +
-      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  metrics.borderRadii.topRight.horizontal =
-      (metrics.borderRadii.topRight.horizontal ? metrics.borderRadii.topRight.horizontal : FOCUS_VISUAL_RADIUS) +
-      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  metrics.borderRadii.topRight.vertical =
-      (metrics.borderRadii.topRight.vertical ? metrics.borderRadii.topRight.vertical : FOCUS_VISUAL_RADIUS) +
+  metrics.borderRadii.topRight = (metrics.borderRadii.topRight ? metrics.borderRadii.topRight : FOCUS_VISUAL_RADIUS) +
       FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
 
   metrics.borderStyles.bottom = metrics.borderStyles.left = metrics.borderStyles.right = metrics.borderStyles.top =
