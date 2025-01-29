@@ -48,12 +48,6 @@ void DebuggingOverlayViewManager::DispatchCommand(
     // There is little point in attempting to implement these commands until then.
     return;
   }
-
-  // Paper doesn't handle the following commands, so we'll just skip them.
-  if (commandId != "highlightTraceUpdates" && commandId != "highlightElements" &&
-      commandId != "clearElementsHighlights") {
-    Super::DispatchCommand(viewToUpdate, commandId, std::move(commandArgs));
-  }
 }
 
 } // namespace Microsoft::ReactNative
