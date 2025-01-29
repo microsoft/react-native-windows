@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from DebuggingOverlayNativeComponent spec file in flow / TypeScript.
+ * This file is auto-generated from CalendarViewNativeComponent spec file in flow / TypeScript.
  */
 // clang-format off
 #pragma once
@@ -16,16 +16,16 @@
 
 #ifdef RNW_NEW_ARCH
 
-namespace Microsoft::ReactNativeSpecs {
+namespace winrt::SampleCustomComponent::Codegen {
 
-REACT_STRUCT(DebuggingOverlayProps)
-struct DebuggingOverlayProps : winrt::implements<DebuggingOverlayProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  DebuggingOverlayProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+REACT_STRUCT(CalendarViewProps)
+struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  CalendarViewProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
     : ViewProps(props)
   {
      if (cloneFrom) {
-       auto cloneFromProps = cloneFrom.as<DebuggingOverlayProps>();
-  
+       auto cloneFromProps = cloneFrom.as<CalendarViewProps>();
+       label = cloneFromProps->label;  
      }
   }
 
@@ -33,24 +33,44 @@ struct DebuggingOverlayProps : winrt::implements<DebuggingOverlayProps, winrt::M
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
+  REACT_FIELD(label)
+  std::string label;
+
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-struct DebuggingOverlayEventEmitter {
-  DebuggingOverlayEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
+REACT_STRUCT(CalendarView_OnSelectedDatesChanged)
+struct CalendarView_OnSelectedDatesChanged {
+  REACT_FIELD(value)
+  bool value{};
+
+  REACT_FIELD(startDate)
+  std::string startDate;
+};
+
+struct CalendarViewEventEmitter {
+  CalendarViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
+
+  using OnSelectedDatesChanged = CalendarView_OnSelectedDatesChanged;
+
+  void onSelectedDatesChanged(OnSelectedDatesChanged &value) const {
+    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
 
  private:
   winrt::Microsoft::ReactNative::EventEmitter m_eventEmitter{nullptr};
 };
 
 template<typename TUserData>
-struct BaseDebuggingOverlay {
+struct BaseCalendarView {
 
   virtual void UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
-    const winrt::com_ptr<DebuggingOverlayProps> &newProps,
-    const winrt::com_ptr<DebuggingOverlayProps> &/*oldProps*/) noexcept {
+    const winrt::com_ptr<CalendarViewProps> &newProps,
+    const winrt::com_ptr<CalendarViewProps> &/*oldProps*/) noexcept {
     m_props = newProps;
   }
 
@@ -67,7 +87,7 @@ struct BaseDebuggingOverlay {
     const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
   }
 
-  virtual void UpdateEventEmitter(const std::shared_ptr<DebuggingOverlayEventEmitter> &eventEmitter) noexcept {
+  virtual void UpdateEventEmitter(const std::shared_ptr<CalendarViewEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
@@ -95,65 +115,34 @@ struct BaseDebuggingOverlay {
                                         winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
   }
 
-  // You must provide an implementation of this method to handle the "highlightTraceUpdates" command
-  virtual void HandleHighlightTraceUpdatesCommand(std::vector<winrt::Microsoft::ReactNative::JSValue> updates) noexcept = 0;
+  
 
-  // You must provide an implementation of this method to handle the "highlightElements" command
-  virtual void HandleHighlightElementsCommand(std::vector<winrt::Microsoft::ReactNative::JSValue> elements) noexcept = 0;
-
-  // You must provide an implementation of this method to handle the "clearElementsHighlights" command
-  virtual void HandleClearElementsHighlightsCommand() noexcept = 0;
-
-  void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
-    auto userData = view.UserData().as<TUserData>();
-    auto commandName = args.CommandName();
-    if (commandName == L"highlightTraceUpdates") {
-      std::vector<winrt::Microsoft::ReactNative::JSValue> updates;
-      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), updates);
-      userData->HandleHighlightTraceUpdatesCommand(updates);
-      return;
-    }
-
-    if (commandName == L"highlightElements") {
-      std::vector<winrt::Microsoft::ReactNative::JSValue> elements;
-      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), elements);
-      userData->HandleHighlightElementsCommand(elements);
-      return;
-    }
-
-    if (commandName == L"clearElementsHighlights") {
-
-      userData->HandleClearElementsHighlightsCommand();
-      return;
-    }
-  }
-
-  const std::shared_ptr<DebuggingOverlayEventEmitter>& EventEmitter() const { return m_eventEmitter; }
-  const winrt::com_ptr<DebuggingOverlayProps>& Props() const { return m_props; }
+  const std::shared_ptr<CalendarViewEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<CalendarViewProps>& Props() const { return m_props; }
 
 private:
-  winrt::com_ptr<DebuggingOverlayProps> m_props;
-  std::shared_ptr<DebuggingOverlayEventEmitter> m_eventEmitter;
+  winrt::com_ptr<CalendarViewProps> m_props;
+  std::shared_ptr<CalendarViewEventEmitter> m_eventEmitter;
 };
 
 template <typename TUserData>
-void RegisterDebuggingOverlayNativeComponent(
+void RegisterCalendarViewNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"DebuggingOverlay", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+      L"CalendarView", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
                               const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<DebuggingOverlayProps>(props, cloneFrom); 
+            return winrt::make<CalendarViewProps>(props, cloneFrom); 
         });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->UpdateProps(view, newProps ? newProps.as<DebuggingOverlayProps>() : nullptr, oldProps ? oldProps.as<DebuggingOverlayProps>() : nullptr);
+            userData->UpdateProps(view, newProps ? newProps.as<CalendarViewProps>() : nullptr, oldProps ? oldProps.as<CalendarViewProps>() : nullptr);
         });
 
         compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -166,10 +155,10 @@ void RegisterDebuggingOverlayNativeComponent(
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->UpdateEventEmitter(std::make_shared<DebuggingOverlayEventEmitter>(eventEmitter));
+          userData->UpdateEventEmitter(std::make_shared<CalendarViewEventEmitter>(eventEmitter));
         });
 
-        if constexpr (&TUserData::FinalizeUpdate != &BaseDebuggingOverlay<TUserData>::FinalizeUpdate) {
+        if constexpr (&TUserData::FinalizeUpdate != &BaseCalendarView<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -177,7 +166,7 @@ void RegisterDebuggingOverlayNativeComponent(
           });
         } 
 
-        if constexpr (&TUserData::UpdateState != &BaseDebuggingOverlay<TUserData>::UpdateState) {
+        if constexpr (&TUserData::UpdateState != &BaseCalendarView<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -185,13 +174,7 @@ void RegisterDebuggingOverlayNativeComponent(
           });
         }
 
-        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
-                                          const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
-          auto userData = view.UserData().as<TUserData>();
-          userData->HandleCommand(view, args);
-        });
-
-        if constexpr (&TUserData::MountChildComponentView != &BaseDebuggingOverlay<TUserData>::MountChildComponentView) {
+        if constexpr (&TUserData::MountChildComponentView != &BaseCalendarView<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -199,7 +182,7 @@ void RegisterDebuggingOverlayNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::UnmountChildComponentView != &BaseDebuggingOverlay<TUserData>::UnmountChildComponentView) {
+        if constexpr (&TUserData::UnmountChildComponentView != &BaseCalendarView<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -209,13 +192,13 @@ void RegisterDebuggingOverlayNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if constexpr (&TUserData::Initialize != &BaseDebuggingOverlay<TUserData>::Initialize) {
+          if constexpr (&TUserData::Initialize != &BaseCalendarView<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if constexpr (&TUserData::CreateVisual != &BaseDebuggingOverlay<TUserData>::CreateVisual) {
+        if constexpr (&TUserData::CreateVisual != &BaseCalendarView<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);
@@ -229,6 +212,6 @@ void RegisterDebuggingOverlayNativeComponent(
       });
 }
 
-} // namespace Microsoft::ReactNativeSpecs
+} // namespace winrt::SampleCustomComponent::Codegen
 
 #endif // #ifdef RNW_NEW_ARCH
