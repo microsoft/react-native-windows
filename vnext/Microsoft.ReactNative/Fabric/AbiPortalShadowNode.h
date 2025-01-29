@@ -17,10 +17,10 @@ namespace Microsoft::ReactNative {
 extern const char AbiPortalComponentName[];
 
 class AbiPortalShadowNode final : public facebook::react::ConcreteViewShadowNode<
-                                   AbiPortalComponentName,
-                                   AbiViewProps,
-                                   facebook::react::ViewEventEmitter,
-                                   Microsoft::ReactNative::AbiStateData> {
+                                      AbiPortalComponentName,
+                                      AbiViewProps,
+                                      facebook::react::ViewEventEmitter,
+                                      Microsoft::ReactNative::AbiStateData> {
  public:
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 
