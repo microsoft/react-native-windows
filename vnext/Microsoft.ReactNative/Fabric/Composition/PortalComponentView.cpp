@@ -30,11 +30,23 @@ void PortalComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   m_rootComponentView->MountChildComponentView(childComponentView, index);
+  if (m_builder && m_builder->MountChildComponentViewHandler()) {
+    m_builder->MountChildComponentViewHandler()(
+        *this,
+        winrt::make<winrt::Microsoft::ReactNative::implementation::MountChildComponentViewArgs>(
+            childComponentView, index));
+  }
 }
 
 void PortalComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
+  if (m_builder && m_builder->UnmountChildComponentViewHandler()) {
+    m_builder->UnmountChildComponentViewHandler()(
+        *this,
+        winrt::make<winrt::Microsoft::ReactNative::implementation::UnmountChildComponentViewArgs>(
+            childComponentView, index));
+  }
   m_rootComponentView->UnmountChildComponentView(childComponentView, index);
 }
 
