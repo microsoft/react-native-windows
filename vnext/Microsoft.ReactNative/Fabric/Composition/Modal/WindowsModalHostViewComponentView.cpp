@@ -264,12 +264,13 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     m_parentHwnd =
         view.as<::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop>()->GetHwndForParenting();
 
+    auto portal = view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>();
+
 #ifdef USE_EXPERIMENTAL_WINUI3
     m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
         view.Parent().as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor(),
         winrt::Microsoft::UI::GetWindowIdFromWindow(m_parentHwnd));
-    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(
-        view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>());
+    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(portal);
     auto contentIsland = m_reactNativeIsland.Island();
 
     m_popUp = m_bridge.TryCreatePopupSiteBridge();
@@ -306,7 +307,6 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     // create a react native island - code taken from CompositionHwndHost
     m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
         view.Parent().as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor(), m_window.Id());
-    auto portal = view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>();
     m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(portal);
     auto contentIsland = m_reactNativeIsland.Island();
 
