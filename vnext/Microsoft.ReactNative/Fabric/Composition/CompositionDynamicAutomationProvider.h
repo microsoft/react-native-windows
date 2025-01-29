@@ -21,8 +21,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IExpandCollapseProvider,
                                                  ISelectionProvider,
                                                  ISelectionItemProvider,
-                                                 ITextProvider,
-                                                 ITextRangeProvider> {
+                                                 ITextProvider> {
  public:
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
@@ -96,38 +95,6 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall RangeFromAnnotation(
       IRawElementProviderSimple *annotationElement,
       ITextRangeProvider **pRetVal) override;*/
-
-  // inherited via ITextRangeProvider
-  virtual HRESULT __stdcall Clone(ITextRangeProvider **pRetVal) override;
-  virtual HRESULT __stdcall Compare(ITextRangeProvider *range, BOOL *pRetVal) override;
-  virtual HRESULT __stdcall CompareEndpoints(
-      TextPatternRangeEndpoint endpoint,
-      ITextRangeProvider *targetRange,
-      TextPatternRangeEndpoint targetEndpoint,
-      int *pRetVal) override;
-  virtual HRESULT __stdcall ExpandToEnclosingUnit(TextUnit unit) override;
-  virtual HRESULT __stdcall FindAttribute(
-      TEXTATTRIBUTEID attributeId,
-      VARIANT val,
-      BOOL backward,
-      ITextRangeProvider **pRetVal) override;
-  virtual HRESULT __stdcall FindText(BSTR text, BOOL backward, BOOL ignoreCase, ITextRangeProvider **pRetVal) override;
-  virtual HRESULT __stdcall GetAttributeValue(TEXTATTRIBUTEID attributeId, VARIANT *pRetVal) override;
-  virtual HRESULT __stdcall GetBoundingRectangles(SAFEARRAY **pRetVal) override;
-  virtual HRESULT __stdcall GetChildren(SAFEARRAY **pRetVal) override;
-  virtual HRESULT __stdcall GetEnclosingElement(IRawElementProviderSimple **pRetVal) override;
-  virtual HRESULT __stdcall GetText(int maxLength, BSTR *pRetVal) override;
-  virtual HRESULT __stdcall Move(TextUnit unit, int count, int *pRetVal) override;
-  virtual HRESULT __stdcall MoveEndpointByRange(
-      TextPatternRangeEndpoint endpoint,
-      ITextRangeProvider *targetRange,
-      TextPatternRangeEndpoint targetEndpoint) override;
-  virtual HRESULT __stdcall MoveEndpointByUnit(
-      TextPatternRangeEndpoint endpoint,
-      TextUnit unit,
-      int count,
-      int *pRetVal) override;
-  virtual HRESULT __stdcall ScrollIntoView(BOOL alignToTop) override;
 
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
