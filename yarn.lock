@@ -8773,10 +8773,18 @@ metro-resolver@0.81.0:
   dependencies:
     flow-enums-runtime "^0.0.6"
 
-metro-runtime@0.81.0, metro-runtime@^0.81.0, metro-runtime@^0.81.0-alpha.0:
+metro-runtime@0.81.0:
   version "0.81.0"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.81.0.tgz#63af9b3fec15d1f307d89ef4881f5ba2c592291e"
   integrity sha512-6oYB5HOt37RuGz2eV4A6yhcl+PUTwJYLDlY9vhT+aVjbUWI6MdBCf69vc4f5K5Vpt+yOkjy+2LDwLS0ykWFwYw==
+  dependencies:
+    "@babel/runtime" "^7.25.0"
+    flow-enums-runtime "^0.0.6"
+
+metro-runtime@^0.81.0, metro-runtime@^0.81.0-alpha.0:
+  version "0.81.1"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.81.1.tgz#a3a23c3c47e02115f8e6d1e10f19d8214eb845fd"
+  integrity sha512-pqu5j5d01rjF85V/K8SDDJ0NR3dRp6bE3z5bKVVb5O2Rx0nbR9KreUxYALQCRCcQHaYySqCg5fYbGKBHC295YQ==
   dependencies:
     "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
