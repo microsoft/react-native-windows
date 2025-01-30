@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Jan 2025 01:11:27 GMT",
+      "version": "0.74.33",
+      "tag": "react-native-windows_v0.74.33",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b2f3b756abab8c47977afbf0534e6fa5c6ce68b9",
+            "comment": "Re-enable code-signing of NuGet packages"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jan 2025 03:29:02 GMT",
       "version": "0.74.32",
       "tag": "react-native-windows_v0.74.32",
