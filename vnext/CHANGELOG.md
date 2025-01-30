@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 24 Jan 2025 03:29:02 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Jan 2025 17:39:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.33
+
+Thu, 30 Jan 2025 17:39:49 GMT
+
+### Patches
+
+- Re-enable code-signing of NuGet packages (jthysell@microsoft.com)
 
 ## 0.74.32
 

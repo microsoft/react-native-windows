@@ -459,7 +459,7 @@ extends:
               packMicrosoftReactNativeManaged: true
               packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -485,7 +485,7 @@ extends:
               # packMicrosoftReactNativeManaged: true
               # packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -508,7 +508,7 @@ extends:
               nugetroot: $(System.DefaultWorkingDirectory)\Desktop
               packDesktop: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -531,7 +531,7 @@ extends:
               nugetroot: $(System.DefaultWorkingDirectory)\Desktop
               packDesktop: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
