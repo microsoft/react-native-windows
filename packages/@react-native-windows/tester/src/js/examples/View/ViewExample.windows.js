@@ -18,8 +18,8 @@ import * as React from 'react';
 import {Alert, Platform, Pressable, StyleSheet, View} from 'react-native';
 
 class ViewBorderStyleExample extends React.Component<
-  $ReadOnly<{||}>,
-  {|showBorder: boolean|},
+  $ReadOnly<{}>,
+  {showBorder: boolean},
 > {
   state: {showBorder: boolean} = {
     showBorder: true,
@@ -83,10 +83,10 @@ const offscreenAlphaCompositingStyles = StyleSheet.create({
 });
 
 class OffscreenAlphaCompositing extends React.Component<
-  $ReadOnly<{|testID?: ?string|}>,
-  {|
+  $ReadOnly<{testID?: ?string}>,
+  {
     active: boolean,
-  |},
+  },
 > {
   state: {active: boolean} = {
     active: false,
@@ -167,10 +167,10 @@ const ZIndexExampleStyles = StyleSheet.create({
 });
 
 class ZIndexExample extends React.Component<
-  $ReadOnly<{||}>,
-  {|
+  $ReadOnly<{}>,
+  {
     flipped: boolean,
-  |},
+  },
 > {
   state: {flipped: boolean} = {
     flipped: false,
@@ -311,10 +311,10 @@ function PositionStaticZIndexExample(): React.Node {
 }
 
 class DisplayNoneStyle extends React.Component<
-  $ReadOnly<{||}>,
-  {|
+  $ReadOnly<{}>,
+  {
     index: number,
-  |},
+  },
 > {
   state: {index: number} = {
     index: 0,
@@ -377,7 +377,7 @@ class DisplayNoneStyle extends React.Component<
   };
 }
 
-class FlexGapExample extends React.Component<$ReadOnly<{|testID?: ?string|}>> {
+class FlexGapExample extends React.Component<$ReadOnly<{testID?: ?string}>> {
   render(): React.Node {
     return (
       <View

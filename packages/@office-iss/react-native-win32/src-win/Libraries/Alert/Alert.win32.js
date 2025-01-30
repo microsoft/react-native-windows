@@ -93,4 +93,4 @@ class Alert {
   }
 }
 
-module.exports = Alert;
+export default Alert;

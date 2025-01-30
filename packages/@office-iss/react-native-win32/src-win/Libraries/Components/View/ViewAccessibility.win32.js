@@ -157,7 +157,7 @@ export type AccessibilityState = {
   ...
 };
 
-export type AccessibilityValue = $ReadOnly<{|
+export type AccessibilityValue = $ReadOnly<{
   /**
    * The minimum value of this component's range. (should be an integer)
    */
@@ -177,4 +177,4 @@ export type AccessibilityValue = $ReadOnly<{|
    * A textual description of this component's value. (will override minimum, current, and maximum if set)
    */
   text?: Stringish,
-|}>;
+}>;

@@ -22,23 +22,23 @@ const Platform: PlatformType = {
     return this.constants.osVersion;
   },
   // $FlowFixMe[unsafe-getters-setters]
-  get constants(): {|
+  get constants(): {
     isTesting: boolean,
     isDisableAnimations?: boolean,
-    reactNativeVersion: {|
+    reactNativeVersion: {
       major: number,
       minor: number,
       patch: number,
       prerelease: ?string,
-    |},
-    reactNativeWindowsVersion: {|
+    },
+    reactNativeWindowsVersion: {
       // [Windows]
       major: number,
       minor: number,
       patch: number,
-    |},
+    },
     osVersion: number,
-  |} {
+  } {
     // $FlowFixMe[object-this-reference]
     if (this.__constants == null) {
       // $FlowFixMe[object-this-reference]
