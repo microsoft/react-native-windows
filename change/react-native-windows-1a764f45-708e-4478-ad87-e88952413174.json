@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "backport Fix react devtools hitting an assert on launch (#14320)",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
