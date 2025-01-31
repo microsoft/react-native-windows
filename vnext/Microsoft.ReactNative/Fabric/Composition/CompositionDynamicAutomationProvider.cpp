@@ -28,7 +28,6 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
   }
-  EnsureTextRangeProvider();
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
@@ -253,12 +252,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  /*
-  if (patternId == UIA_TextPattern2Id &&
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
-    *pRetVal = static_cast<ITextProvider2 *>(this);
-    AddRef();
-  }*/
+  // if (patternId == UIA_TextPattern2Id &&
+  //     strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>())
+  //     {
+  //   *pRetVal = static_cast<ITextProvider2 *>(this);
+  //   AddRef();
+  // }
 
   return S_OK;
 }
@@ -881,8 +880,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_DocumentRange(ITextR
 
   if (m_textRangeProvider == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  *pRetVal = m_textRangeProvider.get();
-  return S_OK; // I think is where the "does not fall within expected ranges" is coming from
+  m_textRangeProvider.copy_to(pRetVal);
+  return S_OK;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_SupportedTextSelection(SupportedTextSelection *pRetVal) {
@@ -910,25 +909,17 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_SupportedTextSelecti
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
-  // represents currently selected text in a text based control
-  // an array of pointers to ITextRangeProviders
   // no-op
-  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 1);
-  if (m_textRangeProvider == nullptr)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-  SafeArrayPutElement(*pRetVal, 0, m_textRangeProvider.get());
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 0);
   return S_OK;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetVisibleRanges(SAFEARRAY **pRetVal) {
-  // if text is empty return empty array
-  // otherwise return an array of ITextRangeProviders for the sections of text on the screen
-  // theoretically content that isn't on the screen shouldn't be included in the ranges, unclear how we can assess that
-  // no-op
   *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 1);
   if (m_textRangeProvider == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  SafeArrayPutElement(*pRetVal, 0, m_textRangeProvider.get());
+  LONG pos = 0;
+  SafeArrayPutElement(*pRetVal, &pos, m_textRangeProvider.get());
   return S_OK;
 }
 
@@ -944,24 +935,22 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromPoint(UiaPoint 
   // no-op
   if (m_textRangeProvider == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  *pRetVal = m_textRangeProvider.get();
+  m_textRangeProvider.copy_to(pRetVal);
   return S_OK;
 }
 
-/* HRESULT __stdcall CompositionDynamicAutomationProvider::GetCaretRange(
-    BOOL *isActive,
-    ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
-  return S_OK;
-}
+// HRESULT __stdcall CompositionDynamicAutomationProvider::GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) {
+//   // no-op
+//   *pRetVal = nullptr;
+//   return S_OK;
+// }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromAnnotation(
-    IRawElementProviderSimple *annotationElement,
-    ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
-  return S_OK;
-}*/
+// HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromAnnotation(
+//     IRawElementProviderSimple *annotationElement,
+//     ITextRangeProvider **pRetVal) {
+//   // no-op
+//   *pRetVal = nullptr;
+//   return S_OK;
+// }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

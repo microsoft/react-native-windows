@@ -2,7 +2,6 @@
 #include "CompositionTextRangeProvider.h"
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
-#include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Fabric/platform/react/renderer/graphics/HostPlatformColor.h>
 #include <Unicode.h>
@@ -13,9 +12,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionTextRangeProvider::CompositionTextRangeProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
-    : m_view{componentView} {
-  auto strongView = m_view.view();
-}
+    : m_view{componentView} {}
 
 HRESULT __stdcall CompositionTextRangeProvider::Clone(ITextRangeProvider **pRetVal) {
   // no-op
@@ -74,12 +71,18 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
   auto props = std::static_pointer_cast<const facebook::react::ParagraphProps>(
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
 
+  auto textinputProps = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  auto isTextInput =
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>();
+
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   if (attributeId == UIA_BackgroundColorAttributeId) {
     pRetVal->vt = VT_I4;
-    pRetVal->lVal = (*props->textAttributes.backgroundColor).AsColorRefWithAlpha();
+    pRetVal->lVal = (*props->backgroundColor).AsColorRefWithAlpha();
   } else if (attributeId == UIA_CapStyleAttributeId) {
     pRetVal->vt = VT_I4;
     auto fontVariant = facebook::react::FontVariant::Default;
@@ -126,7 +129,7 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
         : VARIANT_FALSE;
   } else if (attributeId == UIA_IsReadOnlyAttributeId) {
     pRetVal->vt = VT_BOOL;
-    pRetVal->boolVal = VARIANT_TRUE;
+    pRetVal->boolVal = isTextInput ? textinputProps->editable ? VARIANT_FALSE : VARIANT_TRUE : VARIANT_TRUE;
   } else if (attributeId == UIA_HorizontalTextAlignmentAttributeId) {
     pRetVal->vt = VT_I4;
     auto textAlign = facebook::react::TextAlignment::Center;
@@ -144,18 +147,6 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
     } else if (textAlign == facebook::react::TextAlignment::Natural) {
       pRetVal->lVal = HorizontalTextAlignment_Left;
     }
-  } else if (attributeId == UIA_MarginBottomAttributeId) {
-    pRetVal->vt = VT_R8;
-    // TODO
-  } else if (attributeId == UIA_MarginLeadingAttributeId) {
-    pRetVal->vt = VT_R8;
-    // TODO
-  } else if (attributeId == UIA_MarginTopAttributeId) {
-    pRetVal->vt = VT_R8;
-    // TODO
-  } else if (attributeId == UIA_MarginTrailingAttributeId) {
-    pRetVal->vt = VT_R8;
-    // TODO
   } else if (attributeId == UIA_StrikethroughColorAttributeId) {
     if (props->textAttributes.textDecorationLineType.has_value() &&
         (props->textAttributes.textDecorationLineType.value() ==
@@ -186,7 +177,7 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
   } else if (attributeId == UIA_UnderlineStyleAttributeId) {
     if (props->textAttributes.textDecorationLineType.has_value() &&
         (props->textAttributes.textDecorationLineType.value() ==
-             facebook::react::TextDecorationLineType::Strikethrough ||
+             facebook::react::TextDecorationLineType::Underline ||
          props->textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
       pRetVal->vt = VT_I4;
@@ -223,12 +214,11 @@ HRESULT __stdcall CompositionTextRangeProvider::GetChildren(SAFEARRAY **pRetVal)
 
 HRESULT __stdcall CompositionTextRangeProvider::GetEnclosingElement(IRawElementProviderSimple **pRetVal) {
   // no-op
-  *pRetVal = nullptr; // HERE?
+  *pRetVal = nullptr;
   return S_OK;
 }
 
 HRESULT __stdcall CompositionTextRangeProvider::GetText(int maxLength, BSTR *pRetVal) {
-  // returns text or truncates if too long
   if (pRetVal == nullptr)
     return E_POINTER;
   auto strongView = m_view.view();
@@ -237,11 +227,20 @@ HRESULT __stdcall CompositionTextRangeProvider::GetText(int maxLength, BSTR *pRe
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto paragraphView =
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>();
+  std::string text = "";
+  if (paragraphView) {
+    text = paragraphView->DefaultAccessibleName();
+  } else {
+    auto textInputView =
+        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>();
+    if (textInputView) {
+      text = textInputView->getAccessiblityValue().value().empty() ? textInputView->DefaultAccessibleName()
+                                                                   : textInputView->getAccessiblityValue().value();
+    } else {
+      return UIA_E_ELEMENTNOTAVAILABLE;
+    }
+  }
 
-  if (!paragraphView)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-
-  auto text = paragraphView->DefaultAccessibleName();
   std::wstring wtext(text.begin(), text.end());
   *pRetVal = SysAllocString(wtext.c_str());
   return S_OK;

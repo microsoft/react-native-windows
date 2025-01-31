@@ -91,10 +91,10 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall RangeFromPoint(UiaPoint point, ITextRangeProvider **pRetVal) override;
 
   // inherited via ITextProvider2
-  /* virtual HRESULT __stdcall GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) override;
-  virtual HRESULT __stdcall RangeFromAnnotation(
-      IRawElementProviderSimple *annotationElement,
-      ITextRangeProvider **pRetVal) override;*/
+  //   virtual HRESULT __stdcall GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) override;
+  //   virtual HRESULT __stdcall RangeFromAnnotation(
+  //       IRawElementProviderSimple *annotationElement,
+  //       ITextRangeProvider **pRetVal) override;
 
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);

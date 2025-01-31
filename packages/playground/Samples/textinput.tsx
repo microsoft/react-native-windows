@@ -140,7 +140,14 @@ export default class Bootstrap extends React.Component<{}, any> {
             placeholderTextColor="grey"
             style={[
               styles.input,
-              {backgroundColor: 'black', color: 'white', marginBottom: 4},
+              {
+                backgroundColor: 'black',
+                color: 'white',
+                marginBottom: 4,
+                fontFamily: 'Comic Sans',
+                fontStyle: 'italic',
+                fontWeight: '900',
+              },
             ]}
           />
           <TextInput
