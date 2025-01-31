@@ -48,6 +48,10 @@ exports[`Button Tests Buttons can be disabled 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(249, 249, 249, 77)",
+            },
             "Offset": "0, 0, 0",
             "Size": "916, 37",
             "Visual Type": "SpriteVisual",
@@ -55,7 +59,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "0, 0, 0",
                 "Size": "4, 4",
@@ -64,7 +68,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, 0, 0",
                 "Size": "908, 1",
@@ -73,7 +77,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "-4, 0, 0",
                 "Size": "4, 4",
@@ -82,7 +86,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "-1, 4, 0",
                 "Size": "1, 28",
@@ -91,7 +95,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "-4, -5, 0",
                 "Size": "4, 5",
@@ -100,7 +104,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, -2, 0",
                 "Size": "908, 2",
@@ -109,7 +113,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "0, -5, 0",
                 "Size": "4, 5",
@@ -118,7 +122,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "0, 4, 0",
                 "Size": "1, 28",
@@ -202,7 +206,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "0, 0, 0",
                 "Size": "4, 4",
@@ -211,7 +215,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, 0, 0",
                 "Size": "908, 1",
@@ -220,7 +224,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "-4, 0, 0",
                 "Size": "4, 4",
@@ -229,7 +233,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "-1, 4, 0",
                 "Size": "1, 28",
@@ -238,7 +242,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "-4, -5, 0",
                 "Size": "4, 5",
@@ -247,7 +251,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, -2, 0",
                 "Size": "908, 2",
@@ -256,7 +260,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "0, -5, 0",
                 "Size": "4, 5",
@@ -265,7 +269,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "0, 4, 0",
                 "Size": "1, 28",
@@ -324,6 +328,10 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
     ],
   },
   "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
     "Comment": "accessibility_props",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
@@ -332,7 +340,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 0, 0",
         "Size": "4, 4",
@@ -341,7 +349,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
         "Size": "908, 1",
@@ -350,7 +358,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, 0, 0",
         "Size": "4, 4",
@@ -359,7 +367,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-1, 4, 0",
         "Size": "1, 28",
@@ -368,7 +376,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, -5, 0",
         "Size": "4, 5",
@@ -377,7 +385,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
         "Size": "908, 2",
@@ -386,7 +394,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, -5, 0",
         "Size": "4, 5",
@@ -395,7 +403,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 4, 0",
         "Size": "1, 28",
@@ -466,6 +474,10 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(249, 249, 249, 77)",
+            },
             "Offset": "0, 0, 0",
             "Size": "916, 37",
             "Visual Type": "SpriteVisual",
@@ -473,7 +485,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "0, 0, 0",
                 "Size": "4, 4",
@@ -482,7 +494,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, 0, 0",
                 "Size": "908, 1",
@@ -491,7 +503,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "-4, 0, 0",
                 "Size": "4, 4",
@@ -500,7 +512,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "-1, 4, 0",
                 "Size": "1, 28",
@@ -509,7 +521,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "-4, -5, 0",
                 "Size": "4, 5",
@@ -518,7 +530,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, -2, 0",
                 "Size": "908, 2",
@@ -527,7 +539,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "0, -5, 0",
                 "Size": "4, 5",
@@ -536,7 +548,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "0, 4, 0",
                 "Size": "1, 28",
@@ -620,7 +632,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "0, 0, 0",
                 "Size": "4, 4",
@@ -629,7 +641,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, 0, 0",
                 "Size": "908, 1",
@@ -638,7 +650,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "-4, 0, 0",
                 "Size": "4, 4",
@@ -647,7 +659,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "-1, 4, 0",
                 "Size": "1, 28",
@@ -656,7 +668,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "-4, -5, 0",
                 "Size": "4, 5",
@@ -665,7 +677,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, -2, 0",
                 "Size": "908, 2",
@@ -674,7 +686,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "0, -5, 0",
                 "Size": "4, 5",
@@ -683,7 +695,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 255)",
+                  "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "0, 4, 0",
                 "Size": "1, 28",
@@ -727,6 +739,10 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
     ],
   },
   "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
     "Comment": "accessible_false_button",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
@@ -735,7 +751,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 0, 0",
         "Size": "4, 4",
@@ -744,7 +760,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
         "Size": "908, 1",
@@ -753,7 +769,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, 0, 0",
         "Size": "4, 4",
@@ -762,7 +778,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-1, 4, 0",
         "Size": "1, 28",
@@ -771,7 +787,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, -5, 0",
         "Size": "4, 5",
@@ -780,7 +796,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
         "Size": "908, 2",
@@ -789,7 +805,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, -5, 0",
         "Size": "4, 5",
@@ -798,7 +814,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 4, 0",
         "Size": "1, 28",
@@ -852,6 +868,10 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
     ],
   },
   "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
     "Comment": "focusable_false_button",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
@@ -860,7 +880,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 0, 0",
         "Size": "4, 4",
@@ -869,7 +889,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
         "Size": "908, 1",
@@ -878,7 +898,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, 0, 0",
         "Size": "4, 4",
@@ -887,7 +907,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-1, 4, 0",
         "Size": "1, 28",
@@ -896,7 +916,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, -5, 0",
         "Size": "4, 5",
@@ -905,7 +925,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
         "Size": "908, 2",
@@ -914,7 +934,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, -5, 0",
         "Size": "4, 5",
@@ -923,7 +943,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 4, 0",
         "Size": "1, 28",
@@ -963,6 +983,10 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
     ],
   },
   "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
     "Comment": "accessible_focusable_false_button",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
@@ -971,7 +995,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 0, 0",
         "Size": "4, 4",
@@ -980,7 +1004,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
         "Size": "908, 1",
@@ -989,7 +1013,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, 0, 0",
         "Size": "4, 4",
@@ -998,7 +1022,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-1, 4, 0",
         "Size": "1, 28",
@@ -1007,7 +1031,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, -5, 0",
         "Size": "4, 5",
@@ -1016,7 +1040,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
         "Size": "908, 2",
@@ -1025,7 +1049,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, -5, 0",
         "Size": "4, 5",
@@ -1034,7 +1058,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 4, 0",
         "Size": "1, 28",
@@ -1172,7 +1196,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 0, 0",
                         "Size": "4, 4",
@@ -1181,7 +1205,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, 0, 0",
                         "Size": "51, 1",
@@ -1190,7 +1214,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, 0, 0",
                         "Size": "4, 4",
@@ -1199,7 +1223,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-1, 4, 0",
                         "Size": "1, 28",
@@ -1208,7 +1232,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, -5, 0",
                         "Size": "4, 5",
@@ -1217,7 +1241,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, -2, 0",
                         "Size": "51, 2",
@@ -1226,7 +1250,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, -5, 0",
                         "Size": "4, 5",
@@ -1235,7 +1259,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 4, 0",
                         "Size": "1, 28",
@@ -1289,7 +1313,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 0, 0",
                         "Size": "4, 4",
@@ -1298,7 +1322,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, 0, 0",
                         "Size": "54, 1",
@@ -1307,7 +1331,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, 0, 0",
                         "Size": "4, 4",
@@ -1316,7 +1340,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-1, 4, 0",
                         "Size": "1, 28",
@@ -1325,7 +1349,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, -5, 0",
                         "Size": "4, 5",
@@ -1334,7 +1358,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, -2, 0",
                         "Size": "54, 2",
@@ -1343,7 +1367,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, -5, 0",
                         "Size": "4, 5",
@@ -1352,7 +1376,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 4, 0",
                         "Size": "1, 28",
@@ -1530,7 +1554,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 0, 0",
                         "Size": "4, 4",
@@ -1539,7 +1563,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, 0, 0",
                         "Size": "51, 1",
@@ -1548,7 +1572,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, 0, 0",
                         "Size": "4, 4",
@@ -1557,7 +1581,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-1, 4, 0",
                         "Size": "1, 28",
@@ -1566,7 +1590,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, -5, 0",
                         "Size": "4, 5",
@@ -1575,7 +1599,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, -2, 0",
                         "Size": "51, 2",
@@ -1584,7 +1608,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, -5, 0",
                         "Size": "4, 5",
@@ -1593,7 +1617,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 4, 0",
                         "Size": "1, 28",
@@ -1647,7 +1671,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 0, 0",
                         "Size": "4, 4",
@@ -1656,7 +1680,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, 0, 0",
                         "Size": "97, 1",
@@ -1665,7 +1689,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, 0, 0",
                         "Size": "4, 4",
@@ -1674,7 +1698,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-1, 4, 0",
                         "Size": "1, 28",
@@ -1683,7 +1707,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, -5, 0",
                         "Size": "4, 5",
@@ -1692,7 +1716,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, -2, 0",
                         "Size": "97, 2",
@@ -1701,7 +1725,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, -5, 0",
                         "Size": "4, 5",
@@ -1710,7 +1734,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 4, 0",
                         "Size": "1, 28",
@@ -1764,7 +1788,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 0, 0",
                         "Size": "4, 4",
@@ -1773,7 +1797,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, 0, 0",
                         "Size": "54, 1",
@@ -1782,7 +1806,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, 0, 0",
                         "Size": "4, 4",
@@ -1791,7 +1815,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-1, 4, 0",
                         "Size": "1, 28",
@@ -1800,7 +1824,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "-4, -5, 0",
                         "Size": "4, 5",
@@ -1809,7 +1833,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "4, -2, 0",
                         "Size": "54, 2",
@@ -1818,7 +1842,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, -5, 0",
                         "Size": "4, 5",
@@ -1827,7 +1851,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
-                          "Color": "rgba(0, 0, 0, 255)",
+                          "Color": "rgba(0, 0, 0, 41)",
                         },
                         "Offset": "0, 4, 0",
                         "Size": "1, 28",
@@ -1889,6 +1913,10 @@ exports[`Button Tests Buttons have default styling 1`] = `
     ],
   },
   "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
     "Comment": "button_default_styling",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
@@ -1897,7 +1925,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 0, 0",
         "Size": "4, 4",
@@ -1906,7 +1934,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
         "Size": "908, 1",
@@ -1915,7 +1943,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, 0, 0",
         "Size": "4, 4",
@@ -1924,7 +1952,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-1, 4, 0",
         "Size": "1, 28",
@@ -1933,7 +1961,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "-4, -5, 0",
         "Size": "4, 5",
@@ -1942,7 +1970,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
         "Size": "908, 2",
@@ -1951,7 +1979,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, -5, 0",
         "Size": "4, 5",
@@ -1960,7 +1988,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "0, 4, 0",
         "Size": "1, 28",
