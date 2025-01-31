@@ -11,8 +11,11 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionTextRangeProvider::CompositionTextRangeProvider(
-    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
-    : m_view{componentView} {}
+    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
+    CompositionDynamicAutomationProvider *parentProvider) noexcept
+    : m_view{componentView} {
+  m_parentProvider.copy_from(parentProvider);
+}
 
 HRESULT __stdcall CompositionTextRangeProvider::Clone(ITextRangeProvider **pRetVal) {
   // no-op
@@ -176,8 +179,7 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
     }
   } else if (attributeId == UIA_UnderlineStyleAttributeId) {
     if (props->textAttributes.textDecorationLineType.has_value() &&
-        (props->textAttributes.textDecorationLineType.value() ==
-             facebook::react::TextDecorationLineType::Underline ||
+        (props->textAttributes.textDecorationLineType.value() == facebook::react::TextDecorationLineType::Underline ||
          props->textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
       pRetVal->vt = VT_I4;
@@ -189,20 +191,24 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
 }
 
 HRESULT __stdcall CompositionTextRangeProvider::GetBoundingRectangles(SAFEARRAY **pRetVal) {
-  // temporary data
+  if (pRetVal == nullptr)
+    return E_POINTER;
   UiaRect rect;
-  rect.left = 10.0;
-  rect.top = 10.0;
-  rect.width = 10.0;
-  rect.height = 10.0;
+  auto hr = m_parentProvider->get_BoundingRectangle(&rect);
+  if (FAILED(hr))
+    return hr;
   *pRetVal = SafeArrayCreateVector(VT_R8, 0, 4);
   double *pData = nullptr;
-  HRESULT hr = SafeArrayAccessData(*pRetVal, reinterpret_cast<void **>(&pData));
+  hr = SafeArrayAccessData(*pRetVal, reinterpret_cast<void **>(&pData));
+  if (FAILED(hr))
+    return hr;
   pData[0] = rect.left;
   pData[1] = rect.top;
   pData[2] = rect.width;
   pData[3] = rect.height;
-  SafeArrayUnaccessData(*pRetVal);
+  hr = SafeArrayUnaccessData(*pRetVal);
+  if (FAILED(hr))
+    return hr;
   return S_OK;
 }
 

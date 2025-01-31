@@ -253,8 +253,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_TextPattern2Id &&
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>())
-      {
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
     *pRetVal = static_cast<ITextProvider2 *>(this);
     AddRef();
   }
@@ -734,7 +733,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelectionRequired(
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
-
   auto strongView = m_view.view();
 
   if (!strongView)
@@ -866,8 +864,9 @@ void CompositionDynamicAutomationProvider::EnsureTextRangeProvider() {
 
   if (!m_textRangeProvider) {
     m_textRangeProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(
-                              strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>())
+                              strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
                               .try_as<ITextRangeProvider>();
+    AddRef();
   }
 }
 
@@ -934,18 +933,18 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromPoint(UiaPoint 
   m_textRangeProvider.copy_to(pRetVal);
   return S_OK;
 }
- HRESULT __stdcall CompositionDynamicAutomationProvider::GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) {
-   // no-op
-   *pRetVal = nullptr;
-   return S_OK;
- }
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) {
+  // no-op
+  *pRetVal = nullptr;
+  return S_OK;
+}
 
- HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromAnnotation(
-     IRawElementProviderSimple *annotationElement,
-     ITextRangeProvider **pRetVal) {
-   // no-op
-   *pRetVal = nullptr;
-   return S_OK;
- }
+HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromAnnotation(
+    IRawElementProviderSimple *annotationElement,
+    ITextRangeProvider **pRetVal) {
+  // no-op
+  *pRetVal = nullptr;
+  return S_OK;
+}
 
 } // namespace winrt::Microsoft::ReactNative::implementation

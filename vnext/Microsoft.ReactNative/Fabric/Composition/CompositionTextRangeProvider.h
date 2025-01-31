@@ -9,10 +9,11 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-class CompositionTextRangeProvider
-    : public winrt::implements<CompositionTextRangeProvider, ITextRangeProvider> {
+class CompositionTextRangeProvider : public winrt::implements<CompositionTextRangeProvider, ITextRangeProvider> {
  public:
-  CompositionTextRangeProvider(const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
+  CompositionTextRangeProvider(
+      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
+      CompositionDynamicAutomationProvider *parentProvider) noexcept;
 
   // inherited via ITextRangeProvider
   virtual HRESULT __stdcall Clone(ITextRangeProvider **pRetVal) override;
@@ -51,6 +52,7 @@ class CompositionTextRangeProvider
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
+  winrt::com_ptr<CompositionDynamicAutomationProvider> m_parentProvider;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
