@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix react devtools hitting an assert on launch",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
