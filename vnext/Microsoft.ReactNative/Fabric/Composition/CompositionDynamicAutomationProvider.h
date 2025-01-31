@@ -21,7 +21,8 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IExpandCollapseProvider,
                                                  ISelectionProvider,
                                                  ISelectionItemProvider,
-                                                 ITextProvider> {
+                                                 ITextProvider,
+                                                 ITextProvider2> {
  public:
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
@@ -73,7 +74,6 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall get_CanSelectMultiple(BOOL *pRetVal) override;
   virtual HRESULT __stdcall get_IsSelectionRequired(BOOL *pRetVal) override;
   virtual HRESULT __stdcall GetSelection(SAFEARRAY **pRetVal) override;
-
   // inherited via ISelectionItemProvider
   virtual HRESULT __stdcall AddToSelection() override;
   virtual HRESULT __stdcall get_IsSelected(BOOL *pRetVal) override;
@@ -84,17 +84,16 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   // inherited via ITextProvider
   virtual HRESULT __stdcall get_DocumentRange(ITextRangeProvider **pRetVal) override;
   virtual HRESULT __stdcall get_SupportedTextSelection(SupportedTextSelection *pRetVal) override;
-  // virtual HRESULT __stdcall GetSelection(SAFEARRAY **pRetVal) override;
   virtual HRESULT __stdcall GetVisibleRanges(SAFEARRAY **pRetVal) override;
   virtual HRESULT __stdcall RangeFromChild(IRawElementProviderSimple *childElement, ITextRangeProvider **pRetVal)
       override;
   virtual HRESULT __stdcall RangeFromPoint(UiaPoint point, ITextRangeProvider **pRetVal) override;
 
   // inherited via ITextProvider2
-  //   virtual HRESULT __stdcall GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) override;
-  //   virtual HRESULT __stdcall RangeFromAnnotation(
-  //       IRawElementProviderSimple *annotationElement,
-  //       ITextRangeProvider **pRetVal) override;
+  virtual HRESULT __stdcall GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) override;
+  virtual HRESULT __stdcall RangeFromAnnotation(
+         IRawElementProviderSimple *annotationElement,
+         ITextRangeProvider **pRetVal) override;
 
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
