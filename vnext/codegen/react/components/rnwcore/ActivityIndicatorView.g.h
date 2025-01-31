@@ -159,7 +159,7 @@ void RegisterActivityIndicatorViewNativeComponent(
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->member(view, newState);
+            userData->UpdateState(view, newState);
           });
         }
 
