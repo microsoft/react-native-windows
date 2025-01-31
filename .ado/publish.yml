@@ -456,7 +456,7 @@ extends:
           templateContext:
             sdl:
               binskim:
-                analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\ReactWindows\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\Desktop\**\React.Windows.Desktop.DLL\react-native-win32.dll'
+                analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'
             outputs:
             - output: pipelineArtifact
               displayName: 'Publish final nuget artifacts'
