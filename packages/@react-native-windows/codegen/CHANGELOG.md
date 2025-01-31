@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 31 Jan 2025 06:25:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.118
+
+Fri, 31 Jan 2025 06:25:14 GMT
+
+### Changes
+
+- Fix UpdateState on generated base class (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.117
 

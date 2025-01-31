@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 31 Jan 2025 06:25:14 GMT",
+      "version": "0.0.0-canary.118",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.118",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "ad17235cc0c2fbab2c1f889fe2641793ea3d2fc6",
+            "comment": "Fix UpdateState on generated base class"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2025 06:24:57 GMT",
       "version": "0.0.0-canary.117",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.117",

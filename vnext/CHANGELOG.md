@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 28 Jan 2025 20:34:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 31 Jan 2025 06:25:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.915
+
+Fri, 31 Jan 2025 06:25:14 GMT
+
+### Changes
+
+- Allow portals to have independent layout constraints and scale factor (30809111+acoates-ms@users.noreply.github.com)
+- add modal implementation with PopupWindowSiteBridge (tatianakapos@microsoft.com)
+- Basic support for stitching the UIA tree for a ContentIslandComponentView's child (email not defined)
+- Round Focus visuals by default, fix nudge rendering (30809111+acoates-ms@users.noreply.github.com)
+- Only build OfficeReact.Win32 with UseFabric enabled (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.257
+- Bump @react-native-windows/codegen to v0.0.0-canary.118
 
 ## 0.0.0-canary.914
 
