@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 31 Jan 2025 18:29:43 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 01 Feb 2025 06:24:33 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.916
+
+Sat, 01 Feb 2025 06:24:33 GMT
+
+### Changes
+
+- TurboModule spec checking should accept hstring for string arguments (30809111+acoates-ms@users.noreply.github.com)
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
+- Fix react devtools hitting an assert on launch (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.915
 
