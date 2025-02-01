@@ -16,11 +16,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonT
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->allowRecursiveCommitsWithSynchronousMountOnAndroid(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_batchRenderingUpdatesInEventLoop(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->batchRenderingUpdatesInEventLoop(
     rt
@@ -255,7 +250,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useTurb
 NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativeReactNativeFeatureFlagsCxx", jsInvoker) {
   methodMap_["commonTestFlag"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlag};
-  methodMap_["allowRecursiveCommitsWithSynchronousMountOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_allowRecursiveCommitsWithSynchronousMountOnAndroid};
   methodMap_["batchRenderingUpdatesInEventLoop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_batchRenderingUpdatesInEventLoop};
   methodMap_["completeReactInstanceCreationOnBgThreadOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_completeReactInstanceCreationOnBgThreadOnAndroid};
   methodMap_["destroyFabricSurfacesInReactInstanceManager"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_destroyFabricSurfacesInReactInstanceManager};

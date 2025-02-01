@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "integrate RN 76.6",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
