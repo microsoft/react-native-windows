@@ -363,6 +363,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL isSelected;
   BOOL multipleSelection;
   BOOL selectionRequired;
+  BSTR text = nullptr;
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;
@@ -451,6 +452,21 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     selectionPattern->Release();
   }
 
+  // Dump ITextRangeProvider Information
+  ITextProvider *textPattern;
+  hr = pTarget->GetCurrentPattern(UIA_TextPatternId, reinterpret_cast<IUnknown **>(&textPattern));
+  if (SUCCEEDED(hr) && textPattern) {
+    ITextRangeProvider *textRangePattern;
+    hr = textPattern->get_DocumentRange(&textRangePattern);
+    if (SUCCEEDED(hr) && textRangePattern) {
+      textRangePattern->GetText(20, &text);
+      if (SUCCEEDED(hr)) {
+        InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
+      }
+    }
+  }
+
+  ::SysFreeString(text);
   ::SysFreeString(value);
 }
 

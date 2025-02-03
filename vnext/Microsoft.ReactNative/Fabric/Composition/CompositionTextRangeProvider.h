@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
+#include <Fabric/Composition/CompositionTextProvider.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>

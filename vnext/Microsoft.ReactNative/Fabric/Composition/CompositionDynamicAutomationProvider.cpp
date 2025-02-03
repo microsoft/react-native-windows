@@ -28,6 +28,13 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
   }
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
+    m_textProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextProvider>(
+                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                         .try_as<ITextProvider2>();
+  }
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
@@ -248,14 +255,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_TextPatternId &&
       (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
-    *pRetVal = static_cast<ITextProvider *>(static_cast<ITextProvider2 *>(this));
-    AddRef();
+    auto textProvider = m_textProvider.as<ITextProvider>().get();
+    *pRetVal = textProvider;
+    textProvider->AddRef();
   }
 
   if (patternId == UIA_TextPattern2Id &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
-    *pRetVal = static_cast<ITextProvider2 *>(this);
-    AddRef();
+    auto textProvider = m_textProvider.get();
+    *pRetVal = textProvider;
+    textProvider->AddRef();
   }
 
   return S_OK;
@@ -853,97 +862,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Select() {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
   DispatchAccessibilityAction(m_view, "select");
-  return S_OK;
-}
-
-void CompositionDynamicAutomationProvider::EnsureTextRangeProvider() {
-  auto strongView = m_view.view();
-
-  if (!strongView)
-    return;
-
-  if (!m_textRangeProvider) {
-    m_textRangeProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(
-                              strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                              .try_as<ITextRangeProvider>();
-    AddRef();
-  }
-}
-
-HRESULT __stdcall CompositionDynamicAutomationProvider::get_DocumentRange(ITextRangeProvider **pRetVal) {
-  if (pRetVal == nullptr)
-    return E_POINTER;
-  auto strongView = m_view.view();
-
-  if (!strongView)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-  EnsureTextRangeProvider();
-
-  if (m_textRangeProvider == nullptr)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-  m_textRangeProvider.copy_to(pRetVal);
-  return S_OK;
-}
-
-HRESULT __stdcall CompositionDynamicAutomationProvider::get_SupportedTextSelection(SupportedTextSelection *pRetVal) {
-  if (pRetVal == nullptr)
-    return E_POINTER;
-  auto strongView = m_view.view();
-
-  if (!strongView)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-
-  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
-    *pRetVal = SupportedTextSelection_Single;
-  } else if (
-      auto textView =
-          strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
-    auto props = std::static_pointer_cast<const facebook::react::ParagraphProps>(textView->props());
-    if (props == nullptr)
-      return UIA_E_ELEMENTNOTAVAILABLE;
-    *pRetVal = props->isSelectable ? SupportedTextSelection_Single : SupportedTextSelection_None;
-  } else {
-    *pRetVal = SupportedTextSelection_None;
-  }
-
-  return S_OK;
-}
-
-HRESULT __stdcall CompositionDynamicAutomationProvider::GetVisibleRanges(SAFEARRAY **pRetVal) {
-  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 1);
-  if (m_textRangeProvider == nullptr)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-  LONG pos = 0;
-  SafeArrayPutElement(*pRetVal, &pos, m_textRangeProvider.get());
-  return S_OK;
-}
-
-HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromChild(
-    IRawElementProviderSimple *childElement,
-    ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
-  return S_OK;
-}
-
-HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromPoint(UiaPoint point, ITextRangeProvider **pRetVal) {
-  // no-op
-  if (m_textRangeProvider == nullptr)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-  m_textRangeProvider.copy_to(pRetVal);
-  return S_OK;
-}
-HRESULT __stdcall CompositionDynamicAutomationProvider::GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
-  return S_OK;
-}
-
-HRESULT __stdcall CompositionDynamicAutomationProvider::RangeFromAnnotation(
-    IRawElementProviderSimple *annotationElement,
-    ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
   return S_OK;
 }
 

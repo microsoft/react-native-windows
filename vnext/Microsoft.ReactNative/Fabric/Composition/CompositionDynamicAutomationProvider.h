@@ -20,9 +20,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IToggleProvider,
                                                  IExpandCollapseProvider,
                                                  ISelectionProvider,
-                                                 ISelectionItemProvider,
-                                                 ITextProvider,
-                                                 ITextProvider2> {
+                                                 ISelectionItemProvider> {
  public:
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
@@ -81,27 +79,12 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall RemoveFromSelection() override;
   virtual HRESULT __stdcall Select() override;
 
-  // inherited via ITextProvider
-  virtual HRESULT __stdcall get_DocumentRange(ITextRangeProvider **pRetVal) override;
-  virtual HRESULT __stdcall get_SupportedTextSelection(SupportedTextSelection *pRetVal) override;
-  virtual HRESULT __stdcall GetVisibleRanges(SAFEARRAY **pRetVal) override;
-  virtual HRESULT __stdcall RangeFromChild(IRawElementProviderSimple *childElement, ITextRangeProvider **pRetVal)
-      override;
-  virtual HRESULT __stdcall RangeFromPoint(UiaPoint point, ITextRangeProvider **pRetVal) override;
-
-  // inherited via ITextProvider2
-  virtual HRESULT __stdcall GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) override;
-  virtual HRESULT __stdcall RangeFromAnnotation(
-         IRawElementProviderSimple *annotationElement,
-         ITextRangeProvider **pRetVal) override;
-
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
-  void EnsureTextRangeProvider();
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
-  winrt::com_ptr<ITextRangeProvider> m_textRangeProvider;
+  winrt::com_ptr<ITextProvider2> m_textProvider;
   std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
 };
 
