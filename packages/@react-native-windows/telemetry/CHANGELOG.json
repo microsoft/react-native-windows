@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 03 Feb 2025 16:31:08 GMT",
+      "version": "0.75.3",
+      "tag": "@react-native-windows/telemetry_v0.75.3",
+      "comments": {
+        "none": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "747877582225f25a9d1ddcfdd8c41e97ad0bda61",
+            "comment": "Enables telemetry by migrating from AppInsights to 1DS"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Nov 2024 22:53:44 GMT",
       "version": "0.75.3",
       "tag": "@react-native-windows/telemetry_v0.75.3",

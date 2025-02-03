@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Introducing telemetry collection for 0.75",
-  "packageName": "react-native-windows",
-  "email": "14967941+danielayala94@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

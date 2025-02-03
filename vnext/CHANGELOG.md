@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Jan 2025 16:29:07 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Feb 2025 16:31:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.13
+
+Mon, 03 Feb 2025 16:31:08 GMT
+
+### Patches
+
+- Introducing telemetry collection for 0.75 (14967941+danielayala94@users.noreply.github.com)
 
 ## 0.75.12
 
