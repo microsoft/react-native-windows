@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Feb 2025 22:47:30 GMT",
+      "version": "0.0.0-canary.916",
+      "tag": "react-native-windows_v0.0.0-canary.916",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f24c9bc88da5872b45127b69d18737be7e4ca2a5",
+            "comment": "Fix react devtools hitting an assert on launch"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4315cad9814f0bf54ab925a317cadb0703c69977",
+            "comment": "TurboModule spec checking should accept hstring for string arguments"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9ccccd62425404d4622d809da6c207a65f6e9aad",
+            "comment": "Fix platform color"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 31 Jan 2025 18:29:43 GMT",
       "version": "0.0.0-canary.915",
       "tag": "react-native-windows_v0.0.0-canary.915",
