@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix crash when currently focused element gets marked as enableFocusRing=false",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
