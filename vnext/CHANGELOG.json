@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Feb 2025 18:36:42 GMT",
+      "version": "0.77.1",
+      "tag": "react-native-windows_v0.77.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "111b5fc9a6cae835df418511a44d14af596dea17",
+            "comment": "backport Fix react devtools hitting an assert on launch (#14320)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jan 2025 21:11:35 GMT",
       "version": "0.77.0",
       "tag": "react-native-windows_v0.77.0",
