@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Feb 2025 19:26:15 GMT",
+      "version": "0.75.13",
+      "tag": "react-native-windows_v0.75.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "747877582225f25a9d1ddcfdd8c41e97ad0bda61",
+            "comment": "Introducing telemetry collection for 0.75"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jan 2025 16:29:07 GMT",
       "version": "0.75.12",
       "tag": "react-native-windows_v0.75.12",
