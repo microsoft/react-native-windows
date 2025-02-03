@@ -144,9 +144,6 @@ export default class Bootstrap extends React.Component<{}, any> {
                 backgroundColor: 'black',
                 color: 'white',
                 marginBottom: 4,
-                fontFamily: 'Comic Sans',
-                fontStyle: 'italic',
-                fontWeight: '900',
               },
             ]}
           />

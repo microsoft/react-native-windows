@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    textDecorationLine: 'underline',
-    textDecorationColor: 'red',
-    textDecorationStyle: 'dotted',
   },
 });
 
