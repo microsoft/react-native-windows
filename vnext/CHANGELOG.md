@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 24 Jan 2025 19:55:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Feb 2025 19:11:10 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.7
+
+Mon, 03 Feb 2025 19:11:10 GMT
+
+### Patches
+
+- backport Fix react devtools hitting an assert on launch (#14320) (email not defined)
 
 ## 0.76.6
 
