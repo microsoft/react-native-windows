@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Jan 2025 17:39:49 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Feb 2025 19:38:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.34
+
+Mon, 03 Feb 2025 19:38:48 GMT
+
+### Patches
+
+- Round Focus visuals by default, fix nudge rendering (30809111+acoates-ms@users.noreply.github.com)
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when currently focused element gets marked as enableFocusRing=false (30809111+acoates-ms@users.noreply.github.com)
+- Basic support for stitching the UIA tree for a ContentIslandComponentView's child (email not defined)
+- TurboModule spec checking should accept hstring for string arguments (30809111+acoates-ms@users.noreply.github.com)
+- Allow portals to have independent layout constraints and scale factor (30809111+acoates-ms@users.noreply.github.com)
+- add modal implementation with PopupWindowSiteBridge (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.10
+- Bump @react-native-windows/codegen to v0.74.7
 
 ## 0.74.33
 

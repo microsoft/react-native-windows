@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Feb 2025 19:38:48 GMT",
+      "version": "0.74.34",
+      "tag": "react-native-windows_v0.74.34",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1b4cbdc935779695138ea5dad63d902c8f12e8f5",
+            "comment": "Round Focus visuals by default, fix nudge rendering"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bf15804e00e3369083e8213a331753952b706204",
+            "comment": "Fix platform color"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1b4cbdc935779695138ea5dad63d902c8f12e8f5",
+            "comment": "Fix crash when currently focused element gets marked as enableFocusRing=false"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "1b4cbdc935779695138ea5dad63d902c8f12e8f5",
+            "comment": "Basic support for stitching the UIA tree for a ContentIslandComponentView's child"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bf15804e00e3369083e8213a331753952b706204",
+            "comment": "TurboModule spec checking should accept hstring for string arguments"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1b4cbdc935779695138ea5dad63d902c8f12e8f5",
+            "comment": "Allow portals to have independent layout constraints and scale factor"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b4cbdc935779695138ea5dad63d902c8f12e8f5",
+            "comment": "add modal implementation with PopupWindowSiteBridge"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.10",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.74.7",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2025 17:39:49 GMT",
       "version": "0.74.33",
       "tag": "react-native-windows_v0.74.33",

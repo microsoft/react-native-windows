@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix UpdateState on generated base class",
-  "packageName": "@react-native-windows/codegen",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
