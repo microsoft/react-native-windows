@@ -280,7 +280,7 @@ export function findAppProjectFiles(winFolder: string): string[] {
 
   // Try to find any project file that appears to be an app project
   for (const projectFile of allProjects) {
-    ifAppProject(path.join(winFolder, projectFile))) {
+    if (isRnwAppProject(path.join(winFolder, projectFile))) {
       appProjectFiles.push(path.normalize(projectFile));
     }
   }
