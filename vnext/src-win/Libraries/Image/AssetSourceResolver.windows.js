@@ -75,6 +75,24 @@ function getAssetPathInDrawableFolder(asset: PackagerAsset): string {
   return drawableFolder + '/' + fileName + '.' + asset.type;
 }
 
+/**
+ * Returns true if the asset can be loaded over the network.
+ *
+ * This prevents an issue loading XML assets on Android. XML asset types like
+ * vector drawables can only be loaded from precompiled source. Android does
+ * not support loading these over the network, and AAPT precompiles data by
+ * breaking path data and resource information apart into multiple files,
+ * stuffing it all into the resource table. As a result, we should only attempt
+ * to load resources as we would in release builds: by the resource name.
+ *
+ * For more information, see:
+ * https://issuetracker.google.com/issues/62435069
+ * https://issuetracker.google.com/issues/68293189
+ */
+function assetSupportsNetworkLoads(asset: PackagerAsset): boolean {
+  return !(asset.type === 'xml' && Platform.OS === 'android');
+}
+
 class AssetSourceResolver {
   serverUrl: ?string;
   // where the jsbundle is being run from
@@ -89,7 +107,11 @@ class AssetSourceResolver {
   }
 
   isLoadedFromServer(): boolean {
-    return !!this.serverUrl;
+    return (
+      this.serverUrl != null &&
+      this.serverUrl !== '' &&
+      assetSupportsNetworkLoads(this.asset)
+    );
   }
 
   isLoadedFromFileSystem(): boolean {

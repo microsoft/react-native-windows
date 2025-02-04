@@ -52,7 +52,7 @@ function ContentPress() {
             setTimesPressed(current => current + 1);
           }}>
           {({pressed}) => (
-            <Text testID="one_press_me_button" style={styles.text}>
+            <Text testID="one_press_me_button" style={styles.button}>
               {pressed ? 'Pressed!' : 'Press Me'}
             </Text>
           )}
@@ -124,7 +124,7 @@ function PressableFeedbackEvents() {
           testID="pressable_feedback_events_button"
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
-          accessibilityValue={{text: "Press Me"}}
+          accessibilityValue={{text: 'Press Me'}}
           // [Windows
           onFocus={() => appendEvent('focus')}
           onBlur={() => appendEvent('blur')}
@@ -255,12 +255,12 @@ function PressableNativeMethods() {
         <Pressable ref={ref}>
           <View />
         </Pressable>
-        <Text>
+        <Text style={styles.button}>
           {status == null
             ? 'Missing Ref!'
             : status === true
-            ? 'Native Methods Exist'
-            : 'Native Methods Missing!'}
+              ? 'Native Methods Exist'
+              : 'Native Methods Missing!'}
         </Text>
       </View>
     </>
@@ -986,7 +986,7 @@ const examples = [
             onPress={() => {}}
             importantForAccessibility="no-hide-descendants"
             accessibilityHint="Button"
-            accessibilityValue={{text: "Child Pressable"}}>
+            accessibilityValue={{text: 'Child Pressable'}}>
             <Text>Parent Pressable</Text>
             <Pressable onPress={() => {}}>
               <Text>Child Pressable</Text>
@@ -1068,20 +1068,30 @@ const examples = [
   // [Windows
   {
     title: 'Set of Pressables',
-    description: 'Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize',
+    description:
+      'Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize',
     render: function (): React.Node {
       return (
-        <View accessible testID='pressable_set'>
+        <View accessible testID="pressable_set">
           <Pressable
-            onPress={() => {}} accessibilityPosInSet={1} accessibilitySetSize={3} accessibilityLiveRegion='none'>
+            onPress={() => {}}
+            accessibilityPosInSet={1}
+            accessibilitySetSize={3}
+            accessibilityLiveRegion="none">
             <Text>Pressable 1 of 3</Text>
           </Pressable>
           <Pressable
-            onPress={() => {}} accessibilityPosInSet={2} accessibilitySetSize={3} accessibilityLiveRegion='polite'>
+            onPress={() => {}}
+            accessibilityPosInSet={2}
+            accessibilitySetSize={3}
+            accessibilityLiveRegion="polite">
             <Text>Pressable 2 of 3</Text>
           </Pressable>
           <Pressable
-            onPress={() => {}} accessibilityPosInSet={3} accessibilitySetSize={3} accessibilityLiveRegion='assertive'>
+            onPress={() => {}}
+            accessibilityPosInSet={3}
+            accessibilitySetSize={3}
+            accessibilityLiveRegion="assertive">
             <Text>Pressable 3 of 3</Text>
           </Pressable>
         </View>

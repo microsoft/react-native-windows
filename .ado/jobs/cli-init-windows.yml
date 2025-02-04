@@ -118,6 +118,11 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+          - Name: PaperX64ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            runWack: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
@@ -302,6 +307,7 @@ jobs:
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
+                - UniversalBuild${{ matrix.platform }}Release
                 - UniversalBuild${{ matrix.platform }}ReleaseFabric
 
             variables: [template: ../variables/windows.yml]
@@ -310,7 +316,7 @@ jobs:
               pool: ${{ parameters.AgentPool.Small }}
             ${{ else }}:
               pool: ${{ parameters.AgentPool.Medium }}
-            timeoutInMinutes: 60
+            timeoutInMinutes: 40
             cancelTimeoutInMinutes: 5
 
             steps:
@@ -325,12 +331,6 @@ jobs:
                   platform: ${{ parameters.platform }}
                   configuration: ${{ parameters.configuration }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
-
-              - task: CmdLine@2
-                displayName: Create npm directory
-                name: createNpmDirectory
-                inputs:
-                  script: mkdir %APPDATA%\npm
                   
               - template: ../templates/react-native-init-windows.yml
                 parameters:

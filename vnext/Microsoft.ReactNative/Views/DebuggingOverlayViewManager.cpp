@@ -48,7 +48,6 @@ void DebuggingOverlayViewManager::DispatchCommand(
     // There is little point in attempting to implement these commands until then.
     return;
   }
-  Super::DispatchCommand(viewToUpdate, commandId, std::move(commandArgs));
 }
 
 } // namespace Microsoft::ReactNative

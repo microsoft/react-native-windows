@@ -52,11 +52,13 @@ export interface InitWindowsTemplateConfig {
 
 export class InitWindows {
   protected readonly rnwPath: string;
+  protected readonly rnwConfig?: Record<string, any>;
   protected readonly templates: Map<string, InitWindowsTemplateConfig> =
     new Map();
 
   constructor(readonly config: Config, readonly options: InitOptions) {
     this.rnwPath = pathHelpers.resolveRnwRoot(this.config.root);
+    this.rnwConfig = this.config.project.windows?.rnwConfig;
   }
 
   protected verboseMessage(message: any) {
@@ -125,12 +127,35 @@ export class InitWindows {
     return name;
   }
 
+  protected printTemplateList() {
+    if (this.templates.size === 0) {
+      console.log('\nNo templates found.\n');
+      return;
+    }
+
+    for (const [key, value] of this.templates.entries()) {
+      const defaultLabel = value.isDefault ? chalk.yellow('[Default] ') : '';
+      console.log(
+        `\n${key} - ${value.name}\n    ${defaultLabel}${value.description}`,
+      );
+    }
+    console.log(`\n`);
+  }
+
+  // eslint-disable-next-line complexity
   public async run(spinner: Ora) {
     await this.loadTemplates();
 
     spinner.info();
 
-    this.options.template ??= this.getDefaultTemplateName();
+    if (this.options.list) {
+      this.printTemplateList();
+      return;
+    }
+
+    this.options.template ??=
+      (this.rnwConfig?.['init-windows']?.template as string | undefined) ??
+      this.getDefaultTemplateName();
 
     spinner.info(`Using template '${this.options.template}'...`);
     if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
@@ -142,16 +167,21 @@ export class InitWindows {
     const templateConfig = this.templates.get(this.options.template)!;
 
     // Check if there's a passed-in project name and if it's valid
-    if (this.options.name && !nameHelpers.isValidProjectName(this.options.name)) {
+    if (
+      this.options.name &&
+      !nameHelpers.isValidProjectName(this.options.name)
+    ) {
       throw new CodedError(
         'InvalidProjectName',
         `The specified name '${this.options.name}' is not a valid identifier`,
       );
     }
 
-    // If no project name is provided, calculate the name and clean if necessary
+    // If no project name is provided, check previously used name or calculate a name and clean if necessary
     if (!this.options.name) {
-      const projectName = this.getReactNativeProjectName(this.config.root);
+      const projectName =
+        (this.rnwConfig?.['init-windows']?.name as string | undefined) ??
+        this.getReactNativeProjectName(this.config.root);
       this.options.name = nameHelpers.isValidProjectName(projectName)
         ? projectName
         : nameHelpers.cleanName(projectName);
@@ -166,16 +196,21 @@ export class InitWindows {
     }
 
     // Check if there's a passed-in project namespace and if it's valid
-    if (this.options.namespace && !nameHelpers.isValidProjectNamespace(this.options.namespace)) {
+    if (
+      this.options.namespace &&
+      !nameHelpers.isValidProjectNamespace(this.options.namespace)
+    ) {
       throw new CodedError(
         'InvalidProjectNamespace',
         `The specified namespace '${this.options.namespace}' is not a valid identifier`,
       );
     }
 
-    // If no project namespace is provided, use the project name and clean if necessary
+    // If no project namespace is provided, check previously used namespace or use the project name and clean if necessary
     if (!this.options.namespace) {
-      const namespace = this.options.name;
+      const namespace =
+        (this.rnwConfig?.['init-windows']?.namespace as string | undefined) ??
+        this.options.name;
       this.options.namespace = nameHelpers.isValidProjectNamespace(namespace)
         ? namespace
         : nameHelpers.cleanNamespace(namespace);
@@ -259,6 +294,7 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
     case 'template':
     case 'overwrite':
     case 'telemetry':
+    case 'list':
       return value === undefined ? false : value; // Return value
   }
 }

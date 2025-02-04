@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "IReactContext.h"
 #include "DynamicWriter.h"
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 #include "XamlUIService.h"
 #endif
 
@@ -121,7 +121,7 @@ LoadingState ReactContext::LoadingState() noexcept {
   };
 }
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 // Deprecated: Use XamlUIService directly.
 void ReactContext::DispatchEvent(
     xaml::FrameworkElement const &view,

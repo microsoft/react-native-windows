@@ -1,8 +1,53 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.87
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.90
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 0.0.0-canary.86
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.89
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 0.0.0-canary.85
+
+Sat, 19 Oct 2024 05:29:46 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.88
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.84
+
+Mon, 07 Oct 2024 19:54:27 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.87
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 0.0.0-canary.82
 

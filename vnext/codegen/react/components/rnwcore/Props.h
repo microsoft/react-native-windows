@@ -349,6 +349,7 @@ class ModalHostViewProps final : public ViewProps {
   ModalHostViewPresentationStyle presentationStyle{ModalHostViewPresentationStyle::FullScreen};
   bool transparent{false};
   bool statusBarTranslucent{false};
+  bool navigationBarTranslucent{false};
   bool hardwareAccelerated{false};
   bool visible{false};
   bool animated{false};

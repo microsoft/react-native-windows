@@ -4,29 +4,38 @@
   Licensed under the MIT License.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
   <!--
     This defines the default Windows SDK used to build both the app and 0.66+
-    template community modules.
+    template community modules. This should be the very first import from RNW for
+    any RNW project.
 
     See https://microsoft.github.io/react-native-windows/docs/win10-compat
   -->
+
+  <ImportGroup Condition="'$(ReactNativeArchitecturePropsSet)' != 'true'">
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactNativeArchitecture.props" />
+  </ImportGroup>
+
   <PropertyGroup Label="Globals" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
     <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)'=='' Or '$(WindowsTargetPlatformVersion)'=='10.0.0.0'">10.0.22621.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion Condition="'$(WindowsTargetPlatformMinVersion)'=='' Or '$(WindowsTargetPlatformMinVersion)'=='10.0.0.0'">10.0.17763.0</WindowsTargetPlatformMinVersion>
 
-    <!-- WinAppSDK/Composition projects have higher version requirements. -->
-    <WindowsTargetPlatformVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformVersion)', '10.0.22621.0'))">10.0.22621.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformMinVersion)', '10.0.18362.0'))">10.0.18362.0</WindowsTargetPlatformMinVersion>
+    <!-- New Architecture projects have higher version requirements. -->
+    <WindowsTargetPlatformVersion Condition="'$(RnwNewArch)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformVersion)', '10.0.22621.0'))">10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion Condition="'$(RnwNewArch)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformMinVersion)', '10.0.18362.0'))">10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Globals" Condition="'$(MSBuildProjectExtension)' == '.csproj' Or '$(MSBuildProjectExtension)' == '.wapproj'">
     <TargetPlatformVersion Condition="'$(TargetPlatformVersion)'==''">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion Condition="'$(TargetPlatformMinVersion)'==''">10.0.17763.0</TargetPlatformMinVersion>
 
-    <!-- WinAppSDK/Composition projects have higher version requirements. -->
-    <TargetPlatformVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformVersion)', '10.0.22621.0'))">10.0.22621.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformMinVersion)', '10.0.17763.0'))">10.0.17763.0</TargetPlatformMinVersion>
+    <!-- New Architecture projects have higher version requirements. -->
+    <TargetPlatformVersion Condition="'$(RnwNewArch)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformVersion)', '10.0.22621.0'))">10.0.22621.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion Condition="'$(RnwNewArch)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformMinVersion)', '10.0.17763.0'))">10.0.17763.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RnwSdkDefaultsSet>true</RnwSdkDefaultsSet>
   </PropertyGroup>
 
 </Project>

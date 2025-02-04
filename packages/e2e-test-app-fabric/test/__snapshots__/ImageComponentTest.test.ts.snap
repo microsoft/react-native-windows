@@ -12,8 +12,9 @@ exports[`Image Tests A network Image example 1`] = `
     "_Props": {
       "Sources": [
         {
-          "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1",
+          "Size": "6000, 5340",
+          "Type": "Local",
+          "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/very-large-image.png",
         },
       ],
       "TestId": "image-network",
@@ -136,11 +137,6 @@ exports[`Image Tests An Image can a border radius 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -153,11 +149,6 @@ exports[`Image Tests An Image can a border radius 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -168,11 +159,6 @@ exports[`Image Tests An Image can a border radius 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -261,11 +247,6 @@ exports[`Image Tests An Image can a border radius 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -351,11 +332,6 @@ exports[`Image Tests An Image can a border radius 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -443,11 +419,6 @@ exports[`Image Tests An Image can a border radius 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -533,11 +504,6 @@ exports[`Image Tests An Image can a border radius 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -628,11 +594,6 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -643,11 +604,6 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "52, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -830,11 +786,6 @@ exports[`Image Tests An Image can have a background color 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -847,11 +798,6 @@ exports[`Image Tests An Image can have a background color 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -862,11 +808,6 @@ exports[`Image Tests An Image can have a background color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -954,11 +895,6 @@ exports[`Image Tests An Image can have a background color 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1094,11 +1030,6 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1109,11 +1040,6 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1128,11 +1054,6 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1143,11 +1064,6 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1162,11 +1078,6 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1177,11 +1088,6 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1482,11 +1388,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1497,11 +1398,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1516,11 +1412,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1531,11 +1422,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1550,11 +1436,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1565,11 +1446,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1584,11 +1460,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1599,11 +1470,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1618,11 +1484,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1633,11 +1494,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1652,11 +1508,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1667,11 +1518,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1686,11 +1532,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1701,11 +1542,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1720,11 +1556,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1735,11 +1566,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1754,11 +1580,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1771,11 +1592,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1786,11 +1602,6 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1932,11 +1743,6 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1948,11 +1754,6 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
             "Offset": "0, 0, 0",
             "Opacity": 0.800000011920929,
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1968,11 +1769,6 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1984,11 +1780,6 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
             "Offset": "0, 0, 0",
             "Opacity": 0.4000000059604645,
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2004,11 +1795,6 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2020,11 +1806,6 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
             "Offset": "0, 0, 0",
             "Opacity": 0,
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2226,11 +2007,6 @@ exports[`Image Tests An Image can load a static image 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2241,11 +2017,6 @@ exports[`Image Tests An Image can load a static image 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2260,11 +2031,6 @@ exports[`Image Tests An Image can load a static image 1`] = `
             "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2275,11 +2041,6 @@ exports[`Image Tests An Image can load a static image 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "15, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2373,34 +2134,6 @@ exports[`Image Tests An Image component can have a network callback 1`] = `
 }
 `;
 
-exports[`Image Tests An Image component can hve a network callback 2 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "image-network-callback-2",
-    "ControlType": 50006,
-    "LocalizedControlType": "image",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-    "_Props": {
-      "Sources": [
-        {
-          "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>",
-        },
-      ],
-      "TestId": "image-network-callback-2",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "image-network-callback-2",
-    "Offset": "0, 0, 0",
-    "Size": "64, 64",
-    "Visual Type": "SpriteVisual",
-  },
-}
-`;
-
 exports[`Image Tests An Image component can render a blob image 1`] = `
 {
   "Automation Tree": {
@@ -2464,6 +2197,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
+        "Name": "None",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
         "Name": "Contain",
       },
       {
@@ -2483,6 +2222,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Scale Down",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "None",
       },
     ],
   },
@@ -2562,6 +2307,36 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
               "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
@@ -2617,22 +2392,17 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
   "Visual Tree": {
     "Comment": "image-object-fit",
     "Offset": "0, 0, 0",
-    "Size": "916, 311",
+    "Size": "916, 466",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2689,26 +2459,16 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
         "Offset": "100, 0, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2765,26 +2525,16 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2841,26 +2591,16 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2917,11 +2657,6 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2932,11 +2667,6 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2993,87 +2723,6 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "100, 155, 0",
-        "Size": "90, 16",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "100, 173, 0",
-        "Size": "90, 60",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 60",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3084,11 +2733,6 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           {
             "Offset": "0, 0, 0",
             "Size": "90, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3145,11 +2789,6 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3160,11 +2799,6 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           {
             "Offset": "0, 0, 0",
             "Size": "90, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3221,10 +2855,203 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
               },
             ],
           },
+        ],
+      },
+      {
+        "Offset": "0, 311, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "100, 311, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "100, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 388, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 406, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -3304,11 +3131,6 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
             "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3319,11 +3141,6 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
           {
             "Offset": "0, 0, 0",
             "Size": "64, 64",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3374,6 +3191,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
+        "Name": "None",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
         "Name": "Contain",
       },
       {
@@ -3399,6 +3222,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Center",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "None",
       },
     ],
   },
@@ -3493,6 +3322,36 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
               "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
@@ -3563,7 +3422,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
   "Visual Tree": {
     "Comment": "image-resize-mode",
     "Offset": "0, 0, 0",
-    "Size": "916, 310",
+    "Size": "916, 466",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3574,11 +3433,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3635,11 +3489,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3650,11 +3499,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3711,11 +3555,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3726,11 +3565,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3787,11 +3621,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3802,11 +3631,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3863,11 +3687,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3878,11 +3697,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3939,11 +3753,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3954,11 +3763,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4015,87 +3819,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "100, 155, 0",
-        "Size": "90, 15",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "100, 173, 0",
-        "Size": "90, 60",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 60",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4106,11 +3829,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4167,11 +3885,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4182,11 +3895,6 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4243,15 +3951,10 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
-        "Offset": "200, 233, 0",
+        "Offset": "0, 311, 0",
         "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -4260,15 +3963,10 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
             "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
-        "Offset": "200, 251, 0",
+        "Offset": "0, 329, 0",
         "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -4319,10 +4017,203 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
               },
             ],
           },
+        ],
+      },
+      {
+        "Offset": "100, 311, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "100, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "200, 311, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "200, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 388, 0",
+        "Size": "90, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 15",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 406, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },

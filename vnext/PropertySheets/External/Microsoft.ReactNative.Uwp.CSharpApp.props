@@ -13,14 +13,26 @@
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.props"
           Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.props')" />
 
+  <!-- Check that Microsoft.ReactNative.WindowsSdk.Default.props has already been imported. -->
+  <Target Name="EnsureRnwSdkDefaultsSetTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwSdkDefaultsSet)'!='true'">
+    <Warning Text="Property `RnwSdkDefaultsSet` was not set. Please ensure your project imports 'Microsoft.ReactNative.WindowsSdk.Default.props' before importing this prop sheet." />
+  </Target>
+
+  <!-- Import common props sheets common to all UWP projects. -->
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+
+  <!-- Set props and import specific prop sheets for this kind of project. -->
   <PropertyGroup>
     <ReactNativeCodeGenEnabled Condition="'$(ReactNativeCodeGenEnabled)' == ''">true</ReactNativeCodeGenEnabled>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Appx.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+
+  <PropertyGroup>
+    <RnwExternalPropsLoaded>$(MSBuildThisFile)</RnwExternalPropsLoaded>
+  </PropertyGroup>
 </Project>

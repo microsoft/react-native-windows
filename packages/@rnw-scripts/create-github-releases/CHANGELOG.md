@@ -1,8 +1,54 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.57
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.90
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 1.4.56
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.89
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 1.4.55
+
+Sat, 19 Oct 2024 05:29:47 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.88
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 1.4.54
+
+Mon, 07 Oct 2024 19:54:25 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.87
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 1.4.52
 

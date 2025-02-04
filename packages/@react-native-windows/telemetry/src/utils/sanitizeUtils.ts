@@ -24,9 +24,13 @@ const knownEnvironmentVariablePaths = [
  * @returns The anonymized path.
  */
 export function getAnonymizedPath(
-  filepath: string,
+  filepath: string | undefined,
   projectRoot?: string,
 ): string {
+  if (filepath === undefined) {
+    return '[path]';
+  }
+
   projectRoot = (projectRoot ?? process.cwd())
     .replace(/\//g, '\\')
     .toLowerCase();

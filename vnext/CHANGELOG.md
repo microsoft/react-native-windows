@@ -1,8 +1,450 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 30 Sep 2024 16:33:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Feb 2025 22:47:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.916
+
+Mon, 03 Feb 2025 22:47:30 GMT
+
+### Changes
+
+- Fix react devtools hitting an assert on launch (tatianakapos@microsoft.com)
+- TurboModule spec checking should accept hstring for string arguments (30809111+acoates-ms@users.noreply.github.com)
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.915
+
+Fri, 31 Jan 2025 18:29:43 GMT
+
+### Changes
+
+- Only build OfficeReact.Win32 with UseFabric enabled (jthysell@microsoft.com)
+- Round Focus visuals by default, fix nudge rendering (30809111+acoates-ms@users.noreply.github.com)
+- Allow portals to have independent layout constraints and scale factor (30809111+acoates-ms@users.noreply.github.com)
+- Basic support for stitching the UIA tree for a ContentIslandComponentView's child (email not defined)
+- add modal implementation with PopupWindowSiteBridge (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.257
+- Bump @react-native-windows/codegen to v0.0.0-canary.118
+
+## 0.0.0-canary.914
+
+Tue, 28 Jan 2025 20:34:32 GMT
+
+### Changes
+
+- Merge New and Old Arch Microsoft.ReactNative Nuget packages (jthysell@microsoft.com)
+
+## 0.0.0-canary.913
+
+Sat, 25 Jan 2025 06:30:25 GMT
+
+### Changes
+
+- RNIsland UIA fragment root should report parents fragment root (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when currently focused element gets marked as enableFocusRing=false (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.912
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Remove Paper-only code from Fabric builds of Microsoft.ReactNative (jthysell@microsoft.com)
+- Initial integrate (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.256
+- Bump @react-native-windows/codegen to v0.0.0-canary.117
+
+## 0.0.0-canary.911
+
+Wed, 22 Jan 2025 06:28:02 GMT
+
+### Changes
+
+- Remove Fork of Layoutable Shadow Node (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.910
+
+Thu, 16 Jan 2025 06:21:27 GMT
+
+### Changes
+
+- Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true (50150435+JesseCol@users.noreply.github.com)
+
+## 0.0.0-canary.909
+
+Mon, 13 Jan 2025 18:43:00 GMT
+
+### Changes
+
+- update controltype with accessibilityRole (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.908
+
+Sat, 11 Jan 2025 06:30:39 GMT
+
+### Changes
+
+- Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2 (50150435+JesseCol@users.noreply.github.com)
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 12/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.255
+- Bump @react-native-windows/codegen to v0.0.0-canary.116
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.36
+- Bump @rnw-scripts/just-task to v2.3.49
+- Bump react-native-platform-override to v1.9.51
+
+## 0.0.0-canary.907
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Integrate 12/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.254
+- Bump @react-native-windows/codegen to v0.0.0-canary.115
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.35
+- Bump @rnw-scripts/just-task to v2.3.48
+- Bump react-native-platform-override to v1.9.50
+
+## 0.0.0-canary.906
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Changes
+
+- Stop disabling warning 4244 because BinSkim fails if it sees one (jthysell@microsoft.com)
+- std::aligned_storage is deprecated (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.253
+
+## 0.0.0-canary.905
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Changes
+
+- Integrate 12/10 (34109996+chiaramooney@users.noreply.github.com)
+- Fix calls to std::mutex::lock (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.252
+
+## 0.0.0-canary.904
+
+Fri, 20 Dec 2024 06:22:28 GMT
+
+### Changes
+
+- integrate 0.78.0-nightly-20241201-91e217ff5 (email not defined)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.903
+
+Wed, 18 Dec 2024 06:22:24 GMT
+
+### Changes
+
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e (email not defined)
+
+## 0.0.0-canary.902
+
+Sat, 14 Dec 2024 06:29:13 GMT
+
+### Changes
+
+- Use WebSocket factory in PkgInspectorConnection (julio.rocha@microsoft.com)
+- Integrate RN Nighlty 0.77.0-nightly-20241118-3986eefed (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.901
+
+Wed, 11 Dec 2024 06:21:14 GMT
+
+### Changes
+
+- add windows folder to file list (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.251
+
+## 0.0.0-canary.900
+
+Tue, 10 Dec 2024 06:29:30 GMT
+
+### Changes
+
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.250
+- Bump @react-native-windows/codegen to v0.0.0-canary.114
+
+## 0.0.0-canary.899
+
+Fri, 06 Dec 2024 06:22:27 GMT
+
+### Changes
+
+- Integrate 10/31 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.898
+
+Thu, 05 Dec 2024 06:20:53 GMT
+
+### Changes
+
+- Key and mouse events require a stacking context (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.897
+
+Wed, 04 Dec 2024 06:26:56 GMT
+
+### Changes
+
+- implement onDismiss and remove titlebar from Modal (tatianakapos@microsoft.com)
+- Re-enable most Desktop integration tests (julio.rocha@microsoft.com)
+- Implement cursor property (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.896
+
+Sat, 23 Nov 2024 06:23:16 GMT
+
+### Changes
+
+- Integrate 10/20 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.249
+- Bump @react-native-windows/codegen to v0.0.0-canary.113
+
+## 0.0.0-canary.895
+
+Tue, 19 Nov 2024 06:29:47 GMT
+
+### Changes
+
+- Fix Modal position, disable input to parent hwnd, and add onShow (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.894
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- test integrate 10/15 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.248
+- Bump @react-native-windows/codegen to v0.0.0-canary.112
+
+## 0.0.0-canary.893
+
+Thu, 14 Nov 2024 06:22:59 GMT
+
+### Changes
+
+- bump dotnet target version (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.892
+
+Wed, 13 Nov 2024 06:21:47 GMT
+
+### Changes
+
+- Fix focus visuals being obscured by adjacent views (53619745+rnbot@users.noreply.github.com)
+
+## 0.0.0-canary.891
+
+Tue, 12 Nov 2024 06:27:59 GMT
+
+### Changes
+
+- Adding quotes around codegen tool executeable path and response file path so that users with spaces in their user directory can build cs projects (6237394+Swinkid@users.noreply.github.com)
+
+## 0.0.0-canary.890
+
+Fri, 08 Nov 2024 06:20:38 GMT
+
+### Changes
+
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.247
+- Bump @react-native-windows/codegen to v0.0.0-canary.111
+
+## 0.0.0-canary.889
+
+Thu, 07 Nov 2024 06:24:18 GMT
+
+### Changes
+
+- Integrate 10/10 (yajurgrover24@gmail.com)
+- Export MS.RN.Color ctor in Office dll (30809111+acoates-ms@users.noreply.github.com)
+- TextInput caret becomes visible on non-focused TextInputs on resize (53619745+rnbot@users.noreply.github.com)
+
+## 0.0.0-canary.888
+
+Wed, 06 Nov 2024 06:26:31 GMT
+
+### Changes
+
+- Update to the latest Microsoft.NETCore.UniversalWindowsPlatform (jthysell@microsoft.com)
+
+## 0.0.0-canary.887
+
+Tue, 05 Nov 2024 06:27:17 GMT
+
+### Changes
+
+- Add timeout to JS bundle creation in release builds (jthysell@microsoft.com)
+
+## 0.0.0-canary.886
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.246
+- Bump @react-native-windows/codegen to v0.0.0-canary.110
+
+## 0.0.0-canary.885
+
+Sat, 02 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Fixing text components not rendering a border with Paper (sawalker@microsoft.com)
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+- adds default modal that hosts fabric components (tatianakapos@microsoft.com)
+- Update some packages*.json files after the WinAppSDK udpate (50150435+JesseCol@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.245
+- Bump @react-native-windows/codegen to v0.0.0-canary.109
+
+## 0.0.0-canary.884
+
+Fri, 01 Nov 2024 05:22:37 GMT
+
+### Changes
+
+- Update RNW CLI to preserve and re-use `init-windows` arguments (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.244
+
+## 0.0.0-canary.883
+
+Thu, 31 Oct 2024 05:28:13 GMT
+
+### Changes
+
+- Fix flatten style running multiple times" (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.882
+
+Sat, 26 Oct 2024 05:28:07 GMT
+
+### Changes
+
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.243
+
+## 0.0.0-canary.881
+
+Fri, 25 Oct 2024 05:21:20 GMT
+
+### Changes
+
+- Focus should notify island host when tab loop wraps to give host oportunity to take focus (30809111+acoates-ms@users.noreply.github.com)
+- Default scroll to bring a component into view should have padding around the viewport (30809111+acoates-ms@users.noreply.github.com)
+- Add very basic box-shadow support (30809111+acoates-ms@users.noreply.github.com)
+- Update focus visuals to use cornerRadius and inner/outer strokes. (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.880
+
+Wed, 23 Oct 2024 05:31:16 GMT
+
+### Changes
+
+- Fix ignore files and update cli timeout (jthysell@microsoft.com)
+- Update Provider Guardrails (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.879
+
+Tue, 22 Oct 2024 05:26:27 GMT
+
+### Changes
+
+- Cleanup ReactNativeAppBuilder and ReactNativeWin32App (jthysell@microsoft.com)
+
+## 0.0.0-canary.878
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Changes
+
+- Update WinAppSDK from 1.5 to 1.6 (1.6.240923002) (winappsdkdata_bot@microsoft.com)
+- Introduced autocapitalize prop in TextInput (14967941+danielayala94@users.noreply.github.com)
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.242
+- Bump @react-native-windows/codegen to v0.0.0-canary.108
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.34
+- Bump @rnw-scripts/just-task to v2.3.47
+- Bump react-native-platform-override to v1.9.49
+
+## 0.0.0-canary.877
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Changes
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.241
+- Bump @react-native-windows/codegen to v0.0.0-canary.107
+
+## 0.0.0-canary.876
+
+Tue, 15 Oct 2024 05:26:25 GMT
+
+### Changes
+
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.875
+
+Sat, 12 Oct 2024 05:22:56 GMT
+
+### Changes
+
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.874
+
+Thu, 10 Oct 2024 18:14:31 GMT
+
+### Changes
+
+- Create hybrid CppLib props/targets (jthysell@microsoft.com)
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+- Implement IExpandCollapseProvider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.240
+
+## 0.0.0-canary.873
+
+Tue, 08 Oct 2024 19:23:40 GMT
+
+### Changes
+
+- Use a legacy native module binding that always returns null in bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.872
+
+Mon, 07 Oct 2024 19:54:23 GMT
+
+### Changes
+
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.239
+- Bump @react-native-windows/codegen to v0.0.0-canary.106
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.33
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-platform-override to v1.9.48
 
 ## 0.0.0-canary.871
 

@@ -12,6 +12,7 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "CompositionEventHandler.h"
+#include "PortalComponentView.h"
 #include "ReactHost/React.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -48,11 +49,15 @@ struct ReactNativeIsland
   ~ReactNativeIsland() noexcept;
 
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
+  ReactNativeIsland(const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal) noexcept;
+
+  static winrt::Microsoft::ReactNative::ReactNativeIsland CreatePortal(
+      const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
 
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;
-  void ReactViewHost(ReactNative::IReactViewHost const &value) noexcept;
+  void ReactViewHost(ReactNative::IReactViewHost const &value);
 
   winrt::Microsoft::UI::Composition::Visual RootVisual() noexcept;
 
@@ -82,6 +87,7 @@ struct ReactNativeIsland
   void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   bool TrySetFocus() noexcept;
+  HWND GetHwndForParenting() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader Resources() noexcept;
   void Resources(const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept;
@@ -99,7 +105,8 @@ struct ReactNativeIsland
   winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
       const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *GetComponentView() noexcept;
+  winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>
+  GetComponentView() noexcept;
 
   int64_t RootTag() const noexcept;
 
@@ -109,12 +116,19 @@ struct ReactNativeIsland
   void SetWindow(uint64_t hwnd) noexcept;
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
 
+  winrt::Windows::Foundation::Point ConvertScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept;
+  winrt::Windows::Foundation::Point ConvertLocalToScreen(winrt::Windows::Foundation::Point pt) noexcept;
+
   bool CapturePointer(
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
   void ReleasePointerCapture(
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
+
+  void AddFragmentCompositionEventHandler(
+      winrt::Microsoft::ReactNative::IReactContext context,
+      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
 
  public: // IReactViewInstance UI-thread implementation
   void InitRootView(
@@ -135,13 +149,18 @@ struct ReactNativeIsland
 #endif
 
   HWND m_hwnd{0};
+  bool m_isFragment{false};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   bool m_hasRenderedVisual{false};
   bool m_showingLoadingUI{false};
   bool m_mounted{false};
+  winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::PortalComponentView> m_portal{nullptr};
   IReactDispatcher m_uiDispatcher{nullptr};
   winrt::IInspectable m_uiaProvider{nullptr};
+
+  // This is the surfaceId that this island belongs to.
+  // In the case of portal content root, this will be the surfaceId that contains the portal.
   int64_t m_rootTag{-1};
   float m_scaleFactor{1.0};
   float m_textScaleMultiplier{1.0};

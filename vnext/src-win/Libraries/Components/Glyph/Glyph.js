@@ -29,10 +29,11 @@ export type Props = $ReadOnly<{|
  * ability to be rendered with a specific color
  */
 
+// $FlowFixMe[prop-missing]
 export const Glyph: React.AbstractComponent<
   Props,
   React.ElementRef<typeof GlyphNativeComponent>,
-> = React.forwardRef(function Glyph(props, forwardedRef): React.Node {
+> = React.forwardRef(function Glyph(props: Props, forwardedRef): React.Node {
   const nativeSwitchRef = React.useRef<React.ElementRef<
     typeof GlyphNativeComponent,
   > | null>(null);

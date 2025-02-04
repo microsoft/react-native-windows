@@ -1,8 +1,393 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Mon, 30 Sep 2024 16:33:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Feb 2025 22:47:31 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.256
+
+Mon, 03 Feb 2025 22:47:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.916
+
+## 0.12.255
+
+Fri, 31 Jan 2025 18:29:45 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.915
+
+## 0.12.254
+
+Tue, 28 Jan 2025 20:34:32 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.914
+
+## 0.12.253
+
+Sat, 25 Jan 2025 06:30:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.913
+
+## 0.12.252
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Patches
+
+- Initial integrate (yajurgrover24@gmail.com)
+- Bump react-native-windows to v0.0.0-canary.912
+
+## 0.12.251
+
+Wed, 22 Jan 2025 06:28:02 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.911
+
+## 0.12.250
+
+Thu, 16 Jan 2025 06:21:27 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.910
+
+## 0.12.249
+
+Mon, 13 Jan 2025 18:43:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.909
+
+## 0.12.248
+
+Sat, 11 Jan 2025 06:30:39 GMT
+
+### Patches
+
+- Integrate 12/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+- Bump react-native-windows to v0.0.0-canary.908
+
+## 0.12.247
+
+Fri, 10 Jan 2025 06:23:18 GMT
+
+### Patches
+
+- Integrate 12/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+- Bump react-native-windows to v0.0.0-canary.907
+
+## 0.12.246
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.906
+
+## 0.12.245
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Patches
+
+- Integrate 12/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.905
+
+## 0.12.244
+
+Fri, 20 Dec 2024 06:22:28 GMT
+
+### Patches
+
+- integrate 0.78.0-nightly-20241201-91e217ff5 (email not defined)
+- Bump react-native-windows to v0.0.0-canary.904
+
+## 0.12.243
+
+Wed, 18 Dec 2024 06:22:23 GMT
+
+### Patches
+
+- integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e (email not defined)
+- Bump react-native-windows to v0.0.0-canary.903
+
+## 0.12.242
+
+Sat, 14 Dec 2024 06:29:13 GMT
+
+### Patches
+
+- integrate RN Nightly 0.77.0-nightly-20241118-3986eefed (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.902
+
+## 0.12.241
+
+Wed, 11 Dec 2024 06:21:14 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.901
+
+## 0.12.240
+
+Tue, 10 Dec 2024 06:29:29 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.900
+
+## 0.12.239
+
+Fri, 06 Dec 2024 06:22:27 GMT
+
+### Patches
+
+- Integrate 10/31 (yajurgrover24@gmail.com)
+- Bump react-native-windows to v0.0.0-canary.899
+
+## 0.12.238
+
+Thu, 05 Dec 2024 06:20:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.898
+
+## 0.12.237
+
+Wed, 04 Dec 2024 06:26:56 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.897
+
+## 0.12.236
+
+Sat, 23 Nov 2024 06:23:15 GMT
+
+### Patches
+
+- Integrate 10/20 (yajurgrover24@gmail.com)
+- Bump react-native-windows to v0.0.0-canary.896
+
+## 0.12.235
+
+Tue, 19 Nov 2024 06:29:47 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.895
+
+## 0.12.234
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Patches
+
+- test integrate 10/15 (yajurgrover24@gmail.com)
+- Bump react-native-windows to v0.0.0-canary.894
+
+## 0.12.233
+
+Thu, 14 Nov 2024 06:22:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.893
+
+## 0.12.232
+
+Wed, 13 Nov 2024 06:21:47 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.892
+
+## 0.12.231
+
+Tue, 12 Nov 2024 06:27:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.891
+
+## 0.12.230
+
+Fri, 08 Nov 2024 06:20:37 GMT
+
+### Patches
+
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.890
+
+## 0.12.229
+
+Thu, 07 Nov 2024 06:24:18 GMT
+
+### Patches
+
+- Integrate 10/10 (yajurgrover24@gmail.com)
+- Bump react-native-windows to v0.0.0-canary.889
+
+## 0.12.228
+
+Wed, 06 Nov 2024 06:26:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.888
+
+## 0.12.227
+
+Tue, 05 Nov 2024 06:27:17 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.887
+
+## 0.12.226
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.886
+
+## 0.12.225
+
+Sat, 02 Nov 2024 05:28:14 GMT
+
+### Patches
+
+- Update some packages*.json files after the WinAppSDK udpate (50150435+JesseCol@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.885
+
+## 0.12.224
+
+Fri, 01 Nov 2024 05:22:37 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.884
+
+## 0.12.223
+
+Thu, 31 Oct 2024 05:28:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.883
+
+## 0.12.222
+
+Sat, 26 Oct 2024 05:28:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.882
+
+## 0.12.221
+
+Fri, 25 Oct 2024 05:21:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.881
+
+## 0.12.220
+
+Wed, 23 Oct 2024 05:31:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.880
+
+## 0.12.219
+
+Tue, 22 Oct 2024 05:26:28 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.879
+
+## 0.12.218
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+- Bump react-native-windows to v0.0.0-canary.878
+
+## 0.12.217
+
+Wed, 16 Oct 2024 05:20:54 GMT
+
+### Patches
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.877
+
+## 0.12.216
+
+Tue, 15 Oct 2024 05:26:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.876
+
+## 0.12.215
+
+Sat, 12 Oct 2024 05:22:56 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.875
+
+## 0.12.214
+
+Thu, 10 Oct 2024 18:14:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.874
+
+## 0.12.213
+
+Tue, 08 Oct 2024 19:23:40 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.873
+
+## 0.12.212
+
+Mon, 07 Oct 2024 19:54:26 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-windows to v0.0.0-canary.872
 
 ## 0.12.211
 

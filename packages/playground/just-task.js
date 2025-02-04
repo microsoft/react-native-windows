@@ -6,7 +6,7 @@
  */
 
 const fs = require('fs');
-const {parallel, task} = require('just-scripts');
+const {parallel, series, task} = require('just-scripts');
 
 // Use the shared base configuration
 require('@rnw-scripts/just-task');
@@ -15,4 +15,4 @@ task('prepareBundleWin32', () => {
   fs.mkdirSync('windows/playground-win32/Bundle/Samples', {recursive: true});
 });
 
-task('lint', parallel('eslint', 'depcheck', 'ts'));
+task('lint', parallel(series('prettier', 'eslint'), 'depcheck', 'ts'));

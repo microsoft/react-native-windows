@@ -4,7 +4,6 @@
 #include <CppUnitTest.h>
 
 #include <CppRuntimeOptions.h>
-#include <Test/WebSocketServer.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
@@ -176,14 +175,7 @@ TEST_CLASS (RNTesterIntegrationTests) {
   BEGIN_TEST_METHOD_ATTRIBUTE(WebSocket)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocket) {
-    // Should behave the same as IntegrationTests/websocket_integration_test_server.js
-    auto server = std::make_shared<WebSocketServer>(5555, false /*useTLS*/);
-    server->SetMessageFactory([](string &&message) -> string { return message + "_response"; });
-    server->Start();
-
     TestComponent("WebSocketTest");
-
-    server->Stop();
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(AccessibilityManager)

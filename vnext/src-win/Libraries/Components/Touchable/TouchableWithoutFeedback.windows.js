@@ -59,6 +59,9 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
   'aria-hidden'?: ?boolean,
   'aria-live'?: ?('polite' | 'assertive' | 'off'),
   'aria-label'?: ?Stringish,
@@ -91,7 +94,7 @@ type Props = $ReadOnly<{|
   onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
-  hostRef?: ?React.Ref<typeof Animated.View>, // [Windows]
+  hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>, // [Windows]
 |}>;
 
 const PASSTHROUGH_PROPS = [
@@ -128,10 +131,14 @@ const PASSTHROUGH_PROPS = [
 ];
 
 // Modify the function to accept the ref prop and forward it
+// $FlowFixMe[prop-missing]
 const TouchableWithoutFeedback: React.AbstractComponent<
   Props,
   React.ElementRef<typeof Animated.View>,
-> = React.forwardRef(function TouchableWithoutFeedback(props: Props, ref): React.Node {
+> = React.forwardRef(function TouchableWithoutFeedback(
+  props: Props,
+  ref,
+): React.Node {
   const {
     disabled,
     rejectResponderTermination,
@@ -152,7 +159,6 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     onMouseEnter, // [Windows]
     onMouseLeave, // [Windows]
   } = props;
-
 
   const pressabilityConfig = useMemo(
     () => ({
@@ -219,12 +225,16 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     disabled: props['aria-disabled'] ?? props.accessibilityState?.disabled,
     expanded: props['aria-expanded'] ?? props.accessibilityState?.expanded,
     selected: props['aria-selected'] ?? props.accessibilityState?.selected,
+    readonly: props['aria-readonly'] ?? props.accessibilityState?.readOnly, // Windows
+    multiselectable:
+      props['aria-multiselectable'] ??
+      props.accessibilityState?.multiselectable, // Windows
+    required: props['aria-required'] ?? props.accessibilityState?.required, // Windows
   };
 
   // BACKWARD-COMPATIBILITY: Focus and blur events were never supported before
   // adopting `Pressability`, so preserve that behavior.
-  const {onBlur, onFocus, ...eventHandlersWithoutBlurAndFocus} =
-    eventHandlers || {};
+  const {onBlur, onFocus, ...eventHandlersWithoutBlurAndFocus} = eventHandlers;
 
   const elementProps: {[string]: mixed, ...} = {
     ...eventHandlersWithoutBlurAndFocus,

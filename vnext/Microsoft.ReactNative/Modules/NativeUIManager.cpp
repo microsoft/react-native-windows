@@ -8,7 +8,7 @@
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Views/ShadowNodeBase.h>
-#include <cxxreact/SystraceSection.h>
+#include <cxxreact/TraceSection.h>
 #include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
@@ -215,7 +215,7 @@ int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *ro
 }
 
 void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) {
-  SystraceSection s("NativeUIManager::AddRootView");
+  TraceSection s("NativeUIManager::AddRootView");
   auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
   const auto rootTag = shadowNode.m_tag;
@@ -243,14 +243,14 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
 }
 
 void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
-  SystraceSection s("NativeUIManager::removeRootView");
+  TraceSection s("NativeUIManager::removeRootView");
   m_tagsToXamlReactControl.erase(shadow.m_tag);
   m_sizeChangedMap.erase(shadow.m_tag);
   RemoveView(shadow, true);
 }
 
 void NativeUIManager::onBatchComplete() {
-  SystraceSection s("NativeUIManager::onBatchComplete");
+  TraceSection s("NativeUIManager::onBatchComplete");
   if (m_inBatch) {
     DoLayout();
     m_inBatch = false;
@@ -783,7 +783,7 @@ static void StyleYogaNode(
 }
 
 void NativeUIManager::CreateView(ShadowNode &shadowNode, React::JSValueObject &props) {
-  SystraceSection s("NativeUIManager::CreateView");
+  TraceSection s("NativeUIManager::CreateView");
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -874,7 +874,7 @@ void NativeUIManager::ReplaceView(ShadowNode &shadowNode) {
 }
 
 void NativeUIManager::UpdateView(ShadowNode &shadowNode, winrt::Microsoft::ReactNative::JSValueObject &props) {
-  SystraceSection s("NativeUIManager::UpdateView");
+  TraceSection s("NativeUIManager::UpdateView");
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -885,10 +885,10 @@ void NativeUIManager::UpdateView(ShadowNode &shadowNode, winrt::Microsoft::React
 }
 
 void NativeUIManager::DoLayout() {
-  SystraceSection s("NativeUIManager::DoLayout");
+  TraceSection s("NativeUIManager::DoLayout");
 
   {
-    SystraceSection s("NativeUIManager::DoLayout::UpdateLayout");
+    TraceSection s("NativeUIManager::DoLayout::UpdateLayout");
     // Process vector of RN controls needing extra layout here.
     const auto extraLayoutNodes = m_extraLayoutNodes;
     for (const int64_t tag : extraLayoutNodes) {
@@ -914,7 +914,7 @@ void NativeUIManager::DoLayout() {
 
 void NativeUIManager::ApplyLayout(int64_t tag, float width, float height) {
   if (YGNodeRef rootNode = GetYogaNode(tag)) {
-    SystraceSection s("NativeUIManager::DoLayout::YGNodeCalculateLayout");
+    TraceSection s("NativeUIManager::DoLayout::YGNodeCalculateLayout");
     // We must always run layout in LTR mode, which might seem unintuitive.
     // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
     // which will inherit down the XAML tree, allowing all native controls to pick it up.
@@ -925,7 +925,7 @@ void NativeUIManager::ApplyLayout(int64_t tag, float width, float height) {
   }
 
   {
-    SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
+    TraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
     SetLayoutPropsRecursive(tag);
   }
 }

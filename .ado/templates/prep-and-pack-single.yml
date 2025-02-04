@@ -41,6 +41,9 @@ parameters:
 
 steps:
 
+  - powershell: gci $(System.DefaultWorkingDirectory)/NugetRoot
+    displayName: List files in NugetRoot
+
   - ${{ if ne(parameters.slices, '') }}:
     - powershell: >
         .\StripAdditionalPlatformsFromNuspec.ps1
@@ -49,19 +52,19 @@ steps:
         -slices (ConvertFrom-Json '${{ parameters.slices }}')
         -debug
       displayName: '${{ parameters.outputPackage }} - Strip slices from nuspec'
-      workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
+      workingDirectory: $(System.DefaultWorkingDirectory)/NugetRoot
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
       displayName: '${{ parameters.outputPackage }} CodeSign Binaries'
       inputs:
-        ConnectedServiceName: 'ESRP-CodeSigning-Federated-Auth' 
-        AppRegistrationClientId: 'd95a8439-53e3-4426-a77c-fb6247a72b6a' 
-        AppRegistrationTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
-        AuthAKVName: 'rnw-keyvault' 
-        AuthCertName: 'React-Native-ESRP-App-Authentication' 
-        AuthSignCertName: 'React-Native-PRSS-Authentication'
-        FolderPath: $(System.DefaultWorkingDirectory)/ReactWindows
+        ConnectedServiceName: 'ESRP-CodeSigning-OGX-JSHost-RNW' 
+        AppRegistrationClientId: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+        AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+        AuthAKVName: 'OGX-JSHost-KV'
+        AuthCertName: 'OGX-JSHost-Auth4'
+        AuthSignCertName: 'OGX-JSHost-Sign3'
+        FolderPath: $(System.DefaultWorkingDirectory)/NugetRoot
         # Recursively finds files matching these patterns:
         ${{ if ne(parameters.binariesToSign, '') }}:
           Pattern: ${{ parameters.binariesToSign }}
@@ -102,7 +105,7 @@ steps:
     inputs:
       command: pack
       verbosityPack: 'Detailed'
-      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.outputPackage }}.nuspec
+      packagesToPack: $(System.DefaultWorkingDirectory)/NugetRoot/${{ parameters.outputPackage }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
@@ -110,12 +113,12 @@ steps:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
       displayName: '${{ parameters.outputPackage }} CodeSign NuGet'
       inputs:
-        ConnectedServiceName: 'ESRP-CodeSigning-Federated-Auth' 
-        AppRegistrationClientId: 'd95a8439-53e3-4426-a77c-fb6247a72b6a' 
-        AppRegistrationTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
-        AuthAKVName: 'rnw-keyvault' 
-        AuthCertName: 'React-Native-ESRP-App-Authentication' 
-        AuthSignCertName: 'React-Native-PRSS-Authentication'
+        ConnectedServiceName: 'ESRP-CodeSigning-OGX-JSHost-RNW' 
+        AppRegistrationClientId: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+        AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+        AuthAKVName: 'OGX-JSHost-KV'
+        AuthCertName: 'OGX-JSHost-Auth4'
+        AuthSignCertName: 'OGX-JSHost-Sign3'
         FolderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
         Pattern: |
           **/${{ parameters.outputPackage }}.${{ parameters.packageVersion }}.nupkg

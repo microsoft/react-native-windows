@@ -9,11 +9,7 @@
 namespace facebook::react::HostPlatformViewTraitsInitializer {
 
 inline bool formsStackingContext(ViewProps const &viewProps) {
-  // onFocus/onBlur are often just used for listening to bubbled events.
-  // Only Views which are marked as focusable can actually trigger the events, which will already avoid being collapsed.
-  constexpr decltype(WindowsViewEvents::bits) focusEventsMask = {
-      (1 << (int)WindowsViewEvents::Offset::Focus) & (1 << (int)WindowsViewEvents::Offset::Blur)};
-  return (viewProps.windowsEvents.bits & focusEventsMask).any();
+  return !viewProps.keyDownEvents.empty() || !viewProps.keyUpEvents.empty() || viewProps.tooltip;
 }
 
 inline bool formsView(ViewProps const &viewProps) {

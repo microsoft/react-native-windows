@@ -5,12 +5,15 @@
 #include "AlertModule.h"
 #include "Unicode.h"
 
+#ifndef USE_FABRIC
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Media.h>
 #include <UI.Xaml.Shapes.h>
 #include <Utils/ValueUtils.h>
 #include <XamlUtils.h>
+#endif
+
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Utils/Helpers.h"
 
@@ -36,6 +39,7 @@ void Alert::showAlert(
   });
 }
 
+#ifndef USE_FABRIC
 void Alert::ProcessPendingAlertRequestsXaml() noexcept {
   const auto &pendingAlert = pendingAlerts.front();
   const auto &args = pendingAlert.args;
@@ -155,8 +159,7 @@ void Alert::ProcessPendingAlertRequestsXaml() noexcept {
         ProcessPendingAlertRequests();
       });
 }
-
-#ifdef USE_FABRIC
+#else
 void Alert::ProcessPendingAlertRequestsMessageDialog() noexcept {
   const auto &pendingAlert = pendingAlerts.front();
   const auto &args = pendingAlert.args;
@@ -220,16 +223,18 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   if (pendingAlerts.empty())
     return;
 
-  if (xaml::TryGetCurrentApplication()) {
+#ifndef USE_FABRIC
+  if (xaml::TryGetCurrentUwpXamlApplication()) {
     ProcessPendingAlertRequestsXaml();
   }
-#ifdef USE_FABRIC
+#else
   else {
     // If we don't have xaml loaded, fallback to using MessageDialog
     ProcessPendingAlertRequestsMessageDialog();
   }
 #endif
 }
+
 Alert::Constants Alert::GetConstants() noexcept {
   return m_constants;
 }

@@ -2,6 +2,66 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Sat, 11 Jan 2025 06:30:39 GMT",
+      "version": "1.2.32",
+      "tag": "@rnw-scripts/eslint-config_v1.2.32",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "a279e3762d4daae0b5bb22dea770a61c25edefcd",
+            "comment": "Integrate 12/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Jan 2025 06:23:18 GMT",
+      "version": "1.2.31",
+      "tag": "@rnw-scripts/eslint-config_v1.2.31",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "31b5dea7f76db31d1cfbda276b61d2fbfb116698",
+            "comment": "Integrate 12/20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Oct 2024 05:29:47 GMT",
+      "version": "1.2.30",
+      "tag": "@rnw-scripts/eslint-config_v1.2.30",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Oct 2024 19:54:25 GMT",
+      "version": "1.2.29",
+      "tag": "@rnw-scripts/eslint-config_v1.2.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "eb6b345ee2128d56f32c85f1702bb093e0375a1f",
+            "comment": "integrate RN nightly 0.77.0-nightly-20240921-1747f57c6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Sep 2024 17:38:26 GMT",
       "version": "1.2.27",
       "tag": "@rnw-scripts/eslint-config_v1.2.27",

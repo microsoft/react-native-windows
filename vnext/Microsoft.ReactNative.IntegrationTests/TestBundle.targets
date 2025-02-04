@@ -2,6 +2,7 @@
 	<PropertyGroup>
 		<BundleOutputPath>$(OutputPath)</BundleOutputPath>
 		<BundleSourceMapDir>$(OutputPath)sourcemaps\react</BundleSourceMapDir>
+		<BundleContentRoot>$(OutputPath)</BundleContentRoot>
 	</PropertyGroup>
 	<Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
 	<Target
@@ -15,6 +16,6 @@
 		<MakeDir Directories="$(BundleOutputPath)" Condition="!Exists('$(BundleOutputPath)')" />
 		<MakeDir Directories="$(BundleSourceMapDir)" Condition="!Exists('$(BundleSourceMapDir)')" />
 		<Message Importance="High" Text="Running [$(BundleCliCommand) --platform windows --entry-file %(JsBundleEntry.FullPath) --bundle-output $(BundleOutputPath)%(JsBundleEntry.Filename).bundle --dev $(UseDevBundle) --reset-cache --sourcemap-output $(BundleSourceMapDir)\%(JsBundleEntry.Filename).bundle.packager.map $(BundlerExtraArgs)] to build bundle file." />
-		<Exec Command='$(BundleCliCommand) --platform windows --entry-file "%(JsBundleEntry.FullPath)" --bundle-output "$(BundleOutputPath)%(JsBundleEntry.Filename).bundle" --dev $(UseDevBundle) --reset-cache --sourcemap-output "$(BundleSourceMapDir)\%(JsBundleEntry.Filename).bundle.packager.map" $(BundlerExtraArgs)' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
+		<Exec Command='$(BundleCliCommand) --platform windows --entry-file "%(JsBundleEntry.FullPath)" --assets-dest $(BundleContentRoot) --bundle-output "$(BundleOutputPath)%(JsBundleEntry.Filename).bundle" --dev $(UseDevBundle) --reset-cache --sourcemap-output "$(BundleSourceMapDir)\%(JsBundleEntry.Filename).bundle.packager.map" $(BundlerExtraArgs)' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
 	</Target>
 </Project>

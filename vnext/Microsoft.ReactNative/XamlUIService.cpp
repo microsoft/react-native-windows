@@ -4,17 +4,28 @@
 #include "pch.h"
 #include "XamlUIService.h"
 #include "XamlUIService.g.cpp"
+
+#ifndef USE_FABRIC
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
-#include "DynamicWriter.h"
 #include "ShadowNodeBase.h"
 #include "Views/ShadowNodeBase.h"
+#endif
+
+#include "DynamicWriter.h"
 #include "XamlView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 XamlUIService::XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context(context) {}
 
+/*static*/ winrt::Microsoft::ReactNative::XamlUIService XamlUIService::FromContext(IReactContext context) {
+  return context.Properties()
+      .Get(XamlUIService::XamlUIServiceProperty().Handle())
+      .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
+}
+
+#ifndef USE_FABRIC
 xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noexcept {
   if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
     auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(reactTag);
@@ -24,12 +35,6 @@ xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noex
     return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
   }
   return nullptr;
-}
-
-/*static*/ winrt::Microsoft::ReactNative::XamlUIService XamlUIService::FromContext(IReactContext context) {
-  return context.Properties()
-      .Get(XamlUIService::XamlUIServiceProperty().Handle())
-      .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
 }
 
 void XamlUIService::DispatchEvent(
@@ -64,6 +69,7 @@ winrt::Microsoft::ReactNative::ReactRootView XamlUIService::GetReactRootView(
   }
   return nullptr;
 }
+#endif
 
 /*static*/ ReactPropertyId<XamlUIService> XamlUIService::XamlUIServiceProperty() noexcept {
   static ReactPropertyId<XamlUIService> uiManagerProperty{L"ReactNative.UIManager", L"XamlUIManager"};

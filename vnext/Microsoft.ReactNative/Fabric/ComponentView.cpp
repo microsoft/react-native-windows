@@ -14,6 +14,7 @@
 #include <Fabric/Composition/RootComponentView.h>
 #include "AbiEventEmitter.h"
 #include "AbiShadowNode.h"
+#include "ReactCoreInjection.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct RootComponentView;
@@ -21,11 +22,12 @@ struct RootComponentView;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ComponentView::ComponentView(facebook::react::Tag tag, winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_tag(tag), m_reactContext(reactContext) {}
-
-void ComponentView::MarkAsCustomComponent() noexcept {
-  m_customComponent = true;
+ComponentView::ComponentView(
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder)
+    : m_tag(tag), m_reactContext(reactContext) {
+  m_builder.copy_from(builder);
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -51,16 +53,13 @@ void ComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   m_children.InsertAt(index, childComponentView);
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
-  if (m_mountChildComponentViewHandler) {
-    m_mountChildComponentViewHandler(*this, winrt::make<MountChildComponentViewArgs>(childComponentView, index));
+  if (m_builder && m_builder->MountChildComponentViewHandler()) {
+    m_builder->MountChildComponentViewHandler()(
+        *this, winrt::make<MountChildComponentViewArgs>(childComponentView, index));
   }
   if (m_mounted) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->onMounted();
   }
-}
-
-void ComponentView::MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler) noexcept {
-  m_mountChildComponentViewHandler = handler;
 }
 
 void ComponentView::onMounted() noexcept {
@@ -70,6 +69,10 @@ void ComponentView::onMounted() noexcept {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->onMounted();
   }
   m_mountedEvent(*this, *this);
+}
+
+bool ComponentView::isMounted() noexcept {
+  return m_mounted;
 }
 
 winrt::event_token ComponentView::Mounted(
@@ -84,15 +87,13 @@ void ComponentView::Mounted(winrt::event_token const &token) noexcept {
 void ComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  if (m_mountChildComponentViewHandler) {
-    m_mountChildComponentViewHandler(*this, winrt::make<MountChildComponentViewArgs>(childComponentView, index));
+  if (m_builder && m_builder->UnmountChildComponentViewHandler()) {
+    m_builder->UnmountChildComponentViewHandler()(
+        *this, winrt::make<UnmountChildComponentViewArgs>(childComponentView, index));
   }
   m_children.RemoveAt(index);
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->onUnmounted();
-}
-void ComponentView::UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler) noexcept {
-  m_unmountChildComponentViewHandler = handler;
 }
 
 void ComponentView::onUnmounted() noexcept {
@@ -143,13 +144,9 @@ uint32_t UnmountChildComponentViewArgs::Index() const noexcept {
 void ComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  if (m_updatePropsDelegate) {
-    m_updatePropsDelegate(*this, userProps(props), oldProps ? userProps(oldProps) : nullptr);
+  if (m_builder && m_builder->UpdatePropsHandler()) {
+    m_builder->UpdatePropsHandler()(*this, userProps(props), oldProps ? userProps(oldProps) : nullptr);
   }
-}
-
-void ComponentView::UpdatePropsHandler(const UpdatePropsDelegate &handler) noexcept {
-  m_updatePropsDelegate = handler;
 }
 
 const winrt::Microsoft::ReactNative::IComponentProps ComponentView::userProps(
@@ -160,26 +157,18 @@ const winrt::Microsoft::ReactNative::IComponentProps ComponentView::userProps(
 }
 
 void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
-  if (m_updateEventEmitterHandler) {
-    m_updateEventEmitterHandler(*this, winrt::make<EventEmitter>(eventEmitter));
+  if (m_builder && m_builder->UpdateEventEmitterHandler()) {
+    m_builder->UpdateEventEmitterHandler()(*this, winrt::make<EventEmitter>(eventEmitter));
   }
-}
-
-void ComponentView::UpdateEventEmitterHandler(const UpdateEventEmitterDelegate &handler) noexcept {
-  m_updateEventEmitterHandler = handler;
 }
 
 void ComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
   // Avoid new-ing up a new AbiComponentState on every state change if we are not a custom component
-  if (m_updateStateDelegate) {
-    m_updateStateDelegate(*this, winrt::make<::Microsoft::ReactNative::AbiComponentState>(state));
+  if (m_builder && m_builder->UpdateStateHandler()) {
+    m_builder->UpdateStateHandler()(*this, winrt::make<::Microsoft::ReactNative::AbiComponentState>(state));
   }
-}
-
-void ComponentView::UpdateStateHandler(const UpdateStateDelegate &handler) noexcept {
-  m_updateStateDelegate = handler;
 }
 
 LayoutMetricsChangedArgs::LayoutMetricsChangedArgs(
@@ -211,6 +200,10 @@ void ComponentView::updateLayoutMetrics(
        layoutMetrics.frame.size.height},
       layoutMetrics.pointScaleFactor};
 
+  if (m_builder && m_builder->UpdateLayoutMetricsHandler()) {
+    m_builder->UpdateLayoutMetricsHandler()(*this, newMetrics, oldMetrics);
+  }
+
   m_layoutMetrics = layoutMetrics;
 
   m_layoutMetricsChangedEvent(*this, winrt::make<LayoutMetricsChangedArgs>(newMetrics, oldMetrics));
@@ -235,13 +228,9 @@ void ComponentView::LayoutMetricsChanged(winrt::event_token const &token) noexce
   m_layoutMetricsChangedEvent.remove(token);
 }
 
-void ComponentView::FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler) noexcept {
-  m_finalizeUpdateHandler = handler;
-}
-
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
-  if (m_finalizeUpdateHandler) {
-    m_finalizeUpdateHandler(*this, updateMask);
+  if (m_builder && m_builder->FinalizeUpdateHandler()) {
+    m_builder->FinalizeUpdateHandler()(*this, updateMask);
   }
 }
 
@@ -252,14 +241,21 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
   return {};
 }
 
-void ComponentView::CustomCommandHandler(const HandleCommandDelegate &handler) noexcept {
-  m_customCommandHandler = handler;
+void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  if (m_builder && m_builder->CustomCommandHandler()) {
+    m_builder->CustomCommandHandler()(*this, args);
+  }
 }
 
-void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
-  if (m_customCommandHandler) {
-    m_customCommandHandler(*this, args);
+HWND ComponentView::GetHwndForParenting() noexcept {
+  if (m_parent) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)
+        ->GetHwndForParenting();
   }
+
+  // Fallback if we do not know any more specific HWND
+  return reinterpret_cast<HWND>(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
+      m_reactContext.Properties().Handle()));
 }
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *ComponentView::rootComponentView()
@@ -330,10 +326,13 @@ bool ComponentView::runOnChildren(
         return true;
     }
   } else {
-    // TODO is this conversion from rend correct?
-    for (auto it = m_children.end(); it != m_children.begin(); --it) {
-      if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
-        return true;
+    if (m_children.Size()) {
+      auto it = m_children.end();
+      do {
+        it--;
+        if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
+          return true;
+      } while (it != m_children.begin());
     }
   }
   return false;
@@ -342,6 +341,14 @@ bool ComponentView::runOnChildren(
 RECT ComponentView::getClientRect() const noexcept {
   assert(false);
   return {};
+}
+
+winrt::Windows::Foundation::Point ComponentView::ScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept {
+  return rootComponentView()->ConvertScreenToLocal(pt);
+}
+
+winrt::Windows::Foundation::Point ComponentView::LocalToScreen(winrt::Windows::Foundation::Point pt) noexcept {
+  return rootComponentView()->ConvertLocalToScreen(pt);
 }
 
 // The offset from this elements parent to its children (accounts for things like scroll position)
@@ -632,7 +639,6 @@ facebook::react::Tag ComponentView::hitTest(
 }
 
 winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
-  assert(false);
   return nullptr;
 }
 

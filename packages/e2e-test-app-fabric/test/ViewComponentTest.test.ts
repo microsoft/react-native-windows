@@ -192,15 +192,6 @@ describe('View Tests', () => {
     const dump = await dumpVisualTree('view-test-logical-border-color');
     expect(dump).toMatchSnapshot();
   });
-  test('Views can have layout conformance', async () => {
-    await searchBox('lay');
-    const componentsTab = await app.findElementByTestID(
-      'view-test-layout-conformance',
-    );
-    await componentsTab.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('view-test-layout-conformance');
-    expect(dump).toMatchSnapshot();
-  });
   test('Views can have a nativeid', async () => {
     await searchBox('nat');
     const componentsTab = await app.findElementByTestID('nativeid');

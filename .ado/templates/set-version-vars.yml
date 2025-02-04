@@ -9,10 +9,8 @@ parameters:
       - Continuous
 
 steps:
-  - task: CmdLine@2
+  - script: node ./.ado/scripts/setVersionEnvVars.js ${{ parameters.buildEnvironment }} $(Build.BuildId)
     displayName: Set version variables
     name: setVersionEnvVars
-    inputs:
-      script: node ./.ado/scripts/setVersionEnvVars.js ${{ parameters.buildEnvironment }} $(Build.BuildId)
     env:
       RUNNER_TEMP: $(Build.StagingDirectory)

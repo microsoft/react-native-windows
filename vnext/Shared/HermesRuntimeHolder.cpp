@@ -9,7 +9,7 @@
 #include <JSI/decorator.h>
 #include <NodeApiJsiRuntime.h>
 #include <crash/verifyElseCrash.h>
-#include <cxxreact/SystraceSection.h>
+#include <cxxreact/TraceSection.h>
 #include <jsinspector-modern/ConsoleMessage.h>
 #include <jsinspector-modern/InspectorInterfaces.h>
 #include <mutex>
@@ -311,7 +311,7 @@ HermesRuntimeHolder::~HermesRuntimeHolder() {
 }
 
 void HermesRuntimeHolder::initRuntime() noexcept {
-  facebook::react::SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
+  facebook::react::TraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
   std::shared_ptr<facebook::react::DevSettings> devSettings = m_weakDevSettings.lock();
   VerifyElseCrash(devSettings);
 

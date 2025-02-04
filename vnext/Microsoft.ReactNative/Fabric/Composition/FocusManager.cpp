@@ -14,8 +14,10 @@ int32_t LostFocusEventArgs::OriginalSource() noexcept {
   return m_originalSource;
 }
 
-GotFocusEventArgs::GotFocusEventArgs(const winrt::Microsoft::ReactNative::ComponentView &originalSource)
-    : m_originalSource(originalSource ? originalSource.Tag() : -1) {}
+GotFocusEventArgs::GotFocusEventArgs(
+    const winrt::Microsoft::ReactNative::ComponentView &originalSource,
+    winrt::Microsoft::ReactNative::FocusNavigationDirection direction)
+    : m_originalSource(originalSource ? originalSource.Tag() : -1), m_direction(direction) {}
 int32_t GotFocusEventArgs::OriginalSource() noexcept {
   return m_originalSource;
 }

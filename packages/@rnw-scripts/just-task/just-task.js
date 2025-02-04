@@ -17,6 +17,8 @@ const {
   logger,
   jestTask,
   option,
+  prettierCheckTask,
+  prettierTask,
   series,
   task,
   tscTask,
@@ -24,6 +26,8 @@ const {
   parallel,
   addResolvePath,
 } = require('just-scripts');
+
+const findUp = require('find-up');
 
 // Allow searching from current directory to be able to resolve peerDependencies
 // when running without hoisting
@@ -65,11 +69,14 @@ task('depcheck', async () => {
   }
 });
 
+task('prettier', prettierCheckTask({ files: path.resolve(process.cwd(), '**', '*.{ts,tsx,js,jsx}'), ignorePath: findUp.sync('.prettierignore', {cwd: __dirname}) }));
+task('prettier:fix', prettierTask({ files: path.resolve(process.cwd(), '**', '*.{ts,tsx,js,jsx}'), ignorePath: findUp.sync('.prettierignore', {cwd: __dirname}) }));
+
 task('eslint', eslintTask());
 task('eslint:fix', eslintTask({fix: true}));
 
-task('lint', parallel('eslint', 'depcheck'));
-task('lint:fix', series('eslint:fix'));
+task('lint', parallel(series('prettier', 'eslint'), 'depcheck'));
+task('lint:fix', series('prettier:fix', 'eslint:fix'));
 
 task('watch', tscWatchTask({outDir: 'lib-commonjs'}));
 

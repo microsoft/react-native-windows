@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <Tracing.h>
-#include <cxxreact/SystraceSection.h>
+#include <cxxreact/TraceSection.h>
 
 #include "ChakraHelpers.h"
 #include "ChakraPlatform.h"

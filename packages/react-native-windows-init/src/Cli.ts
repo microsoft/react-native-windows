@@ -300,19 +300,28 @@ function installReactNativeWindows(
 
   const parsedVersion = semver.parse(version);
   if (parsedVersion) {
-    const newSteps = "Please see https://microsoft.github.io/react-native-windows/docs/getting-started for the latest method for adding RNW to your project.";
-    if (parsedVersion.minor > 75
-      || (parsedVersion.minor === 0
-          && parsedVersion.prerelease.length > 1
-          && parsedVersion.prerelease[0] === 'canary'
-          && typeof parsedVersion.prerelease[1] === 'number'
-          && parsedVersion.prerelease[1] > 843)
-      ) {
+    const newSteps =
+      'Please see https://microsoft.github.io/react-native-windows/docs/getting-started for the latest method for adding RNW to your project.';
+    if (
+      parsedVersion.minor > 75 ||
+      (parsedVersion.minor === 0 &&
+        parsedVersion.prerelease.length > 1 &&
+        parsedVersion.prerelease[0] === 'canary' &&
+        typeof parsedVersion.prerelease[1] === 'number' &&
+        parsedVersion.prerelease[1] > 843)
+    ) {
       // Full-stop, you can't use the command anymore.
-      throw new CodedError('UnsupportedReactNativeVersion', `react-native-windows-init only supports react-native-windows <= 0.75. ${newSteps}`);
+      throw new CodedError(
+        'UnsupportedReactNativeVersion',
+        `react-native-windows-init only supports react-native-windows <= 0.75. ${newSteps}`,
+      );
     } else if (parsedVersion.minor === 75) {
       // You can use the command for now, but it will be deprecated soon.
-      console.warn(chalk.yellow(`Warning: react-native-windows-init will be deprecated for RNW > 0.75. ${newSteps}`));
+      console.warn(
+        chalk.yellow(
+          `Warning: react-native-windows-init will be deprecated for RNW > 0.75. ${newSteps}`,
+        ),
+      );
     }
   }
 

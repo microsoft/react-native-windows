@@ -1,8 +1,124 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+This log was last generated on Fri, 31 Jan 2025 18:29:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.118
+
+Fri, 31 Jan 2025 18:29:44 GMT
+
+### Changes
+
+- Fix UpdateState on generated base class (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.117
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Initial integrate (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.116
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 0.0.0-canary.115
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 0.0.0-canary.114
+
+Tue, 10 Dec 2024 06:29:30 GMT
+
+### Changes
+
+- Add linter exception to generated headers for Office builds (email not defined)
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.113
+
+Sat, 23 Nov 2024 06:23:15 GMT
+
+### Changes
+
+- Integrate 10/20 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.112
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- test integrate 10/15 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.111
+
+Fri, 08 Nov 2024 06:20:37 GMT
+
+### Changes
+
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
+
+## 0.0.0-canary.110
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+
+## 0.0.0-canary.109
+
+Sat, 02 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.108
+
+Sat, 19 Oct 2024 05:29:46 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.107
+
+Wed, 16 Oct 2024 05:20:54 GMT
+
+### Changes
+
+- 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.106
+
+Mon, 07 Oct 2024 19:54:26 GMT
+
+### Changes
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 0.0.0-canary.104
 

@@ -22,5 +22,14 @@ ImageRequest ImageManager::requestImage(const ImageSource &imageSource, SurfaceI
   return ((Microsoft::ReactNative::WindowsImageManager *)self_)->requestImage(imageSource, surfaceId);
 }
 
+ImageRequest ImageManager::requestImage(
+    const ImageSource &imageSource,
+    SurfaceId /*surfaceId*/,
+    const ImageRequestParams & /*imageRequestParams*/,
+    Tag /*tag*/) const {
+  // Not implemented.
+  return {imageSource, nullptr, {}};
+}
+
 } // namespace react
 } // namespace facebook

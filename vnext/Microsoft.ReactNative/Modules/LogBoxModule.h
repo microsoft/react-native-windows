@@ -32,9 +32,10 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   winrt::Microsoft::ReactNative::ReactContext m_context;
 #ifdef USE_FABRIC
   HWND m_hwnd{nullptr};
-#endif // USE_FABRIC
+#else
   xaml::Controls::Primitives::Popup m_popup{nullptr};
   winrt::Microsoft::ReactNative::ReactRootView m_logBoxContent{nullptr};
+#endif // USE_FABRIC
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::event_token m_tokenClosed;
 };

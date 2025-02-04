@@ -30,14 +30,14 @@ const DrawingIslandExample = () => {
       <View style={{width: 200, height: 200, backgroundColor: 'red'}} />
       <View style={{width: 200, height: 200, backgroundColor: 'blue'}} />
       <View style={{width: 200, height: 200, backgroundColor: 'pink'}} />
-      <DrawingIsland style={{flex: 1, minWidth: 200}}/>
+      <DrawingIsland style={{flex: 1, minWidth: 200}} />
       <View style={{width: 200, height: 200, backgroundColor: 'green'}} />
       <View style={{width: 200, height: 200, backgroundColor: 'red'}} />
       <View style={{width: 200, height: 200, backgroundColor: 'blue'}} />
       <View style={{width: 200, height: 200, backgroundColor: 'pink'}} />
     </View>
   );
-}
+};
 
 exports.displayName = 'DrawingIslandExample';
 exports.framework = 'React';
@@ -50,9 +50,7 @@ exports.examples = [
   {
     title: 'Drawing Island',
     render: function (): React.Node {
-      return (
-        <DrawingIslandExample />
-      );
+      return <DrawingIslandExample />;
     },
-  }
+  },
 ];

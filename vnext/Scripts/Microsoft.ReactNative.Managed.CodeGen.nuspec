@@ -18,6 +18,6 @@
     <file src="$nugetroot$\Microsoft.ReactNative.Managed.CodeGen.targets" target="build"/>
     <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build"/>
 
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed.CodeGen\Publish\**" target="tools"/>
+    <file src="$nugetroot$\ReactWindows\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed.CodeGen\Publish\**" target="tools"/>
   </files>
 </package>

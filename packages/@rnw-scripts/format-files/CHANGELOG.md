@@ -1,8 +1,45 @@
 # Change Log - @rnw-scripts/format-files
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.1.52
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 1.1.51
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 1.1.50
+
+Sat, 19 Oct 2024 05:29:47 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 1.1.49
+
+Mon, 07 Oct 2024 19:54:27 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 1.1.47
 

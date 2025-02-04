@@ -10,8 +10,8 @@
 #include "InstanceManager.h"
 
 // React Native
-#include <ReactCommon/LongLivedObject.h>
 #include <cxxreact/Instance.h>
+#include <react/bridging/LongLivedObject.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 
 // Standard Library

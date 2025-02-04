@@ -78,7 +78,7 @@ struct InspectorProtocol {
     for (const facebook::react::jsinspector_modern::InspectorPage &page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
-      pageDyn["title"] = page.title;
+      pageDyn["title"] = page.description;
       pageDyn["vm"] = page.vm;
 
       pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSuccess;
@@ -148,17 +148,14 @@ InspectorPackagerConnection::InspectorPackagerConnection(
 winrt::fire_and_forget InspectorPackagerConnection::disconnectAsync() {
   co_await winrt::resume_background();
   std::string reason("Explicit close");
-  m_packagerWebSocketConnection->Close(
-      Microsoft::React::Networking::WinRTWebSocketResource::CloseCode::GoingAway, reason);
+  m_packagerWebSocketConnection->Close(Microsoft::React::Networking::IWebSocketResource::CloseCode::GoingAway, reason);
   co_return;
 }
 
 winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
   co_await winrt::resume_background();
 
-  std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
-  m_packagerWebSocketConnection =
-      std::make_shared<Microsoft::React::Networking::WinRTWebSocketResource>(std::move(certExceptions));
+  m_packagerWebSocketConnection = Microsoft::React::Networking::IWebSocketResource::Make();
 
   m_packagerWebSocketConnection->SetOnError([](const Microsoft::React::Networking::IWebSocketResource::Error &err) {
     facebook::react::tracing::error(err.Message.c_str());

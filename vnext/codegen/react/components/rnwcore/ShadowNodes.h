@@ -40,17 +40,6 @@ using AndroidDrawerLayoutShadowNode = ConcreteViewShadowNode<
     AndroidDrawerLayoutEventEmitter,
     AndroidDrawerLayoutState>;
 
-JSI_EXPORT extern const char AndroidHorizontalScrollContentViewComponentName[];
-
-/*
- * `ShadowNode` for <AndroidHorizontalScrollContentView> component.
- */
-using AndroidHorizontalScrollContentViewShadowNode = ConcreteViewShadowNode<
-    AndroidHorizontalScrollContentViewComponentName,
-    AndroidHorizontalScrollContentViewProps,
-    AndroidHorizontalScrollContentViewEventEmitter,
-    AndroidHorizontalScrollContentViewState>;
-
 JSI_EXPORT extern const char AndroidSwipeRefreshLayoutComponentName[];
 
 /*

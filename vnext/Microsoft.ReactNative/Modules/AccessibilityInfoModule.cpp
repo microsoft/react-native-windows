@@ -3,9 +3,11 @@
 
 #include "pch.h"
 #include "AccessibilityInfoModule.h"
+#ifndef USE_FABRIC
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Controls.h>
 #include <XamlUtils.h>
+#endif
 #include <uiautomationcore.h>
 #include <uiautomationcoreapi.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
@@ -30,6 +32,16 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &o
   });
 }
 
+void AccessibilityInfo::isInvertColorsEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  // TODO: implement ##14206
+  onSuccess(false);
+}
+
+void AccessibilityInfo::isHighTextContrastEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  // TODO: implement #14099
+  onSuccess(false);
+}
+
 void AccessibilityInfo::isTouchExplorationEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   onSuccess(UiaClientsAreListening());
 }
@@ -40,6 +52,7 @@ void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
 
 void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noexcept {
   m_context.UIDispatcher().Post([context = m_context, announcement = std::move(announcement)] {
+#ifndef USE_FABRIC
     // Windows requires a specific element to announce from. Unfortunately the react-native API does not provide a tag
     // So we need to find something to raise the notification event from.
     xaml::UIElement element{nullptr};
@@ -67,6 +80,7 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
         xaml::Automation::Peers::AutomationNotificationProcessing::ImportantMostRecent,
         hstr,
         hstr);
+#endif
   });
 }
 
@@ -74,6 +88,11 @@ void AccessibilityInfo::getRecommendedTimeoutMillis(
     double mSec,
     std::function<void(double)> const &onSuccess) noexcept {
   onSuccess(mSec);
+}
+
+void AccessibilityInfo::isGrayscaleEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  // TODO: implement #14207
+  onSuccess(false);
 }
 
 void AccessibilityInfo::isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept {

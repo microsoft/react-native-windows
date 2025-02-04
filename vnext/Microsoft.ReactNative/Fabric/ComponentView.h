@@ -11,6 +11,8 @@
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/LayoutMetrics.h>
 
+#include <ComponentView.Experimental.interop.h>
+#include <Fabric/Composition/ReactCompositionViewComponentBuilder.h>
 #include <Fabric/Composition/Theme.h>
 #include <uiautomationcore.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
@@ -37,11 +39,11 @@ struct BringIntoViewOptions {
   bool AnimationDesired{false};
   // NaN will bring the element fully into view aligned to the nearest edge of the viewport
   float HorizontalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
-  float HorizontalOffset{0};
+  float HorizontalOffset{20};
   std::optional<facebook::react::Rect> TargetRect;
   // NaN will bring the element fully into view aligned to the nearest edge of the viewport
   float VerticalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
-  float VerticalOffset{0};
+  float VerticalOffset{20};
 };
 
 struct LayoutMetricsChangedArgs : public LayoutMetricsChangedArgsT<LayoutMetricsChangedArgs> {
@@ -77,8 +79,12 @@ struct UnmountChildComponentViewArgs : public UnmountChildComponentViewArgsT<Unm
   uint32_t m_index;
 };
 
-struct ComponentView : public ComponentViewT<ComponentView> {
-  ComponentView(facebook::react::Tag tag, winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+struct ComponentView
+    : public ComponentViewT<ComponentView, ::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop> {
+  ComponentView(
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+      winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder);
 
   virtual std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept;
   virtual void updateProps(
@@ -105,14 +111,16 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   // returns true if the fn ever returned true
   bool runOnChildren(bool forward, Mso::Functor<bool(ComponentView &)> &fn) noexcept;
   virtual RECT getClientRect() const noexcept;
+  winrt::Windows::Foundation::Point ScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept;
+  winrt::Windows::Foundation::Point LocalToScreen(winrt::Windows::Foundation::Point pt) noexcept;
   // The offset from this elements parent to its children (accounts for things like scroll position)
   virtual facebook::react::Point getClientOffset() const noexcept;
   virtual void onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs &args) noexcept;
   virtual void onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs &args) noexcept;
   virtual void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
-  void MarkAsCustomComponent() noexcept;
   virtual void onMounted() noexcept;
+  bool isMounted() noexcept;
   virtual void onUnmounted() noexcept;
   void onDestroying() noexcept;
 
@@ -209,19 +217,14 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   // Notify up the tree to bring the rect into view by scrolling as needed
   virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept;
 
+  // Eventually PopupContentLink and similar APIs will remove the need for this.
+  virtual HWND GetHwndForParenting() noexcept;
+
   virtual const winrt::Microsoft::ReactNative::IComponentProps userProps(
       facebook::react::Props::Shared const &props) noexcept;
 
   void UserData(const winrt::IInspectable &userData) noexcept;
   winrt::IInspectable UserData() const noexcept;
-
-  void CustomCommandHandler(const HandleCommandDelegate &handler) noexcept;
-  void UpdatePropsHandler(const UpdatePropsDelegate &handler) noexcept;
-  void UpdateStateHandler(const UpdateStateDelegate &handler) noexcept;
-  void UpdateEventEmitterHandler(const UpdateEventEmitterDelegate &handler) noexcept;
-  void MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler) noexcept;
-  void UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler) noexcept;
-  void FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler) noexcept;
 
   virtual void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -250,7 +253,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
  protected:
-  bool m_customComponent : 1 {false}; // Is a user custom component, and so needs to call external override functions
+  winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder> m_builder;
   bool m_mounted : 1 {false};
   const facebook::react::Tag m_tag;
   winrt::IInspectable m_userData;
@@ -261,14 +264,6 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{
       winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>()};
-
-  UpdatePropsDelegate m_updatePropsDelegate{nullptr};
-  UpdateStateDelegate m_updateStateDelegate{nullptr};
-  HandleCommandDelegate m_customCommandHandler{nullptr};
-  UpdateFinalizerDelegate m_finalizeUpdateHandler{nullptr};
-  MountChildComponentViewDelegate m_mountChildComponentViewHandler{nullptr};
-  UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler{nullptr};
-  UpdateEventEmitterDelegate m_updateEventEmitterHandler{nullptr};
 
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs>>

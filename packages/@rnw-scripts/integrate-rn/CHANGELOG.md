@@ -1,8 +1,71 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:25 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.54
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.90
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @react-native-windows/package-utils to v0.0.0-canary.87
+- Bump react-native-platform-override to v1.9.51
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 1.4.53
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.89
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @react-native-windows/package-utils to v0.0.0-canary.86
+- Bump react-native-platform-override to v1.9.50
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 1.4.52
+
+Sat, 19 Oct 2024 05:29:48 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.88
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @react-native-windows/package-utils to v0.0.0-canary.85
+- Bump react-native-platform-override to v1.9.49
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 1.4.51
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Patches
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+
+## 1.4.50
+
+Mon, 07 Oct 2024 19:54:25 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.87
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @react-native-windows/package-utils to v0.0.0-canary.84
+- Bump react-native-platform-override to v1.9.48
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 1.4.48
 

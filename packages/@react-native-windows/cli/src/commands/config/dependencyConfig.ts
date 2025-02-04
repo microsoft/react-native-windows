@@ -55,6 +55,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
       csPackageProviders: [],  // (req) Array of fully qualified cs IReactPackageProviders, ie: 'NugetModule.ReactPackageProvider'
     },
   ],
+  rnwConfig: Record<string, any>, // (auto) Object extracted from 'react-native-windows' property in package.json
 }
 
 Example react-native.config.js for a 'MyModule':
@@ -105,6 +106,7 @@ export interface WindowsDependencyConfig {
   solutionFile?: string | null;
   projects: ProjectDependency[];
   nugetPackages: NuGetPackageDependency[];
+  rnwConfig?: Record<string, any>;
 }
 
 /**
@@ -322,6 +324,8 @@ export function dependencyConfigWindows(
           csNamespaces,
           csPackageProviders,
         });
+
+        result.rnwConfig ??= configUtils.getRnwConfig(folder, projectFile);
       } else {
         const projectPath = path.relative(sourceDir, projectFile);
         result.projects.push({

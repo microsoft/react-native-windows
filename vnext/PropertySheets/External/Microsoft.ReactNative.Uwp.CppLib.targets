@@ -8,6 +8,12 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Check that the correct props have already been imported. -->
+  <Target Name="EnsureRnwExternalPropsLoadedTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwExternalPropsLoaded)'!='Microsoft.ReactNative.Uwp.CppLib.props'">
+    <Warning Text="Property `RnwExternalPropsLoaded` was incorrectly set to '$(RnwExternalPropsLoaded)'. Please ensure your project imports 'Microsoft.ReactNative.Uwp.CppLib.props' before importing this prop sheet." />
+  </Target>
+
+  <!-- Import targets common to all projects. -->
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Common.targets" />
 
   <!-- Due to visual studio unconditionally showing references, we have to trick it by making it impossible for VS to find the reference differences between building as source and building as NuGet -->

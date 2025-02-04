@@ -26,6 +26,14 @@
               BuildPlatform: x86
               UseFabric: false
               CreateApiDocs: true
+            - Name: X86Release
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              UseFabric: false
+            - Name: Arm64Release
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
+              UseFabric: false
             - Name: X64DebugFabric
               BuildConfiguration: Debug
               BuildPlatform: x64
@@ -44,6 +52,10 @@
               UseFabric: true
         - BuildEnvironment: SecurePullRequest
           Matrix:
+            - Name: X64Release
+              BuildConfiguration: Release
+              BuildPlatform: x64
+              UseFabric: false
             - Name: X64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: x64

@@ -17,7 +17,7 @@ exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 20",
+    "Size": "103, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -40,7 +40,7 @@ exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 20",
+    "Size": "103, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -63,7 +63,7 @@ exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 20",
+    "Size": "103, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -86,7 +86,7 @@ exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 20",
+    "Size": "103, 19",
     "Visual Type": "SpriteVisual",
   },
 }

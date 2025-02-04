@@ -17,6 +17,12 @@ struct AccessibilityInfo : public std::enable_shared_from_this<AccessibilityInfo
   REACT_METHOD(isReduceMotionEnabled)
   void isReduceMotionEnabled(std::function<void(bool)> const &onSuccess) noexcept;
 
+  REACT_METHOD(isInvertColorsEnabled)
+  void isInvertColorsEnabled(std::function<void(bool)> const &onSuccess) noexcept;
+
+  REACT_METHOD(isHighTextContrastEnabled)
+  void isHighTextContrastEnabled(std::function<void(bool)> const &onSuccess) noexcept;
+
   REACT_METHOD(isTouchExplorationEnabled)
   void isTouchExplorationEnabled(std::function<void(bool)> const &onSuccess) noexcept;
 
@@ -28,6 +34,9 @@ struct AccessibilityInfo : public std::enable_shared_from_this<AccessibilityInfo
 
   REACT_METHOD(getRecommendedTimeoutMillis)
   void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const &onSuccess) noexcept;
+
+  REACT_METHOD(isGrayscaleEnabled)
+  void isGrayscaleEnabled(std::function<void(bool)> const &onSuccess) noexcept;
 
   REACT_METHOD(isAccessibilityServiceEnabled)
   void isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept;

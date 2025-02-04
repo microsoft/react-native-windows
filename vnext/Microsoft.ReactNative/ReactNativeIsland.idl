@@ -6,6 +6,8 @@ import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
 import "Theme.idl";
 import "IReactViewComponentBuilder.idl";
+import "CompositionComponentView.idl";
+
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -78,11 +80,14 @@ namespace Microsoft.ReactNative
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
   runtimeclass ReactNativeIsland
   {
-    DOC_STRING("Creates a new instance of @ReactNativeIsland.")
+    DOC_STRING("Creates a new instance of @ReactNativeIsland. Can be implemented with a ReactViewHost or a ComponentView with reactContext")
     ReactNativeIsland();
 
 #ifdef USE_WINUI3
     ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor);
+
+    DOC_STRING("Used to create react portals, such as a native modal component.")
+    static ReactNativeIsland CreatePortal(Microsoft.ReactNative.Composition.PortalComponentView portal);
 #endif
 
     DOC_STRING(
@@ -97,7 +102,7 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Single ScaleFactor {get; set;};
-
+  
     Single FontSizeMultiplier { get; };
 
     DOC_STRING("Move focus to this @ReactNativeIsland")

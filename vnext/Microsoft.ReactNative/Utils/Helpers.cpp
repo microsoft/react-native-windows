@@ -14,8 +14,6 @@
 #endif // USE_FABRIC
 
 namespace winrt {
-using namespace xaml::Controls::Primitives;
-using namespace xaml::Media;
 using namespace Windows::Foundation::Metadata;
 } // namespace winrt
 

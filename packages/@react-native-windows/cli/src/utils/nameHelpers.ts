@@ -26,7 +26,12 @@ export function cleanName(str: string): string {
 }
 
 export function isValidProjectNamespace(namespace: string): boolean {
-  if (namespace.split(/[.]+/).map(isValidProjectName).every(x => x)) {
+  if (
+    namespace
+      .split(/[.]+/)
+      .map(isValidProjectName)
+      .every(x => x)
+  ) {
     // Validate that every part of the namespace is a valid project name
     return true;
   }

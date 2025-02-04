@@ -15,6 +15,7 @@
 #include "ReactInstanceSettings.h"
 
 #ifdef USE_FABRIC
+#include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactPackageBuilder.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
@@ -24,7 +25,7 @@ using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 using namespace xaml;
 using namespace xaml::Controls;
 #endif
@@ -87,7 +88,7 @@ ReactNativeHostProperty() noexcept {
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
 #endif
 
@@ -105,7 +106,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   m_packageBuilder = make<ReactPackageBuilder>(
       modulesProvider,
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
       viewManagersProvider,
 #endif
       turboModulesProvider,
@@ -114,6 +115,10 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       uriImageManager,
 #endif
       m_instanceSettings.UseWebDebugger());
+
+#ifdef USE_FABRIC
+  winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
+#endif
 
   if (auto packageProviders = InstanceSettings().PackageProviders()) {
     for (auto const &packageProvider : packageProviders) {
@@ -163,7 +168,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.SetJsiEngine(static_cast<Mso::React::JSIEngine>(m_instanceSettings.JSIEngineOverride()));
 
   reactOptions.ModuleProvider = modulesProvider;
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   reactOptions.ViewManagerProvider = viewManagersProvider;
 #endif
   reactOptions.TurboModuleProvider = turboModulesProvider;

@@ -267,7 +267,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\TraceSection.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h">

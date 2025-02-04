@@ -14,7 +14,7 @@ exports[`XamlTest Layout 1`] = `
   "Left": 0,
   "Margin": "0,0,0,0",
   "Padding": "0,0,0,0",
-  "Top": 31,
+  "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
   "Width": 800,

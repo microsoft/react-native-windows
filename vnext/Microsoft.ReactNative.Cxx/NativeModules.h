@@ -411,6 +411,26 @@ constexpr bool MatchInputArg<std::string, std::wstring>() noexcept {
   return true;
 }
 
+template <>
+constexpr bool MatchInputArg<std::string, winrt::hstring>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<winrt::hstring, std::string>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<std::wstring, winrt::hstring>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<winrt::hstring, std::wstring>() noexcept {
+  return true;
+}
+
 template <class TResult, class TInputArgs, class TOutputCallbacks, class TOutputPromises>
 struct MethodSignature {
   using Result = TResult;

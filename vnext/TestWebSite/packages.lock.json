@@ -1,6 +1,6 @@
 {
   "version": 1,
   "dependencies": {
-    "net7.0": {}
+    "net8.0": {}
   }
 }

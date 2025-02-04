@@ -50,8 +50,8 @@ export interface SharedOptions {
   modulesCxx: boolean;
   modulesTypeScriptTypes: boolean;
   modulesWindows: boolean;
-  componentsWindows: boolean,
-  internalComponents: boolean,
+  componentsWindows: boolean;
+  internalComponents: boolean;
   namespace: string;
   outputDirectory: string;
   cppStringType: CppStringTypes;
@@ -324,25 +324,24 @@ export function generate(
       moduleName => schema.modules[moduleName].type === 'Component',
     )
   ) {
-    const componentGenerators = [
-    ];
+    const componentGenerators = [];
 
     if (internalComponents) {
       componentGenerators.push(
-      generatorComponentDescriptorH,
-      generatorEventEmitterCPP,
-      generatorEventEmitterH,
-      generatorPropsCPP,
-      generatorPropsH,
-      generatorShadowNodeCPP,
-      generatorShadowNodeH,
-      generatorStateCPP,
-      generatorStateH
+        generatorComponentDescriptorH,
+        generatorEventEmitterCPP,
+        generatorEventEmitterH,
+        generatorPropsCPP,
+        generatorPropsH,
+        generatorShadowNodeCPP,
+        generatorShadowNodeH,
+        generatorStateCPP,
+        generatorStateH,
       );
     }
 
     if (componentsWindows) {
-    const generateComponentWindows = createComponentGenerator({
+      const generateComponentWindows = createComponentGenerator({
         namespace,
         cppStringType,
       });

@@ -24,7 +24,8 @@ const headerTemplate = `/*
  * in a way that also verifies at compile time that the native module matches the interface required
  * by the TurboModule JS spec.
  */
-#pragma once`;
+#pragma once
+// clang-format off`;
 
 const specTemplate = `::_MODULE_CUSTOM_TYPES_REFLECTION_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
@@ -118,11 +119,16 @@ export function createNM2Generator({
         });
         let tuples = `
   static constexpr auto methods = std::tuple{
-${methods.traversedPropertyTuples}${methods.traversedEventEmitterTuples ? '\n' : ''}${methods.traversedEventEmitterTuples}
+${methods.traversedPropertyTuples}${
+          methods.traversedEventEmitterTuples ? '\n' : ''
+        }${methods.traversedEventEmitterTuples}
   };`;
         let checks = `
     constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();`;
-        let errors = methods.traversedProperties + (methods.traversedEventEmitters ? '\n' : '') + methods.traversedEventEmitters;
+        let errors =
+          methods.traversedProperties +
+          (methods.traversedEventEmitters ? '\n' : '') +
+          methods.traversedEventEmitters;
 
         // prepare constants
         const constants = generateValidateConstants(nativeModule, aliases);

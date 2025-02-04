@@ -225,10 +225,10 @@ const validAttributesForNonEventProps = {
   experimental_filter: {
     process: require('../StyleSheet/processFilter').default,
   },
-  experimental_boxShadow: {
+  boxShadow: {
     process: require('../StyleSheet/processBoxShadow').default,
   },
-  experimental_mixBlendMode: true,
+  mixBlendMode: true,
   isolation: true,
 
   borderTopWidth: true,
@@ -339,6 +339,7 @@ const validAttributesForNonEventProps = {
   alignContent: true,
   position: true,
   aspectRatio: true,
+  boxSizing: true,
 
   // Also declared as ViewProps
   // overflow: true,
@@ -347,8 +348,6 @@ const validAttributesForNonEventProps = {
   direction: true,
 
   style: ReactNativeStyleAttributes,
-
-  experimental_layoutConformance: true,
 };
 
 // Props for bubbling and direct events

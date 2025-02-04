@@ -8,7 +8,7 @@
  * @format
  */
 
-import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import type {HostInstance} from '../../Renderer/shims/ReactNativeTypes';
 import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
   KeyEvent, // Windows
@@ -39,10 +39,10 @@ import * as React from 'react';
 import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 type ReactRefSetter<T> = {current: null | T, ...} | ((ref: null | T) => mixed);
-type TextInputInstance = React.ElementRef<HostComponent<mixed>> & {
+type TextInputInstance = HostInstance & {
   +clear: () => void,
   +isFocused: () => boolean,
-  +getNativeRef: () => ?React.ElementRef<HostComponent<mixed>>,
+  +getNativeRef: () => ?HostInstance,
   +setSelection: (start: number, end: number) => void,
 };
 
@@ -250,7 +250,12 @@ export type TextContentType =
   | 'birthdate'
   | 'birthdateDay'
   | 'birthdateMonth'
-  | 'birthdateYear';
+  | 'birthdateYear'
+  | 'cellularEID'
+  | 'cellularIMEI'
+  | 'dateTime'
+  | 'flightNumber'
+  | 'shipmentTrackingNumber';
 
 export type enterKeyHintType =
   // Cross Platform
@@ -267,6 +272,12 @@ export type enterKeyHintType =
 type PasswordRules = string;
 
 type IOSProps = $ReadOnly<{|
+  /**
+   * If true, the keyboard shortcuts (undo/redo and copy buttons) are disabled. The default value is false.
+   * @platform ios
+   */
+  disableKeyboardShortcuts?: ?boolean,
+
   /**
    * When the clear button should appear on the right side of the text view.
    * This property is supported only for single-line TextInput component.
@@ -318,6 +329,12 @@ type IOSProps = $ReadOnly<{|
   inputAccessoryViewID?: ?string,
 
   /**
+   * An optional label that overrides the default input accessory view button label.
+   * @platform ios
+   */
+  inputAccessoryViewButtonLabel?: ?string,
+
+  /**
    * Determines the color of the keyboard.
    * @platform ios
    */
@@ -366,6 +383,19 @@ type IOSProps = $ReadOnly<{|
    * @platform ios
    */
   lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
+
+  /**
+   * Set line break mode on iOS.
+   * @platform ios
+   */
+  lineBreakModeIOS?: ?(
+    | 'wordWrapping'
+    | 'char'
+    | 'clip'
+    | 'head'
+    | 'middle'
+    | 'tail'
+  ),
 
   /**
    * If `false`, the iOS system will not insert an extra space after a paste operation
@@ -1065,7 +1095,7 @@ function useTextInputStateSynchronization_STATE({
   props: Props,
   mostRecentEventCount: number,
   selection: ?Selection,
-  inputRef: React.RefObject<null | React.ElementRef<HostComponent<mixed>>>,
+  inputRef: React.RefObject<null | HostInstance>,
   text: string,
   viewCommands: ViewCommands,
 }): {
@@ -1146,7 +1176,7 @@ function useTextInputStateSynchronization_REFS({
   props: Props,
   mostRecentEventCount: number,
   selection: ?Selection,
-  inputRef: React.RefObject<null | React.ElementRef<HostComponent<mixed>>>,
+  inputRef: React.RefObject<null | HostInstance>,
   text: string,
   viewCommands: ViewCommands,
 }): {
@@ -1336,6 +1366,9 @@ function InternalTextInput(props: Props): React.Node {
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-selected': ariaSelected,
+    'aria-readonly': ariaReadOnly, // Windows
+    'aria-multiselectable': ariaMultiselectable, // Windows
+    'aria-required': ariaRequired, // Windows
     accessibilityState,
     id,
     tabIndex,
@@ -1346,7 +1379,7 @@ function InternalTextInput(props: Props): React.Node {
     ...otherProps
   } = props;
 
-  const inputRef = useRef<null | React.ElementRef<HostComponent<mixed>>>(null);
+  const inputRef = useRef<null | HostInstance>(null);
 
   const selection: ?Selection =
     propsSelection == null
@@ -1360,11 +1393,12 @@ function InternalTextInput(props: Props): React.Node {
     typeof props.value === 'string'
       ? props.value
       : typeof props.defaultValue === 'string'
-      ? props.defaultValue
-      : '';
+        ? props.defaultValue
+        : '';
 
   const viewCommands =
-    WindowsTextInputCommands || AndroidTextInputCommands || // [Windows]
+    WindowsTextInputCommands || // [Windows]
+    AndroidTextInputCommands ||
     (props.multiline === true
       ? RCTMultilineTextInputNativeCommands
       : RCTSinglelineTextInputNativeCommands);
@@ -1442,10 +1476,14 @@ function InternalTextInput(props: Props): React.Node {
             }
           },
           isFocused(): boolean {
-            const currentlyFocusedInput = TextInputState.currentlyFocusedInput();
-            return currentlyFocusedInput !== null && currentlyFocusedInput === inputRef.current;
+            const currentlyFocusedInput =
+              TextInputState.currentlyFocusedInput();
+            return (
+              currentlyFocusedInput !== null &&
+              currentlyFocusedInput === inputRef.current
+            );
           },
-          getNativeRef(): ?React.ElementRef<HostComponent<mixed>> {
+          getNativeRef(): ?HostInstance {
             return inputRef.current;
           },
           setSelection(start: number, end: number): void {
@@ -1599,7 +1637,7 @@ function InternalTextInput(props: Props): React.Node {
 
   // TextInput handles onBlur and onFocus events
   // so omitting onBlur and onFocus pressability handlers here.
-  const {onBlur, onFocus, ...eventHandlers} = usePressability(config) || {};
+  const {onBlur, onFocus, ...eventHandlers} = usePressability(config);
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
@@ -1659,7 +1697,10 @@ function InternalTextInput(props: Props): React.Node {
     ariaChecked != null ||
     ariaDisabled != null ||
     ariaExpanded != null ||
-    ariaSelected != null
+    ariaSelected != null ||
+    ariaReadOnly != null || // Windows
+    ariaMultiselectable != null || // Windows
+    ariaRequired != null // Windows
   ) {
     _accessibilityState = {
       busy: ariaBusy ?? accessibilityState?.busy,
@@ -1667,6 +1708,10 @@ function InternalTextInput(props: Props): React.Node {
       disabled: ariaDisabled ?? accessibilityState?.disabled,
       expanded: ariaExpanded ?? accessibilityState?.expanded,
       selected: ariaSelected ?? accessibilityState?.selected,
+      readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+      multiselectable:
+        ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+      required: ariaRequired ?? accessibilityState?.required, // Windows
     };
   }
 
@@ -1950,11 +1995,11 @@ const autoCompleteWebToTextContentTypeMap = {
   username: 'username',
 };
 
-const ExportedForwardRef: React.AbstractComponent<
-  React.ElementConfig<typeof InternalTextInput>,
-  TextInputInstance,
+const ExportedForwardRef: component(
+  ref: React.RefSetter<TextInputInstance>,
+  ...props: React.ElementConfig<typeof InternalTextInput>
   // $FlowFixMe[incompatible-call]
-> = React.forwardRef(function TextInput(
+) = React.forwardRef(function TextInput(
   {
     allowFontScaling = true,
     rejectResponderTermination = true,
@@ -1998,12 +2043,12 @@ const ExportedForwardRef: React.AbstractComponent<
         textContentType != null
           ? textContentType
           : Platform.OS === 'ios' &&
-            autoComplete &&
-            autoComplete in autoCompleteWebToTextContentTypeMap
-          ? // $FlowFixMe[invalid-computed-prop]
-            // $FlowFixMe[prop-missing]
-            autoCompleteWebToTextContentTypeMap[autoComplete]
-          : textContentType
+              autoComplete &&
+              autoComplete in autoCompleteWebToTextContentTypeMap
+            ? // $FlowFixMe[invalid-computed-prop]
+              // $FlowFixMe[prop-missing]
+              autoCompleteWebToTextContentTypeMap[autoComplete]
+            : textContentType
       }
       {...restProps}
       forwardedRef={forwardedRef}

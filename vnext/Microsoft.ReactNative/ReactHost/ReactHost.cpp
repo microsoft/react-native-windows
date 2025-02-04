@@ -6,6 +6,9 @@
 #include <ReactPropertyBag.h>
 #include <winrt/Windows.Foundation.h>
 
+#include <react/featureflags/ReactNativeFeatureFlags.h>
+#include <react/featureflags/ReactNativeFeatureFlagsDefaults.h>
+
 namespace Mso::React {
 
 //=============================================================================================
@@ -277,6 +280,18 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(EnableDefaultCrashHandlerProperty()), false);
 }
 
+class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
+ public:
+  bool disableEventLoopOnBridgeless() override {
+    return true; // Disable event loop until we are on a JSI version that supports microtasks
+  }
+
+  bool enableCppPropsIteratorSetter() override {
+    return true;
+  }
+};
+
+std::once_flag g_FlagInitFeatureFlags;
 //=============================================================================================
 // ReactHost implementation
 //=============================================================================================
@@ -284,7 +299,11 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 ReactHost::ReactHost(Mso::DispatchQueue const &queue) noexcept
     : Super{EnsureSerialQueue(queue)},
       m_options{Queue(), m_mutex},
-      m_notifyWhenClosed{ReactHostRegistry::Register(*this), Queue(), m_mutex} {}
+      m_notifyWhenClosed{ReactHostRegistry::Register(*this), Queue(), m_mutex} {
+  std::call_once(g_FlagInitFeatureFlags, []() noexcept {
+    facebook::react::ReactNativeFeatureFlags::override(std::make_unique<ReactNativeWindowsFeatureFlags>());
+  });
+}
 
 ReactHost::~ReactHost() noexcept {}
 

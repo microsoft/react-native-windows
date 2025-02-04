@@ -3,7 +3,7 @@
 
 import "IReactContext.idl";
 import "IReactModuleBuilder.idl";
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 import "IViewManager.idl";
 #endif
 
@@ -14,7 +14,7 @@ namespace Microsoft.ReactNative
   DOC_STRING("Provides information about a custom native module. See @IReactModuleBuilder.")
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   DOC_STRING("Provides information about a custom view manager. See @IViewManager.")
   delegate IViewManager ReactViewManagerProvider();
 #endif
@@ -32,7 +32,7 @@ namespace Microsoft.ReactNative
     "NOTE: TurboModules using JSI directly will not run correctly while using @ReactInstanceSettings.UseWebDebugger")
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
     DOC_STRING("Adds a custom view manager. See @ReactViewManagerProvider.")
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
 #endif

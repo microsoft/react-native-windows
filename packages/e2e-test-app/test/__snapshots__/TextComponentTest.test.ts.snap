@@ -153,7 +153,7 @@ exports[`TextTest Text background color 1`] = `
       "TextHighlighters": [
         {
           "Background": "#FFFFAAAA",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 84,
@@ -163,7 +163,7 @@ exports[`TextTest Text background color 1`] = `
         },
         {
           "Background": "#FFAAAAFF",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 69,
@@ -172,8 +172,18 @@ exports[`TextTest Text background color 1`] = `
           ],
         },
         {
+          "Background": "#FFAAAAFF",
+          "Foreground": "#FF000000",
+          "Ranges": [
+            {
+              "Length": 52,
+              "StartIndex": 32,
+            },
+          ],
+        },
+        {
           "Background": "#FFAAFFAA",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 25,
@@ -201,7 +211,7 @@ exports[`TextTest Text background color 1`] = `
       "TextHighlighters": [
         {
           "Background": "#4D646464",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 70,
@@ -211,7 +221,17 @@ exports[`TextTest Text background color 1`] = `
         },
         {
           "Background": "#4D646464",
-          "Foreground": null,
+          "Foreground": "#FF000000",
+          "Ranges": [
+            {
+              "Length": 45,
+              "StartIndex": 25,
+            },
+          ],
+        },
+        {
+          "Background": "#4D646464",
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 13,
@@ -1427,43 +1447,43 @@ exports[`TextTest Text letter spacing 1`] = `
 }
 `;
 
-exports[`TextTest Text line height 1`] = `
+exports[`TextTest Text line height greater than font size 1`] = `
 {
-  "AutomationId": "text-line-height",
-  "Background": null,
-  "BorderBrush": "#E4000000",
-  "BorderThickness": "0,0,0,0",
+  "AutomationId": "line-height-greater-than-font-size",
   "Clip": null,
-  "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Height": 140,
+  "Foreground": "#FF000000",
+  "Height": 177,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
   "Padding": "0,0,0,0",
+  "Text": "Holisticly formulate inexpensive ideas before best-of-breed benefits. Continually expedite magnetic potentialities rather than client-focused interfaces.",
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
-  "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": [
-    {
-      "Clip": null,
-      "FlowDirection": "LeftToRight",
-      "Foreground": "#FF000000",
-      "Height": 140,
-      "HorizontalAlignment": "Stretch",
-      "Left": 0,
-      "Margin": "0,0,0,0",
-      "Padding": "0,0,0,0",
-      "Text": "Holisticly formulate inexpensive ideas before best-of-breed benefits. Continually expedite magnetic potentialities rather than client-focused interfaces.",
-      "Top": 0,
-      "VerticalAlignment": "Stretch",
-      "Visibility": "Visible",
-      "Width": 300,
-      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
-    },
-  ],
+  "Width": 300,
+  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+}
+`;
+
+exports[`TextTest Text line height less than font size 1`] = `
+{
+  "AutomationId": "line-height-less-than-font-size",
+  "Clip": null,
+  "FlowDirection": "LeftToRight",
+  "Foreground": "#FF000000",
+  "Height": 42,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Text": "Holisticly formulate inexpensive ideas before best-of-breed benefits. Continually expedite magnetic potentialities rather than client-focused interfaces.",
+  "Top": 182,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 300,
+  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
 
@@ -1707,6 +1727,46 @@ exports[`TextTest Text shadows 1`] = `
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
   "Width": 718,
+  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+}
+`;
+
+exports[`TextTest Text single line height greater than font size 1`] = `
+{
+  "AutomationId": "line-height-single-line-greater-than-font-size",
+  "Clip": null,
+  "FlowDirection": "LeftToRight",
+  "Foreground": "#FF000000",
+  "Height": 22,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Text": "Holisticly formulate",
+  "Top": 239,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 300,
+  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+}
+`;
+
+exports[`TextTest Text single line height less than font size 1`] = `
+{
+  "AutomationId": "line-height-single-line-less-than-font-size",
+  "Clip": null,
+  "FlowDirection": "LeftToRight",
+  "Foreground": "#FF000000",
+  "Height": 10,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Text": "Holisticly formulate",
+  "Top": 229,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 300,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;

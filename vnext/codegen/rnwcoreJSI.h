@@ -21,61 +21,63 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
-  virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+  virtual bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) = 0;
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
-  virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
-  virtual bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) = 0;
-  virtual bool enableBackgroundStyleApplicator(jsi::Runtime &rt) = 0;
-  virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
+  virtual bool disableEventLoopOnBridgeless(jsi::Runtime &rt) = 0;
+  virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
+  virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
+  virtual bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
   virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
-  virtual bool enableFabricRendererExclusively(jsi::Runtime &rt) = 0;
+  virtual bool enableFabricRenderer(jsi::Runtime &rt) = 0;
+  virtual bool enableFixForViewCommandRace(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
+  virtual bool enableImagePrefetchingAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
-  virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) = 0;
+  virtual bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableReportEventPaintTime(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
-  virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
-  virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool fixDifferentiatorEmittingUpdatesWithWrongParentTag(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
-  virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
-  virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
   virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
-  virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
-  virtual bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) = 0;
   virtual bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool useRawPropsJsiValue(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
-  virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
-  virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
   virtual bool useTurboModuleInterop(jsi::Runtime &rt) = 0;
+  virtual bool useTurboModules(jsi::Runtime &rt) = 0;
 
 };
 
 template <typename T>
 class JSI_EXPORT NativeReactNativeFeatureFlagsCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeReactNativeFeatureFlagsCxx";
@@ -102,21 +104,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
     }
-    bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) override {
+    bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::allowRecursiveCommitsWithSynchronousMountOnAndroid) == 1,
-          "Expected allowRecursiveCommitsWithSynchronousMountOnAndroid(...) to have 1 parameters");
+          bridging::getParameterCount(&T::commonTestFlagWithoutNativeImplementation) == 1,
+          "Expected commonTestFlagWithoutNativeImplementation(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::allowRecursiveCommitsWithSynchronousMountOnAndroid, jsInvoker_, instance_);
-    }
-    bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
-          "Expected batchRenderingUpdatesInEventLoop(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
+          rt, &T::commonTestFlagWithoutNativeImplementation, jsInvoker_, instance_);
     }
     bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -126,45 +120,53 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::completeReactInstanceCreationOnBgThreadOnAndroid, jsInvoker_, instance_);
     }
-    bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) override {
+    bool disableEventLoopOnBridgeless(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::destroyFabricSurfacesInReactInstanceManager) == 1,
-          "Expected destroyFabricSurfacesInReactInstanceManager(...) to have 1 parameters");
+          bridging::getParameterCount(&T::disableEventLoopOnBridgeless) == 1,
+          "Expected disableEventLoopOnBridgeless(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::destroyFabricSurfacesInReactInstanceManager, jsInvoker_, instance_);
+          rt, &T::disableEventLoopOnBridgeless, jsInvoker_, instance_);
     }
-    bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) override {
+    bool disableMountItemReorderingAndroid(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableAlignItemsBaselineOnFabricIOS) == 1,
-          "Expected enableAlignItemsBaselineOnFabricIOS(...) to have 1 parameters");
+          bridging::getParameterCount(&T::disableMountItemReorderingAndroid) == 1,
+          "Expected disableMountItemReorderingAndroid(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableAlignItemsBaselineOnFabricIOS, jsInvoker_, instance_);
+          rt, &T::disableMountItemReorderingAndroid, jsInvoker_, instance_);
     }
-    bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) override {
+    bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableAndroidMixBlendModeProp) == 1,
-          "Expected enableAndroidMixBlendModeProp(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableAccumulatedUpdatesInRawPropsAndroid) == 1,
+          "Expected enableAccumulatedUpdatesInRawPropsAndroid(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableAndroidMixBlendModeProp, jsInvoker_, instance_);
+          rt, &T::enableAccumulatedUpdatesInRawPropsAndroid, jsInvoker_, instance_);
     }
-    bool enableBackgroundStyleApplicator(jsi::Runtime &rt) override {
+    bool enableBridgelessArchitecture(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableBackgroundStyleApplicator) == 1,
-          "Expected enableBackgroundStyleApplicator(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableBridgelessArchitecture) == 1,
+          "Expected enableBridgelessArchitecture(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableBackgroundStyleApplicator, jsInvoker_, instance_);
+          rt, &T::enableBridgelessArchitecture, jsInvoker_, instance_);
     }
-    bool enableCleanTextInputYogaNode(jsi::Runtime &rt) override {
+    bool enableCppPropsIteratorSetter(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableCleanTextInputYogaNode) == 1,
-          "Expected enableCleanTextInputYogaNode(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableCppPropsIteratorSetter) == 1,
+          "Expected enableCppPropsIteratorSetter(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableCleanTextInputYogaNode, jsInvoker_, instance_);
+          rt, &T::enableCppPropsIteratorSetter, jsInvoker_, instance_);
+    }
+    bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableDeletionOfUnmountedViews) == 1,
+          "Expected enableDeletionOfUnmountedViews(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableDeletionOfUnmountedViews, jsInvoker_, instance_);
     }
     bool enableEagerRootViewAttachment(jsi::Runtime &rt) override {
       static_assert(
@@ -190,13 +192,21 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableFabricLogs, jsInvoker_, instance_);
     }
-    bool enableFabricRendererExclusively(jsi::Runtime &rt) override {
+    bool enableFabricRenderer(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableFabricRendererExclusively) == 1,
-          "Expected enableFabricRendererExclusively(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableFabricRenderer) == 1,
+          "Expected enableFabricRenderer(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableFabricRendererExclusively, jsInvoker_, instance_);
+          rt, &T::enableFabricRenderer, jsInvoker_, instance_);
+    }
+    bool enableFixForViewCommandRace(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableFixForViewCommandRace) == 1,
+          "Expected enableFixForViewCommandRace(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableFixForViewCommandRace, jsInvoker_, instance_);
     }
     bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) override {
       static_assert(
@@ -214,6 +224,22 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableIOSViewClipToPaddingBox, jsInvoker_, instance_);
     }
+    bool enableImagePrefetchingAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableImagePrefetchingAndroid) == 1,
+          "Expected enableImagePrefetchingAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableImagePrefetchingAndroid, jsInvoker_, instance_);
+    }
+    bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableLayoutAnimationsOnAndroid) == 1,
+          "Expected enableLayoutAnimationsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableLayoutAnimationsOnAndroid, jsInvoker_, instance_);
+    }
     bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableLayoutAnimationsOnIOS) == 1,
@@ -230,13 +256,21 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableLongTaskAPI, jsInvoker_, instance_);
     }
-    bool enableMicrotasks(jsi::Runtime &rt) override {
+    bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableMicrotasks) == 1,
-          "Expected enableMicrotasks(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableNewBackgroundAndBorderDrawables) == 1,
+          "Expected enableNewBackgroundAndBorderDrawables(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableMicrotasks, jsInvoker_, instance_);
+          rt, &T::enableNewBackgroundAndBorderDrawables, jsInvoker_, instance_);
+    }
+    bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enablePreciseSchedulingForPremountItemsOnAndroid) == 1,
+          "Expected enablePreciseSchedulingForPremountItemsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enablePreciseSchedulingForPremountItemsOnAndroid, jsInvoker_, instance_);
     }
     bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -286,21 +320,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::excludeYogaFromRawProps, jsInvoker_, instance_);
     }
-    bool fetchImagesInViewPreallocation(jsi::Runtime &rt) override {
+    bool fixDifferentiatorEmittingUpdatesWithWrongParentTag(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::fetchImagesInViewPreallocation) == 1,
-          "Expected fetchImagesInViewPreallocation(...) to have 1 parameters");
+          bridging::getParameterCount(&T::fixDifferentiatorEmittingUpdatesWithWrongParentTag) == 1,
+          "Expected fixDifferentiatorEmittingUpdatesWithWrongParentTag(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::fetchImagesInViewPreallocation, jsInvoker_, instance_);
-    }
-    bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixIncorrectScrollViewStateUpdateOnAndroid) == 1,
-          "Expected fixIncorrectScrollViewStateUpdateOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixIncorrectScrollViewStateUpdateOnAndroid, jsInvoker_, instance_);
+          rt, &T::fixDifferentiatorEmittingUpdatesWithWrongParentTag, jsInvoker_, instance_);
     }
     bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
       static_assert(
@@ -310,14 +336,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fixMappingOfEventPrioritiesBetweenFabricAndReact, jsInvoker_, instance_);
     }
-    bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixMissedFabricStateUpdatesOnAndroid) == 1,
-          "Expected fixMissedFabricStateUpdatesOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixMissedFabricStateUpdatesOnAndroid, jsInvoker_, instance_);
-    }
     bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid) == 1,
@@ -325,22 +343,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid, jsInvoker_, instance_);
-    }
-    bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::forceBatchingMountItemsOnAndroid) == 1,
-          "Expected forceBatchingMountItemsOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::forceBatchingMountItemsOnAndroid, jsInvoker_, instance_);
-    }
-    bool fuseboxEnabledDebug(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fuseboxEnabledDebug) == 1,
-          "Expected fuseboxEnabledDebug(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fuseboxEnabledDebug, jsInvoker_, instance_);
     }
     bool fuseboxEnabledRelease(jsi::Runtime &rt) override {
       static_assert(
@@ -374,14 +376,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
     }
-    bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::setAndroidLayoutDirection) == 1,
-          "Expected setAndroidLayoutDirection(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
-    }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::traceTurboModulePromiseRejectionsOnAndroid) == 1,
@@ -389,6 +383,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::traceTurboModulePromiseRejectionsOnAndroid, jsInvoker_, instance_);
+    }
+    bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useAlwaysAvailableJSErrorHandling) == 1,
+          "Expected useAlwaysAvailableJSErrorHandling(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useAlwaysAvailableJSErrorHandling, jsInvoker_, instance_);
     }
     bool useFabricInterop(jsi::Runtime &rt) override {
       static_assert(
@@ -406,14 +408,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useImmediateExecutorInAndroidBridgeless, jsInvoker_, instance_);
     }
-    bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
-          "Expected useModernRuntimeScheduler(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useModernRuntimeScheduler, jsInvoker_, instance_);
-    }
     bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useNativeViewConfigsInBridgelessMode) == 1,
@@ -421,14 +415,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
-    }
-    bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useNewReactImageViewBackgroundDrawing) == 1,
-          "Expected useNewReactImageViewBackgroundDrawing(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useNewReactImageViewBackgroundDrawing, jsInvoker_, instance_);
     }
     bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -446,6 +432,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useOptimizedEventBatchingOnAndroid, jsInvoker_, instance_);
     }
+    bool useRawPropsJsiValue(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useRawPropsJsiValue) == 1,
+          "Expected useRawPropsJsiValue(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useRawPropsJsiValue, jsInvoker_, instance_);
+    }
     bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useRuntimeShadowNodeReferenceUpdate) == 1,
@@ -453,22 +447,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useRuntimeShadowNodeReferenceUpdate, jsInvoker_, instance_);
-    }
-    bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useRuntimeShadowNodeReferenceUpdateOnLayout) == 1,
-          "Expected useRuntimeShadowNodeReferenceUpdateOnLayout(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useRuntimeShadowNodeReferenceUpdateOnLayout, jsInvoker_, instance_);
-    }
-    bool useStateAlignmentMechanism(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useStateAlignmentMechanism) == 1,
-          "Expected useStateAlignmentMechanism(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useStateAlignmentMechanism, jsInvoker_, instance_);
     }
     bool useTurboModuleInterop(jsi::Runtime &rt) override {
       static_assert(
@@ -478,9 +456,179 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useTurboModuleInterop, jsInvoker_, instance_);
     }
+    bool useTurboModules(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useTurboModules) == 1,
+          "Expected useTurboModules(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useTurboModules, jsInvoker_, instance_);
+    }
 
   private:
     friend class NativeReactNativeFeatureFlagsCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig
+
+template <typename P0, typename P1>
+struct NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig {
+  P0 shouldReloadAndProfile;
+  P1 recordChangeDescriptions;
+  bool operator==(const NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig &other) const {
+    return shouldReloadAndProfile == other.shouldReloadAndProfile && recordChangeDescriptions == other.recordChangeDescriptions;
+  }
+};
+
+template <typename T>
+struct NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfigBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.shouldReloadAndProfile)>(rt, value.getProperty(rt, "shouldReloadAndProfile"), jsInvoker),
+      bridging::fromJs<decltype(types.recordChangeDescriptions)>(rt, value.getProperty(rt, "recordChangeDescriptions"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool shouldReloadAndProfileToJs(jsi::Runtime &rt, decltype(types.shouldReloadAndProfile) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool recordChangeDescriptionsToJs(jsi::Runtime &rt, decltype(types.recordChangeDescriptions) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.shouldReloadAndProfile) {
+      result.setProperty(rt, "shouldReloadAndProfile", bridging::toJs(rt, value.shouldReloadAndProfile.value(), jsInvoker));
+    }
+    if (value.recordChangeDescriptions) {
+      result.setProperty(rt, "recordChangeDescriptions", bridging::toJs(rt, value.recordChangeDescriptions.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig
+
+template <typename P0, typename P1>
+struct NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig {
+  P0 shouldReloadAndProfile;
+  P1 recordChangeDescriptions;
+  bool operator==(const NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig &other) const {
+    return shouldReloadAndProfile == other.shouldReloadAndProfile && recordChangeDescriptions == other.recordChangeDescriptions;
+  }
+};
+
+template <typename T>
+struct NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfigBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.shouldReloadAndProfile)>(rt, value.getProperty(rt, "shouldReloadAndProfile"), jsInvoker),
+      bridging::fromJs<decltype(types.recordChangeDescriptions)>(rt, value.getProperty(rt, "recordChangeDescriptions"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool shouldReloadAndProfileToJs(jsi::Runtime &rt, decltype(types.shouldReloadAndProfile) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool recordChangeDescriptionsToJs(jsi::Runtime &rt, decltype(types.recordChangeDescriptions) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "shouldReloadAndProfile", bridging::toJs(rt, value.shouldReloadAndProfile, jsInvoker));
+    result.setProperty(rt, "recordChangeDescriptions", bridging::toJs(rt, value.recordChangeDescriptions, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI : public TurboModule {
+protected:
+  NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void setReloadAndProfileConfig(jsi::Runtime &rt, jsi::Object config) = 0;
+  virtual jsi::Object getReloadAndProfileConfig(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeReactDevToolsRuntimeSettingsModuleCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "ReactDevToolsRuntimeSettingsModule";
+
+protected:
+  NativeReactDevToolsRuntimeSettingsModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeReactDevToolsRuntimeSettingsModuleCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void setReloadAndProfileConfig(jsi::Runtime &rt, jsi::Object config) override {
+      static_assert(
+          bridging::getParameterCount(&T::setReloadAndProfileConfig) == 2,
+          "Expected setReloadAndProfileConfig(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setReloadAndProfileConfig, jsInvoker_, instance_, std::move(config));
+    }
+    jsi::Object getReloadAndProfileConfig(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getReloadAndProfileConfig) == 1,
+          "Expected getReloadAndProfileConfig(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getReloadAndProfileConfig, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeReactDevToolsRuntimeSettingsModuleCxxSpec;
     T *instance_;
   };
 
@@ -494,19 +642,26 @@ protected:
 
 public:
   virtual void isReduceMotionEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
+  virtual void isInvertColorsEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
+  virtual void isHighTextContrastEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isTouchExplorationEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isAccessibilityServiceEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void setAccessibilityFocus(jsi::Runtime &rt, double reactTag) = 0;
   virtual void announceForAccessibility(jsi::Runtime &rt, jsi::String announcement) = 0;
   virtual void getRecommendedTimeoutMillis(jsi::Runtime &rt, double mSec, jsi::Function onSuccess) = 0;
+  virtual void isGrayscaleEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
 
 };
 
 template <typename T>
 class JSI_EXPORT NativeAccessibilityInfoCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "AccessibilityInfo";
@@ -532,6 +687,22 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::isReduceMotionEnabled, jsInvoker_, instance_, std::move(onSuccess));
+    }
+    void isInvertColorsEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
+      static_assert(
+          bridging::getParameterCount(&T::isInvertColorsEnabled) == 2,
+          "Expected isInvertColorsEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::isInvertColorsEnabled, jsInvoker_, instance_, std::move(onSuccess));
+    }
+    void isHighTextContrastEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
+      static_assert(
+          bridging::getParameterCount(&T::isHighTextContrastEnabled) == 2,
+          "Expected isHighTextContrastEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::isHighTextContrastEnabled, jsInvoker_, instance_, std::move(onSuccess));
     }
     void isTouchExplorationEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
       static_assert(
@@ -573,6 +744,14 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::getRecommendedTimeoutMillis, jsInvoker_, instance_, std::move(mSec), std::move(onSuccess));
     }
+    void isGrayscaleEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
+      static_assert(
+          bridging::getParameterCount(&T::isGrayscaleEnabled) == 2,
+          "Expected isGrayscaleEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::isGrayscaleEnabled, jsInvoker_, instance_, std::move(onSuccess));
+    }
 
   private:
     friend class NativeAccessibilityInfoCxxSpec;
@@ -592,6 +771,7 @@ public:
   virtual void getCurrentGrayscaleState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentInvertColorsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentReduceMotionState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
+  virtual void getCurrentDarkerSystemColorsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentPrefersCrossFadeTransitionsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentReduceTransparencyState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentVoiceOverState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
@@ -605,8 +785,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeAccessibilityManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "AccessibilityManager";
@@ -656,6 +840,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::getCurrentReduceMotionState, jsInvoker_, instance_, std::move(onSuccess), std::move(onError));
+    }
+    void getCurrentDarkerSystemColorsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) override {
+      static_assert(
+          bridging::getParameterCount(&T::getCurrentDarkerSystemColorsState) == 3,
+          "Expected getCurrentDarkerSystemColorsState(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::getCurrentDarkerSystemColorsState, jsInvoker_, instance_, std::move(onSuccess), std::move(onError));
     }
     void getCurrentPrefersCrossFadeTransitionsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) override {
       static_assert(
@@ -738,8 +930,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeActionSheetManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ActionSheetManager";
@@ -935,8 +1131,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeAlertManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "AlertManager";
@@ -1105,8 +1305,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeAnimatedModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeAnimatedModule";
@@ -1459,8 +1663,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeAnimatedTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeAnimatedTurboModule";
@@ -1696,8 +1904,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeAppearanceCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "Appearance";
@@ -1854,8 +2066,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeAppStateCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "AppState";
@@ -2065,8 +2281,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeAppThemeCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "AppTheme";
@@ -2168,8 +2388,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeBlobModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "BlobModule";
@@ -2267,8 +2491,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeBugReportingCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "BugReporting";
@@ -2327,8 +2555,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeClipboardCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "Clipboard";
@@ -2381,6 +2613,69 @@ private:
 };
 
 
+  class JSI_EXPORT NativeCPUTimeCxxSpecJSI : public TurboModule {
+protected:
+  NativeCPUTimeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual double getCPUTimeNanos(jsi::Runtime &rt) = 0;
+  virtual bool hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeCPUTimeCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "CPUTimeCxx";
+
+protected:
+  NativeCPUTimeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeCPUTimeCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeCPUTimeCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeCPUTimeCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    double getCPUTimeNanos(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getCPUTimeNanos) == 1,
+          "Expected getCPUTimeNanos(...) to have 1 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::getCPUTimeNanos, jsInvoker_, instance_);
+    }
+    bool hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::hasAccurateCPUTimeNanosForBenchmarks) == 1,
+          "Expected hasAccurateCPUTimeNanosForBenchmarks(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::hasAccurateCPUTimeNanosForBenchmarks, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeCPUTimeCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeDeviceEventManagerCxxSpecJSI : public TurboModule {
 protected:
   NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -2393,8 +2688,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDeviceEventManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "DeviceEventManager";
@@ -2693,8 +2992,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDeviceInfoCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "DeviceInfo";
@@ -2744,8 +3047,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDevLoadingViewCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "DevLoadingView";
@@ -2806,8 +3113,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDevMenuCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "DevMenu";
@@ -2899,8 +3210,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDevSettingsCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "DevSettings";
@@ -3025,83 +3340,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeDevToolsSettingsManagerCxxSpecJSI : public TurboModule {
-protected:
-  NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void setConsolePatchSettings(jsi::Runtime &rt, jsi::String newConsolePatchSettings) = 0;
-  virtual std::optional<jsi::String> getConsolePatchSettings(jsi::Runtime &rt) = 0;
-  virtual void setProfilingSettings(jsi::Runtime &rt, jsi::String newProfilingSettings) = 0;
-  virtual std::optional<jsi::String> getProfilingSettings(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDevToolsSettingsManagerCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "DevToolsSettingsManager";
-
-protected:
-  NativeDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeDevToolsSettingsManagerCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDevToolsSettingsManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void setConsolePatchSettings(jsi::Runtime &rt, jsi::String newConsolePatchSettings) override {
-      static_assert(
-          bridging::getParameterCount(&T::setConsolePatchSettings) == 2,
-          "Expected setConsolePatchSettings(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setConsolePatchSettings, jsInvoker_, instance_, std::move(newConsolePatchSettings));
-    }
-    std::optional<jsi::String> getConsolePatchSettings(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConsolePatchSettings) == 1,
-          "Expected getConsolePatchSettings(...) to have 1 parameters");
-
-      return bridging::callFromJs<std::optional<jsi::String>>(
-          rt, &T::getConsolePatchSettings, jsInvoker_, instance_);
-    }
-    void setProfilingSettings(jsi::Runtime &rt, jsi::String newProfilingSettings) override {
-      static_assert(
-          bridging::getParameterCount(&T::setProfilingSettings) == 2,
-          "Expected setProfilingSettings(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setProfilingSettings, jsInvoker_, instance_, std::move(newProfilingSettings));
-    }
-    std::optional<jsi::String> getProfilingSettings(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getProfilingSettings) == 1,
-          "Expected getProfilingSettings(...) to have 1 parameters");
-
-      return bridging::callFromJs<std::optional<jsi::String>>(
-          rt, &T::getProfilingSettings, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeDevToolsSettingsManagerCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   
 #pragma mark - NativeDialogManagerAndroidDialogOptions
 
@@ -3211,8 +3449,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDialogManagerAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "DialogManagerAndroid";
@@ -3384,8 +3626,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDialogManagerWindowsCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "Alert";
@@ -3600,7 +3846,6 @@ public:
   virtual void reportFatalException(jsi::Runtime &rt, jsi::String message, jsi::Array stack, double exceptionId) = 0;
   virtual void reportSoftException(jsi::Runtime &rt, jsi::String message, jsi::Array stack, double exceptionId) = 0;
   virtual void reportException(jsi::Runtime &rt, jsi::Object data) = 0;
-  virtual void updateExceptionMessage(jsi::Runtime &rt, jsi::String message, jsi::Array stack, double exceptionId) = 0;
   virtual void dismissRedbox(jsi::Runtime &rt) = 0;
 
 };
@@ -3608,8 +3853,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeExceptionsManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ExceptionsManager";
@@ -3652,14 +3901,6 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::reportException, jsInvoker_, instance_, std::move(data));
     }
-    void updateExceptionMessage(jsi::Runtime &rt, jsi::String message, jsi::Array stack, double exceptionId) override {
-      static_assert(
-          bridging::getParameterCount(&T::updateExceptionMessage) == 4,
-          "Expected updateExceptionMessage(...) to have 4 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::updateExceptionMessage, jsInvoker_, instance_, std::move(message), std::move(stack), std::move(exceptionId));
-    }
     void dismissRedbox(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::dismissRedbox) == 1,
@@ -3671,6 +3912,152 @@ private:
 
   private:
     friend class NativeExceptionsManagerCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - NativeFantomRenderFormatOptions
+
+template <typename P0, typename P1>
+struct NativeFantomRenderFormatOptions {
+  P0 includeRoot;
+  P1 includeLayoutMetrics;
+  bool operator==(const NativeFantomRenderFormatOptions &other) const {
+    return includeRoot == other.includeRoot && includeLayoutMetrics == other.includeLayoutMetrics;
+  }
+};
+
+template <typename T>
+struct NativeFantomRenderFormatOptionsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.includeRoot)>(rt, value.getProperty(rt, "includeRoot"), jsInvoker),
+      bridging::fromJs<decltype(types.includeLayoutMetrics)>(rt, value.getProperty(rt, "includeLayoutMetrics"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool includeRootToJs(jsi::Runtime &rt, decltype(types.includeRoot) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool includeLayoutMetricsToJs(jsi::Runtime &rt, decltype(types.includeLayoutMetrics) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "includeRoot", bridging::toJs(rt, value.includeRoot, jsInvoker));
+    result.setProperty(rt, "includeLayoutMetrics", bridging::toJs(rt, value.includeLayoutMetrics, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeFantomCxxSpecJSI : public TurboModule {
+protected:
+  NativeFantomCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void startSurface(jsi::Runtime &rt, double surfaceId, double viewportWidth, double viewportHeight, double devicePixelRatio) = 0;
+  virtual void stopSurface(jsi::Runtime &rt, double surfaceId) = 0;
+  virtual jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) = 0;
+  virtual void flushMessageQueue(jsi::Runtime &rt) = 0;
+  virtual jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) = 0;
+  virtual void reportTestSuiteResultsJSON(jsi::Runtime &rt, jsi::String results) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeFantomCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeFantomCxx";
+
+protected:
+  NativeFantomCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeFantomCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeFantomCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeFantomCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void startSurface(jsi::Runtime &rt, double surfaceId, double viewportWidth, double viewportHeight, double devicePixelRatio) override {
+      static_assert(
+          bridging::getParameterCount(&T::startSurface) == 5,
+          "Expected startSurface(...) to have 5 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::startSurface, jsInvoker_, instance_, std::move(surfaceId), std::move(viewportWidth), std::move(viewportHeight), std::move(devicePixelRatio));
+    }
+    void stopSurface(jsi::Runtime &rt, double surfaceId) override {
+      static_assert(
+          bridging::getParameterCount(&T::stopSurface) == 2,
+          "Expected stopSurface(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::stopSurface, jsInvoker_, instance_, std::move(surfaceId));
+    }
+    jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) override {
+      static_assert(
+          bridging::getParameterCount(&T::getMountingManagerLogs) == 2,
+          "Expected getMountingManagerLogs(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getMountingManagerLogs, jsInvoker_, instance_, std::move(surfaceId));
+    }
+    void flushMessageQueue(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::flushMessageQueue) == 1,
+          "Expected flushMessageQueue(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::flushMessageQueue, jsInvoker_, instance_);
+    }
+    jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) override {
+      static_assert(
+          bridging::getParameterCount(&T::getRenderedOutput) == 3,
+          "Expected getRenderedOutput(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::String>(
+          rt, &T::getRenderedOutput, jsInvoker_, instance_, std::move(surfaceId), std::move(config));
+    }
+    void reportTestSuiteResultsJSON(jsi::Runtime &rt, jsi::String results) override {
+      static_assert(
+          bridging::getParameterCount(&T::reportTestSuiteResultsJSON) == 2,
+          "Expected reportTestSuiteResultsJSON(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::reportTestSuiteResultsJSON, jsInvoker_, instance_, std::move(results));
+    }
+
+  private:
+    friend class NativeFantomCxxSpec;
     T *instance_;
   };
 
@@ -3691,8 +4078,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeFileReaderModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "FileReaderModule";
@@ -3752,8 +4143,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeFrameRateLoggerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "FrameRateLogger";
@@ -3827,8 +4222,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeHeadlessJsTaskSupportCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "HeadlessJsTaskSupport";
@@ -3944,8 +4343,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeI18nManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "I18nManager";
@@ -4093,8 +4496,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeImageEditorCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ImageEditingManager";
@@ -4203,8 +4610,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeImageLoaderAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ImageLoader";
@@ -4298,8 +4709,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeImageLoaderIOSCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ImageLoader";
@@ -4389,8 +4804,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeImageStoreAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ImageStoreManager";
@@ -4451,8 +4870,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeImageStoreIOSCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ImageStoreManager";
@@ -4537,8 +4960,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeIntentAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "IntentAndroid";
@@ -4619,8 +5046,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeJSCHeapCaptureCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "JSCHeapCapture";
@@ -4657,56 +5088,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeJSCSamplingProfilerCxxSpecJSI : public TurboModule {
-protected:
-  NativeJSCSamplingProfilerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void operationComplete(jsi::Runtime &rt, double token, std::optional<jsi::String> result, std::optional<jsi::String> error) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeJSCSamplingProfilerCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "JSCSamplingProfiler";
-
-protected:
-  NativeJSCSamplingProfilerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeJSCSamplingProfilerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeJSCSamplingProfilerCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeJSCSamplingProfilerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void operationComplete(jsi::Runtime &rt, double token, std::optional<jsi::String> result, std::optional<jsi::String> error) override {
-      static_assert(
-          bridging::getParameterCount(&T::operationComplete) == 4,
-          "Expected operationComplete(...) to have 4 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::operationComplete, jsInvoker_, instance_, std::move(token), std::move(result), std::move(error));
-    }
-
-  private:
-    friend class NativeJSCSamplingProfilerCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativeKeyboardObserverCxxSpecJSI : public TurboModule {
 protected:
   NativeKeyboardObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -4720,8 +5101,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeKeyboardObserverCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "KeyboardObserver";
@@ -4783,8 +5168,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeLinkingManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "LinkingManager";
@@ -4874,8 +5263,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeLogBoxCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "LogBox";
@@ -4933,8 +5326,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeModalManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ModalManager";
@@ -4995,8 +5392,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeNetworkingAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "Networking";
@@ -5081,8 +5482,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeNetworkingIOSCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "Networking";
@@ -5166,8 +5571,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativePermissionsAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "PermissionsAndroid";
@@ -5424,8 +5833,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativePlatformConstantsAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "PlatformConstants";
@@ -5575,8 +5988,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativePlatformConstantsIOSCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "PlatformConstants";
@@ -5695,8 +6112,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativePlatformConstantsWindowsCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "PlatformConstants";
@@ -5932,8 +6353,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativePushNotificationManagerIOSCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "PushNotificationManager";
@@ -6114,6 +6539,69 @@ private:
 };
 
 
+  class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpecJSI : public TurboModule {
+protected:
+  NativeReactDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) = 0;
+  virtual std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "ReactDevToolsSettingsManager";
+
+protected:
+  NativeReactDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeReactDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeReactDevToolsSettingsManagerCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeReactDevToolsSettingsManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) override {
+      static_assert(
+          bridging::getParameterCount(&T::setGlobalHookSettings) == 2,
+          "Expected setGlobalHookSettings(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setGlobalHookSettings, jsInvoker_, instance_, std::move(settings));
+    }
+    std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getGlobalHookSettings) == 1,
+          "Expected getGlobalHookSettings(...) to have 1 parameters");
+
+      return bridging::callFromJs<std::optional<jsi::String>>(
+          rt, &T::getGlobalHookSettings, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeReactDevToolsSettingsManagerCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeRedBoxCxxSpecJSI : public TurboModule {
 protected:
   NativeRedBoxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -6127,8 +6615,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeRedBoxCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "RedBox";
@@ -6286,8 +6778,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "SampleTurboModule";
@@ -6508,8 +7004,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSegmentFetcherCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "SegmentFetcher";
@@ -6568,8 +7068,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSettingsManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "SettingsManager";
@@ -6635,8 +7139,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeShareModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ShareModule";
@@ -6693,8 +7201,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSoundManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "SoundManager";
@@ -6783,8 +7295,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSourceCodeCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "SourceCode";
@@ -6837,8 +7353,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeStatusBarManagerAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "StatusBarManager";
@@ -6925,8 +7445,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeStatusBarManagerIOSCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "StatusBarManager";
@@ -7025,8 +7549,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeTimingCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "Timing";
@@ -7094,8 +7622,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeToastAndroidCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "ToastAndroid";
@@ -7189,8 +7721,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeUIManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "UIManager";
@@ -7410,8 +7946,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeVibrationCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "Vibration";
@@ -7490,8 +8030,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeWebSocketModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "WebSocketModule";
@@ -7679,8 +8223,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeIdleCallbacksCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeIdleCallbacksCxx";
@@ -7811,13 +8359,14 @@ struct NativeIntersectionObserverNativeIntersectionObserverEntryBridging {
 
 #pragma mark - NativeIntersectionObserverNativeIntersectionObserverObserveOptions
 
-template <typename P0, typename P1, typename P2>
+template <typename P0, typename P1, typename P2, typename P3>
 struct NativeIntersectionObserverNativeIntersectionObserverObserveOptions {
   P0 intersectionObserverId;
   P1 targetShadowNode;
   P2 thresholds;
+  P3 rootThresholds;
   bool operator==(const NativeIntersectionObserverNativeIntersectionObserverObserveOptions &other) const {
-    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds;
+    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds && rootThresholds == other.rootThresholds;
   }
 };
 
@@ -7832,7 +8381,8 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
     T result{
       bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
       bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
-      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker)};
+      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker),
+      bridging::fromJs<decltype(types.rootThresholds)>(rt, value.getProperty(rt, "rootThresholds"), jsInvoker)};
     return result;
   }
 
@@ -7848,6 +8398,10 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
   static jsi::Array thresholdsToJs(jsi::Runtime &rt, decltype(types.thresholds) value) {
     return bridging::toJs(rt, value);
   }
+
+  static std::optional<jsi::Array> rootThresholdsToJs(jsi::Runtime &rt, decltype(types.rootThresholds) value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
@@ -7858,6 +8412,9 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
     result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
     result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
     result.setProperty(rt, "thresholds", bridging::toJs(rt, value.thresholds, jsInvoker));
+    if (value.rootThresholds) {
+      result.setProperty(rt, "rootThresholds", bridging::toJs(rt, value.rootThresholds.value(), jsInvoker));
+    }
     return result;
   }
 };
@@ -7878,8 +8435,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeIntersectionObserverCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeIntersectionObserverCxx";
@@ -7960,8 +8521,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeMicrotasksCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeMicrotasksCxx";
@@ -8130,8 +8695,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeMutationObserverCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeMutationObserverCxx";
@@ -8201,106 +8770,22 @@ private:
 
 
   
-class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
-protected:
-  NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
-public:
-  virtual double now(jsi::Runtime &rt) = 0;
-  virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime) = 0;
-  virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
-  virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
-  virtual jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) = 0;
+#pragma mark - NativePerformancePerformanceObserverInit
 
-};
-
-template <typename T>
-class JSI_EXPORT NativePerformanceCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "NativePerformanceCxx";
-
-protected:
-  NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativePerformanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativePerformanceCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativePerformanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    double now(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::now) == 1,
-          "Expected now(...) to have 1 parameters");
-
-      return bridging::callFromJs<double>(
-          rt, &T::now, jsInvoker_, instance_);
-    }
-    void mark(jsi::Runtime &rt, jsi::String name, double startTime) override {
-      static_assert(
-          bridging::getParameterCount(&T::mark) == 3,
-          "Expected mark(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime));
-    }
-    void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
-      static_assert(
-          bridging::getParameterCount(&T::measure) == 7,
-          "Expected measure(...) to have 7 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
-    }
-    jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getSimpleMemoryInfo) == 1,
-          "Expected getSimpleMemoryInfo(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getSimpleMemoryInfo, jsInvoker_, instance_);
-    }
-    jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getReactNativeStartupTiming) == 1,
-          "Expected getReactNativeStartupTiming(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getReactNativeStartupTiming, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativePerformanceCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  
-#pragma mark - NativePerformanceObserverGetPendingEntriesResult
-
-template <typename P0, typename P1>
-struct NativePerformanceObserverGetPendingEntriesResult {
-  P0 entries;
-  P1 droppedEntriesCount;
-  bool operator==(const NativePerformanceObserverGetPendingEntriesResult &other) const {
-    return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativePerformancePerformanceObserverInit {
+  P0 entryTypes;
+  P1 type;
+  P2 buffered;
+  P3 durationThreshold;
+  bool operator==(const NativePerformancePerformanceObserverInit &other) const {
+    return entryTypes == other.entryTypes && type == other.type && buffered == other.buffered && durationThreshold == other.durationThreshold;
   }
 };
 
 template <typename T>
-struct NativePerformanceObserverGetPendingEntriesResultBridging {
+struct NativePerformancePerformanceObserverInitBridging {
   static T types;
 
   static T fromJs(
@@ -8308,17 +8793,27 @@ struct NativePerformanceObserverGetPendingEntriesResultBridging {
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     T result{
-      bridging::fromJs<decltype(types.entries)>(rt, value.getProperty(rt, "entries"), jsInvoker),
-      bridging::fromJs<decltype(types.droppedEntriesCount)>(rt, value.getProperty(rt, "droppedEntriesCount"), jsInvoker)};
+      bridging::fromJs<decltype(types.entryTypes)>(rt, value.getProperty(rt, "entryTypes"), jsInvoker),
+      bridging::fromJs<decltype(types.type)>(rt, value.getProperty(rt, "type"), jsInvoker),
+      bridging::fromJs<decltype(types.buffered)>(rt, value.getProperty(rt, "buffered"), jsInvoker),
+      bridging::fromJs<decltype(types.durationThreshold)>(rt, value.getProperty(rt, "durationThreshold"), jsInvoker)};
     return result;
   }
 
 #ifdef DEBUG
-  static jsi::Array entriesToJs(jsi::Runtime &rt, decltype(types.entries) value) {
+  static jsi::Array entryTypesToJs(jsi::Runtime &rt, decltype(types.entryTypes) value) {
     return bridging::toJs(rt, value);
   }
 
-  static double droppedEntriesCountToJs(jsi::Runtime &rt, decltype(types.droppedEntriesCount) value) {
+  static double typeToJs(jsi::Runtime &rt, decltype(types.type) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool bufferedToJs(jsi::Runtime &rt, decltype(types.buffered) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double durationThresholdToJs(jsi::Runtime &rt, decltype(types.durationThreshold) value) {
     return bridging::toJs(rt, value);
   }
 #endif
@@ -8328,18 +8823,28 @@ struct NativePerformanceObserverGetPendingEntriesResultBridging {
       const T &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "entries", bridging::toJs(rt, value.entries, jsInvoker));
-    result.setProperty(rt, "droppedEntriesCount", bridging::toJs(rt, value.droppedEntriesCount, jsInvoker));
+    if (value.entryTypes) {
+      result.setProperty(rt, "entryTypes", bridging::toJs(rt, value.entryTypes.value(), jsInvoker));
+    }
+    if (value.type) {
+      result.setProperty(rt, "type", bridging::toJs(rt, value.type.value(), jsInvoker));
+    }
+    if (value.buffered) {
+      result.setProperty(rt, "buffered", bridging::toJs(rt, value.buffered.value(), jsInvoker));
+    }
+    if (value.durationThreshold) {
+      result.setProperty(rt, "durationThreshold", bridging::toJs(rt, value.durationThreshold.value(), jsInvoker));
+    }
     return result;
   }
 };
 
 
 
-#pragma mark - NativePerformanceObserverRawPerformanceEntry
+#pragma mark - NativePerformanceRawPerformanceEntry
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct NativePerformanceObserverRawPerformanceEntry {
+struct NativePerformanceRawPerformanceEntry {
   P0 name;
   P1 entryType;
   P2 startTime;
@@ -8347,13 +8852,13 @@ struct NativePerformanceObserverRawPerformanceEntry {
   P4 processingStart;
   P5 processingEnd;
   P6 interactionId;
-  bool operator==(const NativePerformanceObserverRawPerformanceEntry &other) const {
+  bool operator==(const NativePerformanceRawPerformanceEntry &other) const {
     return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
   }
 };
 
 template <typename T>
-struct NativePerformanceObserverRawPerformanceEntryBridging {
+struct NativePerformanceRawPerformanceEntryBridging {
   static T types;
 
   static T fromJs(
@@ -8423,95 +8928,122 @@ struct NativePerformanceObserverRawPerformanceEntryBridging {
   }
 };
 
-class JSI_EXPORT NativePerformanceObserverCxxSpecJSI : public TurboModule {
+
+class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
 protected:
-  NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+  NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
-  virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
-  virtual void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) = 0;
-  virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
-  virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
-  virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
+  virtual double now(jsi::Runtime &rt) = 0;
+  virtual double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) = 0;
+  virtual jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
+  virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
+  virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
+  virtual jsi::Array getEntries(jsi::Runtime &rt) = 0;
+  virtual jsi::Array getEntriesByName(jsi::Runtime &rt, jsi::String entryName, std::optional<double> entryType) = 0;
+  virtual jsi::Array getEntriesByType(jsi::Runtime &rt, double entryType) = 0;
   virtual jsi::Array getEventCounts(jsi::Runtime &rt) = 0;
-  virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
-  virtual void clearEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
-  virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
+  virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
+  virtual jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) = 0;
+  virtual jsi::Value createObserver(jsi::Runtime &rt, jsi::Function callback) = 0;
+  virtual double getDroppedEntriesCount(jsi::Runtime &rt, jsi::Value observer) = 0;
+  virtual void observe(jsi::Runtime &rt, jsi::Value observer, jsi::Object options) = 0;
+  virtual void disconnect(jsi::Runtime &rt, jsi::Value observer) = 0;
+  virtual jsi::Array takeRecords(jsi::Runtime &rt, jsi::Value observer, bool sort) = 0;
   virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
 
 };
 
 template <typename T>
-class JSI_EXPORT NativePerformanceObserverCxxSpec : public TurboModule {
+class JSI_EXPORT NativePerformanceCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
   }
 
-  static constexpr std::string_view kModuleName = "NativePerformanceObserverCxx";
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "NativePerformanceCxx";
 
 protected:
-  NativePerformanceObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativePerformanceObserverCxxSpec::kModuleName}, jsInvoker),
+  NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativePerformanceCxxSpec::kModuleName}, jsInvoker),
       delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 
 private:
-  class Delegate : public NativePerformanceObserverCxxSpecJSI {
+  class Delegate : public NativePerformanceCxxSpecJSI {
   public:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativePerformanceObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+      NativePerformanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
 
     }
 
-    void startReporting(jsi::Runtime &rt, double entryType) override {
+    double now(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::startReporting) == 2,
-          "Expected startReporting(...) to have 2 parameters");
+          bridging::getParameterCount(&T::now) == 1,
+          "Expected now(...) to have 1 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::now, jsInvoker_, instance_);
+    }
+    double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) override {
+      static_assert(
+          bridging::getParameterCount(&T::markWithResult) == 3,
+          "Expected markWithResult(...) to have 3 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::markWithResult, jsInvoker_, instance_, std::move(name), std::move(startTime));
+    }
+    jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
+      static_assert(
+          bridging::getParameterCount(&T::measureWithResult) == 7,
+          "Expected measureWithResult(...) to have 7 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::measureWithResult, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
+    }
+    void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearMarks) == 2,
+          "Expected clearMarks(...) to have 2 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
+          rt, &T::clearMarks, jsInvoker_, instance_, std::move(entryName));
     }
-    void stopReporting(jsi::Runtime &rt, double entryType) override {
+    void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> entryName) override {
       static_assert(
-          bridging::getParameterCount(&T::stopReporting) == 2,
-          "Expected stopReporting(...) to have 2 parameters");
+          bridging::getParameterCount(&T::clearMeasures) == 2,
+          "Expected clearMeasures(...) to have 2 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
+          rt, &T::clearMeasures, jsInvoker_, instance_, std::move(entryName));
     }
-    void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) override {
+    jsi::Array getEntries(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::setIsBuffered) == 3,
-          "Expected setIsBuffered(...) to have 3 parameters");
+          bridging::getParameterCount(&T::getEntries) == 1,
+          "Expected getEntries(...) to have 1 parameters");
 
-      return bridging::callFromJs<void>(
-          rt, &T::setIsBuffered, jsInvoker_, instance_, std::move(entryTypes), std::move(isBuffered));
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEntries, jsInvoker_, instance_);
     }
-    jsi::Object popPendingEntries(jsi::Runtime &rt) override {
+    jsi::Array getEntriesByName(jsi::Runtime &rt, jsi::String entryName, std::optional<double> entryType) override {
       static_assert(
-          bridging::getParameterCount(&T::popPendingEntries) == 1,
-          "Expected popPendingEntries(...) to have 1 parameters");
+          bridging::getParameterCount(&T::getEntriesByName) == 3,
+          "Expected getEntriesByName(...) to have 3 parameters");
 
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::popPendingEntries, jsInvoker_, instance_);
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEntriesByName, jsInvoker_, instance_, std::move(entryName), std::move(entryType));
     }
-    void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) override {
+    jsi::Array getEntriesByType(jsi::Runtime &rt, double entryType) override {
       static_assert(
-          bridging::getParameterCount(&T::setOnPerformanceEntryCallback) == 2,
-          "Expected setOnPerformanceEntryCallback(...) to have 2 parameters");
+          bridging::getParameterCount(&T::getEntriesByType) == 2,
+          "Expected getEntriesByType(...) to have 2 parameters");
 
-      return bridging::callFromJs<void>(
-          rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
-    }
-    void logRawEntry(jsi::Runtime &rt, jsi::Object entry) override {
-      static_assert(
-          bridging::getParameterCount(&T::logRawEntry) == 2,
-          "Expected logRawEntry(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::logRawEntry, jsInvoker_, instance_, std::move(entry));
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEntriesByType, jsInvoker_, instance_, std::move(entryType));
     }
     jsi::Array getEventCounts(jsi::Runtime &rt) override {
       static_assert(
@@ -8521,29 +9053,61 @@ private:
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getEventCounts, jsInvoker_, instance_);
     }
-    void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) override {
+    jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::setDurationThreshold) == 3,
-          "Expected setDurationThreshold(...) to have 3 parameters");
+          bridging::getParameterCount(&T::getSimpleMemoryInfo) == 1,
+          "Expected getSimpleMemoryInfo(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getSimpleMemoryInfo, jsInvoker_, instance_);
+    }
+    jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getReactNativeStartupTiming) == 1,
+          "Expected getReactNativeStartupTiming(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getReactNativeStartupTiming, jsInvoker_, instance_);
+    }
+    jsi::Value createObserver(jsi::Runtime &rt, jsi::Function callback) override {
+      static_assert(
+          bridging::getParameterCount(&T::createObserver) == 2,
+          "Expected createObserver(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::createObserver, jsInvoker_, instance_, std::move(callback));
+    }
+    double getDroppedEntriesCount(jsi::Runtime &rt, jsi::Value observer) override {
+      static_assert(
+          bridging::getParameterCount(&T::getDroppedEntriesCount) == 2,
+          "Expected getDroppedEntriesCount(...) to have 2 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::getDroppedEntriesCount, jsInvoker_, instance_, std::move(observer));
+    }
+    void observe(jsi::Runtime &rt, jsi::Value observer, jsi::Object options) override {
+      static_assert(
+          bridging::getParameterCount(&T::observe) == 3,
+          "Expected observe(...) to have 3 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::setDurationThreshold, jsInvoker_, instance_, std::move(entryType), std::move(durationThreshold));
+          rt, &T::observe, jsInvoker_, instance_, std::move(observer), std::move(options));
     }
-    void clearEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) override {
+    void disconnect(jsi::Runtime &rt, jsi::Value observer) override {
       static_assert(
-          bridging::getParameterCount(&T::clearEntries) == 3,
-          "Expected clearEntries(...) to have 3 parameters");
+          bridging::getParameterCount(&T::disconnect) == 2,
+          "Expected disconnect(...) to have 2 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::clearEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
+          rt, &T::disconnect, jsInvoker_, instance_, std::move(observer));
     }
-    jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) override {
+    jsi::Array takeRecords(jsi::Runtime &rt, jsi::Value observer, bool sort) override {
       static_assert(
-          bridging::getParameterCount(&T::getEntries) == 3,
-          "Expected getEntries(...) to have 3 parameters");
+          bridging::getParameterCount(&T::takeRecords) == 3,
+          "Expected takeRecords(...) to have 3 parameters");
 
       return bridging::callFromJs<jsi::Array>(
-          rt, &T::getEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
+          rt, &T::takeRecords, jsInvoker_, instance_, std::move(observer), std::move(sort));
     }
     jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) override {
       static_assert(
@@ -8555,7 +9119,7 @@ private:
     }
 
   private:
-    friend class NativePerformanceObserverCxxSpec;
+    friend class NativePerformanceCxxSpec;
     T *instance_;
   };
 
@@ -8592,8 +9156,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeDOMCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = "NativeDOMCxx";

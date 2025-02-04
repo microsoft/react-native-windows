@@ -10,7 +10,7 @@
 
 'use strict';
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import CustomXamlComponentWithYogaLayout from './CustomXamlComponentWithYogaLayoutNativeComponent';
 
@@ -36,7 +36,14 @@ const NativeComponentWithYogaExample = () => {
       <CustomXamlComponentWithYogaLayout
         label="This is a Xaml Button set to ellipisify on truncation"
         style={{flex: 1, minWidth: 100}}
-        onMyEvent={(arg) => {setLog(log + '\nRecieved MyEvent: ' + JSON.stringify(arg.nativeEvent) + '\n')}}
+        onMyEvent={arg => {
+          setLog(
+            log +
+              '\nRecieved MyEvent: ' +
+              JSON.stringify(arg.nativeEvent) +
+              '\n',
+          );
+        }}
       />
       <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
       <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
@@ -59,9 +66,7 @@ exports.examples = [
   {
     title: 'Native Component',
     render: function (): React.Node {
-      return (
-        <NativeComponentWithYogaExample />
-      );
+      return <NativeComponentWithYogaExample />;
     },
   },
 ];

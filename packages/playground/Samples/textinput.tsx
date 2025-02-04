@@ -102,6 +102,7 @@ export default class Bootstrap extends React.Component<{}, any> {
             placeholder={'autoCapitalize characters'}
           />
           <TextInput
+            // @ts-ignore
             ref={ref => (textInputRef = ref)}
             onFocus={() => setTimeout(() => textInputRef?.blur(), 5000)}
             placeholder={'blurs after 5 seconds'}

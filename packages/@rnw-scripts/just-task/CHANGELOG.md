@@ -1,8 +1,43 @@
 # Change Log - @rnw-scripts/just-task
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.49
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.32
+
+## 2.3.48
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.31
+
+## 2.3.47
+
+Sat, 19 Oct 2024 05:29:48 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+
+## 2.3.46
+
+Mon, 07 Oct 2024 19:54:27 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.11
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/eslint-config to v1.2.29
 
 ## 2.3.44
 

@@ -1,8 +1,49 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.1.56
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 1.1.55
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 1.1.54
+
+Sat, 19 Oct 2024 05:29:48 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 1.1.53
+
+Mon, 07 Oct 2024 19:54:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 1.1.51
 

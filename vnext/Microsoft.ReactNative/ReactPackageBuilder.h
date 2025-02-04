@@ -4,7 +4,7 @@
 
 #include "NativeModulesProvider.h"
 #include "TurboModulesProvider.h"
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 #include "ViewManagersProvider.h"
 #endif
 #include "winrt/Microsoft.ReactNative.h"
@@ -26,7 +26,7 @@ struct ReactPackageBuilder : winrt::implements<
                                  > {
   ReactPackageBuilder(
       std::shared_ptr<NativeModulesProvider> const &modulesProvider,
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
       std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
       std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
@@ -39,7 +39,7 @@ struct ReactPackageBuilder : winrt::implements<
 
  public: // IReactPackageBuilder
   void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   void AddViewManager(hstring const &viewManagerName, ReactViewManagerProvider const &viewManagerProvider) noexcept;
 #endif
   void AddTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
@@ -52,7 +52,7 @@ struct ReactPackageBuilder : winrt::implements<
 
  private:
   std::shared_ptr<NativeModulesProvider> m_modulesProvider;
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   std::shared_ptr<ViewManagersProvider> m_viewManagersProvider;
 #endif
   std::shared_ptr<TurboModulesProvider> m_turboModulesProvider;

@@ -109,10 +109,10 @@
     "**/lib/**/*.js": true,
     "**/node_modules": false
   },
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "eslint.format.enable": true,
-  "eslint.packageManager": "yarn",
   "eslint.enable": true,
+  "eslint.codeActionsOnSave.mode": "problems",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -123,31 +123,32 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  // These should run through eslint
-  "prettier.disableLanguages": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "clang-format.language.javascript.enable": false,
   "clang-format.language.typescript.enable": false,
   "clang-format.assumeFilename": "${workspaceFolder}/.clang-format",
   "clang-format.executable": "${workspaceRoot}/node_modules/.bin/clang-format",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
   },
-  "dotnet.defaultSolution": "disable"
+  "dotnet.defaultSolution": "disable",
+  "prettier.documentSelectors": [
+    "**/*.{ts,tsx,js,jsx}"
+  ],
+  "prettier.configPath": ".prettierrc",
+  "prettier.ignorePath": ".prettierignore"
 }

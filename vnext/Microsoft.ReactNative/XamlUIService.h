@@ -15,14 +15,17 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
   static ReactPropertyId<XamlUIService> XamlUIServiceProperty() noexcept;
 
-  xaml::DependencyObject ElementFromReactTag(int64_t reactTag) noexcept;
   static winrt::Microsoft::ReactNative::XamlUIService FromContext(IReactContext context);
+
+#ifndef USE_FABRIC
+  xaml::DependencyObject ElementFromReactTag(int64_t reactTag) noexcept;
   void DispatchEvent(
       xaml::FrameworkElement const &view,
       hstring const &eventName,
       JSValueArgWriter const &eventDataArgWriter) noexcept;
 
   winrt::Microsoft::ReactNative::ReactRootView GetReactRootView(xaml::FrameworkElement const &view) noexcept;
+#endif
 
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
   static void SetAccessibleRoot(

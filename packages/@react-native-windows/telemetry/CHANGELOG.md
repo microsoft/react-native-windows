@@ -1,8 +1,75 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.116
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 0.0.0-canary.115
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 0.0.0-canary.114
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Changes
+
+- Address package name limitations for telemetry (14967941+danielayala94@users.noreply.github.com)
+
+## 0.0.0-canary.113
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Changes
+
+- Expand sanitization checks for error telemetry instances (14967941+danielayala94@users.noreply.github.com)
+
+## 0.0.0-canary.112
+
+Wed, 11 Dec 2024 06:21:14 GMT
+
+### Changes
+
+- Fix bug in error telemetry collection. (14967941+danielayala94@users.noreply.github.com)
+
+## 0.0.0-canary.111
+
+Sat, 19 Oct 2024 05:29:47 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.110
+
+Mon, 07 Oct 2024 19:54:25 GMT
+
+### Changes
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 0.0.0-canary.108
 
