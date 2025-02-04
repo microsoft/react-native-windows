@@ -21,7 +21,6 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
-  virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
@@ -101,14 +100,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
-    }
-    bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::allowRecursiveCommitsWithSynchronousMountOnAndroid) == 1,
-          "Expected allowRecursiveCommitsWithSynchronousMountOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::allowRecursiveCommitsWithSynchronousMountOnAndroid, jsInvoker_, instance_);
     }
     bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
       static_assert(
