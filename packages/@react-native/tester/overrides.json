@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.78.0-rc.0",
+  "baseVersion": "0.78.0-rc.3",
   "overrides": [
     {
       "type": "copy",
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "d1e17fc8ba110c86804569969dbda99af0e7ac3e",
+      "baseHash": "9ced57653a9d72b81b8c700581793d5e293c24b4",
       "issue": 4054
     },
     {
@@ -453,14 +453,14 @@
       "type": "copy",
       "file": "js/examples/TextInput/TextInputExample.android.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "fcd8e5e42372bb200be07d8339c644e76dfdb12e",
+      "baseHash": "8cc115a30795ee2fcf174e91f9cdbf56f4513a93",
       "issue": 14292
     },
     {
       "type": "copy",
       "file": "js/examples/TextInput/TextInputExample.ios.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.ios.js",
-      "baseHash": "1a0722932f22f96501391d759b5ccde095c3bdf5",
+      "baseHash": "f89ff976d3609320cc043fe8ffe291f670cad09d",
       "issue": 14292
     },
     {
@@ -656,7 +656,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "92745a87947602aadce83cf580480f8d8cd5d7ed",
+      "baseHash": "8cb63ec1cfdf9506e56fb778bec0c81a704b3278",
       "issue": 13228
     }
   ]
