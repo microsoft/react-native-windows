@@ -1,6 +1,8 @@
 <Project>
   <PropertyGroup Condition="'$(SolutionName)'=='ReactWindows-Desktop'">
-    <RnwNewArch>false</RnwNewArch>
+    <RnwNewArch>true</RnwNewArch>
+    <UseFabric>true</UseFabric>
+    <UseWinUI3>true</UseWinUI3>
     <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
     <WindowsAppSdkAutoInitialize>false</WindowsAppSdkAutoInitialize>
   </PropertyGroup>
