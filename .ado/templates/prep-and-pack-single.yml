@@ -58,12 +58,12 @@ steps:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
       displayName: '${{ parameters.outputPackage }} CodeSign Binaries'
       inputs:
-        ConnectedServiceName: 'ESRP-CodeSigning-Federated-Auth' 
-        AppRegistrationClientId: 'd95a8439-53e3-4426-a77c-fb6247a72b6a' 
-        AppRegistrationTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
-        AuthAKVName: 'rnw-keyvault' 
-        AuthCertName: 'React-Native-ESRP-App-Authentication' 
-        AuthSignCertName: 'React-Native-PRSS-Authentication'
+        ConnectedServiceName: 'ESRP-CodeSigning-OGX-JSHost-RNW' 
+        AppRegistrationClientId: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+        AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+        AuthAKVName: 'OGX-JSHost-KV'
+        AuthCertName: 'OGX-JSHost-Auth4'
+        AuthSignCertName: 'OGX-JSHost-Sign3'
         FolderPath: $(System.DefaultWorkingDirectory)/NugetRoot
         # Recursively finds files matching these patterns:
         ${{ if ne(parameters.binariesToSign, '') }}:
@@ -113,12 +113,12 @@ steps:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
       displayName: '${{ parameters.outputPackage }} CodeSign NuGet'
       inputs:
-        ConnectedServiceName: 'ESRP-CodeSigning-Federated-Auth' 
-        AppRegistrationClientId: 'd95a8439-53e3-4426-a77c-fb6247a72b6a' 
-        AppRegistrationTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
-        AuthAKVName: 'rnw-keyvault' 
-        AuthCertName: 'React-Native-ESRP-App-Authentication' 
-        AuthSignCertName: 'React-Native-PRSS-Authentication'
+        ConnectedServiceName: 'ESRP-CodeSigning-OGX-JSHost-RNW' 
+        AppRegistrationClientId: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+        AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+        AuthAKVName: 'OGX-JSHost-KV'
+        AuthCertName: 'OGX-JSHost-Auth4'
+        AuthSignCertName: 'OGX-JSHost-Sign3'
         FolderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
         Pattern: |
           **/${{ parameters.outputPackage }}.${{ parameters.packageVersion }}.nupkg
