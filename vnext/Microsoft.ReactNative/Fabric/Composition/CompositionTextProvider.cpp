@@ -14,7 +14,9 @@ CompositionTextProvider::CompositionTextProvider(
     CompositionDynamicAutomationProvider *parentProvider) noexcept
     : m_view{componentView} {
   m_parentProvider.copy_from(parentProvider);
+  EnsureTextRangeProvider();
 }
+
 void CompositionTextProvider::EnsureTextRangeProvider() {
   auto strongView = m_view.view();
 
@@ -26,7 +28,6 @@ void CompositionTextProvider::EnsureTextRangeProvider() {
         winrt::make<CompositionTextRangeProvider>(
             strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get())
             .try_as<ITextRangeProvider>();
-    m_parentProvider->AddRef();
   }
 }
 

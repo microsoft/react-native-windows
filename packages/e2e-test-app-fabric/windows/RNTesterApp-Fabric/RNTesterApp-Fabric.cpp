@@ -453,11 +453,11 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   }
 
   // Dump ITextRangeProvider Information
-  ITextProvider *textPattern;
-  hr = pTarget->GetCurrentPattern(UIA_TextPatternId, reinterpret_cast<IUnknown **>(&textPattern));
+  winrt::com_ptr<ITextProvider> *textPattern;
+  hr = pTarget->GetCurrentPattern(UIA_TextPatternId, reinterpret_cast<IUnknown **>(textPattern.put()));
   if (SUCCEEDED(hr) && textPattern) {
-    ITextRangeProvider *textRangePattern;
-    hr = textPattern->get_DocumentRange(&textRangePattern);
+    winrt::com_ptr<ITextRangeProvider> *textRangePattern;
+    hr = textPattern->get_DocumentRange(textRangePattern.put());
     if (SUCCEEDED(hr) && textRangePattern) {
       textRangePattern->GetText(20, &text);
       if (SUCCEEDED(hr)) {
