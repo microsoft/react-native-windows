@@ -72,6 +72,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall get_CanSelectMultiple(BOOL *pRetVal) override;
   virtual HRESULT __stdcall get_IsSelectionRequired(BOOL *pRetVal) override;
   virtual HRESULT __stdcall GetSelection(SAFEARRAY **pRetVal) override;
+
   // inherited via ISelectionItemProvider
   virtual HRESULT __stdcall AddToSelection() override;
   virtual HRESULT __stdcall get_IsSelected(BOOL *pRetVal) override;

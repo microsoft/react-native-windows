@@ -2,7 +2,6 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
-#include <Fabric/platform/react/renderer/graphics/HostPlatformColor.h>
 #include <Unicode.h>
 #include "CompositionTextRangeProvider.h"
 #include "RootComponentView.h"
@@ -24,7 +23,7 @@ void CompositionTextProvider::EnsureTextRangeProvider() {
 
   if (!m_textRangeProvider) {
     m_textRangeProvider =
-        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(
+        winrt::make<CompositionTextRangeProvider>(
             strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get())
             .try_as<ITextRangeProvider>();
     m_parentProvider->AddRef();
@@ -38,10 +37,10 @@ HRESULT __stdcall CompositionTextProvider::get_DocumentRange(ITextRangeProvider 
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  EnsureTextRangeProvider();
 
   if (m_textRangeProvider == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   m_textRangeProvider.copy_to(pRetVal);
   return S_OK;
 }
@@ -71,6 +70,7 @@ HRESULT __stdcall CompositionTextProvider::get_SupportedTextSelection(SupportedT
 }
 
 HRESULT __stdcall CompositionTextProvider::GetSelection(SAFEARRAY **pRetVal) {
+  // no-op
   *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, 0);
   return S_OK;
 }
@@ -80,8 +80,7 @@ HRESULT __stdcall CompositionTextProvider::GetVisibleRanges(SAFEARRAY **pRetVal)
   if (m_textRangeProvider == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   LONG pos = 0;
-  SafeArrayPutElement(*pRetVal, &pos, m_textRangeProvider.get());
-  return S_OK;
+  return SafeArrayPutElement(*pRetVal, &pos, m_textRangeProvider.get());
 }
 
 HRESULT __stdcall CompositionTextProvider::RangeFromChild(

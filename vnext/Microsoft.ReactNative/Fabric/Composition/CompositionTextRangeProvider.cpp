@@ -49,6 +49,7 @@ HRESULT __stdcall CompositionTextRangeProvider::FindAttribute(
     VARIANT val,
     BOOL backward,
     ITextRangeProvider **pRetVal) {
+  // no-op
   *pRetVal = nullptr;
   return S_OK;
 }
@@ -72,10 +73,10 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   auto props = std::static_pointer_cast<const facebook::react::ParagraphProps>(
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+      winrt::get_self<ComponentView>(strongView)->props());
 
   auto textinputProps = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+      winrt::get_self<ComponentView>(strongView)->props());
 
   auto isTextInput =
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>();
@@ -243,7 +244,7 @@ HRESULT __stdcall CompositionTextRangeProvider::GetText(int maxLength, BSTR *pRe
       text = textInputView->getAccessiblityValue().value().empty() ? textInputView->DefaultAccessibleName()
                                                                    : textInputView->getAccessiblityValue().value();
     } else {
-      return UIA_E_ELEMENTNOTAVAILABLE;
+      return UIA_E_NOTSUPPORTED;
     }
   }
 
@@ -282,12 +283,15 @@ HRESULT __stdcall CompositionTextRangeProvider::ScrollIntoView(BOOL alignToTop) 
 }
 
 HRESULT __stdcall CompositionTextRangeProvider::AddToSelection() {
+  // no-op
   return S_OK;
 }
 HRESULT __stdcall CompositionTextRangeProvider::RemoveFromSelection() {
+  // no-op
   return S_OK;
 }
 HRESULT __stdcall CompositionTextRangeProvider::Select() {
+  // no-op
   return S_OK;
 }
 

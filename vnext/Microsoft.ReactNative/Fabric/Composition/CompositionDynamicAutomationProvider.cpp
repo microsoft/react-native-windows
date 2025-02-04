@@ -5,7 +5,6 @@
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
-#include <Fabric/platform/react/renderer/graphics/HostPlatformColor.h>
 #include <Unicode.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
@@ -31,7 +30,7 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 
   if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
-    m_textProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextProvider>(
+    m_textProvider = winrt::make<CompositionTextProvider>(
                          strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
                          .try_as<ITextProvider2>();
   }
@@ -766,7 +765,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
     auto pos = static_cast<long>(i);
     SafeArrayPutElement(*pRetVal, &pos, m_selectionItems.at(selectedItems.at(i)).get());
   }
-
   return S_OK;
 }
 
