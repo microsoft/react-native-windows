@@ -61,14 +61,6 @@ const goToFlatListExample = async (input: string) => {
 };
 
 describe('FlatList Tests', () => {
-  /*test('A FlatList can display a list of components', async () => {
-    await searchBox('Basic');
-    await goToFlatListExample('Basic');
-    const component = await app.findElementByTestID('flatlist-basic');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('flatlist-basic');
-    expect(dump).toMatchSnapshot();
-  });*/
   test('A FlatList can be filtered by a key word', async () => {
     await searchBox('Basic');
     await goToFlatListExample('Basic');
