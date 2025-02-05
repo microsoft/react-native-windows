@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 03 Feb 2025 22:47:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 05 Feb 2025 18:09:33 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.917
+
+Wed, 05 Feb 2025 18:09:33 GMT
+
+### Changes
+
+- Fix Number.h not copied from react-native core (hampus.sjoberg@protonmail.com)
 
 ## 0.0.0-canary.916
 
