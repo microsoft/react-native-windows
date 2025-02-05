@@ -14534,6 +14534,7 @@ exports[`snapshotAllPages FlatList 2`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -15113,6 +15114,7 @@ exports[`snapshotAllPages FlatList 3`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -16006,6 +16008,7 @@ exports[`snapshotAllPages FlatList 4`] = `
       </View>
     </View>
     <RCTScrollView
+      accessible={true}
       automaticallyAdjustContentInsets={false}
       contentInset={
         {
@@ -16878,6 +16881,7 @@ exports[`snapshotAllPages FlatList 5`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -17652,6 +17656,7 @@ exports[`snapshotAllPages FlatList 6`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -18421,6 +18426,7 @@ exports[`snapshotAllPages FlatList 7`] = `
 >
   <RCTScrollView
     ItemSeparatorComponent={[Function]}
+    accessible={true}
     data={
       [
         "Pizza",
@@ -19393,6 +19399,7 @@ exports[`snapshotAllPages FlatList 7`] = `
 
 exports[`snapshotAllPages FlatList 8`] = `
 <RCTScrollView
+  accessible={true}
   data={
     [
       "Sticky Pizza",
@@ -19433,6 +19440,7 @@ exports[`snapshotAllPages FlatList 8`] = `
       "flex": 1,
     }
   }
+  testID="flatlist-sticky"
   viewabilityConfigCallbackPairs={[]}
 >
   <View>
@@ -19796,6 +19804,7 @@ exports[`snapshotAllPages FlatList 9`] = `
       </Text>
     </Text>
     <RCTScrollView
+      accessible={true}
       data={
         [
           "head",
@@ -19828,6 +19837,7 @@ exports[`snapshotAllPages FlatList 9`] = `
           "borderWidth": 1,
         }
       }
+      testID="flatlist-nested"
       viewabilityConfigCallbackPairs={
         [
           {
@@ -19903,6 +19913,7 @@ exports[`snapshotAllPages FlatList 10`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -20693,6 +20704,7 @@ exports[`snapshotAllPages FlatList 11`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -21483,6 +21495,7 @@ exports[`snapshotAllPages FlatList 12`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -22344,6 +22357,7 @@ exports[`snapshotAllPages FlatList 13`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -23212,6 +23226,7 @@ exports[`snapshotAllPages FlatList 14`] = `
     }
   />
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -24002,6 +24017,7 @@ exports[`snapshotAllPages FlatList 15`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
