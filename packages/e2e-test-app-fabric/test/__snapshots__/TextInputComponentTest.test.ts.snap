@@ -326,7 +326,7 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
   "Visual Tree": {
     "Comment": "textinput-cursorColor",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -553,7 +553,7 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-address-country",
     "Offset": "0, 0, 0",
-    "Size": "916, 29",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -707,7 +707,7 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-one-time-code",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1809,7 +1809,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit-2",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1884,7 +1884,7 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
   "Visual Tree": {
     "Comment": "textinput-padding",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2648,7 +2648,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
   "Visual Tree": {
     "Comment": "textinput-return-Compile",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2725,7 +2725,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
   "Visual Tree": {
     "Comment": "textinput-return-React Native",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {

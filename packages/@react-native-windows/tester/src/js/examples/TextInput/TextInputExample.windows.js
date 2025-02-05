@@ -538,11 +538,11 @@ const examples: Array<RNTesterModuleExample> = [
             style={{marginTop: 10}}
             testID={'scalable-text-input'}
           />
-          </View>
-        );
-      },
+        </View>
+      );
     },
-    {
+  },
+  {
     title: 'Auto-expanding',
     render: function (): React.Node {
       return (
