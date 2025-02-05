@@ -1,8 +1,44 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Wed, 11 Dec 2024 06:21:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.116
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.61
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 0.0.0-canary.115
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 0.0.0-canary.114
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Changes
+
+- Address package name limitations for telemetry (14967941+danielayala94@users.noreply.github.com)
+
+## 0.0.0-canary.113
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Changes
+
+- Expand sanitization checks for error telemetry instances (14967941+danielayala94@users.noreply.github.com)
 
 ## 0.0.0-canary.112
 

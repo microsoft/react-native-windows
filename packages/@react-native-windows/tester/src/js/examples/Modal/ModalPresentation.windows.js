@@ -56,6 +56,7 @@ function ModalPresentation() {
     transparent: false,
     hardwareAccelerated: false,
     statusBarTranslucent: false,
+    navigationBarTranslucent: false,
     presentationStyle: Platform.select({
       ios: 'fullScreen',
       default: undefined,
@@ -72,6 +73,7 @@ function ModalPresentation() {
   const presentationStyle = props.presentationStyle;
   const hardwareAccelerated = props.hardwareAccelerated;
   const statusBarTranslucent = props.statusBarTranslucent;
+  const navigationBarTranslucent = props.navigationBarTranslucent;
   const backdropColor = props.backdropColor;
   const backgroundColor = useContext(RNTesterThemeContext).BackgroundColor;
 
@@ -92,8 +94,27 @@ function ModalPresentation() {
         <Switch
           value={statusBarTranslucent}
           onValueChange={enabled =>
-            setProps(prev => ({...prev, statusBarTranslucent: enabled}))
+            setProps(prev => ({
+              ...prev,
+              statusBarTranslucent: enabled,
+              navigationBarTranslucent: false,
+            }))
           }
+        />
+      </View>
+      <View style={styles.inlineBlock}>
+        <RNTesterText style={styles.title}>
+          Navigation Bar Translucent 🟢
+        </RNTesterText>
+        <Switch
+          value={navigationBarTranslucent}
+          onValueChange={enabled => {
+            setProps(prev => ({
+              ...prev,
+              statusBarTranslucent: enabled,
+              navigationBarTranslucent: enabled,
+            }));
+          }}
         />
       </View>
       <View style={styles.inlineBlock}>
@@ -327,13 +348,9 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   modalContainer: {
-    // [Windows
-    width: 500,
-    height: 500,
-    // flex: 1,
-    // justifyContent: 'center',
-    // padding: 20,
-    // Windows ]
+    //flex: 1, // [Windows] - This will cause the modal to stretch to be as tall as the availiable space given to it.
+    justifyContent: 'center',
+    padding: 20,
   },
   modalInnerContainer: {
     borderRadius: 10,

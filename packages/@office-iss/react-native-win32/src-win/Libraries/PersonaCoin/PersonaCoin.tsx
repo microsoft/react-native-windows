@@ -8,5 +8,6 @@ import { PersonaCoinDefaultProps } from './PersonaCoinPropTypes';
 const RCTPersonaCoin = requireNativeComponent('RCTPersonaCoin');
 
 export const PersonaCoin: React.FunctionComponent<IPersonaCoinProps> = (props: IPersonaCoinProps) => <RCTPersonaCoin {...props} />;
+// @ts-ignore
 PersonaCoin.defaultProps = PersonaCoinDefaultProps;
 PersonaCoin.displayName = 'PersonaCoin';

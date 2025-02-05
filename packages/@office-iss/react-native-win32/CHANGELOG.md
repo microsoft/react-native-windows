@@ -1,8 +1,72 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Fri, 06 Dec 2024 06:22:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.281
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Initial integrate (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.280
+
+Sat, 11 Jan 2025 06:30:39 GMT
+
+### Changes
+
+- Integrate 12/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.36
+- Bump @rnw-scripts/just-task to v2.3.49
+- Bump react-native-platform-override to v1.9.51
+
+## 0.0.0-canary.279
+
+Fri, 10 Jan 2025 06:23:18 GMT
+
+### Changes
+
+- Integrate 12/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.35
+- Bump @rnw-scripts/just-task to v2.3.48
+- Bump react-native-platform-override to v1.9.50
+
+## 0.0.0-canary.278
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Changes
+
+- Integrate 12/10 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.277
+
+Fri, 20 Dec 2024 06:22:28 GMT
+
+### Changes
+
+- integrate 0.78.0-nightly-20241201-91e217ff5 (email not defined)
+
+## 0.0.0-canary.276
+
+Wed, 18 Dec 2024 06:22:23 GMT
+
+### Changes
+
+- integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e (email not defined)
+
+## 0.0.0-canary.275
+
+Sat, 14 Dec 2024 06:29:12 GMT
+
+### Changes
+
+- integrate RN Nightly 0.77.0-nightly-20241118-3986eefed (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.274
 

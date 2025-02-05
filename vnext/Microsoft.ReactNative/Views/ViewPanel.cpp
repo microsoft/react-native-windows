@@ -9,7 +9,7 @@
 #include <UI.Xaml.Media.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ResourceBrushUtils.h>
-#include <cxxreact/SystraceSection.h>
+#include <cxxreact/TraceSection.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 

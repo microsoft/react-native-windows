@@ -17,7 +17,8 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    ReactCompositionViewComponentBuilder *builder)
     : base_type(
           {}, // default viewProps
           compContext,
@@ -25,20 +26,34 @@ RootComponentView::RootComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual)) {}
+                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual),
+          builder) {}
+
+RootComponentView::RootComponentView(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : base_type(
+          {}, // default viewProps
+          compContext,
+          -1,
+          reactContext,
+          ComponentViewFeatures::Default &
+              ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
+                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual),
+          nullptr // builder,
+          ),
+      m_wkPortal(portal) {}
 
 RootComponentView::~RootComponentView() {
-  if (auto rootView = m_wkRootView.get()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(
-        OuterVisual());
-  }
+  stop();
 }
 
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return winrt::make<RootComponentView>(compContext, tag, reactContext);
+  return winrt::make<RootComponentView>(compContext, tag, reactContext, nullptr);
 }
 
 RootComponentView *RootComponentView::rootComponentView() const noexcept {
@@ -61,7 +76,9 @@ void RootComponentView::updateLayoutMetrics(
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::GetFocusedComponent() noexcept {
   return m_focusedComponent;
 }
-void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept {
+void RootComponentView::SetFocusedComponent(
+    const winrt::Microsoft::ReactNative::ComponentView &value,
+    winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
   if (m_focusedComponent == value)
     return;
 
@@ -75,7 +92,7 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->TrySetFocus();
     }
-    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value);
+    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value, direction);
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onGotFocus(args);
   }
 
@@ -84,13 +101,13 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
 
 bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
   if (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::Restore) {
-    // No-op for now
-    return m_focusedComponent != nullptr;
+    if (m_focusedComponent)
+      return true;
   }
 
-  auto view = (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::First)
-      ? FocusManager::FindFirstFocusableElement(*this)
-      : FocusManager::FindLastFocusableElement(*this);
+  auto view = (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::Last)
+      ? FocusManager::FindLastFocusableElement(*this)
+      : FocusManager::FindFirstFocusableElement(*this);
   if (view) {
     TrySetFocusedComponent(
         view,
@@ -116,8 +133,10 @@ bool RootComponentView::TrySetFocusedComponent(
     selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   }
 
-  if (selfView && selfView->rootComponentView() != this)
+  if (selfView && selfView->rootComponentView() != this) {
+    assert(false);
     return false;
+  }
 
   auto losingFocusArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::LosingFocusEventArgs>(
       target, direction, m_focusedComponent, target);
@@ -134,7 +153,7 @@ bool RootComponentView::TrySetFocusedComponent(
 
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(losingFocusArgs.NewFocusedComponent())
         ->rootComponentView()
-        ->SetFocusedComponent(gettingFocusArgs.NewFocusedComponent());
+        ->SetFocusedComponent(gettingFocusArgs.NewFocusedComponent(), direction);
   }
 
   return true;
@@ -197,7 +216,7 @@ HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRe
   if (uiManager == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto rootView{uiManager->GetReactNativeIsland(Tag())};
+  auto rootView = m_wkRootView.get();
   if (!rootView) {
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
@@ -214,10 +233,43 @@ uint32_t RootComponentView::overlayIndex() noexcept {
   return 1;
 }
 
-void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept {
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->AddRenderedVisual(
+void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIsland &island) noexcept {
+  theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(island.Theme()));
+
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(island)->AddRenderedVisual(
       OuterVisual());
-  m_wkRootView = rootView;
+  m_visualAddedToIsland = true;
+  ReactNativeIsland(island);
+}
+
+void RootComponentView::stop() noexcept {
+  SetFocusedComponent(nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+  if (m_visualAddedToIsland) {
+    if (auto rootView = m_wkRootView.get()) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(
+          OuterVisual());
+    }
+    m_visualAddedToIsland = false;
+  }
+  // Disconnect from the Island.  In case of an instance reload, the island may now
+  // be attached to a new RootComponentView, so we should stop interacting with it.
+  ReactNativeIsland(nullptr);
+}
+
+void RootComponentView::ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &island) noexcept {
+  m_wkRootView = island;
+}
+
+winrt::Microsoft::ReactNative::ReactNativeIsland RootComponentView::ReactNativeIsland() noexcept {
+  return m_wkRootView.get();
+}
+
+winrt::Microsoft::ReactNative::Composition::PortalComponentView RootComponentView::Portal() const noexcept {
+  return m_wkPortal.get();
+}
+
+facebook::react::Point RootComponentView::getClientOffset() const noexcept {
+  return {};
 }
 
 winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {
@@ -226,6 +278,10 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
       static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor};
 
   facebook::react::Point localPt;
+
+  // In the case of a sub rootview, we may have a non-zero origin.  hitTest takes a pt in the parent coords, so we need
+  // to apply the current origin
+  ptDips += m_layoutMetrics.frame.origin;
   auto tag = hitTest(ptDips, localPt, true);
 
   auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_reactContext.Properties());

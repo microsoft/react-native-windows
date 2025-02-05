@@ -13,7 +13,6 @@
 #include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
@@ -61,9 +60,6 @@ FabricUIManager::~FabricUIManager() {
 }
 
 void FabricUIManager::installFabricUIManager() noexcept {
-  std::shared_ptr<const facebook::react::ReactNativeConfig> config =
-      std::make_shared<const ReactNativeConfigProperties>(m_context.Properties());
-
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
   facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
@@ -88,8 +84,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
       [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
         return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeScheduler);
       };
-
-  contextContainer->insert("ReactNativeConfig", config);
 
   toolbox.contextContainer = contextContainer;
   toolbox.componentRegistryFactory = [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
@@ -134,7 +128,6 @@ void FabricUIManager::startSurface(
 
     auto root = rootComponentViewDescriptor.view
                     .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
-    root->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
     root->start(rootView);
   });
 
@@ -154,13 +147,9 @@ void FabricUIManager::startSurface(
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
   m_surfaceManager->stopSurface(surfaceId);
   auto &rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
+  rootDescriptor.view.as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>()->stop();
   m_registry.enqueueComponentViewWithComponentHandle(
       facebook::react::RootShadowNode::Handle(), surfaceId, rootDescriptor);
-}
-
-winrt::Microsoft::ReactNative::ReactNativeIsland FabricUIManager::GetReactNativeIsland(
-    facebook::react::SurfaceId surfaceId) const noexcept {
-  return m_surfaceRegistry.at(surfaceId).wkRootView.get();
 }
 
 facebook::react::Size FabricUIManager::measureSurface(
@@ -230,9 +219,9 @@ void FabricUIManager::RCTPerformMountInstructions(
       case facebook::react::ShadowViewMutation::Insert: {
         auto &oldChildShadowView = mutation.oldChildShadowView;
         auto &newChildShadowView = mutation.newChildShadowView;
-        auto &parentShadowView = mutation.parentShadowView;
+        auto &parentTag = mutation.parentTag;
         auto &newChildViewDescriptor = m_registry.componentViewDescriptorWithTag(newChildShadowView.tag);
-        auto parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
+        auto parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentTag);
         auto newChildComponentView =
             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view);
 
@@ -249,9 +238,9 @@ void FabricUIManager::RCTPerformMountInstructions(
 
       case facebook::react::ShadowViewMutation::Remove: {
         auto &oldChildShadowView = mutation.oldChildShadowView;
-        auto &parentShadowView = mutation.parentShadowView;
+        auto &parentTag = mutation.parentTag;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
-        auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
+        auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentTag);
         winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
             ->UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;

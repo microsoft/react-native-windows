@@ -66,6 +66,11 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   /*
   {
+    key: 'LayoutConformanceExample',
+    module: require('../examples/LayoutConformance/LayoutConformanceExample')
+      .default,
+  },
+  {
     key: 'JSResponderHandlerExample',
     module: require('../examples/JSResponderHandlerExample/JSResponderHandlerExample'),
   },
@@ -210,6 +215,12 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'Dimensions',
     category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
+  },
+  {
+    key: 'DisplayContentsExample',
+    category: 'UI',
+    module: require('../examples/DisplayContents/DisplayContentsExample')
+      .default,
   },
   // Only show the link for the example if the API is available.
   typeof IntersectionObserver === 'function'

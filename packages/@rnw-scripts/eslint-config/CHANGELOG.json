@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Sat, 11 Jan 2025 06:30:39 GMT",
+      "version": "1.2.32",
+      "tag": "@rnw-scripts/eslint-config_v1.2.32",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "a279e3762d4daae0b5bb22dea770a61c25edefcd",
+            "comment": "Integrate 12/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Jan 2025 06:23:18 GMT",
+      "version": "1.2.31",
+      "tag": "@rnw-scripts/eslint-config_v1.2.31",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "31b5dea7f76db31d1cfbda276b61d2fbfb116698",
+            "comment": "Integrate 12/20"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Oct 2024 05:29:47 GMT",
       "version": "1.2.30",
       "tag": "@rnw-scripts/eslint-config_v1.2.30",

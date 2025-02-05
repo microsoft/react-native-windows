@@ -19,48 +19,50 @@
     <file src="$nugetroot$\Microsoft.ReactNative.targets" target="build\native"/>
     <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build\native"/>
 
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd"   target="lib\uap10.0"/>
+    <file src="$nugetroot$\ReactWindows\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\oldarch"/>
+    <file src="$nugetroot$\ReactWindowsFabric\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\newarch"/>
     <!-- 
     Uncomment once we are producing doc xml file
-    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml"   target="lib\uap10.0"/> 
+    <file src="$nugetroot$\ReactWindows\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml" target="lib\uap10.0\oldarch"/> 
+    <file src="$nugetroot$\ReactWindowsFabric\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml" target="lib\uap10.0\newarch"/> 
     -->
 
     <!-- Included in Microsoft.ReactNative -->
-    <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm64\native" />
-    <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm64\native" />
-    <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-arm64\native" />
-    <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\arm64" />
+    <file src="$nugetroot$\ReactWindows\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-arm64\native\oldarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindowsFabric\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-arm64\native\newarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindows\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\arm64\oldarch" />
+    <file src="$nugetroot$\ReactWindowsFabric\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\arm64\newarch" />
 
-    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x86\native" />
-    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x86\native" />
-    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x86\native" />
-    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x86" />
+    <file src="$nugetroot$\ReactWindows\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x86\native\oldarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindowsFabric\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x86\native\newarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindows\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x86\oldarch" />
+    <file src="$nugetroot$\ReactWindowsFabric\x86\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x86\newarch" />
 
-    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native" />
-    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x64\native" />
-    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x64\native" />
-    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64" />
+    <file src="$nugetroot$\ReactWindows\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x64\native\oldarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindowsFabric\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x64\native\newarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindows\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64\oldarch" />
+    <file src="$nugetroot$\ReactWindowsFabric\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64\newarch" />
 
     <!-- Included in Microsoft.ReactNative.Debug -->
-    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm64\native" />
-    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm64\native" />
-    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-arm64\native" />
-    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\arm64" />
+    <file src="$nugetroot$\ReactWindows\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-arm64\native\oldarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindowsFabric\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-arm64\native\newarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindows\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\arm64\oldarch" />
+    <file src="$nugetroot$\ReactWindowsFabric\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\arm64\newarch" />
 
-    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x86\native" />
-    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x86\native" />
-    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x86\native" />
-    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x86" />
+    <file src="$nugetroot$\ReactWindows\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x86\native\oldarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindowsFabric\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x86\native\newarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindows\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x86\oldarch" />
+    <file src="$nugetroot$\ReactWindowsFabric\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x86\newarch" />
 
-    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native" />
-    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x64\native" />
-    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x64\native" />
-    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64" />
+    <file src="$nugetroot$\ReactWindows\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x64\native\oldarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindowsFabric\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.*" target="runtimes\win10-x64\native\newarch" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindows\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64\oldarch" />
+    <file src="$nugetroot$\ReactWindowsFabric\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64\newarch" />
 
     <!-- XBF files need to be included for Debug since they are not embedded in the PRI -->
-    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-arm64\native" />
-    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x86\native" />
-    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\ReactWindows\ARM64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-arm64\native\oldarch" />
+    <file src="$nugetroot$\ReactWindows\x86\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x86\native\oldarch" />
+    <file src="$nugetroot$\ReactWindows\x64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x64\native\oldarch" />
 
   </files>
 </package>

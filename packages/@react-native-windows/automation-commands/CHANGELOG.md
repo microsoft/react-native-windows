@@ -1,8 +1,132 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Wed, 11 Dec 2024 06:21:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Feb 2025 22:47:31 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.1.359
+
+Mon, 03 Feb 2025 22:47:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.256
+
+## 0.1.358
+
+Fri, 31 Jan 2025 18:29:45 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.255
+
+## 0.1.357
+
+Tue, 28 Jan 2025 20:34:32 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.254
+
+## 0.1.356
+
+Sat, 25 Jan 2025 06:30:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.253
+
+## 0.1.355
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.252
+
+## 0.1.354
+
+Wed, 22 Jan 2025 06:28:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.251
+
+## 0.1.353
+
+Thu, 16 Jan 2025 06:21:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.250
+
+## 0.1.352
+
+Mon, 13 Jan 2025 18:43:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.249
+
+## 0.1.351
+
+Sat, 11 Jan 2025 06:30:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.248
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/just-task to v2.3.49
+
+## 0.1.350
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.247
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
+
+## 0.1.349
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.246
+
+## 0.1.348
+
+Wed, 08 Jan 2025 06:31:14 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.245
+
+## 0.1.347
+
+Fri, 20 Dec 2024 06:22:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.244
+
+## 0.1.346
+
+Wed, 18 Dec 2024 06:22:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.243
+
+## 0.1.345
+
+Sat, 14 Dec 2024 06:29:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.242
 
 ## 0.1.344
 
