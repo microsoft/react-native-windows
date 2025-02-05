@@ -272,16 +272,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_TextPatternId &&
       (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
-    auto textProvider = m_textProvider.as<ITextProvider>().get();
-    *pRetVal = textProvider;
-    textProvider->AddRef();
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   if (patternId == UIA_TextPattern2Id &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
-    auto textProvider = m_textProvider.get();
-    *pRetVal = textProvider;
-    textProvider->AddRef();
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   return S_OK;
