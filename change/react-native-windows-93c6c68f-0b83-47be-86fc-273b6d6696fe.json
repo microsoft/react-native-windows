@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate rn 0.78-rc3",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
