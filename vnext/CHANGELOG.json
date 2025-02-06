@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 06 Feb 2025 18:31:31 GMT",
+      "version": "0.78.0-preview.3",
+      "tag": "react-native-windows_v0.78.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "842d2e5cb630152c2cccd003253da0c8d86700f8",
+            "comment": "integrate rn 0.78-rc3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 18:14:32 GMT",
       "version": "0.78.0-preview.2",
       "tag": "react-native-windows_v0.78.0-preview.2",
