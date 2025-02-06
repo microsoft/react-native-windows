@@ -8,6 +8,7 @@
     <RootNamespace>{{ name }}</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>{{ name }}.ico</ApplicationIcon>
+    <RuntimeIdentifiers>win10-x64;win10-x86;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <PropertyGroup Label="ReactNativeWindowsProps">
