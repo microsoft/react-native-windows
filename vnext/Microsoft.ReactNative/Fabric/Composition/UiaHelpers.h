@@ -2,6 +2,7 @@
 
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
 
@@ -47,4 +48,6 @@ void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider
 void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept;
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
+
+TextDecorationLineStyle GetTextDecorationLineStyle(facebook::react::TextDecorationStyle style) noexcept;
 } // namespace winrt::Microsoft::ReactNative::implementation

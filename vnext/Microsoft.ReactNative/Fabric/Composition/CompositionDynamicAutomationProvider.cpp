@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionTextRangeProvider.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
@@ -25,6 +27,13 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
+  }
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
+    m_textProvider = winrt::make<CompositionTextProvider>(
+                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                         .try_as<ITextProvider2>();
   }
 }
 
@@ -251,6 +260,17 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
       props->accessibilityState->selected.has_value()) {
     *pRetVal = static_cast<ISelectionItemProvider *>(this);
     AddRef();
+  }
+
+  if (patternId == UIA_TextPatternId &&
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  }
+
+  if (patternId == UIA_TextPattern2Id &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   return S_OK;
