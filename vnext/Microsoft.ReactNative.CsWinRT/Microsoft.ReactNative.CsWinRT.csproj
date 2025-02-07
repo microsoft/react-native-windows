@@ -4,16 +4,19 @@
   <PropertyGroup>
     <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <Platform>AnyCPU</Platform>
+    <Platforms>x86;x64;arm64</Platforms>
     <!-- Workaround for MSB3271 error on processor architecture mismatch -->
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <NoWarn>CS8305;CS0436</NoWarn>
     <AssemblyName>Microsoft.ReactNative.Projection</AssemblyName>
   </PropertyGroup>
 
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
   </ItemGroup>
 
   <ItemGroup>
