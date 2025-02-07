@@ -99,8 +99,8 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept override {
-    assert(!m_childLayoutMetricsToken);
     AdjustWindowSize(args.Child().LayoutMetrics());
+    assert(!m_childLayoutMetricsToken);
     m_childLayoutMetricsToken = args.Child().LayoutMetricsChanged(
         [wkThis = get_weak()](
             auto &sender, const winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs &layoutMetricsChangedArgs) {
