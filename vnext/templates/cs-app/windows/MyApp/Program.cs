@@ -19,38 +19,52 @@ namespace {{ namespace }}
 
       var appDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-      var reactInstanceSettingsBuilder = new ReactInstanceSettingsBuilder()
-        .DebugBundlePath("index")
-        .JavaScriptBundleFile("index.windows")
-        .BundleRootPath(appDirectory)
+      // Create a ReactNativeWin32App with the ReactNativeAppBuilder
+      var reactNativeWin32App = new ReactNativeAppBuilder().Build();
+
+      // Configure the initial InstanceSettings for the app's ReactNativeHost
+      var settings = reactNativeWin32App.ReactNativeHost.InstanceSettings;
+      // Register any autolinked native modules
+      Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(settings.PackageProviders);
+
 #if BUNDLE
-        .UseFastRefresh(false)
+      // Load the JS bundle from a file (not Metro):
+      // Set the path (on disk) where the .bundle file is located
+      settings.BundleRootPath = "file://" + appDirectory).append "\\Bundle\\";
+      // Set the name of the bundle file (without the .bundle extension)
+      settings.JavaScriptBundleFile = "index.windows";
+      // Disable hot reload
+      settings.UseFastRefresh = false;
 #else
-        .UseFastRefresh(true)
+      // Load the JS bundle from Metro
+      settings.JavaScriptBundleFile = "index";
+      // Enable hot reload
+      settings.UseFastRefresh = true;
 #endif
 #if _DEBUG
-        .UseDirectDebugger(true)
-        .UseDeveloperSupport(true);
+      // For Debug builds
+      // Enable Direct Debugging of JS
+      settings.UseDirectDebugger = true;
+      // Enable the Developer Menu
+      settings.UseDeveloperSupport = true;
 #else
-        .UseDirectDebugger(false)
-        .UseDeveloperSupport(false);
+      // For Release builds:
+      // Disable Direct Debugging of JS
+      settings.UseDirectDebugger = false;
+      // Disable the Developer Menu
+      settings.UseDeveloperSupport = false;
 #endif
 
-      var reactPackageProviders = new List<IReactPackageProvider>();
-      Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(reactPackageProviders);
+      // Get the AppWindow so we can configure its initial title and size
+      var appWindow = reactNativeWin32App.AppWindow;
+      appWindow.Title = "{{ mainComponentName }}";
+      appWindow.Resize(new Windows.Graphics.SizeInt32(1000, 1000));
 
-      var viewOptions = new ReactViewOptions();
+      // Get the ReactViewOptions so we can set the initial RN component to load
+      var viewOptions = reactNativeWin32App.ReactViewOptions;
       viewOptions.ComponentName = "{{ mainComponentName }}";
 
-      // Initialize and Manage the ReactNativeHost
-      var reactNativeAppBuilder = new ReactNativeAppBuilder()
-        .AddPackageProviders(reactPackageProviders)
-        .SetReactInstanceSettings(reactInstanceSettingsBuilder.ReactInstanceSettings)
-        .SetReactViewOptions(viewOptions);
-
-      // Start the react-native instance by creating a javascript runtime and load the bundle.
-      var reactNativeWin32App = reactNativeAppBuilder.Build();
-
+      // Start the app
       reactNativeWin32App.Start();
     }
 
