@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net6.0-windows10.0.22621": {
+    "native,Version=v0.0": {
       "Microsoft.UI.Xaml": {
         "type": "Direct",
         "requested": "[2.8.0, )",

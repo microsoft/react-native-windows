@@ -11,6 +11,8 @@
     <AssemblyName>Microsoft.ReactNative.Projection</AssemblyName>
     <!-- Prevents Microsoft.Web.WebView2.Core.dll from being added to ReferenceCopyLocalPaths -->
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
+    <!-- Prevents restore issues for Hermes projects -->
+    <TargetFrameworkMoniker>native,Version=v0.0</TargetFrameworkMoniker>
   </PropertyGroup>
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
