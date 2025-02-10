@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Feb 2025 16:38:24 GMT",
+      "version": "0.77.2",
+      "tag": "react-native-windows_v0.77.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f8e6b3de41bf995bb98e5a7c40ec35129c605541",
+            "comment": "Fix platform color"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 18:36:42 GMT",
       "version": "0.77.1",
       "tag": "react-native-windows_v0.77.1",

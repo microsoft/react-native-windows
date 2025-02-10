@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 03 Feb 2025 18:36:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 10 Feb 2025 16:38:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.2
+
+Mon, 10 Feb 2025 16:38:24 GMT
+
+### Patches
+
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.77.1
 
