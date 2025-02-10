@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Feb 2025 23:25:52 GMT",
+      "version": "0.76.8",
+      "tag": "react-native-windows_v0.76.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "4c239177bec99b6d108edf7c1a7d40ca5948cc2d",
+            "comment": "integrate RN 76.6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 19:11:10 GMT",
       "version": "0.76.7",
       "tag": "react-native-windows_v0.76.7",

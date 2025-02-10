@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Fri, 24 Jan 2025 19:55:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 10 Feb 2025 23:25:52 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.3
+
+Mon, 10 Feb 2025 23:25:52 GMT
+
+### Patches
+
+- integrate RN 76.6 (email not defined)
 
 ## 0.76.2
 
