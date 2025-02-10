@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 05 Feb 2025 18:09:33 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 10 Feb 2025 23:53:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.918
+
+Mon, 10 Feb 2025 23:53:18 GMT
+
+### Changes
+
+- ITextProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.917
 
