@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 03 Feb 2025 19:38:48 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Feb 2025 20:07:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.35
+
+Tue, 11 Feb 2025 20:07:11 GMT
+
+### Patches
+
+- Bump to using WASK 1.7 experimental 3 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.34
 
