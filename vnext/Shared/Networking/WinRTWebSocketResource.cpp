@@ -99,6 +99,16 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
 WinRTWebSocketResource2::~WinRTWebSocketResource2() noexcept /*override*/
 {}
 
+void WinRTWebSocketResource2::Fail(string &&message, ErrorType type) noexcept {
+  auto self = shared_from_this();
+
+  self->m_state = State::Error;
+
+  if (self->m_errorHandler) {
+    self->m_errorHandler({std::move(message), type});
+  }
+}
+
 void WinRTWebSocketResource2::OnMessageReceived(
     IMessageWebSocket const &,
     IMessageWebSocketMessageReceivedEventArgs const &args) {
@@ -113,21 +123,29 @@ void WinRTWebSocketResource2::OnMessageReceived(
           ->GetDataReader(reinterpret_cast<ABI::Windows::Storage::Streams::IDataReader **>(winrt::put_abi(reader)));
 
   if (FAILED(hr)) {
+    string errorMessage;
+    ErrorType errorType;
     // See
     // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-22621#remarks
     if (hr == WININET_E_CONNECTION_ABORTED) {
-      string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
-
-      if (self->m_errorHandler) {
-        self->m_errorHandler({errorMessage, ErrorType::Connection});
-      }
+      //string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
+      errorMessage = "[0x80072EFE] Underlying TCP connection suddenly terminated";
+      errorType = ErrorType::Connection;
+      //if (self->m_errorHandler) {
+      //  self->m_errorHandler({errorMessage, ErrorType::Connection});
+      //}
+      //TODO: Do not "Close". Define an "Abort" routine.
       // Note: We are not clear whether all read-related errors should close the socket.
       Close(CloseCode::BadPayload, std::move(errorMessage));
     } else {
-      if (self->m_errorHandler) {
-        self->m_errorHandler({Utilities::HResultToString(hr), ErrorType::Receive});
-      }
+      //if (self->m_errorHandler) {
+      //  self->m_errorHandler({Utilities::HResultToString(hr), ErrorType::Receive});
+      //}
+      errorMessage = Utilities::HResultToString(hr);
+      errorType = ErrorType::Receive;
     }
+
+    Fail(std::move(errorMessage), errorType);
 
     return;
   }

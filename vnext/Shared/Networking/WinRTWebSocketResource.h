@@ -18,7 +18,10 @@ namespace Microsoft::React::Networking {
 
 class WinRTWebSocketResource2 : public IWebSocketResource,
                                 public std::enable_shared_from_this<WinRTWebSocketResource2> {
+  enum class State { Created, Open, Closed, Error };
+
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
+  State m_state;
 
   CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;
@@ -30,6 +33,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   // TODO: Use or remove.
   winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker m_revoker;
   winrt::Windows::Storage::Streams::IDataWriter m_writer;
+
+  void Fail(std::string &&message, IWebSocketResource::ErrorType type) noexcept;
 
   void OnMessageReceived(
       winrt::Windows::Networking::Sockets::IMessageWebSocket const &,
