@@ -187,10 +187,9 @@ extends:
             displayName: Stop pipeline if latest commit message contains ***NO_CI***
             condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
-          # Disabling this as it appears to interfere with 1ESPT and publish
-          # - template: .ado/templates/checkout-full.yml@self
-          #   parameters:
-          #     persistCredentials: false # We're going to use rnbot's git creds to publish
+          - template: .ado/templates/checkout-full.yml@self
+            parameters:
+              persistCredentials: false # We're going to use rnbot's git creds to publish
 
           - powershell: gci env:/BUILD_*
             displayName: Show build information
@@ -215,8 +214,8 @@ extends:
           dependsOn: RnwPublishPrep
           pool:
             name: Azure-Pipelines-1ESPT-ExDShared
-            image: windows-latest
-            os: windows
+            image: ubuntu-latest
+            os: linux
           timeoutInMinutes: 120
           cancelTimeoutInMinutes: 5
           steps:
