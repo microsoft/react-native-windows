@@ -241,7 +241,7 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
   // This automation mode must be set before connecting the child ContentIsland.
   // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
   // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
-  m_childSiteLink.AutomationTreeOption(winrt::Microsoft::UI::Content::AutomationTreeOptions::FragmentBased);
+  m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FragmentBased);
 
   // These events are raised in response to the child ContentIsland asking for providers.
   // For example, the ContentIsland.FragmentRootAutomationProvider property will return
