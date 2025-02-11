@@ -153,11 +153,23 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     int32_t yCor = static_cast<int32_t>(
         (parentRC.top + parentRC.bottom - layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor) / 2);
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+    winrt::Windows::Graphics::RectInt32 rect2{
+        (int)xCor,
+        (int)yCor,
+        static_cast<int32_t>(layoutMetrics.Frame.Width * (layoutMetrics.PointScaleFactor)),
+        static_cast<int32_t>(layoutMetrics.Frame.Height * (layoutMetrics.PointScaleFactor))};
+    m_popUp.MoveAndResize(rect2);
+#else
+    // Fix for https://github.com/microsoft/microsoft-ui-xaml/issues/9529
+    auto titleBarHeight = m_window.TitleBar().Height();
+
     // Adjust window position and size
     m_window.ResizeClient(
         {static_cast<int32_t>(layoutMetrics.Frame.Width * (layoutMetrics.PointScaleFactor)),
-         static_cast<int32_t>(layoutMetrics.Frame.Height * (layoutMetrics.PointScaleFactor))});
+         static_cast<int32_t>(layoutMetrics.Frame.Height * (layoutMetrics.PointScaleFactor)) - titleBarHeight});
     m_window.Move({xCor, yCor});
+#endif
   };
 
   void ShowOnUIThread(const winrt::Microsoft::ReactNative::ComponentView &view) {
