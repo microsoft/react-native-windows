@@ -38,6 +38,7 @@ using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Networking::Sockets::IMessageWebSocket;
 using winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs;
 using winrt::Windows::Networking::Sockets::IWebSocket;
+using winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs;
 using winrt::Windows::Networking::Sockets::MessageWebSocket;
 using winrt::Windows::Networking::Sockets::SocketMessageType;
 using winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs;
@@ -160,6 +161,15 @@ void WinRTWebSocketResource2::OnMessageReceived(
   }
 }
 
+void WinRTWebSocketResource2::OnClosed(IWebSocket const& sender, IWebSocketClosedEventArgs const& args) {
+  auto self = shared_from_this();
+
+  //m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
+  if (self->m_closeHandler) {
+    self->m_closeHandler(self->m_closeCode, self->m_closeReason);
+  }
+}
+
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
@@ -168,6 +178,11 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
   m_socket.MessageReceived([self = shared_from_this()](
                                IMessageWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
     self->OnMessageReceived(sender, args);
+  });
+
+  m_socket.Closed([self = shared_from_this()](
+                      IWebSocket const &sender, IWebSocketClosedEventArgs const &args) {
+    self->OnClosed(sender, args);
   });
 
   // TODO: readyState
@@ -180,8 +195,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
     }
   }
 
-  winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
-      m_socket.Control().SupportedProtocols();
+  auto supportedProtocols = m_socket.Control().SupportedProtocols();
   for (const auto &protocol : protocols) {
     supportedProtocols.Append(winrt::to_hstring(protocol));
   }

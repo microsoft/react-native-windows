@@ -20,7 +20,11 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
                                 public std::enable_shared_from_this<WinRTWebSocketResource2> {
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
 
+  CloseCode m_closeCode{CloseCode::Normal};
+  std::string m_closeReason;
+
   std::function<void(std::size_t, const std::string &, bool)> m_readHandler;
+  std::function<void(CloseCode, const std::string &)> m_closeHandler;
   std::function<void(Error &&)> m_errorHandler;
 
   // TODO: Use or remove.
@@ -30,6 +34,10 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   void OnMessageReceived(
       winrt::Windows::Networking::Sockets::IMessageWebSocket const &,
       winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &args);
+
+  void OnClosed(
+      winrt::Windows::Networking::Sockets::IWebSocket const &,
+      winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs const &args);
 
  public:
   WinRTWebSocketResource2(
