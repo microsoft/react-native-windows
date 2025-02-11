@@ -16,8 +16,8 @@
 
 namespace Microsoft::React::Networking {
 
-class WinRTWebSocketResource2 : public IWebSocketResource, public std::enable_shared_from_this<WinRTWebSocketResource2>
-{
+class WinRTWebSocketResource2 : public IWebSocketResource,
+                                public std::enable_shared_from_this<WinRTWebSocketResource2> {
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
 
   std::function<void(std::size_t, const std::string &, bool)> m_readHandler;

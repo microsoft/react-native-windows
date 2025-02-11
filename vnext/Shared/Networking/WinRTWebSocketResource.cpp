@@ -85,12 +85,10 @@ namespace Microsoft::React::Networking {
 
 #pragma region WinRTWebSocketResource2
 
-
-
 WinRTWebSocketResource2::WinRTWebSocketResource2(
-  IMessageWebSocket &&socket,
-  IDataWriter &&writer,
-  vector<ChainValidationResult>&& certExceptions)
+    IMessageWebSocket &&socket,
+    IDataWriter &&writer,
+    vector<ChainValidationResult> &&certExceptions)
     : m_socket{std::move(socket)}, m_writer(std::move(writer)) {
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
@@ -98,14 +96,12 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
 }
 
 WinRTWebSocketResource2::~WinRTWebSocketResource2() noexcept /*override*/
-{
-
-}
+{}
 
 void WinRTWebSocketResource2::OnMessageReceived(
-  IMessageWebSocket const&,
-  IMessageWebSocketMessageReceivedEventArgs const& args) {
-
+    IMessageWebSocket const &,
+    IMessageWebSocketMessageReceivedEventArgs const &args) {
+  auto self = shared_from_this();
   string response;
 
   IDataReader reader{nullptr};
@@ -120,46 +116,61 @@ void WinRTWebSocketResource2::OnMessageReceived(
     // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-22621#remarks
     if (hr == WININET_E_CONNECTION_ABORTED) {
       string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
-      m_errorHandler({errorMessage, ErrorType::Connection});
+
+      if (self->m_errorHandler) {
+        self->m_errorHandler({errorMessage, ErrorType::Connection});
+      }
       // Note: We are not clear whether all read-related errors should close the socket.
       Close(CloseCode::BadPayload, std::move(errorMessage));
     } else {
-      m_errorHandler({Utilities::HResultToString(hr), ErrorType::Receive});
+      if (self->m_errorHandler) {
+        self->m_errorHandler({Utilities::HResultToString(hr), ErrorType::Receive});
+      }
     }
 
     return;
   }
 
-  auto len = reader.UnconsumedBufferLength();
-  if (args.MessageType() == SocketMessageType::Utf8) {
-    reader.UnicodeEncoding(UnicodeEncoding::Utf8);
-    vector<uint8_t> data(len);
-    reader.ReadBytes(data);
+  try {
+    auto len = reader.UnconsumedBufferLength();
+    if (args.MessageType() == SocketMessageType::Utf8) {
+      reader.UnicodeEncoding(UnicodeEncoding::Utf8);
+      vector<uint8_t> data(len);
+      reader.ReadBytes(data);
 
-    response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
-  } else {
-    auto buffer = reader.ReadBuffer(len);
-    winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+      response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
+    } else {
+      auto buffer = reader.ReadBuffer(len);
+      auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
-    response = winrt::to_string(std::wstring_view(data));
+      response = winrt::to_string(std::wstring_view(data));
+    }
+
+    if (self->m_readHandler) {
+      self->m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
+    }
+
+  } catch (hresult_error const &e) {
+    if (self->m_errorHandler) {
+      auto errorMessage = Utilities::HResultToString(e);
+      auto errorType = ErrorType::Receive;
+
+      self->m_errorHandler({errorMessage, errorType});
+    }
   }
-
-  if (m_readHandler) {
-    m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
-  }
-
-  //TODO: try-catch?
 }
 
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
-
   // Register MessageReceived BEFORE calling Connect
   // https://learn.microsoft.com/en-us/uwp/api/windows.networking.sockets.messagewebsocket.messagereceived?view=winrt-26100
-  m_socket.MessageReceived({this, &WinRTWebSocketResource2::OnMessageReceived});
+  m_socket.MessageReceived([self = shared_from_this()](
+                               IMessageWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
+    self->OnMessageReceived(sender, args);
+  });
 
-  //TODO: readyState
+  // TODO: readyState
 
   bool hasOriginHeader = false;
   for (const auto &header : options) {
@@ -203,16 +214,16 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
     }
 
     // Abort - Mark connection as concluded.
-    //TODO:SetEvent(m_connectionPerformed.get())
-    //m_connectPerformedPromise.set_value();
-    //m_connectRequested = false;
+    // TODO:SetEvent(m_connectionPerformed.get())
+    // m_connectPerformedPromise.set_value();
+    // m_connectRequested = false;
 
     return;
   }
 
-  //TODO: m_connectrequested
+  // TODO: m_connectrequested
 
-  //TODO: Perform ConnectS
+  // TODO: Perform ConnectS
 }
 
 void WinRTWebSocketResource2::Ping() noexcept {}
