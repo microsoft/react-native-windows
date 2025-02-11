@@ -27,7 +27,11 @@ const searchBox = async (input: string) => {
   await app.waitUntil(
     async () => {
       await searchBox.setValue(input);
-      return (await searchBox.getText()) === input;
+      if (input === '') {
+        return (await searchBox.getText()) === 'Search...';
+      } else {
+        return (await searchBox.getText()) === input;
+      }
     },
     {
       interval: 1500,

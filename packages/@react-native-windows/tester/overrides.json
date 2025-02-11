@@ -27,6 +27,40 @@
       "issue": 12869
     },
     {
+      "type": "patch",
+      "file": "src/js/examples/FlatList/BaseFlatListExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
+      "baseHash": "fed8eb23e3f81d51450e9e3987a0105ea767e662",
+      "issue": 12869
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
+      "baseHash": "9c1244c03d22578ac09fe2143b04664ba61f7b97",
+      "issue": 12869
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
+      "baseHash": "194b5caf919b2acb35ba5e0766b8b8451345e7a8",
+      "issue": 12869
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/FlatList/FlatList-nested.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-nested.js",
+      "baseHash": "cf2755fd167ff54fa86d0bb9a7a236dabf37782f",
+      "issue": 12869
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/FlatList/FlatList-stickyHeaders.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-stickyHeaders.js",
+      "baseHash": "7d524f19d1e93ea6f15b87d6c8096e13bb015847"
+    },
+    {
       "type": "platform",
       "file": "src/js/examples/HTTP/HTTPExample.js"
     },

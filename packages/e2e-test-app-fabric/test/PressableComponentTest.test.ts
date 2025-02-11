@@ -45,7 +45,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -84,7 +84,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -118,7 +118,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -152,7 +152,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -181,7 +181,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -210,7 +210,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
