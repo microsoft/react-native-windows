@@ -190,20 +190,12 @@
                       Microsoft.ReactNative.Cxx.UnitTests\**
                       Microsoft.ReactNative.IntegrationTests\**
                       Microsoft.ReactNative.ComponentTests\**
+                      Microsoft.ReactNative.CsWinRT\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
                       Microsoft.ReactNative.Managed.CodeGen.UnitTests\**
                       Microsoft.ReactNative.Managed.UnitTests\**
                       Mso.UnitTests\**
-
-                - ${{ if eq(matrix.UseFabric, true) }}:
-                  - template: ../templates/publish-build-artifacts.yml
-                    parameters:
-                      artifactName: ReactWindowsFabric
-                      buildPlatform: AnyCPU
-                      buildConfiguration: ${{ matrix.BuildConfiguration }}
-                      contents: |
-                        Microsoft.ReactNative.CsWinRT\**
 
             - job: UniversalTest${{ matrix.Name }}
               variables:
