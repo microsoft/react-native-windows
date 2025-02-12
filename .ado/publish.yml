@@ -214,8 +214,8 @@ extends:
           dependsOn: RnwPublishPrep
           pool:
             name: Azure-Pipelines-1ESPT-ExDShared
-            image: ubuntu-latest
-            os: linux
+            image: windows-latest
+            os: windows
           timeoutInMinutes: 120
           cancelTimeoutInMinutes: 5
           steps:
