@@ -61,6 +61,11 @@ app.Map(
   Microsoft.React.Test.WebSocketTests.EchoSuffix
   );
 
+app.Map(
+  "/rnw/websockets/pong",
+  Microsoft.React.Test.WebSocketTests.Pong
+  );
+
 app.MapGet(
   "/officedev/office-js/issues/4144",
    Microsoft.Office.Test.OfficeJsTests.Issue4144)
