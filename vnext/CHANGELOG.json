@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2025 00:30:57 GMT",
+      "version": "0.74.35",
+      "tag": "react-native-windows_v0.74.35",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "21a93f9e66a80f831b4713ab8bf85ce7ab8155cf",
+            "comment": "Bump to using WASK 1.7 experimental 3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 19:38:48 GMT",
       "version": "0.74.34",
       "tag": "react-native-windows_v0.74.34",
