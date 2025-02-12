@@ -225,12 +225,12 @@ extends:
 
           - template: .ado/templates/configure-git.yml@self
 
-          - bash: |
+          - script: |
               echo "##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish"
             displayName: Enable No-Publish (npm)
             condition: ${{ parameters.skipNpmPublish }}
 
-          - bash: |
+          - script: |
               echo "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
             displayName: Enable No-Publish (git)
             condition: ${{ parameters.skipGitPush }}
