@@ -33,7 +33,15 @@ void SetPromise(once_flag& flag, promise<void>& prom)
     prom.set_value();
   });
 }
+
+void SetPromise(once_flag& flag, promise<string>& prom, string value)
+{
+  std::call_once(flag, [&prom, &value]()
+  {
+    prom.set_value(value);
+  });
 }
+} // namespace <anonymous>
 
 namespace Microsoft::React::Test {
 
@@ -43,20 +51,13 @@ TEST_CLASS (WebSocketIntegrationTest)
 
   void SendReceiveCloseBase(bool isSecure)
   {
-    auto server = make_shared<Test::WebSocketServer>(s_port, isSecure);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message + "_response";
-    });
-    string serverError;
-    server->SetOnError([&serverError](Error&& err)
-    {
-      serverError = err.Message;
-    });
-
     string scheme = "ws";
+    string port = "5555";
     if (isSecure)
+    {
       scheme += "s";
+      port = "5543";
+    }
     auto ws = IWebSocketResource::Make();
     promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size)
@@ -76,10 +77,9 @@ TEST_CLASS (WebSocketIntegrationTest)
       receivedPromise.set_value("");
     });
 
-    server->Start();
     string sent = "prefix";
     auto expectedSize = sent.size();
-    ws->Connect(scheme + "://localhost:" + std::to_string(s_port));
+    ws->Connect(scheme + "://localhost:" + port + "/rnw/websockets/echosuffix");
     ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
@@ -92,9 +92,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual({}, clientError);
 
     ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
 
-    Assert::AreEqual({}, serverError);
     Assert::AreEqual({}, clientError);
     Assert::AreEqual(expectedSize, sentSize);
     Assert::AreEqual({"prefix_response"}, received);
@@ -133,7 +131,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       SetPromise(doneFlag, donePromise);
     });
 
-    ws->Connect("wss://localhost:5543/rnw/websockets/echosuffix");
+    ws->Connect("ws://localhost:5555");
     ws->Close(CloseCode::Normal, "Closing");
     donePromise.get_future().wait();
 
@@ -147,8 +145,8 @@ TEST_CLASS (WebSocketIntegrationTest)
     bool connected = false;
     bool closed = false;
     string errorMessage;
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->Start();
+    once_flag doneFlag;
+    promise<void> donePromise;
 
     // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
     {
@@ -157,20 +155,23 @@ TEST_CLASS (WebSocketIntegrationTest)
       {
         connected = true;
       });
-      ws->SetOnClose([&closed](CloseCode code, const string& reason)
+      ws->SetOnClose([&closed, &doneFlag, &donePromise](CloseCode code, const string& reason)
       {
         closed = true;
+
+        SetPromise(doneFlag, donePromise);
       });
-      ws->SetOnError([&errorMessage](Error && error)
+      ws->SetOnError([&errorMessage, &doneFlag, &donePromise](Error && error)
       {
         errorMessage = error.Message;
+
+        SetPromise(doneFlag, donePromise);
       });
 
-      ws->Connect("ws://localhost:" + std::to_string(s_port));
+      ws->Connect("ws://localhost:5555");
       ws->Close();//TODO: Either remove or rename test.
     }
-
-    server->Stop();
+    donePromise.get_future().wait();
 
     Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
