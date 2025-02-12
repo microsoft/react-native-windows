@@ -34,7 +34,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker m_revoker;
   winrt::Windows::Storage::Streams::IDataWriter m_writer;
 
-  void Fail(std::string &&message, IWebSocketResource::ErrorType type) noexcept;
+  void Fail(std::string &&message, ErrorType type) noexcept;
+  void Fail(winrt::hresult_error const &e, ErrorType type) noexcept;
 
   void OnMessageReceived(
       winrt::Windows::Networking::Sockets::IMessageWebSocket const &,

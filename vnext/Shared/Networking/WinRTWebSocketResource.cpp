@@ -109,6 +109,11 @@ void WinRTWebSocketResource2::Fail(string &&message, ErrorType type) noexcept {
   }
 }
 
+void WinRTWebSocketResource2::Fail(winrt::hresult_error const& error, ErrorType type) noexcept
+{
+  Fail(Utilities::HResultToString(error), type);
+}
+
 void WinRTWebSocketResource2::OnMessageReceived(
     IMessageWebSocket const &,
     IMessageWebSocketMessageReceivedEventArgs const &args) {
@@ -145,7 +150,7 @@ void WinRTWebSocketResource2::OnMessageReceived(
       errorType = ErrorType::Receive;
     }
 
-    Fail(std::move(errorMessage), errorType);
+    self->Fail(std::move(errorMessage), errorType);
 
     return;
   }
@@ -170,12 +175,13 @@ void WinRTWebSocketResource2::OnMessageReceived(
     }
 
   } catch (hresult_error const &e) {
-    if (self->m_errorHandler) {
-      auto errorMessage = Utilities::HResultToString(e);
-      auto errorType = ErrorType::Receive;
+    //if (self->m_errorHandler) {
+    //  auto errorMessage = Utilities::HResultToString(e);
+    //  auto errorType = ErrorType::Receive;
 
-      self->m_errorHandler({errorMessage, errorType});
-    }
+    //  self->m_errorHandler({errorMessage, errorType});
+    //}
+    self->Fail(e, ErrorType::Receive);
   }
 }
 
@@ -241,9 +247,10 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
       m_socket.SetRequestHeader(L"Origin", std::move(origin));
     }
   } catch (hresult_error const &e) {
-    if (m_errorHandler) {
-      m_errorHandler({Utilities::HResultToString(e), ErrorType::Connection});
-    }
+    //if (m_errorHandler) {
+    //  m_errorHandler({Utilities::HResultToString(e), ErrorType::Connection});
+    //}
+    Fail(e, ErrorType::Connection);
 
     // Abort - Mark connection as concluded.
     // TODO:SetEvent(m_connectionPerformed.get())
