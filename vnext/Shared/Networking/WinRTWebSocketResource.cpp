@@ -283,11 +283,15 @@ void WinRTWebSocketResource2::SetOnPing(function<void()> &&handler) noexcept {}
 
 void WinRTWebSocketResource2::SetOnSend(function<void(size_t)> &&handler) noexcept {}
 
-void WinRTWebSocketResource2::SetOnMessage(function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {}
+void WinRTWebSocketResource2::SetOnMessage(function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
+  m_readHandler = std::move(handler);
+}
 
 void WinRTWebSocketResource2::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept {}
 
-void WinRTWebSocketResource2::SetOnError(function<void(Error &&)> &&handler) noexcept {}
+void WinRTWebSocketResource2::SetOnError(function<void(Error &&)> &&handler) noexcept {
+  m_errorHandler = std::move(handler);
+}
 
 #pragma endregion IWebSocketResource
 
