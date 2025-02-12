@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2025 01:18:59 GMT",
+      "version": "0.0.0-canary.919",
+      "tag": "react-native-windows_v0.0.0-canary.919",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1529ea52ca3a7c66d8575a06c373800a400f9a74",
+            "comment": "fix modal height"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Feb 2025 23:53:18 GMT",
       "version": "0.0.0-canary.918",
       "tag": "react-native-windows_v0.0.0-canary.918",

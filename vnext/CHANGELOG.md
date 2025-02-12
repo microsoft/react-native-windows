@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 10 Feb 2025 23:53:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 12 Feb 2025 01:18:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.919
+
+Wed, 12 Feb 2025 01:18:59 GMT
+
+### Changes
+
+- fix modal height (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.918
 
