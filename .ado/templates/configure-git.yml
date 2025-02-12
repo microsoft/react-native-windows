@@ -1,12 +1,8 @@
 
 steps:
 
-  - task: CmdLine@2
-    displayName: Configure git
-    inputs:
-      script: |
-        git config --global user.email "53619745+rnbot@users.noreply.github.com"
-        git config --global user.name "React-Native-Windows Bot"
-
-  - script: git remote set-url origin https://rnbot:$(githubAuthToken)@github.com/microsoft/react-native-windows
-    displayName: Set Permissions to push
+  - script: |
+      git config user.name "React-Native-Windows Bot"
+      git config user.email "53619745+rnbot@users.noreply.github.com"
+      git remote set-url origin https://rnbot:$(githubAuthToken)@github.com/microsoft/react-native-windows.git
+    displayName: Git Authentication
