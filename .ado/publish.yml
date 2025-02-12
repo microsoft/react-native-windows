@@ -168,6 +168,9 @@ extends:
 
           - template: .ado/templates/run-compliance-prebuild.yml@self
 
+          - script: if not exist %USERPROFILE%\AppData\Roaming\npm (mkdir %USERPROFILE%\AppData\Roaming\npm)
+            displayName: Fix missing npm config
+
           - pwsh: |
               npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
               $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
@@ -193,13 +196,13 @@ extends:
           - template: .ado/templates/configure-git.yml@self
 
           - script: |
-              echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
-            displayName: Enable No-Publish
+              echo "##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish"
+            displayName: Enable No-Publish (npm)
             condition: ${{ parameters.skipNpmPublish }}
 
           - script: |
-              echo ##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push
-            displayName: Enable No-Publish
+              echo "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
+            displayName: Enable No-Publish (git)
             condition: ${{ parameters.skipGitPush }}
 
           - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
