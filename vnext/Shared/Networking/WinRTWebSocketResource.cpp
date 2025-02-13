@@ -24,7 +24,6 @@ using Microsoft::Common::Utilities::CheckedReinterpretCast;
 using std::function;
 using std::lock_guard;
 using std::mutex;
-using std::size_t;
 using std::string;
 using std::vector;
 
