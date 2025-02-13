@@ -59,11 +59,6 @@ TEST_CLASS (WebSocketIntegrationTest)
       port = "5543";
     }
     auto ws = IWebSocketResource::Make();
-    //promise<size_t> sentSizePromise;
-    //ws->SetOnSend([&sentSizePromise](size_t size)
-    //{
-    //  sentSizePromise.set_value(size);
-    //});
     promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message, bool isBinary)
     {
@@ -73,7 +68,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->SetOnError([&clientError, /*&sentSizePromise,*/ &receivedPromise](Error err)
     {
       clientError = err.Message;
-      //sentSizePromise.set_value(0);
       receivedPromise.set_value("");
     });
 
@@ -83,9 +77,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    //auto sentSizeFuture = sentSizePromise.get_future();
-    //sentSizeFuture.wait();
-    //auto sentSize = sentSizeFuture.get();
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
@@ -94,7 +85,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Close(CloseCode::Normal, "Closing after reading");
 
     Assert::AreEqual({}, clientError);
-    //Assert::AreEqual(expectedSize, sentSize);
     Assert::AreEqual({"prefix_response"}, received);
   }
 
@@ -216,16 +206,19 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   TEST_METHOD(SendReceiveLargeMessage) {
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
     auto ws = IWebSocketResource::Make();
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
+    once_flag responseFlag;
+    promise<string> responsePromise;
+    ws->SetOnMessage([&responseFlag, &responsePromise](size_t size, const string &message, bool isBinary) {
+      SetPromise(responseFlag, responsePromise, message);
+    });
     string errorMessage;
-    ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage, &responseFlag, &responsePromise](Error err) {
+      errorMessage = err.Message;
+      SetPromise(responseFlag, responsePromise, "");
+    });
 
-    server->Start();
-    ws->Connect("ws://localhost:" + std::to_string(s_port));
+    ws->Connect("ws://localhost:5555/rnw/websockets/echosuffix");
 
     char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 #define LEN 4096 + 4096 * 2 + 1
@@ -237,12 +230,11 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Send(string{chars});
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    auto future = response.get_future();
+    auto future = responsePromise.get_future();
     future.wait();
     string result = future.get();
 
     ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
@@ -298,21 +290,15 @@ TEST_CLASS (WebSocketIntegrationTest)
   TEST_METHOD(SendReceiveSsl)
   {
     auto ws = IWebSocketResource::Make();
-    promise<size_t> sentSizePromise;
-    //ws->SetOnSend([&sentSizePromise](size_t size)
-    //{
-    //  sentSizePromise.set_value(size);
-    //});
     promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message, bool isBinary)
     {
       receivedPromise.set_value(message);
     });
     string clientError{};
-    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](Error err)
+    ws->SetOnError([&clientError, &receivedPromise](Error err)
     {
       clientError = err.Message;
-      sentSizePromise.set_value(0);
       receivedPromise.set_value("");
     });
 
@@ -322,9 +308,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    //auto sentSizeFuture = sentSizePromise.get_future();
-    //sentSizeFuture.wait();
-    //auto sentSize = sentSizeFuture.get();
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
@@ -333,7 +316,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Close(CloseCode::Normal, "Closing after reading");
 
     Assert::AreEqual({}, clientError);
-    //Assert::AreEqual(expectedSize, sentSize);
     Assert::AreEqual({"prefix_response"}, received);
   }
 
