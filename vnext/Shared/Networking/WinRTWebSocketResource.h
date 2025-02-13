@@ -26,6 +26,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;
 
+  std::function<void()> m_connectHandler;
   std::function<void(std::size_t, const std::string &, bool)> m_readHandler;
   std::function<void(CloseCode, const std::string &)> m_closeHandler;
   std::function<void(Error &&)> m_errorHandler;
@@ -35,6 +36,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::Windows::Storage::Streams::IDataWriter m_writer;
 
   void Fail(std::string &&message, ErrorType type) noexcept;
+  void Fail(winrt::hresult &&e, ErrorType type) noexcept;
   void Fail(winrt::hresult_error const &e, ErrorType type) noexcept;
 
   void OnMessageReceived(
@@ -44,6 +46,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   void OnClosed(
       winrt::Windows::Networking::Sockets::IWebSocket const &,
       winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs const &args);
+
+  winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
 
  public:
   WinRTWebSocketResource2(

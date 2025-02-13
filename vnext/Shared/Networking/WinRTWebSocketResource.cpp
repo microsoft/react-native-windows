@@ -109,7 +109,11 @@ void WinRTWebSocketResource2::Fail(string &&message, ErrorType type) noexcept {
   }
 }
 
-void WinRTWebSocketResource2::Fail(winrt::hresult_error const& error, ErrorType type) noexcept
+void WinRTWebSocketResource2::Fail(hresult &&error, ErrorType type) noexcept {
+  Fail(Utilities::HResultToString(std::move(error)), type);
+}
+
+void WinRTWebSocketResource2::Fail(hresult_error const& error, ErrorType type) noexcept
 {
   Fail(Utilities::HResultToString(error), type);
 }
@@ -188,10 +192,38 @@ void WinRTWebSocketResource2::OnMessageReceived(
 void WinRTWebSocketResource2::OnClosed(IWebSocket const& sender, IWebSocketClosedEventArgs const& args) {
   auto self = shared_from_this();
 
-  //m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
   if (self->m_closeHandler) {
     self->m_closeHandler(self->m_closeCode, self->m_closeReason);
   }
+}
+
+fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
+  auto self = shared_from_this();
+  auto coUri = std::move(uri);
+
+  co_await resume_background();
+
+  auto async = self->m_socket.ConnectAsync(coUri);
+  co_await lessthrow_await_adapter<IAsyncAction>{async};
+  auto result = async.ErrorCode();
+
+  try
+  {
+    if (result >= 0) { // Non-failing HRESULT
+      self->m_state = State::Open;
+      if (self->m_connectHandler) {
+        self->m_connectHandler();
+      }
+    } else {
+      self->Fail(std::move(result), ErrorType::Connection);
+    }
+  } catch (hresult_error const &e) {
+    Fail(e, ErrorType::Connection);
+  } catch (std::exception const &e) {
+    Fail(e.what(), ErrorType::Connection);
+  }
+
+  //TODO: Notify!
 }
 
 #pragma region IWebSocketResource
@@ -262,7 +294,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
 
   // TODO: m_connectrequested
 
-  // TODO: Perform ConnectS
+  PerformConnect(std::move(uri));
 }
 
 void WinRTWebSocketResource2::Ping() noexcept {}
