@@ -25,6 +25,7 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
 
 #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
   RegisterCalendarViewComponentView(packageBuilder);
+  
 #endif // #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
 }
 
