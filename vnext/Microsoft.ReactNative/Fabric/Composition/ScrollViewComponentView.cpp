@@ -1259,7 +1259,7 @@ facebook::react::Point ScrollViewComponentView::getClientOffset() const noexcept
 }
 
 std::string ScrollViewComponentView::DefaultControlType() const noexcept {
-  return "scrollbar";
+  return "pane";
 }
 
 winrt::com_ptr<ComponentView> ScrollViewComponentView::focusVisualRoot(

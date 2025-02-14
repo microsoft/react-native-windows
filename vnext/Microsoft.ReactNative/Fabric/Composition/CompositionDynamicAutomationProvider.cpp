@@ -3,6 +3,7 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
+#include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
@@ -231,6 +232,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
+  if (patternId == UIA_ScrollPatternId) {
+    *pRetVal = static_cast<IScrollProvider *>(this);
+    AddRef();
+  }
+
   if (patternId == UIA_ValuePatternId &&
       ((strongView
             .try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() &&
@@ -341,6 +347,8 @@ long GetControlType(const std::string &role) noexcept {
     return UIA_TreeControlTypeId;
   } else if (role == "treeitem") {
     return UIA_TreeItemControlTypeId;
+  } else if (role == "pane") {
+    return UIA_PaneControlTypeId;
   }
   assert(false);
   return UIA_GroupControlTypeId;
@@ -505,6 +513,102 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
       ->StartBringIntoView(std::move(scrollOptions));
   DispatchAccessibilityAction(m_view, "scrollIntoView");
 
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontalScrollPercent(double *pRetVal) {
+  BOOL horizontallyScrollable auto hr = get_HorizontallyScrollable(&horizontallyScrollable);
+  if (!SUCCEEDED(hr)) {
+    return hr;
+  }
+  if (!horizontallyScrollable) {
+    *pRetVal = UIA_ScrollPatternNoScroll;
+  }
+  // something else - specifies the horizontal scroll position
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticalScrollPercent(double *pRetVal) {
+  BOOL verticallyScrollable auto hr = get_VerticallyScrollable(&verticallyScrollable);
+  if (!SUCCEEDED(hr)) {
+    return hr;
+  }
+  if (!verticallyScrollable) {
+    *pRetVal = UIA_ScrollPatternNoScroll;
+  }
+  // something else - specifies the vertical scroll position
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontalViewSize(double *pRetVal) {
+  BOOL horizontallyScrollable auto hr = get_HorizontallyScrollable(&horizontallyScrollable);
+  if (!SUCCEEDED(hr)) {
+    return hr;
+  }
+  if (!horizontallyScrollable) {
+    *pRetVal = 100;
+  }
+  // something else - specifies the horizontal size of the viewable region
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticalViewSize(double *pRetVal) {
+  BOOL verticallyScrollable auto hr = get_VerticallyScrollable(&verticallyScrollable);
+  if (!SUCCEEDED(hr)) {
+    return hr;
+  }
+  if (!verticallyScrollable) {
+    *pRetVal = 100;
+  }
+  // something else - specifies the vertical size of the viewable region
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontallyScrollable(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ScrollViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  *pRetVal = props->horizontal;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticallyScrollable(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ScrollViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  *pRetVal = !props->horizontal;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Scroll(
+    ScrollAmount horizontalAmount,
+    ScrollAmount verticalAmount) {
+  // something else if native control
+  DispatchAccessibilityAction(m_view, "scroll");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetScrollPercent(
+    double horiztonalPercent,
+    double verticalPercent) {
+  // something else if native control
+  DispatchAccessibilityAction(m_view, "setScrollPercent");
   return S_OK;
 }
 
