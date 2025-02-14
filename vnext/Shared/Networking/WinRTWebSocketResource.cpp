@@ -236,9 +236,12 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 
 fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
 {
-  //TODO: Check if background thread is needed.
+  //TODO: Check whether background thread is needed.
 
   co_await resume_on_signal(m_connectPerformed.get());
+
+  if (m_state != State::Open)
+    co_return;
 
   try {
     m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
@@ -334,9 +337,6 @@ void WinRTWebSocketResource2::Send(string &&message) noexcept {}
 void WinRTWebSocketResource2::SendBinary(string &&base64String) noexcept {}
 
 void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexcept {
-  if (m_state != State::Open)
-    return;
-
   m_closeCode = code;
   m_closeReason = reason;
   PerformClose();
