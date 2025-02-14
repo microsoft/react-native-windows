@@ -238,7 +238,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
 {
   //TODO: Check whether background thread is needed.
 
-  co_await resume_on_signal(m_connectPerformed.get());
+  co_await resume_on_signal(m_connectPerformed.get()); //TODO: Timeout?
 
   if (m_state != State::Open)
     co_return;
