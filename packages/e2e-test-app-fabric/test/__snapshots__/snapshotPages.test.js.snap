@@ -751,7 +751,6 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     The following View exposes the accessibilityValue.Text field
   </Text>
   <View
-    accessibilityRole="combobox"
     accessibilityValue={
       {
         "text": "testText",
@@ -759,6 +758,7 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     }
     accessible={true}
     aria-readonly={true}
+    role="combobox"
     style={
       {
         "backgroundColor": "gray",
