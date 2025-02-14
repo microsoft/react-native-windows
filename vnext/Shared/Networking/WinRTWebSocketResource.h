@@ -52,10 +52,17 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
 
+  WinRTWebSocketResource2(
+    winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
+    std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
+
  public:
   WinRTWebSocketResource2(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
+
+  WinRTWebSocketResource2(
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
   ~WinRTWebSocketResource2() noexcept override;

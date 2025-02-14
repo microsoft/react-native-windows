@@ -95,6 +95,15 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
   }
 }
 
+// private
+WinRTWebSocketResource2::WinRTWebSocketResource2(
+    IMessageWebSocket &&socket,
+    vector<ChainValidationResult> &&certExceptions)
+    : WinRTWebSocketResource2(std::move(socket), DataWriter{socket.OutputStream()}, std::move(certExceptions)) {}
+
+WinRTWebSocketResource2::WinRTWebSocketResource2(vector<ChainValidationResult> &&certExceptions)
+    : WinRTWebSocketResource2(MessageWebSocket{}, std::move(certExceptions)) {}
+
 WinRTWebSocketResource2::~WinRTWebSocketResource2() noexcept /*override*/
 {}
 
@@ -231,6 +240,20 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
 
   co_await resume_on_signal(m_connectPerformed.get());
 
+  try {
+    m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
+    m_state = State::Closed;
+
+    if (m_closeHandler) {
+      m_closeHandler(m_closeCode, m_closeReason);
+    }
+  } catch (winrt::hresult_invalid_argument const &e) {
+    Fail(e, ErrorType::Close);
+  } catch (hresult_error const &e) {
+    Fail(e, ErrorType::Close);
+  } catch (const std::exception &e) {
+    Fail(e.what(), ErrorType::Close);
+  }
 }
 
 #pragma region IWebSocketResource
@@ -314,13 +337,18 @@ void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexce
   if (m_state != State::Open)
     return;
 
+  m_closeCode = code;
+  m_closeReason = reason;
+  PerformClose();
 }
 
 IWebSocketResource::ReadyState WinRTWebSocketResource2::GetReadyState() const noexcept {
   return IWebSocketResource::ReadyState::Closed;
 }
 
-void WinRTWebSocketResource2::SetOnConnect(function<void()> &&handler) noexcept {}
+void WinRTWebSocketResource2::SetOnConnect(function<void()> &&handler) noexcept {
+  m_connectHandler = std::move(handler);
+}
 
 void WinRTWebSocketResource2::SetOnPing(function<void()> &&handler) noexcept {}
 
@@ -330,7 +358,9 @@ void WinRTWebSocketResource2::SetOnMessage(function<void(size_t, const string &,
   m_readHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource2::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept {}
+void WinRTWebSocketResource2::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept {
+  m_closeHandler = std::move(handler);
+}
 
 void WinRTWebSocketResource2::SetOnError(function<void(Error &&)> &&handler) noexcept {
   m_errorHandler = std::move(handler);
