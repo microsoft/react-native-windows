@@ -217,12 +217,20 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
       self->Fail(std::move(result), ErrorType::Connection);
     }
   } catch (hresult_error const &e) {
-    Fail(e, ErrorType::Connection);
+    self->Fail(e, ErrorType::Connection);
   } catch (std::exception const &e) {
-    Fail(e.what(), ErrorType::Connection);
+    self->Fail(e.what(), ErrorType::Connection);
   }
 
-  //TODO: Notify!
+  SetEvent(self->m_connectPerformed.get());
+}
+
+fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
+{
+  //TODO: Check if background thread is needed.
+
+  co_await resume_on_signal(m_connectPerformed.get());
+
 }
 
 #pragma region IWebSocketResource
@@ -302,7 +310,11 @@ void WinRTWebSocketResource2::Send(string &&message) noexcept {}
 
 void WinRTWebSocketResource2::SendBinary(string &&base64String) noexcept {}
 
-void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexcept {}
+void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexcept {
+  if (m_state != State::Open)
+    return;
+
+}
 
 IWebSocketResource::ReadyState WinRTWebSocketResource2::GetReadyState() const noexcept {
   return IWebSocketResource::ReadyState::Closed;

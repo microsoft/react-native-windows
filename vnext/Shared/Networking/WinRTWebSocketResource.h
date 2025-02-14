@@ -21,6 +21,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   enum class State { Created, Open, Closed, Error };
 
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
+  winrt::handle m_connectPerformed{
+      CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr)};
   State m_state;
 
   CloseCode m_closeCode{CloseCode::Normal};
@@ -48,6 +50,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
       winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs const &args);
 
   winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
+  winrt::fire_and_forget PerformClose() noexcept;
 
  public:
   WinRTWebSocketResource2(
