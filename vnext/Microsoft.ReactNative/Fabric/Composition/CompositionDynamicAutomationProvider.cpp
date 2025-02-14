@@ -504,7 +504,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsContentElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+      pRetVal->boolVal =
+          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
           ? VARIANT_TRUE
           : VARIANT_FALSE;
       break;
