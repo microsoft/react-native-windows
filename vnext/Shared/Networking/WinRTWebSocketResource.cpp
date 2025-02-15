@@ -262,11 +262,11 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
 fire_and_forget WinRTWebSocketResource2::PerformWrite(string&& message, bool isBinary) noexcept
 {
   auto self = shared_from_this();
-  auto coMessage = std::move(message);
+  self->m_writeQueue.emplace(std::move(message), isBinary);
 
-  co_await resume_on_signal(self->m_connectPerformed.get());
+  co_await resume_on_signal(self->m_connectPerformed.get()); // Ensure connection attempt has finished
 
-  co_await resume_background();
+  co_await resume_in_queue(self->m_dispatchQueue); // Ensure writes happen sequentially
 
   if (self->m_state != State::Open) {
     self = nullptr;
@@ -274,18 +274,25 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string&& message, bool isB
   }
 
   size_t length = 0;
-  //TODO: try-catch?
-  if (isBinary) {
+  string messageLocal;
+  bool isBinaryLocal;
+  try {
+    std::tie(messageLocal, isBinaryLocal) = self->m_writeQueue.front();
+    self->m_writeQueue.pop();
+    if (isBinaryLocal) {
+    } else {
+      self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
-  } else {
-    self->m_socket.Control().MessageType(SocketMessageType::Utf8);
-
-    //TODO: Use char_t instead of uint8_t?
-    length = coMessage.size();
-    winrt::array_view<const uint8_t> view(
-        CheckedReinterpretCast<const uint8_t *>(coMessage.c_str()),
-        CheckedReinterpretCast<const uint8_t *>(coMessage.c_str()) + coMessage.length());
-    self->m_writer.WriteBytes(view);
+      length = messageLocal.size();
+      winrt::array_view<const uint8_t> view(
+          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
+          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
+      self->m_writer.WriteBytes(view);
+    }
+  } catch(hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
+    self->Fail(e, ErrorType::Send);
+  } catch (const std::exception &e) {
+    self->Fail(e.what(), ErrorType::Send);
   }
 
   auto async = self->m_writer.StoreAsync();
