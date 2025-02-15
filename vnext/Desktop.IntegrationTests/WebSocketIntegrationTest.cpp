@@ -387,25 +387,28 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
     auto ws = IWebSocketResource::Make();
 
-    string expected = "ABCDEFGHIJ";
+    string expected = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string result(expected.size(), '0');
     size_t index = 0;
-    promise<void> responsesReceived;
-    ws->SetOnMessage([&result, &index, &responsesReceived, count=expected.size()](size_t size, const string& message, bool isBinary)
+    once_flag doneFlag;
+    promise<void> donePromise;
+    ws->SetOnMessage([&result, &index, &doneFlag, &donePromise, count=expected.size()](size_t size, const string& message, bool isBinary)
     {
       result[index++] = message[0];
 
       if (index == count)
-        responsesReceived.set_value();
+        SetPromise(doneFlag, donePromise);
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](Error err)
+    ws->SetOnError([&errorMessage, &doneFlag, &donePromise](Error err)
     {
       errorMessage = err.Message;
+
+      SetPromise(doneFlag, donePromise);
     });
 
     server->Start();
-    ws->Connect("ws://localhost:" + std::to_string(s_port));
+    ws->Connect("ws://localhost:5555/rnw/websockets/echo");
 
     // Consecutive immediate writes should be enqueued.
     // The WebSocket library (WinRT or Beast) can't handle multiple write operations
@@ -416,10 +419,9 @@ TEST_CLASS (WebSocketIntegrationTest)
     }
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    responsesReceived.get_future().wait();
+    donePromise.get_future().wait();
 
     ws->Close(CloseCode::Normal, "Closing");
-    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(expected, result);
