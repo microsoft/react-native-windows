@@ -57,6 +57,11 @@ app.Map(
   );
 
 app.Map(
+  "/rnw/websockets/echo",
+  Microsoft.React.Test.WebSocketTests.Echo
+  );
+
+app.Map(
   "/rnw/websockets/echosuffix",
   Microsoft.React.Test.WebSocketTests.EchoSuffix
   );
