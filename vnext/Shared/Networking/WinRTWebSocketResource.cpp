@@ -280,6 +280,13 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string&& message, bool isB
     std::tie(messageLocal, isBinaryLocal) = self->m_writeQueue.front();
     self->m_writeQueue.pop();
     if (isBinaryLocal) {
+      self->m_socket.Control().MessageType(SocketMessageType::Binary);
+
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
+      if (buffer) {
+        length = buffer.Length();
+        self->m_writer.WriteBuffer(buffer);
+      }
     } else {
       self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
