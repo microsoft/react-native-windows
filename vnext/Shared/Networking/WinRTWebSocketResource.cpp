@@ -259,6 +259,45 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
   }
 }
 
+fire_and_forget WinRTWebSocketResource2::PerformWrite(string&& message, bool isBinary) noexcept
+{
+  auto self = shared_from_this();
+  auto coMessage = std::move(message);
+
+  co_await resume_on_signal(self->m_connectPerformed.get());
+
+  co_await resume_background();
+
+  if (self->m_state != State::Open) {
+    self = nullptr;
+    co_return;
+  }
+
+  size_t length = 0;
+  //TODO: try-catch?
+  if (isBinary) {
+
+  } else {
+    self->m_socket.Control().MessageType(SocketMessageType::Utf8);
+
+    //TODO: Use char_t instead of uint8_t?
+    length = coMessage.size();
+    winrt::array_view<const uint8_t> view(
+        CheckedReinterpretCast<const uint8_t *>(coMessage.c_str()),
+        CheckedReinterpretCast<const uint8_t *>(coMessage.c_str()) + coMessage.length());
+    self->m_writer.WriteBytes(view);
+  }
+
+  auto async = self->m_writer.StoreAsync();
+
+  co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+
+  auto result = async.ErrorCode();
+  if (result < 0) {
+    Fail(std::move(result), ErrorType::Send);
+  }
+}
+
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
@@ -332,9 +371,13 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
 
 void WinRTWebSocketResource2::Ping() noexcept {}
 
-void WinRTWebSocketResource2::Send(string &&message) noexcept {}
+void WinRTWebSocketResource2::Send(string &&message) noexcept {
+  PerformWrite(std::move(message), false);
+}
 
-void WinRTWebSocketResource2::SendBinary(string &&base64String) noexcept {}
+void WinRTWebSocketResource2::SendBinary(string &&base64String) noexcept {
+  PerformWrite(std::move(base64String), true);
+}
 
 void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexcept {
   m_closeCode = code;
