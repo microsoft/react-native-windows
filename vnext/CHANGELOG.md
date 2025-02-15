@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 03 Feb 2025 22:47:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 12 Feb 2025 01:18:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.919
+
+Wed, 12 Feb 2025 01:18:59 GMT
+
+### Changes
+
+- fix modal height (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.918
+
+Mon, 10 Feb 2025 23:53:18 GMT
+
+### Changes
+
+- ITextProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.917
+
+Wed, 05 Feb 2025 18:09:33 GMT
+
+### Changes
+
+- Fix Number.h not copied from react-native core (hampus.sjoberg@protonmail.com)
 
 ## 0.0.0-canary.916
 

@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2025 01:18:59 GMT",
+      "version": "0.0.0-canary.919",
+      "tag": "react-native-windows_v0.0.0-canary.919",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1529ea52ca3a7c66d8575a06c373800a400f9a74",
+            "comment": "fix modal height"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Feb 2025 23:53:18 GMT",
+      "version": "0.0.0-canary.918",
+      "tag": "react-native-windows_v0.0.0-canary.918",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "78e2e4710f4a1223f778b7557116479efd78d37d",
+            "comment": "ITextProvider Implementation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Feb 2025 18:09:33 GMT",
+      "version": "0.0.0-canary.917",
+      "tag": "react-native-windows_v0.0.0-canary.917",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "hampus.sjoberg@protonmail.com",
+            "package": "react-native-windows",
+            "commit": "c0be76e207aa68f2ce0d73fa776fe17026a30248",
+            "comment": "Fix Number.h not copied from react-native core"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 22:47:30 GMT",
       "version": "0.0.0-canary.916",
       "tag": "react-native-windows_v0.0.0-canary.916",
