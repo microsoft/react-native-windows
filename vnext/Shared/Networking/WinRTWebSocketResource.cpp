@@ -30,6 +30,7 @@ using std::vector;
 using winrt::fire_and_forget;
 using winrt::hresult;
 using winrt::hresult_error;
+using winrt::hstring;
 using winrt::resume_background;
 using winrt::resume_on_signal;
 using winrt::Windows::Foundation::IAsyncAction;
@@ -187,12 +188,6 @@ void WinRTWebSocketResource2::OnMessageReceived(
     }
 
   } catch (hresult_error const &e) {
-    //if (self->m_errorHandler) {
-    //  auto errorMessage = Utilities::HResultToString(e);
-    //  auto errorType = ErrorType::Receive;
-
-    //  self->m_errorHandler({errorMessage, errorType});
-    //}
     self->Fail(e, ErrorType::Receive);
   }
 }
@@ -359,15 +354,12 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
       }
 
       // Only add a port if a port is defined.
-      winrt::hstring originPort = port != 0 ? L":" + winrt::to_hstring(port) : L"";
-      auto origin = winrt::hstring{scheme + L"://" + host + originPort};
+      hstring originPort = port != 0 ? L":" + winrt::to_hstring(port) : L"";
+      auto origin = hstring{scheme + L"://" + host + originPort};
 
       m_socket.SetRequestHeader(L"Origin", std::move(origin));
     }
   } catch (hresult_error const &e) {
-    //if (m_errorHandler) {
-    //  m_errorHandler({Utilities::HResultToString(e), ErrorType::Connection});
-    //}
     Fail(e, ErrorType::Connection);
 
     // Abort - Mark connection as concluded.
@@ -407,9 +399,9 @@ void WinRTWebSocketResource2::SetOnConnect(function<void()> &&handler) noexcept 
   m_connectHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource2::SetOnPing(function<void()> &&handler) noexcept {}
+void WinRTWebSocketResource2::SetOnPing(function<void()> &&/*handler*/) noexcept {}
 
-void WinRTWebSocketResource2::SetOnSend(function<void(size_t)> &&handler) noexcept {}
+void WinRTWebSocketResource2::SetOnSend(function<void(size_t)> &&/*handler*/) noexcept {}
 
 void WinRTWebSocketResource2::SetOnMessage(function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
   m_readHandler = std::move(handler);
@@ -675,7 +667,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
         response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
       } else {
         auto buffer = reader.ReadBuffer(len);
-        winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+        hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
 
         response = winrt::to_string(std::wstring_view(data));
       }
@@ -704,7 +696,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
     }
   }
 
-  winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
+  winrt::Windows::Foundation::Collections::IVector<hstring> supportedProtocols =
       m_socket.Control().SupportedProtocols();
   for (const auto &protocol : protocols) {
     supportedProtocols.Append(winrt::to_hstring(protocol));
@@ -727,8 +719,8 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
       }
 
       // Only add a port if a port is defined
-      winrt::hstring originPort = port != 0 ? L":" + winrt::to_hstring(port) : L"";
-      auto origin = winrt::hstring{scheme + L"://" + host + originPort};
+      hstring originPort = port != 0 ? L":" + winrt::to_hstring(port) : L"";
+      auto origin = hstring{scheme + L"://" + host + originPort};
 
       m_socket.SetRequestHeader(L"Origin", std::move(origin));
     }
