@@ -90,7 +90,7 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
     IMessageWebSocket &&socket,
     IDataWriter &&writer,
     vector<ChainValidationResult> &&certExceptions)
-    : m_socket{std::move(socket)}, m_writer(std::move(writer)) {
+    : m_socket{std::move(socket)}, m_writer(std::move(writer)), m_state{State::Created} {
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
