@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "backport Fix Number.h not copied from react-native core",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
