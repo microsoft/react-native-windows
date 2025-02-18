@@ -27,7 +27,7 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/popup-menu-android": "0.78.0-rc.3",
+    "@react-native/popup-menu-android": "0.78.0-rc.4",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
