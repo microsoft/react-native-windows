@@ -316,7 +316,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
     self->OnClosed(sender, args);
   });
 
-  // TODO: readyState
+  m_readyState = ReadyState::Connecting;
 
   bool hasOriginHeader = false;
   for (const auto &header : options) {
