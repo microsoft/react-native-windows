@@ -15,6 +15,7 @@ using namespace winrt::Windows::Networking::Sockets;
 
 using Microsoft::React::Networking::IWebSocketResource;
 using Microsoft::React::Networking::WinRTWebSocketResource;
+using Microsoft::React::Networking::WinRTWebSocketResource2;
 using std::make_shared;
 using std::shared_ptr;
 using std::string;
@@ -59,7 +60,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
@@ -76,6 +77,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectFails");
     bool connected = false;
     string errorMessage;
+
     auto imws{winrt::make<MockMessageWebSocket>()};
 
     // Set up mocks
@@ -85,7 +87,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
@@ -98,10 +100,10 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
   TEST_METHOD(InternalSocketThrowsHResult) {
     Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::InternalSocketThrowsHResult");
-    shared_ptr<WinRTWebSocketResource> rc;
+    shared_ptr<WinRTWebSocketResource2> rc;
 
     auto lambda = [&rc]() mutable {
-      rc = make_shared<WinRTWebSocketResource>(
+      rc = make_shared<WinRTWebSocketResource2>(
           winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, CertExceptions{});
     };
 
