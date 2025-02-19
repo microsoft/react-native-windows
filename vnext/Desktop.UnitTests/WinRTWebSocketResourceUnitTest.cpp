@@ -17,6 +17,7 @@ using Microsoft::React::Networking::IWebSocketResource;
 using Microsoft::React::Networking::WinRTWebSocketResource;
 using Microsoft::React::Networking::WinRTWebSocketResource2;
 using std::make_shared;
+using std::promise;
 using std::shared_ptr;
 using std::string;
 using winrt::event_token;
@@ -76,9 +77,9 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectFails");
     bool connected = false;
     string errorMessage;
+    promise<void> donePromise;
 
     auto imws{winrt::make<MockMessageWebSocket>()};
-
     // Set up mocks
     auto mws{imws.as<MockMessageWebSocket>()};
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
@@ -86,10 +87,15 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     // Test APIs
     auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
-    rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
+    rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
+      errorMessage = error.Message;
+      donePromise.set_value();
+    });
 
     rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
+
+    donePromise.get_future().wait();
 
     Assert::AreEqual({"[0x80004005] Expected Failure"}, errorMessage);
     Assert::IsFalse(connected);
