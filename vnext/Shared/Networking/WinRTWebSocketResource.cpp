@@ -90,7 +90,10 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
     IMessageWebSocket &&socket,
     IDataWriter &&writer,
     vector<ChainValidationResult> &&certExceptions)
-    : m_socket{std::move(socket)}, m_writer(std::move(writer)), m_state{State::Created} {
+    : m_socket{std::move(socket)},
+      m_writer(std::move(writer)),
+      m_state{State::Created},
+      m_readyState{ReadyState::Connecting} {
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
@@ -112,6 +115,7 @@ void WinRTWebSocketResource2::Fail(string &&message, ErrorType type) noexcept {
   auto self = shared_from_this();
 
   self->m_state = State::Error;
+  self->m_readyState = ReadyState::Closed;
 
   if (self->m_errorHandler) {
     self->m_errorHandler({std::move(message), type});
@@ -146,19 +150,12 @@ void WinRTWebSocketResource2::OnMessageReceived(
     // See
     // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-22621#remarks
     if (hr == WININET_E_CONNECTION_ABORTED) {
-      //string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
       errorMessage = "[0x80072EFE] Underlying TCP connection suddenly terminated";
       errorType = ErrorType::Connection;
-      //if (self->m_errorHandler) {
-      //  self->m_errorHandler({errorMessage, ErrorType::Connection});
-      //}
       //TODO: Do not "Close". Define an "Abort" routine.
       // Note: We are not clear whether all read-related errors should close the socket.
       Close(CloseCode::BadPayload, std::move(errorMessage));
     } else {
-      //if (self->m_errorHandler) {
-      //  self->m_errorHandler({Utilities::HResultToString(hr), ErrorType::Receive});
-      //}
       errorMessage = Utilities::HResultToString(hr);
       errorType = ErrorType::Receive;
     }
@@ -214,6 +211,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   {
     if (result >= 0) { // Non-failing HRESULT
       self->m_state = State::Open;
+      self->m_readyState = ReadyState::Open;
       if (self->m_connectHandler) {
         self->m_connectHandler();
       }
@@ -231,16 +229,17 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 
 fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
 {
-  //TODO: Check whether background thread is needed.
-
-  co_await resume_on_signal(m_connectPerformed.get()); //TODO: Timeout?
+  co_await resume_on_signal(m_connectPerformed.get());
 
   if (m_state != State::Open)
+    co_return;
+  if (m_readyState != ReadyState::Open)
     co_return;
 
   try {
     m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
     m_state = State::Closed;
+    m_readyState = ReadyState::Closed;//TODO: Closing!
 
     if (m_closeHandler) {
       m_closeHandler(m_closeCode, m_closeReason);
@@ -264,6 +263,10 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string&& message, bool isB
   co_await resume_in_queue(self->m_dispatchQueue); // Ensure writes happen sequentially
 
   if (self->m_state != State::Open) {
+    self = nullptr;
+    co_return;
+  }
+  if (self->m_readyState != ReadyState::Open) {
     self = nullptr;
     co_return;
   }
@@ -392,7 +395,7 @@ void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexce
 }
 
 IWebSocketResource::ReadyState WinRTWebSocketResource2::GetReadyState() const noexcept {
-  return IWebSocketResource::ReadyState::Closed;
+  return m_readyState;
 }
 
 void WinRTWebSocketResource2::SetOnConnect(function<void()> &&handler) noexcept {

@@ -24,6 +24,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::handle m_connectPerformed{
       CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr)};
   State m_state;
+  ReadyState m_readyState;
   Mso::DispatchQueue m_dispatchQueue;
   std::queue<std::pair<std::string, bool>> m_writeQueue;
   CloseCode m_closeCode{CloseCode::Normal};
