@@ -27,6 +27,11 @@ MockMessageWebSocket::MockMessageWebSocket() {
       [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
     return event_token{};
   };
+
+  Mocks.ClosedToken =
+      [](TypedEventHandler<IWebSocket, WebSocketClosedEventArgs> const &) -> event_token {
+    return {};
+  };
 }
 
 // IWebSocket
