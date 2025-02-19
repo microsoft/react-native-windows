@@ -18,12 +18,9 @@ namespace Microsoft::React::Networking {
 
 class WinRTWebSocketResource2 : public IWebSocketResource,
                                 public std::enable_shared_from_this<WinRTWebSocketResource2> {
-  enum class State { Created, Open, Closed, Error };
-
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
   winrt::handle m_connectPerformed{
       CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr)};
-  State m_state;
   ReadyState m_readyState;
   Mso::DispatchQueue m_dispatchQueue;
   std::queue<std::pair<std::string, bool>> m_writeQueue;
