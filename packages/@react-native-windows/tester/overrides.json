@@ -77,6 +77,12 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/Modal/ModalOnShow.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Modal/ModalOnShow.js",
+      "baseHash": "911507abcf9172b5fdd1bb68faaf02562df704d4"
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
       "baseHash": "84626c18296dbbe5b210fafd68c526b9c9d31f56"
