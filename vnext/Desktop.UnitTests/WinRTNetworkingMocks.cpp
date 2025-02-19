@@ -23,6 +23,7 @@ namespace Microsoft::React::Test {
 #pragma region MockMessageWebSocket
 
 MockMessageWebSocket::MockMessageWebSocket() {
+  // Default mocks
   Mocks.MessageReceivedToken =
       [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
     return event_token{};
@@ -32,6 +33,10 @@ MockMessageWebSocket::MockMessageWebSocket() {
       [](TypedEventHandler<IWebSocket, WebSocketClosedEventArgs> const &) -> event_token {
     return {};
   };
+
+  Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
+
+  Mocks.Close = [](uint16_t, const hstring &) {};
 }
 
 // IWebSocket

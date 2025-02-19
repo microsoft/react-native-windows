@@ -20,6 +20,7 @@ using std::make_shared;
 using std::shared_ptr;
 using std::string;
 using winrt::event_token;
+using winrt::hresult_error;
 using winrt::param::hstring;
 
 using CertExceptions = std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>;
@@ -56,8 +57,6 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     auto mws{imws.as<MockMessageWebSocket>()};
     // TODO: Mock Control()
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
-    mws->Mocks.Close = [](uint16_t, const hstring &) {};
-    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
     auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
@@ -83,8 +82,6 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     // Set up mocks
     auto mws{imws.as<MockMessageWebSocket>()};
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
-    mws->Mocks.Close = [](uint16_t, const hstring &) {};
-    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
     auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
@@ -107,7 +104,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
           winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, CertExceptions{});
     };
 
-    Assert::ExpectException<winrt::hresult_error>(lambda);
+    Assert::ExpectException<hresult_error>(lambda);
     Assert::IsTrue(nullptr == rc);
   }
 };
