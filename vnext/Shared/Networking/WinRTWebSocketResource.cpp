@@ -189,6 +189,7 @@ void WinRTWebSocketResource2::OnMessageReceived(
 
 void WinRTWebSocketResource2::OnClosed(IWebSocket const& sender, IWebSocketClosedEventArgs const& args) {
   auto self = shared_from_this();
+  self->m_readyState = ReadyState::Closed;
 
   if (self->m_closeHandler) {
     self->m_closeHandler(self->m_closeCode, self->m_closeReason);
@@ -233,7 +234,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
 
   try {
     m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
-    m_readyState = ReadyState::Closed;//TODO: Closing!
+    m_readyState = ReadyState::Closing;
 
     if (m_closeHandler) {
       m_closeHandler(m_closeCode, m_closeReason);
