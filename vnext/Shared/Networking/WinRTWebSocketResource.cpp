@@ -90,9 +90,7 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
     IMessageWebSocket &&socket,
     IDataWriter &&writer,
     vector<ChainValidationResult> &&certExceptions)
-    : m_socket{std::move(socket)},
-      m_writer(std::move(writer)),
-      m_readyState{ReadyState::Connecting} {
+    : m_socket{std::move(socket)}, m_writer(std::move(writer)), m_readyState{ReadyState::Connecting} {
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
@@ -124,8 +122,7 @@ void WinRTWebSocketResource2::Fail(hresult &&error, ErrorType type) noexcept {
   Fail(Utilities::HResultToString(std::move(error)), type);
 }
 
-void WinRTWebSocketResource2::Fail(hresult_error const& error, ErrorType type) noexcept
-{
+void WinRTWebSocketResource2::Fail(hresult_error const &error, ErrorType type) noexcept {
   Fail(Utilities::HResultToString(error), type);
 }
 
@@ -150,8 +147,8 @@ void WinRTWebSocketResource2::OnMessageReceived(
     if (hr == WININET_E_CONNECTION_ABORTED) {
       errorMessage = "[0x80072EFE] Underlying TCP connection suddenly terminated";
       errorType = ErrorType::Connection;
-      //TODO: Do not "Close". Define an "Abort" routine.
-      // Note: We are not clear whether all read-related errors should close the socket.
+      // TODO: Do not "Close". Define an "Abort" routine.
+      //  Note: We are not clear whether all read-related errors should close the socket.
       Close(CloseCode::BadPayload, std::move(errorMessage));
     } else {
       errorMessage = Utilities::HResultToString(hr);
@@ -187,7 +184,7 @@ void WinRTWebSocketResource2::OnMessageReceived(
   }
 }
 
-void WinRTWebSocketResource2::OnClosed(IWebSocket const& sender, IWebSocketClosedEventArgs const& args) {
+void WinRTWebSocketResource2::OnClosed(IWebSocket const &sender, IWebSocketClosedEventArgs const &args) {
   auto self = shared_from_this();
   self->m_readyState = ReadyState::Closed;
 
@@ -206,8 +203,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   co_await lessthrow_await_adapter<IAsyncAction>{async};
   auto result = async.ErrorCode();
 
-  try
-  {
+  try {
     if (result >= 0) { // Non-failing HRESULT
       self->m_readyState = ReadyState::Open;
       if (self->m_connectHandler) {
@@ -225,8 +221,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   SetEvent(self->m_connectPerformed.get());
 }
 
-fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
-{
+fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   co_await resume_on_signal(m_connectPerformed.get());
 
   if (m_readyState != ReadyState::Open)
@@ -248,8 +243,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept
   }
 }
 
-fire_and_forget WinRTWebSocketResource2::PerformWrite(string&& message, bool isBinary) noexcept
-{
+fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
   auto self = shared_from_this();
   self->m_writeQueue.emplace(std::move(message), isBinary);
 
@@ -285,7 +279,7 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string&& message, bool isB
           CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
       self->m_writer.WriteBytes(view);
     }
-  } catch(hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
+  } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
     self->Fail(e, ErrorType::Send);
   } catch (const std::exception &e) {
     self->Fail(e.what(), ErrorType::Send);
@@ -311,8 +305,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
     self->OnMessageReceived(sender, args);
   });
 
-  m_socket.Closed([self = shared_from_this()](
-                      IWebSocket const &sender, IWebSocketClosedEventArgs const &args) {
+  m_socket.Closed([self = shared_from_this()](IWebSocket const &sender, IWebSocketClosedEventArgs const &args) {
     self->OnClosed(sender, args);
   });
 
@@ -393,9 +386,9 @@ void WinRTWebSocketResource2::SetOnConnect(function<void()> &&handler) noexcept 
   m_connectHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource2::SetOnPing(function<void()> &&/*handler*/) noexcept {}
+void WinRTWebSocketResource2::SetOnPing(function<void()> && /*handler*/) noexcept {}
 
-void WinRTWebSocketResource2::SetOnSend(function<void(size_t)> &&/*handler*/) noexcept {}
+void WinRTWebSocketResource2::SetOnSend(function<void(size_t)> && /*handler*/) noexcept {}
 
 void WinRTWebSocketResource2::SetOnMessage(function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
   m_readHandler = std::move(handler);

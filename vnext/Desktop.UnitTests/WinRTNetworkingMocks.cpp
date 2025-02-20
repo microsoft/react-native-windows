@@ -29,10 +29,7 @@ MockMessageWebSocket::MockMessageWebSocket() {
     return event_token{};
   };
 
-  Mocks.ClosedToken =
-      [](TypedEventHandler<IWebSocket, WebSocketClosedEventArgs> const &) -> event_token {
-    return {};
-  };
+  Mocks.ClosedToken = [](TypedEventHandler<IWebSocket, WebSocketClosedEventArgs> const &) -> event_token { return {}; };
 
   Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 

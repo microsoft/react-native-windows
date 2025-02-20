@@ -53,8 +53,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::fire_and_forget PerformClose() noexcept;
 
   WinRTWebSocketResource2(
-    winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
-    std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
+      winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
  public:
   WinRTWebSocketResource2(

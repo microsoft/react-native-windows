@@ -25,7 +25,7 @@ TEST_MODULE_INITIALIZE(InitModule) {
   using Microsoft::React::SetRuntimeOptionBool;
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
-  SetRuntimeOptionBool("WebSocket.ResourceV2", true);// Use WinRTWebSocketResource2
+  SetRuntimeOptionBool("WebSocket.ResourceV2", true); // Use WinRTWebSocketResource2
 
   // WebSocketJSExecutor can't register native log hooks.
   SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
