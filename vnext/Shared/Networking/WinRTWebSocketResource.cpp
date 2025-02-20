@@ -357,8 +357,6 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
     return;
   }
 
-  // TODO: m_connectrequested
-
   PerformConnect(std::move(uri));
 }
 
