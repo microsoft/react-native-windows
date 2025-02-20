@@ -21,7 +21,7 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make() {
     certExceptions.emplace_back(ChainValidationResult::InvalidName);
   }
 
-  if (true) {
+  if (GetRuntimeOptionBool("WebSocket.ResourceV2")) {
     return std::make_shared<WinRTWebSocketResource2>(std::move(certExceptions));
   } else {
     return std::make_shared<WinRTWebSocketResource>(std::move(certExceptions));
