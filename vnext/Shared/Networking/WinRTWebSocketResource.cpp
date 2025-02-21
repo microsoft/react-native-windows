@@ -311,22 +311,22 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
 
   m_readyState = ReadyState::Connecting;
 
-  bool hasOriginHeader = false;
-  for (const auto &header : options) {
-    m_socket.SetRequestHeader(header.first, winrt::to_hstring(header.second));
-    if (boost::iequals(header.first, L"Origin")) {
-      hasOriginHeader = true;
-    }
-  }
-
   auto supportedProtocols = m_socket.Control().SupportedProtocols();
   for (const auto &protocol : protocols) {
     supportedProtocols.Append(winrt::to_hstring(protocol));
   }
 
   Uri uri{nullptr};
+  bool hasOriginHeader{false};
   try {
     uri = Uri{winrt::to_hstring(url)};
+
+    for (const auto &header : options) {
+      m_socket.SetRequestHeader(header.first, winrt::to_hstring(header.second));
+      if (boost::iequals(header.first, L"Origin")) {
+        hasOriginHeader = true;
+      }
+    }
 
     // #12626 - If Origin header is not provided, set to connect endpoint.
     if (!hasOriginHeader) {

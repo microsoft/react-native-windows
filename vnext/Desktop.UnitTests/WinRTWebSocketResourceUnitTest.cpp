@@ -118,9 +118,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     // Test APIs
     auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
-    rc->SetOnError([&errorMessage](Error &&error) {
-      errorMessage = error.Message;
-    });
+    rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
     rc->Connect(testUrl, {}, /*headers*/ {{L"k1", "v1"}});
     rc->Close(CloseCode::Normal, {});
 
