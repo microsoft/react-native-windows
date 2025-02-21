@@ -13,7 +13,8 @@
 
 /*
 Sample client code:
-var ws = new WebSocket('ws://localhost:5555'); ws.onmessage = (e) => console.log(e.data);
+var w = 'w'.repeat(1025); var x = 'x'.repeat(1025); var y = 'y'.repeat(1025); var z = 'z'.repeat(1025);
+var ws = new WebSocket('ws://localhost:5555/rnw/websockets/echo'); ws.onmessage = (e) => console.log(e.data);
 w.send(w);ws.send(x);ws.send(y);ws.send(z);ws.close();
 */
 
@@ -24,7 +25,7 @@ const ReactNative = require('react-native');
 const {View} = ReactNative;
 const {TestModule} = ReactNative.NativeModules;
 
-const DEFAULT_WS_URL = 'ws://localhost:5555/';
+const DEFAULT_WS_URL = 'ws://localhost:5555/rnw/websockets/echo';
 
 const WS_EVENTS = ['close', 'error', 'message', 'open'];
 
@@ -36,11 +37,16 @@ type State = {
   lastSocketEvent: ?string,
   lastMessage: ?string | ?ArrayBuffer,
   testMessage: string,
+  messageW: string,
+  messageX: string,
+  messageY: string,
+  messageZ: string
   testExpectedResponse: string,
+  expectedMessageCount: number,
   ...
 };
 
-class WebSocketTest extends React.Component<{...}, State> {
+class WebSocketMultpleSendTest extends React.Component<{...}, State> {
   state: State = {
     url: DEFAULT_WS_URL,
     fetchStatus: null,
@@ -49,7 +55,12 @@ class WebSocketTest extends React.Component<{...}, State> {
     lastSocketEvent: null,
     lastMessage: null,
     testMessage: 'testMessage',
+    messageW: 'w'.repeat(1025),
+    messageX: 'x'.repeat(1025),
+    messageY: 'y'.repeat(1025),
+    messageZ: 'z'.repeat(1025),
     testExpectedResponse: 'testMessage_response',
+    expectedMessageCount: 4,
   };
 
   _waitFor = (condition: any, timeout: any, callback: any) => {
@@ -139,33 +150,37 @@ class WebSocketTest extends React.Component<{...}, State> {
         TestModule.markTestPassed(false);
         return;
       }
-      this.testSendAndReceive();
+      //this.testSendAndReceive();
     });
   };
 
-  testSendAndReceive: () => void = () => {
-    this._sendTestMessage();
-    this._waitFor(this._receivedTestExpectedResponse, 5, messageReceived => {
-      if (!messageReceived) {
-        TestModule.markTestPassed(false);
-        return;
-      }
-      this.testDisconnect();
-    });
+  testSendAndClose: () => void () => {
+    
   };
 
-  testDisconnect: () => void = () => {
-    this._disconnect();
-    this._waitFor(this._socketIsDisconnected, 5, disconnectSucceeded => {
-      TestModule.markTestPassed(disconnectSucceeded);
-    });
-  };
+  //testSendAndReceive: () => void = () => {
+  //  this._sendTestMessage();
+  //  this._waitFor(this._receivedTestExpectedResponse, 5, messageReceived => {
+  //    if (!messageReceived) {
+  //      TestModule.markTestPassed(false);
+  //      return;
+  //    }
+  //    this.testDisconnect();
+  //  });
+  //};
+
+  //testDisconnect: () => void = () => {
+  //  this._disconnect();
+  //  this._waitFor(this._socketIsDisconnected, 5, disconnectSucceeded => {
+  //    TestModule.markTestPassed(disconnectSucceeded);
+  //  });
+  //};
 
   render(): React.Node {
     return <View />;
   }
 }
 
-WebSocketTest.displayName = 'WebSocketTest';
+WebSocketMultpleSendTest.displayName = 'WebSocketMultpleSendTest';
 
-module.exports = WebSocketTest;
+module.exports = WebSocketMultpleSendTest;

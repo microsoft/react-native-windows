@@ -208,6 +208,13 @@ TEST_CLASS (RNTesterIntegrationTests) {
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketMultipleSend)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(WebSocketMultipleSend) {
+    auto result = m_runner.RunTest("IntegrationTests/WebSocketMultipleSendTest", "WebSocketMultipleSendTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
   BEGIN_TEST_METHOD_ATTRIBUTE(Blob)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Blob) {
