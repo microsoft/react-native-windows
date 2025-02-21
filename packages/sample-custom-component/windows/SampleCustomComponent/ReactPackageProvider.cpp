@@ -10,6 +10,7 @@
 #include "CalendarView.h"
 #include "DrawingIsland.h"
 #include "MovingLight.h"
+#include "XamlHost.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -25,7 +26,9 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
 
 #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
   RegisterCalendarViewComponentView(packageBuilder);
-  
+
+  RegisterXamlHostComponentView(packageBuilder);
+  RegisterXamlControl(packageBuilder);
 #endif // #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
 }
 

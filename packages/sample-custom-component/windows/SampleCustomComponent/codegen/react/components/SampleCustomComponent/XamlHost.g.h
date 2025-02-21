@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from FabricXamlControlNativeComponent spec file in flow / TypeScript.
+ * This file is auto-generated from XamlHostNativeComponent spec file in flow / TypeScript.
  */
 // clang-format off
 #pragma once
@@ -18,14 +18,14 @@
 
 namespace winrt::SampleCustomComponent::Codegen {
 
-REACT_STRUCT(FabricXamlControlProps)
-struct FabricXamlControlProps : winrt::implements<FabricXamlControlProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  FabricXamlControlProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+REACT_STRUCT(XamlHostProps)
+struct XamlHostProps : winrt::implements<XamlHostProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  XamlHostProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
     : ViewProps(props)
   {
      if (cloneFrom) {
-       auto cloneFromProps = cloneFrom.as<FabricXamlControlProps>();
-       xamlTypeName = cloneFromProps->xamlTypeName;  
+       auto cloneFromProps = cloneFrom.as<XamlHostProps>();
+       label = cloneFromProps->label;  
      }
   }
 
@@ -33,14 +33,14 @@ struct FabricXamlControlProps : winrt::implements<FabricXamlControlProps, winrt:
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
-  REACT_FIELD(xamlTypeName)
-  std::string xamlTypeName;
+  REACT_FIELD(label)
+  std::string label;
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-struct FabricXamlControlEventEmitter {
-  FabricXamlControlEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
+struct XamlHostEventEmitter {
+  XamlHostEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
  private:
@@ -48,12 +48,12 @@ struct FabricXamlControlEventEmitter {
 };
 
 template<typename TUserData>
-struct BaseFabricXamlControl {
+struct BaseXamlHost {
 
   virtual void UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
-    const winrt::com_ptr<FabricXamlControlProps> &newProps,
-    const winrt::com_ptr<FabricXamlControlProps> &/*oldProps*/) noexcept {
+    const winrt::com_ptr<XamlHostProps> &newProps,
+    const winrt::com_ptr<XamlHostProps> &/*oldProps*/) noexcept {
     m_props = newProps;
   }
 
@@ -70,7 +70,7 @@ struct BaseFabricXamlControl {
     const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
   }
 
-  virtual void UpdateEventEmitter(const std::shared_ptr<FabricXamlControlEventEmitter> &eventEmitter) noexcept {
+  virtual void UpdateEventEmitter(const std::shared_ptr<XamlHostEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
@@ -100,32 +100,32 @@ struct BaseFabricXamlControl {
 
   
 
-  const std::shared_ptr<FabricXamlControlEventEmitter>& EventEmitter() const { return m_eventEmitter; }
-  const winrt::com_ptr<FabricXamlControlProps>& Props() const { return m_props; }
+  const std::shared_ptr<XamlHostEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<XamlHostProps>& Props() const { return m_props; }
 
 private:
-  winrt::com_ptr<FabricXamlControlProps> m_props;
-  std::shared_ptr<FabricXamlControlEventEmitter> m_eventEmitter;
+  winrt::com_ptr<XamlHostProps> m_props;
+  std::shared_ptr<XamlHostEventEmitter> m_eventEmitter;
 };
 
 template <typename TUserData>
-void RegisterFabricXamlControlNativeComponent(
+void RegisterXamlHostNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"FabricXamlControl", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+      L"XamlHost", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
                               const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<FabricXamlControlProps>(props, cloneFrom); 
+            return winrt::make<XamlHostProps>(props, cloneFrom); 
         });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->UpdateProps(view, newProps ? newProps.as<FabricXamlControlProps>() : nullptr, oldProps ? oldProps.as<FabricXamlControlProps>() : nullptr);
+            userData->UpdateProps(view, newProps ? newProps.as<XamlHostProps>() : nullptr, oldProps ? oldProps.as<XamlHostProps>() : nullptr);
         });
 
         compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -138,10 +138,10 @@ void RegisterFabricXamlControlNativeComponent(
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->UpdateEventEmitter(std::make_shared<FabricXamlControlEventEmitter>(eventEmitter));
+          userData->UpdateEventEmitter(std::make_shared<XamlHostEventEmitter>(eventEmitter));
         });
 
-        if constexpr (&TUserData::FinalizeUpdate != &BaseFabricXamlControl<TUserData>::FinalizeUpdate) {
+        if constexpr (&TUserData::FinalizeUpdate != &BaseXamlHost<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -149,7 +149,7 @@ void RegisterFabricXamlControlNativeComponent(
           });
         } 
 
-        if constexpr (&TUserData::UpdateState != &BaseFabricXamlControl<TUserData>::UpdateState) {
+        if constexpr (&TUserData::UpdateState != &BaseXamlHost<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -157,7 +157,7 @@ void RegisterFabricXamlControlNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::MountChildComponentView != &BaseFabricXamlControl<TUserData>::MountChildComponentView) {
+        if constexpr (&TUserData::MountChildComponentView != &BaseXamlHost<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -165,7 +165,7 @@ void RegisterFabricXamlControlNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::UnmountChildComponentView != &BaseFabricXamlControl<TUserData>::UnmountChildComponentView) {
+        if constexpr (&TUserData::UnmountChildComponentView != &BaseXamlHost<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -175,13 +175,13 @@ void RegisterFabricXamlControlNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if constexpr (&TUserData::Initialize != &BaseFabricXamlControl<TUserData>::Initialize) {
+          if constexpr (&TUserData::Initialize != &BaseXamlHost<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if constexpr (&TUserData::CreateVisual != &BaseFabricXamlControl<TUserData>::CreateVisual) {
+        if constexpr (&TUserData::CreateVisual != &BaseXamlHost<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);

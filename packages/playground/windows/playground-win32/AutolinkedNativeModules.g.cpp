@@ -6,6 +6,9 @@
 // Includes from @react-native-picker/picker
 #include <winrt/ReactNativePicker.h>
 
+// Includes from sample-custom-component
+#include <winrt/SampleCustomComponent.h>
+
 namespace winrt::Microsoft::ReactNative
 {
 
@@ -13,6 +16,8 @@ void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::Collecti
 { 
     // IReactPackageProviders from @react-native-picker/picker
     packageProviders.Append(winrt::ReactNativePicker::ReactPackageProvider());
+    // IReactPackageProviders from sample-custom-component
+    packageProviders.Append(winrt::SampleCustomComponent::ReactPackageProvider());
 }
 
 }

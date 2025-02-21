@@ -6,5 +6,9 @@
     <ProjectReference Include="$(ProjectDir)..\..\..\..\node_modules\@react-native-picker\picker\windows\ReactNativePicker\ReactNativePicker.vcxproj">
       <Project>{bedcc600-4541-41f2-aa46-9e058202b6ad}</Project>
     </ProjectReference>
+    <!-- Projects from sample-custom-component -->
+    <ProjectReference Include="$(ProjectDir)..\..\..\..\node_modules\sample-custom-component\windows\SampleCustomComponent\SampleCustomComponent.vcxproj">
+      <Project>{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}</Project>
+    </ProjectReference>
   </ItemGroup>
 </Project>

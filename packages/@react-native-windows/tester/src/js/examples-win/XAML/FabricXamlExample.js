@@ -12,7 +12,8 @@
 
 import React, {useState} from 'react';
 import {Alert, Button, Text, View, ScrollView} from 'react-native';
-import {CalendarView} from 'sample-custom-component';
+//import {CalendarView} from 'sample-custom-component';
+import {FabricXamlControl, StackPanel, Button as XamlButton, XamlHost} from 'sample-custom-component';
 
 const XamlContentExample = () => {
   const [selectedDate, setSelectedDate] = useState(true);
@@ -30,17 +31,19 @@ const XamlContentExample = () => {
           onPress={() => Alert.alert('Before button pressed')}
         />
         <Text>Xaml CalendarView control. Selected date: {selectedDate}</Text>
-        <CalendarView
+        <XamlHost
           style={{
             width: 400,
             height: 400,
             minWidth: 400,
             minHeight: 400,
           }}
-          onSelectedDatesChanged={e => {
-            setSelectedDate(e.nativeEvent.startDate);
-          }}
-        />
+          label='11111'
+        >
+          <StackPanel label='22222' >
+            <XamlButton content='the_content_field' text='the_text_field' davis='davis_value_33' />
+          </StackPanel>
+        </XamlHost>
         <Button
           title="After Button"
           onPress={() => Alert.alert('After button pressed')}

@@ -98,6 +98,13 @@
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.UI.Xaml": "[2.7.0-prerelease.210913003, )"
         }
+      },
+      "samplecustomcomponent": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.UI.Xaml": "[2.7.0-prerelease.210913003, )"
+        }
       }
     },
     "native,Version=v0.0/win": {

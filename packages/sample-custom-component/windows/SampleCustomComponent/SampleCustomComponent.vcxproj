@@ -123,6 +123,8 @@
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="CalendarView.cpp" />
+    <ClCompile Include="FabricXamlControl.cpp" />
+    <ClCompile Include="XamlHost.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
