@@ -8,6 +8,7 @@ namespace Facebook.React.Test
   public sealed class RNTesterIntegrationTests
   {
     static List<WebSocket> wsConnections = new List<WebSocket>();
+    static HashSet<uint> readWritePairs = new HashSet<uint>();
 
     public static async Task WebSocketTest(HttpContext context)
     {
@@ -76,6 +77,11 @@ An incoming message of 'exit' will shut down the server.
           break;
         }
       }
+    }
+
+    public static async Task WebSocketMultipleSendTest(HttpContext context)
+    {
+      context.Request.RouteValues["Id"];
     }
   }
 }
