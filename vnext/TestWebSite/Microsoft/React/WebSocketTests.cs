@@ -16,30 +16,7 @@ namespace Microsoft.React.Test
       {
         if (ws.State == WebSocketState.Open)
         {
-          async Task<string> receiveMessage(WebSocket socket)
-          {
-            // Read incoming message
-            var buffer = new byte[1024];
-            var payload = new byte[1024];
-            WebSocketReceiveResult result;
-            int total = 0;
-            int lastTotal;
-            do
-            {
-              result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-              lastTotal = total;
-              total += result.Count;
-              if (total > payload.Length)
-                Array.Resize(ref payload, total);
-
-              Array.Copy(buffer, 0, payload, lastTotal, result.Count);
-            } while (result != null && !result.EndOfMessage);
-
-            return Encoding.UTF8.GetString(payload, 0, total);
-          }
-          ;
-          var inputMessage = await receiveMessage(ws);
+          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
           await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
 
           var outputMessage = inputMessage;
@@ -66,29 +43,7 @@ namespace Microsoft.React.Test
       {
         if (ws.State == WebSocketState.Open)
         {
-          async Task<string> receiveMessage(WebSocket socket)
-          {
-            // Read incoming message
-            var buffer = new byte[1024];
-            var payload = new byte[1024];
-            WebSocketReceiveResult result;
-            int total = 0;
-            int lastTotal;
-            do
-            {
-              result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-              lastTotal = total;
-              total += result.Count;
-              if (total > payload.Length)
-                Array.Resize(ref payload, total);
-
-              Array.Copy(buffer, 0, payload, lastTotal, result.Count);
-            } while (result != null && !result.EndOfMessage);
-
-            return Encoding.UTF8.GetString(payload, 0, total);
-          };
-          var inputMessage = await receiveMessage(ws);
+          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
           await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
 
           var outputMessage = $"{inputMessage}_response";
@@ -112,20 +67,7 @@ namespace Microsoft.React.Test
       {
         if (ws.State == WebSocketState.Open)
         {
-          async Task<string> receiveMessage(WebSocket socket)
-          {
-            var inputBytes = new byte[4];
-            WebSocketReceiveResult result;
-            int total = 0;
-            do
-            {
-              result = await socket.ReceiveAsync(new ArraySegment<byte>(inputBytes), CancellationToken.None);
-              total += result.Count;
-            } while (result != null && !result.EndOfMessage);
-
-            return Encoding.UTF8.GetString(inputBytes, 0, total);
-          };
-          var inputMessage = await receiveMessage(ws);//TODO: Use byte(s) instead of string
+          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
 
           var outputMessage = "";
           var outputBytes = Encoding.UTF8.GetBytes(outputMessage);

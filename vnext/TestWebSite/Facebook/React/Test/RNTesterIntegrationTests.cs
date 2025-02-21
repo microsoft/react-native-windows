@@ -1,6 +1,7 @@
-using System;
 using System.Net.WebSockets;
 using System.Text;
+
+using WebSocketUtils = Microsoft.React.Test.WebSocketUtils;
 
 namespace Facebook.React.Test
 {
@@ -34,29 +35,7 @@ An incoming message of 'exit' will shut down the server.
       {
         if (ws.State == WebSocketState.Open)
         {
-          async Task<string> receiveMessage(WebSocket socket)
-          {
-            // Read incoming message
-            var buffer = new byte[1024];
-            var payload = new byte[1024];
-            WebSocketReceiveResult result;
-            int total = 0;
-            int lastTotal;
-            do
-            {
-              result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-              lastTotal = total;
-              total += result.Count;
-              if (total > payload.Length)
-                Array.Resize(ref payload, total);
-
-              Array.Copy(buffer, 0, payload, lastTotal, result.Count);
-            } while (result != null && !result.EndOfMessage);
-
-            return Encoding.UTF8.GetString(payload, 0, total);
-          };
-          var inputMessage = await receiveMessage(ws);
+          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
           await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
 
           if (inputMessage == "exit")
@@ -85,21 +64,7 @@ An incoming message of 'exit' will shut down the server.
       {
         if (ws.State == WebSocketState.Open)
         {
-          async Task<string> receiveMessage(WebSocket socket)
-          {
-            // Read incoming message
-            var inputBytes = new byte[1024];
-            WebSocketReceiveResult result;
-            int total = 0;
-            do
-            {
-              result = await socket.ReceiveAsync(new ArraySegment<byte>(inputBytes), CancellationToken.None);
-              total += result.Count;
-            } while (result != null && !result.EndOfMessage);
-
-            return Encoding.UTF8.GetString(inputBytes, 0, total);
-          };
-          var incomingMessage = await receiveMessage(ws);
+          var incomingMessage = await WebSocketUtils.ReceiveStringAsync(ws);
           await Console.Out.WriteLineAsync($"Message received: [{incomingMessage}]");
 
           var outgoingBytes = new byte[] { 4, 5, 6, 7 };
