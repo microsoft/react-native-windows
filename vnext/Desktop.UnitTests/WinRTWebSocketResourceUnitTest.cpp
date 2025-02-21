@@ -101,6 +101,33 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     Assert::IsFalse(connected);
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(SetRequestHeaderFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SetRequestHeaderFails) {
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::SetRequestHeaderFails");
+    bool connected = false;
+    string errorMessage;
+
+    // Set up mocks
+    auto imws{winrt::make<MockMessageWebSocket>()};
+    auto mws{imws.as<MockMessageWebSocket>()};
+    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {
+      winrt::throw_hresult(winrt::hresult_invalid_argument().code());
+    };
+
+    // Test APIs
+    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    rc->SetOnConnect([&connected]() { connected = true; });
+    rc->SetOnError([&errorMessage](Error &&error) {
+      errorMessage = error.Message;
+    });
+    rc->Connect(testUrl, {}, /*headers*/ {{L"k1", "v1"}});
+    rc->Close(CloseCode::Normal, {});
+
+    Assert::AreEqual({"[0x80070057] The parameter is incorrect."}, errorMessage);
+    Assert::IsFalse(connected);
+  }
+
   TEST_METHOD(InternalSocketThrowsHResult) {
     Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::InternalSocketThrowsHResult");
     shared_ptr<WinRTWebSocketResource2> rc;
