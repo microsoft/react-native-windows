@@ -299,7 +299,7 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
 
 void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
   // Register MessageReceived BEFORE calling Connect
-  // https://learn.microsoft.com/en-us/uwp/api/windows.networking.sockets.messagewebsocket.messagereceived?view=winrt-26100
+  // https://learn.microsoft.com/en-us/uwp/api/windows.networking.sockets.messagewebsocket.messagereceived?view=winrt-22621
   m_socket.MessageReceived([self = shared_from_this()](
                                IMessageWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
     self->OnMessageReceived(sender, args);
