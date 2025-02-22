@@ -56,18 +56,14 @@ app.Map(
   Facebook.React.Test.RNTesterIntegrationTests.WebSocketBinaryTest
   );
 
-app.MapGet(
-  "/rnw/rntester/websocketmultiplesendtest/{Id}", async context =>
-  {
-    var response = context.Response;
-    response.StatusCode = 200;
-    response.ContentType = "text/plain";
-
-    var id = context.Request.RouteValues["Id"].ToString();
-    var bytes = System.Text.Encoding.UTF8.GetBytes(id);
-    await response.Body.WriteAsync(bytes);
-  }
-  //Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest
+// app.Map(
+//   "/rnw/rntester/websocketmultiplesendtest/{Action}/{Id}",
+//    Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest
+//   );
+//TODO: Map two different endpoints (send / receive)
+app.Map(
+  "/rnw/rntester/websocketmultiplesendtest/{Id}",
+   Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest
   );
 
 app.Map(
