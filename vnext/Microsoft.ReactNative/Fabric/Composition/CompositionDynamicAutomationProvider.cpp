@@ -232,7 +232,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ScrollPatternId) {
+  if (patternId == UIA_ScrollPatternId &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>()) {
     *pRetVal = static_cast<IScrollProvider *>(this);
     AddRef();
   }
@@ -517,50 +518,54 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontalScrollPercent(double *pRetVal) {
-  BOOL horizontallyScrollable auto hr = get_HorizontallyScrollable(&horizontallyScrollable);
+  BOOL horizontallyScrollable;
+  auto hr = get_HorizontallyScrollable(&horizontallyScrollable);
   if (!SUCCEEDED(hr)) {
     return hr;
   }
   if (!horizontallyScrollable) {
     *pRetVal = UIA_ScrollPatternNoScroll;
   }
-  // something else - specifies the horizontal scroll position
+  // specifies the horizontal scroll position
   return S_OK;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticalScrollPercent(double *pRetVal) {
-  BOOL verticallyScrollable auto hr = get_VerticallyScrollable(&verticallyScrollable);
+  BOOL verticallyScrollable;
+  auto hr = get_VerticallyScrollable(&verticallyScrollable);
   if (!SUCCEEDED(hr)) {
     return hr;
   }
   if (!verticallyScrollable) {
     *pRetVal = UIA_ScrollPatternNoScroll;
   }
-  // something else - specifies the vertical scroll position
+  // specifies the vertical scroll position
   return S_OK;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontalViewSize(double *pRetVal) {
-  BOOL horizontallyScrollable auto hr = get_HorizontallyScrollable(&horizontallyScrollable);
+  BOOL horizontallyScrollable;
+  auto hr = get_HorizontallyScrollable(&horizontallyScrollable);
   if (!SUCCEEDED(hr)) {
     return hr;
   }
   if (!horizontallyScrollable) {
     *pRetVal = 100;
   }
-  // something else - specifies the horizontal size of the viewable region
+  // specifies the horizontal size of the viewable region
   return S_OK;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticalViewSize(double *pRetVal) {
-  BOOL verticallyScrollable auto hr = get_VerticallyScrollable(&verticallyScrollable);
+  BOOL verticallyScrollable;
+  auto hr = get_VerticallyScrollable(&verticallyScrollable);
   if (!SUCCEEDED(hr)) {
     return hr;
   }
   if (!verticallyScrollable) {
     *pRetVal = 100;
   }
-  // something else - specifies the vertical size of the viewable region
+  // specifies the vertical size of the viewable region
   return S_OK;
 }
 
@@ -576,7 +581,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontallyScrollab
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  *pRetVal = props->horizontal;
+  *pRetVal = (props->horizontal && props->scrollEnabled);
   return S_OK;
 }
 
@@ -592,22 +597,47 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticallyScrollable
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  *pRetVal = !props->horizontal;
+  *pRetVal = (!props->horizontal && props->scrollEnabled);
   return S_OK;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Scroll(
     ScrollAmount horizontalAmount,
     ScrollAmount verticalAmount) {
-  // something else if native control
+  // scroll, can be large/small increment/decrememnt or no amount for each.
   DispatchAccessibilityAction(m_view, "scroll");
+  auto strongView = m_view.view();
+  auto scrollComponentView =
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
+  scrollComponentView->scrollTo({50.0f, 0.0f, 0.0f}, true);
   return S_OK;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::SetScrollPercent(
     double horiztonalPercent,
     double verticalPercent) {
-  // something else if native control
+  auto strongView = m_view.view();
+  // Sets the horizontal and vertical scroll position as a percentage of the total content area within the control.
+  BOOL verticallyScrollable;
+  BOOL horizontallyScrollable;
+  auto hr = get_VerticallyScrollable(&verticallyScrollable);
+  if (!SUCCEEDED(hr)) {
+    return hr;
+  }
+  if (verticallyScrollable) {
+    auto scrollComponentView =
+        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
+    scrollComponentView->scrollTo({50.0f, 50.0f, 0.0f}, true);
+  }
+  hr = get_HorizontallyScrollable(&horizontallyScrollable);
+  if (!SUCCEEDED(hr)) {
+    return hr;
+  }
+  if (horizontallyScrollable) {
+    auto scrollComponentView =
+        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
+    scrollComponentView->scrollTo({50.0f, 50.0f, 0.0f}, true);
+  }
   DispatchAccessibilityAction(m_view, "setScrollPercent");
   return S_OK;
 }
