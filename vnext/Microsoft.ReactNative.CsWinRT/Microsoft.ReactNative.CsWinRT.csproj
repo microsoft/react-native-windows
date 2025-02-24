@@ -22,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
+    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+      <Private>false</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <PropertyGroup>
