@@ -154,7 +154,7 @@ export function getRawTemplateInfo(filePath: string): RawTemplateInfo {
     ) {
       result.projectType = 'lib';
       result.projectArch = 'new';
-    } 
+    }
   } else if (result.projectLang === 'cpp') {
     if (
       importProjectExists(
