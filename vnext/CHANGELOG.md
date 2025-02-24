@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 06 Feb 2025 23:51:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 24 Feb 2025 16:33:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.0-preview.4
+
+Mon, 24 Feb 2025 16:33:57 GMT
+
+### Changes
+
+- integrate 0.78-rc4 (email not defined)
 
 ## 0.78.0-preview.3
 
