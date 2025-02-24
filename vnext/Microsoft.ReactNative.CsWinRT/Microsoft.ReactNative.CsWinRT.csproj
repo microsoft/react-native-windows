@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
-      <Private>false</Private>
+      <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
     </ProjectReference>
   </ItemGroup>
 
