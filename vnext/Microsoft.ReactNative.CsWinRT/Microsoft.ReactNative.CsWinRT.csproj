@@ -7,7 +7,7 @@
     <Platforms>x86;x64;arm64</Platforms>
     <!-- Workaround for MSB3271 error on processor architecture mismatch -->
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <NoWarn>CS8305;CS0436</NoWarn>
+    <NoWarn>CS8305;CS0436;NU1701</NoWarn>
     <AssemblyName>Microsoft.ReactNative.Projection</AssemblyName>
     <!-- Prevents Microsoft.Web.WebView2.Core.dll from being added to ReferenceCopyLocalPaths -->
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
@@ -22,9 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
-      <SetTargetFramework>native</SetTargetFramework>
-    </ProjectReference>
+    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
   </ItemGroup>
 
   <PropertyGroup>
