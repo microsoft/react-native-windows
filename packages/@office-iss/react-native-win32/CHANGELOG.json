@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 24 Feb 2025 16:33:57 GMT",
+      "version": "0.78.0-preview.3",
+      "tag": "@office-iss/react-native-win32_v0.78.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "de0074f7cf70b480a11e1a982f6bee71a673d489",
+            "comment": "integrate 0.78-rc4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Feb 2025 23:51:16 GMT",
       "version": "0.78.0-preview.2",
       "tag": "@office-iss/react-native-win32_v0.78.0-preview.2",
