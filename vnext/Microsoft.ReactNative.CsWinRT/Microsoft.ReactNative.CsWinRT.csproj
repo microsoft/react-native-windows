@@ -30,14 +30,17 @@
 
   <PropertyGroup>
     <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
-    <CSWinRTIncludes>Microsoft.ReactNative</CSWinRTIncludes>
+    <CSWinRTIncludes>
+      Microsoft.ReactNative;
+      Microsoft.UI.Composition
+    </CSWinRTIncludes>
     <!--PkgMicrosoft_WindowsAppSDK is set in in obj\*.csproj.nuget.g.props with TargetFramework condition, doesn't support multi-targeting-->
-    <PkgMicrosoft_WindowsAppSDK>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', 'microsoft.windowsappsdk', '$(MicrosoftWinAppSDKVersion)'))</PkgMicrosoft_WindowsAppSDK>
+    <PkgMicrosoft_WindowsAppSDK>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(WinUIPackageName)', '$(WinUIPackageVersion)'))</PkgMicrosoft_WindowsAppSDK>
   </PropertyGroup>
 
   <ItemGroup>
     <!--Explicitly reference WinAppSDK's Microsoft.UI winmds from TFM uap10.0-->
-    <CsWinRTInputs Update="$(PkgMicrosoft_WindowsAppSDK)/**/Microsoft.UI.winmd" />
+    <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0.18362/Microsoft.UI.winmd" />
   </ItemGroup>
 
 </Project>
