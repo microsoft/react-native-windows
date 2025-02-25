@@ -40,7 +40,7 @@
   <ItemGroup>
     <!--Explicitly reference WinAppSDK's Microsoft.UI winmds from TFM uap10.0-->
     <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0.18362/Microsoft.UI.winmd" />
-    <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap/Microsoft.UI.Xaml.winmd" />
+    <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0/Microsoft.UI.Xaml.winmd" />
   </ItemGroup>
 
 </Project>
