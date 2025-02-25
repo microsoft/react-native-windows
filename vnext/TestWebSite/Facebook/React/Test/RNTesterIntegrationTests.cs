@@ -96,8 +96,14 @@ An incoming message of 'exit' will shut down the server.
         return;
       }
 
-      var ws = await context.WebSockets.AcceptWebSocketAsync();
+      WebSocket ws;
+      if (multipleSendSocketsOut.TryGetValue(id, out ws!))
+        return; // WebSocket already registered for ID
+
+      ws = await context.WebSockets.AcceptWebSocketAsync();
       await Console.Out.WriteLineAsync($"Accepted receiver [{id}]");
+      if (!multipleSendSocketsOut.TryAdd(id, ws!))
+        return; //ERROR!
 
       while (true)
       {
