@@ -82,6 +82,48 @@ An incoming message of 'exit' will shut down the server.
     static Dictionary<string, WebSocket> multipleSendSocketsOut = new Dictionary<string, WebSocket>();
     static Dictionary<string, Queue<byte[]>> multipleSendMessagesOut = new Dictionary<string, Queue<byte[]>>();
 
+    public static async Task WebSocketMultipleSendTest_ClientSend(HttpContext context)
+    {
+      string? id = context.Request.RouteValues["Id"]!.ToString();
+    }
+
+    public static async Task WebSocketMultipleSendTest_ClientReceive(HttpContext context)
+    {
+      string? id = context.Request.RouteValues["Id"]!.ToString();
+      if (string.IsNullOrEmpty(id))
+      {
+        await Console.Out.WriteLineAsync($"Invalid ID: {id}");
+        return;
+      }
+
+      var ws = await context.WebSockets.AcceptWebSocketAsync();
+      await Console.Out.WriteLineAsync($"Accepted receiver [{id}]");
+
+      while (true)
+      {
+        if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
+          break;
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        Queue<byte[]> outputQueue;
+        if (! multipleSendMessagesOut.TryGetValue(id, out outputQueue!))
+        {
+          continue;
+        }
+        byte[] outputBytes;
+        if (! outputQueue.TryDequeue(out outputBytes!))
+        {
+          continue;
+        }
+
+        await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
+        await Console.Out.WriteLineAsync($"Sent message: {outputBytes}");
+      }
+    }
+
+
     public static async Task WebSocketMultipleSendTest(HttpContext context)
     {
       // string? clientAction = context.Request.RouteValues["Action"]!.ToString();

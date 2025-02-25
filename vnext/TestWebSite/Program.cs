@@ -65,6 +65,14 @@ app.Map(
   "/rnw/rntester/websocketmultiplesendtest/{Id}",
    Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest
   );
+app.Map(
+  "/rnw/rntester/websocketmultiplesendtest/send/{Id}",
+  Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest_ClientSend
+);
+app.Map(
+  "/rnw/rntester/websocketmultiplesendtest/receive/{Id}",
+  Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest_ClientReceive
+);
 
 app.Map(
   "/rnw/websockets/echo",
