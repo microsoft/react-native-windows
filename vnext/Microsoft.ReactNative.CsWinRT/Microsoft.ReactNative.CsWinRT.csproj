@@ -31,8 +31,7 @@
   <PropertyGroup>
     <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
     <CSWinRTIncludes>
-      Microsoft.ReactNative;
-      Microsoft.UI.Composition
+      Microsoft.ReactNative
     </CSWinRTIncludes>
     <!--PkgMicrosoft_WindowsAppSDK is set in in obj\*.csproj.nuget.g.props with TargetFramework condition, doesn't support multi-targeting-->
     <PkgMicrosoft_WindowsAppSDK>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(WinUIPackageName)', '$(WinUIPackageVersion)'))</PkgMicrosoft_WindowsAppSDK>
