@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 25 Feb 2025 22:07:38 GMT",
+      "version": "0.74.36",
+      "tag": "react-native-windows_v0.74.36",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a31e698ed4c308d9f1933ef2abed8bbc4c2bbc31",
+            "comment": "Fix issue when calling arrange on an RN Island during load"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2025 00:30:57 GMT",
       "version": "0.74.35",
       "tag": "react-native-windows_v0.74.35",

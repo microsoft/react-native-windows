@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Feb 2025 00:30:57 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Feb 2025 22:07:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.36
+
+Tue, 25 Feb 2025 22:07:38 GMT
+
+### Patches
+
+- Fix issue when calling arrange on an RN Island during load (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.35
 
