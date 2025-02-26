@@ -8,12 +8,14 @@
  * @flow
  */
 
-
 /*
-Sample client code:
+Sample client code
+The server should successfully receive all messsges in order.
+
+var id = Math.floor(Math.random() * 1000000);
 var w = 'w'.repeat(1025); var x = 'x'.repeat(1025); var y = 'y'.repeat(1025); var z = 'z'.repeat(1025);
-var ws = new WebSocket('ws://localhost:5555/rnw/websockets/echo'); ws.onmessage = (e) => console.log(e.data);
-w.send(w);ws.send(x);ws.send(y);ws.send(z);ws.close();
+var ws = new WebSocket(`ws://localhost:5555/rnw/rntester/websocketmultiplesendtest/send/${id}`); ws.onmessage = (e) => console.log(e.data);
+ws.send(w);ws.send(x);ws.send(y);ws.send(z);ws.close();
 */
 
 'use strict';
@@ -28,34 +30,38 @@ const URL_BASE = 'ws://localhost:5555/rnw/rntester/websocketmultiplesendtest';
 
 const WS_EVENTS = ['open', 'message', 'close', 'error'];
 
-const EXPECTED = 'wxyz';
+const MESSAGE_SIZE = 16;//TODO: Bump?
 
-//lastSocketEvent: ?string,
+const EXPECTED = 'abcdef';
+
+const ID = Math.floor(Math.random() * 1000000);
+
 type State = {
   sendUrl: string,
   receiveUrl: string,
-  incomingSocket: ?WebSocket,
-  outgoingSocket: ?WebSocket,
-  messageW: string,
-  messageX: string,
-  messageY: string,
-  messageZ: string,
+  sendSocket: ?WebSocket,
+  receiveSocket: ?WebSocket,
+  messageA: string,
+  messageB: string,
+  messageC: string,
+  messageD: string,
+  messageE: string,
+  messageF: string,
   result: ?string,
-  //...
 };
-
-const ID = Math.floor(Math.random() * 1000000);
 
 class WebSocketMultipleSendTest extends React.Component<{}, State> {
   state: State = {
     sendUrl: `${URL_BASE}/send/${ID}`,
     receiveUrl: `${URL_BASE}/receive/${ID}`,
-    incomingSocket: null,
-    outgoingSocket: null,
-    messageW: 'w'.repeat(1025),
-    messageX: 'x'.repeat(1025),
-    messageY: 'y'.repeat(1025),
-    messageZ: 'z'.repeat(1025),
+    sendSocket: null,
+    receiveSocket: null,
+    messageA: 'a'.repeat(MESSAGE_SIZE),
+    messageB: 'b'.repeat(MESSAGE_SIZE),
+    messageC: 'c'.repeat(MESSAGE_SIZE),
+    messageD: 'd'.repeat(MESSAGE_SIZE),
+    messageE: 'e'.repeat(MESSAGE_SIZE),
+    messageF: 'f'.repeat(MESSAGE_SIZE),
     result: '',
   };
 
@@ -77,66 +83,78 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
   };
 
   _socketsAreConnected = (): boolean => {
-    return this.state.incomingSocket.readyState === 1 && this.state.outgoingSocket.readyState === 1; // OPEN
+    return this.state.sendSocket.readyState === 1 && this.state.receiveSocket.readyState === 1; // OPEN
   };
 
   _socketsAreDisconnected = (): boolean => {
-    return this.state.incomingSocket.readyState === 3 && this.state.outgoingSocket.readyState === 3; // CLOSED
+    return this.state.sendSocket.readyState === 3 && this.state.receiveSocket.readyState === 3; // CLOSED
   };
 
   _resultIsComplete = (): boolean => {
-    return true;
-    //TODO: Implement!
+    return this.state.result === EXPECTED;
   };
 
-  _disconnectIncoming = () => {
-    if (!this.state.incomingSocket) {
-      return;
-    }
-    this.state.incomingSocket.close();
-
+  _disconnect = () => {
     //TODO: Remove
-    if (!this.state.outgoingSocket) {
-      return;
+    //if (this.state.sendSocket) {
+    //  this.state.sendSocket.close();
+    //}
+
+    if (this.state.receiveSocket) {
+      this.state.receiveSocket.close();
     }
-    this.state.outgoingSocket.close();
   };
 
   testDisconnect: () => void = () => {
-    this._disconnectIncoming();
+    this._disconnect();
     this._waitFor(this._socketsAreDisconnected, 5, disconnectSucceeded => {
       TestModule.markTestPassed(disconnectSucceeded);
     });
   };
 
   testSendMultipleAndClose: () => void = () => {
-    if (!this.state.incomingSocket || !this.state.outgoingSocket) {
+    if (!this.state.sendSocket || !this.state.receiveSocket) {
       return;
     }
-  //  this.state.outgoingSocket.send(this.state.messageW);
-  //  this.state.outgoingSocket.send(this.state.messageX);
-  //  this.state.outgoingSocket.send(this.state.messageY);
-  //  this.state.outgoingSocket.send(this.state.messageZ);
+    //this.state.sendSocket.send(this.state.messageA);
+    //this.state.sendSocket.send(this.state.messageB);
+    //this.state.sendSocket.send(this.state.messageC);
+    //this.state.sendSocket.send(this.state.messageD);
+    //this.state.sendSocket.send(this.state.messageE);
+    //this.state.sendSocket.send(this.state.messageF);
+    this.state.sendSocket.send('a'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket.send('b'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket.send('c'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket.send('d'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket.send('e'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket.send('f'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket.close();
 
-  //  this._waitFor(this._resultIsComplete, 5, resultComplete => {
-  //    if (!resultComplete) {
-  //      TestModule.markTestPassed(false);
-  //      return;
-  //    }
-  //    this.testDisconnect();
-  //  });
-    TestModule.markTestPassed(true);
+    this._waitFor(this._resultIsComplete, 5, resultComplete => {
+      if (!resultComplete) {
+        TestModule.markTestPassed(false);
+        return;
+      }
+      this.testDisconnect();
+    });
+  };
+
+  _onSocketEvent = (event: any) => {
+    if (event.type === 'message') {
+      var message = this.state.result + event.data[0];
+      this.setState({
+        result: message,
+      });
+    }
   };
 
   _connect = () => {
-    const incomingSocket = new WebSocket(this.state.sendUrl);
-    WS_EVENTS.forEach(ev => incomingSocket.addEventListener(ev, this._onIncomingEvent));
-    const outgoingSocket = new WebSocket(this.state.receiveUrl);
-    //WS_EVENTS.forEach(ev => outgoingSocket.addEventListener(ev, this._onSocketEvent));//TODO: Different callbacks?
+    const sendSocket = new WebSocket(this.state.sendUrl);
+    const receiveSocket = new WebSocket(this.state.receiveUrl);
+    WS_EVENTS.forEach(ev => receiveSocket.addEventListener(ev, this._onSocketEvent));
     this.setState({
-      incomingSocket,
-      outgoingSocket,
-      //TODO: Separate ready state?
+      sendSocket,
+      receiveSocket,
     });
   };
 
@@ -148,7 +166,6 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
         return;
       }
       this.testSendMultipleAndClose();
-      //TestModule.markTestPassed(true);
     });
   }
 
