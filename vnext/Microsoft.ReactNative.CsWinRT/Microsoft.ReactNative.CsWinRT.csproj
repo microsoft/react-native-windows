@@ -10,6 +10,7 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <NoWarn>CS0108;CS8305;CS0436;NU1701</NoWarn>
     <AssemblyName>Microsoft.ReactNative.Projection</AssemblyName>
+    <WebView2EnableCsWinRTProjection>false</WebView2EnableCsWinRTProjection>
     <!-- Prevents Microsoft.Web.WebView2.Core.dll from being added to ReferenceCopyLocalPaths -->
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
   </PropertyGroup>
@@ -20,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'">
-      <ExcludeAssets>build; buildtransitive; compile; runtime</ExcludeAssets>
+      <!-- <ExcludeAssets>build; buildtransitive; compile; runtime</ExcludeAssets> -->
     </PackageReference>
   </ItemGroup>
 
@@ -37,6 +38,8 @@
       Windows;
       Microsoft;
       Microsoft.UI;
+      Microsoft.UI.Xaml;
+      Microsoft.Web.WebView2
       Microsoft.ReactNative.XamlUIService
       Microsoft.ReactNative.IXamlUIServiceStatics
     </CSWinRTExcludes>
