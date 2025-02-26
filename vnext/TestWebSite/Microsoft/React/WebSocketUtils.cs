@@ -13,17 +13,27 @@ namespace Microsoft.React.Test
       var payload = new byte[1024];
       int total = 0;
       int lastTotal;
-      do
+      try
       {
-        result = await socket.ReceiveAsync(new ArraySegment<byte>(bufffer), CancellationToken.None);
+        do
+        {
+          result = await socket.ReceiveAsync(new ArraySegment<byte>(bufffer), CancellationToken.None);
+          lastTotal = total;
+          total += result.Count;
+          if (total > payload.Length)
+            Array.Resize(ref payload, total);
 
-        lastTotal = total;
-        total += result.Count;
-        if (total > payload.Length)
-          Array.Resize(ref payload, total);
+          Array.Copy(bufffer, 0, payload, lastTotal, result.Count);
+        } while (result != null && !result.EndOfMessage);
+      }
+      catch (WebSocketException e)
+      {
+        //TODO: Investigate RNTesterIntegrationTests.
+        if (e.Message != "The remote party closed the WebSocket connection without completing the close handshake.")
+          throw;
 
-        Array.Copy(bufffer, 0, payload, lastTotal, result.Count);
-      } while (result != null && !result.EndOfMessage);
+        await Console.Out.WriteLineAsync($"[WARNING]: {e.Message}");
+      }
 
       return Encoding.UTF8.GetString(payload, 0, total);
     }

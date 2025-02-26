@@ -113,7 +113,10 @@ An incoming message of 'exit' will shut down the server.
 
         Queue<byte[]> outputQueue;
         if (! multipleSendMessagesOut.TryGetValue(id, out outputQueue!))
-          multipleSendMessagesOut.Add(id, new Queue<byte[]>());
+        {
+          outputQueue = new Queue<byte[]>();
+          multipleSendMessagesOut.Add(id, outputQueue);
+        }
         outputQueue.Enqueue(Encoding.UTF8.GetBytes(inputMessage));
       }
     }
