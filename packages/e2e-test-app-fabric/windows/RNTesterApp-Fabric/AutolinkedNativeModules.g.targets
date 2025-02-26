@@ -6,5 +6,9 @@
     <ProjectReference Include="$(ProjectDir)..\..\..\..\node_modules\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj">
       <Project>{c0a69310-6119-46dc-a6d6-0bab7826dc92}</Project>
     </ProjectReference>
+    <!-- Projects from react-native-xaml-fabric -->
+    <ProjectReference Include="$(ProjectDir)..\..\..\..\node_modules\react-native-xaml-fabric\windows\ReactNativeXamlFabric\ReactNativeXamlFabric.vcxproj">
+      <Project>{C1A496D8-B776-4A41-8871-559316F585E2}</Project>
+    </ProjectReference>
   </ItemGroup>
 </Project>

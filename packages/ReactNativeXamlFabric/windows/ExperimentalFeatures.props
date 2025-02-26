@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
+    <!--
+      Required for building a New Architecture project.
+
+      Library projects can change this value to test against Old and New
+      Architectures when building the library project's local sln file.
+      
+      Otherwise this value will be decided by the consuming RNW app.
+
+      See https://microsoft.github.io/react-native-windows/docs/new-architecture
+    -->
+    <RnwNewArch>true</RnwNewArch>
+
+    <!--
+      Changes compilation to assume use of Microsoft.ReactNative NuGet packages
+      instead of building the framework from source. Defaults to true.
+
+      This is set during library project creation and is used when building
+      the library project's local sln file.
+
+      Otherwise this value will be decided by the consuming RNW app.
+
+      See https://microsoft.github.io/react-native-windows/docs/nuget
+    -->
+    <UseExperimentalNuget>true</UseExperimentalNuget>
+
+    <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
+  </PropertyGroup>
+
+</Project>

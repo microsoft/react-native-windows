@@ -25,6 +25,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {XamlHost, Button, StackPanel} from 'react-native-xaml-fabric';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -78,8 +80,16 @@ function App(): React.JSX.Element {
           }}>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            screen and then come back to see your edits. OK I'll do that
+            nddow!!!!
           </Section>
+          <XamlHost label="1" style={{width: 100, height: 100}}>
+            <StackPanel label="2">
+              <Button content="I am button 1" />
+              <Button content="button 2" />
+              <Button content="oh this is button 3" />
+            </StackPanel>
+          </XamlHost>
           <Section title="See Your Changes">
             <ReloadInstructions />
           </Section>

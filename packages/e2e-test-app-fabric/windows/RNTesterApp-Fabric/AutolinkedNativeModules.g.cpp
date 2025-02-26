@@ -6,6 +6,9 @@
 // Includes from @react-native-windows/automation-channel
 #include <winrt/AutomationChannel.h>
 
+// Includes from react-native-xaml-fabric
+#include <winrt/ReactNativeXamlFabric.h>
+
 namespace winrt::Microsoft::ReactNative
 {
 
@@ -13,6 +16,8 @@ void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::Collecti
 { 
     // IReactPackageProviders from @react-native-windows/automation-channel
     packageProviders.Append(winrt::AutomationChannel::ReactPackageProvider());
+    // IReactPackageProviders from react-native-xaml-fabric
+    packageProviders.Append(winrt::ReactNativeXamlFabric::ReactPackageProvider());
 }
 
 }
