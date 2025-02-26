@@ -1099,8 +1099,7 @@ void CompositionEventHandler::onPointerExited(
 
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
-    auto handler = [](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
-    };
+    auto handler = [](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {};
 
     HandleIncomingPointerEvent(pointerEvent, nullptr, pointerPoint, keyModifiers, handler);
   }
