@@ -1,4 +1,5 @@
 /**
+ * TODO: update copyright?
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -9,12 +10,13 @@
  */
 
 /*
-Sample client code
+Sample client code (i.e. Node)
 The server should successfully receive all messsges in order.
 
 var id = Math.floor(Math.random() * 1000000);
 var w = 'w'.repeat(1025); var x = 'x'.repeat(1025); var y = 'y'.repeat(1025); var z = 'z'.repeat(1025);
-var ws = new WebSocket(`ws://localhost:5555/rnw/rntester/websocketmultiplesendtest/send/${id}`); ws.onmessage = (e) => console.log(e.data);
+var ws = new WebSocket(`ws://localhost:5555/rnw/rntester/websocketmultiplesendtest/send/${id}`);
+ws.onmessage = (e) => console.log(e.data);
 ws.send(w);ws.send(x);ws.send(y);ws.send(z);ws.close();
 */
 
@@ -41,12 +43,6 @@ type State = {
   receiveUrl: string,
   sendSocket: ?WebSocket,
   receiveSocket: ?WebSocket,
-  messageA: string,
-  messageB: string,
-  messageC: string,
-  messageD: string,
-  messageE: string,
-  messageF: string,
   result: ?string,
 };
 
@@ -56,12 +52,6 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
     receiveUrl: `${URL_BASE}/receive/${ID}`,
     sendSocket: null,
     receiveSocket: null,
-    messageA: 'a'.repeat(MESSAGE_SIZE),
-    messageB: 'b'.repeat(MESSAGE_SIZE),
-    messageC: 'c'.repeat(MESSAGE_SIZE),
-    messageD: 'd'.repeat(MESSAGE_SIZE),
-    messageE: 'e'.repeat(MESSAGE_SIZE),
-    messageF: 'f'.repeat(MESSAGE_SIZE),
     result: '',
   };
 
@@ -95,11 +85,6 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
   };
 
   _disconnect = () => {
-    //TODO: Remove
-    //if (this.state.sendSocket) {
-    //  this.state.sendSocket.close();
-    //}
-
     if (this.state.receiveSocket) {
       this.state.receiveSocket.close();
     }
@@ -116,12 +101,6 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
     if (!this.state.sendSocket || !this.state.receiveSocket) {
       return;
     }
-    //this.state.sendSocket.send(this.state.messageA);
-    //this.state.sendSocket.send(this.state.messageB);
-    //this.state.sendSocket.send(this.state.messageC);
-    //this.state.sendSocket.send(this.state.messageD);
-    //this.state.sendSocket.send(this.state.messageE);
-    //this.state.sendSocket.send(this.state.messageF);
     this.state.sendSocket.send('a'.repeat(MESSAGE_SIZE));
     this.state.sendSocket.send('b'.repeat(MESSAGE_SIZE));
     this.state.sendSocket.send('c'.repeat(MESSAGE_SIZE));
