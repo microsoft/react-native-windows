@@ -14,10 +14,9 @@ Sample client code (i.e. Node)
 The server should successfully receive all messsges in order.
 
 var id = Math.floor(Math.random() * 1000000);
-var w = 'w'.repeat(1025); var x = 'x'.repeat(1025); var y = 'y'.repeat(1025); var z = 'z'.repeat(1025);
 var ws = new WebSocket(`ws://localhost:5555/rnw/rntester/websocketmultiplesendtest/send/${id}`);
 ws.onmessage = (e) => console.log(e.data);
-ws.send(w);ws.send(x);ws.send(y);ws.send(z);ws.close();
+Array.from('abcdef').forEach( e => { ws.send(e.repeat(1025)) });
 */
 
 'use strict';
