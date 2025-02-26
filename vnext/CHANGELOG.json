@@ -2,6 +2,129 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Feb 2025 01:18:59 GMT",
+      "version": "0.0.0-canary.919",
+      "tag": "react-native-windows_v0.0.0-canary.919",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1529ea52ca3a7c66d8575a06c373800a400f9a74",
+            "comment": "fix modal height"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Feb 2025 23:53:18 GMT",
+      "version": "0.0.0-canary.918",
+      "tag": "react-native-windows_v0.0.0-canary.918",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "78e2e4710f4a1223f778b7557116479efd78d37d",
+            "comment": "ITextProvider Implementation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Feb 2025 18:09:33 GMT",
+      "version": "0.0.0-canary.917",
+      "tag": "react-native-windows_v0.0.0-canary.917",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "hampus.sjoberg@protonmail.com",
+            "package": "react-native-windows",
+            "commit": "c0be76e207aa68f2ce0d73fa776fe17026a30248",
+            "comment": "Fix Number.h not copied from react-native core"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 Feb 2025 22:47:30 GMT",
+      "version": "0.0.0-canary.916",
+      "tag": "react-native-windows_v0.0.0-canary.916",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f24c9bc88da5872b45127b69d18737be7e4ca2a5",
+            "comment": "Fix react devtools hitting an assert on launch"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4315cad9814f0bf54ab925a317cadb0703c69977",
+            "comment": "TurboModule spec checking should accept hstring for string arguments"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9ccccd62425404d4622d809da6c207a65f6e9aad",
+            "comment": "Fix platform color"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 31 Jan 2025 18:29:43 GMT",
+      "version": "0.0.0-canary.915",
+      "tag": "react-native-windows_v0.0.0-canary.915",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "36c3714341d883eb1fcb8b3555ff0ca8f2b79a87",
+            "comment": "Only build OfficeReact.Win32 with UseFabric enabled"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "98087a7adcde555a9bef20b09898105835bea586",
+            "comment": "Round Focus visuals by default, fix nudge rendering"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ad17235cc0c2fbab2c1f889fe2641793ea3d2fc6",
+            "comment": "Allow portals to have independent layout constraints and scale factor"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "a95adab57b6d7be765f490aa3ba15e9f56bc020e",
+            "comment": "Basic support for stitching the UIA tree for a ContentIslandComponentView's child"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "60909d33d0630f9b0c2e1f67825c1aedcc11b350",
+            "comment": "add modal implementation with PopupWindowSiteBridge"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.257",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.118",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jan 2025 20:34:32 GMT",
       "version": "0.0.0-canary.914",
       "tag": "react-native-windows_v0.0.0-canary.914",
