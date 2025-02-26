@@ -85,6 +85,37 @@ An incoming message of 'exit' will shut down the server.
     public static async Task WebSocketMultipleSendTest_ClientSend(HttpContext context)
     {
       string? id = context.Request.RouteValues["Id"]!.ToString();
+      if (string.IsNullOrEmpty(id))
+      {
+        await Console.Out.WriteLineAsync($"Invalid ID: {id}");
+        return;
+      }
+
+      WebSocket ws;
+      if (multipleSendSocketsIn.TryGetValue(id, out ws!))
+        return; // WebSocket already registered for ID
+
+      ws = await context.WebSockets.AcceptWebSocketAsync();
+      await Console.Out.WriteLineAsync($"Accepted sender [{id}]");
+      if (!multipleSendSocketsIn.TryAdd(id, ws!))
+        return; //ERROR!
+
+      while (true)
+      {
+        if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
+          break;
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
+        await Console.Out.WriteLineAsync($"Received message: [{inputMessage}]");
+
+        Queue<byte[]> outputQueue;
+        if (! multipleSendMessagesOut.TryGetValue(id, out outputQueue!))
+          multipleSendMessagesOut.Add(id, new Queue<byte[]>());
+        outputQueue.Enqueue(Encoding.UTF8.GetBytes(inputMessage));
+      }
     }
 
     public static async Task WebSocketMultipleSendTest_ClientReceive(HttpContext context)
@@ -116,125 +147,17 @@ An incoming message of 'exit' will shut down the server.
         Queue<byte[]> outputQueue;
         if (! multipleSendMessagesOut.TryGetValue(id, out outputQueue!))
         {
+          multipleSendMessagesOut.Add(id, new Queue<byte[]>());
           continue;
         }
+
         byte[] outputBytes;
         if (! outputQueue.TryDequeue(out outputBytes!))
-        {
           continue;
-        }
 
         await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
-        await Console.Out.WriteLineAsync($"Sent message: {outputBytes}");
+        await Console.Out.WriteLineAsync($"Sent [{outputBytes.Length}] bytes");
       }
-    }
-
-
-    public static async Task WebSocketMultipleSendTest(HttpContext context)
-    {
-      // string? clientAction = context.Request.RouteValues["Action"]!.ToString();
-      string? id = context.Request.RouteValues["Id"]!.ToString();
-      // if (!("send" == clientAction || "receive" == clientAction) || string.IsNullOrEmpty(id))
-      // {
-      //   await Console.Out.WriteLineAsync($"Invalid path: [{clientAction}/{id}]");
-      //   return;
-      // }
-
-      // if ("send" == clientAction)
-      //   await WebSocketMultipleSendRead(context, id);
-      // else if ("receive" == clientAction)
-      //   await WebsSocketMultipleSendWrite(context, id);
-
-      var senderClient = await context.WebSockets.AcceptWebSocketAsync();
-      await Console.Out.WriteLineAsync("Accepted sender");
-      var receiverClient = await context.WebSockets.AcceptWebSocketAsync();
-      await Console.Out.WriteLineAsync("Accepted receiver");
-
-      while (true)
-      {
-        if (senderClient.State == WebSocketState.Open && receiverClient.State == WebSocketState.Open)
-        {
-          var inputMessage = await WebSocketUtils.ReceiveStringAsync(senderClient);
-          await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
-
-          var outputBytes = Encoding.UTF8.GetBytes(inputMessage);
-          await receiverClient.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
-          await Console.Out.WriteLineAsync($"Sent message: {outputBytes}");
-        }
-        else if (senderClient.State == WebSocketState.Closed || senderClient.State == WebSocketState.Aborted ||
-            receiverClient.State == WebSocketState.Closed || receiverClient.State == WebSocketState.Aborted)
-        {
-          break;
-        }
-      }
-
-#if false
-      //TODO: Simplify using pointers.
-      WebSocket wsIn = null, wsOut = null;
-
-      if ("send" == clientAction)
-      {
-        if (multipleSendSocketsIn.ContainsKey(id))
-        {
-          // wsIn = multipleSendSocketsIn[id];
-          return;
-        }
-        else
-        {
-          wsIn = await context.WebSockets.AcceptWebSocketAsync();
-          multipleSendSocketsIn.Add(id, wsIn);
-          wsConnections.Add(wsIn);
-          await Console.Out.WriteLineAsync($"Connection accepted at {DateTime.UtcNow}");
-        }
-
-        if (! multipleSendSocketsOut.ContainsKey(id))
-        {
-          return;
-        }
-
-        wsOut = multipleSendSocketsOut[id];
-      }
-      else if ("receive" == clientAction)
-      {
-        if (multipleSendSocketsOut.ContainsKey(id))
-        {
-          //wsOut = multipleSendSocketsOut[id];
-          return;
-        }
-        else
-        {
-          wsOut = await context.WebSockets.AcceptWebSocketAsync();
-          multipleSendSocketsOut.Add(id, wsOut);
-          wsConnections.Add(wsOut);
-          await Console.Out.WriteLineAsync($"Connection accepted at {DateTime.UtcNow}");
-        }
-
-        if (! multipleSendSocketsIn.ContainsKey(id))
-        {
-          return;
-        }
-
-          //TODO: Disposed when retrieved
-          wsIn = multipleSendSocketsIn[id];
-      }
-
-      while (true)
-      {
-        if (wsIn.State == WebSocketState.Open)
-        {
-          var inputMessage = await WebSocketUtils.ReceiveStringAsync(wsIn);
-          await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
-
-          var outputBytes = Encoding.UTF8.GetBytes(inputMessage);
-          await wsOut.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
-          await Console.Out.WriteLineAsync($"Sent message: {outputBytes}");
-        }
-        else if (wsIn.State == WebSocketState.Closed || wsIn.State == WebSocketState.Aborted)
-        {
-          break;
-        }
-      }
-#endif
     }
   }
 }

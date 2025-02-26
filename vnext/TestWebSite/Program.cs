@@ -56,15 +56,6 @@ app.Map(
   Facebook.React.Test.RNTesterIntegrationTests.WebSocketBinaryTest
   );
 
-// app.Map(
-//   "/rnw/rntester/websocketmultiplesendtest/{Action}/{Id}",
-//    Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest
-//   );
-//TODO: Map two different endpoints (send / receive)
-app.Map(
-  "/rnw/rntester/websocketmultiplesendtest/{Id}",
-   Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest
-  );
 app.Map(
   "/rnw/rntester/websocketmultiplesendtest/send/{Id}",
   Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest_ClientSend
