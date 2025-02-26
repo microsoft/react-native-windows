@@ -2,7 +2,7 @@
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <Platforms>x86;x64;arm64</Platforms>
@@ -18,9 +18,9 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'">
-      <ExcludeAssets>build; buildtransitive; compile; runtime</ExcludeAssets>
+      <!-- <ExcludeAssets>build; buildtransitive; compile; runtime</ExcludeAssets> -->
     </PackageReference>
   </ItemGroup>
 
@@ -31,16 +31,24 @@
   <PropertyGroup>
     <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
     <CSWinRTIncludes>
-      Microsoft.ReactNative
+      Microsoft.ReactNative;
     </CSWinRTIncludes>
+    <CSWinRTExcludes>
+      Windows;
+      Microsoft;
+      Microsoft.UI;
+      Microsoft.ReactNative.XamlUIService
+      Microsoft.ReactNative.IXamlUIServiceStatics
+    </CSWinRTExcludes>
     <!--PkgMicrosoft_WindowsAppSDK is set in in obj\*.csproj.nuget.g.props with TargetFramework condition, doesn't support multi-targeting-->
     <PkgMicrosoft_WindowsAppSDK>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(WinUIPackageName)', '$(WinUIPackageVersion)'))</PkgMicrosoft_WindowsAppSDK>
   </PropertyGroup>
 
   <ItemGroup>
     <!--Explicitly reference WinAppSDK's Microsoft.UI winmds from TFM uap10.0-->
-    <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0.18362/Microsoft.UI.winmd" />
-    <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0/Microsoft.UI.Xaml.winmd" />
+    <!-- <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0.18362/Microsoft.Foundation.winmd" /> -->
+    <!-- <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0.18362/Microsoft.UI.winmd" /> -->
+    <!-- <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/**/*.winmd" /> -->
   </ItemGroup>
 
 </Project>
