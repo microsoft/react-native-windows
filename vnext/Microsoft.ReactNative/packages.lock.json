@@ -10,9 +10,9 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.23, )",
-        "resolved": "0.1.23",
-        "contentHash": "cA9t1GjY4Yo0JD1AfA//e1lOwk48hLANfuX6GXrikmEBNZVr2TIX5ONJt5tqCnpZyLz6xGiPDgTfFNKbSfb21g=="
+        "requested": "[0.1.27, )",
+        "resolved": "0.1.27",
+        "contentHash": "o4YBxD3yVaDfB7ccauyIIcUL3Q+k2C7dv3F9ODkMzUIL/lZBe44BiB2qdw/jchBD3ByUaC/kK3Lm/SW59V1A/w=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
