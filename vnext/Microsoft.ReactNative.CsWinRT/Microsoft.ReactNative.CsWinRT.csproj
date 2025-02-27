@@ -10,7 +10,8 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <NoWarn>CS0108;CS8305;CS0436;NU1701</NoWarn>
     <AssemblyName>Microsoft.ReactNative.Projection</AssemblyName>
-    <!-- Prevent WebView2 DLLs from being added to the output and therefore the projcetion's dependencies -->
+
+    <!-- Prevent all WebView2 DLLs from being added to our output and therefore erroneously to the projection DLL's dependencies -->
     <WebView2UseWinRT>true</WebView2UseWinRT>
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
     <WebView2EnableCsWinRTProjection>false</WebView2EnableCsWinRTProjection>
@@ -36,21 +37,7 @@
     <CSWinRTExcludes>
       Windows;
       Microsoft;
-      Microsoft.UI;
-      Microsoft.UI.Xaml;
-      Microsoft.Web.WebView2
-      Microsoft.ReactNative.XamlUIService
-      Microsoft.ReactNative.IXamlUIServiceStatics
     </CSWinRTExcludes>
-    <!--PkgMicrosoft_WindowsAppSDK is set in in obj\*.csproj.nuget.g.props with TargetFramework condition, doesn't support multi-targeting-->
-    <PkgMicrosoft_WindowsAppSDK>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', '$(WinUIPackageName)', '$(WinUIPackageVersion)'))</PkgMicrosoft_WindowsAppSDK>
   </PropertyGroup>
-
-  <ItemGroup>
-    <!--Explicitly reference WinAppSDK's Microsoft.UI winmds from TFM uap10.0-->
-    <!-- <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0.18362/Microsoft.Foundation.winmd" /> -->
-    <!-- <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/uap10.0.18362/Microsoft.UI.winmd" /> -->
-    <!-- <CsWinRTInputs Include="$(PkgMicrosoft_WindowsAppSDK)/lib/**/*.winmd" /> -->
-  </ItemGroup>
 
 </Project>
