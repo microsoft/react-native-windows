@@ -75,6 +75,7 @@ jobs:
             #12714 -  Disable for first deployment of test website.
             #         RNTesterIntegrationTests::WebSocket
             #         RNTesterIntegrationTests::WebSocketBlob
+            #         RNTesterIntegrationTests::WebSocketMultipleSend
             #14217 - Reneable RNTesterIntegrationTests
             #         RNTesterIntegrationTests::Dummy
             #         RNTesterIntegrationTests::Fetch
@@ -86,6 +87,7 @@ jobs:
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
                 (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&

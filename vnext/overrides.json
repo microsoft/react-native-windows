@@ -218,6 +218,10 @@
     },
     {
       "type": "platform",
+      "file": "src-win/IntegrationTests/WebSocketMultipleSendTest.js"
+    },
+    {
+      "type": "platform",
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
