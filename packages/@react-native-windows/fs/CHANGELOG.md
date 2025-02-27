@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Fri, 24 Jan 2025 21:11:35 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Feb 2025 20:13:39 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.1
+
+Thu, 27 Feb 2025 20:13:39 GMT
+
+### Patches
+
+- Promote 0.77 to legacy (tatianakapos@microsoft.com)
 
 ## 0.77.0
 

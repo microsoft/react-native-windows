@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 24 Jan 2025 21:11:34 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Feb 2025 20:13:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.1
+
+Thu, 27 Feb 2025 20:13:38 GMT
+
+### Patches
+
+- Promote 0.77 to legacy (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.77.1
+- Bump @react-native-windows/fs to v0.77.1
+- Bump @react-native-windows/package-utils to v0.77.1
+- Bump @react-native-windows/telemetry to v0.77.1
 
 ## 0.77.0
 

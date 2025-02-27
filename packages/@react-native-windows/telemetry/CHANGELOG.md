@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Fri, 24 Jan 2025 21:11:35 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Feb 2025 20:13:39 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.1
+
+Thu, 27 Feb 2025 20:13:39 GMT
+
+### Patches
+
+- Promote 0.77 to legacy (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.77.1
 
 ## 0.77.0
 
