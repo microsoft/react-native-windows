@@ -108,6 +108,7 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Convert.h -De
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Error.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\EventEmitter.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Function.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Number.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.cpp -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Object.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
