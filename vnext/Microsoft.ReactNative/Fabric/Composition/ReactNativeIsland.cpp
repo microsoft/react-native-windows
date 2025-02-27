@@ -778,7 +778,7 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
   facebook::react::LayoutConstraints constraints;
   ApplyConstraints(layoutConstraints, constraints);
 
-  if (m_isInitialized && m_rootTag != -1) {
+  if (m_isInitialized && m_rootTag != -1 && m_hasRenderedVisual) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
@@ -809,7 +809,7 @@ void ReactNativeIsland::Arrange(
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(layoutConstraints, fbLayoutConstraints);
 
-  if (m_isInitialized && m_rootTag != -1 && !m_isFragment) {
+  if (m_isInitialized && m_rootTag != -1 && !m_isFragment && m_hasRenderedVisual) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
