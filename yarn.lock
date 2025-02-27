@@ -10054,9 +10054,9 @@ react-clone-referenced-element@^1.0.1:
   integrity sha512-LZBPvQV8W0B5dFzXFu+D3Tpil8YHS8tO00iFsfXcTLdtpuH7XyvaHqHcoz4hd4uNPQCZ30fceh+s7mLznzMXvg==
 
 react-devtools-core@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-6.0.1.tgz#ffa1ba4bb176e6fd66040d98008d8ab74b258784"
-  integrity sha512-II3iSJhnR5nAscYDa9FCgPLq8mO5aEx/EKKtdXYTDnvdFEa3K7gs3jn1SKRXwQf9maOmIilmjnnx7Qy+3annPA==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-6.1.1.tgz#7dac74773d039273134c360f8b65cf4f6c795c49"
+  integrity sha512-TFo1MEnkqE6hzAbaztnyR5uLTMoz6wnEWwWBsCUzNt+sVXJycuRJdDqvL078M4/h65BI/YO5XWTaxZDWVsW0fw==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
