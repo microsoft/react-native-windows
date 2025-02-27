@@ -96,7 +96,7 @@
     "react-native": "^0.77.0"
   },
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.77-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
