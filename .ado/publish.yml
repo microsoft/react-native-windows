@@ -316,14 +316,11 @@ extends:
 
             - template: .ado/templates/apply-published-version-vars.yml@self
 
-            - ${{ if eq(matrix.UseFabric, true) }}:
-              - template: .ado/templates/enable-fabric-experimental-feature.yml@self
-
             - template: .ado/templates/msbuild-sln.yml@self
               parameters:
                 solutionDir: vnext
                 ${{ if eq(matrix.UseFabric, true) }}:
-                  solutionName: Microsoft.ReactNative.CppOnly.slnf
+                  solutionName: Microsoft.ReactNative.NewArch.sln
                 ${{ else }}:
                   solutionName: Microsoft.ReactNative.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
@@ -349,6 +346,7 @@ extends:
                   Microsoft.ReactNative\**
                   Microsoft.ReactNative.Managed\**
                   Microsoft.ReactNative.Managed.CodeGen\**
+                  Microsoft.ReactNative.CsWinRT\**
 
             - template: .ado/templates/component-governance.yml@self
 
@@ -432,7 +430,6 @@ extends:
                   configuration: Debug
                 - platform: ARM64
                   configuration: Debug
-
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
