@@ -32,8 +32,6 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   std::function<void(CloseCode, const std::string &)> m_closeHandler;
   std::function<void(Error &&)> m_errorHandler;
 
-  // TODO: Use or remove.
-  winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker m_revoker;
   winrt::Windows::Storage::Streams::IDataWriter m_writer;
 
   void Fail(std::string &&message, ErrorType type) noexcept;
