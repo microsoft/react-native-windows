@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix Number.h not copied from react-native core",
   "packageName": "react-native-windows",
   "email": "hampus.sjoberg@protonmail.com",
