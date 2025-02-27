@@ -147,8 +147,7 @@ void WinRTWebSocketResource2::OnMessageReceived(
     if (hr == WININET_E_CONNECTION_ABORTED) {
       errorMessage = "[0x80072EFE] Underlying TCP connection suddenly terminated";
       errorType = ErrorType::Connection;
-      // TODO: Do not "Close". Define an "Abort" routine.
-      //  Note: We are not clear whether all read-related errors should close the socket.
+      // Note: It is not clear whether all read-related errors should close the socket.
       Close(CloseCode::BadPayload, std::move(errorMessage));
     } else {
       errorMessage = Utilities::HResultToString(hr);
@@ -349,10 +348,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
   } catch (hresult_error const &e) {
     Fail(e, ErrorType::Connection);
 
-    // Abort - Mark connection as concluded.
-    // TODO:SetEvent(m_connectionPerformed.get())
-    // m_connectPerformedPromise.set_value();
-    // m_connectRequested = false;
+    SetEvent(m_connectPerformed.get());
 
     return;
   }
