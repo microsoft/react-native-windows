@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 24 Feb 2025 16:33:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Feb 2025 22:23:33 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.0
+
+Thu, 27 Feb 2025 22:23:33 GMT
+
+### Patches
+
+- Fix Number.h not copied from react-native core (hampus.sjoberg@protonmail.com)
+- Promote 0.78 to latest (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.78.0
+- Bump @react-native-windows/codegen to v0.78.0
 
 ## 0.78.0-preview.4
 

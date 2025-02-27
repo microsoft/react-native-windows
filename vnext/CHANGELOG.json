@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 27 Feb 2025 22:23:33 GMT",
+      "version": "0.78.0",
+      "tag": "react-native-windows_v0.78.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "hampus.sjoberg@protonmail.com",
+            "package": "react-native-windows",
+            "commit": "afc464158856a3a1f85cf96d16808b766de495fd",
+            "comment": "Fix Number.h not copied from react-native core"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d95e94bc8cf9b1d04e4c7c608ef009fcd4852423",
+            "comment": "Promote 0.78 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.78.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Feb 2025 16:33:57 GMT",
       "version": "0.78.0-preview.4",
       "tag": "react-native-windows_v0.78.0-preview.4",
