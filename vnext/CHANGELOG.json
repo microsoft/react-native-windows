@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 27 Feb 2025 06:33:21 GMT",
+      "version": "0.0.0-canary.920",
+      "tag": "react-native-windows_v0.0.0-canary.920",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ce99a08b6def7eaf284ed7109e502e2072d029ea",
+            "comment": "Fix issue when calling arrange on an RN Island during load"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c8de27f3102de4c5e3fd920286839772f13b0db7",
+            "comment": "Fix stale focus rects left in UI when last focusable component is removed"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Feb 2025 01:18:59 GMT",
       "version": "0.0.0-canary.919",
       "tag": "react-native-windows_v0.0.0-canary.919",

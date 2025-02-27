@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 12 Feb 2025 01:18:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Feb 2025 06:33:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.920
+
+Thu, 27 Feb 2025 06:33:21 GMT
+
+### Changes
+
+- Fix issue when calling arrange on an RN Island during load (30809111+acoates-ms@users.noreply.github.com)
+- Fix stale focus rects left in UI when last focusable component is removed (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.919
 
