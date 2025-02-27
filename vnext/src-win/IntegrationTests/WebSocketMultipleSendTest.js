@@ -23,15 +23,15 @@ Array.from('abcdef').forEach( e => { ws.send(e.repeat(1025)) });
 
 const React = require('react');
 const ReactNative = require('react-native');
-const { AppRegistry, View } = ReactNative;
-const { TestModule } = ReactNative.NativeModules;
+const {AppRegistry, View} = ReactNative;
+const {TestModule} = ReactNative.NativeModules;
 
 // eslint-disable-next-line @microsoft/sdl/no-insecure-url
 const URL_BASE = 'ws://localhost:5555/rnw/rntester/websocketmultiplesendtest';
 
 const WS_EVENTS = ['open', 'message', 'close', 'error'];
 
-const MESSAGE_SIZE = 16;//TODO: Bump?
+const MESSAGE_SIZE = 16; //TODO: Bump?
 
 const EXPECTED = 'abcdef';
 
@@ -72,11 +72,17 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
   };
 
   _socketsAreConnected = (): boolean => {
-    return this.state.sendSocket.readyState === 1 && this.state.receiveSocket.readyState === 1; // OPEN
+    return (
+      this.state.sendSocket.readyState === 1 &&
+      this.state.receiveSocket.readyState === 1
+    ); // OPEN
   };
 
   _socketsAreDisconnected = (): boolean => {
-    return this.state.sendSocket.readyState === 3 && this.state.receiveSocket.readyState === 3; // CLOSED
+    return (
+      this.state.sendSocket.readyState === 3 &&
+      this.state.receiveSocket.readyState === 3
+    ); // CLOSED
   };
 
   _resultIsComplete = (): boolean => {
@@ -129,7 +135,9 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
   _connect = () => {
     const sendSocket = new WebSocket(this.state.sendUrl);
     const receiveSocket = new WebSocket(this.state.receiveUrl);
-    WS_EVENTS.forEach(ev => receiveSocket.addEventListener(ev, this._onSocketEvent));
+    WS_EVENTS.forEach(ev =>
+      receiveSocket.addEventListener(ev, this._onSocketEvent),
+    );
     this.setState({
       sendSocket,
       receiveSocket,
@@ -154,6 +162,9 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
 
 WebSocketMultipleSendTest.displayName = 'WebSocketMultipleSendTest';
 
-AppRegistry.registerComponent('WebSocketMultipleSendTest', () => WebSocketMultipleSendTest);
+AppRegistry.registerComponent(
+  'WebSocketMultipleSendTest',
+  () => WebSocketMultipleSendTest,
+);
 
 module.exports = WebSocketMultipleSendTest;
