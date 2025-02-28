@@ -77,15 +77,13 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
 
   _socketsAreConnected = (): boolean => {
     return (
-      this.state.sendSocketState === 1 &&
-      this.state.receiveSocketState === 1
+      this.state.sendSocketState === 1 && this.state.receiveSocketState === 1
     ); // OPEN
   };
 
   _socketsAreDisconnected = (): boolean => {
     return (
-      this.state.sendSocketState === 3 &&
-      this.state.receiveSocketState === 3
+      this.state.sendSocketState === 3 && this.state.receiveSocketState === 3
     ); // CLOSED
   };
 
