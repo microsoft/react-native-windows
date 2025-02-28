@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL Win32 C# app projects (both inside
+  and outside of this repo) that build on top of Microsoft.ReactNative.
+  Do not make any changes here unless it applies to ALL such projects.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Keeping this at the top of the imports ensures we can use the autolinking 
+       process to set properties without having to edit the project file -->
+  <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.props"
+          Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.props')" />
+
+  <!-- Check that Microsoft.ReactNative.WindowsSdk.Default.props has already been imported. -->
+  <Target Name="EnsureRnwSdkDefaultsSetTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwSdkDefaultsSet)'!='true'">
+    <Warning Text="Property `RnwSdkDefaultsSet` was not set. Please ensure your project imports 'Microsoft.ReactNative.WindowsSdk.Default.props' before importing this prop sheet." />
+  </Target>
+
+  <!-- Import common props sheets common to all Composition projects. -->
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.Common.props" />
+  
+  <!-- Set props and import specific prop sheets for this kind of project. -->
+  <PropertyGroup>
+    <TargetFramework Condition="'$(TargetFramework)'==''">net6.0-windows10.0.22621.0</TargetFramework>
+    <AssetTargetFallback>net6.0-windows$(TargetPlatformVersion);$(AssetTargetFallback)</AssetTargetFallback>
+    <!-- Workaround to stop msbuild from getting confused about copying hermes twice -->
+    <NugetRootOverride>$([MSBuild]::NormalizePath($(HermesPackage)\))</NugetRootOverride>
+    <!-- Workaround to stop WebView2 targets from trying to copy their DLLs from Hermes package. -->
+    <WebView2EnableCsWinRTProjection>false</WebView2EnableCsWinRTProjection>
+  </PropertyGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Appx.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\HybridCRT.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PackageVersionDefinitions.props" />
+
+  <PropertyGroup>
+    <RnwExternalPropsLoaded>$(MSBuildThisFile)</RnwExternalPropsLoaded>
+  </PropertyGroup>
+</Project>

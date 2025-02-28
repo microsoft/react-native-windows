@@ -5,8 +5,17 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Only include Microsoft.ReactNative.* NuGet packages that C# (app and lib) projects need when using UseExperimentalNuget. -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.ReactNative" Version="$(ReactNativeWindowsVersion)" />
-    <PackageReference Include="Microsoft.ReactNative.Managed" Version="$(ReactNativeWindowsVersion)" />
-  </ItemGroup>
+  <Choose>
+    <When Condition="'$(RnwNewArch)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.ReactNative" Version="$(ReactNativeWindowsVersion)" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+       <ItemGroup>
+        <PackageReference Include="Microsoft.ReactNative" Version="$(ReactNativeWindowsVersion)" />
+        <PackageReference Include="Microsoft.ReactNative.Managed" Version="$(ReactNativeWindowsVersion)" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
 </Project>
