@@ -4,6 +4,7 @@
 
 #include "XamlHost.h"
 #include "FabricXamlControl.h"
+#include "XamlApplication.h"
 
 #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
 
@@ -20,6 +21,9 @@ struct XamlHostComponentView : public winrt::implements<XamlHostComponentView, w
                                    Codegen::BaseXamlHost<XamlHostComponentView> {
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
+      
+        winrt::ReactNativeXamlFabric::implementation::XamlApplication::EnsureCreated();
+      
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     //m_xamlIsland.Content(m_XamlHost);
     islandView.Connect(m_xamlIsland.ContentIsland());

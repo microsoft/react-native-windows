@@ -52,6 +52,16 @@
     <PlatformToolset>v143</PlatformToolset>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <!-- Island-support: Needed to generate App.xaml.g.h (e.g. pulls in Microsoft.Cpp.AppContainerApplication.props) -->
+    <ApplicationType>Windows Store</ApplicationType>
+    <!-- Island-support: Min version must be at least 17764.
+      (Needed to set RedirectionTarget to 8.21, so we get the correct version of Microsoft.Windows.UI.Xaml.Cpp.targets) -->
+    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <!-- Island-support: We want the app to be unpackaged -->
+    <WindowsPackageType>None</WindowsPackageType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
@@ -110,8 +120,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ReactNativeXamlFabric.cpp" />
+    <ClCompile Include="XamlApplication.cpp" />
     <ClCompile Include="FabricXamlControl.cpp" />
     <ClCompile Include="XamlHost.cpp" />
+    <ClCompile Include="XamlMetadataProvider.cpp" />
+    <ClCompile Include="XamlTypeInfo.Impl.g.cpp" />
+    <ClCompile Include="XamlTypeInfo.g.cpp" />
+
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -122,6 +137,16 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ReactPackageProvider.idl" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="App.idl">
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="XamlMetaDataProvider.idl">
+      <SubType>Code</SubType>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ReactNativeXamlFabric.rc" />
