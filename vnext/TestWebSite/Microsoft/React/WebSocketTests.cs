@@ -14,20 +14,22 @@ namespace Microsoft.React.Test
 
       while (true)
       {
-        if (ws.State == WebSocketState.Open)
-        {
-          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
-          await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
-
-          var outputMessage = inputMessage;
-          var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
-
-          await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-        else if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
-        {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
           break;
-        }
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
+        await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
+
+        var outputMessage = inputMessage;
+        var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
+
+        await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
       }
     }
 
@@ -41,21 +43,24 @@ namespace Microsoft.React.Test
 
       while (true)
       {
-        if (ws.State == WebSocketState.Open)
-        {
-          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
-          await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
-
-          var outputMessage = $"{inputMessage}_response";
-          var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
-
-          await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-        else if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
-        {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
           break;
-        }
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
+        await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
+
+        var outputMessage = $"{inputMessage}_response";
+        var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
+
+        await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
       }
+      ws.Dispose();
     }
 
     public static async Task Pong(HttpContext context)
@@ -65,19 +70,21 @@ namespace Microsoft.React.Test
 
       while (true)
       {
-        if (ws.State == WebSocketState.Open)
-        {
-          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
-
-          var outputMessage = "";
-          var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
-
-          await ws.SendAsync(outputBytes, WebSocketMessageType.Binary, true, CancellationToken.None);
-        }
-        else if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
-        {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
           break;
-        }
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
+
+        var outputMessage = "";
+        var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
+
+        await ws.SendAsync(outputBytes, WebSocketMessageType.Binary, true, CancellationToken.None);
       }
     }
   }

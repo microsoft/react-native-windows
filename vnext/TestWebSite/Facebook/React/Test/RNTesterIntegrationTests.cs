@@ -33,25 +33,24 @@ An incoming message of 'exit' will shut down the server.
 
       while (true)
       {
-        if (ws.State == WebSocketState.Open)
-        {
-          var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
-          await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
-
-          if (inputMessage == "exit")
-          {
-            await Console.Out.WriteLineAsync("WebSocket integration test server exit");
-          }
-
-          var outputMessage = $"{inputMessage}_response";
-          var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
-
-          await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-        else if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
-        {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
           break;
-        }
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var inputMessage = await WebSocketUtils.ReceiveStringAsync(ws);
+        await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
+
+        if (inputMessage == "exit")
+          await Console.Out.WriteLineAsync("WebSocket integration test server exit");
+
+        var outputMessage = $"{inputMessage}_response";
+        var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
+        await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
       }
     }
 
@@ -62,19 +61,21 @@ An incoming message of 'exit' will shut down the server.
 
       while (true)
       {
-        if (ws.State == WebSocketState.Open)
-        {
-          var incomingMessage = await WebSocketUtils.ReceiveStringAsync(ws);
-          await Console.Out.WriteLineAsync($"Message received: [{incomingMessage}]");
-
-          var outgoingBytes = new byte[] { 4, 5, 6, 7 };
-
-          await ws.SendAsync(outgoingBytes, WebSocketMessageType.Binary, true, CancellationToken.None);
-        }
-        else if(ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
-        {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
           break;
-        }
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var incomingMessage = await WebSocketUtils.ReceiveStringAsync(ws);
+        await Console.Out.WriteLineAsync($"Message received: [{incomingMessage}]");
+
+        var outgoingBytes = new byte[] { 4, 5, 6, 7 };
+
+        await ws.SendAsync(outgoingBytes, WebSocketMessageType.Binary, true, CancellationToken.None);
       }
     }
 
@@ -102,7 +103,10 @@ An incoming message of 'exit' will shut down the server.
 
       while (true)
       {
-        if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
           break;
 
         if (ws.State != WebSocketState.Open)
@@ -141,7 +145,10 @@ An incoming message of 'exit' will shut down the server.
 
       while (true)
       {
-        if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
           break;
 
         if (ws.State != WebSocketState.Open)
