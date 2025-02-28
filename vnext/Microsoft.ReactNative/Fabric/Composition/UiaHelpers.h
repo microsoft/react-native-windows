@@ -44,4 +44,6 @@ void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *pro
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
 
 TextDecorationLineStyle GetTextDecorationLineStyle(facebook::react::TextDecorationStyle style) noexcept;
+
+float GetScrollAmount(ScrollAmount amount) noexcept;
 } // namespace winrt::Microsoft::ReactNative::implementation

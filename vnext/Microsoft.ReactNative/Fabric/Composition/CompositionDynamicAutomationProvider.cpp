@@ -525,8 +525,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontalScrollPerc
   }
   if (!horizontallyScrollable) {
     *pRetVal = UIA_ScrollPatternNoScroll;
+  } else {
+    auto strongView = m_view.view();
+    auto scrollComponentView =
+        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
+    *pRetVal = scrollComponentView->getScrollPositionX();
   }
-  // specifies the horizontal scroll position
   return S_OK;
 }
 
@@ -538,8 +542,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticalScrollPercen
   }
   if (!verticallyScrollable) {
     *pRetVal = UIA_ScrollPatternNoScroll;
+  } else {
+    auto strongView = m_view.view();
+    auto scrollComponentView =
+        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
+    *pRetVal = scrollComponentView->getScrollPositionY();
   }
-  // specifies the vertical scroll position
   return S_OK;
 }
 
@@ -551,8 +559,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_HorizontalViewSize(d
   }
   if (!horizontallyScrollable) {
     *pRetVal = 100;
+  } else {
+    auto strongView = m_view.view();
+    auto scrollComponentView =
+        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
+    *pRetVal = scrollComponentView->getHorizontalSize();
   }
-  // specifies the horizontal size of the viewable region
   return S_OK;
 }
 
@@ -564,8 +576,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticalViewSize(dou
   }
   if (!verticallyScrollable) {
     *pRetVal = 100;
+  } else {
+    auto strongView = m_view.view();
+    auto scrollComponentView =
+        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
+    *pRetVal = scrollComponentView->getVerticalSize();
   }
-  // specifies the vertical size of the viewable region
   return S_OK;
 }
 
@@ -604,41 +620,50 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_VerticallyScrollable
 HRESULT __stdcall CompositionDynamicAutomationProvider::Scroll(
     ScrollAmount horizontalAmount,
     ScrollAmount verticalAmount) {
-  // scroll, can be large/small increment/decrememnt or no amount for each.
   DispatchAccessibilityAction(m_view, "scroll");
   auto strongView = m_view.view();
   auto scrollComponentView =
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
-  scrollComponentView->scrollTo({50.0f, 0.0f, 0.0f}, true);
-  return S_OK;
-}
-
-HRESULT __stdcall CompositionDynamicAutomationProvider::SetScrollPercent(
-    double horiztonalPercent,
-    double verticalPercent) {
-  auto strongView = m_view.view();
-  // Sets the horizontal and vertical scroll position as a percentage of the total content area within the control.
   BOOL verticallyScrollable;
   BOOL horizontallyScrollable;
+  float vertical = 0.0f;
+  float horizontal = 0.0f;
   auto hr = get_VerticallyScrollable(&verticallyScrollable);
   if (!SUCCEEDED(hr)) {
     return hr;
   }
   if (verticallyScrollable) {
-    auto scrollComponentView =
-        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
-    scrollComponentView->scrollTo({50.0f, 50.0f, 0.0f}, true);
+    if (verticalAmount == ScrollAmount_LargeIncrement) {
+      scrollComponentView->pageDown(true);
+    } else if (verticalAmount == ScrollAmount_LargeDecrement) {
+      scrollComponentView->pageUp(true);
+    } else if (verticalAmount == ScrollAmount_SmallIncrement) {
+      scrollComponentView->lineDown(true);
+    } else if (verticalAmount == ScrollAmount_SmallDecrement) {
+      scrollComponentView->lineUp(true);
+    }
   }
   hr = get_HorizontallyScrollable(&horizontallyScrollable);
   if (!SUCCEEDED(hr)) {
     return hr;
   }
   if (horizontallyScrollable) {
-    auto scrollComponentView =
-        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView>();
-    scrollComponentView->scrollTo({50.0f, 50.0f, 0.0f}, true);
+    if (horizontalAmount == ScrollAmount_LargeIncrement) {
+      scrollComponentView->pageDown(true);
+    } else if (horizontalAmount == ScrollAmount_LargeDecrement) {
+      scrollComponentView->pageUp(true);
+    } else if (horizontalAmount == ScrollAmount_SmallIncrement) {
+      scrollComponentView->lineRight(true);
+    } else if (horizontalAmount == ScrollAmount_SmallDecrement) {
+      scrollComponentView->lineLeft(true);
+    }
   }
-  DispatchAccessibilityAction(m_view, "setScrollPercent");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetScrollPercent(
+    double horiztonalPercent,
+    double verticalPercent) {
   return S_OK;
 }
 
