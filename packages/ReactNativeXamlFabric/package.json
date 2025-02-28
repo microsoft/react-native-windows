@@ -1,0 +1,55 @@
+{
+  "name": "react-native-xaml-fabric",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "rnw-scripts buildWithCodegetNativeComponents",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix"
+  },
+  "dependencies": {
+    "react": "19.0.0",
+    "react-native": "0.78.0-nightly-20250113-d4407d6f7",
+    "react-native-windows": "0.0.0-canary.919"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native/babel-preset": "0.78.0",
+    "@react-native/eslint-config": "0.78.0",
+    "@react-native/metro-config": "0.78.0",
+    "@react-native/typescript-config": "0.78.0",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.0.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "eslint": "^8.19.0",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react-test-renderer": "19.0.0",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "lib-commonjs/index.js",
+  "types": "lib-commonjs/index.d.ts",
+  "codegenConfig": {
+    "name": "ReactNativeXamlFabric",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "windows": {
+      "generators": "componentsWindows",
+      "namespace": "winrt::ReactNativeXamlFabric::Codegen",
+      "outputDirectory": "windows/ReactNativeXamlFabric/codegen"
+    }
+  },
+  "react-native-windows": {
+    "init-windows": {
+      "name": "react-native-xaml-fabric",
+      "namespace": "ReactNativeXamlFabric",
+      "template": "cpp-lib"
+    }
+  }
+}

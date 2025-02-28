@@ -6,6 +6,8 @@
     <UseExperimentalNuget>false</UseExperimentalNuget>
 
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
+
+    <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
   </PropertyGroup>
 
 </Project>

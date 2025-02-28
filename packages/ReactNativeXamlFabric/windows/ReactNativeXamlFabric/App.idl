@@ -1,0 +1,26 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace ReactNativeXamlFabric
+{
+    [webhosthidden][default_interface] runtimeclass XamlApplication : Microsoft.UI.Xaml.Application,
+      Microsoft.UI.Xaml.Markup.IXamlMetadataProvider
+    {
+        XamlApplication();
+
+        static void EnsureCreated();
+
+        static XamlApplication Current {
+          get;
+        };
+
+        void AddMetadataProvider(Microsoft.UI.Xaml.Markup.IXamlMetadataProvider otherProvider);
+
+/*
+        static XamlApplication Current {
+          get;
+        }
+        */
+        //void AddMetadataProvider(Microsoft.UI.Xaml.Markup.IXamlMetadataProvider otherProvider);
+    }
+}
