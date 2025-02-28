@@ -1,24 +1,27 @@
 {
   "version": 1,
   "dependencies": {
-    "native,Version=v0.0": {
-      "boost": {
+    "net6.0-windows10.0.22621": {
+      "Microsoft.Windows.CsWinRT": {
         "type": "Direct",
-        "requested": "[1.83.0, )",
+        "requested": "[2.2.0, )",
+        "resolved": "2.2.0",
+        "contentHash": "R8MDVawukHrKgYCFgYaoLfbAna/FrImEFRxDK9k8ITbrXv3KLE5uN6tRqrNV83H4MFdqJ/uiA/hg1cSsXkl0vw=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.6.240923002, )",
+        "resolved": "1.6.240923002",
+        "contentHash": "7PfOz2scXU+AAM/GYge+f6s7k3DVI+R1P8MNPZQr56GOPCGw+csvcg3S5KZg47z/o04kNvWH3GKtWT1ML9tpZw==",
+        "dependencies": {
+          "Microsoft.Web.WebView2": "1.0.2651.64",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
+        }
+      },
+      "boost": {
+        "type": "Transitive",
         "resolved": "1.83.0",
         "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
-      },
-      "Microsoft.Windows.CppWinRT": {
-        "type": "Direct",
-        "requested": "[2.0.230706.1, )",
-        "resolved": "2.0.230706.1",
-        "contentHash": "l0D7oCw/5X+xIKHqZTi62TtV+1qeSz7KVluNFdrJ9hXsst4ghvqQ/Yhura7JqRdZWBXAuDS0G0KwALptdoxweQ=="
-      },
-      "ReactWindows.OpenSSL.StdCall.Static": {
-        "type": "Direct",
-        "requested": "[1.0.2-p.5, )",
-        "resolved": "1.0.2-p.5",
-        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -46,27 +49,13 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.2792.45",
-        "contentHash": "KOlLJSq70OySfU8mdhWdh9iOyApazWsIb6CmSz+YTJ5MmwLcsCLMW0qemORo7Si3A7VhLDIH3jwpMhPxodfkuA=="
+        "resolved": "1.0.2651.64",
+        "contentHash": "f5sc/vcAoTCTEW7Nqzp4galAuTRguZViw8ksn+Nx2uskEBPm0/ubzy6gVjvXS/P96jLS89C8T9I0hPc417xpNg=="
       },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Transitive",
         "resolved": "10.0.22621.756",
         "contentHash": "7ZL2sFSioYm1Ry067Kw1hg0SCcW5kuVezC2SwjGbcPE61Nn+gTbH86T73G3LcEOVj0S3IZzNuE/29gZvOLS7VA=="
-      },
-      "Microsoft.WindowsAppSDK": {
-        "type": "Transitive",
-        "resolved": "1.7.250109001-experimental2",
-        "contentHash": "leUsCOh27uNnygO/AtohKnnvyZ+j0vaOh4oWlmiv3zs4HuCe46O04+25GennjmmwgESvahWp+RLTGMTJgdQd0Q==",
-        "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.2792.45",
-          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
-        }
-      },
-      "ReactNative.V8Jsi.Windows": {
-        "type": "Transitive",
-        "resolved": "0.71.8",
-        "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
       },
       "common": {
         "type": "Project",
@@ -84,24 +73,15 @@
           "fmt": "[1.0.0, )"
         }
       },
-      "follywin32": {
-        "type": "Project",
-        "dependencies": {
-          "Folly": "[1.0.0, )"
-        }
-      },
-      "react.windows.desktop": {
+      "microsoft.reactnative": {
         "type": "Project",
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "FollyWin32": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.1.23, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
-          "Microsoft.Web.WebView2": "[1.0.2792.45, )",
-          "Microsoft.WindowsAppSDK": "[1.7.250109001-experimental2, )",
+          "Microsoft.WindowsAppSDK": "[1.6.240923002, )",
           "ReactCommon": "[1.0.0, )",
-          "ReactNative.V8Jsi.Windows": "[0.71.8, )",
           "boost": "[1.83.0, )"
         }
       },
