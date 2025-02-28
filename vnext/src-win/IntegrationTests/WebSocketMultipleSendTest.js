@@ -41,9 +41,7 @@ type State = {
   sendUrl: string,
   receiveUrl: string,
   sendSocket: ?WebSocket,
-  sendSocketState: number,
   receiveSocket: ?WebSocket,
-  receiveSocketState: number,
   result: ?string,
 };
 
@@ -52,9 +50,7 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
     sendUrl: `${URL_BASE}/send/${ID}`,
     receiveUrl: `${URL_BASE}/receive/${ID}`,
     sendSocket: null,
-    sendSocketState: 0,
     receiveSocket: null,
-    receiveSocketState: 0,
     result: '',
   };
 
@@ -77,15 +73,19 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
 
   _socketsAreConnected = (): boolean => {
     return (
-      this.state.sendSocketState === 1 &&
-      this.state.receiveSocketState === 1
+      this.state.sendSocket &&
+      this.state.sendSocket.readyState === 1 &&
+      this.state.receiveSocket &&
+      this.state.receiveSocket.readyState === 1
     ); // OPEN
   };
 
   _socketsAreDisconnected = (): boolean => {
     return (
-      this.state.sendSocketState === 3 &&
-      this.state.receiveSocketState === 3
+      this.state.sendSocket &&
+      this.state.sendSocket.readyState === 3 &&
+      this.state.receiveSocket &&
+      this.state.receiveSocket.readyState === 3
     ); // CLOSED
   };
 
@@ -144,9 +144,7 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
     );
     this.setState({
       sendSocket,
-      sendSocketState: sendSocket.readyState,
       receiveSocket,
-      receiveSocketState: receiveSocket.readyState,
     });
   };
 
