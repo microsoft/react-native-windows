@@ -8,7 +8,6 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -24,8 +23,6 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
-import {XamlHost, Button, StackPanel} from 'react-native-xaml-fabric';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -64,32 +61,38 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  /*
+   * To keep the template simple and small we're adding padding to prevent view
+   * from rendering under the System UI.
+   * For bigger apps the reccomendation is to use `react-native-safe-area-context`:
+   * https://github.com/AppAndFlow/react-native-safe-area-context
+   *
+   * You can read more about it here:
+   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
+   */
+  const safePadding = '5%';
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <View style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
+        <View style={{paddingRight: safePadding}}>
+          <Header/>
+        </View>
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            paddingHorizontal: safePadding,
+            paddingBottom: safePadding,
           }}>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits. OK I'll do that
-            nddow!!!!
+            screen and then come back to see your edits.
           </Section>
-          <XamlHost label="jerry" style={{width: 100, height: 100}}>
-            <StackPanel>
-              <Button content="I am button 1" />
-              <Button content="button 2" />
-              <Button content="oh this is button 3" />
-            </StackPanel>
-          </XamlHost>
           <Section title="See Your Changes">
             <ReloadInstructions />
           </Section>
@@ -102,7 +105,7 @@ function App(): React.JSX.Element {
           <LearnMoreLinks />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
