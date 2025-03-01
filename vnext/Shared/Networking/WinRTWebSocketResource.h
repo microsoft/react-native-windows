@@ -27,7 +27,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
 
   ReadyState m_readyState;
   Mso::DispatchQueue m_callingQueue;
-  Mso::DispatchQueue m_dispatchQueue;
+  Mso::DispatchQueue m_backgroundQueue;
   std::queue<std::pair<std::string, bool>> m_writeQueue;
   CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;

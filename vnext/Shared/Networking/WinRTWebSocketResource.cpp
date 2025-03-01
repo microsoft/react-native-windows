@@ -173,7 +173,7 @@ void WinRTWebSocketResource2::OnMessageReceived(
       errorType = ErrorType::Receive;
     }
 
-    self->m_dispatchQueue.Post([self, errorMessage = std::move(errorMessage), errorType]() mutable {
+    self->m_backgroundQueue.Post([self, errorMessage = std::move(errorMessage), errorType]() mutable {
       self->Fail(std::move(errorMessage), errorType);
     });
 
@@ -217,7 +217,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   auto self = shared_from_this();
   auto coUri = std::move(uri);
 
-  co_await resume_in_queue(self->m_dispatchQueue);
+  co_await resume_in_queue(self->m_backgroundQueue);
 
   auto async = self->m_socket.ConnectAsync(coUri);
   co_await lessthrow_await_adapter<IAsyncAction>{async};
@@ -249,7 +249,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
 
   co_await resume_on_signal(self->m_connectPerformed.get());
 
-  co_await resume_in_queue(self->m_dispatchQueue);
+  co_await resume_in_queue(self->m_backgroundQueue);
 
   if (m_readyState != ReadyState::Open)
     co_return;
@@ -274,12 +274,12 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   auto self = shared_from_this();
   string coMessage = std::move(message);
 
-  co_await resume_in_queue(self->m_dispatchQueue); // Ensure writes happen sequentially
+  co_await resume_in_queue(self->m_backgroundQueue); // Ensure writes happen sequentially
   self->m_writeQueue.emplace(std::move(coMessage), isBinary);
 
   co_await resume_on_signal(self->m_connectPerformed.get());
 
-  co_await resume_in_queue(self->m_dispatchQueue);
+  co_await resume_in_queue(self->m_backgroundQueue);
 
   if (self->m_readyState != ReadyState::Open) {
     self = nullptr;
