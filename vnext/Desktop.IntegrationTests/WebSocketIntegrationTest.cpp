@@ -380,11 +380,6 @@ TEST_CLASS (WebSocketIntegrationTest)
 
   TEST_METHOD(SendConsecutive)
   {
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message;
-    });
     auto ws = IWebSocketResource::Make();
 
     string expected = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -407,7 +402,6 @@ TEST_CLASS (WebSocketIntegrationTest)
       SetPromise(doneFlag, donePromise);
     });
 
-    server->Start();
     ws->Connect("ws://localhost:5555/rnw/websockets/echo");
 
     // Consecutive immediate writes should be enqueued.
