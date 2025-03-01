@@ -60,7 +60,8 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource2>(
+        std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
@@ -85,7 +86,8 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource2>(
+        std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
       errorMessage = error.Message;
@@ -116,7 +118,8 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     };
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource2>(
+        std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
     rc->Connect(testUrl, {}, /*headers*/ {{L"k1", "v1"}});
@@ -132,7 +135,10 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     auto lambda = [&rc]() mutable {
       rc = make_shared<WinRTWebSocketResource2>(
-          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, CertExceptions{});
+          winrt::make<ThrowingMessageWebSocket>(),
+          MockDataWriter{},
+          CertExceptions{},
+          Mso::DispatchQueue::MakeSerialQueue());
     };
 
     Assert::ExpectException<hresult_error>(lambda);

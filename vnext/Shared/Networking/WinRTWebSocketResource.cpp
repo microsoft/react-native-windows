@@ -21,6 +21,8 @@
 
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
+using Mso::DispatchQueue;
+
 using std::function;
 using std::lock_guard;
 using std::mutex;
@@ -55,9 +57,9 @@ namespace {
 ///
 /// Implements an awaiter for Mso::DispatchQueue
 ///
-auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
+auto resume_in_queue(const DispatchQueue &queue) noexcept {
   struct awaitable {
-    awaitable(const Mso::DispatchQueue &queue) noexcept : m_queue{queue} {}
+    awaitable(const DispatchQueue &queue) noexcept : m_queue{queue} {}
 
     bool await_ready() const noexcept {
       return false;
@@ -80,6 +82,14 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
   return awaitable{queue};
 } // resume_in_queue
 
+DispatchQueue GetCurrentOrSerialQueue() noexcept {
+  auto queue = DispatchQueue::CurrentQueue();
+  if (!queue)
+    queue = DispatchQueue::MakeSerialQueue();
+
+  return queue;
+}
+
 } // namespace
 
 namespace Microsoft::React::Networking {
@@ -89,8 +99,13 @@ namespace Microsoft::React::Networking {
 WinRTWebSocketResource2::WinRTWebSocketResource2(
     IMessageWebSocket &&socket,
     IDataWriter &&writer,
-    vector<ChainValidationResult> &&certExceptions)
-    : m_socket{std::move(socket)}, m_writer(std::move(writer)), m_readyState{ReadyState::Connecting} {
+    vector<ChainValidationResult> &&certExceptions,
+    DispatchQueue callingQueue)
+    : m_socket{std::move(socket)},
+      m_writer(std::move(writer)),
+      m_readyState{ReadyState::Connecting},
+      m_connectPerformed{CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr)},
+      m_callingQueue{callingQueue} {
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
@@ -100,7 +115,11 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
 WinRTWebSocketResource2::WinRTWebSocketResource2(
     IMessageWebSocket &&socket,
     vector<ChainValidationResult> &&certExceptions)
-    : WinRTWebSocketResource2(std::move(socket), DataWriter{socket.OutputStream()}, std::move(certExceptions)) {}
+    : WinRTWebSocketResource2(
+          std::move(socket),
+          DataWriter{socket.OutputStream()},
+          std::move(certExceptions),
+          GetCurrentOrSerialQueue()) {}
 
 WinRTWebSocketResource2::WinRTWebSocketResource2(vector<ChainValidationResult> &&certExceptions)
     : WinRTWebSocketResource2(MessageWebSocket{}, std::move(certExceptions)) {}
@@ -154,7 +173,9 @@ void WinRTWebSocketResource2::OnMessageReceived(
       errorType = ErrorType::Receive;
     }
 
-    self->Fail(std::move(errorMessage), errorType);
+    self->m_dispatchQueue.Post([self, errorMessage = std::move(errorMessage), errorType]() mutable {
+      self->Fail(std::move(errorMessage), errorType);
+    });
 
     return;
   }
@@ -196,10 +217,13 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   auto self = shared_from_this();
   auto coUri = std::move(uri);
 
-  co_await resume_background();
+  co_await resume_in_queue(self->m_dispatchQueue);
 
   auto async = self->m_socket.ConnectAsync(coUri);
   co_await lessthrow_await_adapter<IAsyncAction>{async};
+
+  co_await resume_in_queue(self->m_callingQueue);
+
   auto result = async.ErrorCode();
 
   try {
@@ -221,7 +245,11 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 }
 
 fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
-  co_await resume_on_signal(m_connectPerformed.get());
+  auto self = shared_from_this();
+
+  co_await resume_on_signal(self->m_connectPerformed.get());
+
+  co_await resume_in_queue(self->m_dispatchQueue);
 
   if (m_readyState != ReadyState::Open)
     co_return;
@@ -244,11 +272,14 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
 
 fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
   auto self = shared_from_this();
-  self->m_writeQueue.emplace(std::move(message), isBinary);
-
-  co_await resume_on_signal(self->m_connectPerformed.get()); // Ensure connection attempt has finished
+  string coMessage = std::move(message);
 
   co_await resume_in_queue(self->m_dispatchQueue); // Ensure writes happen sequentially
+  self->m_writeQueue.emplace(std::move(coMessage), isBinary);
+
+  co_await resume_on_signal(self->m_connectPerformed.get());
+
+  co_await resume_in_queue(self->m_dispatchQueue);
 
   if (self->m_readyState != ReadyState::Open) {
     self = nullptr;
@@ -307,8 +338,6 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
   m_socket.Closed([self = shared_from_this()](IWebSocket const &sender, IWebSocketClosedEventArgs const &args) {
     self->OnClosed(sender, args);
   });
-
-  m_readyState = ReadyState::Connecting;
 
   auto supportedProtocols = m_socket.Control().SupportedProtocols();
   for (const auto &protocol : protocols) {

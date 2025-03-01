@@ -19,9 +19,14 @@ namespace Microsoft::React::Networking {
 class WinRTWebSocketResource2 : public IWebSocketResource,
                                 public std::enable_shared_from_this<WinRTWebSocketResource2> {
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
-  winrt::handle m_connectPerformed{
-      CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr)};
+
+  ///
+  // Connection attempt performed, either succeeding or failing
+  ///
+  winrt::handle m_connectPerformed;
+
   ReadyState m_readyState;
+  Mso::DispatchQueue m_callingQueue;
   Mso::DispatchQueue m_dispatchQueue;
   std::queue<std::pair<std::string, bool>> m_writeQueue;
   CloseCode m_closeCode{CloseCode::Normal};
@@ -58,7 +63,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   WinRTWebSocketResource2(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions,
+      Mso::DispatchQueue callingQueue);
 
   WinRTWebSocketResource2(
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
