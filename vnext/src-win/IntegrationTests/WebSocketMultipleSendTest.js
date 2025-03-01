@@ -35,7 +35,7 @@ const URL_BASE = 'ws://localhost:5555/rnw/rntester/websocketmultiplesendtest';
 
 const WS_EVENTS = ['open', 'message', 'close', 'error'];
 
-const MESSAGE_SIZE = 16; //TODO: Bump?
+const MESSAGE_SIZE = 16;
 
 const EXPECTED = 'abcdef';
 
@@ -77,13 +77,15 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
 
   _socketsAreConnected = (): boolean => {
     return (
-      this.state.sendSocketState === 1 && this.state.receiveSocketState === 1
+      this.state.sendSocket?.readyState === 1 &&
+      this.state.sendSocket?.readyState === 1
     ); // OPEN
   };
 
   _socketsAreDisconnected = (): boolean => {
     return (
-      this.state.sendSocketState === 3 && this.state.receiveSocketState === 3
+      this.state.sendSocket?.readyState === 3 &&
+      this.state.sendSocket?.readyState === 3
     ); // CLOSED
   };
 
@@ -105,16 +107,13 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
   };
 
   testSendMultipleAndClose: () => void = () => {
-    if (!this.state.sendSocket || !this.state.receiveSocket) {
-      return;
-    }
-    this.state.sendSocket.send('a'.repeat(MESSAGE_SIZE));
-    this.state.sendSocket.send('b'.repeat(MESSAGE_SIZE));
-    this.state.sendSocket.send('c'.repeat(MESSAGE_SIZE));
-    this.state.sendSocket.send('d'.repeat(MESSAGE_SIZE));
-    this.state.sendSocket.send('e'.repeat(MESSAGE_SIZE));
-    this.state.sendSocket.send('f'.repeat(MESSAGE_SIZE));
-    this.state.sendSocket.close();
+    this.state.sendSocket?.send('a'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('b'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('c'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('d'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('e'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('f'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.close();
 
     this._waitFor(this._resultIsComplete, 5, resultComplete => {
       if (!resultComplete) {
