@@ -173,9 +173,7 @@ void WinRTWebSocketResource2::OnMessageReceived(
       errorType = ErrorType::Receive;
     }
 
-    self->m_backgroundQueue.Post([self, errorMessage = std::move(errorMessage), errorType]() mutable {
-      self->Fail(std::move(errorMessage), errorType);
-    });
+    self->Fail(std::move(errorMessage), errorType);
 
     return;
   }
