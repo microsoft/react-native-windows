@@ -275,7 +275,7 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   string coMessage = std::move(message);
 
   co_await resume_in_queue(self->m_backgroundQueue); // Ensure writes happen sequentially
-  self->m_writeQueue.emplace(std::move(coMessage), isBinary);
+  self->m_outgoingMessages.emplace(std::move(coMessage), isBinary);
 
   co_await resume_on_signal(self->m_connectPerformed.get());
 
@@ -290,8 +290,8 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   string messageLocal;
   bool isBinaryLocal;
   try {
-    std::tie(messageLocal, isBinaryLocal) = self->m_writeQueue.front();
-    self->m_writeQueue.pop();
+    std::tie(messageLocal, isBinaryLocal) = self->m_outgoingMessages.front();
+    self->m_outgoingMessages.pop();
     if (isBinaryLocal) {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
