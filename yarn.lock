@@ -8812,7 +8812,7 @@ metro-runtime@^0.81.0, metro-runtime@^0.81.0-alpha.0:
     "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
 
-metro-source-map@0.81.0, metro-source-map@^0.81.0:
+metro-source-map@0.81.0:
   version "0.81.0"
   resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.81.0.tgz#ca83964124bb227d5f0bdb1ee304dbfe635f869e"
   integrity sha512-TzsVxhH83dyxg4A4+L1nzNO12I7ps5IHLjKGZH3Hrf549eiZivkdjYiq/S5lOB+p2HiQ+Ykcwtmcja95LIC62g==
@@ -8828,6 +8828,22 @@ metro-source-map@0.81.0, metro-source-map@^0.81.0:
     source-map "^0.5.6"
     vlq "^1.0.0"
 
+metro-source-map@0.81.2, metro-source-map@^0.81.0:
+  version "0.81.2"
+  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.81.2.tgz#d47950419351bd684820c7ca8b53ee2b69772605"
+  integrity sha512-/mJYbZIGswFbfxt0ouaBYw22YvqQiaCB+ql8reeA37bNjd4lHvozND7/w8NO2x7FjTfsmPBh50Iqi/mTuZFiZA==
+  dependencies:
+    "@babel/traverse" "^7.25.3"
+    "@babel/traverse--for-generate-function-map" "npm:@babel/traverse@^7.25.3"
+    "@babel/types" "^7.25.2"
+    flow-enums-runtime "^0.0.6"
+    invariant "^2.2.4"
+    metro-symbolicate "0.81.2"
+    nullthrows "^1.1.1"
+    ob1 "0.81.2"
+    source-map "^0.5.6"
+    vlq "^1.0.0"
+
 metro-symbolicate@0.81.0:
   version "0.81.0"
   resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.81.0.tgz#b7b1eae8bfd6ad2a922fa2bcb9f2144e464adafb"
@@ -8839,6 +8855,18 @@ metro-symbolicate@0.81.0:
     nullthrows "^1.1.1"
     source-map "^0.5.6"
     through2 "^2.0.1"
+    vlq "^1.0.0"
+
+metro-symbolicate@0.81.2:
+  version "0.81.2"
+  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.81.2.tgz#af30923ba92f26d1c4dfd3a2eab5bff62f8cf214"
+  integrity sha512-jEZoh3XldJazigetID+4Sy41OszGdixEOvB8zI0v2k7sXgHh+Rw8J/R7UuYCxQp+f89MqCjeGLLN7qNHuvRSCQ==
+  dependencies:
+    flow-enums-runtime "^0.0.6"
+    invariant "^2.2.4"
+    metro-source-map "0.81.2"
+    nullthrows "^1.1.1"
+    source-map "^0.5.6"
     vlq "^1.0.0"
 
 metro-transform-plugins@0.81.0, metro-transform-plugins@^0.81.0:
@@ -9344,6 +9372,13 @@ ob1@0.81.0:
   version "0.81.0"
   resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.81.0.tgz#dc3154cca7aa9c2eb58f5ac63e9ee23ff4c6f520"
   integrity sha512-6Cvrkxt1tqaRdWqTAMcVYEiO5i1xcF9y7t06nFdjFqkfPsEloCf8WwhXdwBpNUkVYSQlSGS7cDgVQR86miBfBQ==
+  dependencies:
+    flow-enums-runtime "^0.0.6"
+
+ob1@0.81.2:
+  version "0.81.2"
+  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.81.2.tgz#1c144d5ed63a0d1778bec32bf8a56c93397911ed"
+  integrity sha512-K0hJXOlU4j7c4chNLaDDzVyg5yjYjbmDSQbVMXdAcTtqZndwYHfmBIO06riFMgpg2KOevxeB1pIwzqJuES2SuA==
   dependencies:
     flow-enums-runtime "^0.0.6"
 
