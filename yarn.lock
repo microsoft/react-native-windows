@@ -8302,9 +8302,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.12.10"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.12.10.tgz#f6b4b6ad07e7a9c83747ffd642dd5ddd346484ce"
-  integrity sha512-jbxEW8SmCMhN6hey115BfdDqDa4Kz4RkfTgEPtKrEEsIAwwDeOsBpj4c6LX7NLMbeqB9KGSoLJHJEX7e2tPi2w==
+  version "2.12.20"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.12.20.tgz#789db2bed65b400c94777d7daa958a07d7b7243e"
+  integrity sha512-Ft4hNpHXPu2IjWy04oQBt5zz/yeEqykbc3VKF/snoK43vEpY5sYdkVGU1hIV+ZiDvUyQbI56zQ8G0LRLa4vp+w==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
