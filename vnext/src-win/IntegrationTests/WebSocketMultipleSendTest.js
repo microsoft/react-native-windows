@@ -125,7 +125,7 @@ class WebSocketMultipleSendTest extends React.Component<{}, State> {
   };
 
   _onSocketEvent = (event: any) => {
-    if (event.type === 'message') {
+    if (event.type === 'message' && event.data.length) {
       var message = this.state.result + event.data[0];
       this.setState({
         result: message,
