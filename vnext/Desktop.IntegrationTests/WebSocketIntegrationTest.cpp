@@ -65,7 +65,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       receivedPromise.set_value(message);
     });
     string clientError{};
-    ws->SetOnError([&clientError, /*&sentSizePromise,*/ &receivedPromise](Error err)
+    ws->SetOnError([&clientError, &receivedPromise](Error err)
     {
       clientError = err.Message;
       receivedPromise.set_value("");
