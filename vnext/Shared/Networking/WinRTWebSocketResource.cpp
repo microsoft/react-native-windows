@@ -249,12 +249,12 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
 
   co_await resume_in_queue(self->m_backgroundQueue);
 
-  if (m_readyState != ReadyState::Open)
-    co_return;
+  // See https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
+  co_await self->SendPendingMessages();
 
   try {
-    m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
-    m_readyState = ReadyState::Closing;
+    self->m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
+    self->m_readyState = ReadyState::Closing;
   } catch (winrt::hresult_invalid_argument const &e) {
     Fail(e, ErrorType::Close);
   } catch (hresult_error const &e) {
@@ -275,47 +275,55 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
 
   co_await resume_in_queue(self->m_backgroundQueue);
 
-  if (self->m_readyState != ReadyState::Open) {
-    self = nullptr;
-    co_return;
-  }
+  co_await self->SendPendingMessages();
+}
 
-  size_t length = 0;
-  string messageLocal;
-  bool isBinaryLocal;
-  try {
-    std::tie(messageLocal, isBinaryLocal) = self->m_outgoingMessages.front();
-    self->m_outgoingMessages.pop();
-    if (isBinaryLocal) {
-      self->m_socket.Control().MessageType(SocketMessageType::Binary);
+IAsyncAction WinRTWebSocketResource2::SendPendingMessages() noexcept {
+  auto self = shared_from_this();
 
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
-      if (buffer) {
-        length = buffer.Length();
-        self->m_writer.WriteBuffer(buffer);
-      }
-    } else {
-      self->m_socket.Control().MessageType(SocketMessageType::Utf8);
-
-      length = messageLocal.size();
-      winrt::array_view<const uint8_t> view(
-          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
-          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
-      self->m_writer.WriteBytes(view);
+  while (!self->m_outgoingMessages.empty()) {
+    if (self->m_readyState != ReadyState::Open) {
+      co_return;
     }
-  } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
-    self->Fail(e, ErrorType::Send);
-  } catch (const std::exception &e) {
-    self->Fail(e.what(), ErrorType::Send);
-  }
 
-  auto async = self->m_writer.StoreAsync();
+    size_t length = 0;
+    string messageLocal;
+    bool isBinaryLocal;
+    try {
+      std::tie(messageLocal, isBinaryLocal) = self->m_outgoingMessages.front();
+      self->m_outgoingMessages.pop();
+      if (isBinaryLocal) {
+        self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
-  co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+        auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
+        if (buffer) {
+          length = buffer.Length();
+          self->m_writer.WriteBuffer(buffer);
+        }
+      } else {
+        self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
-  auto result = async.ErrorCode();
-  if (result < 0) {
-    Fail(std::move(result), ErrorType::Send);
+        length = messageLocal.size();
+        winrt::array_view<const uint8_t> view(
+            CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
+            CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
+        self->m_writer.WriteBytes(view);
+      }
+    } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
+      self->Fail(e, ErrorType::Send);
+      co_return;
+    } catch (const std::exception &e) {
+      self->Fail(e.what(), ErrorType::Send);
+      co_return;
+    }
+
+    auto async = self->m_writer.StoreAsync();
+    co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+
+    auto result = async.ErrorCode();
+    if (result < 0) {
+      Fail(std::move(result), ErrorType::Send);
+    }
   }
 }
 

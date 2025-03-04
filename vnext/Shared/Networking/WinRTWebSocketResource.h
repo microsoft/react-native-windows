@@ -54,6 +54,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
   winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
+  winrt::Windows::Foundation::IAsyncAction SendPendingMessages() noexcept;
 
   WinRTWebSocketResource2(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
