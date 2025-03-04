@@ -82,12 +82,24 @@ jobs:
             #         RNTesterIntegrationTests::XHRSample
             #         RNTesterIntegrationTests::Blob
             #         RNTesterIntegrationTests::Logging
+            #      - CI agents show the following server-side errors (local runs succeed):
+            #         - [0x801901f4] Internal server error (500).
+            #         - [0x800710dd] The operation identifier is not valid.
+            #         WebSocketIntegrationTest::ConnectClose)&
+            #         WebSocketIntegrationTest::ConnectNoClose)&
+            #         WebSocketIntegrationTest::SendConsecutive)&
+            #         WebSocketIntegrationTest::SendReceiveLargeMessage)&
+            #         WebSocketIntegrationTest::SendReceiveSsl)&
             - name: Desktop.IntegrationTests.Filter
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
+                (FullyQualifiedName!=WebSocketIntegrationTest::ConnectClose)&
+                (FullyQualifiedName!=WebSocketIntegrationTest::ConnectNoClose)&
+                (FullyQualifiedName!=WebSocketIntegrationTest::SendConsecutive)&
+                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveLargeMessage)&
                 (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
