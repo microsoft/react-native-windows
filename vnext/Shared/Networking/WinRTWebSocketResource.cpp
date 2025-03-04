@@ -423,6 +423,7 @@ void WinRTWebSocketResource2::SetOnError(function<void(Error &&)> &&handler) noe
 
 #pragma endregion WinRTWebSocketResource2
 
+#pragma region Legacy resource
 // private
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
@@ -800,5 +801,7 @@ void WinRTWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noex
 }
 
 #pragma endregion IWebSocketResource
+
+#pragma endregion Legacy resource
 
 } // namespace Microsoft::React::Networking
