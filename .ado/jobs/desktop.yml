@@ -96,11 +96,11 @@ jobs:
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::ConnectClose)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::ConnectNoClose)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendConsecutive)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveLargeMessage)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::Fetch)&
