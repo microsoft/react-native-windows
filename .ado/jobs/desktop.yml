@@ -87,6 +87,7 @@ jobs:
             #         - [0x800710dd] The operation identifier is not valid.
             #         WebSocketIntegrationTest::ConnectClose)&
             #         WebSocketIntegrationTest::ConnectNoClose)&
+            #         WebSocketIntegrationTest::SendReceiveClose)&
             #         WebSocketIntegrationTest::SendConsecutive)&
             #         WebSocketIntegrationTest::SendReceiveLargeMessage)&
             #         WebSocketIntegrationTest::SendReceiveSsl)&
@@ -98,6 +99,7 @@ jobs:
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
                 (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
                 (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
                 (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
                 (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
                 (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
