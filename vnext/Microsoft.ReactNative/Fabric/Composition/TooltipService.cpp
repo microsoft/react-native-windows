@@ -231,14 +231,13 @@ void TooltipTracker::OnUnmounted(
 }
 
 void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
-  auto viewCompView = view.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
-
-  auto selfView =
-      winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>(viewCompView);
-  auto parentHwnd = selfView->GetHwndForParenting();
   DestroyTimer();
 
   if (!m_hwndTip) {
+    auto viewCompView = view.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
+    auto selfView =
+      winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>(viewCompView);
+    auto parentHwnd = selfView->GetHwndForParenting();
     auto tooltipData = std::make_unique<TooltipData>(view);
     tooltipData->attributedString = CreateTooltipAttributedString(*selfView->viewProps()->tooltip);
 
@@ -256,19 +255,21 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
     facebook::react::TextLayoutManager::GetTextLayout(
         tooltipData->attributedString, {} /*paragraphAttributes*/, layoutConstraints, tooltipData->textLayout);
 
-    DWRITE_TEXT_METRICS tm;
-    winrt::check_hresult(tooltipData->textLayout->GetMetrics(&tm));
+    if (tooltipData->textLayout)
+    {
+      DWRITE_TEXT_METRICS tm;
+      winrt::check_hresult(tooltipData->textLayout->GetMetrics(&tm));
 
-    tooltipData->width =
-        static_cast<int>(tm.width + ((tooltipHorizontalPadding + tooltipHorizontalPadding) * scaleFactor));
-    tooltipData->height = static_cast<int>(tm.height + ((tooltipTopPadding + tooltipBottomPadding) * scaleFactor));
+      tooltipData->width =
+        static_cast<int>((tm.width + tooltipHorizontalPadding + tooltipHorizontalPadding) * scaleFactor);
+      tooltipData->height = static_cast<int>((tm.height + tooltipTopPadding + tooltipBottomPadding) * scaleFactor);
 
-    POINT pt = {static_cast<LONG>(m_pos.X), static_cast<LONG>(m_pos.Y)};
-    ClientToScreen(parentHwnd, &pt);
+      POINT pt = { static_cast<LONG>(m_pos.X), static_cast<LONG>(m_pos.Y) };
+      ClientToScreen(parentHwnd, &pt);
 
-    RegisterTooltipWndClass();
-    HINSTANCE hInstance = GetModuleHandle(NULL);
-    m_hwndTip = CreateWindow(
+      RegisterTooltipWndClass();
+      HINSTANCE hInstance = GetModuleHandle(NULL);
+      m_hwndTip = CreateWindow(
         c_tooltipWindowClassName,
         L"Tooltip",
         WS_POPUP,
@@ -281,12 +282,13 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
         hInstance,
         tooltipData.get());
 
-    DWM_WINDOW_CORNER_PREFERENCE preference = DWMWCP_ROUNDSMALL;
-    UINT borderThickness = 0;
-    DwmSetWindowAttribute(m_hwndTip, DWMWA_WINDOW_CORNER_PREFERENCE, &preference, sizeof(preference));
+      DWM_WINDOW_CORNER_PREFERENCE preference = DWMWCP_ROUNDSMALL;
+      UINT borderThickness = 0;
+      DwmSetWindowAttribute(m_hwndTip, DWMWA_WINDOW_CORNER_PREFERENCE, &preference, sizeof(preference));
 
-    tooltipData.release();
-    AnimateWindow(m_hwndTip, toolTipAnimationTimeMs, AW_BLEND);
+      tooltipData.release();
+      AnimateWindow(m_hwndTip, toolTipAnimationTimeMs, AW_BLEND);
+    }
   }
 }
 
