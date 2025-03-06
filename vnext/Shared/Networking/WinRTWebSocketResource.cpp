@@ -130,7 +130,7 @@ WinRTWebSocketResource2::~WinRTWebSocketResource2() noexcept /*override*/
 void WinRTWebSocketResource2::Fail(string &&message, ErrorType type) noexcept {
   auto self = shared_from_this();
 
-  self->m_readyState = ReadyState::Closed;
+  self->m_backgroundQueue.Post([self]() { self->m_readyState = ReadyState::Closed; });
 
   if (self->m_errorHandler) {
     self->m_errorHandler({std::move(message), type});
@@ -204,7 +204,8 @@ void WinRTWebSocketResource2::OnMessageReceived(
 
 void WinRTWebSocketResource2::OnClosed(IWebSocket const &sender, IWebSocketClosedEventArgs const &args) {
   auto self = shared_from_this();
-  self->m_readyState = ReadyState::Closed;
+
+  self->m_backgroundQueue.Post([self]() { self->m_readyState = ReadyState::Closed; });
 
   if (self->m_closeHandler) {
     self->m_closeHandler(self->m_closeCode, self->m_closeReason);
@@ -226,7 +227,10 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 
   try {
     if (result >= 0) { // Non-failing HRESULT
+      co_await resume_in_queue(self->m_backgroundQueue);
       self->m_readyState = ReadyState::Open;
+
+      co_await resume_in_queue(self->m_callingQueue);
       if (self->m_connectHandler) {
         self->m_connectHandler();
       }
