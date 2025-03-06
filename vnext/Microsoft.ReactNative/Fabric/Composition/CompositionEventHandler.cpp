@@ -197,6 +197,20 @@ void CompositionEventHandler::Initialize() noexcept {
       }
     });
 
+    m_pointerExitedToken = pointerSource.PointerExited([wkThis = weak_from_this()](
+                                                           winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                                           winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+      if (auto strongThis = wkThis.lock()) {
+        if (auto strongRootView = strongThis->m_wkRootView.get()) {
+          if (strongThis->SurfaceId() == -1)
+            return;
+          auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+              args.CurrentPoint(), strongRootView.ScaleFactor());
+          strongThis->onPointerExited(pp, args.KeyModifiers());
+        }
+      }
+    });
+
     m_pointerCaptureLostToken =
         pointerSource.PointerCaptureLost([wkThis = weak_from_this()](
                                              winrt::Microsoft::UI::Input::InputPointerSource const &,
@@ -1065,6 +1079,34 @@ void CompositionEventHandler::onPointerMoved(
     };
 
     HandleIncomingPointerEvent(pointerEvent, targetView, pointerPoint, keyModifiers, handler);
+  }
+}
+
+void CompositionEventHandler::onPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  if (SurfaceId() == -1)
+    return;
+
+  int pointerId = pointerPoint.PointerId();
+  auto position = pointerPoint.Position();
+
+  if (std::shared_ptr<FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
+    facebook::react::Tag tag = -1;
+    facebook::react::Point ptLocal, ptScaled;
+    getTargetPointerArgs(fabricuiManager, pointerPoint, tag, ptScaled, ptLocal);
+
+    tag = -1;
+
+    auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
+        m_context, tag, pointerPoint, keyModifiers);
+
+    facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
+
+    auto handler = [](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {};
+
+    HandleIncomingPointerEvent(pointerEvent, nullptr, pointerPoint, keyModifiers, handler);
   }
 }
 
