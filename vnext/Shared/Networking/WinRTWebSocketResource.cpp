@@ -210,7 +210,9 @@ void WinRTWebSocketResource2::OnClosed(IWebSocket const &sender, IWebSocketClose
   self->m_backgroundQueue.Post([self]() { self->m_readyState = ReadyState::Closed; });
 
   if (self->m_closeHandler) {
-    self->m_closeHandler(self->m_closeCode, self->m_closeReason);
+    self->m_callingQueue.Post([onClose = std::move(self->m_closeHandler),
+                               code = self->m_closeCode,
+                               &reason = self->m_closeReason]() { onClose(code, reason); });
   }
 }
 
