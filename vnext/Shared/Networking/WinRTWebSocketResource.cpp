@@ -194,14 +194,16 @@ void WinRTWebSocketResource2::OnMessageReceived(
 
       response = winrt::to_string(std::wstring_view(data));
     }
-
-    if (self->m_readHandler) {
-      self->m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
-    }
-
   } catch (hresult_error const &e) {
-    self->Fail(e, ErrorType::Receive);
+    return self->Fail(e, ErrorType::Receive);
   }
+
+  // Posting inside try-catch block causes errors.
+  self->m_callingQueue.Post([self, response = std::move(response), messageType = args.MessageType()]() {
+    if (self->m_readHandler) {
+      self->m_readHandler(response.length(), response, messageType == SocketMessageType::Binary);
+    }
+  });
 }
 
 void WinRTWebSocketResource2::OnClosed(IWebSocket const &sender, IWebSocketClosedEventArgs const &args) {
