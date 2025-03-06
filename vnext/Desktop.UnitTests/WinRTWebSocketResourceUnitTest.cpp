@@ -117,15 +117,19 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.SetRequestHeader = [callingQueue](const hstring &, const hstring &) {
       winrt::throw_hresult(winrt::hresult_invalid_argument().code());
     };
+    std::promise<void> donePromise;
 
     // Test APIs
     auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
     rc->SetOnConnect([&connected]() { connected = true; });
-    rc->SetOnError([&errorMessage, callingQueue](Error &&error) { errorMessage = error.Message; });
+    rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
+      errorMessage = error.Message;
+      donePromise.set_value();
+    });
     rc->Connect(testUrl, {}, /*headers*/ {{L"k1", "v1"}});
     rc->Close(CloseCode::Normal, {});
 
-    callingQueue.AwaitTermination();
+    donePromise.get_future().wait();
 
     Assert::AreEqual({"[0x80070057] The parameter is incorrect."}, errorMessage);
     Assert::IsFalse(connected);

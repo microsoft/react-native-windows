@@ -130,12 +130,13 @@ WinRTWebSocketResource2::~WinRTWebSocketResource2() noexcept /*override*/
 void WinRTWebSocketResource2::Fail(string &&message, ErrorType type) noexcept {
   auto self = shared_from_this();
 
-  self->m_backgroundQueue.Post([self]() { self->m_readyState = ReadyState::Closed; });
-
-  self->m_callingQueue.Post([self, message = std::move(message), type]() {
-    if (self->m_errorHandler) {
-      self->m_errorHandler({std::move(message), type});
-    }
+  self->m_backgroundQueue.Post([self, message = std::move(message), type]() {
+    self->m_readyState = ReadyState::Closed;
+    self->m_callingQueue.Post([self, message = std::move(message), type]() {
+      if (self->m_errorHandler) {
+        self->m_errorHandler({std::move(message), type});
+      }
+    });
   });
 }
 
