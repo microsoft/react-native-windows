@@ -132,9 +132,11 @@ void WinRTWebSocketResource2::Fail(string &&message, ErrorType type) noexcept {
 
   self->m_backgroundQueue.Post([self]() { self->m_readyState = ReadyState::Closed; });
 
-  if (self->m_errorHandler) {
-    self->m_errorHandler({std::move(message), type});
-  }
+  self->m_callingQueue.Post([self, message = std::move(message), type]() {
+    if (self->m_errorHandler) {
+      self->m_errorHandler({std::move(message), type});
+    }
+  });
 }
 
 void WinRTWebSocketResource2::Fail(hresult &&error, ErrorType type) noexcept {

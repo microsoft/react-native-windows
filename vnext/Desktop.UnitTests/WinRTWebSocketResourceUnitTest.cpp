@@ -111,19 +111,21 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     string errorMessage;
 
     // Set up mocks
+    auto callingQueue{Mso::DispatchQueue::MakeSerialQueue()};
     auto imws{winrt::make<MockMessageWebSocket>()};
     auto mws{imws.as<MockMessageWebSocket>()};
-    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {
+    mws->Mocks.SetRequestHeader = [callingQueue](const hstring &, const hstring &) {
       winrt::throw_hresult(winrt::hresult_invalid_argument().code());
     };
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(
-        std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
+    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
     rc->SetOnConnect([&connected]() { connected = true; });
-    rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
+    rc->SetOnError([&errorMessage, callingQueue](Error &&error) { errorMessage = error.Message; });
     rc->Connect(testUrl, {}, /*headers*/ {{L"k1", "v1"}});
     rc->Close(CloseCode::Normal, {});
+
+    callingQueue.AwaitTermination();
 
     Assert::AreEqual({"[0x80070057] The parameter is incorrect."}, errorMessage);
     Assert::IsFalse(connected);
