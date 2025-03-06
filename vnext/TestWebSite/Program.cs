@@ -57,8 +57,27 @@ app.Map(
   );
 
 app.Map(
+  "/rnw/rntester/websocketmultiplesendtest/send/{Id}",
+  Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest_ClientSend
+);
+app.Map(
+  "/rnw/rntester/websocketmultiplesendtest/receive/{Id}",
+  Facebook.React.Test.RNTesterIntegrationTests.WebSocketMultipleSendTest_ClientReceive
+);
+
+app.Map(
+  "/rnw/websockets/echo",
+  Microsoft.React.Test.WebSocketTests.Echo
+  );
+
+app.Map(
   "/rnw/websockets/echosuffix",
   Microsoft.React.Test.WebSocketTests.EchoSuffix
+  );
+
+app.Map(
+  "/rnw/websockets/pong",
+  Microsoft.React.Test.WebSocketTests.Pong
   );
 
 app.MapGet(
