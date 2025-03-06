@@ -10,6 +10,7 @@
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 #include "TextDrawing.h"
 #include "dwmapi.h"
 
@@ -49,6 +50,8 @@ facebook::react::AttributedStringBox CreateTooltipAttributedString(const std::st
   auto fragment = facebook::react::AttributedString::Fragment{};
   fragment.string = tooltip;
   fragment.textAttributes.fontSize = tooltipFontSize;
+  fragment.textAttributes.fontSizeMultiplier =
+      static_cast<float>(winrt::Windows::UI::ViewManagement::UISettings().TextScaleFactor());
   attributedString.appendFragment(std::move(fragment));
   return facebook::react::AttributedStringBox{attributedString};
 }
