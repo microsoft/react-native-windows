@@ -77,13 +77,12 @@ winrt::Microsoft::ReactNative::Color Color::ReadValue(
   switch (reader.ValueType()) {
     case JSValueType::Int64: {
       auto argb = reader.GetInt64();
-      return winrt::make<Color>(facebook::react::Color{
-          /*color*/
-          {static_cast<uint8_t>((argb >> 24) & 0xFF),
-           static_cast<uint8_t>((argb >> 16) & 0xFF),
-           static_cast<uint8_t>((argb >> 8) & 0xFF),
-           static_cast<uint8_t>(argb & 0xFF)},
-          {}});
+      return winrt::make<Color>(facebook::react::Color{/*color*/
+                                                       {static_cast<uint8_t>((argb >> 24) & 0xFF),
+                                                        static_cast<uint8_t>((argb >> 16) & 0xFF),
+                                                        static_cast<uint8_t>((argb >> 8) & 0xFF),
+                                                        static_cast<uint8_t>(argb & 0xFF)},
+                                                       {}});
     }
     case JSValueType::Object: {
       std::vector<std::string> platformColors;
