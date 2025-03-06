@@ -1477,6 +1477,15 @@ inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
   return MakeModuleProvider<TModule>();
 }
 
+// Clang does not allow a virtual function address to be a constexpr statement
+#if !defined(CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS)
+#if defined(__clang__)
+#define CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS
+#else
+#define CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS constexpr
+#endif
+#endif
+
 } // namespace winrt::Microsoft::ReactNative
 
 namespace React {
