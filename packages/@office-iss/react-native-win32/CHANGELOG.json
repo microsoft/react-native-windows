@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 07 Mar 2025 06:27:15 GMT",
+      "version": "0.0.0-canary.282",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.282",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ca717fc9756cae188bfb5b8c637c0b7874edb8f3",
+            "comment": "Refactor WebSocket resource class"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2025 06:24:57 GMT",
       "version": "0.0.0-canary.281",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.281",

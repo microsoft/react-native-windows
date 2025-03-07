@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 07 Mar 2025 06:27:16 GMT",
+      "version": "0.0.0-canary.119",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.119",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "cddb8348d7a97d610efb89c634fd5d72bbd2ec27",
+            "comment": "Fix build issue building component codegen using clang"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 31 Jan 2025 18:29:44 GMT",
       "version": "0.0.0-canary.118",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.118",

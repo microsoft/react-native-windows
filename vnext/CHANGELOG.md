@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 27 Feb 2025 06:33:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 07 Mar 2025 06:27:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.921
+
+Fri, 07 Mar 2025 06:27:16 GMT
+
+### Changes
+
+- Implement WinRTWebSocketResource2 stubs (julio.rocha@microsoft.com)
+- Fix tooltips in high dpi (30809111+acoates-ms@users.noreply.github.com)
+- Components do not lost hover state if pointer leaves window before it leaves the component (30809111+acoates-ms@users.noreply.github.com)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.258
+- Bump @react-native-windows/codegen to v0.0.0-canary.119
 
 ## 0.0.0-canary.920
 
