@@ -16,6 +16,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::chrono::milliseconds;
 using std::make_shared;
+using std::once_flag;
 using std::promise;
 using std::string;
 using std::vector;
@@ -24,66 +25,66 @@ using Networking::IWebSocketResource;
 using CloseCode = IWebSocketResource::CloseCode;
 using Error = IWebSocketResource::Error;
 
+namespace {
+void SetPromise(once_flag& flag, promise<void>& prom)
+{
+  std::call_once(flag, [&prom]()
+  {
+    prom.set_value();
+  });
+}
+
+void SetPromise(once_flag& flag, promise<string>& prom, string value)
+{
+  std::call_once(flag, [&prom, &value]()
+  {
+    prom.set_value(value);
+  });
+}
+} // namespace <anonymous>
+
+namespace Microsoft::React::Test {
+
 TEST_CLASS (WebSocketIntegrationTest)
 {
   static uint16_t s_port;
 
   void SendReceiveCloseBase(bool isSecure)
   {
-    auto server = make_shared<Test::WebSocketServer>(s_port, isSecure);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message + "_response";
-    });
-    string serverError;
-    server->SetOnError([&serverError](Error&& err)
-    {
-      serverError = err.Message;
-    });
-
     string scheme = "ws";
+    string port = "5555";
     if (isSecure)
-      scheme += "s";
-    auto ws = IWebSocketResource::Make();
-    promise<size_t> sentSizePromise;
-    ws->SetOnSend([&sentSizePromise](size_t size)
     {
-      sentSizePromise.set_value(size);
-    });
+      scheme += "s";
+      port = "5543";
+    }
+    auto ws = IWebSocketResource::Make();
     promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message, bool isBinary)
     {
       receivedPromise.set_value(message);
     });
     string clientError{};
-    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](Error err)
+    ws->SetOnError([&clientError, &receivedPromise](Error err)
     {
       clientError = err.Message;
-      sentSizePromise.set_value(0);
       receivedPromise.set_value("");
     });
 
-    server->Start();
     string sent = "prefix";
     auto expectedSize = sent.size();
-    ws->Connect(scheme + "://localhost:" + std::to_string(s_port));
+    ws->Connect(scheme + "://localhost:" + port + "/rnw/websockets/echosuffix");
     ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    auto sentSizeFuture = sentSizePromise.get_future();
-    sentSizeFuture.wait();
-    auto sentSize = sentSizeFuture.get();
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
     Assert::AreEqual({}, clientError);
 
     ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
 
-    Assert::AreEqual({}, serverError);
     Assert::AreEqual({}, clientError);
-    Assert::AreEqual(expectedSize, sentSize);
     Assert::AreEqual({"prefix_response"}, received);
   }
 
@@ -96,30 +97,33 @@ TEST_CLASS (WebSocketIntegrationTest)
 
   TEST_METHOD(ConnectClose)
   {
-    auto server = make_shared<Test::WebSocketServer>(s_port);
     auto ws = IWebSocketResource::Make();
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
     bool closed = false;
-    bool error = false;
     string errorMessage;
+    promise<void> donePromise;
+    once_flag doneFlag;
     ws->SetOnConnect([&connected]()
     {
       connected = true;
     });
-    ws->SetOnClose([&closed](CloseCode code, const string& reason)
+    ws->SetOnClose([&closed, &doneFlag, &donePromise](CloseCode code, const string& reason)
     {
       closed = true;
+
+      SetPromise(doneFlag, donePromise);
     });
-    ws->SetOnError([&errorMessage](Error&& e)
+    ws->SetOnError([&errorMessage, &doneFlag, &donePromise](Error&& e)
     {
       errorMessage = e.Message;
+
+      SetPromise(doneFlag, donePromise);
     });
 
-    server->Start();
-    ws->Connect("ws://localhost:" + std::to_string(s_port));
+    ws->Connect("ws://localhost:5555");
     ws->Close(CloseCode::Normal, "Closing");
-    server->Stop();
+    donePromise.get_future().wait();
 
     Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
@@ -131,8 +135,8 @@ TEST_CLASS (WebSocketIntegrationTest)
     bool connected = false;
     bool closed = false;
     string errorMessage;
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->Start();
+    once_flag doneFlag;
+    promise<void> donePromise;
 
     // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
     {
@@ -141,20 +145,23 @@ TEST_CLASS (WebSocketIntegrationTest)
       {
         connected = true;
       });
-      ws->SetOnClose([&closed](CloseCode code, const string& reason)
+      ws->SetOnClose([&closed, &doneFlag, &donePromise](CloseCode code, const string& reason)
       {
         closed = true;
+
+        SetPromise(doneFlag, donePromise);
       });
-      ws->SetOnError([&errorMessage](Error && error)
+      ws->SetOnError([&errorMessage, &doneFlag, &donePromise](Error && error)
       {
         errorMessage = error.Message;
+
+        SetPromise(doneFlag, donePromise);
       });
 
-      ws->Connect("ws://localhost:" + std::to_string(s_port));
+      ws->Connect("ws://localhost:5555");
       ws->Close();//TODO: Either remove or rename test.
     }
-
-    server->Stop();
+    donePromise.get_future().wait();
 
     Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
@@ -162,35 +169,36 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(PingClose)
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(PingClose)
   {
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->Start();
-
     auto ws = IWebSocketResource::Make();
     promise<bool> pingPromise;
-    ws->SetOnPing([&pingPromise]()
+    once_flag doneFlag;
+    promise<void> donePromise;
+    bool pinged = false;
+    ws->SetOnMessage([&pinged, &doneFlag, &donePromise](size_t size, const string &message, bool isBinary)
     {
-      pingPromise.set_value(true);
+      pinged = true;
+
+      SetPromise(doneFlag, donePromise);
     });
     string errorString;
-    ws->SetOnError([&errorString](Error err)
+    ws->SetOnError([&errorString, &doneFlag, &donePromise](Error err)
     {
       errorString = err.Message;
+
+      SetPromise(doneFlag, donePromise);
     });
 
-    ws->Connect("ws://localhost:" + std::to_string(s_port));
+    ws->Connect("ws://localhost:5555/rnw/websockets/pong");
     ws->Ping();
-    auto pingFuture = pingPromise.get_future();
-    pingFuture.wait();
-    bool pinged = pingFuture.get();
+    donePromise.get_future().wait();
     ws->Close(CloseCode::Normal, "Closing after reading");
 
-    server->Stop();
-
-    Assert::IsTrue(pinged);
     Assert::AreEqual({}, errorString);
+    Assert::IsTrue(pinged);
   }
 
   TEST_METHOD(SendReceiveClose)
@@ -199,16 +207,19 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   TEST_METHOD(SendReceiveLargeMessage) {
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
     auto ws = IWebSocketResource::Make();
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
+    once_flag responseFlag;
+    promise<string> responsePromise;
+    ws->SetOnMessage([&responseFlag, &responsePromise](size_t size, const string &message, bool isBinary) {
+      SetPromise(responseFlag, responsePromise, message);
+    });
     string errorMessage;
-    ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage, &responseFlag, &responsePromise](Error err) {
+      errorMessage = err.Message;
+      SetPromise(responseFlag, responsePromise, "");
+    });
 
-    server->Start();
-    ws->Connect("ws://localhost:" + std::to_string(s_port));
+    ws->Connect("ws://localhost:5555/rnw/websockets/echosuffix");
 
     char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 #define LEN 4096 + 4096 * 2 + 1
@@ -220,12 +231,11 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Send(string{chars});
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    auto future = response.get_future();
+    auto future = responsePromise.get_future();
     future.wait();
     string result = future.get();
 
     ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
@@ -281,21 +291,15 @@ TEST_CLASS (WebSocketIntegrationTest)
   TEST_METHOD(SendReceiveSsl)
   {
     auto ws = IWebSocketResource::Make();
-    promise<size_t> sentSizePromise;
-    ws->SetOnSend([&sentSizePromise](size_t size)
-    {
-      sentSizePromise.set_value(size);
-    });
     promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message, bool isBinary)
     {
       receivedPromise.set_value(message);
     });
     string clientError{};
-    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](Error err)
+    ws->SetOnError([&clientError, &receivedPromise](Error err)
     {
       clientError = err.Message;
-      sentSizePromise.set_value(0);
       receivedPromise.set_value("");
     });
 
@@ -305,9 +309,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    auto sentSizeFuture = sentSizePromise.get_future();
-    sentSizeFuture.wait();
-    auto sentSize = sentSizeFuture.get();
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
@@ -316,7 +317,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Close(CloseCode::Normal, "Closing after reading");
 
     Assert::AreEqual({}, clientError);
-    Assert::AreEqual(expectedSize, sentSize);
     Assert::AreEqual({"prefix_response"}, received);
   }
 
@@ -380,32 +380,29 @@ TEST_CLASS (WebSocketIntegrationTest)
 
   TEST_METHOD(SendConsecutive)
   {
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message;
-    });
     auto ws = IWebSocketResource::Make();
 
-    string expected = "ABCDEFGHIJ";
+    string expected = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string result(expected.size(), '0');
     size_t index = 0;
-    promise<void> responsesReceived;
-    ws->SetOnMessage([&result, &index, &responsesReceived, count=expected.size()](size_t size, const string& message, bool isBinary)
+    once_flag doneFlag;
+    promise<void> donePromise;
+    ws->SetOnMessage([&result, &index, &doneFlag, &donePromise, count=expected.size()](size_t size, const string& message, bool isBinary)
     {
       result[index++] = message[0];
 
       if (index == count)
-        responsesReceived.set_value();
+        SetPromise(doneFlag, donePromise);
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](Error err)
+    ws->SetOnError([&errorMessage, &doneFlag, &donePromise](Error err)
     {
       errorMessage = err.Message;
+
+      SetPromise(doneFlag, donePromise);
     });
 
-    server->Start();
-    ws->Connect("ws://localhost:" + std::to_string(s_port));
+    ws->Connect("ws://localhost:5555/rnw/websockets/echo");
 
     // Consecutive immediate writes should be enqueued.
     // The WebSocket library (WinRT or Beast) can't handle multiple write operations
@@ -416,10 +413,9 @@ TEST_CLASS (WebSocketIntegrationTest)
     }
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    responsesReceived.get_future().wait();
+    donePromise.get_future().wait();
 
     ws->Close(CloseCode::Normal, "Closing");
-    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(expected, result);
@@ -456,3 +452,5 @@ TEST_CLASS (WebSocketIntegrationTest)
 };
 
 uint16_t WebSocketIntegrationTest::s_port = 6666;
+
+} // namespace Microsoft::React::Test

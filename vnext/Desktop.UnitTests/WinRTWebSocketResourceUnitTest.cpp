@@ -15,10 +15,13 @@ using namespace winrt::Windows::Networking::Sockets;
 
 using Microsoft::React::Networking::IWebSocketResource;
 using Microsoft::React::Networking::WinRTWebSocketResource;
+using Microsoft::React::Networking::WinRTWebSocketResource2;
 using std::make_shared;
+using std::promise;
 using std::shared_ptr;
 using std::string;
 using winrt::event_token;
+using winrt::hresult_error;
 using winrt::param::hstring;
 
 using CertExceptions = std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>;
@@ -52,19 +55,20 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     auto imws{winrt::make<MockMessageWebSocket>()};
 
     // Set up mocks
+    auto callingQueue = Mso::DispatchQueue::MakeSerialQueue();
     auto mws{imws.as<MockMessageWebSocket>()};
     // TODO: Mock Control()
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
-    mws->Mocks.Close = [](uint16_t, const hstring &) {};
-    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
     rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
+
+    callingQueue.AwaitTermination();
 
     Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
@@ -76,36 +80,76 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectFails");
     bool connected = false;
     string errorMessage;
-    auto imws{winrt::make<MockMessageWebSocket>()};
+    promise<void> donePromise;
 
+    auto imws{winrt::make<MockMessageWebSocket>()};
     // Set up mocks
     auto mws{imws.as<MockMessageWebSocket>()};
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
-    mws->Mocks.Close = [](uint16_t, const hstring &) {};
-    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource2>(
+        std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
     rc->SetOnConnect([&connected]() { connected = true; });
-    rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
+    rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
+      errorMessage = error.Message;
+      donePromise.set_value();
+    });
 
     rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
+
+    donePromise.get_future().wait();
 
     Assert::AreEqual({"[0x80004005] Expected Failure"}, errorMessage);
     Assert::IsFalse(connected);
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(SetRequestHeaderFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SetRequestHeaderFails) {
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::SetRequestHeaderFails");
+    bool connected = false;
+    string errorMessage;
+
+    // Set up mocks
+    auto callingQueue{Mso::DispatchQueue::MakeSerialQueue()};
+    auto imws{winrt::make<MockMessageWebSocket>()};
+    auto mws{imws.as<MockMessageWebSocket>()};
+    mws->Mocks.SetRequestHeader = [callingQueue](const hstring &, const hstring &) {
+      winrt::throw_hresult(winrt::hresult_invalid_argument().code());
+    };
+    std::promise<void> donePromise;
+
+    // Test APIs
+    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
+    rc->SetOnConnect([&connected]() { connected = true; });
+    rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
+      errorMessage = error.Message;
+      donePromise.set_value();
+    });
+    rc->Connect(testUrl, {}, /*headers*/ {{L"k1", "v1"}});
+    rc->Close(CloseCode::Normal, {});
+
+    donePromise.get_future().wait();
+
+    Assert::AreEqual({"[0x80070057] The parameter is incorrect."}, errorMessage);
+    Assert::IsFalse(connected);
+  }
+
   TEST_METHOD(InternalSocketThrowsHResult) {
     Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::InternalSocketThrowsHResult");
-    shared_ptr<WinRTWebSocketResource> rc;
+    shared_ptr<WinRTWebSocketResource2> rc;
 
     auto lambda = [&rc]() mutable {
-      rc = make_shared<WinRTWebSocketResource>(
-          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, CertExceptions{});
+      rc = make_shared<WinRTWebSocketResource2>(
+          winrt::make<ThrowingMessageWebSocket>(),
+          MockDataWriter{},
+          CertExceptions{},
+          Mso::DispatchQueue::MakeSerialQueue());
     };
 
-    Assert::ExpectException<winrt::hresult_error>(lambda);
+    Assert::ExpectException<hresult_error>(lambda);
     Assert::IsTrue(nullptr == rc);
   }
 };
