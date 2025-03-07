@@ -1,6 +1,6 @@
 {
-  "type": "prerelease",
-  "comment": "Implement WinRTWebSocketResource2 stubs",
+  "type": "patch",
+  "comment": "Refactor WebSocket resource class (#14377)",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
