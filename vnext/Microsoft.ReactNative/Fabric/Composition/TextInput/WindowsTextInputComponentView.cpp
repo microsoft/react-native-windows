@@ -1311,7 +1311,7 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   m_pf.cbSize = sizeof(PARAFORMAT2);
   m_pf.dwMask = PFM_ALL;
 
-  auto& textAlign = windowsTextInputProps().textAlign;
+  auto &textAlign = windowsTextInputProps().textAlign;
 
   if (textAlign == "center") {
     m_pf.wAlignment = PFA_CENTER;
