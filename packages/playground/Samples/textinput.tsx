@@ -104,19 +104,19 @@ export default class Bootstrap extends React.Component<{}, any> {
           <TextInput
             style={styles.input}
             textAlign={'left'}
-            autoCapitalize='none'
+            autoCapitalize="none"
             placeholder={'Text aligned to the left'}
           />
           <TextInput
             style={styles.input}
             textAlign={'center'}
-            autoCapitalize='none'
+            autoCapitalize="none"
             placeholder={'Text aligned to the center'}
           />
           <TextInput
             style={styles.input}
             textAlign={'right'}
-            autoCapitalize='none'
+            autoCapitalize="none"
             placeholder={'Text aligned to the right'}
           />
           <TextInput
