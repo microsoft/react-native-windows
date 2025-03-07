@@ -12,7 +12,7 @@
         "type": "Direct",
         "requested": "[1.0.2792.45, )",
         "resolved": "1.0.2792.45",
-        "contentHash": "f5sc/vcAoTCTEW7Nqzp4galAuTRguZViw8ksn+Nx2uskEBPm0/ubzy6gVjvXS/P96jLS89C8T9I0hPc417xpNg=="
+        "contentHash": "KOlLJSq70OySfU8mdhWdh9iOyApazWsIb6CmSz+YTJ5MmwLcsCLMW0qemORo7Si3A7VhLDIH3jwpMhPxodfkuA=="
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
