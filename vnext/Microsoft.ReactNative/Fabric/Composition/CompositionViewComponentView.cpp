@@ -183,7 +183,7 @@ void ComponentView::updateProps(
     updateShadowProps(oldViewProps, newViewProps);
   }
   if (oldViewProps.tooltip != newViewProps.tooltip) {
-    if (!m_tooltipTracked && newViewProps.tooltip) {
+    if (!m_tooltipTracked && newViewProps.tooltip && !newViewProps.tooltip->empty()) {
       TooltipService::GetCurrent(m_reactContext.Properties())->StartTracking(*this);
       m_tooltipTracked = true;
     } else if (m_tooltipTracked && !newViewProps.tooltip) {
