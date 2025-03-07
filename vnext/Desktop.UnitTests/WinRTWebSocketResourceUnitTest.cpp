@@ -55,18 +55,20 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     auto imws{winrt::make<MockMessageWebSocket>()};
 
     // Set up mocks
+    auto callingQueue = Mso::DispatchQueue::MakeSerialQueue();
     auto mws{imws.as<MockMessageWebSocket>()};
     // TODO: Mock Control()
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(
-        std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
+    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
     rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
+
+    callingQueue.AwaitTermination();
 
     Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
