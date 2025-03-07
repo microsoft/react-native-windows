@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix build issue building component codegen using clang",
+  "comment": "Property updates switching between PlatformColors would no-op",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
