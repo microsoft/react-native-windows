@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Property updates switching between PlatformColors would no-op",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

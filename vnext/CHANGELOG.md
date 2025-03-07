@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 25 Feb 2025 22:07:38 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Mar 2025 20:21:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.37
+
+Fri, 07 Mar 2025 20:21:59 GMT
+
+### Patches
+
+- Fix tooltips in high dpi (30809111+acoates-ms@users.noreply.github.com)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+- Refactor WebSocket resource class (#14377) (julio.rocha@microsoft.com)
+- Property updates switching between PlatformColors would no-op (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.11
+- Bump @react-native-windows/codegen to v0.74.8
 
 ## 0.74.36
 

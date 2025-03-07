@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 07 Mar 2025 20:21:59 GMT",
+      "version": "0.74.37",
+      "tag": "react-native-windows_v0.74.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4ad063f22757b42a70478b2c145520e621fd2bf5",
+            "comment": "Fix tooltips in high dpi"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4ad063f22757b42a70478b2c145520e621fd2bf5",
+            "comment": "Fix build issue building component codegen using clang"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4dc7e13a5de99b95f76c058f43474dccded41ac5",
+            "comment": "Refactor WebSocket resource class (#14377)"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4ad063f22757b42a70478b2c145520e621fd2bf5",
+            "comment": "Property updates switching between PlatformColors would no-op"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.11",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.74.8",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Feb 2025 22:07:38 GMT",
       "version": "0.74.36",
       "tag": "react-native-windows_v0.74.36",
