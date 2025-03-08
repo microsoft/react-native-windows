@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 07 Mar 2025 06:27:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 08 Mar 2025 06:23:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.922
+
+Sat, 08 Mar 2025 06:23:48 GMT
+
+### Changes
+
+- Prevent race condition in ConnectSucceeds (julio.rocha@microsoft.com)
+- Property updates switching between PlatformColors would no-op (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.921
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 08 Mar 2025 06:23:48 GMT",
+      "version": "0.0.0-canary.922",
+      "tag": "react-native-windows_v0.0.0-canary.922",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1ebf0e8a935c8d98d07b3ec4c7576913140f629b",
+            "comment": "Prevent race condition in ConnectSucceeds"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "782335bf56506df35df9d61efbe4e3b2b3fea8af",
+            "comment": "Property updates switching between PlatformColors would no-op"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Mar 2025 06:27:16 GMT",
       "version": "0.0.0-canary.921",
       "tag": "react-native-windows_v0.0.0-canary.921",
