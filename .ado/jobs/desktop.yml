@@ -95,13 +95,40 @@ jobs:
             #12714 -  Disable for first deployment of test website.
             #         RNTesterIntegrationTests::WebSocket
             #         RNTesterIntegrationTests::WebSocketBlob
+            #         RNTesterIntegrationTests::WebSocketMultipleSend
+            #14217 - Reneable RNTesterIntegrationTests
+            #         RNTesterIntegrationTests::Dummy
+            #         RNTesterIntegrationTests::Fetch
+            #         RNTesterIntegrationTests::XHRSample
+            #         RNTesterIntegrationTests::Blob
+            #         RNTesterIntegrationTests::Logging
+            #      - CI agents show the following server-side errors (local runs succeed):
+            #         - [0x801901f4] Internal server error (500).
+            #         - [0x800710dd] The operation identifier is not valid.
+            #         WebSocketIntegrationTest::ConnectClose)&
+            #         WebSocketIntegrationTest::ConnectNoClose)&
+            #         WebSocketIntegrationTest::SendReceiveClose)&
+            #         WebSocketIntegrationTest::SendConsecutive)&
+            #         WebSocketIntegrationTest::SendReceiveLargeMessage)&
+            #         WebSocketIntegrationTest::SendReceiveSsl)&
             - name: Desktop.IntegrationTests.Filter
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
-                (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
+                (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
+                (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Fetch)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Logging)
             #6799 -
             #       HostFunctionTest              - Crashes under JSI/V8
             #       HostObjectProtoTest           - Crashes under JSI/V8
