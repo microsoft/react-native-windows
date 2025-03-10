@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Mar 2025 15:25:38 GMT",
+      "version": "0.75.14",
+      "tag": "react-native-windows_v0.75.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "30e4ed554d28f1d3d299868f7c62923604fbc0a6",
+            "comment": "Refactor WebSocket resource class (#14377)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 19:26:15 GMT",
       "version": "0.75.13",
       "tag": "react-native-windows_v0.75.13",

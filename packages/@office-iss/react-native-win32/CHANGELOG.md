@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 25 Nov 2024 16:28:03 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Mar 2025 15:25:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.6
+
+Mon, 10 Mar 2025 15:25:38 GMT
+
+### Patches
+
+- Refactor WebSocket resource class (#14377) (julio.rocha@microsoft.com)
 
 ## 0.75.5
 
