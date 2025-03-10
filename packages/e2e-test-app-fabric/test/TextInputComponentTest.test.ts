@@ -464,9 +464,7 @@ describe('TextInput Tests', () => {
   });
 
   test('TextInputs can select text on focus', async () => {
-    const component = await app.findElementByTestID(
-      'select-text-on-focus',
-    );
+    const component = await app.findElementByTestID('select-text-on-focus');
     await component.waitForDisplayed({timeout: 5000});
 
     await app.waitUntil(
@@ -484,7 +482,7 @@ describe('TextInput Tests', () => {
     // Check if the text is selected on focus.
     await component.click();
 
-    const dump = await dumpVisualTree(('select-text-on-focus'));
+    const dump = await dumpVisualTree('select-text-on-focus');
     expect(dump).toMatchSnapshot();
   });
 

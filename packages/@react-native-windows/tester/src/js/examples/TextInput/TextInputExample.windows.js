@@ -219,7 +219,9 @@ const examples: Array<RNTesterModuleExample> = [
             style={styles.singleLine}
             testID="select-text-on-focus"
           />
-          <Text>Do not select text on focus if clear text on focus is enabled:</Text>
+          <Text>
+            Do not select text on focus if clear text on focus is enabled:
+          </Text>
           <ExampleTextInput
             selectTextOnFocus={true}
             clearTextOnFocus={true}
