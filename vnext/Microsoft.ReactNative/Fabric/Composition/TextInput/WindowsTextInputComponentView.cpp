@@ -703,7 +703,8 @@ void WindowsTextInputComponentView::OnPointerReleased(
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
 
-    // Can't select text on focus at onGotFocus() as the selection is lost after processing the released pointer message.
+    // We should not select text at onGotFocus() as the selection is cleared after processing the released pointer
+    // message.
     if (msg == WM_LBUTTONUP) {
       handleSelectTextOnFocus();
     }
