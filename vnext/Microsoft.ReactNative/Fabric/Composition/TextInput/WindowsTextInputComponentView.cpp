@@ -702,6 +702,11 @@ void WindowsTextInputComponentView::OnPointerReleased(
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
+
+    // Can't select text on focus at onGotFocus() as the selection is lost after processing the released pointer message.
+    if (msg == WM_LBUTTONUP) {
+      handleSelectTextOnFocus();
+    }
   }
 }
 
@@ -928,6 +933,8 @@ void WindowsTextInputComponentView::onLostFocus(
     LRESULT lresult;
     DrawBlock db(*this);
     m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
+
+    handleSelectTextOnFocus();
   }
   m_caretVisual.IsVisible(false);
 }
@@ -1522,6 +1529,32 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
   if (newCapitalizationType == "characters") {
     winrt::check_hresult(m_textServices->TxSendMessage(
         EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
+  }
+}
+
+void WindowsTextInputComponentView::handleSelectTextOnFocus() noexcept {
+  // clearTextOnFocus takes precedence over selectTextOnFocus.
+  if (!windowsTextInputProps().clearTextOnFocus && windowsTextInputProps().selectTextOnFocus) {
+    if (m_hasFocus) {
+      // Get precise character count, as passing -1 in the LPARAM (indicating the end of the string) highlights an empty
+      // character at the end.
+      LRESULT textLength = 0;
+      GETTEXTLENGTHEX getTextLength{};
+      getTextLength.flags = GTL_NUMCHARS | GTL_PRECISE;
+      getTextLength.codepage = 1200; // Unicode
+
+      m_textServices->TxSendMessage(
+          EM_GETTEXTLENGTHEX, reinterpret_cast<WPARAM>(&getTextLength), static_cast<LPARAM>(0), &textLength);
+
+      LRESULT res;
+      winrt::check_hresult(
+          m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(0), static_cast<LPARAM>(textLength), &res));
+    } else {
+      // Clear the selection when the focus is lost.
+      LRESULT res;
+      winrt::check_hresult(
+          m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(-1), static_cast<LPARAM>(-1), &res));
+    }
   }
 }
 
