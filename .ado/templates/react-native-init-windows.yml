@@ -25,6 +25,9 @@ parameters:
   - name: useNuGet
     type: boolean
     default: false
+  - name: publishNuGet
+    type: boolean
+    default: false    
   - name: runWack
     type: boolean
     default: false
@@ -55,6 +58,15 @@ steps:
         slices:
           - platform: ${{ parameters.platform }}
             configuration: Release
+
+    - ${{ if eq(parameters.publishNuGet, true) }}:
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish Artifact: CliInitNuGet.${{parameters.platform}}.${{parameters.configuration}}"
+        # Do nothing if the artifact was already published. E.g. after rerunning a past successful job attempt
+        continueOnError: true
+        inputs:
+          artifactName: CliInitNuGet.${{parameters.platform}}.${{parameters.configuration}}
+          targetPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |

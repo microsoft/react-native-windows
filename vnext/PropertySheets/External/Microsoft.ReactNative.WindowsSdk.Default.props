@@ -31,7 +31,7 @@
 
     <!-- New Architecture projects have higher version requirements. -->
     <TargetPlatformVersion Condition="'$(RnwNewArch)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformVersion)', '10.0.22621.0'))">10.0.22621.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion Condition="'$(RnwNewArch)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformMinVersion)', '10.0.17763.0'))">10.0.17763.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion Condition="'$(RnwNewArch)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformMinVersion)', '10.0.17763.0'))">10.0.18362.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup>

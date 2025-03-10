@@ -16,12 +16,6 @@ try
         Write-Host Restoring $_.FullName with defaults
         & msbuild /t:Restore /p:RestoreForceEvaluate=true $_.FullName
     }
-
-    # Re-run solutions that we also build a Fabric variant
-    @("$RepoRoot\vnext\ReactWindows-Desktop.sln", "$RepoRoot\vnext\Microsoft.ReactNative.CppOnly.slnf") | Foreach {
-        Write-Host Restoring $_ with Fabric
-        & msbuild /t:Restore /p:RestoreForceEvaluate=true /p:RnwNewArch=true $_
-    }
 }
 finally
 {
