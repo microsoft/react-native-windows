@@ -268,19 +268,4 @@ TextDecorationLineStyle GetTextDecorationLineStyle(facebook::react::TextDecorati
   }
 }
 
-float GetScrollAmount(ScrollAmount amount) noexcept {
-  if (amount == ScrollAmount_LargeDecrement) {
-    return -100.0f;
-  } else if (amount == ScrollAmount_SmallDecrement) {
-    return -50.0f;
-  } else if (amount == ScrollAmount_NoAmount) {
-    return 0.0f;
-  } else if (amount == ScrollAmount_LargeIncrement) {
-    return 100.0f;
-  } else if (amount == ScrollAmount_SmallIncrement) {
-    return 50.0f;
-  }
-  return 0.0f;
-}
-
 } // namespace winrt::Microsoft::ReactNative::implementation
