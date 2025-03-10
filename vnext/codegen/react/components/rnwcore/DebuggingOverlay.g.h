@@ -169,7 +169,7 @@ void RegisterDebuggingOverlayNativeComponent(
           userData->UpdateEventEmitter(std::make_shared<DebuggingOverlayEventEmitter>(eventEmitter));
         });
 
-        if constexpr (&TUserData::FinalizeUpdate != &BaseDebuggingOverlay<TUserData>::FinalizeUpdate) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseDebuggingOverlay<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -177,7 +177,7 @@ void RegisterDebuggingOverlayNativeComponent(
           });
         } 
 
-        if constexpr (&TUserData::UpdateState != &BaseDebuggingOverlay<TUserData>::UpdateState) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseDebuggingOverlay<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -191,7 +191,7 @@ void RegisterDebuggingOverlayNativeComponent(
           userData->HandleCommand(view, args);
         });
 
-        if constexpr (&TUserData::MountChildComponentView != &BaseDebuggingOverlay<TUserData>::MountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseDebuggingOverlay<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -199,7 +199,7 @@ void RegisterDebuggingOverlayNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::UnmountChildComponentView != &BaseDebuggingOverlay<TUserData>::UnmountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseDebuggingOverlay<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -209,13 +209,13 @@ void RegisterDebuggingOverlayNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if constexpr (&TUserData::Initialize != &BaseDebuggingOverlay<TUserData>::Initialize) {
+          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseDebuggingOverlay<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if constexpr (&TUserData::CreateVisual != &BaseDebuggingOverlay<TUserData>::CreateVisual) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseDebuggingOverlay<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);

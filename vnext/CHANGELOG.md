@@ -1,8 +1,39 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 12 Feb 2025 01:18:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 08 Mar 2025 06:23:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.922
+
+Sat, 08 Mar 2025 06:23:48 GMT
+
+### Changes
+
+- Prevent race condition in ConnectSucceeds (julio.rocha@microsoft.com)
+- Property updates switching between PlatformColors would no-op (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.921
+
+Fri, 07 Mar 2025 06:27:16 GMT
+
+### Changes
+
+- Implement WinRTWebSocketResource2 stubs (julio.rocha@microsoft.com)
+- Fix tooltips in high dpi (30809111+acoates-ms@users.noreply.github.com)
+- Components do not lost hover state if pointer leaves window before it leaves the component (30809111+acoates-ms@users.noreply.github.com)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.258
+- Bump @react-native-windows/codegen to v0.0.0-canary.119
+
+## 0.0.0-canary.920
+
+Thu, 27 Feb 2025 06:33:21 GMT
+
+### Changes
+
+- Fix issue when calling arrange on an RN Island during load (30809111+acoates-ms@users.noreply.github.com)
+- Fix stale focus rects left in UI when last focusable component is removed (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.919
 
