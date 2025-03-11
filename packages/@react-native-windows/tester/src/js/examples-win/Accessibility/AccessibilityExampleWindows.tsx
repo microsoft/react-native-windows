@@ -475,7 +475,7 @@ class AccessibilityStateExamples extends React.Component {
           accessibilityValue={{
             text: this.state.viewValueText,
           }}
-          accessibilityRole="combobox"
+          role="combobox"
           testID="accessibilityValue-text"
           accessible
           aria-readonly>

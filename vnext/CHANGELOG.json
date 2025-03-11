@@ -2,6 +2,72 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 08 Mar 2025 06:23:48 GMT",
+      "version": "0.0.0-canary.922",
+      "tag": "react-native-windows_v0.0.0-canary.922",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1ebf0e8a935c8d98d07b3ec4c7576913140f629b",
+            "comment": "Prevent race condition in ConnectSucceeds"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "782335bf56506df35df9d61efbe4e3b2b3fea8af",
+            "comment": "Property updates switching between PlatformColors would no-op"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 07 Mar 2025 06:27:16 GMT",
+      "version": "0.0.0-canary.921",
+      "tag": "react-native-windows_v0.0.0-canary.921",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ca717fc9756cae188bfb5b8c637c0b7874edb8f3",
+            "comment": "Implement WinRTWebSocketResource2 stubs"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "222e66d138b82ba93b14c87b0df18ace5ded4a21",
+            "comment": "Fix tooltips in high dpi"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "46406568f191395cc34bce5492f59455991e7310",
+            "comment": "Components do not lost hover state if pointer leaves window before it leaves the component"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cddb8348d7a97d610efb89c634fd5d72bbd2ec27",
+            "comment": "Fix build issue building component codegen using clang"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.258",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.119",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2025 06:33:21 GMT",
       "version": "0.0.0-canary.920",
       "tag": "react-native-windows_v0.0.0-canary.920",
