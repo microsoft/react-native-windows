@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup Condition="'$(SolutionName)'=='ReactWindows-Desktop'">
-    <UseFabric>false</UseFabric>
+    <UseFabric>true</UseFabric>
     <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup>
