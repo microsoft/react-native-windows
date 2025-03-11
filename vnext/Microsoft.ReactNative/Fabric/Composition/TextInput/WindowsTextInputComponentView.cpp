@@ -165,6 +165,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the caret
   BOOL TxShowCaret(BOOL fShow) override {
+    // Only show the caret if we have focus
+    if (fShow && !m_outer->m_hasFocus) {
+      return false;
+    }
     m_outer->ShowCaret(m_outer->windowsTextInputProps().caretHidden ? false : fShow);
     return true;
   }
@@ -232,19 +236,25 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Establish a new cursor shape
   void TxSetCursor(HCURSOR hcur, BOOL fText) override {
-    assert(false);
+    m_outer->m_hcursor = hcur;
   }
 
   //@cmember Converts screen coordinates of a specified point to the client coordinates
   BOOL TxScreenToClient(LPPOINT lppt) override {
-    assert(false);
-    return {};
+    winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+    auto localpt = m_outer->ScreenToLocal(pt);
+    lppt->x = static_cast<LONG>(localpt.X);
+    lppt->y = static_cast<LONG>(localpt.Y);
+    return true;
   }
 
   //@cmember Converts the client coordinates of a specified point to screen coordinates
   BOOL TxClientToScreen(LPPOINT lppt) override {
-    assert(false);
-    return {};
+    winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+    auto screenpt = m_outer->LocalToScreen(pt);
+    lppt->x = static_cast<LONG>(screenpt.X);
+    lppt->y = static_cast<LONG>(screenpt.Y);
+    return true;
   }
 
   //@cmember Request host to activate text services
@@ -722,6 +732,9 @@ void WindowsTextInputComponentView::OnPointerMoved(
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
   }
+
+  m_textServices->OnTxSetCursor(
+      DVASPECT_CONTENT, -1, nullptr, nullptr, nullptr, nullptr, nullptr, ptContainer.x, ptContainer.y);
 }
 
 void WindowsTextInputComponentView::OnKeyDown(
@@ -909,6 +922,7 @@ void WindowsTextInputComponentView::UnmountChildComponentView(
 
 void WindowsTextInputComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  m_hasFocus = false;
   Super::onLostFocus(args);
   if (m_textServices) {
     LRESULT lresult;
@@ -920,6 +934,7 @@ void WindowsTextInputComponentView::onLostFocus(
 
 void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  m_hasFocus = true;
   Super::onGotFocus(args);
   if (m_textServices) {
     LRESULT lresult;
@@ -1206,7 +1221,7 @@ void WindowsTextInputComponentView::onMounted() noexcept {
   InternalFinalize();
 }
 
-std::optional<std::string> WindowsTextInputComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue() noexcept {
   return GetTextFromRichEdit();
 }
 
@@ -1465,6 +1480,10 @@ WindowsTextInputComponentView::createVisual() noexcept {
   m_caretVisual.IsVisible(false);
 
   return visual;
+}
+
+std::pair<facebook::react::Cursor, HCURSOR> WindowsTextInputComponentView::cursor() const noexcept {
+  return {viewProps()->cursor, m_hcursor};
 }
 
 void WindowsTextInputComponentView::onThemeChanged() noexcept {

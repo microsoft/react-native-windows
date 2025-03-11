@@ -29,6 +29,7 @@ type FilesOutput = Map<string, string>;
 const headerTemplate = `/*
  * This file is auto-generated from ::_COMPONENT_NAME_::NativeComponent spec file in flow / TypeScript.
  */
+// clang-format off
 #pragma once
 
 #include <JSValueComposition.h>
@@ -93,6 +94,13 @@ struct Base::_COMPONENT_NAME_:: {
     const winrt::com_ptr<::_COMPONENT_NAME_::Props> &newProps,
     const winrt::com_ptr<::_COMPONENT_NAME_::Props> &/*oldProps*/) noexcept {
     m_props = newProps;
+  }
+
+  // UpdateLayoutMetrics will only be called if this method is overridden
+  virtual void UpdateLayoutMetrics(
+    const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*newLayoutMetrics*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*oldLayoutMetrics*/) noexcept {
   }
 
   // UpdateState will only be called if this method is overridden
@@ -163,13 +171,20 @@ void Register::_COMPONENT_NAME_::NativeComponent(
             userData->UpdateProps(view, newProps ? newProps.as<::_COMPONENT_NAME_::Props>() : nullptr, oldProps ? oldProps.as<::_COMPONENT_NAME_::Props>() : nullptr);
         });
 
+        compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &newLayoutMetrics,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &oldLayoutMetrics) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            userData->UpdateLayoutMetrics(view, newLayoutMetrics, oldLayoutMetrics);
+        });
+
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
           userData->UpdateEventEmitter(std::make_shared<::_COMPONENT_NAME_::EventEmitter>(eventEmitter));
         });
 
-        if constexpr (&TUserData::FinalizeUpdate != &Base::_COMPONENT_NAME_::<TUserData>::FinalizeUpdate) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &Base::_COMPONENT_NAME_::<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -177,17 +192,17 @@ void Register::_COMPONENT_NAME_::NativeComponent(
           });
         } 
 
-        if constexpr (&TUserData::UpdateState != &Base::_COMPONENT_NAME_::<TUserData>::UpdateState) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &Base::_COMPONENT_NAME_::<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->member(view, newState);
+            userData->UpdateState(view, newState);
           });
         }
 
 ::_REGISTER_CUSTOM_COMMAND_HANDLER_::
 
-        if constexpr (&TUserData::MountChildComponentView != &Base::_COMPONENT_NAME_::<TUserData>::MountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &Base::_COMPONENT_NAME_::<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -195,7 +210,7 @@ void Register::_COMPONENT_NAME_::NativeComponent(
           });
         }
 
-        if constexpr (&TUserData::UnmountChildComponentView != &Base::_COMPONENT_NAME_::<TUserData>::UnmountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &Base::_COMPONENT_NAME_::<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -205,13 +220,13 @@ void Register::_COMPONENT_NAME_::NativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if constexpr (&TUserData::Initialize != &Base::_COMPONENT_NAME_::<TUserData>::Initialize) {
+          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &Base::_COMPONENT_NAME_::<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if constexpr (&TUserData::CreateVisual != &Base::_COMPONENT_NAME_::<TUserData>::CreateVisual) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &Base::_COMPONENT_NAME_::<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);

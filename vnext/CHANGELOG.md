@@ -1,8 +1,139 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 05 Nov 2024 21:10:08 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Mar 2025 20:21:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.37
+
+Fri, 07 Mar 2025 20:21:59 GMT
+
+### Patches
+
+- Fix tooltips in high dpi (30809111+acoates-ms@users.noreply.github.com)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+- Refactor WebSocket resource class (#14377) (julio.rocha@microsoft.com)
+- Property updates switching between PlatformColors would no-op (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.11
+- Bump @react-native-windows/codegen to v0.74.8
+
+## 0.74.36
+
+Tue, 25 Feb 2025 22:07:38 GMT
+
+### Patches
+
+- Fix issue when calling arrange on an RN Island during load (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.35
+
+Wed, 12 Feb 2025 00:30:57 GMT
+
+### Patches
+
+- Bump to using WASK 1.7 experimental 3 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.34
+
+Mon, 03 Feb 2025 19:38:48 GMT
+
+### Patches
+
+- Round Focus visuals by default, fix nudge rendering (30809111+acoates-ms@users.noreply.github.com)
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when currently focused element gets marked as enableFocusRing=false (30809111+acoates-ms@users.noreply.github.com)
+- Basic support for stitching the UIA tree for a ContentIslandComponentView's child (email not defined)
+- TurboModule spec checking should accept hstring for string arguments (30809111+acoates-ms@users.noreply.github.com)
+- Allow portals to have independent layout constraints and scale factor (30809111+acoates-ms@users.noreply.github.com)
+- add modal implementation with PopupWindowSiteBridge (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.10
+- Bump @react-native-windows/codegen to v0.74.7
+
+## 0.74.33
+
+Thu, 30 Jan 2025 17:39:49 GMT
+
+### Patches
+
+- Re-enable code-signing of NuGet packages (jthysell@microsoft.com)
+
+## 0.74.32
+
+Fri, 24 Jan 2025 03:29:02 GMT
+
+### Patches
+
+- RNIsland UIA fragment root should report parents fragment root. (acoates@microsoft.com)
+- Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2 (50150435+JesseCol@users.noreply.github.com)
+
+## 0.74.31
+
+Wed, 15 Jan 2025 01:23:17 GMT
+
+### Patches
+
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.30
+
+Tue, 14 Jan 2025 23:37:20 GMT
+
+### Patches
+
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.29
+
+Wed, 08 Jan 2025 20:05:17 GMT
+
+### Patches
+
+- std::aligned_storage is deprecated (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.28
+
+Tue, 07 Jan 2025 22:01:59 GMT
+
+### Patches
+
+- Fix calls to std::mutex::lock (vmorozov@microsoft.com)
+
+## 0.74.27
+
+Tue, 10 Dec 2024 04:12:33 GMT
+
+### Patches
+
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
+- implement onDismiss and remove titlebar from Modal (tatianakapos@microsoft.com)
+- Implement cursor property (30809111+acoates-ms@users.noreply.github.com)
+- Fix Modal position, disable input to parent hwnd, and add onShow (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.9
+- Bump @react-native-windows/codegen to v0.74.6
+
+## 0.74.26
+
+Wed, 13 Nov 2024 20:44:24 GMT
+
+### Patches
+
+- Fix focus visuals being obscured by adjacent views (53619745+rnbot@users.noreply.github.com)
+- TextInput caret becomes visible on non-focused TextInputs on resize (53619745+rnbot@users.noreply.github.com)
+
+## 0.74.25
+
+Wed, 06 Nov 2024 21:53:05 GMT
+
+### Patches
+
+- Update to the latest Microsoft.NETCore.UniversalWindowsPlatform (jthysell@microsoft.com)
+- Export MS.RN.Color ctor in Office dll (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.24
 

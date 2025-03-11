@@ -179,8 +179,11 @@ export type AccessibilityState = {
   disabled?: boolean,
   selected?: boolean,
   checked?: ?boolean | 'mixed',
-  busy?: boolean,
-  expanded?: boolean,
+  busy?: ?boolean,
+  expanded?: ?boolean,
+  readOnly?: ?boolean, // Windows
+  multiselectable?: ?boolean, // Windows
+  required?: ?boolean, // Windows
   ...
 };
 
