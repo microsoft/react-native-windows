@@ -1725,7 +1725,7 @@ class ScrollView extends React.Component<Props, State> {
         ? this.props.alwaysBounceVertical
         : !this.props.horizontal;
 
-    const accessible = this.props.accessible !== false;
+    const accessible = this.props.accessible !== false; // [Windows]
 
     const baseStyle = horizontal ? styles.baseHorizontal : styles.baseVertical;
 
@@ -1733,7 +1733,7 @@ class ScrollView extends React.Component<Props, State> {
       this.props;
     const props = {
       ...otherProps,
-      accessible,
+      accessible, // [Windows]
       alwaysBounceHorizontal,
       alwaysBounceVertical,
       style: StyleSheet.compose(baseStyle, this.props.style),

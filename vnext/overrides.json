@@ -328,8 +328,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "eb392989a1ca57ffd2c583eab45c939c510936fd",
-      "issue": 0
+      "baseHash": "eb392989a1ca57ffd2c583eab45c939c510936fd"
     },
     {
       "type": "derived",
