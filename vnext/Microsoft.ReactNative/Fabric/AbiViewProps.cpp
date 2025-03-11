@@ -77,14 +77,12 @@ winrt::Microsoft::ReactNative::Color Color::ReadValue(
   switch (reader.ValueType()) {
     case JSValueType::Int64: {
       auto argb = reader.GetInt64();
-      return winrt::make<Color>(facebook::react::Color{
-          /*m_isDefined*/ true,
-          /*color*/
-          {static_cast<uint8_t>((argb >> 24) & 0xFF),
-           static_cast<uint8_t>((argb >> 16) & 0xFF),
-           static_cast<uint8_t>((argb >> 8) & 0xFF),
-           static_cast<uint8_t>(argb & 0xFF)},
-          {}});
+      return winrt::make<Color>(facebook::react::Color{/*color*/
+                                                       {static_cast<uint8_t>((argb >> 24) & 0xFF),
+                                                        static_cast<uint8_t>((argb >> 16) & 0xFF),
+                                                        static_cast<uint8_t>((argb >> 8) & 0xFF),
+                                                        static_cast<uint8_t>(argb & 0xFF)},
+                                                       {}});
     }
     case JSValueType::Object: {
       std::vector<std::string> platformColors;
@@ -96,10 +94,10 @@ winrt::Microsoft::ReactNative::Color Color::ReadValue(
           SkipValue<JSValue>(reader); // Skip this property
         }
       }
-      return winrt::make<Color>(facebook::react::Color{/*m_isDefined*/ true, /*color*/ {}, std::move(platformColors)});
+      return winrt::make<Color>(facebook::react::Color{/*color*/ {}, std::move(platformColors)});
     }
     default:
-      return winrt::make<Color>(facebook::react::Color{/*m_isDefined*/ false, /*color*/ {0, 0, 0, 0}, {}});
+      return winrt::make<Color>(facebook::react::Color{/*color*/ {0, 0, 0, 0}, {}});
   }
 }
 

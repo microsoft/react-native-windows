@@ -67,7 +67,7 @@ struct WindowsTextInputComponentView
                                &args) noexcept override;
   void onMounted() noexcept override;
 
-  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
 
@@ -77,6 +77,8 @@ struct WindowsTextInputComponentView
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
+
+  std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept override;
 
  private:
   struct DrawBlock {
@@ -128,10 +130,12 @@ struct WindowsTextInputComponentView
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_drawing{false};
+  bool m_hasFocus{false};
   bool m_clearTextOnSubmit{false};
   bool m_multiline{false};
   DWORD m_propBitsMask{0};
   DWORD m_propBits{0};
+  HCURSOR m_hcursor{nullptr};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 

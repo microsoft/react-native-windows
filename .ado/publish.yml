@@ -226,13 +226,13 @@ extends:
           - template: .ado/templates/configure-git.yml@self
 
           - script: |
-              echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
-            displayName: Enable No-Publish
+              echo "##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish"
+            displayName: Enable No-Publish (npm)
             condition: ${{ parameters.skipNpmPublish }}
 
           - script: |
-              echo ##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push
-            displayName: Enable No-Publish
+              echo "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
+            displayName: Enable No-Publish (git)
             condition: ${{ parameters.skipGitPush }}
 
           - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
@@ -459,7 +459,7 @@ extends:
               packMicrosoftReactNativeManaged: true
               packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -485,7 +485,7 @@ extends:
               # packMicrosoftReactNativeManaged: true
               # packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -508,7 +508,7 @@ extends:
               nugetroot: $(System.DefaultWorkingDirectory)\Desktop
               packDesktop: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -531,7 +531,7 @@ extends:
               nugetroot: $(System.DefaultWorkingDirectory)\Desktop
               packDesktop: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release

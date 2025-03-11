@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #include <Fabric/AbiComponentDescriptor.h>
-#include <Fabric/AbiViewComponentDescriptor.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/core/ReactPrimitives.h>
 #include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
@@ -12,10 +11,12 @@
 
 namespace winrt::Microsoft::ReactNative::Composition {
 
-struct ReactCompositionViewComponentBuilder : winrt::implements<
-                                                  ReactCompositionViewComponentBuilder,
-                                                  IReactViewComponentBuilder,
-                                                  Composition::IReactCompositionViewComponentBuilder> {
+struct ReactCompositionViewComponentBuilder
+    : winrt::implements<
+          ReactCompositionViewComponentBuilder,
+          IReactViewComponentBuilder,
+          Composition::IReactCompositionViewComponentBuilder,
+          Composition::Experimental::IReactCompositionViewComponentInternalBuilder> {
   ReactCompositionViewComponentBuilder() noexcept;
 
  public: // IReactViewComponentBuilder
@@ -42,8 +43,13 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
   void SetContentIslandComponentViewInitializer(const ComponentIslandComponentViewInitializer &initializer) noexcept;
+  void SetPortalComponentViewInitializer(const PortalComponentViewInitializer &initializer) noexcept;
   void SetCreateVisualHandler(CreateVisualDelegate impl) noexcept;
   void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
+  void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl) noexcept;
+  void SetIVisualToMountChildrenIntoHandler(
+      winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate impl) noexcept;
+  void SetUpdateLayoutMetricsHandler(UpdateLayoutMetricsDelegate impl) noexcept;
 
  public:
   IComponentProps CreateProps(ViewProps props, const IComponentProps &cloneFrom) noexcept;
@@ -60,6 +66,18 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
       facebook::react::Tag tag,
       const Experimental::ICompositionContext &context) noexcept;
 
+  const UpdateFinalizerDelegate &FinalizeUpdateHandler() const noexcept;
+  const HandleCommandDelegate &CustomCommandHandler() const noexcept;
+  const winrt::Microsoft::ReactNative::UpdatePropsDelegate &UpdatePropsHandler() const noexcept;
+  const winrt::Microsoft::ReactNative::UpdateStateDelegate &UpdateStateHandler() const noexcept;
+  const UpdateEventEmitterDelegate &UpdateEventEmitterHandler() const noexcept;
+  const MountChildComponentViewDelegate &MountChildComponentViewHandler() const noexcept;
+  const UnmountChildComponentViewDelegate &UnmountChildComponentViewHandler() const noexcept;
+  const UpdateLayoutMetricsDelegate &UpdateLayoutMetricsHandler() const noexcept;
+  const CreateVisualDelegate &CreateVisualHandler() const noexcept;
+  const winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate &
+  VisualToMountChildrenIntoHandler() const noexcept;
+
  private:
   void InitializeComponentView(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
 
@@ -74,7 +92,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
       const IReactContext &reactContext,
       int32_t tag,
       const Experimental::ICompositionContext &context,
-      ComponentViewFeatures features)>
+      ComponentViewFeatures features,
+      ReactCompositionViewComponentBuilder &builder)>
       m_fnCreateView;
   std::function<facebook::react::ComponentDescriptorConstructor *()> m_descriptorConstructorFactory;
   winrt::Microsoft::ReactNative::HandleCommandDelegate m_customCommandHandler;
@@ -86,6 +105,9 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   winrt::Microsoft::ReactNative::UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler;
 
   winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate m_createVisualHandler;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate
+      m_visualToMountChildrenIntoHandler;
+  UpdateLayoutMetricsDelegate m_updateLayoutMetricsHandler;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition

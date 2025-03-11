@@ -371,6 +371,26 @@ constexpr bool MatchInputArg<std::string, std::wstring>() noexcept {
   return true;
 }
 
+template <>
+constexpr bool MatchInputArg<std::string, winrt::hstring>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<winrt::hstring, std::string>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<std::wstring, winrt::hstring>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<winrt::hstring, std::wstring>() noexcept {
+  return true;
+}
+
 template <class TResult, class TInputArgs, class TOutputCallbacks, class TOutputPromises>
 struct MethodSignature {
   using Result = TResult;
@@ -1339,6 +1359,15 @@ inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
       "TModule::ModuleSpec must exist and it specifies the specification for this module.");
   return MakeModuleProvider<TModule>();
 }
+
+// Clang does not allow a virtual function address to be a constexpr statement
+#if !defined(CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS)
+#if defined(__clang__)
+#define CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS
+#else
+#define CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS constexpr
+#endif
+#endif
 
 } // namespace winrt::Microsoft::ReactNative
 
