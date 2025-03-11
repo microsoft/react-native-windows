@@ -77,7 +77,7 @@ Copy-Item -Force -Path $NodeApiJsiRoot\src\NodeApiJsiRuntime.h -Destination $Tar
 
 # Microsoft.ReactNative.CXX project TurboModule files
 New-Item -ItemType Directory -Path $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon -Force
-New-Item -ItemType Directory -Path $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\react\bridging -Force
+New-Item -ItemType Directory -Path $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Array.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
