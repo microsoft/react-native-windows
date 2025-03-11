@@ -10,16 +10,14 @@
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
-import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
-import {useState} from 'react';
 import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
 
 function ModalOnShowOnDismiss(): React.Node {
-  const [modalShowComponent, setModalShowComponent] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [onShowCount, setOnShowCount] = useState(0);
-  const [onDismissCount, setOnDismissCount] = useState(0);
+  const [modalShowComponent, setModalShowComponent] = React.useState(true);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [onShowCount, setOnShowCount] = React.useState(0);
+  const [onDismissCount, setOnDismissCount] = React.useState(0);
 
   return (
     <View style={styles.container}>
@@ -29,10 +27,10 @@ function ModalOnShowOnDismiss(): React.Node {
           transparent={true}
           visible={modalVisible}
           onShow={() => {
-            setOnShowCount(showCount => showCount + 1);
+            setOnShowCount(onShowCount + 1);
           }}
           onDismiss={() => {
-            setOnDismissCount(dismissCount => dismissCount + 1);
+            setOnDismissCount(onDismissCount + 1);
           }}
           onRequestClose={() => {
             setModalVisible(false);
@@ -65,12 +63,10 @@ function ModalOnShowOnDismiss(): React.Node {
           </View>
         </Modal>
       )}
-      <RNTesterText testID="on-show-count">
-        onShow is called {onShowCount} times
-      </RNTesterText>
-      <RNTesterText testID="on-dismiss-count">
+      <Text testID="on-show-count">onShow is called {onShowCount} times</Text>
+      <Text testID="on-dismiss-count">
         onDismiss is called {onDismissCount} times
-      </RNTesterText>
+      </Text>
       <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => {
@@ -92,7 +88,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   centeredView: {
-    // flex: 1, // [Windows] - This will cause the modal to stretch to be as tall as the availiable space given to it.
+    // flex: 1, // [Windows]
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -101,6 +97,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',

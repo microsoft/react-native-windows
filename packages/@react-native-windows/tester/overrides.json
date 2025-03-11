@@ -45,7 +45,7 @@
       "type": "patch",
       "file": "src/js/examples/Modal/ModalOnShow.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalOnShow.js",
-      "baseHash": "911507abcf9172b5fdd1bb68faaf02562df704d4"
+      "baseHash": "5098723f16d232ef3c5971a6f153522f42f87f61"
     },
     {
       "type": "patch",
