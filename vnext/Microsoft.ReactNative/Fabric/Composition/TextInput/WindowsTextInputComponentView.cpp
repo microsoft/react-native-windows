@@ -1313,9 +1313,9 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
 
   auto &textAlign = windowsTextInputProps().textAlign;
 
-  if (textAlign == "center") {
+  if (textAlign == facebook::react::TextAlignment::Center) {
     m_pf.wAlignment = PFA_CENTER;
-  } else if (textAlign == "right") {
+  } else if (textAlign == facebook::react::TextAlignment::Right) {
     m_pf.wAlignment = PFA_RIGHT;
   } else {
     m_pf.wAlignment = PFA_LEFT;

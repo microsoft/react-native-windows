@@ -84,6 +84,24 @@ static inline void fromRawValue(
   }
 }
 
+static inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    facebook::react::TextAlignment &textAlignment) {
+  textAlignment = facebook::react::TextAlignment::Left;
+
+  if (value.hasValue()) {
+    std::string rawTextAlign;
+    fromRawValue(context, value, rawTextAlign);
+
+    if (rawTextAlign == "center") {
+      textAlignment = facebook::react::TextAlignment::Center;
+    } else if (rawTextAlign == "right") {
+      textAlignment = facebook::react::TextAlignment::Right;
+    }
+  }
+}
+
 class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
  public:
   WindowsTextInputProps() = default;
@@ -118,7 +136,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   bool clearTextOnSubmit{false};
   std::vector<CompWindowsTextInputSubmitKeyEventsStruct> submitKeyEvents{};
   bool autoFocus{false};
-  std::string textAlign{};
+  facebook::react::TextAlignment textAlign{};
 };
 
 } // namespace facebook::react
