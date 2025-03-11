@@ -29,7 +29,6 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
        presentationStyle = cloneFromProps->presentationStyle;
        transparent = cloneFromProps->transparent;
        statusBarTranslucent = cloneFromProps->statusBarTranslucent;
-       navigationBarTranslucent = cloneFromProps->navigationBarTranslucent;
        hardwareAccelerated = cloneFromProps->hardwareAccelerated;
        visible = cloneFromProps->visible;
        animated = cloneFromProps->animated;
@@ -53,9 +52,6 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
 
   REACT_FIELD(statusBarTranslucent)
   std::optional<bool> statusBarTranslucent{};
-
-  REACT_FIELD(navigationBarTranslucent)
-  std::optional<bool> navigationBarTranslucent{};
 
   REACT_FIELD(hardwareAccelerated)
   std::optional<bool> hardwareAccelerated{};
