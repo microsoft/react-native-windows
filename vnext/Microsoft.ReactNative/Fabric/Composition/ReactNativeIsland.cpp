@@ -979,10 +979,10 @@ ReactNativeIsland::GetComponentView() noexcept {
 
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(
-        static_cast<facebook::react::SurfaceId>(m_rootTag));
-    return rootComponentViewDescriptor.view
-        .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    if (auto view = fabricuiManager->GetViewRegistry().findComponentViewWithTag(
+            static_cast<facebook::react::SurfaceId>(m_rootTag))) {
+      return view.as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    }
   }
   return nullptr;
 }

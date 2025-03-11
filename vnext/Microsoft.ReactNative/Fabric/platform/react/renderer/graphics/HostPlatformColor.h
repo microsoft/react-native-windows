@@ -38,7 +38,9 @@ struct Color {
 };
 
 namespace HostPlatformColor {
-static const facebook::react::Color UndefinedColor{{0, 0, 0, 0} /*Black*/, {} /*Empty PlatformColors*/};
+static const facebook::react::Color UndefinedColor{
+    {0, 0, 0, 0} /*Black*/,
+    {"__undefinedColor"} /*Empty PlatformColors*/};
 } // namespace HostPlatformColor
 
 inline Color hostPlatformColorFromComponents(ColorComponents components) {
