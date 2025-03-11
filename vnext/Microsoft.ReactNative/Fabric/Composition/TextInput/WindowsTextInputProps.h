@@ -84,10 +84,8 @@ static inline void fromRawValue(
   }
 }
 
-static inline void fromRawValue(
-    const PropsParserContext &context,
-    const RawValue &value,
-    facebook::react::TextAlignment &textAlignment) {
+static inline void
+fromRawValue(const PropsParserContext &context, const RawValue &value, facebook::react::TextAlignment &textAlignment) {
   textAlignment = facebook::react::TextAlignment::Left;
 
   if (value.hasValue()) {
