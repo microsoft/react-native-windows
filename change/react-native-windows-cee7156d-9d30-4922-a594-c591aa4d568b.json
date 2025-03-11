@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Only build OfficeReact.Win32 with UseFabric enabled",
   "packageName": "react-native-windows",
   "email": "jthysell@microsoft.com",

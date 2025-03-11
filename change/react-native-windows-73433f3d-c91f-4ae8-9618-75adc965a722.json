@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Remove Paper-only code from Fabric builds of Microsoft.ReactNative",
   "packageName": "react-native-windows",
   "email": "jthysell@microsoft.com",
