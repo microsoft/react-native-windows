@@ -639,7 +639,7 @@ exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-country",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1002,12 +1002,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 33",
+        "Size": "916, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 33",
+            "Size": "916, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1066,12 +1066,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
       },
       {
         "Offset": "0, 31, 0",
-        "Size": "916, 32",
+        "Size": "916, 33",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 32",
+            "Size": "916, 33",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1679,7 +1679,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1907,7 +1907,7 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
   "Visual Tree": {
     "Comment": "textinput-padding",
     "Offset": "0, 0, 0",
-    "Size": "916, 29",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2915,7 +2915,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
   "Visual Tree": {
     "Comment": "textinput-return-go",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3227,7 +3227,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
   "Visual Tree": {
     "Comment": "textinput-return-search",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5814,7 +5814,7 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
   "Visual Tree": {
     "Comment": "textinput-searchbox",
     "Offset": "0, 0, 0",
-    "Size": "916, 31",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
