@@ -8,18 +8,17 @@
     <RnwNewArch Condition="'$(RnwNewArch)'==''">false</RnwNewArch>
 
     <_rnwFolder>$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native</_rnwFolder>
-    <_rnwArch Condition="'$(RnwNewArch)'=='true'">newarch</_rnwArch>
-    <_rnwArch Condition="'$(_rnwArch)'==''">oldarch</_rnwArch>
+    <_rnwArch Condition="'$(RnwNewArch)'!='true'">-old</_rnwArch>
   </PropertyGroup>
   
   <ItemGroup>
-    <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\$(_rnwArch)\Microsoft.ReactNative.winmd" Private="false">
+    <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0$(_rnwArch)\Microsoft.ReactNative.winmd" Private="false">
       <Implementation>Microsoft.ReactNative.dll</Implementation>
     </Reference>
     
-    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)\$(_rnwArch)\Microsoft.ReactNative.dll')" Include="$(_rnwFolder)\$(_rnwArch)\Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)\$(_rnwArch)\Microsoft.ReactNative.pri')" Include="$(_rnwFolder)\$(_rnwArch)\Microsoft.ReactNative.pri" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug'" Include="$(_rnwFolder)\$(_rnwArch)\**\*.xbf" />
+    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)$(_rnwArch)\Microsoft.ReactNative.dll')" Include="$(_rnwFolder)$(_rnwArch)\Microsoft.ReactNative.dll" />
+    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)$(_rnwArch)\Microsoft.ReactNative.pri')" Include="$(_rnwFolder)$(_rnwArch)\Microsoft.ReactNative.pri" />
+    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug'" Include="$(_rnwFolder)$(_rnwArch)\**\*.xbf" />
 
   </ItemGroup>
 
