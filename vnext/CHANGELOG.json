@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Mar 2025 05:22:51 GMT",
+      "version": "0.0.0-canary.923",
+      "tag": "react-native-windows_v0.0.0-canary.923",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "74a161e31efb70fa20c39fd3d51590fb6fd88401",
+            "comment": "Add Support for Role Prop"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7dea848e43d2606087e5855c0ded29d4c76d93a0",
+            "comment": "Fix bool operator on transparent colors returning false"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 08 Mar 2025 06:23:48 GMT",
       "version": "0.0.0-canary.922",
       "tag": "react-native-windows_v0.0.0-canary.922",
