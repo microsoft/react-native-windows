@@ -363,6 +363,11 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL isSelected;
   BOOL multipleSelection;
   BOOL selectionRequired;
+<<<<<<< HEAD
+=======
+  BSTR text = nullptr;
+  BOOL horizontallyScrollable;
+>>>>>>> 70823b2f70 ([Fabric] Add Support for ScrollProvider (#14411))
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;
@@ -451,6 +456,34 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     selectionPattern->Release();
   }
 
+<<<<<<< HEAD
+=======
+  // Dump ITextRangeProvider Information
+  winrt::com_ptr<ITextProvider> textPattern;
+  hr = pTarget->GetCurrentPattern(UIA_TextPatternId, reinterpret_cast<IUnknown **>(textPattern.put()));
+  if (SUCCEEDED(hr) && textPattern) {
+    winrt::com_ptr<ITextRangeProvider> textRangePattern;
+    hr = textPattern->get_DocumentRange(textRangePattern.put());
+    if (SUCCEEDED(hr) && textRangePattern) {
+      textRangePattern->GetText(20, &text);
+      if (SUCCEEDED(hr)) {
+        InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
+      }
+    }
+  }
+
+  // Dump IScrollProvider Information
+  winrt::com_ptr<IScrollProvider> scrollPattern;
+  hr = pTarget->GetCurrentPattern(UIA_ScrollPatternId, reinterpret_cast<IUnknown **>(scrollPattern.put()));
+  if (SUCCEEDED(hr) && scrollPattern) {
+    hr = scrollPattern->get_HorizontallyScrollable(&horizontallyScrollable);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ScrollPattern.HorizontallyScrollable", horizontallyScrollable, false);
+    }
+  }
+
+  ::SysFreeString(text);
+>>>>>>> 70823b2f70 ([Fabric] Add Support for ScrollProvider (#14411))
   ::SysFreeString(value);
 }
 
