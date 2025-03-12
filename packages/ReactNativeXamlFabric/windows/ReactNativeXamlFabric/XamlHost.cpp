@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 #include "pch.h"
 
-#include "XamlHost.h"
 #include "FabricXamlControl.h"
 #include "XamlApplication.h"
+#include "XamlHost.h"
 
 #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
 
@@ -18,28 +18,26 @@ namespace winrt::ReactNativeXamlFabric {
 // Later, we'll expose this through react-native-xaml.
 
 struct XamlHostComponentView : public winrt::implements<XamlHostComponentView, winrt::IInspectable>,
-                                   Codegen::BaseXamlHost<XamlHostComponentView> {
+                               Codegen::BaseXamlHost<XamlHostComponentView> {
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-      
-        winrt::ReactNativeXamlFabric::implementation::XamlApplication::EnsureCreated();
-      
+    winrt::ReactNativeXamlFabric::implementation::XamlApplication::EnsureCreated();
+
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
-    //m_xamlIsland.Content(m_XamlHost);
+    // m_xamlIsland.Content(m_XamlHost);
     islandView.Connect(m_xamlIsland.ContentIsland());
-   
   }
 
   void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
-      const winrt::Microsoft::ReactNative::MountChildComponentViewArgs & args) noexcept override {
-        // Add the xaml child to the m_xamlIsland here.
-        auto xamlControl = args.Child().UserData().as<XamlControlComponentView>();
-        if (xamlControl) {
-          auto xamlElement = xamlControl->GetXamlElement();
-          m_xamlIsland.Content(xamlElement);
-        }
-      }
+      const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept override {
+    // Add the xaml child to the m_xamlIsland here.
+    auto xamlControl = args.Child().UserData().as<XamlControlComponentView>();
+    if (xamlControl) {
+      auto xamlElement = xamlControl->GetXamlElement();
+      m_xamlIsland.Content(xamlElement);
+    }
+  }
 
  private:
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
@@ -60,6 +58,5 @@ void RegisterXamlHostComponentView(winrt::Microsoft::ReactNative::IReactPackageB
             });
       });
 }
-
 
 #endif // defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)

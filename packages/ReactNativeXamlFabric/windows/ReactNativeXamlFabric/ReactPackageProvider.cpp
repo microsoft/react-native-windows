@@ -15,11 +15,9 @@ static_assert(false, "This module requires RNW_NEW_ARCH and USE_EXPERIMENTAL_WIN
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::ReactNativeXamlFabric::implementation
-{
+namespace winrt::ReactNativeXamlFabric::implementation {
 
-void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept
-{
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder, true);
 
   RegisterXamlHostComponentView(packageBuilder);

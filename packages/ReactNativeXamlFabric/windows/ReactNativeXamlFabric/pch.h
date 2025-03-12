@@ -17,9 +17,9 @@
 #include <unknwn.h>
 
 // WinRT Header Files
-#include <winrt/base.h>
 #include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
+#include <winrt/base.h>
 
 // C RunTime Header Files
 #include <malloc.h>

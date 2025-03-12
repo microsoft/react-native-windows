@@ -2,8 +2,7 @@
 
 #include "ReactNativeXamlFabric.h"
 
-namespace winrt::ReactNativeXamlFabric
-{
+namespace winrt::ReactNativeXamlFabric {
 
 // See https://microsoft.github.io/react-native-windows/docs/native-modules for details on writing native modules
 

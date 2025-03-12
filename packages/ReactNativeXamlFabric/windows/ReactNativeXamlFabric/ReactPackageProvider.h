@@ -4,11 +4,9 @@
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::ReactNativeXamlFabric::implementation
-{
+namespace winrt::ReactNativeXamlFabric::implementation {
 
-struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
-{
+struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
   ReactPackageProvider() = default;
 
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
@@ -16,8 +14,7 @@ struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
 
 } // namespace winrt::ReactNativeXamlFabric::implementation
 
-namespace winrt::ReactNativeXamlFabric::factory_implementation
-{
+namespace winrt::ReactNativeXamlFabric::factory_implementation {
 
 struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
 

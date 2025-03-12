@@ -4,20 +4,17 @@
 #include "resource.h"
 
 #if __has_include("codegen/NativeReactNativeXamlFabricDataTypes.g.h")
-  #include "codegen/NativeReactNativeXamlFabricDataTypes.g.h"
+#include "codegen/NativeReactNativeXamlFabricDataTypes.g.h"
 #endif
-//#include "codegen/NativeReactNativeXamlFabricSpec.g.h"
+// #include "codegen/NativeReactNativeXamlFabricSpec.g.h"
 
 #include "NativeModules.h"
 
-namespace winrt::ReactNativeXamlFabric
-{
-
+namespace winrt::ReactNativeXamlFabric {
 
 REACT_MODULE(ReactNativeXamlFabric)
-struct ReactNativeXamlFabric
-{
-  //using ModuleSpec = ReactNativeXamlFabricCodegen::ReactNativeXamlFabricSpec;
+struct ReactNativeXamlFabric {
+  // using ModuleSpec = ReactNativeXamlFabricCodegen::ReactNativeXamlFabricSpec;
 
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
@@ -25,7 +22,7 @@ struct ReactNativeXamlFabric
   REACT_SYNC_METHOD(multiply)
   double multiply(double a, double b) noexcept;
 
-private:
+ private:
   React::ReactContext m_context;
 };
 
