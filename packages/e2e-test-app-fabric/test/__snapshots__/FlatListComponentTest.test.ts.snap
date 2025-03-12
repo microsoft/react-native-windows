@@ -479,8 +479,8 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "flat_list",
-    "ControlType": 50014,
-    "LocalizedControlType": "scroll bar",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
     "__Children": [
       {
         "AutomationId": "Pizza",
@@ -1247,8 +1247,8 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "flat_list",
-    "ControlType": 50014,
-    "LocalizedControlType": "scroll bar",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
     "__Children": [
       {
         "AutomationId": "Pizza",
@@ -2015,8 +2015,8 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "flat_list",
-    "ControlType": 50014,
-    "LocalizedControlType": "scroll bar",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
     "__Children": [
       {
         "AutomationId": "Pizza",
@@ -3243,8 +3243,8 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "flatlist-sticky",
-    "ControlType": 50014,
-    "LocalizedControlType": "scroll bar",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
     "__Children": [
       {
         "AutomationId": "",
@@ -3906,8 +3906,8 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "flatlist-nested",
-    "ControlType": 50014,
-    "LocalizedControlType": "scroll bar",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
     "__Children": [
       {
         "AutomationId": "",
@@ -4839,8 +4839,8 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "flat_list",
-    "ControlType": 50014,
-    "LocalizedControlType": "scroll bar",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
     "__Children": [
       {
         "AutomationId": "Pizza",
@@ -5607,8 +5607,8 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "flat_list",
-    "ControlType": 50014,
-    "LocalizedControlType": "scroll bar",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
     "__Children": [
       {
         "AutomationId": "Pizza",
