@@ -143,6 +143,8 @@ struct ComponentView : public ComponentViewT<
   void FinalizeTransform(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
+  facebook::react::RectangleEdges<bool> focusNudges() const noexcept;
+  facebook::react::LayoutMetrics focusLayoutMetricsNoNudge(bool inner) const noexcept;
   facebook::react::LayoutMetrics focusLayoutMetrics(bool inner) const noexcept;
   facebook::react::BorderMetrics focusBorderMetrics(bool inner, const facebook::react::LayoutMetrics &layoutMetrics)
       const noexcept;

@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionTextRangeProvider.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
+#include <winrt/Microsoft.UI.Content.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
 
@@ -11,13 +14,51 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
-    : m_view{componentView} {}
+    : m_view{componentView} {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (!props)
+    return;
+
+  if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
+    AddSelectionItemsToContainer(this);
+  }
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
+    m_textProvider = winrt::make<CompositionTextProvider>(
+                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                         .try_as<ITextProvider2>();
+  }
+}
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
+    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
+    const winrt::Microsoft::UI::Content::ChildSiteLink &childSiteLink) noexcept
+    : m_view{componentView}, m_childSiteLink{childSiteLink} {}
+#endif // USE_EXPERIMENTAL_WINUI3
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
     IRawElementProviderFragment **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (m_childSiteLink) {
+    if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
+      auto fragment = m_childSiteLink.AutomationProvider().try_as<IRawElementProviderFragment>();
+      *pRetVal = fragment.detach();
+      return S_OK;
+    }
+  }
+#endif // USE_EXPERIMENTAL_WINUI3
 
   return UiaNavigateHelper(m_view.view(), direction, *pRetVal);
 }
@@ -127,8 +168,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_ProviderOptions(Prov
   return S_OK;
 }
 
-bool accessibilityValueHasValue(const facebook::react::AccessibilityValue &value) {
-  return (value.min.has_value() && value.max.has_value()) || value.now.has_value() || value.text.has_value();
+bool accessibilityValueHasTextValue(const facebook::react::AccessibilityValue &value) {
+  return value.text.has_value();
+}
+
+bool accessibilityValueHasNumericValue(const facebook::react::AccessibilityValue &value) {
+  return (value.min.has_value() && value.max.has_value() && value.now.has_value());
 }
 
 bool expandableControl(const facebook::react::SharedViewProps props) {
@@ -174,14 +219,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  auto accessibilityRole =
-      props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
-  if (patternId == UIA_InvokePatternId &&
-      (accessibilityRole == "button" || accessibilityRole == "imagebutton" || accessibilityRole == "link" ||
-       accessibilityRole == "splitbutton" || (accessibilityRole == "menuitem" && props->onAccessibilityTap) ||
-       (accessibilityRole == "treeitem" && props->onAccessibilityTap))) {
+  if (patternId == UIA_InvokePatternId && (props->onAccessibilityTap)) {
     *pRetVal = static_cast<IInvokeProvider *>(this);
     AddRef();
   }
@@ -192,14 +232,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_ValuePatternId &&
-      (accessibilityRole == "textinput" || accessibilityRole == "searchbox" ||
-       (accessibilityRole == "button" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "combobox" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "link" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "listitem" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "progressbar" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "adjustable" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "spinbutton" && accessibilityValueHasValue(props->accessibilityValue)))) {
+      ((strongView
+            .try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() &&
+        !accessibilityValueHasNumericValue(props->accessibilityValue)) ||
+       accessibilityValueHasTextValue(props->accessibilityValue))) {
+    *pRetVal = static_cast<IValueProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_RangeValuePatternId && accessibilityValueHasNumericValue(props->accessibilityValue)) {
     *pRetVal = static_cast<IValueProvider *>(this);
     AddRef();
   }
@@ -211,19 +252,38 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ExpandCollapsePatternId &&
-      (accessibilityRole == "combobox" || accessibilityRole == "splitbutton" || accessibilityRole == "treeitem" ||
-       (expandableControl(props) &&
-        (accessibilityRole == "toolbar" || accessibilityRole == "menuitem" || accessibilityRole == "menubar" ||
-         accessibilityRole == "listitem" || accessibilityRole == "group" || accessibilityRole == "button")))) {
+  if (patternId == UIA_ExpandCollapsePatternId && expandableControl(props)) {
     *pRetVal = static_cast<IExpandCollapseProvider *>(this);
     AddRef();
+  }
+
+  if (patternId == UIA_SelectionPatternId && props->accessibilityState.has_value() &&
+      props->accessibilityState->multiselectable.has_value() && props->accessibilityState->required.has_value()) {
+    *pRetVal = static_cast<ISelectionProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_SelectionItemPatternId && props->accessibilityState.has_value() &&
+      props->accessibilityState->selected.has_value()) {
+    *pRetVal = static_cast<ISelectionItemProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_TextPatternId &&
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  }
+
+  if (patternId == UIA_TextPattern2Id &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   return S_OK;
 }
 
-long GetControlType(const std::string &role) noexcept {
+long GetControlTypeFromString(const std::string &role) noexcept {
   if (role == "adjustable") {
     return UIA_SliderControlTypeId;
   } else if (role == "group" || role == "search" || role == "radiogroup" || role == "timer" || role.empty()) {
@@ -286,6 +346,96 @@ long GetControlType(const std::string &role) noexcept {
   return UIA_GroupControlTypeId;
 }
 
+long GetControlTypeFromRole(const facebook::react::Role &role) noexcept {
+  switch (role) {
+    case facebook::react::Role::Alert:
+      return UIA_TextControlTypeId;
+    case facebook::react::Role::Application:
+      return UIA_WindowControlTypeId;
+    case facebook::react::Role::Button:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Checkbox:
+      return UIA_CheckBoxControlTypeId;
+    case facebook::react::Role::Columnheader:
+      return UIA_HeaderControlTypeId;
+    case facebook::react::Role::Combobox:
+      return UIA_ComboBoxControlTypeId;
+    case facebook::react::Role::Document:
+      return UIA_DocumentControlTypeId;
+    case facebook::react::Role::Grid:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Group:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Heading:
+      return UIA_TextControlTypeId;
+    case facebook::react::Role::Img:
+      return UIA_ImageControlTypeId;
+    case facebook::react::Role::Link:
+      return UIA_HyperlinkControlTypeId;
+    case facebook::react::Role::List:
+      return UIA_ListControlTypeId;
+    case facebook::react::Role::Listitem:
+      return UIA_ListItemControlTypeId;
+    case facebook::react::Role::Menu:
+      return UIA_MenuControlTypeId;
+    case facebook::react::Role::Menubar:
+      return UIA_MenuBarControlTypeId;
+    case facebook::react::Role::Menuitem:
+      return UIA_MenuItemControlTypeId;
+    case facebook::react::Role::None:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Presentation:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Progressbar:
+      return UIA_ProgressBarControlTypeId;
+    case facebook::react::Role::Radio:
+      return UIA_RadioButtonControlTypeId;
+    case facebook::react::Role::Radiogroup:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Rowgroup:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Rowheader:
+      return UIA_HeaderControlTypeId;
+    case facebook::react::Role::Scrollbar:
+      return UIA_ScrollBarControlTypeId;
+    case facebook::react::Role::Searchbox:
+      return UIA_EditControlTypeId;
+    case facebook::react::Role::Separator:
+      return UIA_SeparatorControlTypeId;
+    case facebook::react::Role::Slider:
+      return UIA_SliderControlTypeId;
+    case facebook::react::Role::Spinbutton:
+      return UIA_SpinnerControlTypeId;
+    case facebook::react::Role::Status:
+      return UIA_StatusBarControlTypeId;
+    case facebook::react::Role::Summary:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Switch:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Tab:
+      return UIA_TabItemControlTypeId;
+    case facebook::react::Role::Table:
+      return UIA_TableControlTypeId;
+    case facebook::react::Role::Tablist:
+      return UIA_TabControlTypeId;
+    case facebook::react::Role::Tabpanel:
+      return UIA_TabControlTypeId;
+    case facebook::react::Role::Timer:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Toolbar:
+      return UIA_ToolBarControlTypeId;
+    case facebook::react::Role::Tooltip:
+      return UIA_ToolTipControlTypeId;
+    case facebook::react::Role::Tree:
+      return UIA_TreeControlTypeId;
+    case facebook::react::Role::Treegrid:
+      return UIA_TreeControlTypeId;
+    case facebook::react::Role::Treeitem:
+      return UIA_TreeItemControlTypeId;
+  }
+  return UIA_GroupControlTypeId;
+}
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -311,8 +461,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      auto role = props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
-      pRetVal->lVal = GetControlType(role);
+      pRetVal->lVal = props->role == facebook::react::Role::None ? props->accessibilityRole.empty()
+              ? GetControlTypeFromString(compositionView->DefaultControlType())
+              : GetControlTypeFromString(props->accessibilityRole)
+                                                                 : GetControlTypeFromRole(props->role);
       break;
     }
     case UIA_AutomationIdPropertyId: {
@@ -352,17 +504,24 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsContentElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal =
+          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+          ? VARIANT_TRUE
+          : VARIANT_FALSE;
       break;
     }
     case UIA_IsControlElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal =
+          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+          ? VARIANT_TRUE
+          : VARIANT_FALSE;
       break;
     }
     case UIA_IsOffscreenPropertyId: {
       pRetVal->vt = VT_BOOL;
       pRetVal->boolVal = (compositionView->getClipState() == ClipState::FullyClipped) ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
     }
     case UIA_HelpTextPropertyId: {
       pRetVal->vt = VT_BSTR;
@@ -471,6 +630,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->setAcccessiblityValue(winrt::to_string(val));
+  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See
+  // https://github.com/react-native-community/discussions-and-proposals/issues/843.
   DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
@@ -501,20 +662,83 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  auto accessibilityRole = props->accessibilityRole;
-  if (accessibilityRole.empty()) {
-    // Control is using default control type. Use default IsReadOnly value.
-    *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                   ->getAcccessiblityIsReadOnly();
-  } else if (
-      accessibilityRole == "textinput" || accessibilityRole == "searchbox" || accessibilityRole == "adjustable" ||
-      accessibilityRole == "spinbutton" || accessibilityRole == "combobox") {
-    // Control is using customized control type which should not be IsReadOnly for value pattern.
-    *pRetVal = false;
+  if (props->accessibilityState.has_value() && props->accessibilityState->readOnly.has_value()) {
+    *pRetVal = props->accessibilityState->readOnly.value();
   } else {
-    // Control is using customized control type which should be IsReadOnly for value pattern.
-    *pRetVal = true;
+    // Use default IsReadOnly value.
+    *pRetVal = false;
   }
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_LargeChange(double *pRetVal) {
+  // no-op
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Maximum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = props->accessibilityValue.max.value();
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Minimum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = props->accessibilityValue.min.value();
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_SmallChange(double *pRetVal) {
+  // no-op
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = props->accessibilityValue.now.value();
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(double val) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See
+  // https://github.com/react-native-community/discussions-and-proposals/issues/843.
+  DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
 
@@ -582,6 +806,171 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Collapse() {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
   DispatchAccessibilityAction(m_view, "collapse");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_CanSelectMultiple(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props =
+      std::static_pointer_cast<const facebook::react::ViewProps>(winrt::get_self<ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = (props->accessibilityState.has_value() && props->accessibilityState->multiselectable.has_value())
+      ? props->accessibilityState->multiselectable.value()
+      : false;
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelectionRequired(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = (props->accessibilityState.has_value() && props->accessibilityState->required.has_value())
+      ? props->accessibilityState->required.value()
+      : false;
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  std::vector<int> selectedItems;
+  for (size_t i = 0; i < m_selectionItems.size(); i++) {
+    auto selectionItem = m_selectionItems.at(i);
+    auto provider = selectionItem.as<CompositionDynamicAutomationProvider>();
+    BOOL selected;
+    auto hr = provider->get_IsSelected(&selected);
+    if (hr == S_OK && selected) {
+      selectedItems.push_back(int(i));
+    }
+  }
+
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, ULONG(selectedItems.size()));
+  if (*pRetVal == nullptr)
+    return E_OUTOFMEMORY;
+
+  for (size_t i = 0; i < selectedItems.size(); i++) {
+    auto pos = static_cast<long>(i);
+    SafeArrayPutElement(*pRetVal, &pos, m_selectionItems.at(selectedItems.at(i)).get());
+  }
+  return S_OK;
+}
+
+void CompositionDynamicAutomationProvider::AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
+  if (std::find(m_selectionItems.begin(), m_selectionItems.end(), item) != m_selectionItems.end()) {
+    return;
+  }
+  m_selectionItems.push_back(item);
+}
+
+void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
+  std::erase(m_selectionItems, item);
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::AddToSelection() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  DispatchAccessibilityAction(m_view, "addToSelection");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelected(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value())
+      ? props->accessibilityState->selected.value()
+      : false;
+
+  return S_OK;
+}
+
+IRawElementProviderSimple *findSelectionContainer(winrt::Microsoft::ReactNative::ComponentView current) {
+  if (!current)
+    return nullptr;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(current)->props());
+  if (props->accessibilityState.has_value() && props->accessibilityState->multiselectable.has_value() &&
+      props->accessibilityState->required.has_value()) {
+    auto uiaProvider =
+        current.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->EnsureUiaProvider();
+    if (uiaProvider != nullptr) {
+      auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
+      if (spProviderSimple != nullptr) {
+        spProviderSimple->AddRef();
+        return spProviderSimple.get();
+      }
+    }
+  } else {
+    return findSelectionContainer(current.Parent());
+  }
+  return nullptr;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_SelectionContainer(IRawElementProviderSimple **pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = findSelectionContainer(strongView.Parent());
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::RemoveFromSelection() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  DispatchAccessibilityAction(m_view, "removeFromSelection");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Select() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  DispatchAccessibilityAction(m_view, "select");
   return S_OK;
 }
 

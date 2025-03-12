@@ -312,33 +312,40 @@ class AccessibilityStateExamples extends React.Component {
           The following list of TouchableHighlights toggles
           accessibilityState.selected when touched:
         </Text>
-        <FlatList
-          accessibilityLabel="List of selectable items"
-          data={selectableItems}
-          renderItem={item => (
-            <TouchableHighlight
-              style={{
-                width: 100,
-                height: 50,
-                backgroundColor: this.state.itemsSelected[item.index]
-                  ? 'gray'
-                  : 'lightskyblue',
-              }}
-              accessibilityRole="button"
-              accessibilityLabel={'Selectable item ' + (item.index + 1)}
-              accessibilityState={{
-                selected: this.state.itemsSelected[item.index],
-              }}
-              onPress={() => this.selectPress(item.index)}>
-              <Text>
-                {this.state.itemsSelected[item.index]
-                  ? 'Selected'
-                  : 'Unselected'}
-              </Text>
-            </TouchableHighlight>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <View
+          accessible
+          accessibilityLabel="Selection Container"
+          accessibilityState={{multiselectable: true, required: true}}
+          testID="selection-container">
+          <FlatList
+            accessibilityLabel="List of selectable items"
+            data={selectableItems}
+            renderItem={item => (
+              <TouchableHighlight
+                style={{
+                  width: 100,
+                  height: 50,
+                  backgroundColor: this.state.itemsSelected[item.index]
+                    ? 'gray'
+                    : 'lightskyblue',
+                }}
+                accessibilityRole="button"
+                accessibilityLabel={'Selectable item ' + (item.index + 1)}
+                testID={'Selectable item ' + (item.index + 1)}
+                accessibilityState={{
+                  selected: this.state.itemsSelected[item.index],
+                }}
+                onPress={() => this.selectPress(item.index)}>
+                <Text>
+                  {this.state.itemsSelected[item.index]
+                    ? 'Selected'
+                    : 'Unselected'}
+                </Text>
+              </TouchableHighlight>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
         <Text>
           The following TouchableHighlight cycles accessibilityState.checked
           through unchecked/checked/mixed for the View under it:
@@ -429,7 +436,8 @@ class AccessibilityStateExamples extends React.Component {
         </Text>
         <TouchableHighlight
           style={{width: 100, height: 50, backgroundColor: 'blue'}}
-          onPress={this.rangePress}>
+          onPress={this.rangePress}
+          testID="accessibilityValue-increment">
           <Text>Range value increment</Text>
         </TouchableHighlight>
         <View
@@ -444,7 +452,9 @@ class AccessibilityStateExamples extends React.Component {
             min: this.state.viewRangeMin,
             max: this.state.viewRangeMax,
             now: this.state.viewRangeNow,
-          }}>
+          }}
+          testID="accessibilityValue-number"
+          accessibilityState={{readOnly: true}}>
           <Text>
             The View's (accessibilityRole == adjustable, ie. Slider) properties
             should be the following according to UIA: Min-{' '}
@@ -465,7 +475,10 @@ class AccessibilityStateExamples extends React.Component {
           accessibilityValue={{
             text: this.state.viewValueText,
           }}
-          accessibilityRole="combobox">
+          role="combobox"
+          testID="accessibilityValue-text"
+          accessible
+          aria-readonly>
           <Text>
             The View's properties should be the following according to UIA:
             Text- {this.state.viewValueText}

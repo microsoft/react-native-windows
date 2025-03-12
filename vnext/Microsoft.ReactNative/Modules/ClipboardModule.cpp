@@ -48,7 +48,7 @@ void Clipboard::getString(React::ReactPromise<std::string> result) noexcept {
   );
 }
 
-void Clipboard::setString(std::wstring content) noexcept {
+void Clipboard::setString(winrt::hstring content) noexcept {
   m_reactContext.UIDispatcher().Post([=] {
     DataTransfer::DataPackage data;
     data.SetText(content);

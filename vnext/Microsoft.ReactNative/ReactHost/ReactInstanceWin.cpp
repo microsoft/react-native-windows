@@ -67,11 +67,16 @@
 #include <react/runtime/TimerManager.h>
 #endif
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 #include <LayoutService.h>
+#include <XamlUIService.h>
+#include "Modules/NativeUIManager.h"
+#include "Modules/PaperUIManagerModule.h"
+#endif
+
+#ifndef CORE_ABI
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#include <XamlUIService.h>
 #include "ConfigureBundlerDlg.h"
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
@@ -82,8 +87,6 @@
 #include "Modules/I18nManagerModule.h"
 #include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
-#include "Modules/NativeUIManager.h"
-#include "Modules/PaperUIManagerModule.h"
 #else
 #include "Modules/DesktopTimingModule.h"
 #endif
@@ -164,7 +167,7 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
                                                       UIBatchCompleteCallbackProperty())) {
                     (*callback)(instance->m_reactContext->Properties());
                   }
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
                   if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
                     uiManager->onBatchComplete();
                   }
@@ -189,7 +192,7 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
                                                   UIBatchCompleteCallbackProperty())) {
                 (*callback)(instance->m_reactContext->Properties());
               }
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
               if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
                 uiManager->onBatchComplete();
               }
@@ -347,15 +350,16 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
-#ifndef CORE_ABI
-
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   if (!IsBridgeless()) {
     registerTurboModule(
         L"UIManager",
         // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
         winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
   }
+#endif
 
+#ifndef CORE_ABI
   registerTurboModule(
       L"AccessibilityInfo",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AccessibilityInfo>());
@@ -497,7 +501,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
 void ReactInstanceWin::InitDevMenu() noexcept {
   Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
     Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
 #endif // CORE_ABI
   });
@@ -585,6 +589,24 @@ std::unique_ptr<facebook::jsi::PreparedScriptStore> CreatePreparedScriptStore() 
 }
 
 #ifdef USE_FABRIC
+
+typedef HRESULT(__stdcall *SetThreadDescriptionFn)(HANDLE, PCWSTR);
+void SetJSThreadDescription() noexcept {
+  // Office still supports Server 2016 so we need to use Run Time Dynamic Linking and cannot just use:
+  // ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
+
+  auto moduleHandle = GetModuleHandleW(L"kernelbase.dll");
+  // The description is just for developer experience, so we can skip it if kernelbase isn't already loaded
+  if (!moduleHandle)
+    return;
+
+  auto proc = GetProcAddress(moduleHandle, "SetThreadDescription");
+  if (!proc)
+    return;
+
+  reinterpret_cast<SetThreadDescriptionFn>(proc)(GetCurrentThread(), L"React-Native JavaScript Thread");
+}
+
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
 
@@ -633,7 +655,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 Mso::Copy(m_whenDestroyed)));
 
             m_jsMessageThread.Load()->runOnQueueSync([&]() {
-              ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
+              SetJSThreadDescription();
               auto timerRegistry =
                   ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(m_reactContext->Properties());
               auto timerRegistryRaw = timerRegistry.get();
@@ -752,7 +774,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
   InitUIQueue();
   InitUIMessageThread();
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
 #endif
@@ -1143,7 +1165,7 @@ bool ReactInstanceWin::IsBridgeless() noexcept {
       winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 }
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 void ReactInstanceWin::InitUIManager() noexcept {
   std::vector<std::unique_ptr<Microsoft::ReactNative::IViewManager>> viewManagers;
 
@@ -1441,12 +1463,14 @@ void ReactInstanceWin::AttachMeasuredRootView(
   if (!useFabric || m_useWebDebugger) {
     int64_t rootTag = -1;
 
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
     if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {
       rootTag = uiManager->AddMeasuredRootView(rootView);
       rootView->SetTag(rootTag);
     } else {
       assert(false);
     }
+#endif
 
     std::string jsMainModuleName = rootView->JSComponentName();
     folly::dynamic params = folly::dynamic::array(

@@ -111,7 +111,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void InitNativeMessageThread() noexcept;
   void InitUIMessageThread() noexcept;
   void SetupHMRClient() noexcept;
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   void InitUIManager() noexcept;
 #endif
 

@@ -15,11 +15,10 @@ namespace facebook::react {
 
 inline SharedColor
 parsePlatformColor(const ContextContainer &contextContainer, int32_t surfaceId, const RawValue &value) {
-  if (value.hasType<std::unordered_map<std::string, std::string>>()) {
+  if (value.hasType<std::unordered_map<std::string, std::vector<std::string>>>()) {
     auto map = (std::unordered_map<std::string, std::vector<std::string>>)value;
     if (map.find("windowsbrush") != map.end()) {
       facebook::react::Color color = {
-          /* .m_isDefined = */ true,
           /* .m_color = */ {},
           /* .m_platformColor = */ std::move(map["windowsbrush"]),
       };

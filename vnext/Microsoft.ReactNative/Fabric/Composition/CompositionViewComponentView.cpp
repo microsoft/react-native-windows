@@ -33,6 +33,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 constexpr float FOCUS_VISUAL_WIDTH = 2.0f;
+constexpr float FOCUS_VISUAL_RADIUS = 3.0f;
 
 // m_outerVisual
 //   |
@@ -168,18 +169,21 @@ void ComponentView::updateProps(
       m_componentHostingFocusVisual->hostFocusVisual(false, get_strong());
     }
 
-    if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->updateProps(oldViewProps, newViewProps);
-    }
-    if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive) {
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->updateProps(oldViewProps, newViewProps);
+    // We have to check m_componentHostingFocusVisual again, as it can be set to null by above hostFocusVisual call
+    if (m_componentHostingFocusVisual) {
+      if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
+        m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->updateProps(oldViewProps, newViewProps);
+      }
+      if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive) {
+        m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->updateProps(oldViewProps, newViewProps);
+      }
     }
   }
   if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
     updateShadowProps(oldViewProps, newViewProps);
   }
   if (oldViewProps.tooltip != newViewProps.tooltip) {
-    if (!m_tooltipTracked && newViewProps.tooltip) {
+    if (!m_tooltipTracked && newViewProps.tooltip && !newViewProps.tooltip->empty()) {
       TooltipService::GetCurrent(m_reactContext.Properties())->StartTracking(*this);
       m_tooltipTracked = true;
     } else if (m_tooltipTracked && !newViewProps.tooltip) {
@@ -225,29 +229,11 @@ void ComponentView::updateFocusLayoutMetrics() noexcept {
   facebook::react::RectangleEdges<bool> nudgeEdges;
   auto scaleFactor = m_focusPrimitive->m_focusVisualComponent->m_layoutMetrics.pointScaleFactor;
   if (m_focusPrimitive) {
+    auto nudgeEdges = m_focusPrimitive->m_focusVisualComponent->focusNudges();
     if (m_focusPrimitive->m_focusOuterPrimitive) {
       auto outerFocusMetrics = m_focusPrimitive->m_focusVisualComponent->focusLayoutMetrics(false /*inner*/);
-
-      if (outerFocusMetrics.frame.origin.x < 0) {
-        nudgeEdges.left = true;
-      }
-      if (outerFocusMetrics.frame.origin.y < 0) {
-        nudgeEdges.top = true;
-      }
-      if (outerFocusMetrics.frame.getMaxX() > m_layoutMetrics.frame.getMaxX()) {
-        nudgeEdges.right = true;
-      }
-      if (outerFocusMetrics.frame.getMaxY() > m_layoutMetrics.frame.getMaxY()) {
-        nudgeEdges.bottom = true;
-      }
-
       m_focusPrimitive->m_focusOuterPrimitive->RootVisual().Size(
-          {outerFocusMetrics.frame.size.width * scaleFactor -
-               (nudgeEdges.left ? (FOCUS_VISUAL_WIDTH * 2 * scaleFactor) : 0) -
-               (nudgeEdges.right ? (FOCUS_VISUAL_WIDTH * 2 * scaleFactor) : 0),
-           outerFocusMetrics.frame.size.height * scaleFactor -
-               (nudgeEdges.top ? (FOCUS_VISUAL_WIDTH * 2 * scaleFactor) : 0) -
-               (nudgeEdges.bottom ? (FOCUS_VISUAL_WIDTH * 2 * scaleFactor) : 0)});
+          {outerFocusMetrics.frame.size.width * scaleFactor, outerFocusMetrics.frame.size.height * scaleFactor});
       m_focusPrimitive->m_focusOuterPrimitive->RootVisual().Offset(
           {nudgeEdges.left ? 0 : -(FOCUS_VISUAL_WIDTH * 2 * scaleFactor),
            nudgeEdges.top ? 0 : -(FOCUS_VISUAL_WIDTH * 2 * scaleFactor),
@@ -258,15 +244,10 @@ void ComponentView::updateFocusLayoutMetrics() noexcept {
     if (m_focusPrimitive->m_focusInnerPrimitive) {
       auto innerFocusMetrics = m_focusPrimitive->m_focusVisualComponent->focusLayoutMetrics(true /*inner*/);
       m_focusPrimitive->m_focusInnerPrimitive->RootVisual().Size(
-          {innerFocusMetrics.frame.size.width * scaleFactor -
-               (nudgeEdges.left ? (FOCUS_VISUAL_WIDTH * scaleFactor) : 0) -
-               (nudgeEdges.right ? (FOCUS_VISUAL_WIDTH * scaleFactor) : 0),
-           innerFocusMetrics.frame.size.height * scaleFactor -
-               (nudgeEdges.top ? (FOCUS_VISUAL_WIDTH * scaleFactor) : 0) -
-               (nudgeEdges.bottom ? (FOCUS_VISUAL_WIDTH * scaleFactor) : 0)});
+          {innerFocusMetrics.frame.size.width * scaleFactor, innerFocusMetrics.frame.size.height * scaleFactor});
       m_focusPrimitive->m_focusInnerPrimitive->RootVisual().Offset(
-          {nudgeEdges.left ? 0 : -FOCUS_VISUAL_WIDTH * scaleFactor,
-           nudgeEdges.top ? 0 : -FOCUS_VISUAL_WIDTH * scaleFactor,
+          {nudgeEdges.left ? (FOCUS_VISUAL_WIDTH * scaleFactor) : (-FOCUS_VISUAL_WIDTH * scaleFactor),
+           nudgeEdges.top ? (FOCUS_VISUAL_WIDTH * scaleFactor) : (-FOCUS_VISUAL_WIDTH * scaleFactor),
            0.0f});
       m_focusPrimitive->m_focusInnerPrimitive->markNeedsUpdate();
     }
@@ -468,7 +449,7 @@ bool ComponentView::CapturePointer(const winrt::Microsoft::ReactNative::Composit
   if (!root)
     return false;
 
-  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
+  auto rootView{root->ReactNativeIsland()};
   if (!rootView) {
     return false;
   }
@@ -487,7 +468,7 @@ void ComponentView::ReleasePointerCapture(
   if (!root)
     return;
 
-  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
+  auto rootView{root->ReactNativeIsland()};
   if (!rootView) {
     return;
   }
@@ -535,12 +516,60 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView:
   return m_outerVisual ? m_outerVisual : Visual();
 }
 
-facebook::react::LayoutMetrics ComponentView::focusLayoutMetrics(bool inner) const noexcept {
+// If the focus visual would extend past the bounds of the hosting visual,
+// then we will nudge the focus visual back inside the hosting visuals bounds.
+facebook::react::RectangleEdges<bool> ComponentView::focusNudges() const noexcept {
+  facebook::react::RectangleEdges<bool> nudgeEdges;
+
+  // Always use outer focus metrics to determine if we need to nudge the focus rect over to fit
+  facebook::react::LayoutMetrics layoutMetrics = focusLayoutMetricsNoNudge(false /*inner*/);
+
+  Assert(m_componentHostingFocusVisual);
+
+  if (layoutMetrics.frame.origin.x < 0) {
+    nudgeEdges.left = true;
+  }
+  if (layoutMetrics.frame.origin.y < 0) {
+    nudgeEdges.top = true;
+  }
+  if (layoutMetrics.frame.getMaxX() > m_componentHostingFocusVisual->m_layoutMetrics.frame.getMaxX()) {
+    nudgeEdges.right = true;
+  }
+  if (layoutMetrics.frame.getMaxY() > m_componentHostingFocusVisual->m_layoutMetrics.frame.getMaxY()) {
+    nudgeEdges.bottom = true;
+  }
+
+  return nudgeEdges;
+}
+
+facebook::react::LayoutMetrics ComponentView::focusLayoutMetricsNoNudge(bool inner) const noexcept {
   facebook::react::LayoutMetrics layoutMetrics = m_layoutMetrics;
   layoutMetrics.frame.origin.x -= FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
   layoutMetrics.frame.origin.y -= FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
   layoutMetrics.frame.size.height += FOCUS_VISUAL_WIDTH * (inner ? 2 : 4);
   layoutMetrics.frame.size.width += FOCUS_VISUAL_WIDTH * (inner ? 2 : 4);
+  return layoutMetrics;
+}
+
+facebook::react::LayoutMetrics ComponentView::focusLayoutMetrics(bool inner) const noexcept {
+  auto nudgeEdges = focusNudges();
+  auto layoutMetrics = focusLayoutMetricsNoNudge(inner);
+
+  if (nudgeEdges.left) {
+    layoutMetrics.frame.origin.x += FOCUS_VISUAL_WIDTH * 2;
+    layoutMetrics.frame.size.width -= FOCUS_VISUAL_WIDTH * 2;
+  }
+  if (nudgeEdges.top) {
+    layoutMetrics.frame.origin.y += FOCUS_VISUAL_WIDTH * 2;
+    layoutMetrics.frame.size.height -= FOCUS_VISUAL_WIDTH * 2;
+  }
+  if (nudgeEdges.right) {
+    layoutMetrics.frame.size.width -= FOCUS_VISUAL_WIDTH * 2;
+  }
+  if (nudgeEdges.bottom) {
+    layoutMetrics.frame.size.height -= FOCUS_VISUAL_WIDTH * 2;
+  }
+
   return layoutMetrics;
 }
 
@@ -553,22 +582,31 @@ facebook::react::BorderMetrics ComponentView::focusBorderMetrics(
   innerColor.m_platformColor.push_back(inner ? "FocusVisualSecondary" : "FocusVisualPrimary");
   metrics.borderColors.bottom = metrics.borderColors.left = metrics.borderColors.right = metrics.borderColors.top =
       innerColor;
-  if (metrics.borderRadii.bottomLeft.horizontal != 0)
-    metrics.borderRadii.bottomLeft.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.bottomLeft.vertical != 0)
-    metrics.borderRadii.bottomLeft.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.bottomRight.horizontal != 0)
-    metrics.borderRadii.bottomRight.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.bottomRight.vertical != 0)
-    metrics.borderRadii.bottomRight.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topLeft.horizontal != 0)
-    metrics.borderRadii.topLeft.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topLeft.vertical != 0)
-    metrics.borderRadii.topLeft.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topRight.horizontal != 0)
-    metrics.borderRadii.topRight.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topRight.vertical != 0)
-    metrics.borderRadii.topRight.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+
+  metrics.borderRadii.bottomLeft.horizontal =
+      (metrics.borderRadii.bottomLeft.horizontal ? metrics.borderRadii.bottomLeft.horizontal : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  metrics.borderRadii.bottomLeft.vertical =
+      (metrics.borderRadii.bottomLeft.vertical ? metrics.borderRadii.bottomLeft.vertical : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  metrics.borderRadii.bottomRight.horizontal =
+      (metrics.borderRadii.bottomRight.horizontal ? metrics.borderRadii.bottomRight.horizontal : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  metrics.borderRadii.bottomRight.vertical =
+      (metrics.borderRadii.bottomRight.vertical ? metrics.borderRadii.bottomRight.vertical : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  metrics.borderRadii.topLeft.horizontal =
+      (metrics.borderRadii.topLeft.horizontal ? metrics.borderRadii.topLeft.horizontal : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  metrics.borderRadii.topLeft.vertical =
+      (metrics.borderRadii.topLeft.vertical ? metrics.borderRadii.topLeft.vertical : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  metrics.borderRadii.topRight.horizontal =
+      (metrics.borderRadii.topRight.horizontal ? metrics.borderRadii.topRight.horizontal : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  metrics.borderRadii.topRight.vertical =
+      (metrics.borderRadii.topRight.vertical ? metrics.borderRadii.topRight.vertical : FOCUS_VISUAL_RADIUS) +
+      FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
 
   metrics.borderStyles.bottom = metrics.borderStyles.left = metrics.borderStyles.right = metrics.borderStyles.top =
       facebook::react::BorderStyle::Solid;
@@ -761,11 +799,23 @@ void ComponentView::updateAccessibilityProps(
       UIA_LiveSettingPropertyId,
       oldViewProps.accessibilityLiveRegion,
       newViewProps.accessibilityLiveRegion);
+
+  if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
+      ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
+    auto compProvider =
+        m_uiaProvider.try_as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    if (compProvider) {
+      if ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value())) {
+        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(compProvider.get());
+      } else {
+        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(compProvider.get());
+      }
+    }
+  }
 }
 
 std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
-  return winrt::Microsoft::ReactNative::implementation::extractAccessibilityValue(
-      std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue);
+  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text.value();
 }
 
 void ComponentView::setAcccessiblityValue(std::string &&value) noexcept {
@@ -1318,7 +1368,7 @@ winrt::Microsoft::ReactNative::ComponentView lastDeepChild(
 }
 
 // Walks the tree calling the function fn on each node.
-// If fn returns true, then walkTree stops itterating over the tree, and returns true.
+// If fn returns true, then walkTree stops iterating over the tree, and returns true.
 // If the tree walk completes without fn returning true, then walkTree returns false.
 bool walkTree(
     const winrt::Microsoft::ReactNative::ComponentView &view,

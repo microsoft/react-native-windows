@@ -12,13 +12,10 @@ namespace facebook::react {
 
 struct Color {
   bool operator==(const Color &otherColor) const {
-    return m_isUndefined && otherColor.m_isUndefined ||
-        (m_isUndefined == otherColor.m_isUndefined && m_color == otherColor.m_color &&
-         m_platformColor == otherColor.m_platformColor);
+    return m_color == otherColor.m_color && m_platformColor == otherColor.m_platformColor;
   }
   bool operator!=(const Color &otherColor) const {
-    return m_isUndefined != otherColor.m_isUndefined || m_color != otherColor.m_color ||
-        m_platformColor != otherColor.m_platformColor;
+    return m_color != otherColor.m_color || m_platformColor != otherColor.m_platformColor;
   }
 
   winrt::Windows::UI::Color AsWindowsColor() const {
@@ -36,13 +33,14 @@ struct Color {
     return RGB(m_color.R, m_color.G, m_color.B) | (m_color.A << 24);
   }
 
-  bool m_isUndefined;
   winrt::Windows::UI::Color m_color;
   std::vector<std::string> m_platformColor;
 };
 
 namespace HostPlatformColor {
-static const facebook::react::Color UndefinedColor{true};
+static const facebook::react::Color UndefinedColor{
+    {0, 0, 0, 0} /*Black*/,
+    {"__undefinedColor"} /*Empty PlatformColors*/};
 } // namespace HostPlatformColor
 
 inline Color hostPlatformColorFromComponents(ColorComponents components) {
@@ -53,7 +51,6 @@ inline Color hostPlatformColorFromComponents(ColorComponents components) {
       static_cast<uint8_t>((int)round(components.green * ratio) & 0xff),
       static_cast<uint8_t>((int)round(components.blue * ratio) & 0xff)};
   return {
-      /* .m_isUndefined = */ false,
       /* .m_color = */ color,
       /* .m_platformColor = */ {}};
 }

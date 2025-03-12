@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
 
@@ -31,11 +33,15 @@ void UpdateUiaProperty(
 
 long GetLiveSetting(const std::string &liveRegion) noexcept;
 
-std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept;
-
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept;
 
 ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept;
 
+void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept;
+
+void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept;
+
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
+
+TextDecorationLineStyle GetTextDecorationLineStyle(facebook::react::TextDecorationStyle style) noexcept;
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -31,8 +31,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
  public:
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,
-      const winrt::Microsoft::ReactNative::ReactNativeIsland &ReactNativeIsland,
-      const int fragmentTag);
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &ReactNativeIsland);
   virtual ~CompositionEventHandler();
 
   void Initialize() noexcept;
@@ -56,6 +55,9 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerExited(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onPointerWheelChanged(
@@ -152,7 +154,6 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
 
   std::map<PointerId, ActiveTouch> m_activeTouches; // iOS is map of touch event args to ActiveTouch..?
   PointerId m_touchId = 0;
-  int m_fragmentTag = -1;
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;
@@ -171,6 +172,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   winrt::event_token m_pointerMovedToken;
   winrt::event_token m_pointerWheelChangedToken;
   winrt::event_token m_pointerCaptureLostToken;
+  winrt::event_token m_pointerExitedToken;
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;
   winrt::event_token m_characterReceivedToken;
