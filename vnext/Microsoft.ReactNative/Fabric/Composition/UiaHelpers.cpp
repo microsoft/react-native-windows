@@ -174,16 +174,6 @@ long GetLiveSetting(const std::string &liveRegion) noexcept {
   return LiveSetting::Off;
 }
 
-std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept {
-  if (value.now.has_value()) {
-    return std::to_string(value.now.value());
-  } else if (value.text.has_value()) {
-    return value.text.value();
-  } else {
-    return "";
-  }
-}
-
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
   auto strongView = view.view();
 
