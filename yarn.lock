@@ -2224,6 +2224,44 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.0.tgz#4587fbce6a382adedad74311e96ee10bb2b2d63a"
   integrity sha512-QuZU6gbxmOID5zZgd/H90NgBnbJ3VV6qVzp6c7/dDrmWdX8S0X5YFYgDcQFjE3dRen9wB9FWnj2VVdPU64adSg==
 
+"@react-native-windows/cli@0.0.0-canary.257":
+  version "0.0.0-canary.257"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/cli/-/cli-0.0.0-canary.257.tgz#54444280c10622971bd2ce5ca2c7a4aa9f9f023d"
+  integrity sha512-v97KM/o+7NtZw3G0qEO/EPN47GLzIvVKbtjc3OhZVgo1eaAPtQnJv9UYg3pyIoF5gR5kz406qT30/0cf3c26tg==
+  dependencies:
+    "@react-native-windows/codegen" "0.0.0-canary.118"
+    "@react-native-windows/fs" "^0.0.0-canary.61"
+    "@react-native-windows/package-utils" "^0.0.0-canary.87"
+    "@react-native-windows/telemetry" "^0.0.0-canary.116"
+    "@xmldom/xmldom" "^0.7.7"
+    chalk "^4.1.0"
+    cli-spinners "^2.2.0"
+    envinfo "^7.5.0"
+    find-up "^4.1.0"
+    glob "^7.1.1"
+    lodash "^4.17.15"
+    mustache "^4.0.1"
+    ora "^3.4.0"
+    prompts "^2.4.1"
+    semver "^7.3.2"
+    shelljs "^0.8.4"
+    username "^5.1.0"
+    xml-formatter "^2.4.0"
+    xml-parser "^1.2.1"
+    xpath "^0.0.27"
+
+"@react-native-windows/codegen@0.0.0-canary.118":
+  version "0.0.0-canary.118"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/codegen/-/codegen-0.0.0-canary.118.tgz#1c4b7da4c014caf9a58ca35e9b4be768b17878ab"
+  integrity sha512-n5GBNtssNZN9Z3zuGKX70XB7JTqqjekQz8KHFxnvFhGg5THyJJoNoTbuzBaTYCCe7t4RdyEjqDgGB2gF7temPg==
+  dependencies:
+    "@react-native-windows/fs" "^0.0.0-canary.61"
+    chalk "^4.1.0"
+    globby "^11.1.0"
+    mustache "^4.0.1"
+    source-map-support "^0.5.19"
+    yargs "^16.2.0"
+
 "@react-native/assets-registry@0.78.0-nightly-20250113-d4407d6f7":
   version "0.78.0-nightly-20250113-d4407d6f7"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.78.0-nightly-20250113-d4407d6f7.tgz#54a3d28afc416e539e949bb7b3f835916e102b86"
@@ -10420,6 +10458,57 @@ react-is@^19.0.0:
   version "19.0.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-19.0.0.tgz#d6669fd389ff022a9684f708cf6fa4962d1fea7a"
   integrity sha512-H91OHcwjZsbq3ClIDHMzBShc1rotbfACdWENsmEf0IFvZ3FgGPtdHMcsv45bQ1hAbgdfiA8SnxTKfDS+x/8m2g==
+
+react-native-windows@0.0.0-canary.919:
+  version "0.0.0-canary.919"
+  resolved "https://registry.yarnpkg.com/react-native-windows/-/react-native-windows-0.0.0-canary.919.tgz#fc81befe97270fe7ab6d406f5ad5fd3ef9be5948"
+  integrity sha512-16/L8VRwwMMDcVltGrRMiNmpIDAEVHo00jJjPiWwE4s8CF+8kodRpmd7fupjSdlAWBmlVVDX9q5S1CM5zaLArQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@jest/create-cache-key-function" "^29.6.3"
+    "@react-native-community/cli" "15.0.0-alpha.2"
+    "@react-native-community/cli-platform-android" "15.0.0-alpha.2"
+    "@react-native-community/cli-platform-ios" "15.0.0-alpha.2"
+    "@react-native-windows/cli" "0.0.0-canary.257"
+    "@react-native/assets" "1.0.0"
+    "@react-native/assets-registry" "0.78.0-nightly-20250113-d4407d6f7"
+    "@react-native/codegen" "0.78.0-nightly-20250113-d4407d6f7"
+    "@react-native/community-cli-plugin" "0.78.0-nightly-20250113-d4407d6f7"
+    "@react-native/gradle-plugin" "0.78.0-nightly-20250113-d4407d6f7"
+    "@react-native/js-polyfills" "0.78.0-nightly-20250113-d4407d6f7"
+    "@react-native/normalize-colors" "0.78.0-nightly-20250113-d4407d6f7"
+    "@react-native/virtualized-lists" "0.78.0-nightly-20250113-d4407d6f7"
+    abort-controller "^3.0.0"
+    anser "^1.4.9"
+    ansi-regex "^5.0.0"
+    babel-jest "^29.7.0"
+    babel-plugin-syntax-hermes-parser "0.25.1"
+    base64-js "^1.5.1"
+    chalk "^4.0.0"
+    commander "^12.0.0"
+    event-target-shim "^5.0.1"
+    flow-enums-runtime "^0.0.6"
+    glob "^7.1.1"
+    invariant "^2.2.4"
+    jest-environment-node "^29.6.3"
+    memoize-one "^5.0.0"
+    metro-runtime "^0.81.0"
+    metro-source-map "^0.81.0"
+    mkdirp "^0.5.1"
+    nullthrows "^1.1.1"
+    pretty-format "^29.7.0"
+    promise "^8.3.0"
+    react-devtools-core "^6.0.1"
+    react-refresh "^0.14.0"
+    react-shallow-renderer "^16.15.0"
+    regenerator-runtime "^0.13.2"
+    scheduler "0.25.0"
+    semver "^7.1.3"
+    source-map-support "^0.5.19"
+    stacktrace-parser "^0.1.10"
+    whatwg-fetch "^3.0.0"
+    ws "^6.2.3"
+    yargs "^17.6.2"
 
 react-native-xaml@^0.0.78:
   version "0.0.78"

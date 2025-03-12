@@ -83,11 +83,11 @@ function App(): React.JSX.Element {
             screen and then come back to see your edits. OK I'll do that
             nddow!!!!
           </Section>
-          <XamlHost label="jerry" style={{width: 100, height: 100}}>
+          <XamlHost label="jerry" style={{width: 300, height: 100}}>
             <StackPanel>
-              <Button content="I am button 1" />
-              <Button content="button 2" />
-              <Button content="oh this is button 3" />
+              <Button content="Xaml: I am button 1" />
+              <Button content="Xaml: button 2" />
+              <Button content="Xaml: oh this is button 3" />
             </StackPanel>
           </XamlHost>
           <Section title="See Your Changes">
