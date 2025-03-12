@@ -466,6 +466,16 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     }
   }
 
+  // Dump IScrollProvider Information
+  winrt::com_ptr<IScrollProvider> scrollPattern;
+  hr = pTarget->GetCurrentPattern(UIA_ScrollPatternId, reinterpret_cast<IUnknown **>(scrollPattern.put()));
+  if (SUCCEEDED(hr) && scrollPattern) {
+    hr = scrollPattern->get_HorizontallyScrollable(&horizontallyScrollable);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ScrollPattern.HorizontallyScrollable", horizontallyScrollable, false);
+    }
+  }
+
   ::SysFreeString(text);
   ::SysFreeString(value);
 }
