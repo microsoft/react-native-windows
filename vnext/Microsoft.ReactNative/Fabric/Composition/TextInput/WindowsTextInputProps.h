@@ -6,6 +6,7 @@
 #include <react/components/rnwcore/Props.h>
 #include <react/renderer/components/text/BaseTextProps.h>
 #include <react/renderer/core/propsConversions.h>
+#include <react/renderer/attributedstring/conversions.h>
 
 namespace facebook::react {
 
@@ -81,22 +82,6 @@ static inline void fromRawValue(
     CompWindowsTextInputSubmitKeyEventsStruct newItem;
     fromRawValue(context, item, newItem);
     result.emplace_back(newItem);
-  }
-}
-
-static inline void
-fromRawValue(const PropsParserContext &context, const RawValue &value, facebook::react::TextAlignment &textAlignment) {
-  textAlignment = facebook::react::TextAlignment::Left;
-
-  if (value.hasValue()) {
-    std::string rawTextAlign;
-    fromRawValue(context, value, rawTextAlign);
-
-    if (rawTextAlign == "center") {
-      textAlignment = facebook::react::TextAlignment::Center;
-    } else if (rawTextAlign == "right") {
-      textAlignment = facebook::react::TextAlignment::Right;
-    }
   }
 }
 
