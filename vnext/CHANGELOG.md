@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 07 Mar 2025 20:21:59 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Mar 2025 17:01:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.38
+
+Wed, 12 Mar 2025 17:01:06 GMT
+
+### Patches
+
+- Add bridging files to Microsoft.ReactNative.Cxx (30809111+acoates-ms@users.noreply.github.com)
+- Add Support for Role Prop (34109996+chiaramooney@users.noreply.github.com)
+- Prevent race condition in ConnectSucceeds WS unit test (#14405) (julio.rocha@microsoft.com)
+- Components do not lost hover state if pointer leaves window before it leaves the component (30809111+acoates-ms@users.noreply.github.com)
+- Fix bool operator on transparent colors returning false (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.37
 

@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Mar 2025 17:01:06 GMT",
+      "version": "0.74.38",
+      "tag": "react-native-windows_v0.74.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0438560b807679d6b74c3410fe2b9502300256ba",
+            "comment": "Add bridging files to Microsoft.ReactNative.Cxx"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "60e5d3d8101cd7836d7fd8ffae83d98a6d68610f",
+            "comment": "Add Support for Role Prop"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "311bbc76a2a3cb9f22864e2f1160be240278d6b6",
+            "comment": "Prevent race condition in ConnectSucceeds WS unit test (#14405)"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "60e5d3d8101cd7836d7fd8ffae83d98a6d68610f",
+            "comment": "Components do not lost hover state if pointer leaves window before it leaves the component"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "60e5d3d8101cd7836d7fd8ffae83d98a6d68610f",
+            "comment": "Fix bool operator on transparent colors returning false"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Mar 2025 20:21:59 GMT",
       "version": "0.74.37",
       "tag": "react-native-windows_v0.74.37",
