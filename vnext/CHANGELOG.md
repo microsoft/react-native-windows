@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 12 Mar 2025 05:22:51 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 13 Mar 2025 05:21:34 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.924
+
+Thu, 13 Mar 2025 05:21:34 GMT
+
+### Changes
+
+- Add IScrollProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
+- Add new .NET projection for Microsoft.ReactNative (jthysell@microsoft.com)
 
 ## 0.0.0-canary.923
 

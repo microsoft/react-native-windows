@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 Mar 2025 05:21:34 GMT",
+      "version": "0.0.0-canary.924",
+      "tag": "react-native-windows_v0.0.0-canary.924",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "70823b2f70fadd8c0584e49a0a2e086548e4b81e",
+            "comment": "Add IScrollProvider Implementation"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9f5249a29fdbbff791bff93da67d0c4f5f7d9199",
+            "comment": "Add new .NET projection for Microsoft.ReactNative"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Mar 2025 05:22:51 GMT",
       "version": "0.0.0-canary.923",
       "tag": "react-native-windows_v0.0.0-canary.923",
