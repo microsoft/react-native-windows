@@ -976,10 +976,16 @@ bool ScrollViewComponentView::scrollToStart(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::pageUp(bool animate) noexcept {
+  if (std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->horizontal) {
+    return scrollLeft(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
+  }
   return scrollUp(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
 }
 
 bool ScrollViewComponentView::pageDown(bool animate) noexcept {
+  if (std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->horizontal) {
+    return scrollRight(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
+  }
   return scrollDown(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
 }
 
@@ -1036,7 +1042,7 @@ bool ScrollViewComponentView::scrollLeft(float delta, bool animate) noexcept {
     return false;
   }
 
-  m_scrollVisual.ScrollBy({delta, 0, 0}, animate);
+  m_scrollVisual.ScrollBy({-delta, 0, 0}, animate);
   return true;
 }
 
@@ -1259,7 +1265,7 @@ facebook::react::Point ScrollViewComponentView::getClientOffset() const noexcept
 }
 
 std::string ScrollViewComponentView::DefaultControlType() const noexcept {
-  return "scrollbar";
+  return "pane";
 }
 
 winrt::com_ptr<ComponentView> ScrollViewComponentView::focusVisualRoot(
@@ -1270,6 +1276,22 @@ winrt::com_ptr<ComponentView> ScrollViewComponentView::focusVisualRoot(
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ScrollViewComponentView::visualToHostFocus() noexcept {
   return m_scrollVisual;
+}
+
+int ScrollViewComponentView::getScrollPositionX() noexcept {
+  return int((m_scrollVisual.ScrollPosition().x / m_horizontalScrollbarComponent->getScrollRange()) * 100);
+}
+
+int ScrollViewComponentView::getScrollPositionY() noexcept {
+  return int((m_scrollVisual.ScrollPosition().y / m_verticalScrollbarComponent->getScrollRange()) * 100);
+}
+
+double ScrollViewComponentView::getVerticalSize() noexcept {
+  return std::min((m_layoutMetrics.frame.size.height / m_contentSize.height * 100.0), 100.0);
+}
+
+double ScrollViewComponentView::getHorizontalSize() noexcept {
+  return std::min((m_layoutMetrics.frame.size.width / m_contentSize.width * 100.0), 100.0);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

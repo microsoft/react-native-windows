@@ -113,6 +113,11 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept override;
   winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept override;
 
+  int getScrollPositionX() noexcept;
+  int getScrollPositionY() noexcept;
+  double getVerticalSize() noexcept;
+  double getHorizontalSize() noexcept;
+
  private:
   void updateContentVisualSize() noexcept;
   bool scrollToEnd(bool animate) noexcept;

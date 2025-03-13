@@ -245,11 +245,10 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
     "SelectionPattern.IsSelectionRequired": true,
     "__Children": [
       {
-        "AutomationId": "Selectable item 1",
-        "ControlType": 50000,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "button",
-        "Name": "Selectable item 1",
+        "AutomationId": "",
+        "ControlType": 50033,
+        "LocalizedControlType": "pane",
+        "Name": "List of selectable items",
         "__Children": [
           {
             "AutomationId": "",
@@ -258,15 +257,6 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "Name": "Unselected",
             "TextRangePattern.GetText": "Unselected",
           },
-        ],
-      },
-      {
-        "AutomationId": "Selectable item 2",
-        "ControlType": 50000,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "button",
-        "Name": "Selectable item 2",
-        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
@@ -274,15 +264,6 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "Name": "Unselected",
             "TextRangePattern.GetText": "Unselected",
           },
-        ],
-      },
-      {
-        "AutomationId": "Selectable item 3",
-        "ControlType": 50000,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "button",
-        "Name": "Selectable item 3",
-        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
