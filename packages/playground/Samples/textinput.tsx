@@ -102,6 +102,24 @@ export default class Bootstrap extends React.Component<{}, any> {
             placeholder={'autoCapitalize characters'}
           />
           <TextInput
+            style={styles.input}
+            textAlign={'left'}
+            autoCapitalize="none"
+            placeholder={'Text aligned to the left'}
+          />
+          <TextInput
+            style={styles.input}
+            textAlign={'center'}
+            autoCapitalize="none"
+            placeholder={'Text aligned to the center'}
+          />
+          <TextInput
+            style={styles.input}
+            textAlign={'right'}
+            autoCapitalize="none"
+            placeholder={'Text aligned to the right'}
+          />
+          <TextInput
             // @ts-ignore
             ref={ref => (textInputRef = ref)}
             onFocus={() => setTimeout(() => textInputRef?.blur(), 5000)}
