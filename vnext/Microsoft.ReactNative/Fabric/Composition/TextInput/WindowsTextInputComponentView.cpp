@@ -1042,6 +1042,12 @@ void WindowsTextInputComponentView::updateProps(
     autoCapitalizeOnUpdateProps(oldTextInputProps.autoCapitalize, newTextInputProps.autoCapitalize);
   }
 
+  if (oldTextInputProps.textAlign != newTextInputProps.textAlign) {
+    // Let UpdateParaFormat() to refresh the text field with the new text alignment.
+    m_propBitsMask |= TXTBIT_PARAFORMATCHANGE;
+    m_propBits |= TXTBIT_PARAFORMATCHANGE;
+  }
+
   UpdatePropertyBits();
 }
 
@@ -1305,7 +1311,15 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   m_pf.cbSize = sizeof(PARAFORMAT2);
   m_pf.dwMask = PFM_ALL;
 
-  m_pf.wAlignment = PFA_LEFT;
+  auto &textAlign = windowsTextInputProps().textAlign;
+
+  if (textAlign == facebook::react::TextAlignment::Center) {
+    m_pf.wAlignment = PFA_CENTER;
+  } else if (textAlign == facebook::react::TextAlignment::Right) {
+    m_pf.wAlignment = PFA_RIGHT;
+  } else {
+    m_pf.wAlignment = PFA_LEFT;
+  }
 
   m_pf.cTabCount = 1;
   m_pf.rgxTabs[0] = lDefaultTab;

@@ -4,6 +4,7 @@
 #pragma once
 
 #include <react/components/rnwcore/Props.h>
+#include <react/renderer/attributedstring/conversions.h>
 #include <react/renderer/components/text/BaseTextProps.h>
 #include <react/renderer/core/propsConversions.h>
 
@@ -118,6 +119,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   bool clearTextOnSubmit{false};
   std::vector<CompWindowsTextInputSubmitKeyEventsStruct> submitKeyEvents{};
   bool autoFocus{false};
+  facebook::react::TextAlignment textAlign{};
 };
 
 } // namespace facebook::react
