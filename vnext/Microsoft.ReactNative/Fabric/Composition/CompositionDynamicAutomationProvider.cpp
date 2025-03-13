@@ -1,13 +1,7 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
-<<<<<<< HEAD
-=======
-#include <Fabric/Composition/CompositionTextRangeProvider.h>
-#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
->>>>>>> 70823b2f70 ([Fabric] Add Support for ScrollProvider (#14411))
-#include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
 #include "RootComponentView.h"
