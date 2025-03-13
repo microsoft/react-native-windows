@@ -85,6 +85,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
+  winrt::com_ptr<ITextProvider2> m_textProvider;
   std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
 };
 
