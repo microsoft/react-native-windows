@@ -363,6 +363,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL isSelected;
   BOOL multipleSelection;
   BOOL selectionRequired;
+  BSTR text = nullptr;
   BOOL horizontallyScrollable;
 
   // Dump IValueProvider Information
@@ -453,9 +454,14 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   == == == =
                // Dump ITextRangeProvider Information
       winrt::com_ptr<ITextProvider> textPattern;
+  == == == =
+               // Dump ITextRangeProvider Information
+      winrt::com_ptr<ITextProvider> textPattern;
+>>>>>>> c289d5d390b86e7650db29f3c5fed8aff253a7c4
   hr = pTarget->GetCurrentPattern(UIA_TextPatternId, reinterpret_cast<IUnknown **>(textPattern.put()));
   if (SUCCEEDED(hr) && textPattern) {
     winrt::com_ptr<ITextRangeProvider> textRangePattern;
@@ -468,6 +474,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     }
   }
 
+<<<<<<< HEAD
   // Dump IScrollProvider Information
   winrt::com_ptr<IScrollProvider> scrollPattern;
   hr = pTarget->GetCurrentPattern(UIA_ScrollPatternId, reinterpret_cast<IUnknown **>(scrollPattern.put()));
@@ -480,6 +487,8 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
 
   ::SysFreeString(text);
 >>>>>>> 70823b2f70 ([Fabric] Add Support for ScrollProvider (#14411))
+  == == == = ::SysFreeString(text);
+>>>>>>> c289d5d390b86e7650db29f3c5fed8aff253a7c4
   ::SysFreeString(value);
 }
 

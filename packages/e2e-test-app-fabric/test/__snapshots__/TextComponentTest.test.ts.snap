@@ -7,6 +7,7 @@ exports[`Text Tests Padding can be added to Text 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "This text is indented by 10px padding on all sides.",
+    "TextRangePattern.GetText": "This text is indented by 10px padding on all sides.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -30,6 +31,7 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
+    "TextRangePattern.GetText": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -53,6 +55,7 @@ exports[`Text Tests Text can be selectable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
+    "TextRangePattern.GetText": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -76,6 +79,7 @@ exports[`Text Tests Text can have a color 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Red color",
+    "TextRangePattern.GetText": "Red color",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -99,6 +103,7 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "This text will have a orange highlight on selection.",
+    "TextRangePattern.GetText": "This text will have a orange highlight on selection.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -109,7 +114,7 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
   "Visual Tree": {
     "Comment": "text-selection-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "916, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -122,6 +127,7 @@ exports[`Text Tests Text can have a size 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Size 23",
+    "TextRangePattern.GetText": "Size 23",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -151,18 +157,21 @@ exports[`Text Tests Text can have advanced borders 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text has customized borders.",
+        "TextRangePattern.GetText": "This text has customized borders.",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text has customized borders.",
+        "TextRangePattern.GetText": "This text has customized borders.",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text has customized borders.",
+        "TextRangePattern.GetText": "This text has customized borders.",
       },
     ],
   },
@@ -281,12 +290,12 @@ exports[`Text Tests Text can have advanced borders 1`] = `
       },
       {
         "Offset": "0, 38, 0",
-        "Size": "916, 40",
+        "Size": "916, 39",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "916, 39",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -322,7 +331,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "-10, 20, 0",
-                "Size": "10, 14",
+                "Size": "10, 13",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -358,7 +367,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 22, 0",
-                "Size": "20, 10",
+                "Size": "20, 9",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -367,12 +376,12 @@ exports[`Text Tests Text can have advanced borders 1`] = `
       },
       {
         "Offset": "0, 77, 0",
-        "Size": "916, 21",
+        "Size": "916, 22",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 21",
+            "Size": "916, 22",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -408,7 +417,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "-1, 4, 0",
-                "Size": "1, 13",
+                "Size": "1, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -444,7 +453,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "0, 4, 0",
-                "Size": "1, 13",
+                "Size": "1, 14",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -463,6 +472,7 @@ exports[`Text Tests Text can have an outer color 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
+    "TextRangePattern.GetText": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -492,6 +502,7 @@ exports[`Text Tests Text can have borders 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Sample bordered text with default styling.",
+        "TextRangePattern.GetText": "Sample bordered text with default styling.",
       },
       {
         "AutomationId": "",
@@ -500,12 +511,16 @@ exports[`Text Tests Text can have borders 1`] = `
         "Name": "Some more bordered text + a tad of CSS.
 1st nested - border specifcied but ignored.
 2nd Inside text!",
+        "TextRangePattern.GetText": "Some more bordered text + a tad of CSS.
+1st nested - border specifcied but ignored.
+2nd Inside text!",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
+        "TextRangePattern.GetText": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
       },
     ],
   },
@@ -533,7 +548,7 @@ exports[`Text Tests Text can have borders 1`] = `
   "Visual Tree": {
     "Comment": "text-border",
     "Offset": "0, 0, 0",
-    "Size": "916, 385",
+    "Size": "916, 384",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -592,12 +607,12 @@ exports[`Text Tests Text can have borders 1`] = `
       },
       {
         "Offset": "100, 127, 0",
-        "Size": "716, 139",
+        "Size": "716, 138",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "716, 139",
+            "Size": "716, 138",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -646,12 +661,12 @@ exports[`Text Tests Text can have borders 1`] = `
       },
       {
         "Offset": "0, 365, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -668,6 +683,7 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Solid line-through",
+    "TextRangePattern.GetText": "Solid line-through",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -691,6 +707,7 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Solid underline",
+    "TextRangePattern.GetText": "Solid underline",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -714,6 +731,7 @@ exports[`Text Tests Text can have shadows 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Demo text shadow",
+    "TextRangePattern.GetText": "Demo text shadow",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -724,7 +742,7 @@ exports[`Text Tests Text can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "text-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 27",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -737,6 +755,7 @@ exports[`Text Tests Text can wrap 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
+    "TextRangePattern.GetText": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
