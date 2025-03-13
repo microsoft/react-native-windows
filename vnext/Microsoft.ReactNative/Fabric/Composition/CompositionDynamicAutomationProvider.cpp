@@ -3,8 +3,8 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
-#include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
+#include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
 #include "RootComponentView.h"
