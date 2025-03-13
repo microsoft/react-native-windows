@@ -274,7 +274,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   return S_OK;
 }
 
-long GetControlType(const std::string &role) noexcept {
+long GetControlTypeFromString(const std::string &role) noexcept {
   if (role == "adjustable") {
     return UIA_SliderControlTypeId;
   } else if (role == "group" || role == "search" || role == "radiogroup" || role == "timer" || role.empty()) {
@@ -339,6 +339,96 @@ long GetControlType(const std::string &role) noexcept {
   return UIA_GroupControlTypeId;
 }
 
+long GetControlTypeFromRole(const facebook::react::Role &role) noexcept {
+  switch (role) {
+    case facebook::react::Role::Alert:
+      return UIA_TextControlTypeId;
+    case facebook::react::Role::Application:
+      return UIA_WindowControlTypeId;
+    case facebook::react::Role::Button:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Checkbox:
+      return UIA_CheckBoxControlTypeId;
+    case facebook::react::Role::Columnheader:
+      return UIA_HeaderControlTypeId;
+    case facebook::react::Role::Combobox:
+      return UIA_ComboBoxControlTypeId;
+    case facebook::react::Role::Document:
+      return UIA_DocumentControlTypeId;
+    case facebook::react::Role::Grid:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Group:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Heading:
+      return UIA_TextControlTypeId;
+    case facebook::react::Role::Img:
+      return UIA_ImageControlTypeId;
+    case facebook::react::Role::Link:
+      return UIA_HyperlinkControlTypeId;
+    case facebook::react::Role::List:
+      return UIA_ListControlTypeId;
+    case facebook::react::Role::Listitem:
+      return UIA_ListItemControlTypeId;
+    case facebook::react::Role::Menu:
+      return UIA_MenuControlTypeId;
+    case facebook::react::Role::Menubar:
+      return UIA_MenuBarControlTypeId;
+    case facebook::react::Role::Menuitem:
+      return UIA_MenuItemControlTypeId;
+    case facebook::react::Role::None:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Presentation:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Progressbar:
+      return UIA_ProgressBarControlTypeId;
+    case facebook::react::Role::Radio:
+      return UIA_RadioButtonControlTypeId;
+    case facebook::react::Role::Radiogroup:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Rowgroup:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Rowheader:
+      return UIA_HeaderControlTypeId;
+    case facebook::react::Role::Scrollbar:
+      return UIA_ScrollBarControlTypeId;
+    case facebook::react::Role::Searchbox:
+      return UIA_EditControlTypeId;
+    case facebook::react::Role::Separator:
+      return UIA_SeparatorControlTypeId;
+    case facebook::react::Role::Slider:
+      return UIA_SliderControlTypeId;
+    case facebook::react::Role::Spinbutton:
+      return UIA_SpinnerControlTypeId;
+    case facebook::react::Role::Status:
+      return UIA_StatusBarControlTypeId;
+    case facebook::react::Role::Summary:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Switch:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Tab:
+      return UIA_TabItemControlTypeId;
+    case facebook::react::Role::Table:
+      return UIA_TableControlTypeId;
+    case facebook::react::Role::Tablist:
+      return UIA_TabControlTypeId;
+    case facebook::react::Role::Tabpanel:
+      return UIA_TabControlTypeId;
+    case facebook::react::Role::Timer:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Toolbar:
+      return UIA_ToolBarControlTypeId;
+    case facebook::react::Role::Tooltip:
+      return UIA_ToolTipControlTypeId;
+    case facebook::react::Role::Tree:
+      return UIA_TreeControlTypeId;
+    case facebook::react::Role::Treegrid:
+      return UIA_TreeControlTypeId;
+    case facebook::react::Role::Treeitem:
+      return UIA_TreeItemControlTypeId;
+  }
+  return UIA_GroupControlTypeId;
+}
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -364,8 +454,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      auto role = props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
-      pRetVal->lVal = GetControlType(role);
+      pRetVal->lVal = props->role == facebook::react::Role::None ? props->accessibilityRole.empty()
+              ? GetControlTypeFromString(compositionView->DefaultControlType())
+              : GetControlTypeFromString(props->accessibilityRole)
+                                                                 : GetControlTypeFromRole(props->role);
       break;
     }
     case UIA_AutomationIdPropertyId: {
@@ -405,12 +497,18 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsContentElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal =
+          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+          ? VARIANT_TRUE
+          : VARIANT_FALSE;
       break;
     }
     case UIA_IsControlElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal =
+          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+          ? VARIANT_TRUE
+          : VARIANT_FALSE;
       break;
     }
     case UIA_IsOffscreenPropertyId: {
@@ -707,7 +805,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  auto accessibilityRole = props->accessibilityRole;
   if (props->accessibilityState.has_value() && props->accessibilityState->readOnly.has_value()) {
     *pRetVal = props->accessibilityState->readOnly.value();
   } else {
