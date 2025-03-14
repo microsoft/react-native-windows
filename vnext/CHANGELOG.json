@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 14 Mar 2025 05:22:28 GMT",
+      "version": "0.0.0-canary.925",
+      "tag": "react-native-windows_v0.0.0-canary.925",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "af6c4b225edd0f0db710514e06ff7839030d8e6a",
+            "comment": "Implemented textAlign in TextInput for Fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Mar 2025 05:21:34 GMT",
       "version": "0.0.0-canary.924",
       "tag": "react-native-windows_v0.0.0-canary.924",
