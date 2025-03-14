@@ -83,6 +83,11 @@
         _CONSOLE;MSO_MOTIFCPP;FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <!--
+        /await  -
+        /bigobj -
+        /FS     - Force Synchronous PDB writes. Useful when setting MultiProcCL.
+      -->
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj /FS</AdditionalOptions>
       <ConformanceMode>true</ConformanceMode>
       <CallingConvention>Cdecl</CallingConvention>
