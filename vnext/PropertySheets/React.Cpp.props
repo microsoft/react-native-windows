@@ -97,8 +97,9 @@
     <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.Cpp.Dependencies.props" />
   </ImportGroup>
 
-  <PropertyGroup>
+  <PropertyGroup Label="C++">
     <CppStandard Condition="'$(CppStandard)'==''">stdcpp20</CppStandard>
+    <MultiProcCL Condition="'$(MultiProcCL)'==''">true</MultiProcCL>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
