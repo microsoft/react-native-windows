@@ -97,8 +97,12 @@
     <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.Cpp.Dependencies.props" />
   </ImportGroup>
 
-  <PropertyGroup>
+  <!--
+    MultiProcCL - Allow building individual project's C++ sources in parallel.
+  -->
+  <PropertyGroup Label="MSVC">
     <CppStandard Condition="'$(CppStandard)'==''">stdcpp20</CppStandard>
+    <MultiProcCL Condition="'$(MultiProcCL)'==''">true</MultiProcCL>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

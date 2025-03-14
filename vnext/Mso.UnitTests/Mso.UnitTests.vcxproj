@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="Current"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -12,7 +13,8 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
-  <!-- Because the test exe is unpackaged, it needs the self contained WinAppSDK stuff below when testing against fabric -->
+  <!-- Because the test exe is unpackaged, it needs the self contained WinAppSDK stuff below when
+  testing against fabric -->
   <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
     <AppContainerApplication>false</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
@@ -65,7 +67,9 @@
     <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
+      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
+      Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="PropertySheet.props" />
@@ -85,7 +89,12 @@
       <PreprocessorDefinitions>_CONSOLE;MS_TARGET_WINDOWS;MSO_MOTIFCPP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
+      <!--
+        /await  -
+        /bigobj -
+        /FS     - Force Synchronous PDB writes. Useful when setting MultiProcCL.
+      -->
+      <AdditionalOptions>/await %(AdditionalOptions) /bigobj /FS</AdditionalOptions>
       <ConformanceMode>true</ConformanceMode>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
@@ -172,11 +181,14 @@
     <None Include="future\futureTest.tt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.7" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn"
+      Version="1.8.1.7" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)"
+      PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
-    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)"
+      Condition="'$(OverrideWinUIPackage)'!='true'" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
