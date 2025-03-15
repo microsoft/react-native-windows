@@ -30,4 +30,7 @@
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' == ''">$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
   </PropertyGroup>
 
+  <!-- User overrides -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Build.local.props" Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.local.props')" />
+
 </Project>
