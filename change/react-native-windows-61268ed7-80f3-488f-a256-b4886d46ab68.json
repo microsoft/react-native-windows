@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable parallel C++ compilation",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

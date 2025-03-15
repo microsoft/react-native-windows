@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 15 Mar 2025 05:21:08 GMT",
+      "version": "0.0.0-canary.926",
+      "tag": "react-native-windows_v0.0.0-canary.926",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ed3e2e0fe2c325b25494ce3e4a3b6c4fea3bfb11",
+            "comment": "Enable parallel C++ compilation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Mar 2025 05:22:28 GMT",
       "version": "0.0.0-canary.925",
       "tag": "react-native-windows_v0.0.0-canary.925",
