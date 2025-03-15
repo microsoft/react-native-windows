@@ -22,18 +22,13 @@ indent_size = 4
 end_of_line = crlf
 
 # Xml project files
-[*.{config,csproj,njsproj,props,targets,vcxitems,vcxproj,vcxproj.filters}]
+[*.{config,csproj,csproj.filters,nuspec,props,ruleset,targets,vcxitems,vcxitems.filters,vcxproj,vcxproj.filters}]
 indent_size = 2
 end_of_line = crlf
 insert_final_newline = false
 
 # Xml files
 [*.{xml,stylecop,resx,ruleset}]
-indent_size = 2
-end_of_line = crlf
-
-# XML config files
-[*.{msbuild,props,targets,ruleset,config,nuspec}]
 indent_size = 2
 end_of_line = crlf
 

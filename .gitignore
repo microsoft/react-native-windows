@@ -81,6 +81,8 @@ ipch/
 *.tlog/
 Ankh.NoLoad
 UpgradeLog.htm
+Directory.Build.local.props
+Directory.Build.local.targets
 
 #MonoDevelop
 *.pidb
