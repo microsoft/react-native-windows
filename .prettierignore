@@ -55,13 +55,3 @@ vnext/src-win/rntypes
 vnext/rntypes
 vnext/target
 vnext/flow-typed
-
-# MSBuild project files
-*.props
-*.targets
-*.config
-*.ruleset
-*.vcxproj
-*.vcxproj.filters
-*.csproj
-*.csproj.filters
