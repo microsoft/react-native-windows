@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Allow portals to have independent layout constraints and scale factor",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

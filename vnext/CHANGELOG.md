@@ -1,8 +1,48 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 10 Feb 2025 23:25:52 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Mar 2025 15:29:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.9
+
+Mon, 17 Mar 2025 15:29:08 GMT
+
+### Patches
+
+- Update Provider Guardrails (34109996+chiaramooney@users.noreply.github.com)
+- Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true (50150435+JesseCol@users.noreply.github.com)
+- Use WebSocket factory in PkgInspectorConnection (julio.rocha@microsoft.com)
+- Fix tooltips in high dpi (30809111+acoates-ms@users.noreply.github.com)
+- Allow portals to have independent layout constraints and scale factor (30809111+acoates-ms@users.noreply.github.com)
+- Add Support for Role Prop (34109996+chiaramooney@users.noreply.github.com)
+- Components do not lost hover state if pointer leaves window before it leaves the component (30809111+acoates-ms@users.noreply.github.com)
+- add modal implementation with PopupWindowSiteBridge (tatianakapos@microsoft.com)
+- TurboModule spec checking should accept hstring for string arguments (30809111+acoates-ms@users.noreply.github.com)
+- Remove Paper-only code from Fabric builds of Microsoft.ReactNative (jthysell@microsoft.com)
+- RNIsland UIA fragment root should report parents fragment root (30809111+acoates-ms@users.noreply.github.com)
+- std::aligned_storage is deprecated (30809111+acoates-ms@users.noreply.github.com)
+- Basic support for stitching the UIA tree for a ContentIslandComponentView's child (email not defined)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+- Fix bool operator on transparent colors returning false (30809111+acoates-ms@users.noreply.github.com)
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when currently focused element gets marked as enableFocusRing=false (30809111+acoates-ms@users.noreply.github.com)
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- Fix issue when calling arrange on an RN Island during load (30809111+acoates-ms@users.noreply.github.com)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+- Fix stale focus rects left in UI when last focusable component is removed (30809111+acoates-ms@users.noreply.github.com)
+- Property updates switching between PlatformColors would no-op (30809111+acoates-ms@users.noreply.github.com)
+- Round Focus visuals by default, fix nudge rendering (30809111+acoates-ms@users.noreply.github.com)
+- Only build OfficeReact.Win32 with UseFabric enabled (jthysell@microsoft.com)
+- ITextProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
+- fix modal height (tatianakapos@microsoft.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
+- Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2 (50150435+JesseCol@users.noreply.github.com)
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+- Refactor WebSocket resource class (#14377) (julio.rocha@microsoft.com)
+- Fix react devtools hitting an assert on launch (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.76.5
+- Bump @react-native-windows/codegen to v0.76.3
 
 ## 0.76.8
 

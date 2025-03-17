@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Refactor WebSocket resource class (#14377)",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Fri, 24 Jan 2025 19:55:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Mar 2025 15:29:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.3
+
+Mon, 17 Mar 2025 15:29:08 GMT
+
+### Patches
+
+- Fix UpdateState on generated base class (30809111+acoates-ms@users.noreply.github.com)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.76.2
 

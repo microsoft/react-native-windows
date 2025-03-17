@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true",
-  "packageName": "react-native-windows",
-  "email": "50150435+JesseCol@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

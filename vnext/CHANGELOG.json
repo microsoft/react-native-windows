@@ -2,6 +2,213 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Mar 2025 15:29:08 GMT",
+      "version": "0.76.9",
+      "tag": "react-native-windows_v0.76.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Update Provider Guardrails"
+          },
+          {
+            "author": "50150435+JesseCol@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Use WebSocket factory in PkgInspectorConnection"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix tooltips in high dpi"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Allow portals to have independent layout constraints and scale factor"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Add Support for Role Prop"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Components do not lost hover state if pointer leaves window before it leaves the component"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "add modal implementation with PopupWindowSiteBridge"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "TurboModule spec checking should accept hstring for string arguments"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Remove Paper-only code from Fabric builds of Microsoft.ReactNative"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "RNIsland UIA fragment root should report parents fragment root"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "std::aligned_storage is deprecated"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Basic support for stitching the UIA tree for a ContentIslandComponentView's child"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix build issue building component codegen using clang"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix bool operator on transparent colors returning false"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix platform color"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix crash when currently focused element gets marked as enableFocusRing=false"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Implement ISelectionProvider and ISelectionItemProvider"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix issue when calling arrange on an RN Island during load"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "IRangeValue Provider"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix stale focus rects left in UI when last focusable component is removed"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Property updates switching between PlatformColors would no-op"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Round Focus visuals by default, fix nudge rendering"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Only build OfficeReact.Win32 with UseFabric enabled"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "ITextProvider Implementation"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "fix modal height"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix crash running on server 2016"
+          },
+          {
+            "author": "50150435+JesseCol@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Rework modal implementation to use public APIs"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2f62e3dae3b0b8500c05233d60850b9e268e542b",
+            "comment": "Refactor WebSocket resource class (#14377)"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "146231794bfd4cd32715b5845e1ac58c4c546d13",
+            "comment": "Fix react devtools hitting an assert on launch"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.76.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Feb 2025 23:25:52 GMT",
       "version": "0.76.8",
       "tag": "react-native-windows_v0.76.8",
