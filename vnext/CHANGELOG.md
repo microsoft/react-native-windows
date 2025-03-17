@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 27 Feb 2025 20:13:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Mar 2025 15:30:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.4
+
+Mon, 17 Mar 2025 15:30:03 GMT
+
+### Patches
+
+- Add Support for Role Prop (34109996+chiaramooney@users.noreply.github.com)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+- ITextProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
+- Refactor WebSocket resource class (#14377) (julio.rocha@microsoft.com)
+- integrate 0.77.1 (tatianakapos@microsoft.com)
 
 ## 0.77.3
 
