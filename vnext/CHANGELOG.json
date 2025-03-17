@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Mar 2025 15:30:03 GMT",
+      "version": "0.77.4",
+      "tag": "react-native-windows_v0.77.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "657f0d9a8915223e83f1ef043045b0da2f049af3",
+            "comment": "Add Support for Role Prop"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ef8b692f54cdd89fefb66ea2d3a6c57c8b56f833",
+            "comment": "IRangeValue Provider"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c289d5d390b86e7650db29f3c5fed8aff253a7c4",
+            "comment": "ITextProvider Implementation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a1574f6381eab469ed68378ca9711dad8756fe8c",
+            "comment": "Refactor WebSocket resource class (#14377)"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f11ceab457bb81ac1848e0c2b6ca2e7f7cac35dc",
+            "comment": "integrate 0.77.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2025 20:13:39 GMT",
       "version": "0.77.3",
       "tag": "react-native-windows_v0.77.3",
