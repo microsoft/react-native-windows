@@ -4,7 +4,7 @@
   <!-- This target is used to compute the inputs and outputs for running the `yarn install`. -->
   <Target
     Name="ReactNativeYarnInstallInputAndOutputs"
-    >
+  >
     <ItemGroup>
       <_ReactNativeYarnInstallInputFiles Include="$(MSBuildThisFileDirectory)yarn.lock" />
       <_ReactNativeYarnInstallInputFiles Include="$(MSBuildThisFileDirectory)**\package.json" Exclude="$(MSBuildThisFileDirectory)node_modules\**" />
@@ -24,7 +24,7 @@
     Inputs="@(_ReactNativeYarnInstallInputFiles)"
     Outputs="@(_ReactNativeYarnInstallOutputFiles)"
     Condition="'$(DesignTimeBuild)'=='' AND '$(AGENT_NAME)' == ''"
-    >
+  >
 
     <Message Text="Running yarn install to fetch latest packages." Importance="High" />
     <Message Text="yarn install --frozen-lockfile --mutex file:.yarn-mutex" Importance="High" />
@@ -32,8 +32,8 @@
       ContinueOnError="True"
       Command="yarn install --frozen-lockfile --mutex file:.yarn-mutex"
       WorkingDirectory="$(MSBuildThisFileDirectory)"
-      >
-      <Output TaskParameter="ExitCode" ItemName="_ReactNativeYarnExitCode"/>
+    >
+      <Output TaskParameter="ExitCode" ItemName="_ReactNativeYarnExitCode" />
     </Exec>
 
     <Message Text="yarn install: Succeeded" Condition="'%(_ReactNativeYarnExitCode.Identity)' == '0'" Importance="High" />
@@ -195,5 +195,8 @@
     <Message Text="                                            %(ProjectCapability.Identity)" />
 
   </Target>
+
+  <!-- User overrides -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Build.local.targets" Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.local.targets')" />
 
 </Project>
