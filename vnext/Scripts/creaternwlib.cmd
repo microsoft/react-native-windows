@@ -8,7 +8,7 @@ REM name            The name of the app to create (default: testlib)
 REM /r [version]    Use react@version (default: latest)
 REM /rn [version]   Use react-native@version (default: latest)
 REM /rnw [version]  Use react-native-windows@version (default: latest)
-REM /lt [template]  Use template (default: module-mixed)
+REM /lt [template]  Use create-react-native-library template (default: turbo-module)
 REM /linkrnw        Use your local RNW repo at RNW_ROOT
 REM
 REM Requirements:
