@@ -244,134 +244,47 @@ TextMeasurement TextLayoutManager::measure(
   TextMeasurement measurement{};
   auto &attributedString = attributedStringBox.getValue();
 
-  // Get attachments
-  float totalWidth = 0;
-  float totalHeight = 0;
-  auto fragments = attributedString.getFragments();
-  auto outerFragment = fragments[0];
-  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-  auto size = layoutConstraints.maximumSize;
+  measurement = m_measureCache.get(
+      {attributedString, paragraphAttributes, layoutConstraints}, [&](TextMeasureCacheKey const &key) {
+        auto telemetry = TransactionTelemetry::threadLocalTelemetry();
+        if (telemetry) {
+          telemetry->willMeasureText();
+        }
 
-  // Define font style
-  DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
-  if (outerFragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic)
-    style = DWRITE_FONT_STYLE_ITALIC;
-  else if (outerFragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique)
-    style = DWRITE_FONT_STYLE_OBLIQUE;
+        winrt::com_ptr<IDWriteTextLayout> spTextLayout;
 
-  // Create text format with base attributes
-  winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-  winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
-      outerFragment.textAttributes.fontFamily.empty()
-          ? L"Segoe UI"
-          : Microsoft::Common::Unicode::Utf8ToUtf16(outerFragment.textAttributes.fontFamily).c_str(),
-      nullptr, // Font collection (nullptr sets it to use the system font collection).
-      static_cast<DWRITE_FONT_WEIGHT>(outerFragment.textAttributes.fontWeight.value_or(
-          static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
-      style,
-      DWRITE_FONT_STRETCH_NORMAL,
-      (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
-       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier))
-          ? (outerFragment.textAttributes.fontSizeMultiplier * outerFragment.textAttributes.fontSize)
-          : outerFragment.textAttributes.fontSize,
-      L"",
-      spTextFormat.put()));
+        TextMeasurement::Attachments attachments;
+        GetTextLayout(
+            attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
 
-  // Set line height if specified
-  if (!isnan(outerFragment.textAttributes.lineHeight)) {
-    winrt::check_hresult(spTextFormat->SetLineSpacing(
-        DWRITE_LINE_SPACING_METHOD_UNIFORM,
-        outerFragment.textAttributes.lineHeight,
-        // Recommended ratio of baseline to lineSpacing is 80%
-        // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
-        // It is possible we need to load full font metrics to calculate a better baseline value.
-        // For a particular font, you can determine what lineSpacing and baseline should be by examining a
-        // DWRITE_FONT_METRICS method available from the GetMetrics method of IDWriteFont or IDWriteFontFace. For
-        // normal behavior, you'd set lineSpacing to the sum of ascent, descent and lineGap (adjusted for the em
-        // size, of course), and baseline to the ascent value.
-        outerFragment.textAttributes.lineHeight * 0.8f));
-  }
+        if (spTextLayout) {
+          auto maxHeight = std::numeric_limits<float>().max();
+          if (paragraphAttributes.maximumNumberOfLines > 0) {
+            std::vector<DWRITE_LINE_METRICS> lineMetrics;
+            uint32_t actualLineCount;
+            spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
+            lineMetrics.resize(static_cast<size_t>(actualLineCount));
+            winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
+            maxHeight = 0;
+            const auto count =
+                std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount);
+            for (uint32_t i = 0; i < count; ++i) {
+              maxHeight += lineMetrics[i].height;
+            }
+          }
 
-  // Set text alignment
-  DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-  if (outerFragment.textAttributes.alignment) {
-    switch (*outerFragment.textAttributes.alignment) {
-      case facebook::react::TextAlignment::Center:
-        alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
-        break;
-      case facebook::react::TextAlignment::Justified:
-        alignment = DWRITE_TEXT_ALIGNMENT_JUSTIFIED;
-        break;
-      case facebook::react::TextAlignment::Left:
-        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-        break;
-      case facebook::react::TextAlignment::Right:
-        alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
-        break;
-      // TODO use LTR values
-      case facebook::react::TextAlignment::Natural:
-        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-        break;
-      default:
-        assert(false);
-    }
-  }
-  winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
+          DWRITE_TEXT_METRICS dtm{};
+          winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
+          measurement.size = {dtm.width, std::min(dtm.height, maxHeight)};
+          measurement.attachments = attachments;
+        }
 
-  // Get text with Object Replacement Characters for attachments
-  auto str = GetTransformedText(attributedStringBox);
+        if (telemetry) {
+          telemetry->didMeasureText();
+        }
 
-  // Create text layout
-  winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
-      str.c_str(), static_cast<UINT32>(str.size()), spTextFormat.get(), size.width, size.height, spTextLayout.put()));
-
-  DWRITE_TEXT_METRICS dtm{};
-  winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
-
-  // Calculate positions for attachments
-  TextMeasurement::Attachments attachments;
-  unsigned int position = 0;
-  for (const auto &fragment : fragments) {
-    if (fragment.isAttachment()) {
-      // Get the position of the Object Replacement Character
-      DWRITE_HIT_TEST_METRICS hitTestMetrics;
-      float x, y;
-      winrt::check_hresult(spTextLayout->HitTestTextPosition(position, false, &x, &y, &hitTestMetrics));
-
-      // Store the attachment position and dimensions
-      TextMeasurement::Attachment attachment;
-      attachment.frame = {
-          x, // left
-          y, // top
-          fragment.parentShadowView.layoutMetrics.frame.size.width, // width
-          fragment.parentShadowView.layoutMetrics.frame.size.height // height
-      };
-
-      // Check if the attachment is clipped (height exceeds text height)
-      attachment.isClipped = attachment.frame.size.height > dtm.height;
-
-      // If clipped, adjust the height to match the text height
-      if (attachment.isClipped) {
-        attachment.frame.size.height = dtm.height;
-      }
-
-      attachments.push_back(attachment);
-
-      // Update total dimensions
-      totalWidth += attachment.frame.size.width;
-      if (attachment.frame.size.height > totalHeight) {
-        totalHeight = attachment.frame.size.height;
-      }
-    }
-    position += static_cast<UINT32>(fragment.string.length());
-  }
-
-  // Set the final size, using the larger of text height or attachment height
-  measurement.size = {dtm.width + totalWidth, std::max(dtm.height, totalHeight)};
-
-  // Set attachments
-  measurement.attachments = attachments;
-
+        return measurement;
+      });
   return measurement;
 }
 
