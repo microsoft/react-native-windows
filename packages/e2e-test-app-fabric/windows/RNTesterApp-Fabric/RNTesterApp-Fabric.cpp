@@ -364,6 +364,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL multipleSelection;
   BOOL selectionRequired;
   BSTR text = nullptr;
+  BOOL horizontallyScrollable;
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;
