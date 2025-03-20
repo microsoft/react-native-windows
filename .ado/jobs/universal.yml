@@ -56,14 +56,17 @@
               BuildConfiguration: Release
               BuildPlatform: x64
               UseFabric: false
+              UseExperimentalWinUI3: true
             - Name: X64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: x64
               UseFabric: true
+              UseExperimentalWinUI3: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
               UseFabric: true
+              UseExperimentalWinUI3: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: X64Debug
@@ -144,6 +147,11 @@
                     buildEnvironment: ${{ config.BuildEnvironment }}
 
                 - template: ../templates/apply-published-version-vars.yml
+
+                - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
+                  - template:  ../templates/enable-experimental-winui3.yml
+                    parameters:
+                      workingDir: vnext
 
                 - template: ../templates/msbuild-sln.yml
                   parameters:

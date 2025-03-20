@@ -1,5 +1,5 @@
 parameters:
-- name: package
+- name: workingDir
   type: string
 - name: feature
   type: string
@@ -17,4 +17,4 @@ steps:
 
       $experimentalFeatures.Save("$pwd\ExperimentalFeatures.props")
     displayName: Set "${{ parameters.feature }}" to "${{ parameters.value }}"
-    workingDirectory: ${{ parameters.package }}/windows
+    workingDirectory: ${{ parameters.workingDir }}
