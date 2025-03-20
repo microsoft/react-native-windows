@@ -198,6 +198,32 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     float horizAlignment{0.f};
     float vertAlignment{0.f};
 
+    /*
+    const auto &props = paragraphProps()
+    if (props.textAttributes.alignment) {
+      switch (*props.textAttributes.alignment) {
+        case facebook::react::TextAlignment::Center:
+          horizAlignment = 0.5f;
+          break;
+        case facebook::react::TextAlignment::Justified:
+          horizAlignment = 0.5f;
+          break;
+        case facebook::react::TextAlignment::Left:
+          horizAlignment = 0.f;
+          break;
+        case facebook::react::TextAlignment::Right:
+          horizAlignment = 1.f;
+          break;
+        // TODO use LTR values
+        case facebook::react::TextAlignment::Natural:
+          horizAlignment = 0.f;
+          break;
+        default:
+          assert(false);
+      }
+    }
+    */
+    // TODO Using brush alignment to align the text makes it blurry...
     if (m_drawingSurface) {
       m_drawingSurface.HorizontalAlignmentRatio(horizAlignment);
       m_drawingSurface.VerticalAlignmentRatio(vertAlignment);
