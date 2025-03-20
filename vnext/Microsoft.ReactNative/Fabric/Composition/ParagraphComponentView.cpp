@@ -155,6 +155,9 @@ void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
 void ParagraphComponentView::updateVisualBrush() noexcept {
   bool requireNewBrush{false};
 
+  // TODO
+  // updateTextAlignment(paragraphProps.textAttributes.alignment);
+
   if (!m_textLayout) {
     facebook::react::LayoutConstraints constraints;
     constraints.maximumSize.width =
@@ -178,7 +181,6 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
         m_drawingSurface = nullptr;
         return;
       }
-
 
       winrt::Windows::Foundation::Size surfaceSize = {
           m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,

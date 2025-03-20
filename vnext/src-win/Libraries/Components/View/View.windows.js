@@ -280,12 +280,72 @@ const View: component(
       />
     );
 
-    if (hasTextAncestor) {
+    // Paper doesn't support Views in Text while Fabric does
+    if (global.RN$Bridgeless !== true) {
       return (
-        <TextAncestor.Provider value={false}>
-          {actualView}
-        </TextAncestor.Provider>
+        // [Windows
+        // In core this is a TextAncestor.Provider value={false} See
+        // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
+        // But since Views are not currently supported in Text, we do not need the extra provider
+        <TextAncestor.Consumer>
+          {hasTextAncestor => {
+            invariant(
+              !hasTextAncestor,
+              'Nesting of <View> within <Text> is not currently supported.',
+            );
+            return (
+              <ViewNativeComponent
+                {...otherProps}
+                accessibilityLiveRegion={
+                  ariaLive === 'off'
+                    ? 'none'
+                    : ariaLive ?? accessibilityLiveRegion
+                }
+                accessibilityLabel={ariaLabel ?? accessibilityLabel}
+                accessibilityLevel={ariaLevel ?? accessibilityLevel}
+                accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
+                accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
+                focusable={_focusable}
+                disabled={disabled}
+                accessibilityState={_accessibilityState}
+                accessibilityElementsHidden={
+                  ariaHidden ?? accessibilityElementsHidden
+                }
+                accessibilityLabelledBy={_accessibilityLabelledBy}
+                accessibilityValue={_accessibilityValue}
+                importantForAccessibility={
+                  ariaHidden === true
+                    ? 'no-hide-descendants'
+                    : importantForAccessibility
+                }
+                nativeID={id ?? nativeID}
+                ref={forwardedRef}
+                onKeyDown={_keyDown}
+                onKeyDownCapture={_keyDownCapture}
+                onKeyUp={_keyUp}
+                onKeyUpCapture={_keyUpCapture}
+                // [Windows
+                accessible={_accessible}
+                children={
+                  importantForAccessibility === 'no-hide-descendants'
+                    ? childrenWithImportantForAccessibility(otherProps.children)
+                    : otherProps.children
+                }
+                // Windows]
+              />
+            );
+          }}
+        </TextAncestor.Consumer>
+        // Windows]
       );
+    } else {
+      if (hasTextAncestor) {
+        return (
+          <TextAncestor.Provider value={false}>
+            {actualView}
+          </TextAncestor.Provider>
+        );
+      }
     }
 
     return actualView;

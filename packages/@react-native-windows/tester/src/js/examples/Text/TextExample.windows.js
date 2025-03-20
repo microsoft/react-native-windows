@@ -1094,7 +1094,26 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
   );
   const subtitleStyle = {fontSize: 16, marginTop: 8, fontWeight: 'bold'};
 
-  return (
+  // Paper doesn't support Views in Text while Fabric does
+  return global.RN$Bridgeless !== true ? (
+    <View>
+      <RNTesterText style={subtitleStyle}>{'Nested <Text/>s:'}</RNTesterText>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        <RNTesterText>{texts}</RNTesterText>
+        {marker}
+      </View>
+
+      <RNTesterText style={subtitleStyle}>
+        {'Array of <Text/>s in <View>:'}
+      </RNTesterText>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        {texts}
+        {marker}
+      </View>
+    </View>
+  ) : (
     <View>
       <RNTesterText style={subtitleStyle}>{'Nested <Text/>s:'}</RNTesterText>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
@@ -1663,48 +1682,54 @@ const examples = [
       );
     },
   },
-  {
-    title: 'Inline views',
-    name: 'inlineViewsBasic',
-    render(): React.Node {
-      return <TextInlineView.Basic />;
-    },
-  },
-  {
-    title: 'Inline views with multiple nested texts',
-    name: 'inlineViewsMultiple',
-    render(): React.Node {
-      return <TextInlineView.NestedTexts />;
-    },
-  },
-  {
-    title: 'Inline image/view clipped by <Text>',
-    name: 'inlineViewsClipped',
-    render(): React.Node {
-      return <TextInlineView.ClippedByText />;
-    },
-  },
-  {
-    title: 'Relayout inline image',
-    name: 'relayoutInlineImage',
-    render(): React.Node {
-      return <TextInlineView.ChangeImageSize />;
-    },
-  },
-  {
-    title: 'Relayout inline view',
-    name: 'relayoutInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeViewSize />;
-    },
-  },
-  {
-    title: 'Relayout nested inline view',
-    name: 'relayoutNestedInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeInnerViewSize />;
-    },
-  },
+  // Paper doesn't support Views in Text while Fabric does
+  ...(global.RN$Bridgeless === true
+    ? [
+        {
+          title: 'Inline views',
+          name: 'inlineViewsBasic',
+          render(): React.Node {
+            return <TextInlineView.Basic />;
+          },
+        },
+        {
+          title: 'Inline views with multiple nested texts',
+          name: 'inlineViewsMultiple',
+          render(): React.Node {
+            return <TextInlineView.NestedTexts />;
+          },
+        },
+        {
+          title: 'Inline image/view clipped by <Text>',
+          name: 'inlineViewsClipped',
+          render(): React.Node {
+            return <TextInlineView.ClippedByText />;
+          },
+        },
+        {
+          title: 'Relayout inline image',
+          name: 'relayoutInlineImage',
+          render(): React.Node {
+            return <TextInlineView.ChangeImageSize />;
+          },
+        },
+        {
+          title: 'Relayout inline view',
+          name: 'relayoutInlineView',
+          render(): React.Node {
+            return <TextInlineView.ChangeViewSize />;
+          },
+        },
+        {
+          title: 'Relayout nested inline view',
+          name: 'relayoutNestedInlineView',
+          render(): React.Node {
+            return <TextInlineView.ChangeInnerViewSize />;
+          },
+        },
+        TextInlineViewsExample,
+      ]
+    : []),
   {
     title: 'Text shadow',
     name: 'textShadow',
@@ -1846,7 +1871,6 @@ const examples = [
       );
     },
   },
-  TextInlineViewsExample,
   {
     title: 'Customized Accessibility',
     name: 'textAccessibility',
