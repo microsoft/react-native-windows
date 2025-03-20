@@ -1,8 +1,42 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 08 Mar 2025 06:23:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 15 Mar 2025 05:21:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.926
+
+Sat, 15 Mar 2025 05:21:08 GMT
+
+### Changes
+
+- Enable parallel C++ compilation (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.925
+
+Fri, 14 Mar 2025 05:22:28 GMT
+
+### Changes
+
+- Implemented textAlign in TextInput for Fabric (14967941+danielayala94@users.noreply.github.com)
+
+## 0.0.0-canary.924
+
+Thu, 13 Mar 2025 05:21:34 GMT
+
+### Changes
+
+- Add IScrollProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
+- Add new .NET projection for Microsoft.ReactNative (jthysell@microsoft.com)
+
+## 0.0.0-canary.923
+
+Wed, 12 Mar 2025 05:22:51 GMT
+
+### Changes
+
+- Add Support for Role Prop (34109996+chiaramooney@users.noreply.github.com)
+- Fix bool operator on transparent colors returning false (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.922
 

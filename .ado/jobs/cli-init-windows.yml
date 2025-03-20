@@ -22,6 +22,7 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+            publishNuGet: true
           - Name: FabricX86Debug
             template: cpp-app
             configuration: Debug
@@ -118,6 +119,7 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+            publishNuGet: true
           - Name: PaperX64ReleaseCpp
             template: old/uwp-cpp-app
             configuration: Release
@@ -137,6 +139,7 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+            publishNuGet: true
           - Name: FabricX86Debug
             template: cpp-app
             configuration: Debug
@@ -148,6 +151,7 @@ parameters:
             configuration: Release
             platform: x86
             useNuGet: true
+            publishNuGet: true
           - Name: FabricArm64Debug
             template: cpp-app
             configuration: Debug
@@ -160,6 +164,7 @@ parameters:
             platform: ARM64
             additionalRunArguments: --no-autolink --no-deploy
             useNuGet: true
+            publishNuGet: true
           - Name: FabricLibX64Debug
             template: cpp-lib
             configuration: Debug

@@ -150,5 +150,6 @@
     "**/*.{ts,tsx,js,jsx}"
   ],
   "prettier.configPath": ".prettierrc",
-  "prettier.ignorePath": ".prettierignore"
+  "prettier.ignorePath": ".prettierignore",
+  "xml.format.maxLineWidth": 0
 }
