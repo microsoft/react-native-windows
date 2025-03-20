@@ -28,6 +28,7 @@ import {convertObjectFitToResizeMode} from './ImageUtils';
 import ImageViewNativeComponent from './ImageViewNativeComponent';
 import NativeImageLoaderIOS from './NativeImageLoaderIOS';
 import resolveAssetSource from './resolveAssetSource';
+import TextInlineImageNativeComponent from './TextInlineImageNativeComponent';
 import * as React from 'react';
 
 function getSize(
@@ -171,37 +172,24 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
   const actualRef = useWrapRefWithImageAttachedCallbacks(forwardedRef);
 
   return (
-    // [Windows
-    <TextAncestor.Consumer>
-      {hasTextAncestor => {
-        invariant(
-          !hasTextAncestor,
-          'Nesting of <Image> within <Text> is not currently supported.',
-        );
-        // windows]
-
+    <ImageAnalyticsTagContext.Consumer>
+      {analyticTag => {
         return (
-          <ImageAnalyticsTagContext.Consumer>
-            {analyticTag => {
-              return (
-                <ImageViewNativeComponent
-                  accessibilityState={_accessibilityState}
-                  {...restProps}
-                  accessible={props.alt !== undefined ? true : props.accessible}
-                  accessibilityLabel={accessibilityLabel ?? props.alt}
-                  ref={actualRef}
-                  style={style}
-                  resizeMode={resizeMode}
-                  tintColor={tintColor}
-                  source={sources}
-                  internal_analyticTag={analyticTag}
-                />
-              );
-            }}
-          </ImageAnalyticsTagContext.Consumer>
+          <ImageViewNativeComponent
+            accessibilityState={_accessibilityState}
+            {...restProps}
+            accessible={props.alt !== undefined ? true : props.accessible}
+            accessibilityLabel={accessibilityLabel ?? props.alt}
+            ref={actualRef}
+            style={style}
+            resizeMode={resizeMode}
+            tintColor={tintColor}
+            source={sources}
+            internal_analyticTag={analyticTag}
+          />
         );
       }}
-    </TextAncestor.Consumer>
+    </ImageAnalyticsTagContext.Consumer>
   );
 });
 

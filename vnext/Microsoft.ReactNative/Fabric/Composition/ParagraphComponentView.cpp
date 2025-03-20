@@ -1,4 +1,3 @@
-
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -32,14 +31,12 @@ ParagraphComponentView::ParagraphComponentView(
 void ParagraphComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::MountChildComponentView(childComponentView, index);
 }
 
 void ParagraphComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
@@ -158,9 +155,6 @@ void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
 void ParagraphComponentView::updateVisualBrush() noexcept {
   bool requireNewBrush{false};
 
-  // TODO
-  // updateTextAlignment(paragraphProps.textAttributes.alignment);
-
   if (!m_textLayout) {
     facebook::react::LayoutConstraints constraints;
     constraints.maximumSize.width =
@@ -185,6 +179,9 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
         return;
       }
 
+      // Calculate baseline offset for proper text alignment
+      float baselineOffset = metrics.height * 0.8f; // Use 80% of height as baseline
+
       winrt::Windows::Foundation::Size surfaceSize = {
           m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
           m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
@@ -199,35 +196,11 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
     float horizAlignment{0.f};
-    /*
-    const auto &props = paragraphProps()
-    if (props.textAttributes.alignment) {
-      switch (*props.textAttributes.alignment) {
-        case facebook::react::TextAlignment::Center:
-          horizAlignment = 0.5f;
-          break;
-        case facebook::react::TextAlignment::Justified:
-          horizAlignment = 0.5f;
-          break;
-        case facebook::react::TextAlignment::Left:
-          horizAlignment = 0.f;
-          break;
-        case facebook::react::TextAlignment::Right:
-          horizAlignment = 1.f;
-          break;
-        // TODO use LTR values
-        case facebook::react::TextAlignment::Natural:
-          horizAlignment = 0.f;
-          break;
-        default:
-          assert(false);
-      }
-    }
-    */
-    // TODO Using brush alignment to align the text makes it blurry...
+    float vertAlignment{0.f};
+
     if (m_drawingSurface) {
       m_drawingSurface.HorizontalAlignmentRatio(horizAlignment);
-      m_drawingSurface.VerticalAlignmentRatio(0.f);
+      m_drawingSurface.VerticalAlignmentRatio(vertAlignment);
       m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     }
     Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);
