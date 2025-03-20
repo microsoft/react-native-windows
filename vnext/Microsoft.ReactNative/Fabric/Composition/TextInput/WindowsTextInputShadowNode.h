@@ -51,7 +51,10 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
 
   void layout(LayoutContext layoutContext) override;
 
-  // Float baseline(const LayoutContext& layoutContext, Size size) const override;
+  Float baseline(const LayoutContext &layoutContext, Size size) const override {
+    // Calculate baseline as 80% of the text height
+    return size.height * 0.8f;
+  }
 
   std::shared_ptr<const TextLayoutManager> textLayoutManager_;
 

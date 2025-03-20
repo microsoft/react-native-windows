@@ -179,8 +179,6 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
         return;
       }
 
-      // Calculate baseline offset for proper text alignment
-      float baselineOffset = metrics.height * 0.8f; // Use 80% of height as baseline
 
       winrt::Windows::Foundation::Size surfaceSize = {
           m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
@@ -196,7 +194,6 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
     float horizAlignment{0.f};
-    float vertAlignment{0.f};
 
     /*
     const auto &props = paragraphProps()
@@ -226,7 +223,6 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     // TODO Using brush alignment to align the text makes it blurry...
     if (m_drawingSurface) {
       m_drawingSurface.HorizontalAlignmentRatio(horizAlignment);
-      m_drawingSurface.VerticalAlignmentRatio(vertAlignment);
       m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     }
     Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);
