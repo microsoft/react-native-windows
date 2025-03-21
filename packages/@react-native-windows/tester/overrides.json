@@ -108,9 +108,9 @@
     },
     {
       "type": "derived",
-      "file": "src/js/examples/Text/TextInlineViewExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/Text/TextInlineViewExample.js",
-      "baseHash": "05e9aba7bc765ca0f9e15313bb60a92a9c7688eb"
+      "file": "src/js/examples/Text/TextInlineViewsExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Text/TextInlineViewsExample.js",
+      "baseHash": "63088038921558214c480b323dd2099698911f3f"
     },
     {
       "type": "patch",
