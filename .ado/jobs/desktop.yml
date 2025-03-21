@@ -35,6 +35,7 @@ parameters:
           - Name: X64Debug
             BuildConfiguration: Debug
             BuildPlatform: x64
+            UseExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Debug
@@ -166,6 +167,11 @@ jobs:
                   $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
                   Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
                 displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
+
+            - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
+              - template:  ../templates/enable-experimental-winui3.yml
+                parameters:
+                  workingDir: vnext
 
             - template: ../templates/msbuild-sln.yml
               parameters:

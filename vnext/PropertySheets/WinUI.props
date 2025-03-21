@@ -3,13 +3,16 @@
   <PropertyGroup Label="WinUI3 versioning">
 
     <!-- 
-      Internal versions are located at: https://microsoft.visualstudio.com/DefaultCollection/ProjectReunion/_artifacts/feed/Project.Reunion.nuget.internal/NuGet/Microsoft.WindowsAppSDK/versions
-      For local testing of internal versions, modify WinUI3ExperimentalVersion, and comment out the addition nuget source in NuGet.Config
+      Internal versions are typically only located at: https://microsoft.visualstudio.com/DefaultCollection/ProjectReunion/_artifacts/feed/Project.Reunion.nuget.internal/NuGet/Microsoft.WindowsAppSDK/versions
+      For local testing of internal versions, modify WinUI3ExperimentalVersion, and comment out the additional nuget source in NuGet.Config
+      When this version is updated, be sure to update the default for the enableInternalFeed parameter of /.ado/templates/enable-experimental-winui3.yml and the minimum version of WebView in WebView2.props
     -->
     <WinUI3ExperimentalVersion Condition="'$(WinUI3ExperimentalVersion)'==''">1.7.250109001-experimental2</WinUI3ExperimentalVersion>
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/cli/.../autolinkWindows.ts -->
     <WinUI3Version Condition="'$(WinUI3Version)'=='' AND '$(UseExperimentalWinUI3)'=='true'">$(WinUI3ExperimentalVersion)</WinUI3Version>
     <WinUI3Version Condition="'$(WinUI3Version)'==''">1.6.240923002</WinUI3Version>
+    <!-- This is needed to prevent build errors with WinAppSDK >= 1.7 trying to double build WindowsAppRuntimeAutoInitializer.cpp -->
+    <WindowsAppSdkAutoInitialize Condition="'$(WindowsAppSdkAutoInitialize)'=='' And $([MSBuild]::VersionGreaterThan('$(WinUI3Version)', '1.7.0'))">false</WindowsAppSdkAutoInitialize>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">

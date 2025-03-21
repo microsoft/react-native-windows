@@ -1,5 +1,5 @@
 parameters:
-- name: package
+- name: workingDir
   type: string
 - name: feature
   type: string
@@ -8,13 +8,12 @@ parameters:
 
 steps:
   - powershell: |
-      [xml] $experimentalFeatures = Get-Content .\ExperimentalFeatures.props
-      $nsm = New-Object Xml.XmlNamespaceManager($experimentalFeatures.NameTable)
-      $nsm.AddNamespace('ns', $experimentalFeatures.DocumentElement.NamespaceURI)
-
-      $xmlNode = $experimentalFeatures.SelectSingleNode('//ns:PropertyGroup/ns:${{ parameters.feature }}', $nsm);
-      $xmlNode.InnerText = '${{ parameters.value }}'
-
-      $experimentalFeatures.Save("$pwd\ExperimentalFeatures.props")
+      [xml] $xmlDoc = Get-Content .\ExperimentalFeatures.props
+      # Add to new property group at the end of the file to ensure it overrides any other setting
+      $propertyGroup = $xmlDoc.CreateElement("PropertyGroup", $xmlDoc.DocumentElement.NamespaceURI);
+      $newProp = $propertyGroup.AppendChild($xmlDoc.CreateElement("${{ parameters.feature }}", $xmlDoc.DocumentElement.NamespaceURI)); 
+      $newProp.AppendChild($xmlDoc.CreateTextNode("${{ parameters.value }}"));
+      $xmlDoc.DocumentElement.AppendChild($propertyGroup);
+      $xmlDoc.Save("$pwd\ExperimentalFeatures.props")
     displayName: Set "${{ parameters.feature }}" to "${{ parameters.value }}"
-    workingDirectory: ${{ parameters.package }}/windows
+    workingDirectory: ${{ parameters.workingDir }}

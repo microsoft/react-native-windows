@@ -1,0 +1,25 @@
+parameters:
+- name: workingDir
+  type: string
+- name: enableInternalFeed
+  type: boolean
+  default: false # If WinUI3ExperimentalVersion in WinUI.props is only available on the ProjectReuinion feed, set to true, else if is on nuget.org, set to false
+
+steps:
+  - template:  ../templates/set-experimental-feature.yml
+    parameters:
+      workingDir: ${{ parameters.workingDir }}
+      feature: UseExperimentalWinUI3
+      value: true
+
+  - ${{ if eq(parameters.enableInternalFeed, true) }}:
+    - task: PowerShell@2
+      displayName: Enable the internal WinAppSDK Feed
+      inputs:
+        targetType: filePath # filePath | inline
+        filePath: $(Build.SourcesDirectory)\vnext\Scripts\EnableInternalWinAppSDKFeed.ps1
+
+    - task: NuGetAuthenticate@1
+      displayName: 'NuGet Authenticate Internal WinAppSDK Feed'
+      inputs:
+        nuGetServiceConnections: 'WinAppSDK Experimental NuGet for RNW'
