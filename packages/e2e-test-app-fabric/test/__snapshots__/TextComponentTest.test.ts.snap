@@ -943,7 +943,7 @@ exports[`Text Tests Text can wrap 1`] = `
 }
 `;
 
-exports[`Text Tests Texts should clip inline View/Images 1`] = `
+exports[`Text Tests Texts can clip inline View/Images 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "text-view-images-clipped",

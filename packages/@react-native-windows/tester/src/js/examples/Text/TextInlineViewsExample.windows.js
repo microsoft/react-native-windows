@@ -18,7 +18,7 @@ function InlineView(props: {
   long?: boolean,
 }): React.Node {
   return (
-    <View style={{margin: 4}}>
+    <View style={{margin: 4}} accesible={true}>
       <Text style={{textAlign: props.textAlign, backgroundColor: 'cyan'}}>
         Parent
         <Text style={{fontWeight: 'bold'}}>Child</Text>
@@ -38,9 +38,9 @@ export function TextInlineViewsExample(props: {}): React.Node {
   return (
     <>
       <View
+        accesible={true}
         style={{flex: 1}}
-        testID="view-test-inline-text-alignment"
-        accesible={true}>
+        testID="view-test-inline-text-alignment">
         <Text style={{textAlign: 'center', fontSize: 14}}>BoringLayout</Text>
         <InlineView textAlign="left" />
         <InlineView textAlign="center" />

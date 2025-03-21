@@ -153,11 +153,10 @@ void TextLayoutManager::GetTextLayout(
   unsigned int position = 0;
   for (const auto &fragment : fragments) {
     if (fragment.isAttachment()) {
-      // Get attachment dimensions
       float width = fragment.parentShadowView.layoutMetrics.frame.size.width;
       float height = fragment.parentShadowView.layoutMetrics.frame.size.height;
 
-      // Get text metrics to check for clipping
+      // Get current height to check if attachment needs to be clipped
       DWRITE_TEXT_METRICS dtm{};
       winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
 
@@ -168,10 +167,8 @@ void TextLayoutManager::GetTextLayout(
         height = dtm.height;
       }
 
-      // Create an inline object with the correct dimensions
+      // Create an inline object (this just reserves space in RichEdit for ReactNative to render the actual attachment)
       auto inlineObject = winrt::make<AttachmentInlineObject>(width, height);
-
-      // Set the inline object at this position
       winrt::check_hresult(spTextLayout->SetInlineObject(inlineObject.get(), {position, 1}));
 
       // Get the position of the Object Replacement Character
@@ -179,7 +176,7 @@ void TextLayoutManager::GetTextLayout(
       float x, y;
       winrt::check_hresult(spTextLayout->HitTestTextPosition(position, false, &x, &y, &hitTestMetrics));
 
-      // Store the attachment position and dimensions
+      // Store the attachment position for RN to render later
       TextMeasurement::Attachment attachment;
       attachment.frame = {
           x, // left
@@ -411,14 +408,14 @@ Float TextLayoutManager::baseline(
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
   TextMeasurement::Attachments attachments;
   GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
-
   if (!spTextLayout) {
     return 0;
   }
 
   DWRITE_TEXT_METRICS metrics;
   winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-  return metrics.height * 0.8f;
+  return metrics.height *
+      0.8f; // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
 }
 
 winrt::hstring TextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {
