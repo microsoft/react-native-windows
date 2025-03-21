@@ -9,6 +9,12 @@
   "overrides": [
     {
       "type": "derived",
+      "file": "src/js/components/TextInlineView.windows.js",
+      "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
+      "baseHash": "e644fe80f0d405382d180ec7a822794454943ff1"
+    },
+    {
+      "type": "derived",
       "file": "src/js/examples-win/Button/ButtonExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
       "baseHash": "e03b21d229ecb631c12e4ac04ddf73fbe6059da7"
@@ -137,12 +143,6 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "d007fb16f30b2630ba84a5fa61e4190c6d9a18b1"
-    },
-    {
-      "type": "derived",
-      "file": "src/js/components/TextInlineView.windows.js",
-      "baseFile": "packages/rn-tester/js/components/TextInlineView",
       "baseHash": "d007fb16f30b2630ba84a5fa61e4190c6d9a18b1"
     }
   ]
