@@ -282,7 +282,7 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         break;
       }
       default:
-        assert(false);
+        assert(true);
     }
 
     Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);

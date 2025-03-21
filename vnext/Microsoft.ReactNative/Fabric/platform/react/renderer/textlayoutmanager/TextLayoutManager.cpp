@@ -162,6 +162,7 @@ void TextLayoutManager::GetTextLayout(
       winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
 
       // Check if the attachment should be clipped
+      // TODO #14443: clipping works on the first-levels view, but any nested view won't be clipped
       bool isClipped = height > dtm.height;
       if (isClipped) {
         height = dtm.height;
