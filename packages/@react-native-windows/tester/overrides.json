@@ -107,6 +107,12 @@
       "baseHash": "05e9aba7bc765ca0f9e15313bb60a92a9c7688eb"
     },
     {
+      "type": "derived",
+      "file": "src/js/examples/Text/TextInlineViewExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Text/TextInlineViewExample.js",
+      "baseHash": "05e9aba7bc765ca0f9e15313bb60a92a9c7688eb"
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",

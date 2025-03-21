@@ -27,7 +27,7 @@ function Basic(): React.Node {
 
 function NestedTexts(): React.Node {
   return (
-    <View testID={'text-nested-view'}>
+    <View testID="text-nested-view" accessible={true}>
       <RNTesterText>This is the first row</RNTesterText>
       <RNTesterText>
         <RNTesterText>
@@ -42,7 +42,7 @@ function NestedTexts(): React.Node {
 
 function ClippedByText(): React.Node {
   return (
-    <View testID={'text-view-images-clipped'}>
+    <View testID="text-view-images-clipped" accessible={true}>
       {/*
        * Inline View
        **/}

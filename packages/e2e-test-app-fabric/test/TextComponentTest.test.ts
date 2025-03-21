@@ -117,21 +117,19 @@ describe('Text Tests', () => {
     const dump = await dumpVisualTree('text-view');
     expect(dump).toMatchSnapshot();
   });
-  /*
   test('Text can have nested views', async () => {
     const component = await app.findElementByTestID('text-nested-view');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-nested-view');
     expect(dump).toMatchSnapshot();
   });
-  */
-  test('Texts should clip inline View/Images', async () => {
+  test('Texts can clip inline View/Images', async () => {
     const component = await app.findElementByTestID('text-view-images-clipped');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-view-images-clipped');
     expect(dump).toMatchSnapshot();
   });
-  test('Texts should align inline View/Images', async () => {
+  test('Texts can align inline View/Images', async () => {
     const component = await app.findElementByTestID(
       'view-test-inline-text-alignment',
     );
