@@ -138,6 +138,12 @@
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "d007fb16f30b2630ba84a5fa61e4190c6d9a18b1"
+    },
+    {
+      "type": "derived",
+      "file": "src/js/components/TextInlineView.windows.js",
+      "baseFile": "packages/rn-tester/js/components/TextInlineView",
+      "baseHash": "d007fb16f30b2630ba84a5fa61e4190c6d9a18b1"
     }
   ]
 }
