@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 22 Mar 2025 05:24:34 GMT",
+      "version": "0.0.0-canary.927",
+      "tag": "react-native-windows_v0.0.0-canary.927",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3c85fcec21caa4d1f85c6b8287119116f89ec247",
+            "comment": "Add creaternwapp.cmd and creaternwlib.cmd scripts"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Mar 2025 05:21:08 GMT",
       "version": "0.0.0-canary.926",
       "tag": "react-native-windows_v0.0.0-canary.926",

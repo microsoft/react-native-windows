@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Sat, 15 Mar 2025 05:21:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 22 Mar 2025 05:24:34 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.3.349
+
+Sat, 22 Mar 2025 05:24:34 GMT
+
+### Patches
+
+- Replace use of `execSync` with `spawnSync` in `@react-native-windows/automation` (jthysell@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.12.267
 
 ## 0.3.348
 

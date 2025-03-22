@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Replace use of `execSync` with `spawnSync` in `@react-native-windows/automation`",
-  "packageName": "@react-native-windows/automation",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
