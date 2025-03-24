@@ -25,6 +25,9 @@ parameters:
   - name: useNuGet
     type: boolean
     default: false
+  - name: useExperimentalWinUI3
+    type: boolean
+    default: false
   - name: runWack
     type: boolean
     default: false
@@ -133,9 +136,17 @@ steps:
   - ${{ if eq(parameters.UseChakra, true) }}:
     - template:  set-experimental-feature.yml
       parameters:
-        package: ..\testcli
+        workingDir: ..\testcli\windows
         feature: UseHermes
         value: false
+
+  - ${{ if eq(parameters.useExperimentalWinUI3, true) }}:
+    - template:  ../templates/enable-experimental-winui3.yml
+      parameters:
+        ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
+          workingDir: $(Agent.BuildDirectory)\testcli\example\windows
+        ${{ else }}:
+          workingDir: $(Agent.BuildDirectory)\testcli\windows
 
   - ${{ if or(endsWith(parameters.template, '-app'), and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old')))) }}:
     - powershell: |
