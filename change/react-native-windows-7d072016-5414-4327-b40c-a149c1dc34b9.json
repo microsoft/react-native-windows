@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add IScrollProvider Implementation",
-  "packageName": "react-native-windows",
-  "email": "34109996+chiaramooney@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

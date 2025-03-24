@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Mar 2025 15:25:14 GMT",
+      "version": "0.77.5",
+      "tag": "react-native-windows_v0.77.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5f7c15de6e26afe3731e7f6af8257bd2655fe8ba",
+            "comment": "Add IScrollProvider Implementation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Mar 2025 15:30:03 GMT",
       "version": "0.77.4",
       "tag": "react-native-windows_v0.77.4",

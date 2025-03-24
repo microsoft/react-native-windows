@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 17 Mar 2025 15:30:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 24 Mar 2025 15:25:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.5
+
+Mon, 24 Mar 2025 15:25:14 GMT
+
+### Patches
+
+- Add IScrollProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.77.4
 
