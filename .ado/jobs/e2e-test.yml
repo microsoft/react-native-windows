@@ -70,7 +70,7 @@ jobs:
 
             - template: ../templates/set-experimental-feature.yml
               parameters:
-                package: packages/e2e-test-app
+                workingDir: packages/e2e-test-app/windows
                 feature: UseHermes
                 ${{ if eq(matrix.UseChakra, true) }}:
                   value: false

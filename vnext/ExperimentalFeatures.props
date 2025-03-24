@@ -10,7 +10,6 @@
     <UseFabric>true</UseFabric>
     <UseWinUI3>true</UseWinUI3>
     <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
-    <WindowsAppSdkAutoInitialize>false</WindowsAppSdkAutoInitialize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(SolutionName)'=='Microsoft.ReactNative.NewArch'">
     <RnwNewArch>true</RnwNewArch>
