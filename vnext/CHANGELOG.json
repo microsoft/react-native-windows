@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Mar 2025 15:25:16 GMT",
+      "version": "0.78.2",
+      "tag": "react-native-windows_v0.78.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "51c4b89d281e2b4a79b89eb949e03ad0f6b82f41",
+            "comment": "Add Support for Role Prop"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "51c4b89d281e2b4a79b89eb949e03ad0f6b82f41",
+            "comment": "Add IScrollProvider Implementation"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "51c4b89d281e2b4a79b89eb949e03ad0f6b82f41",
+            "comment": "ITextProvider Implementation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Mar 2025 15:30:01 GMT",
       "version": "0.78.1",
       "tag": "react-native-windows_v0.78.1",
