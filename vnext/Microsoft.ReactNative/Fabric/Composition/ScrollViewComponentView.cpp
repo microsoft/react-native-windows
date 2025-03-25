@@ -608,92 +608,94 @@ ScrollViewComponentView::ScrollViewComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background),
-      m_element(winrt::Windows::UI::Xaml::Controls::ScrollViewer()),
-      m_contentPanel(winrt::Windows::UI::Xaml::Controls::StackPanel()) {
-
-  m_element.Content(m_contentPanel);
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
+  // m_element.Content(m_contentPanel);
 
   /*
-  m_scrollViewerViewChangingRevoker =
-      m_element.ViewChanging(winrt::auto_revoke, [this](const auto &sender, const auto &args) {
-        const auto scrollViewerNotNull = sender.as<xaml::Controls::ScrollViewer>();
+    m_scrollViewerViewChangingRevoker =
+        m_element.ViewChanging(winrt::auto_revoke, [this](const auto &sender, const auto &args) {
+          const auto scrollViewerNotNull = sender.as<xaml::Controls::ScrollViewer>();
 
-        facebook::react::ScrollViewMetrics scrollMetrics;
-        scrollMetrics.containerSize.height = static_cast<facebook::react::Float>(m_element.ActualHeight());
-        scrollMetrics.containerSize.width = static_cast<facebook::react::Float>(m_element.ActualWidth());
-        scrollMetrics.contentOffset.x = static_cast<facebook::react::Float>(args.NextView().HorizontalOffset());
-        scrollMetrics.contentOffset.y = static_cast<facebook::react::Float>(args.NextView().VerticalOffset());
-        scrollMetrics.zoomScale = args.NextView().ZoomFactor();
-        scrollMetrics.contentSize.height = static_cast<facebook::react::Float>(m_contentPanel.ActualHeight());
-        scrollMetrics.contentSize.width = static_cast<facebook::react::Float>(m_contentPanel.ActualWidth());
+          facebook::react::ScrollViewMetrics scrollMetrics;
+          scrollMetrics.containerSize.height = static_cast<facebook::react::Float>(m_element.ActualHeight());
+          scrollMetrics.containerSize.width = static_cast<facebook::react::Float>(m_element.ActualWidth());
+          scrollMetrics.contentOffset.x = static_cast<facebook::react::Float>(args.NextView().HorizontalOffset());
+          scrollMetrics.contentOffset.y = static_cast<facebook::react::Float>(args.NextView().VerticalOffset());
+          scrollMetrics.zoomScale = args.NextView().ZoomFactor();
+          scrollMetrics.contentSize.height = static_cast<facebook::react::Float>(m_contentPanel.ActualHeight());
+          scrollMetrics.contentSize.width = static_cast<facebook::react::Float>(m_contentPanel.ActualWidth());
 
-        // If we are transitioning to inertial scrolling.
-        if (m_isScrolling && !m_isScrollingFromInertia && args.IsInertial()) {
-          m_isScrollingFromInertia = true;
+          // If we are transitioning to inertial scrolling.
+          if (m_isScrolling && !m_isScrollingFromInertia && args.IsInertial()) {
+            m_isScrollingFromInertia = true;
+
+            if (m_eventEmitter) {
+              std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
+                  ->onScrollEndDrag(scrollMetrics);
+              std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
+                  ->onMomentumScrollBegin(scrollMetrics);
+            }
+          }
 
           if (m_eventEmitter) {
             std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
-                ->onScrollEndDrag(scrollMetrics);
-            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
-                ->onMomentumScrollBegin(scrollMetrics);
+                ->onScroll(scrollMetrics);
           }
-        }
+        });
 
-        if (m_eventEmitter) {
-          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
-              ->onScroll(scrollMetrics);
-        }
-      });
-   */
+    m_scrollViewerDirectManipulationStartedRevoker =
+        m_element.DirectManipulationStarted(winrt::auto_revoke, [this](const auto &sender, const auto &) {
+          m_isScrolling = true;
 
-  m_scrollViewerDirectManipulationStartedRevoker =
-      m_element.DirectManipulationStarted(winrt::auto_revoke, [this](const auto &sender, const auto &) {
-        m_isScrolling = true;
 
-        facebook::react::ScrollViewMetrics scrollMetrics;
-        scrollMetrics.containerSize.height = static_cast<facebook::react::Float>(m_element.ActualHeight());
-        scrollMetrics.containerSize.width = static_cast<facebook::react::Float>(m_element.ActualWidth());
-        scrollMetrics.contentOffset.x = static_cast<facebook::react::Float>(m_element.HorizontalOffset());
-        scrollMetrics.contentOffset.y = static_cast<facebook::react::Float>(m_element.VerticalOffset());
-        scrollMetrics.zoomScale = m_element.ZoomFactor();
-        scrollMetrics.contentSize.height = static_cast<facebook::react::Float>(m_contentPanel.ActualHeight());
-        scrollMetrics.contentSize.width = static_cast<facebook::react::Float>(m_contentPanel.ActualWidth());
+          //if (m_dismissKeyboardOnDrag && m_SIPEventHandler) {
+          //  m_SIPEventHandler->TryHide();
+          //}
 
-        const auto scrollViewer = sender.as<xaml::Controls::ScrollViewer>();
-        if (m_eventEmitter) {
-          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
-              ->onScrollBeginDrag(scrollMetrics);
-        }
-      });
 
-  /*
-  m_scrollViewerDirectManipulationCompletedRevoker =
-      m_element.DirectManipulationCompleted(winrt::auto_revoke, [this](const auto &sender, const auto &args) {
-        const auto scrollViewer = sender.as<xaml::Controls::ScrollViewer>();
+          facebook::react::ScrollViewMetrics scrollMetrics;
+          scrollMetrics.containerSize.height = static_cast<facebook::react::Float>(m_element.ActualHeight());
+          scrollMetrics.containerSize.width = static_cast<facebook::react::Float>(m_element.ActualWidth());
+          scrollMetrics.contentOffset.x = static_cast<facebook::react::Float>(m_element.HorizontalOffset());
+          scrollMetrics.contentOffset.y = static_cast<facebook::react::Float>(m_element.VerticalOffset());
+          scrollMetrics.zoomScale = m_element.ZoomFactor();
+          scrollMetrics.contentSize.height = static_cast<facebook::react::Float>(m_contentPanel.ActualHeight());
+          scrollMetrics.contentSize.width = static_cast<facebook::react::Float>(m_contentPanel.ActualWidth());
 
-        facebook::react::ScrollViewMetrics scrollMetrics;
-        scrollMetrics.containerSize.height = static_cast<facebook::react::Float>(m_element.ActualHeight());
-        scrollMetrics.containerSize.width = static_cast<facebook::react::Float>(m_element.ActualWidth());
-        scrollMetrics.contentOffset.x = static_cast<facebook::react::Float>(m_element.HorizontalOffset());
-        scrollMetrics.contentOffset.y = static_cast<facebook::react::Float>(m_element.VerticalOffset());
-        scrollMetrics.zoomScale = m_element.ZoomFactor();
-        scrollMetrics.contentSize.height = static_cast<facebook::react::Float>(m_contentPanel.ActualHeight());
-        scrollMetrics.contentSize.width = static_cast<facebook::react::Float>(m_contentPanel.ActualWidth());
-
-        if (m_eventEmitter) {
-          if (m_isScrollingFromInertia) {
+          const auto scrollViewer = sender.as<xaml::Controls::ScrollViewer>();
+          if (m_eventEmitter) {
             std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
-                ->onMomentumScrollEnd(scrollMetrics);
-          } else {
-            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
-                ->onScrollEndDrag(scrollMetrics);
+                ->onScrollBeginDrag(scrollMetrics);
           }
-        }
+        });
 
-        m_isScrolling = false;
-        m_isScrollingFromInertia = false;
-      });*/
+    m_scrollViewerDirectManipulationCompletedRevoker =
+        m_element.DirectManipulationCompleted(winrt::auto_revoke, [this](const auto &sender, const auto &args) {
+          const auto scrollViewer = sender.as<xaml::Controls::ScrollViewer>();
+
+          facebook::react::ScrollViewMetrics scrollMetrics;
+          scrollMetrics.containerSize.height = static_cast<facebook::react::Float>(m_element.ActualHeight());
+          scrollMetrics.containerSize.width = static_cast<facebook::react::Float>(m_element.ActualWidth());
+          scrollMetrics.contentOffset.x = static_cast<facebook::react::Float>(m_element.HorizontalOffset());
+          scrollMetrics.contentOffset.y = static_cast<facebook::react::Float>(m_element.VerticalOffset());
+          scrollMetrics.zoomScale = m_element.ZoomFactor();
+          scrollMetrics.contentSize.height = static_cast<facebook::react::Float>(m_contentPanel.ActualHeight());
+          scrollMetrics.contentSize.width = static_cast<facebook::react::Float>(m_contentPanel.ActualWidth());
+
+          if (m_eventEmitter) {
+            if (m_isScrollingFromInertia) {
+              std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
+                  ->onMomentumScrollEnd(scrollMetrics);
+            } else {
+              std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(m_eventEmitter)
+                  ->onScrollEndDrag(scrollMetrics);
+            }
+          }
+
+          m_isScrolling = false;
+          m_isScrollingFromInertia = false;
+        });
+        */
 }
 
 void ScrollViewComponentView::MountChildComponentView(
