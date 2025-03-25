@@ -1,0 +1,9 @@
+namespace Microsoft_ReactNative_Xaml
+{
+    [default_interface]
+    runtimeclass Class
+    {
+        Class();
+        Int32 MyProperty;
+    }
+}
