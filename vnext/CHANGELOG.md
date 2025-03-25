@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 22 Mar 2025 05:24:34 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 25 Mar 2025 05:21:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.928
+
+Tue, 25 Mar 2025 05:21:49 GMT
+
+### Changes
+
+- Fix use of ExperimentalWinUI3 in CI / Secure PR (jthysell@microsoft.com)
+- Button should pass onAccessibilityTap to native (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.927
 

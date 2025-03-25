@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 25 Mar 2025 05:21:49 GMT",
+      "version": "0.0.0-canary.928",
+      "tag": "react-native-windows_v0.0.0-canary.928",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ec6652e46c08d00e7f4cad9f486ecb92347fcfa0",
+            "comment": "Fix use of ExperimentalWinUI3 in CI / Secure PR"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "98d5178416535b98b5d6a053fa8ad0a1f3b15c0a",
+            "comment": "Button should pass onAccessibilityTap to native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Mar 2025 05:24:34 GMT",
       "version": "0.0.0-canary.927",
       "tag": "react-native-windows_v0.0.0-canary.927",
