@@ -1,9 +1,0 @@
-namespace Microsoft.ReactNative.Xaml
-{
-    [default_interface]
-    runtimeclass DialogFrame : Microsoft.UI.Xaml.Controls.UserControl
-    {
-        DialogFrame();
-        Int32 MyProperty;
-    }
-}
