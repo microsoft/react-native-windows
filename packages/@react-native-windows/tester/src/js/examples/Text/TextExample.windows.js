@@ -17,9 +17,8 @@ import type {RNTesterModule} from '../../types/RNTesterTypes';
 
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
-// [Windows 12997 - nested Images and Views not supported]
-// import TextInlineViewsExample from './TextInlineViewsExample';
-// const TextInlineView = require('../../components/TextInlineView');
+import TextInlineViewsExample from './TextInlineViewsExample';
+const TextInlineView = require('../../components/TextInlineView');
 const React = require('react');
 const {
   LayoutAnimation,
@@ -962,7 +961,8 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
   );
   const subtitleStyle = {fontSize: 16, marginTop: 8, fontWeight: 'bold'};
 
-  return (
+  // [Windows - Paper doesn't support Views in Text while Fabric does
+  return global.RN$Bridgeless !== true ? (
     <View>
       <Text style={subtitleStyle}>{'Nested <Text/>s:'}</Text>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
@@ -977,78 +977,103 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
         {texts}
         {marker}
       </View>
-      {/* [Windows #12997 - This tests renders <View> nested within <Text> which is not supported yet]
-      <Text style={subtitleStyle}>{'Interleaving <View> and <Text>:'}</Text>
+    </View>
+  ) : (
+    <View>
+      <RNTesterText style={subtitleStyle}>{'Nested <Text/>s:'}</RNTesterText>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
         {marker}
-        <Text selectable={true}>
-          Some text.
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'baseline',
-              backgroundColor: '#eee',
-            }}>
-            {marker}
-            <Text>Text inside View.</Text>
-            {marker}
+        <RNTesterText>{texts}</RNTesterText>
+        {marker}
+      </View>
+
+      <RNTesterText style={subtitleStyle}>
+        {'Array of <Text/>s in <View>:'}
+      </RNTesterText>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        {texts}
+        {marker}
+      </View>
+      <View>
+        <RNTesterText style={subtitleStyle}>
+          {'Interleaving <View> and <Text>:'}
+        </RNTesterText>
+        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+          {marker}
+          <RNTesterText selectable={true}>
+            Some text.
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'baseline',
+                backgroundColor: '#eee',
+              }}>
+              {marker}
+              <RNTesterText>Text inside View.</RNTesterText>
+              {marker}
+            </View>
+          </RNTesterText>
+          {marker}
+        </View>
+
+        <RNTesterText style={subtitleStyle}>
+          {'Multi-line interleaved <View> and <Text>:'}
+        </RNTesterText>
+        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+          <RNTesterText selectable={true}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+            venenatis,{' '}
+            <View
+              style={{
+                backgroundColor: 'yellow',
+              }}>
+              <RNTesterText>mauris eu commodo maximus</RNTesterText>
+            </View>{' '}
+            , ante arcu vestibulum ligula, et scelerisque diam.
+          </RNTesterText>
+        </View>
+
+        <RNTesterText style={subtitleStyle}>
+          {'Multi-line <Text> alignment'}
+        </RNTesterText>
+        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+          <View style={{width: 50, height: 50, backgroundColor: 'gray'}} />
+          <View style={{width: 125, backgroundColor: '#eee'}}>
+            <RNTesterText style={{fontSize: 15}}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </RNTesterText>
           </View>
-        </Text>
-        {marker}
-      </View>
-
-      <Text style={subtitleStyle}>
-        {'Multi-line interleaved <View> and <Text>:'}
-      </Text>
-      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-        <Text selectable={true}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-          venenatis,{' '}
-          <View
-            style={{
-              backgroundColor: 'yellow',
-            }}>
-            <Text>mauris eu commodo maximus</Text>
-          </View>{' '}
-          , ante arcu vestibulum ligula, et scelerisque diam.
-        </Text>
-      </View>
-
-      <Text style={subtitleStyle}>{'Multi-line <Text> alignment'}</Text>
-      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-        <View style={{width: 50, height: 50, backgroundColor: 'gray'}} />
-        <View style={{width: 125, backgroundColor: '#eee'}}>
-          <Text style={{fontSize: 15}}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
+          <View style={{width: 125, backgroundColor: '#eee'}}>
+            <RNTesterText style={{fontSize: 10}}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </RNTesterText>
+          </View>
         </View>
-        <View style={{width: 125, backgroundColor: '#eee'}}>
-          <Text style={{fontSize: 10}}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
+
+        <RNTesterText style={subtitleStyle}>{'<TextInput/>:'}</RNTesterText>
+        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+          {marker}
+          <TextInput style={{margin: 0, padding: 0}}>{texts}</TextInput>
+          {marker}
+        </View>
+
+        <RNTesterText style={subtitleStyle}>
+          {'<TextInput multiline/>:'}
+        </RNTesterText>
+        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+          {marker}
+          <TextInput multiline={true} style={{margin: 0, padding: 0}}>
+            {texts}
+          </TextInput>
+          {marker}
         </View>
       </View>
-
-      <Text style={subtitleStyle}>{'<TextInput/>:'}</Text>
-      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-        {marker}
-        <TextInput style={{margin: 0, padding: 0}}>{texts}</TextInput>
-        {marker}
-      </View>
-
-      <Text style={subtitleStyle}>{'<TextInput multiline/>:'}</Text>
-      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-        {marker}
-        <TextInput multiline={true} style={{margin: 0, padding: 0}}>
-          {texts}
-        </TextInput>
-        {marker}
-      </View>
-*/}
     </View>
   );
+  // Windows]
 }
 
 function TextBorderExample(props: {}): React.Node {
@@ -1457,50 +1482,55 @@ const examples = [
       );
     },
   },
-  /* [Windows #12997 - This tests renders <View> nested within <Text> which is not supported yet]
-  {
-    title: 'Inline views',
-    name: 'inlineViewsBasic',
-    render(): React.Node {
-      return <TextInlineView.Basic />;
-    },
-  },
-  {
-    title: 'Inline views with multiple nested texts',
-    name: 'inlineViewsMultiple',
-    render(): React.Node {
-      return <TextInlineView.NestedTexts />;
-    },
-  },
-  {
-    title: 'Inline image/view clipped by <Text>',
-    name: 'inlineViewsClipped',
-    render(): React.Node {
-      return <TextInlineView.ClippedByText />;
-    },
-  },
-  {
-    title: 'Relayout inline image',
-    name: 'relayoutInlineImage',
-    render(): React.Node {
-      return <TextInlineView.ChangeImageSize />;
-    },
-  },
-  {
-    title: 'Relayout inline view',
-    name: 'relayoutInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeViewSize />;
-    },
-  },
-  {
-    title: 'Relayout nested inline view',
-    name: 'relayoutNestedInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeInnerViewSize />;
-    },
-  },
-*/
+  // [Windows - Paper doesn't support Views in Text while Fabric does
+  ...(global.RN$Bridgeless === true
+    ? [
+        {
+          title: 'Inline views',
+          name: 'inlineViewsBasic',
+          render(): React.Node {
+            return <TextInlineView.Basic />;
+          },
+        },
+        {
+          title: 'Inline views with multiple nested texts',
+          name: 'inlineViewsMultiple',
+          render(): React.Node {
+            return <TextInlineView.NestedTexts />;
+          },
+        },
+        {
+          title: 'Inline image/view clipped by <Text>',
+          name: 'inlineViewsClipped',
+          render(): React.Node {
+            return <TextInlineView.ClippedByText />;
+          },
+        },
+        {
+          title: 'Relayout inline image',
+          name: 'relayoutInlineImage',
+          render(): React.Node {
+            return <TextInlineView.ChangeImageSize />;
+          },
+        },
+        {
+          title: 'Relayout inline view',
+          name: 'relayoutInlineView',
+          render(): React.Node {
+            return <TextInlineView.ChangeViewSize />;
+          },
+        },
+        {
+          title: 'Relayout nested inline view',
+          name: 'relayoutNestedInlineView',
+          render(): React.Node {
+            return <TextInlineView.ChangeInnerViewSize />;
+          },
+        },
+        TextInlineViewsExample,
+      ]
+    : []),
+  // Windows]
   {
     title: 'Text shadow',
     name: 'textShadow',
@@ -1637,8 +1667,6 @@ const examples = [
       );
     },
   },
-  // [Windows #12997]
-  // TextInlineViewsExample,
   {
     title: 'Customized Accessibility',
     name: 'textAccessibility',
