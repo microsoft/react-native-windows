@@ -171,7 +171,7 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
 
   const actualRef = useWrapRefWithImageAttachedCallbacks(forwardedRef);
 
-  // Paper doesn't support Views in Text while Fabric does
+  // [Windows - Paper doesn't support Views in Text while Fabric does
   if (global.RN$Bridgeless !== true) {
     return (
       // [Windows
@@ -223,6 +223,7 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
       </ImageAnalyticsTagContext.Consumer>
     );
   }
+  // Windows]
 });
 
 const imageComponentDecorator = unstable_getImageComponentDecorator();

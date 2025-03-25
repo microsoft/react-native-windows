@@ -280,7 +280,7 @@ const View: component(
       />
     );
 
-    // Paper doesn't support Views in Text while Fabric does
+    // [Windows - Paper doesn't support Views in Text while Fabric does
     if (global.RN$Bridgeless !== true) {
       return (
         // [Windows
@@ -347,6 +347,7 @@ const View: component(
         );
       }
     }
+    // Windows]
 
     return actualView;
   },

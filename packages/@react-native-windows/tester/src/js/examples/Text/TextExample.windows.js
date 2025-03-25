@@ -1094,7 +1094,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
   );
   const subtitleStyle = {fontSize: 16, marginTop: 8, fontWeight: 'bold'};
 
-  // Paper doesn't support Views in Text while Fabric does
+  // [Windows - Paper doesn't support Views in Text while Fabric does
   return global.RN$Bridgeless !== true ? (
     <View>
       <RNTesterText style={subtitleStyle}>{'Nested <Text/>s:'}</RNTesterText>
@@ -1208,6 +1208,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
       </View>
     </View>
   );
+  // Windows]
 }
 
 function TextBorderExample(props: {}): React.Node {
@@ -1682,7 +1683,7 @@ const examples = [
       );
     },
   },
-  // Paper doesn't support Views in Text while Fabric does
+  // [Windows - Paper doesn't support Views in Text while Fabric does
   ...(global.RN$Bridgeless === true
     ? [
         {
@@ -1730,6 +1731,7 @@ const examples = [
         TextInlineViewsExample,
       ]
     : []),
+  // Windows]
   {
     title: 'Text shadow',
     name: 'textShadow',

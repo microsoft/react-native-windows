@@ -26,6 +26,7 @@ function Basic(): React.Node {
 }
 
 function NestedTexts(): React.Node {
+  // [Windows] accessible = {true} is needed to find Views in e2etests
   return (
     <View testID="text-nested-view" accessible={true}>
       <RNTesterText>This is the first row</RNTesterText>
@@ -41,6 +42,7 @@ function NestedTexts(): React.Node {
 }
 
 function ClippedByText(): React.Node {
+  // [Windows] accessible = {true} is needed to find Views in e2etests
   return (
     <View testID="text-view-images-clipped" accessible={true}>
       {/*
