@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Mar 2025 05:26:15 GMT",
+      "version": "0.0.0-canary.929",
+      "tag": "react-native-windows_v0.0.0-canary.929",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5e85327d1e058b5abe55a61e68458655b8ee9160",
+            "comment": "Allow text components to have children"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Mar 2025 05:21:49 GMT",
       "version": "0.0.0-canary.928",
       "tag": "react-native-windows_v0.0.0-canary.928",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 25 Mar 2025 05:21:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 26 Mar 2025 05:26:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.929
+
+Wed, 26 Mar 2025 05:26:15 GMT
+
+### Changes
+
+- Allow text components to have children (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.928
 
