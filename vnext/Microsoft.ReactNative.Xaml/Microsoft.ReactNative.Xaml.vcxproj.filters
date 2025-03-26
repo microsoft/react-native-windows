@@ -21,7 +21,7 @@
     <Midl Include="Class.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft_ReactNative_Xaml.def" />
+    <None Include="Microsoft.ReactNative.Xaml.def" />
     <None Include="packages.config" />
     <None Include="packages.lock.json" />
   </ItemGroup>

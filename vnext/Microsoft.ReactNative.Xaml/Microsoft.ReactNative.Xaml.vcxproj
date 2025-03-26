@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.props" Condition="Exists('packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.props')" />
-  <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props')" />
-  <Import Project="packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.props" Condition="Exists('packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -20,7 +17,17 @@
     <DesktopCompatible>true</DesktopCompatible>
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- TODO: Is this the right way?  We only support newarch/winui3.-->
+    <UseWinUI3>true</UseWinUI3>
+    <RnwNewArch>true</RnwNewArch>
+    <UseFabric>true</UseFabric>
+    <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\PackageVersionDefinitions.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -68,8 +75,15 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
+  <!--<Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />-->
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="PropertySheet.props" />
+    <Import Project="..\PropertySheets\WinUI.props" />
+    <!-- Added since we build this project with Paper/Fabric. -->
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -86,7 +100,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>Microsoft_ReactNative_Xaml.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>Microsoft.ReactNative.Xaml.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -125,34 +139,27 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft_ReactNative_Xaml.def" />
+    <None Include="Microsoft.ReactNative.Xaml.def" />
+    <!--
     <None Include="packages.config" />
     <None Include="packages.lock.json" />
+    -->
   </ItemGroup>
   <ItemGroup>
-    <Text Include="readme.txt">
-      <DeploymentContent>false</DeploymentContent>
-    </Text>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Folly\Folly.vcxproj">
+      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
+      <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="boost" Version="1.83.0.0" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\Microsoft.Web.WebView2.1.0.2903.40\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('packages\Microsoft.Web.WebView2.1.0.2903.40\build\native\Microsoft.Web.WebView2.targets')" />
-    <Import Project="packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.targets" Condition="Exists('packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.targets')" />
-    <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.targets" Condition="Exists('packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.targets')" />
-    <Import Project="packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets" Condition="Exists('packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\Microsoft.Web.WebView2.1.0.2903.40\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Web.WebView2.1.0.2903.40\build\native\Microsoft.Web.WebView2.targets'))" />
-    <Error Condition="!Exists('packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.props'))" />
-    <Error Condition="!Exists('packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.WindowsAppSDK.1.7.250310001\build\native\Microsoft.WindowsAppSDK.targets'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.240405.15\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.props'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.SDK.BuildTools.10.0.26100.1742\build\Microsoft.Windows.SDK.BuildTools.targets'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets'))" />
-  </Target>
 </Project>
