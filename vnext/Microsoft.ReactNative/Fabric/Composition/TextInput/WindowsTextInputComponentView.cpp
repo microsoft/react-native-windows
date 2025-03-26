@@ -116,25 +116,25 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the scroll bar
   BOOL TxShowScrollBar(INT fnBar, BOOL fShow) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Enable the scroll bar
   BOOL TxEnableScrollBar(INT fuSBFlags, INT fuArrowflags) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll range
   BOOL TxSetScrollRange(INT fnBar, LONG nMinPos, INT nMaxPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll position
   BOOL TxSetScrollPos(INT fnBar, INT nPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
@@ -377,8 +377,11 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the bits representing requested scroll bars for the window
   HRESULT TxGetScrollBars(DWORD *pdwScrollBar) override {
-    // TODO support scrolling
-    *pdwScrollBar = 0;
+    if (m_outer->m_multiline) {
+      *pdwScrollBar = WS_VSCROLL | WS_HSCROLL | ES_AUTOVSCROLL | ES_AUTOHSCROLL;
+    } else {
+      *pdwScrollBar = WS_HSCROLL | ES_AUTOHSCROLL;
+    }
     return S_OK;
   }
 
@@ -1488,6 +1491,9 @@ WindowsTextInputComponentView::createVisual() noexcept {
   winrt::com_ptr<::IUnknown> spUnk;
   winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
   spUnk.as(m_textServices);
+
+  LRESULT res;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
 
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);

@@ -160,44 +160,6 @@ struct WindowData {
     return m_instanceSettings;
   }
 
-  winrt::Microsoft::UI::WindowId
-  CreateChildWindow(winrt::Microsoft::UI::WindowId parentWindowId, LPCWSTR title, int x, int y, int w, int h) {
-    LPCWSTR childWindowClassName = L"TestChildWindowClass";
-
-    // Register child window class
-    static std::once_flag onceFlag;
-    std::call_once(onceFlag, [&childWindowClassName]() {
-      WNDCLASSEX childWindowClass = {};
-
-      childWindowClass.cbSize = sizeof(WNDCLASSEX);
-      childWindowClass.style = CS_HREDRAW | CS_VREDRAW;
-      childWindowClass.lpfnWndProc = ::DefWindowProc;
-      childWindowClass.hInstance = GetModuleHandle(nullptr);
-      childWindowClass.lpszClassName = childWindowClassName;
-
-      RegisterClassEx(&childWindowClass);
-    });
-
-    HWND parentHwnd;
-    parentHwnd = winrt::Microsoft::UI::GetWindowFromWindowId(parentWindowId);
-
-    HWND childHwnd = ::CreateWindowEx(
-        0 /* dwExStyle */,
-        childWindowClassName,
-        title,
-        WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE,
-        x,
-        y,
-        w,
-        h,
-        parentHwnd /* hWndParent */,
-        nullptr /* hMenu */,
-        GetModuleHandle(nullptr),
-        nullptr /* lpParam */);
-
-    return winrt::Microsoft::UI::GetWindowIdFromWindow(childHwnd);
-  }
-
   void ApplyConstraintsForContentSizedWindow(winrt::Microsoft::ReactNative::LayoutConstraints &constraints) {
     constraints.MinimumSize = {300, 300};
     constraints.MaximumSize = {1000, 1000};
@@ -279,21 +241,28 @@ struct WindowData {
                 // Disable user sizing of the hwnd
                 ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
                 m_compRootView.SizeChanged(
-                    [hwnd](auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
-                      RECT rcClient, rcWindow;
-                      GetClientRect(hwnd, &rcClient);
-                      GetWindowRect(hwnd, &rcWindow);
+                    [hwnd, props = InstanceSettings().Properties()](
+                        auto sender, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                      auto compositor =
+                          winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
+                      auto async = compositor.RequestCommitAsync();
+                      async.Completed([hwnd, size = args.Size()](
+                                          auto asyncInfo, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
+                        RECT rcClient, rcWindow;
+                        GetClientRect(hwnd, &rcClient);
+                        GetWindowRect(hwnd, &rcWindow);
 
-                      SetWindowPos(
-                          hwnd,
-                          nullptr,
-                          0,
-                          0,
-                          static_cast<int>(args.Size().Width) + rcClient.left - rcClient.right + rcWindow.right -
-                              rcWindow.left,
-                          static_cast<int>(args.Size().Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
-                              rcWindow.top,
-                          SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                        SetWindowPos(
+                            hwnd,
+                            nullptr,
+                            0,
+                            0,
+                            static_cast<int>(size.Width) + rcClient.left - rcClient.right + rcWindow.right -
+                                rcWindow.left,
+                            static_cast<int>(size.Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
+                                rcWindow.top,
+                            SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                      });
                     });
               }
               m_compRootView.Arrange(constraints, {0, 0});

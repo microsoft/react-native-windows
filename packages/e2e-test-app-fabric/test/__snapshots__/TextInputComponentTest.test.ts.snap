@@ -3853,10 +3853,8 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "TextRangePattern.GetText": "Hel
-",
-    "ValuePattern.Value": "Hel
-",
+    "TextRangePattern.GetText": "Hel",
+    "ValuePattern.Value": "Hel",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",

@@ -5,6 +5,8 @@
 
 #include "WindowsTextInputEventEmitter.h"
 
+#include <react/renderer/core/graphicsConversions.h>
+
 namespace facebook::react {
 
 void WindowsTextInputEventEmitter::onChange(OnChange event) const {
@@ -43,6 +45,25 @@ void WindowsTextInputEventEmitter::onKeyPress(OnKeyPress event) const {
     auto payload = jsi::Object(runtime);
     payload.setProperty(runtime, "key", event.key);
     return payload;
+  });
+}
+
+static jsi::Value textInputMetricsContentSizePayload(
+    jsi::Runtime &runtime,
+    const WindowsTextInputEventEmitter::OnContentSizeChange &event) {
+  auto payload = jsi::Object(runtime);
+  {
+    auto contentSize = jsi::Object(runtime);
+    contentSize.setProperty(runtime, "width", event.contentSize.width);
+    contentSize.setProperty(runtime, "height", event.contentSize.height);
+    payload.setProperty(runtime, "contentSize", contentSize);
+  }
+  return payload;
+};
+
+void WindowsTextInputEventEmitter::onContentSizeChange(OnContentSizeChange event) const {
+  dispatchEvent("textInputContentSizeChange", [event = std::move(event)](jsi::Runtime &runtime) {
+    return textInputMetricsContentSizePayload(runtime, event);
   });
 }
 
