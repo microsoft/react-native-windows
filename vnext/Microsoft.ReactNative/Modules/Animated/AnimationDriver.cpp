@@ -50,7 +50,6 @@ void AnimationDriver::StartAnimation() {
     animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_valueName, animation);
     animatedValue->AddActiveAnimation(m_id);
   }
-  scopedBatch.End();
 
   m_scopedBatchCompletedToken = scopedBatch.Completed(
       [weakSelf = weak_from_this(), weakManager = m_manager, id = m_id, tag = m_animatedValueTag](auto sender, auto) {
@@ -73,6 +72,8 @@ void AnimationDriver::StartAnimation() {
           strongSelf->DoCallback(!strongSelf->m_stopped);
         }
       });
+
+  scopedBatch.End();
 
   m_animation = animation;
   m_scopedBatch = scopedBatch;
