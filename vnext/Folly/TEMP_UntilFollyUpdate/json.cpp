@@ -769,7 +769,7 @@ std::string serialize(dynamic const& dyn, serialization_opts const& opts) {
 template <bool EnableExtraAsciiEscapes, class T>
 size_t firstEscapableInWord(T s, const serialization_opts& opts) {
   static_assert(std::is_unsigned<T>::value, "Unsigned integer required");
-  static constexpr T kOnes = std::numeric_limits<T>::max() / 255; // 0x...0101
+  static constexpr T kOnes = ~T() / 255; // 0x...0101
   static constexpr T kMsbs = kOnes * 0x80; // 0x...8080
 
   // Sets the MSB of bytes < b. Precondition: b < 128.
@@ -847,7 +847,7 @@ void escapeStringImpl(
       } else {
         word = folly::partialLoadUnaligned<uint64_t>(firstEsc, avail);
       }
-      auto prefix = firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts);
+      auto prefix = std::min(firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts), 8);
       DCHECK_LE(prefix, avail);
       firstEsc += prefix;
       if (prefix < 8) {
