@@ -847,7 +847,9 @@ void escapeStringImpl(
       } else {
         word = folly::partialLoadUnaligned<uint64_t>(firstEsc, avail);
       }
-      auto prefix = std::min(firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts), (size_t)8);
+      // [Windows Capping prefix to avail shouldn't be necessary, workaround to fix issue #14394
+      auto prefix = std::min(firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts), (size_t)avail);
+      // Windows]
       DCHECK_LE(prefix, avail);
       firstEsc += prefix;
       if (prefix < 8) {
