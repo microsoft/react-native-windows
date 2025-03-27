@@ -36,10 +36,16 @@ class WindowsTextInputEventEmitter : public ViewEventEmitter {
     std::string key;
   };
 
+  struct OnContentSizeChange {
+    int target;
+    facebook::react::Size contentSize;
+  };
+
   void onChange(OnChange value) const;
   void onSelectionChange(const OnSelectionChange &value) const;
   void onSubmitEditing(OnSubmitEditing value) const;
   void onKeyPress(OnKeyPress value) const;
+  void onContentSizeChange(OnContentSizeChange value) const;
 };
 
 } // namespace facebook::react
