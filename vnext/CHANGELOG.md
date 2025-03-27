@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 26 Mar 2025 05:26:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Mar 2025 05:23:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.930
+
+Thu, 27 Mar 2025 05:23:14 GMT
+
+### Changes
+
+- Allow TextInput to scroll (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.929
 
