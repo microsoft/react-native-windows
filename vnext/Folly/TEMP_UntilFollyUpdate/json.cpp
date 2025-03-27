@@ -847,7 +847,7 @@ void escapeStringImpl(
       } else {
         word = folly::partialLoadUnaligned<uint64_t>(firstEsc, avail);
       }
-      auto prefix = std::min(firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts), 8);
+      auto prefix = std::min(firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts), (size_t)8);
       DCHECK_LE(prefix, avail);
       firstEsc += prefix;
       if (prefix < 8) {
