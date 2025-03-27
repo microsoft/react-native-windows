@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 27 Mar 2025 22:01:23 GMT",
+      "version": "0.74.39",
+      "tag": "react-native-windows_v0.74.39",
+      "comments": {
+        "patch": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "238eab86141194a61a233a3fec3b4f22a7a3b0f9",
+            "comment": "Implemented textAlign in TextInput for Fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "238eab86141194a61a233a3fec3b4f22a7a3b0f9",
+            "comment": "Allow TextInput to scroll"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "238eab86141194a61a233a3fec3b4f22a7a3b0f9",
+            "comment": "Button should pass onAccessibilityTap to native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Mar 2025 17:01:06 GMT",
       "version": "0.74.38",
       "tag": "react-native-windows_v0.74.38",

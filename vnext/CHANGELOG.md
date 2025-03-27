@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Mar 2025 17:01:06 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Mar 2025 22:01:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.39
+
+Thu, 27 Mar 2025 22:01:23 GMT
+
+### Patches
+
+- Implemented textAlign in TextInput for Fabric (14967941+danielayala94@users.noreply.github.com)
+- Allow TextInput to scroll (30809111+acoates-ms@users.noreply.github.com)
+- Button should pass onAccessibilityTap to native (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.74.38
 
