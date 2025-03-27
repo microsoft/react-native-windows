@@ -847,10 +847,12 @@ void escapeStringImpl(
       } else {
         word = folly::partialLoadUnaligned<uint64_t>(firstEsc, avail);
       }
-      // [Windows Capping prefix to avail shouldn't be necessary, workaround to fix issue #14394
-      auto prefix = std::min(firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts), (size_t)avail);
-      // Windows]
+      auto prefix = firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts);
       DCHECK_LE(prefix, avail);
+      // [Windows Sometimes prefix is completely wrong (corrupt?), only in Release, causing a later AV (see issue #14394).
+      // Prefix should always be <= avail, capping it here as a workaround, hoping the assert above eventually catches this in Debug.
+      prefix = std::min(prefix, (size_t)avail);
+      // Windows]
       firstEsc += prefix;
       if (prefix < 8) {
         break;
