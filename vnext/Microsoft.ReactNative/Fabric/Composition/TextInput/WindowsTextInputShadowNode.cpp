@@ -161,10 +161,7 @@ Size WindowsTextInputShadowNode::measureContent(
     facebook::react::ParagraphAttributes paragraphAttributes{};
     paragraphAttributes.maximumNumberOfLines = getConcreteProps().multiline ? 0 : 1;
     return m_textLayoutManager
-        ->measureCachedSpannableById(
-            getStateData().cachedAttributedStringId,
-            paragraphAttributes,
-            layoutConstraints)
+        ->measureCachedSpannableById(getStateData().cachedAttributedStringId, paragraphAttributes, layoutConstraints)
         .size;
   }
 
@@ -189,11 +186,7 @@ Size WindowsTextInputShadowNode::measureContent(
   paragraphAttributes.maximumNumberOfLines = getConcreteProps().multiline ? 0 : 1;
   return m_textLayoutManager
       ->measure(
-          AttributedStringBox{attributedString},
-          paragraphAttributes,
-          textLayoutContext,
-          layoutConstraints,
-          nullptr)
+          AttributedStringBox{attributedString}, paragraphAttributes, textLayoutContext, layoutConstraints, nullptr)
       .size;
 }
 
