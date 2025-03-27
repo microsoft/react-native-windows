@@ -16,8 +16,8 @@
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
     <!-- When bumping the Folly version, be sure to bump the git hash of that version's commit and build Folly.vcxproj (to update its cgmanifest.json) too. -->
-    <FollyVersion>2023.11.06.00</FollyVersion>
-    <FollyCommitHash>d62707bf4dc8c58bcc317260611b8cbe25c7f444</FollyCommitHash>
+    <FollyVersion>2024.01.01.00</FollyVersion>
+    <FollyCommitHash>234d39a36a43106747d10cc19efada72fd810dd3</FollyCommitHash>
     <!-- When bumping the fmt version, be sure to bump the git hash of that version's commit and build fmt.vcxproj (to update its cgmanifest.json) too. -->
     <FmtVersion>10.1.0</FmtVersion>
     <FmtCommitHash>ca2e3685b160617d3d95fcd9e789c4e06ca88</FmtCommitHash>
