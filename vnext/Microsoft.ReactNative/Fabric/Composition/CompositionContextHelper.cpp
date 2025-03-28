@@ -708,13 +708,12 @@ struct CompScrollerVisual : winrt::implements<
         typename TTypeRedirects::InteractionTrackerInertiaStateEnteredArgs args) noexcept {
       m_outer->m_custom = false;
       m_outer->m_inertia = true;
+      m_outer->m_currentPosition = args.NaturalRestingPosition();
+      m_outer->FireScrollBeginDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
     }
     void InteractingStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
-        typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {
-      m_outer->m_currentPosition = args.Position();
-      m_outer->FireScrollBeginDrag({args.Position().x, args.Position().y});
-    }
+        typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {}
     void RequestIgnored(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerRequestIgnoredArgs args) noexcept {}

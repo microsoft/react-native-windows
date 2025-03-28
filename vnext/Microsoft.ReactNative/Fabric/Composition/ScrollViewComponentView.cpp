@@ -1222,7 +1222,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
     winrt::auto_revoke,
     [this](
         winrt::IInspectable const & /*sender*/,
-        winrt::Microsoft::ReactNative::Composition::Experimental::IScrollBeginDragArgs const &args) {
+        winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
       updateStateWithContentOffset();
       auto eventEmitter = GetEventEmitter();
       if (eventEmitter) {
