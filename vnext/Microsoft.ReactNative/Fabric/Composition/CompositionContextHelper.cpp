@@ -920,7 +920,7 @@ struct CompScrollerVisual : winrt::implements<
     return m_scrollPositionChangedEvent.add(handler);
   }
 
-   winrt::event_token ScrollBeginDrag(
+  winrt::event_token ScrollBeginDrag(
       winrt::Windows::Foundation::EventHandler<
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs> const
           &handler) noexcept {
