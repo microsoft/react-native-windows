@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement OnScrollBeginDrag Event",
+  "packageName": "react-native-windows",
+  "email": "anupriyaverma13@gmail.com",
+  "dependentChangeType": "patch"
+}
