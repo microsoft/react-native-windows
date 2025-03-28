@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -16,13 +17,6 @@
     <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
     <DesktopCompatible>true</DesktopCompatible>
     <UseWinUI>true</UseWinUI>
-  </PropertyGroup>
-  <PropertyGroup>
-    <!-- TODO: Is this the right way?  We only support newarch/winui3.-->
-    <UseWinUI3>true</UseWinUI3>
-    <RnwNewArch>true</RnwNewArch>
-    <UseFabric>true</UseFabric>
-    <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -161,5 +155,11 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
   </ItemGroup>
+  <Target Name="ValidateRnwNewArch" BeforeTargets="PrepareForBuild">
+    <Error Text="RnwNewArch must be true to use this project" Condition="'$(RnwNewArch)' != 'true'" />
+    <Error Text="UseWinUI3 must be true to use this project" Condition="'$(UseWinUI3)' != 'true'" />
+    <Error Text="UseFabric must be true to use this project" Condition="'$(UseFabric)' != 'true'" />
+    <Error Text="UseExperimentalWinUI3 must be true to use this project" Condition="'$(UseExperimentalWinUI3)' != 'true'" />
+  </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
