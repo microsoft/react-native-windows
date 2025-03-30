@@ -1051,6 +1051,10 @@ void WindowsTextInputComponentView::updateProps(
     m_propBits |= TXTBIT_PARAFORMATCHANGE;
   }
 
+  if (oldTextInputProps.letterSpacing != newTextInputProps.letterSpacing) {
+    updateLetterSpacing(newTextInputProps.letterSpacing);
+  }
+
   UpdatePropertyBits();
 }
 
@@ -1543,6 +1547,22 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
     winrt::check_hresult(m_textServices->TxSendMessage(
         EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
   }
+}
+
+void WindowsTextInputComponentView::updateLetterSpacing(float letterSpacing) noexcept {
+  CHARFORMAT2W cf = {};
+  cf.cbSize = sizeof(CHARFORMAT2W);
+  cf.dwMask = CFM_SPACING;
+  cf.sSpacing = static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
+
+  LRESULT res;
+
+  // Apply to all existing text like placeholder
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&cf), &res));
+
+  // Apply to future text input
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&cf), &res));
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

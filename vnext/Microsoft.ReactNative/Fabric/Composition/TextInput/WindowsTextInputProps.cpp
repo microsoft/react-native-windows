@@ -27,6 +27,7 @@ WindowsTextInputProps::WindowsTextInputProps(
       clearTextOnFocus(convertRawProp(context, rawProps, "clearTextOnFocus", sourceProps.clearTextOnFocus, {false})),
       editable(convertRawProp(context, rawProps, "editable", sourceProps.editable, {true})),
       maxLength(convertRawProp(context, rawProps, "maxLength", sourceProps.maxLength, {0})),
+      letterSpacing(convertRawProp(context, rawProps, "letterSpacing", sourceProps.letterSpacing, {0.0})),
       multiline(convertRawProp(context, rawProps, "multiline", sourceProps.multiline, {false})),
       placeholder(convertRawProp(context, rawProps, "placeholder", sourceProps.placeholder, {})),
       placeholderTextColor(
