@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement letterSpacing for TextInput",
+  "packageName": "react-native-windows",
+  "email": "anupriyaverma13@gmail.com",
+  "dependentChangeType": "patch"
+}
