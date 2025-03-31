@@ -170,6 +170,22 @@ function SpellCheckSample() {
   );
 }
 
+function IsFocusedSample() {
+  const [isFocused, setIsFocused] = React.useState(false);
+
+  return (
+    <View accessible testID="uncontrolled-textinput">
+      <ExampleTextInput
+        defaultValue="Hello World!"
+        testID="uncontrolled-textinput"
+        style={isFocused ? styles.focusedUncontrolled : undefined}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+      />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   multiline: {
     height: 60,
@@ -773,6 +789,12 @@ const examples: Array<RNTesterModuleExample> = [
           />
         </View>
       );
+    },
+  },
+  {
+    title: 'TextInputs which have isFocused',
+    render: function (): React.Node {
+      return <IsFocusedSample />;
     },
   },
   // Windows]
