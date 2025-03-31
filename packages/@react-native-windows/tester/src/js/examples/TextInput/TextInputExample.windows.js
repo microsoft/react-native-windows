@@ -172,15 +172,14 @@ function SpellCheckSample() {
 
 function IsFocusedSample() {
   const [isFocused, setIsFocused] = React.useState(false);
-
   return (
-    <View accessible testID="uncontrolled-textinput">
+    <View accessible testID="isfocused-textinput">
       <ExampleTextInput
         defaultValue="Hello World!"
-        testID="uncontrolled-textinput"
-        style={isFocused ? styles.focusedUncontrolled : undefined}
-        onFocus={() => setIsFocused(true)}
+        testID="isfocused-textinput"
+        style={isFocused ? styles.isFocused : undefined}
         onBlur={() => setIsFocused(false)}
+        isFocused={() => setIsFocused(true) }
       />
     </View>
   );
@@ -199,6 +198,10 @@ const styles = StyleSheet.create({
   },
   wrappedText: {
     maxWidth: 300,
+  },
+  isFocused: {
+    borderColor: 'red',
+    borderWidth: 2,
   },
 });
 
