@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 28 Mar 2025 05:25:50 GMT",
+      "version": "0.0.0-canary.931",
+      "tag": "react-native-windows_v0.0.0-canary.931",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8966dc5cfeac61022cf2fe94ca46cfb12adf1b1f",
+            "comment": "Bump folly to v2024.01.01.00"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Mar 2025 05:23:14 GMT",
+      "version": "0.0.0-canary.930",
+      "tag": "react-native-windows_v0.0.0-canary.930",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ebb1949033d580e00438cbd62ec819b717e271e6",
+            "comment": "Allow TextInput to scroll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Mar 2025 05:26:15 GMT",
       "version": "0.0.0-canary.929",
       "tag": "react-native-windows_v0.0.0-canary.929",
