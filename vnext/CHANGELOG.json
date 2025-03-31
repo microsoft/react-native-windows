@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 31 Mar 2025 15:24:14 GMT",
+      "version": "0.77.6",
+      "tag": "react-native-windows_v0.77.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "faf22821e34fd9786923c6241e445b2f9fb530bd",
+            "comment": "Button should pass onAccessibilityTap to native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Mar 2025 15:25:14 GMT",
       "version": "0.77.5",
       "tag": "react-native-windows_v0.77.5",
