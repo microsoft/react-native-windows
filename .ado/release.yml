@@ -40,6 +40,7 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
+        - checkout: none
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet '
         - task: NuGetAuthenticate@1
@@ -65,6 +66,7 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
+        - checkout: none
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet '
         - task: NuGetAuthenticate@1
@@ -83,7 +85,7 @@ extends:
       jobs:
       - job: PushPackages
         displayName: Push packages
-        condition: and(succeeded(), endsWith(variables['Build.SourceBranchName'],'-stable'))
+        # condition: and(succeeded(), endsWith(variables['Build.SourceBranchName'],'-stable')) # Disable filter, let main publish fail
         timeoutInMinutes: 0
         templateContext:
           inputs:
@@ -92,6 +94,7 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
+        - checkout: none
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet '
         - task: CmdLine@2
