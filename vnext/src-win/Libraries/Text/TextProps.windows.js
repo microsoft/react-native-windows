@@ -61,6 +61,7 @@ export type TextProps = $ReadOnly<{
   accessibilityLevel?: ?number, // Windows
   accessibilityPosInSet?: ?number, // Windows
   accessibilitySetSize?: ?number, // Windows
+  tooltip?: ?string, // Windows dev
 
   'aria-label'?: ?string,
 

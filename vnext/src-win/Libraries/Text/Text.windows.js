@@ -47,6 +47,7 @@ const Text: component(
       accessibilityLevel, // Windows
       accessibilityPosInSet, // Windows
       accessibilitySetSize, // Windows
+      tooltip, // Windows
       accessibilityState,
       allowFontScaling,
       'aria-busy': ariaBusy,
@@ -205,6 +206,7 @@ const Text: component(
               accessibilityLevel: _accessibilityLevel, // Windows
               accessibilityPosInSet: _accessibilityPosInSet, // Windows
               accessibilitySetSize: _accessibilitySetSize, // Windows
+              tooltip: tooltip, // Windows
               nativeID: _nativeID,
               numberOfLines: _numberOfLines,
               selectable: _selectable,
@@ -239,6 +241,7 @@ const Text: component(
           accessibilityLevel={_accessibilityLevel} // Windows
           accessibilityPosInSet={_accessibilityPosInSet} // Windows
           accessibilitySetSize={_accessibilitySetSize} // Windows
+          tooltip={tooltip} // Windows
           nativeID={_nativeID}
           numberOfLines={_numberOfLines}
           ref={forwardedRef}
@@ -283,6 +286,7 @@ const Text: component(
             accessibilityLevel: _accessibilityLevel, // Windows
             accessibilityPosInSet: _accessibilityPosInSet, // Windows
             accessibilitySetSize: _accessibilitySetSize, // Windows
+            tooltip: tooltip, // Windows
             accessible: _accessible,
             allowFontScaling: allowFontScaling !== false,
             disabled: _disabled,
@@ -319,6 +323,7 @@ const Text: component(
           accessibilityLevel={_accessibilityLevel} // Windows
           accessibilityPosInSet={_accessibilityPosInSet} // Windows
           accessibilitySetSize={_accessibilitySetSize} // Windows
+          tooltip={tooltip} // Windows
           accessible={_accessible}
           allowFontScaling={allowFontScaling !== false}
           disabled={_disabled}
