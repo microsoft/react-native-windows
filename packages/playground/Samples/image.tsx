@@ -209,10 +209,7 @@ export default class Bootstrap extends React.Component<
             }
             resizeMode={this.state.selectedResizeMode}
             blurRadius={this.state.blurRadius}
-            loadingIndicatorSource={
-              this.state.selectedSource === 'svg'
-                ? require('../Samples/images/Microsoft-Logo.svg')
-                : {uri: this.state.imageUri}
+            loadingIndicatorSource={require('../Samples/images/loading.png')
             }
           />
         </View>
