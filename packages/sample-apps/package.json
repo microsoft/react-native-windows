@@ -23,7 +23,7 @@
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native-community/cli": "^15.0.0",
     "@react-native-windows/cli": "0.76.5",
     "@react-native-windows/codegen": "0.76.3",
     "@react-native/metro-config": "0.76.2",
