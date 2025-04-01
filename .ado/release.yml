@@ -101,10 +101,10 @@ extends:
           inputs:
             script: nuget.exe SetApiKey $(nugetorg-apiKey-push)
             workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
-        - task: CmdLine@2
+        - task: PowerShell@2
           displayName: NuGet push (nuget.org)
           inputs:
-            pwsh: |
+            script: |
               if (Get-ChildItem -Path .\ -Filter '*0.0.0-canary*' -ErrorAction SilentlyContinue) { Write-Output "Canary builds found, exiting."; return 0; }
               nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
             workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
