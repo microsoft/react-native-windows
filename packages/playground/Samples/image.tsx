@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  * @format
  */
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   AppRegistry,
   Image,
@@ -16,6 +16,9 @@ import {
   FlatList,
 } from 'react-native';
 
+const loadingImageUri = require('..\\Samples\\images\\loading.png');
+const actualImageUri = require('..\\Samples\\images\\reduser.png');
+
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
 
@@ -27,6 +30,19 @@ const dataImageUri =
 
 const dataImageSvg =
   'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
+
+const DisplayAnImageWithStyle = () => {
+  return (
+    <View>
+      <Text> loadingIndicatorSource </Text>
+      <Image
+        style={styles.loading}
+        source={{uri: actualImageUri}}
+        loadingIndicatorSource={{uri: loadingImageUri}}
+      />
+    </View>
+  );
+};
 
 export default class Bootstrap extends React.Component<
   {},
@@ -49,11 +65,11 @@ export default class Bootstrap extends React.Component<
 > {
   state = {
     selectedResizeMode: 'center' as 'center',
-    selectedSource: 'small',
+    selectedSource: 'data-svg',
     includeBorder: false,
     tintColor: 'transparent',
     blurRadius: 0,
-    imageUri: 'https://facebook.github.io/react-native/img/header_logo.png',
+    imageUri: dataImageSvg,
     modalVisible: false,
     currentPicker: '',
   };
@@ -149,6 +165,7 @@ export default class Bootstrap extends React.Component<
 
     return (
       <View style={styles.container}>
+        {/*<DisplayAnImageWithStyle />*/}
         <View style={styles.rowContainer}>
           <Text style={styles.title}>ResizeMode</Text>
           <TouchableOpacity
@@ -202,15 +219,18 @@ export default class Bootstrap extends React.Component<
                 ? styles.imageWithPlatformColor
                 : {tintColor: this.state.tintColor},
             ]}
+            defaultSource={{uri: this.state.imageUri}}
             source={
               this.state.selectedSource === 'svg'
                 ? require('../Samples/images/Microsoft-Logo.svg')
                 : {uri: this.state.imageUri}
             }
+            loadingIndicatorSource={{uri: this.state.imageUri}}
             resizeMode={this.state.selectedResizeMode}
             blurRadius={this.state.blurRadius}
-            loadingIndicatorSource={require('../Samples/images/loading.png')
-            }
+            onLoad={() => console.log('onLoad')}
+            onLoadStart={() => console.log('onLoadStart')}
+            onLoadEnd={() => console.log('onLoadEnd')}
           />
         </View>
 
@@ -293,6 +313,10 @@ const styles = StyleSheet.create({
   },
   imageWithPlatformColor: {
     tintColor: 'green',
+  },
+  loading: {
+    height: '10%',
+    width: '10%',
   },
   item: {
     paddingVertical: 12,

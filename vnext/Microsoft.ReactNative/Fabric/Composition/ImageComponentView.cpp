@@ -36,7 +36,15 @@ ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress, int64_t loaded, int64_t total)
     const {
-  // TODO progress?
+  if (auto imgComponentView = m_wkImage.get()) {
+    int loadedInt = static_cast<int>(loaded);
+    int totalInt = static_cast<int>(total);
+    imgComponentView->m_reactContext.UIDispatcher().Post([progress, wkImage = m_wkImage, loadedInt, totalInt]() {
+      if (auto image = wkImage.get()) {
+        image->didReceiveProgress(progress, loadedInt, totalInt);
+      }
+    });
+  }
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
@@ -95,6 +103,21 @@ void ImageComponentView::ImageLoadStart() noexcept {
   }
 }
 
+void ImageComponentView::ImageLoaded() noexcept {
+  auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
+  if (imageEventEmitter) {
+    imageEventEmitter->onLoadEnd();
+  }
+}
+
+void ImageComponentView::didReceiveProgress(float progress, int loaded, int total) noexcept {
+  auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
+  if (imageEventEmitter) {
+    imageEventEmitter->onProgress(progress, loaded, total);
+  }
+  ensureDrawingSurface();
+}
+
 void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImage> &imageResponseImage) noexcept {
   // TODO check for recycled?
 
@@ -142,6 +165,14 @@ void ImageComponentView::updateProps(
     m_drawingSurface = nullptr; // TODO don't need to recreate the surface just to redraw...
   }
 
+  if (newImageProps.defaultSource != oldImageProps.defaultSource) {
+    m_imageSource = newImageProps.defaultSource;
+  }
+
+  if (newImageProps.loadingIndicatorSource != oldImageProps.loadingIndicatorSource) {
+    m_imageSource = newImageProps.loadingIndicatorSource;
+  }
+
   Super::updateProps(props, oldProps);
 }
 
@@ -159,7 +190,8 @@ void ImageComponentView::updateState(
   bool havePreviousData = oldImageState && oldImageState->getData().getImageSource() != facebook::react::ImageSource{};
 
   if (!havePreviousData ||
-      (newImageState && newImageState->getData().getImageSource() != oldImageState->getData().getImageSource())) {
+      (newImageState && newImageState->getData().getImageSource() != oldImageState->getData().getImageSource()) ||
+      !m_imageSource.uri.empty()) {
     // Loading actually starts a little before this, but this is the first time we know
     // the image is loading and can fire an event from this component
     std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter)->onLoadStart();

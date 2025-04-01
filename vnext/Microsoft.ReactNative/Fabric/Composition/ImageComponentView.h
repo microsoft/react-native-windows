@@ -85,6 +85,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
 
   void ImageLoadStart() noexcept;
   void ImageLoaded() noexcept;
+  void didReceiveProgress(float progress, int loaded, int total) noexcept;
   void didReceiveImage(const std::shared_ptr<ImageResponseImage> &wicbmp) noexcept;
   void didReceiveFailureFromObserver(const facebook::react::ImageLoadError &error) noexcept;
   void setStateAndResubscribeImageResponseObserver(
@@ -95,6 +96,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   std::shared_ptr<ImageResponseImage> m_imageResponseImage;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
   facebook::react::ImageShadowNode::ConcreteState::Shared m_state;
+  facebook::react::ImageSource m_imageSource;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
