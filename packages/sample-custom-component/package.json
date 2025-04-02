@@ -31,7 +31,7 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native-community/cli": "^15.0.0",
     "@react-native/metro-config": "0.77.0-nightly-20241001-223e98cc4",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
