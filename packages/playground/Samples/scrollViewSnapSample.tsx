@@ -249,6 +249,9 @@ export default class Bootstrap extends React.Component<{}, any> {
             onScrollBeginDrag={() => {
               console.log('onScrollBeginDrag');
             }}
+			onScrollEndDrag={() => {
+              console.log('onScrollEndDrag');
+            }}
             onScroll={() => {
               console.log('onScroll');
             }}>
