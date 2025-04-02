@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  * @format
  */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   AppRegistry,
   Image,
@@ -17,32 +17,23 @@ import {
 } from 'react-native';
 
 const loadingImageUri = require('..\\Samples\\images\\loading.png');
-const actualImageUri = require('..\\Samples\\images\\reduser.png');
 
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
 
 const smallImageUri =
-  'https://facebook.github.io/react-native/img/header_logo.png';
+  'https://cdn.pixabay.com/photo/2021/08/02/00/10/flowers-6515538_1280.jpg';
+
+const reactLogoUri = 'https://reactjs.org/logo-og.png';
+
+const svgUri =
+  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iIzYxREFGQiIvPjwvc3ZnPg==';
 
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
 
 const dataImageSvg =
   'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
-
-const DisplayAnImageWithStyle = () => {
-  return (
-    <View>
-      <Text> loadingIndicatorSource </Text>
-      <Image
-        style={styles.loading}
-        source={{uri: actualImageUri}}
-        loadingIndicatorSource={{uri: loadingImageUri}}
-      />
-    </View>
-  );
-};
 
 export default class Bootstrap extends React.Component<
   {},
@@ -61,17 +52,19 @@ export default class Bootstrap extends React.Component<
     tintColor: string;
     modalVisible: boolean;
     currentPicker: string | null;
+    defaultImageUri: string;
   }
 > {
   state = {
     selectedResizeMode: 'center' as 'center',
-    selectedSource: 'data-svg',
+    selectedSource: 'small',
     includeBorder: false,
     tintColor: 'transparent',
     blurRadius: 0,
-    imageUri: dataImageSvg,
+    imageUri: smallImageUri,
     modalVisible: false,
     currentPicker: '',
+    defaultImageUri: reactLogoUri,
   };
 
   switchImageUri = (value: string) => {
@@ -86,6 +79,10 @@ export default class Bootstrap extends React.Component<
       imageUri = dataImageSvg;
     } else if (value === 'data') {
       imageUri = dataImageUri;
+    } else if (value === 'svg') {
+      imageUri = svgUri;
+    } else if (value === 'react-logo') {
+      imageUri = reactLogoUri;
     }
     this.setState({imageUri});
   };
@@ -135,10 +132,11 @@ export default class Bootstrap extends React.Component<
 
   render() {
     const resizeModes = [
+      {label: 'center', value: 'center'},
+
       {label: 'cover', value: 'cover'},
       {label: 'contain', value: 'contain'},
       {label: 'stretch', value: 'stretch'},
-      {label: 'center', value: 'center'},
       {label: 'repeat', value: 'repeat'},
     ];
 
@@ -148,6 +146,7 @@ export default class Bootstrap extends React.Component<
       {label: 'data', value: 'data'},
       {label: 'data-svg', value: 'data-svg'},
       {label: 'svg', value: 'svg'},
+      {label: 'react-logo', value: 'react-logo'},
     ];
 
     const blurRadiusOptions = [
@@ -165,7 +164,6 @@ export default class Bootstrap extends React.Component<
 
     return (
       <View style={styles.container}>
-        {/*<DisplayAnImageWithStyle />*/}
         <View style={styles.rowContainer}>
           <Text style={styles.title}>ResizeMode</Text>
           <TouchableOpacity
@@ -219,13 +217,9 @@ export default class Bootstrap extends React.Component<
                 ? styles.imageWithPlatformColor
                 : {tintColor: this.state.tintColor},
             ]}
-            defaultSource={{uri: this.state.imageUri}}
-            source={
-              this.state.selectedSource === 'svg'
-                ? require('../Samples/images/Microsoft-Logo.svg')
-                : {uri: this.state.imageUri}
-            }
-            loadingIndicatorSource={{uri: this.state.imageUri}}
+            defaultSource={{uri: this.state.defaultImageUri}}
+            source={{uri: this.state.imageUri}}
+            loadingIndicatorSource={{uri: loadingImageUri}}
             resizeMode={this.state.selectedResizeMode}
             blurRadius={this.state.blurRadius}
             onLoad={() => console.log('onLoad')}
