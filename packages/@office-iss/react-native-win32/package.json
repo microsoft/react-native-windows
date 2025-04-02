@@ -26,9 +26,9 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^29.6.3",
-    "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-android": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-ios": "15.0.0-alpha.2",
+    "@react-native-community/cli": "^15.0.0",
+    "@react-native-community/cli-platform-android": "^15.0.0",
+    "@react-native-community/cli-platform-ios": "^15.0.0",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.78.0",
     "@react-native/codegen": "0.78.0",
