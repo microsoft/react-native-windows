@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/eslint-config",
-  "version": "1.2.32",
+  "version": "1.2.33",
   "license": "MIT",
   "main": "eslintrc.js",
   "repository": {

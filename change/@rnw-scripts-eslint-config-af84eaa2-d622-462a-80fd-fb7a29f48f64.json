@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "bump dependencies missed in integrations",
-  "packageName": "@rnw-scripts/eslint-config",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
