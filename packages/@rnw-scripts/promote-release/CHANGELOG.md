@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/promote-release
 
-<!-- This log was last generated on Sat, 11 Jan 2025 06:30:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.1.57
+
+Wed, 02 Apr 2025 05:22:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.91
+- Bump @react-native-windows/fs to v0.0.0-canary.62
+- Bump @react-native-windows/package-utils to v0.0.0-canary.88
+- Bump @rnw-scripts/eslint-config to v1.2.33
+- Bump @rnw-scripts/just-task to v2.3.50
 
 ## 2.1.56
 
