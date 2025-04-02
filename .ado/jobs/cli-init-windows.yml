@@ -196,11 +196,13 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+            useExperimentalWinUI3: true
           - Name: PaperX64ReleaseCpp
             template: old/uwp-cpp-app
             configuration: Release
             platform: x64
             runWack: true
+            useExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
@@ -420,3 +422,4 @@ jobs:
                   buildEnvironment: ${{ parameters.buildEnvironment }}
                   useChakra: ${{ coalesce(matrix.useChakra, false) }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
+                  useExperimentalWinUI3: ${{ coalesce(matrix.useExperimentalWinUI3, false) }}
