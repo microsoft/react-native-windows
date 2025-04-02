@@ -77,7 +77,7 @@ steps:
       displayName: Init new app project with @react-native-community/cli init
       workingDirectory: $(Agent.BuildDirectory)
 
-  - ${{ if and(endsWith(parameters.template, '-lib')) }}:
+  - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
         npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type turbo-module --react-native-version $(reactNativeDevDependency) --example vanilla testcli
       displayName: Init new lib project with create-react-native-library
@@ -150,7 +150,7 @@ steps:
   - ${{ if eq(parameters.useExperimentalWinUI3, true) }}:
     - template:  ../templates/enable-experimental-winui3.yml
       parameters:
-        ${{ if and(endsWith(parameters.template, '-lib')) }}:
+        ${{ if endsWith(parameters.template, '-lib') }}:
           workingDir: $(Agent.BuildDirectory)\testcli\example\windows
         ${{ else }}:
           workingDir: $(Agent.BuildDirectory)\testcli\windows
@@ -161,7 +161,7 @@ steps:
       $manifest.Package.Identity.Name = 'ReactNative.InitTest'
       $manifest.Save("$path")
     displayName: Set AppX package name to "ReactNative.InitTest"
-    ${{ if and(endsWith(parameters.template, '-lib')) }}:
+    ${{ if endsWith(parameters.template, '-lib') }}:
       workingDirectory: $(Agent.BuildDirectory)\testcli\example\windows
     ${{ else }}:
       workingDirectory: $(Agent.BuildDirectory)\testcli\windows
@@ -177,7 +177,7 @@ steps:
 
   - template: react-native-debug-info.yml
     parameters:
-      ${{ if and(endsWith(parameters.template, '-lib')) }}:
+      ${{ if endsWith(parameters.template, '-lib') }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli\example
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
@@ -198,7 +198,7 @@ steps:
       buildPlatform: ${{ parameters.platform }}
       deployOption: ${{ parameters.additionalRunArguments }}
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
-      ${{ if and(endsWith(parameters.template, '-lib')) }}:
+      ${{ if endsWith(parameters.template, '-lib') }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli\example
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
