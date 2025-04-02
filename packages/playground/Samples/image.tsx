@@ -4,17 +4,7 @@
  * @format
  */
 import React from 'react';
-import {
-  AppRegistry,
-  Image,
-  View,
-  Text,
-  Switch,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  FlatList,
-} from 'react-native';
+import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
 import {TestPickerView} from './testPicker';
 
 const loadingImageUri =

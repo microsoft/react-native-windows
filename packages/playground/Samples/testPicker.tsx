@@ -70,11 +70,9 @@ const TestPicker: FC<PickerProps> = ({ options, currentPicker, selectedLabel, on
 };
 
 export const TestPickerView: FC<TestPickerProps> = ({ options, id, selectedLabel, onSelect }) => {
-    const [currentPicker, setCurrentPicker] = useState(id);
-
     return (
         <View style={styles.container}>
-            <TestPicker options={options} currentPicker={currentPicker} onSelect={onSelect} selectedLabel={selectedLabel} />
+            <TestPicker options={options} currentPicker={id} onSelect={onSelect} selectedLabel={selectedLabel} />
         </View>
     );
 };
