@@ -110,6 +110,8 @@ struct WindowsTextInputComponentView
       const std::string &previousCapitalizationType,
       const std::string &newcapitalizationType) noexcept;
 
+  void updateLetterSpacing(float letterSpacing) noexcept;
+
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface{nullptr};
