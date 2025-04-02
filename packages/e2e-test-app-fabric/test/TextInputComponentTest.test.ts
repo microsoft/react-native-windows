@@ -860,36 +860,36 @@ describe('TextInput Tests', () => {
   });
     test('TextInputs which have isFocused', async () => {
      // TO-DO
-    //const component = await app.findElementByTestID('isfocused-textinput');
-    //await component.waitForDisplayed({timeout: 5000});
+    const component = await app.findElementByTestID('isfocused-textinput');
+    await component.waitForDisplayed({timeout: 5000});
 
-    //  await app.waitUntil(
-    //      async () => {
-    //          return (await component.getText()) === 'Hello World!';
-    //      },
-    //      {
-    //          interval: 1500,
-    //          timeout: 5000,
-    //          timeoutMsg: `Unable to get value for not focused.`,
-    //      },
-    //  );
+      await app.waitUntil(
+          async () => {
+              return (await component.getText()) === 'Hello World!';
+          },
+          {
+              interval: 1500,
+              timeout: 5000,
+              timeoutMsg: `Unable to get value for not focused.`,
+          },
+      );
 
-    //// Set focus on the component
-    //await component.click();
+    // Set focus on the component
+    await component.click();
 
-    //await app.waitUntil(
-    //    async () => {
-    //        await component.setValue('Focused');
-    //        return (await component.getText()) === 'Focused';
-    //  },
-    //  {
-    //    interval: 1500,
-    //    timeout: 5000,
-    //    timeoutMsg: `Unable to focus.`,
-    //  },
-    //);
+    await app.waitUntil(
+        async () => {
+            await component.setValue('Focused');
+            return (await component.getText()) === 'Focused';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to focus.`,
+      },
+    );
 
-    //  const dump = await dumpVisualTree('isfocused-textinput');
-    //expect(dump).toMatchSnapshot();
+      const dump = await dumpVisualTree('isfocused-textinput');
+    expect(dump).toMatchSnapshot();
   });
 });
