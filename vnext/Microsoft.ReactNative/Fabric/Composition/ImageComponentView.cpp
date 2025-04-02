@@ -195,6 +195,7 @@ void ImageComponentView::updateState(
     // Loading actually starts a little before this, but this is the first time we know
     // the image is loading and can fire an event from this component
     std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter)->onLoadStart();
+    std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter)->onLoad(m_imageSource);
   }
 }
 

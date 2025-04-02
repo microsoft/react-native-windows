@@ -53,6 +53,7 @@ export default class Bootstrap extends React.Component<
     modalVisible: boolean;
     currentPicker: string | null;
     defaultImageUri: string;
+    includedefaultSourceOnly: boolean;
   }
 > {
   state = {
@@ -65,6 +66,7 @@ export default class Bootstrap extends React.Component<
     modalVisible: false,
     currentPicker: '',
     defaultImageUri: reactLogoUri,
+    includedefaultSourceOnly: true,
   };
 
   switchImageUri = (value: string) => {
@@ -208,26 +210,54 @@ export default class Bootstrap extends React.Component<
           <Text>Round Border</Text>
         </View>
 
-        <View style={styles.imageContainer}>
-          <Image
-            style={[
-              styles.image,
-              this.state.includeBorder ? styles.imageWithBorder : {},
-              this.state.tintColor === 'platformcolor'
-                ? styles.imageWithPlatformColor
-                : {tintColor: this.state.tintColor},
-            ]}
-            defaultSource={{uri: this.state.defaultImageUri}}
-            source={{uri: this.state.imageUri}}
-            loadingIndicatorSource={{uri: loadingImageUri}}
-            resizeMode={this.state.selectedResizeMode}
-            blurRadius={this.state.blurRadius}
-            onLoad={() => console.log('onLoad')}
-            onLoadStart={() => console.log('onLoadStart')}
-            onLoadEnd={() => console.log('onLoadEnd')}
+        <View style={styles.rowContainer}>
+          <Text>defaultSource</Text>
+          <Switch
+            style={{marginLeft: 10}}
+            value={this.state.includedefaultSourceOnly}
+            onValueChange={(value: boolean) =>
+              this.setState({includedefaultSourceOnly: value})
+            }
           />
+          <Text>Include defaultSource Only</Text>
         </View>
-
+        <View
+          style={
+            this.state.includedefaultSourceOnly
+              ? styles.imageContainerDefault
+              : styles.imageContainer
+          }>
+          {this.state.includedefaultSourceOnly ? (
+            <Image
+              style={[
+                styles.image,
+                this.state.includeBorder ? styles.imageWithBorder : {},
+                this.state.tintColor === 'platformcolor'
+                  ? styles.imageWithPlatformColor
+                  : {tintColor: this.state.tintColor},
+              ]}
+              defaultSource={{uri: this.state.defaultImageUri}}
+            />
+          ) : (
+            <Image
+              style={[
+                styles.image,
+                this.state.includeBorder ? styles.imageWithBorder : {},
+                this.state.tintColor === 'platformcolor'
+                  ? styles.imageWithPlatformColor
+                  : {tintColor: this.state.tintColor},
+              ]}
+              defaultSource={{uri: this.state.defaultImageUri}}
+              source={{uri: this.state.imageUri}}
+              loadingIndicatorSource={{uri: loadingImageUri}}
+              resizeMode={this.state.selectedResizeMode}
+              blurRadius={this.state.blurRadius}
+              onLoad={() => console.log('onLoad')}
+              onLoadStart={() => console.log('onLoadStart')}
+              onLoadEnd={() => console.log('onLoadEnd')}
+            />
+          )}
+        </View>
         <Modal
           visible={this.state.modalVisible}
           transparent={true}
@@ -295,6 +325,12 @@ const styles = StyleSheet.create({
     height: '50%',
     width: '75%',
   },
+  imageContainerDefault: {
+    marginTop: 5,
+    backgroundColor: 'skyblue',
+    height: '50%',
+    width: '75%',
+  },
   image: {
     height: '100%',
     width: '100%',
@@ -306,7 +342,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   imageWithPlatformColor: {
-    tintColor: 'green',
+    tintColor: 'green', //to-do: use platform color
   },
   loading: {
     height: '10%',
