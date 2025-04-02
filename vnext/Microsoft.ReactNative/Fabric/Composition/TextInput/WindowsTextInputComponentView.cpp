@@ -986,7 +986,9 @@ void WindowsTextInputComponentView::updateProps(
   if (!facebook::react::floatEquality(
           oldTextInputProps.textAttributes.fontSize, newTextInputProps.textAttributes.fontSize) ||
       (oldTextInputProps.textAttributes.allowFontScaling != newTextInputProps.textAttributes.allowFontScaling) ||
-      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight) {
+      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
+      !facebook::react::floatEquality(
+          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing)) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1049,10 +1051,6 @@ void WindowsTextInputComponentView::updateProps(
     // Let UpdateParaFormat() to refresh the text field with the new text alignment.
     m_propBitsMask |= TXTBIT_PARAFORMATCHANGE;
     m_propBits |= TXTBIT_PARAFORMATCHANGE;
-  }
-
-  if (oldTextInputProps.letterSpacing != newTextInputProps.letterSpacing) {
-    updateLetterSpacing(newTextInputProps.letterSpacing);
   }
 
   UpdatePropertyBits();
@@ -1304,6 +1302,12 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   // set char offset
   cfNew.dwMask |= CFM_OFFSET;
   cfNew.yOffset = 0;
+
+  // set letter spacing
+  float letterSpacing = props.textAttributes.letterSpacing;
+  if (!std::isnan(letterSpacing)) {
+    updateLetterSpacing(letterSpacing);
+  }
 
   // set charset
   cfNew.dwMask |= CFM_CHARSET;

@@ -100,7 +100,6 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   bool clearTextOnFocus{false};
   bool editable{true};
   int maxLength{0};
-  float letterSpacing{0.0};
   bool multiline{false};
   std::string placeholder{};
   SharedColor placeholderTextColor{};
