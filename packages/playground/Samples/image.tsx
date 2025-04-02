@@ -4,7 +4,6 @@
  * @format
  */
 import React from 'react';
-import {Picker} from '@react-native-picker/picker';
 import {
   AppRegistry,
   Image,
@@ -12,14 +11,23 @@ import {
   Text,
   Switch,
   StyleSheet,
-  PlatformColor,
+  TouchableOpacity,
+  Modal,
+  FlatList,
 } from 'react-native';
 
+const loadingImageUri =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
 
 const smallImageUri =
-  'https://facebook.github.io/react-native/img/header_logo.png';
+  'https://cdn.pixabay.com/photo/2021/08/02/00/10/flowers-6515538_1280.jpg';
+
+const reactLogoUri = 'https://reactjs.org/logo-og.png';
+
+const svgUri =
+  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iIzYxREFGQiIvPjwvc3ZnPg==';
 
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
@@ -42,6 +50,10 @@ export default class Bootstrap extends React.Component<
     selectedSource: string;
     imageUri: string;
     tintColor: string;
+    modalVisible: boolean;
+    currentPicker: string | null;
+    defaultImageUri: string;
+    includedefaultSourceOnly: boolean;
   }
 > {
   state = {
@@ -50,14 +62,17 @@ export default class Bootstrap extends React.Component<
     includeBorder: false,
     tintColor: 'transparent',
     blurRadius: 0,
-    imageUri: 'https://facebook.github.io/react-native/img/header_logo.png',
+    imageUri: smallImageUri,
+    modalVisible: false,
+    currentPicker: '',
+    defaultImageUri: reactLogoUri,
+    includedefaultSourceOnly: false,
   };
 
   switchImageUri = (value: string) => {
     this.setState({selectedSource: value});
 
     let imageUri = '';
-
     if (value === 'small') {
       imageUri = smallImageUri;
     } else if (value === 'large') {
@@ -66,63 +81,123 @@ export default class Bootstrap extends React.Component<
       imageUri = dataImageSvg;
     } else if (value === 'data') {
       imageUri = dataImageUri;
+    } else if (value === 'svg') {
+      imageUri = svgUri;
+    } else if (value === 'react-logo') {
+      imageUri = reactLogoUri;
     }
-
     this.setState({imageUri});
   };
 
+  setModalVisible = (visible: boolean, pickerName: string | null = null) => {
+    this.setState({modalVisible: visible, currentPicker: pickerName});
+  };
+
+  setSelection = (value: any) => {
+    const {currentPicker} = this.state;
+    switch (currentPicker) {
+      case 'resizeMode':
+        this.setState({selectedResizeMode: value});
+        break;
+      case 'imageSource':
+        this.switchImageUri(value);
+        break;
+      case 'blurRadius':
+        this.setState({blurRadius: value});
+        break;
+      case 'tintColor':
+        this.setState({tintColor: value});
+        break;
+      default:
+        break;
+    }
+
+    this.setModalVisible(false);
+  };
+
+  renderPickerItems = (options: {label: string; value: any}[]) => {
+    return (
+      <FlatList
+        style={styles.flatList}
+        data={options}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => this.setSelection(item.value)}>
+            <Text style={styles.itemText}>{item.label}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={item => item.value}
+      />
+    );
+  };
+
   render() {
+    const resizeModes = [
+      {label: 'center', value: 'center'},
+
+      {label: 'cover', value: 'cover'},
+      {label: 'contain', value: 'contain'},
+      {label: 'stretch', value: 'stretch'},
+      {label: 'repeat', value: 'repeat'},
+    ];
+
+    const imageSources = [
+      {label: 'small', value: 'small'},
+      {label: 'large', value: 'large'},
+      {label: 'data', value: 'data'},
+      {label: 'data-svg', value: 'data-svg'},
+      {label: 'svg', value: 'svg'},
+      {label: 'react-logo', value: 'react-logo'},
+    ];
+
+    const blurRadiusOptions = [
+      {label: '0', value: 0},
+      {label: '5', value: 5},
+      {label: '10', value: 10},
+    ];
+
+    const tintColors = [
+      {label: 'None', value: 'transparent'},
+      {label: 'Purple', value: 'purple'},
+      {label: 'Green', value: 'green'},
+      {label: 'SystemAccentColor', value: 'platformcolor'},
+    ];
+
     return (
       <View style={styles.container}>
         <View style={styles.rowContainer}>
           <Text style={styles.title}>ResizeMode</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.selectedResizeMode}
-            onValueChange={value => this.setState({selectedResizeMode: value})}>
-            <Picker.Item label="cover" value="cover" />
-            <Picker.Item label="contain" value="contain" />
-            <Picker.Item label="stretch" value="stretch" />
-            <Picker.Item label="center" value="center" />
-            <Picker.Item label="repeat" value="repeat" />
-          </Picker>
+          <TouchableOpacity
+            onPress={() => this.setModalVisible(true, 'resizeMode')}>
+            <Text>{this.state.selectedResizeMode}</Text>
+          </TouchableOpacity>
         </View>
+
         <View style={styles.rowContainer}>
           <Text style={styles.title}>Image Source</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.selectedSource}
-            onValueChange={value => this.switchImageUri(value)}>
-            <Picker.Item label="small" value="small" />
-            <Picker.Item label="large" value="large" />
-            <Picker.Item label="data" value="data" />
-            <Picker.Item label="data-svg" value="data-svg" />
-            <Picker.Item label="svg" value="svg" />
-          </Picker>
+          <TouchableOpacity
+            onPress={() => this.setModalVisible(true, 'imageSource')}>
+            <Text>{this.state.selectedSource}</Text>
+          </TouchableOpacity>
         </View>
+
         <View style={styles.rowContainer}>
           <Text style={styles.title}>Blur Radius</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.blurRadius}
-            onValueChange={value => this.setState({blurRadius: value})}>
-            <Picker.Item label="0" value={0} />
-            <Picker.Item label="5" value={5} />
-            <Picker.Item label="10" value={10} />
-          </Picker>
+          <TouchableOpacity
+            onPress={() => this.setModalVisible(true, 'blurRadius')}>
+            <Text>{this.state.blurRadius}</Text>
+          </TouchableOpacity>
         </View>
+
         <View style={styles.rowContainer}>
           <Text style={styles.title}>Tint Color</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.tintColor}
-            onValueChange={value => this.setState({tintColor: value})}>
-            <Picker.Item label="None" value="transparent" />
-            <Picker.Item label="Purple" value="purple" />
-            <Picker.Item label="Green" value="green" />
-            <Picker.Item label="SystemAccentColor" value="platformcolor" />
-          </Picker>
+          <TouchableOpacity
+            onPress={() => this.setModalVisible(true, 'tintColor')}>
+            <Text>{this.state.tintColor}</Text>
+          </TouchableOpacity>
         </View>
+
         <View style={styles.rowContainer}>
           <Text>No Border</Text>
           <Switch
@@ -134,35 +209,107 @@ export default class Bootstrap extends React.Component<
           />
           <Text>Round Border</Text>
         </View>
-        <View style={styles.imageContainer}>
-          <Image
-            style={[
-              styles.image,
-              this.state.includeBorder ? styles.imageWithBorder : {},
-              this.state.tintColor === 'platformcolor'
-                ? styles.imageWithPlatformColor
-                : {tintColor: this.state.tintColor},
-            ]}
-            source={
-              this.state.selectedSource === 'svg'
-                ? require('../Samples/images/Microsoft-Logo.svg')
-                : {uri: this.state.imageUri}
+
+        <View style={styles.rowContainer}>
+          <Text>defaultSource</Text>
+          <Switch
+            style={{marginLeft: 10}}
+            value={this.state.includedefaultSourceOnly}
+            onValueChange={(value: boolean) =>
+              this.setState({includedefaultSourceOnly: value})
             }
-            resizeMode={this.state.selectedResizeMode}
-            blurRadius={this.state.blurRadius}
           />
+          <Text>Include defaultSource Only</Text>
         </View>
+        <View
+          style={
+            this.state.includedefaultSourceOnly
+              ? styles.imageContainerDefault
+              : styles.imageContainer
+          }>
+          {this.state.includedefaultSourceOnly ? (
+            <Image
+              style={[
+                styles.image,
+                this.state.includeBorder ? styles.imageWithBorder : {},
+                this.state.tintColor === 'platformcolor'
+                  ? styles.imageWithPlatformColor
+                  : {tintColor: this.state.tintColor},
+              ]}
+              defaultSource={{uri: this.state.defaultImageUri}}
+            />
+          ) : (
+            <Image
+              style={[
+                styles.image,
+                this.state.includeBorder ? styles.imageWithBorder : {},
+                this.state.tintColor === 'platformcolor'
+                  ? styles.imageWithPlatformColor
+                  : {tintColor: this.state.tintColor},
+              ]}
+              defaultSource={{uri: this.state.defaultImageUri}}
+              source={{uri: this.state.imageUri}}
+              loadingIndicatorSource={{uri: loadingImageUri}}
+              resizeMode={this.state.selectedResizeMode}
+              blurRadius={this.state.blurRadius}
+              onLoad={() => console.log('onLoad')}
+              onLoadStart={() => console.log('onLoadStart')}
+              onLoadEnd={() => console.log('onLoadEnd')}
+            />
+          )}
+        </View>
+        <Modal
+          visible={this.state.modalVisible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => this.setModalVisible(false)}>
+          <View>
+            {this.state.currentPicker === 'resizeMode' &&
+              this.renderPickerItems(resizeModes)}
+            {this.state.currentPicker === 'imageSource' &&
+              this.renderPickerItems(imageSources)}
+            {this.state.currentPicker === 'blurRadius' &&
+              this.renderPickerItems(blurRadiusOptions)}
+            {this.state.currentPicker === 'tintColor' &&
+              this.renderPickerItems(tintColors)}
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => this.setModalVisible(false)}>
+              <Text style={styles.closeText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  closeButton: {
+    backgroundColor: 'red',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    alignSelf: 'center',
+  },
+  closeText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5,
+  },
+  flatList: {
+    width: '100%',
+    flexGrow: 1,
+    maxHeight: 300,
   },
   rowContainer: {
     flexDirection: 'row',
@@ -178,6 +325,12 @@ const styles = StyleSheet.create({
     height: '50%',
     width: '75%',
   },
+  imageContainerDefault: {
+    marginTop: 5,
+    backgroundColor: 'skyblue',
+    height: '50%',
+    width: '75%',
+  },
   image: {
     height: '100%',
     width: '100%',
@@ -189,7 +342,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   imageWithPlatformColor: {
-    tintColor: PlatformColor('SystemAccentColor'),
+    tintColor: 'green', //to-do: use platform color
+  },
+  loading: {
+    height: '10%',
+    width: '10%',
+  },
+  item: {
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    alignItems: 'flex-start',
+  },
+  itemText: {
+    fontSize: 16,
+    color: '#333',
   },
   title: {
     fontWeight: 'bold',
