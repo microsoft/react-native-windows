@@ -15,6 +15,7 @@ import {
   Modal,
   FlatList,
 } from 'react-native';
+import {TestPickerView} from './testPicker';
 
 const loadingImageUri =
   'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
@@ -115,27 +116,33 @@ export default class Bootstrap extends React.Component<
     this.setModalVisible(false);
   };
 
-  renderPickerItems = (options: {label: string; value: any}[]) => {
-    return (
-      <FlatList
-        style={styles.flatList}
-        data={options}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => this.setSelection(item.value)}>
-            <Text style={styles.itemText}>{item.label}</Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={item => item.value}
-      />
-    );
+  handleResizeModesSelect = (value: any) => {
+    this.setState({selectedResizeMode: value});
+    this.state.currentPicker = 'resizeMode';
+    this.setSelection(value);
+  };
+
+  handleImageSourcesSelect = (value: any) => {
+    this.setState({selectedSource: value});
+    this.state.currentPicker = 'imageSource';
+    this.setSelection(value);
+  };
+
+  handleBlurRadiusSelect = (value: any) => {
+    this.setState({blurRadius: value});
+    this.state.currentPicker = 'blurRadius';
+    this.setSelection(value);
+  };
+
+  handleTintColorSelect = (value: any) => {
+    this.setState({tintColor: value});
+    this.state.currentPicker = 'tintColor';
+    this.setSelection(value);
   };
 
   render() {
     const resizeModes = [
       {label: 'center', value: 'center'},
-
       {label: 'cover', value: 'cover'},
       {label: 'contain', value: 'contain'},
       {label: 'stretch', value: 'stretch'},
@@ -166,37 +173,30 @@ export default class Bootstrap extends React.Component<
 
     return (
       <View style={styles.container}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>ResizeMode</Text>
-          <TouchableOpacity
-            onPress={() => this.setModalVisible(true, 'resizeMode')}>
-            <Text>{this.state.selectedResizeMode}</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>Image Source</Text>
-          <TouchableOpacity
-            onPress={() => this.setModalVisible(true, 'imageSource')}>
-            <Text>{this.state.selectedSource}</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>Blur Radius</Text>
-          <TouchableOpacity
-            onPress={() => this.setModalVisible(true, 'blurRadius')}>
-            <Text>{this.state.blurRadius}</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>Tint Color</Text>
-          <TouchableOpacity
-            onPress={() => this.setModalVisible(true, 'tintColor')}>
-            <Text>{this.state.tintColor}</Text>
-          </TouchableOpacity>
-        </View>
+        <TestPickerView
+          options={resizeModes}
+          id="Resize Mode"
+          selectedLabel={this.state.selectedResizeMode}
+          onSelect={this.handleResizeModesSelect}
+        />
+        <TestPickerView
+          options={imageSources}
+          id="Image Source"
+          selectedLabel={this.state.selectedSource}
+          onSelect={this.handleImageSourcesSelect}
+        />
+        <TestPickerView
+          options={blurRadiusOptions}
+          id="Blur Radius"
+          selectedLabel={this.state.blurRadius}
+          onSelect={this.handleBlurRadiusSelect}
+        />
+        <TestPickerView
+          options={tintColors}
+          id="Tint Color"
+          selectedLabel={this.state.tintColor}
+          onSelect={this.handleTintColorSelect}
+        />
 
         <View style={styles.rowContainer}>
           <Text>No Border</Text>
@@ -211,7 +211,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={styles.rowContainer}>
-          <Text>defaultSource</Text>
+          <Text>defaultSource [Not Implemented Yet]</Text>
           <Switch
             style={{marginLeft: 10}}
             value={this.state.includedefaultSourceOnly}
@@ -258,58 +258,17 @@ export default class Bootstrap extends React.Component<
             />
           )}
         </View>
-        <Modal
-          visible={this.state.modalVisible}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => this.setModalVisible(false)}>
-          <View>
-            {this.state.currentPicker === 'resizeMode' &&
-              this.renderPickerItems(resizeModes)}
-            {this.state.currentPicker === 'imageSource' &&
-              this.renderPickerItems(imageSources)}
-            {this.state.currentPicker === 'blurRadius' &&
-              this.renderPickerItems(blurRadiusOptions)}
-            {this.state.currentPicker === 'tintColor' &&
-              this.renderPickerItems(tintColors)}
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => this.setModalVisible(false)}>
-              <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  closeButton: {
-    backgroundColor: 'red',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    alignSelf: 'center',
-  },
-  closeText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5,
-  },
-  flatList: {
-    width: '100%',
-    flexGrow: 1,
-    maxHeight: 300,
   },
   rowContainer: {
     flexDirection: 'row',
@@ -347,17 +306,6 @@ const styles = StyleSheet.create({
   loading: {
     height: '10%',
     width: '10%',
-  },
-  item: {
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    alignItems: 'flex-start',
-  },
-  itemText: {
-    fontSize: 16,
-    color: '#333',
   },
   title: {
     fontWeight: 'bold',
