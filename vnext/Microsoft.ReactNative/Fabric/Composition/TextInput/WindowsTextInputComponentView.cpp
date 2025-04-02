@@ -986,7 +986,9 @@ void WindowsTextInputComponentView::updateProps(
   if (!facebook::react::floatEquality(
           oldTextInputProps.textAttributes.fontSize, newTextInputProps.textAttributes.fontSize) ||
       (oldTextInputProps.textAttributes.allowFontScaling != newTextInputProps.textAttributes.allowFontScaling) ||
-      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight) {
+      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
+      !facebook::react::floatEquality(
+          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing)) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1301,6 +1303,12 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   cfNew.dwMask |= CFM_OFFSET;
   cfNew.yOffset = 0;
 
+  // set letter spacing
+  float letterSpacing = props.textAttributes.letterSpacing;
+  if (!std::isnan(letterSpacing)) {
+    updateLetterSpacing(letterSpacing);
+  }
+
   // set charset
   cfNew.dwMask |= CFM_CHARSET;
   cfNew.bCharSet = DEFAULT_CHARSET;
@@ -1543,6 +1551,22 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
     winrt::check_hresult(m_textServices->TxSendMessage(
         EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
   }
+}
+
+void WindowsTextInputComponentView::updateLetterSpacing(float letterSpacing) noexcept {
+  CHARFORMAT2W cf = {};
+  cf.cbSize = sizeof(CHARFORMAT2W);
+  cf.dwMask = CFM_SPACING;
+  cf.sSpacing = static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
+
+  LRESULT res;
+
+  // Apply to all existing text like placeholder
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&cf), &res));
+
+  // Apply to future text input
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&cf), &res));
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
