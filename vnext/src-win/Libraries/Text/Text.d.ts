@@ -102,20 +102,19 @@ export interface TextPropsAndroid {
 }
 
 export interface TextPropsWindows {
-
   /**
    * The tooltip to show when the text is clicked.
-  */
+   */
   // [Windows
   tooltip?: string | undefined;
   //  Windows]
-
 }
 
 // https://reactnative.dev/docs/text#props
 export interface TextProps
   extends TextPropsIOS,
     TextPropsAndroid,
+    TextPropsWindows,
     AccessibilityProps {
   /**
    * Specifies whether fonts should scale to respect Text Size accessibility settings.
