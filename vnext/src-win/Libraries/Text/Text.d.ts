@@ -101,6 +101,17 @@ export interface TextPropsAndroid {
   android_hyphenationFrequency?: 'normal' | 'none' | 'full' | undefined;
 }
 
+export interface TextPropsWindows {
+
+  /**
+   * The tooltip to show when the text is clicked.
+  */
+  // [Windows
+  tooltip?: string | undefined;
+  //  Windows]
+
+}
+
 // https://reactnative.dev/docs/text#props
 export interface TextProps
   extends TextPropsIOS,
@@ -214,10 +225,6 @@ export interface TextProps
    * Controls how touch events are handled. Similar to `View`'s `pointerEvents`.
    */
   pointerEvents?: ViewStyle['pointerEvents'] | undefined;
-
-  // [Windows
-  tooltip?: string | undefined;
-  //  Windows]
 }
 
 /**
