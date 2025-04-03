@@ -205,6 +205,7 @@ export type TextProps = $ReadOnly<{
    * See https://reactnative.dev/docs/text#testid
    */
   testID?: ?string,
+
   /**
    * Android Only
    */
