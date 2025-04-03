@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Implement the onContentSizeChange property for the fabric implementation of TextInput.",
+  "packageName": "react-native-windows",
+  "email": "satkh@microsoft.com",
+  "dependentChangeType": "none"
+}
