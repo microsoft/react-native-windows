@@ -61,7 +61,6 @@ export type TextProps = $ReadOnly<{
   accessibilityLevel?: ?number, // Windows
   accessibilityPosInSet?: ?number, // Windows
   accessibilitySetSize?: ?number, // Windows
-  tooltip?: ?string, // Windows dev
 
   'aria-label'?: ?string,
 
@@ -206,7 +205,6 @@ export type TextProps = $ReadOnly<{
    * See https://reactnative.dev/docs/text#testid
    */
   testID?: ?string,
-
   /**
    * Android Only
    */
