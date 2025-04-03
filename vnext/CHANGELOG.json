@@ -2,6 +2,87 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 03 Apr 2025 05:21:53 GMT",
+      "version": "0.0.0-canary.934",
+      "tag": "react-native-windows_v0.0.0-canary.934",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7480f75e39d3e30dad5f1b2e9c8b0ee3d95752c0",
+            "comment": "Implement letterSpacing for TextInput"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 02 Apr 2025 05:22:08 GMT",
+      "version": "0.0.0-canary.933",
+      "tag": "react-native-windows_v0.0.0-canary.933",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "df8c9a167ada510c44169eda57425177a181071f",
+            "comment": "bump dep"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.259",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.120",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.33",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.37",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.50",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.52",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Apr 2025 20:12:38 GMT",
+      "version": "0.0.0-canary.932",
+      "tag": "react-native-windows_v0.0.0-canary.932",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f176a4dff6c2dfa37fe17cc16aef187e975592f5",
+            "comment": "Implement OnScrollBeginDrag Event"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Mar 2025 05:25:50 GMT",
       "version": "0.0.0-canary.931",
       "tag": "react-native-windows_v0.0.0-canary.931",

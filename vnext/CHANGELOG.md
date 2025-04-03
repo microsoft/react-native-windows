@@ -1,8 +1,38 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 28 Mar 2025 05:25:50 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 03 Apr 2025 05:21:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.934
+
+Thu, 03 Apr 2025 05:21:53 GMT
+
+### Changes
+
+- Implement letterSpacing for TextInput (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.933
+
+Wed, 02 Apr 2025 05:22:08 GMT
+
+### Changes
+
+- bump dep (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.259
+- Bump @react-native-windows/codegen to v0.0.0-canary.120
+- Bump @rnw-scripts/eslint-config to v1.2.33
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.37
+- Bump @rnw-scripts/just-task to v2.3.50
+- Bump react-native-platform-override to v1.9.52
+
+## 0.0.0-canary.932
+
+Tue, 01 Apr 2025 20:12:38 GMT
+
+### Changes
+
+- Implement OnScrollBeginDrag Event (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.931
 
