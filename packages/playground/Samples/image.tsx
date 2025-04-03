@@ -4,7 +4,15 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
+import {
+  AppRegistry,
+  Image,
+  View,
+  Text,
+  Switch,
+  StyleSheet,
+  PlatformColor,
+} from 'react-native';
 import {TestPickerView} from './testPicker';
 
 const loadingImageUri =
@@ -291,7 +299,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   imageWithPlatformColor: {
-    tintColor: 'green', //to-do: use platform color
+    tintColor: PlatformColor('SystemAccentColor'),
   },
   loading: {
     height: '10%',
