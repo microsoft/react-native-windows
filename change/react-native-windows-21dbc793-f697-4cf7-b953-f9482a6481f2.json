@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump folly to v2024.01.01.00",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
