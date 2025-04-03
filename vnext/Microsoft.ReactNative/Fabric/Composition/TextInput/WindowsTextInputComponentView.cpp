@@ -659,6 +659,14 @@ void WindowsTextInputComponentView::OnPointerPressed(
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
   }
+
+  // Implements OnPressIn event
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnPressIn pressInArgs;
+    pressInArgs.target = m_tag; // Identify which TextInput was pressed
+    emitter->onPressIn(pressInArgs);
+  }
 }
 
 void WindowsTextInputComponentView::OnPointerReleased(
