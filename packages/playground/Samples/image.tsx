@@ -166,7 +166,8 @@ export default class Bootstrap extends React.Component<
       {label: 'None', value: 'transparent'},
       {label: 'Purple', value: 'purple'},
       {label: 'Green', value: 'green'},
-      {label: 'SystemAccentColor', value: 'platformcolor'},
+      {label: 'AccentDark1', value: 'accentDark1'},
+      {label: 'TextFillColorPrimary', value: 'textFillColorPrimary'},
     ];
 
     return (
@@ -230,8 +231,10 @@ export default class Bootstrap extends React.Component<
               style={[
                 styles.image,
                 this.state.includeBorder ? styles.imageWithBorder : {},
-                this.state.tintColor === 'platformcolor'
+                this.state.tintColor === 'accentDark1'
                   ? styles.imageWithPlatformColor
+                  : this.state.tintColor === 'textFillColorPrimary'
+                  ? styles.imageWithPlatformColorPrimary
                   : {tintColor: this.state.tintColor},
               ]}
               defaultSource={{uri: this.state.defaultImageUri}}
@@ -241,8 +244,10 @@ export default class Bootstrap extends React.Component<
               style={[
                 styles.image,
                 this.state.includeBorder ? styles.imageWithBorder : {},
-                this.state.tintColor === 'platformcolor'
+                this.state.tintColor === 'accentDark1'
                   ? styles.imageWithPlatformColor
+                  : this.state.tintColor === 'textFillColorPrimary'
+                  ? styles.imageWithPlatformColorPrimary
                   : {tintColor: this.state.tintColor},
               ]}
               defaultSource={{uri: this.state.defaultImageUri}}
@@ -299,7 +304,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   imageWithPlatformColor: {
-    tintColor: PlatformColor('SystemAccentColor'),
+    tintColor: PlatformColor('AccentDark1'),
+  },
+  imageWithPlatformColorPrimary: {
+    tintColor: PlatformColor('TextFillColorPrimary'),
   },
   loading: {
     height: '10%',
