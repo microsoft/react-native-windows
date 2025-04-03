@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 03 Apr 2025 05:21:53 GMT",
+      "version": "0.0.0-canary.934",
+      "tag": "react-native-windows_v0.0.0-canary.934",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7480f75e39d3e30dad5f1b2e9c8b0ee3d95752c0",
+            "comment": "Implement letterSpacing for TextInput"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Apr 2025 05:22:08 GMT",
       "version": "0.0.0-canary.933",
       "tag": "react-native-windows_v0.0.0-canary.933",

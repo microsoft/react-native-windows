@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 03 Apr 2025 05:21:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.934
+
+Thu, 03 Apr 2025 05:21:53 GMT
+
+### Changes
+
+- Implement letterSpacing for TextInput (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.933
 
