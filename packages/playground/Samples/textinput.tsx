@@ -41,10 +41,6 @@ export default class Bootstrap extends React.Component<{}, any> {
     console.log('keyboardDidHide');
   };
 
-  setHeightAndWidth = (height, width) => {
-    console.log("Content size changed, height: " + height + " width: " + width);
-  };
-
   componentWillUnmount() {
     this.didShowEmitterSubscription.remove();
     this.didHideEmitterSubscription.remove();
@@ -147,13 +143,6 @@ export default class Bootstrap extends React.Component<{}, any> {
             style={styles.input}
             clearTextOnFocus={true}
             placeholder={'Clear text on focus'}
-          />
-          <TextInput
-            style={styles.input}
-            multiline
-            onContentSizeChange={(event) => this.setHeightAndWidth(event.nativeEvent.contentSize.height,
-               event.nativeEvent.contentSize.width)}
-            placeholder={'content size change'}
           />
           <Button
             title={

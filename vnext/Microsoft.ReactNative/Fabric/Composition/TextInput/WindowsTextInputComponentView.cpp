@@ -1130,16 +1130,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
 
   if (newWidth != m_imgWidth || newHeight != m_imgHeight) {
     m_drawingSurface = nullptr; // Invalidate surface if we get a size change
-
-    // call onContentSizeChange event for multiline TextInput
-    if (m_eventEmitter && !m_comingFromJS && m_multiline) {
-      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-      facebook::react::WindowsTextInputEventEmitter::OnContentSizeChange onContentSizeChangeArgs;
-      onContentSizeChangeArgs.contentSize.width = layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor;
-      onContentSizeChangeArgs.contentSize.height = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
-      emitter->onContentSizeChange(onContentSizeChangeArgs);
-    }
-
   }
 
   m_imgWidth = newWidth;
