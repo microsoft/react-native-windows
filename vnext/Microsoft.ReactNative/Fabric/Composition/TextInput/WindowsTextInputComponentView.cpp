@@ -1141,7 +1141,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
       onContentSizeChangeArgs.contentSize.height = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
       emitter->onContentSizeChange(onContentSizeChangeArgs);
     }
-
   }
 
   m_imgWidth = newWidth;
