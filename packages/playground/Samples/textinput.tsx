@@ -43,7 +43,7 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   setHeightAndWidth = (height: number, width: number) => {
     console.log(' onContentSizeChange height: ' + height + ' width: ' + width);
-  }
+  };
 
   componentWillUnmount() {
     this.didShowEmitterSubscription.remove();
@@ -155,8 +155,12 @@ export default class Bootstrap extends React.Component<{}, any> {
           <TextInput
             style={styles.input}
             multiline
-            onContentSizeChange={(event) => this.setHeightAndWidth(event.nativeEvent.contentSize.height,
-                event.nativeEvent.contentSize.width)}
+            onContentSizeChange={event =>
+              this.setHeightAndWidth(
+                event.nativeEvent.contentSize.height,
+                event.nativeEvent.contentSize.width,
+              )
+            }
             placeholder={'content size change'}
           />
           <Button
