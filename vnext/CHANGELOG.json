@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Apr 2025 05:22:09 GMT",
+      "version": "0.0.0-canary.935",
+      "tag": "react-native-windows_v0.0.0-canary.935",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bfe285bfd08654f25e38e26d1caf11015fe86309",
+            "comment": "Remove old library templates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Apr 2025 05:21:53 GMT",
       "version": "0.0.0-canary.934",
       "tag": "react-native-windows_v0.0.0-canary.934",
