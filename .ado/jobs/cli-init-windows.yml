@@ -73,16 +73,6 @@ parameters:
             configuration: Debug
             platform: x86
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-          - Name: PaperLibX86DebugCpp
-            template: old/uwp-cpp-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
-          - Name: PaperLibX86DebugCs
-            template: old/uwp-cpp-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
           - Name: PaperX86DebugCppChakra
             template: old/uwp-cpp-app
             configuration: Debug
@@ -223,16 +213,6 @@ parameters:
             configuration: Debug
             platform: x86
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-          - Name: PaperLibX86DebugCpp
-            template: old/uwp-cpp-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
-          - Name: PaperLibX86DebugCs
-            template: old/uwp-cs-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
           - Name: PaperX86DebugCppChakra
             template: old/uwp-cpp-app
             configuration: Debug

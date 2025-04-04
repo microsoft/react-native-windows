@@ -909,6 +909,104 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     backgroundColor: 'yellow',
   },
+  borderBottomEndRadius: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderBottomEndRadius: 30,
+    borderColor: 'blue',
+    backgroundColor: 'yellow',
+  },
+  borderBottomStartRadius: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderBottomStartRadius: 30,
+    borderColor: 'blue',
+    backgroundColor: 'yellow',
+  },
+  borderTopEndRadius: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderTopEndRadius: 30,
+    borderColor: 'blue',
+    backgroundColor: 'yellow',
+  },
+  borderTopStartRadius: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderTopStartRadius: 30,
+    borderColor: 'blue',
+    backgroundColor: 'yellow',
+  },
+  borderLeftWidth: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderLeftWidth: 8,
+    borderColor: 'blue',
+    backgroundColor: 'yellow',
+  },
+  borderBottomWidth: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderBottomWidth: 8,
+    borderColor: 'blue',
+    backgroundColor: 'yellow',
+  },
+  borderTopWidth: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderTopWidth: 8,
+    borderColor: 'blue',
+    backgroundColor: 'yellow',
+  },
+  borderEndColor: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderEndColor: 'red',
+    backgroundColor: 'yellow',
+  },
+  borderLeftColor: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderLeftColor: 'red',
+    backgroundColor: 'yellow',
+  },
+  borderRightColor: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderRightColor: 'red',
+    backgroundColor: 'yellow',
+  },
+  borderStartColor: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderStartColor: 'red',
+    backgroundColor: 'yellow',
+  },
+  borderTopColor: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderTopColor: 'red',
+    backgroundColor: 'yellow',
+  },
+  borderStyle: {
+    resizeMode: 'contain',
+    width: 90,
+    borderWidth: 4,
+    borderStyle: 'dashed',
+    backgroundColor: 'yellow',
+  },
   boxShadow: {
     margin: 10,
   },
@@ -1167,6 +1265,46 @@ exports.examples = [
     },
   },
   {
+    title: 'Border Colors',
+    name: 'borderColors',
+    render: function (): React.Node {
+      return (
+        <View style={styles.horizontal} testID="image-border-colors" accessible>
+          <Image
+            source={smallImage}
+            style={[styles.base, styles.background, styles.borderEndColor]}
+            accessible
+          />
+          <Image
+            source={smallImage}
+            style={[styles.base, styles.background, styles.borderLeftColor]}
+            accessible
+          />
+          <Image
+            source={smallImage}
+            style={[styles.base, styles.background, styles.borderRightColor]}
+            accessible
+          />
+          <Image
+            source={smallImage}
+            style={[styles.base, styles.background, styles.borderStartColor]}
+            accessible
+          />
+          <Image
+            source={smallImage}
+            style={[styles.base, styles.background, styles.borderTopColor]}
+            accessible
+          />
+          <Image
+            source={smallImage}
+            style={[styles.base, styles.background, styles.borderStyle]}
+            accessible
+          />
+        </View>
+      );
+    },
+  },
+  {
     title: 'Border Radius',
     name: 'border-radius',
     render: function (): React.Node {
@@ -1198,6 +1336,34 @@ exports.examples = [
           />
           <Image
             style={[styles.base, styles.borderRadius5]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderBottomEndRadius]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderBottomStartRadius]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderBottomWidth]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderLeftWidth]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderTopEndRadius]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderTopStartRadius]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderTopWidth]}
             source={fullImage}
           />
         </View>
