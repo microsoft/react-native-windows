@@ -67,7 +67,7 @@ export default class Bootstrap extends React.Component<{}, any> {
   render() {
     let textInputRef: TextInput | null;
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback>
         <ScrollView>
           <View style={styles.container}>
             <TextInput
