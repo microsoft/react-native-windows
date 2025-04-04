@@ -94,6 +94,12 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-border');
     expect(dump).toMatchSnapshot();
   });
+  test('An Image can have border colors', async () => {
+    const component = await app.findElementByTestID('image-border-colors');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-border-colors');
+    expect(dump).toMatchSnapshot();
+  });
   test('An Image can a border radius', async () => {
     const component = await app.findElementByTestID('image-border-radius');
     await component.waitForDisplayed({timeout: 5000});
