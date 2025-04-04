@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update creaternw scripts to use RNW devDependencies",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

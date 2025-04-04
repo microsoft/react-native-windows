@@ -61,8 +61,8 @@ if not "%part%"=="" (
 
 if %LINK_RNW% equ 1 (
   @echo creaternwapp.cmd Determining versions from local RNW repo at %RNW_ROOT%
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" peerDependencies.react') do @set R_VERSION=%%a
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" peerDependencies.react-native') do @set RN_VERSION=%%a
+  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" devDependencies.react') do @set R_VERSION=%%a
+  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" devDependencies.react-native') do @set RN_VERSION=%%a
   for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" version') do @set RNW_VERSION=%%a
   for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" dependencies.@react-native-community/cli') do @set RNCLI_VERSION=%%a
 )
@@ -74,7 +74,7 @@ if "%RNW_VERSION%"=="" (
 
 if "%RN_VERSION%"=="" (
   @echo creaternwapp.cmd Determining react-native version from react-native-windows dependency
-  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% peerDependencies.react-native') do @set RN_VERSION=%%a
+  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% devDependencies.react-native') do @set RN_VERSION=%%a
 )
 
 if "%RNCLI_VERSION%"=="" (
@@ -84,7 +84,7 @@ if "%RNCLI_VERSION%"=="" (
 
 if "%R_VERSION%"=="" (
   @echo creaternwapp.cmd Determining react version from react-native-windows dependency
-  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% peerDependencies.react') do @set R_VERSION=%%a
+  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% devDependencies.react') do @set R_VERSION=%%a
 )
 
 @echo creaternwapp.cmd Determining concrete versions for react@%R_VERSION%, react-native@%RN_VERSION%, @react-native-community/cli@%RNCLI_VERSION%, and react-native-windows@%RNW_VERSION% 
