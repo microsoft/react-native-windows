@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Apr 2025 00:22:00 GMT",
+      "version": "0.74.40",
+      "tag": "react-native-windows_v0.74.40",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "bd26f3b61d1f46e15b9f85ef16c46744db8f33e5",
+            "comment": "Bump folly to v2024.01.01.00 (#14452)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Mar 2025 22:01:23 GMT",
       "version": "0.74.39",
       "tag": "react-native-windows_v0.74.39",

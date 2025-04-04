@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 27 Mar 2025 22:01:23 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Apr 2025 00:22:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.40
+
+Fri, 04 Apr 2025 00:22:00 GMT
+
+### Patches
+
+- Bump folly to v2024.01.01.00 (#14452) (yajurgrover24@gmail.com)
 
 ## 0.74.39
 
