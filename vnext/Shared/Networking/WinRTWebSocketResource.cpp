@@ -338,6 +338,7 @@ IAsyncAction WinRTWebSocketResource2::SendPendingMessages() noexcept {
     auto result = async.ErrorCode();
     if (result < 0) {
       Fail(std::move(result), ErrorType::Send);
+      co_return;
     }
   }
 }
