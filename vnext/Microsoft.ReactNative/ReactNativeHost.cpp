@@ -15,6 +15,7 @@
 #include "ReactInstanceSettings.h"
 
 #ifdef USE_FABRIC
+#include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactPackageBuilder.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
@@ -114,6 +115,10 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       uriImageManager,
 #endif
       m_instanceSettings.UseWebDebugger());
+
+#ifdef USE_FABRIC
+  winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
+#endif
 
   if (auto packageProviders = InstanceSettings().PackageProviders()) {
     for (auto const &packageProvider : packageProviders) {

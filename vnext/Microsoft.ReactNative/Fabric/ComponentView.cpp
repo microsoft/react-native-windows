@@ -639,7 +639,6 @@ facebook::react::Tag ComponentView::hitTest(
 }
 
 winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
-  assert(false);
   return nullptr;
 }
 

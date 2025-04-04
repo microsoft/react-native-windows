@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #include <Fabric/AbiComponentDescriptor.h>
-#include <Fabric/AbiViewComponentDescriptor.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/core/ReactPrimitives.h>
 #include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
@@ -12,10 +11,12 @@
 
 namespace winrt::Microsoft::ReactNative::Composition {
 
-struct ReactCompositionViewComponentBuilder : winrt::implements<
-                                                  ReactCompositionViewComponentBuilder,
-                                                  IReactViewComponentBuilder,
-                                                  Composition::IReactCompositionViewComponentBuilder> {
+struct ReactCompositionViewComponentBuilder
+    : winrt::implements<
+          ReactCompositionViewComponentBuilder,
+          IReactViewComponentBuilder,
+          Composition::IReactCompositionViewComponentBuilder,
+          Composition::Experimental::IReactCompositionViewComponentInternalBuilder> {
   ReactCompositionViewComponentBuilder() noexcept;
 
  public: // IReactViewComponentBuilder
@@ -42,6 +43,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
   void SetContentIslandComponentViewInitializer(const ComponentIslandComponentViewInitializer &initializer) noexcept;
+  void SetPortalComponentViewInitializer(const PortalComponentViewInitializer &initializer) noexcept;
   void SetCreateVisualHandler(CreateVisualDelegate impl) noexcept;
   void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
   void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl) noexcept;

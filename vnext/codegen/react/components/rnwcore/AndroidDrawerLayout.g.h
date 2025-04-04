@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from MovingLightNativeComponent spec file in flow / TypeScript.
+ * This file is auto-generated from AndroidDrawerLayoutNativeComponent spec file in flow / TypeScript.
  */
 // clang-format off
 #pragma once
@@ -16,28 +16,21 @@
 
 #ifdef RNW_NEW_ARCH
 
-namespace winrt::SampleCustomComponent::Codegen {
+namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(MovingLightSpec_MovingLightProps_objectProp)
-struct MovingLightSpec_MovingLightProps_objectProp {
-  REACT_FIELD(number)
-  double number{};
-
-  REACT_FIELD(string)
-  std::string string;
-};
-
-REACT_STRUCT(MovingLightProps)
-struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  MovingLightProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+REACT_STRUCT(AndroidDrawerLayoutProps)
+struct AndroidDrawerLayoutProps : winrt::implements<AndroidDrawerLayoutProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  AndroidDrawerLayoutProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
     : ViewProps(props)
   {
      if (cloneFrom) {
-       auto cloneFromProps = cloneFrom.as<MovingLightProps>();
-       size = cloneFromProps->size;
-       color = cloneFromProps->color;
-       eventParam = cloneFromProps->eventParam;
-       objectProp = cloneFromProps->objectProp;  
+       auto cloneFromProps = cloneFrom.as<AndroidDrawerLayoutProps>();
+       keyboardDismissMode = cloneFromProps->keyboardDismissMode;
+       drawerBackgroundColor = cloneFromProps->drawerBackgroundColor;
+       drawerPosition = cloneFromProps->drawerPosition;
+       drawerWidth = cloneFromProps->drawerWidth;
+       drawerLockMode = cloneFromProps->drawerLockMode;
+       statusBarBackgroundColor = cloneFromProps->statusBarBackgroundColor;  
      }
   }
 
@@ -45,38 +38,76 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
-  REACT_FIELD(size)
-  float size{42};
+  REACT_FIELD(keyboardDismissMode)
+  std::optional<std::string> keyboardDismissMode;
 
-  REACT_FIELD(color)
-  winrt::Microsoft::ReactNative::Color color{nullptr};
+  REACT_FIELD(drawerBackgroundColor)
+  winrt::Microsoft::ReactNative::Color drawerBackgroundColor{nullptr};
 
-  REACT_FIELD(eventParam)
-  std::optional<std::string> eventParam;
+  REACT_FIELD(drawerPosition)
+  std::optional<std::string> drawerPosition;
 
-  REACT_FIELD(objectProp)
-  std::optional<MovingLightSpec_MovingLightProps_objectProp> objectProp;
+  REACT_FIELD(drawerWidth)
+  std::optional<float> drawerWidth{};
+
+  REACT_FIELD(drawerLockMode)
+  std::optional<std::string> drawerLockMode;
+
+  REACT_FIELD(statusBarBackgroundColor)
+  winrt::Microsoft::ReactNative::Color statusBarBackgroundColor{nullptr};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(MovingLight_OnSomething)
-struct MovingLight_OnSomething {
-  REACT_FIELD(value)
-  std::string value;
-
-  REACT_FIELD(target)
-  int32_t target{};
+REACT_STRUCT(AndroidDrawerLayout_OnDrawerSlide)
+struct AndroidDrawerLayout_OnDrawerSlide {
+  REACT_FIELD(offset)
+  float offset{};
 };
 
-struct MovingLightEventEmitter {
-  MovingLightEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
+REACT_STRUCT(AndroidDrawerLayout_OnDrawerStateChanged)
+struct AndroidDrawerLayout_OnDrawerStateChanged {
+  REACT_FIELD(drawerState)
+  int32_t drawerState{};
+};
+
+REACT_STRUCT(AndroidDrawerLayout_OnDrawerOpen)
+struct AndroidDrawerLayout_OnDrawerOpen {
+};
+
+REACT_STRUCT(AndroidDrawerLayout_OnDrawerClose)
+struct AndroidDrawerLayout_OnDrawerClose {
+};
+
+struct AndroidDrawerLayoutEventEmitter {
+  AndroidDrawerLayoutEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnSomething = MovingLight_OnSomething;
+  using OnDrawerSlide = AndroidDrawerLayout_OnDrawerSlide;
+  using OnDrawerStateChanged = AndroidDrawerLayout_OnDrawerStateChanged;
+  using OnDrawerOpen = AndroidDrawerLayout_OnDrawerOpen;
+  using OnDrawerClose = AndroidDrawerLayout_OnDrawerClose;
 
-  void onSomething(OnSomething &value) const {
-    m_eventEmitter.DispatchEvent(L"something", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onDrawerSlide(OnDrawerSlide &value) const {
+    m_eventEmitter.DispatchEvent(L"drawerSlide", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onDrawerStateChanged(OnDrawerStateChanged &value) const {
+    m_eventEmitter.DispatchEvent(L"drawerStateChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onDrawerOpen(OnDrawerOpen &value) const {
+    m_eventEmitter.DispatchEvent(L"drawerOpen", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onDrawerClose(OnDrawerClose &value) const {
+    m_eventEmitter.DispatchEvent(L"drawerClose", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
@@ -86,12 +117,12 @@ struct MovingLightEventEmitter {
 };
 
 template<typename TUserData>
-struct BaseMovingLight {
+struct BaseAndroidDrawerLayout {
 
   virtual void UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
-    const winrt::com_ptr<MovingLightProps> &newProps,
-    const winrt::com_ptr<MovingLightProps> &/*oldProps*/) noexcept {
+    const winrt::com_ptr<AndroidDrawerLayoutProps> &newProps,
+    const winrt::com_ptr<AndroidDrawerLayoutProps> &/*oldProps*/) noexcept {
     m_props = newProps;
   }
 
@@ -108,7 +139,7 @@ struct BaseMovingLight {
     const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
   }
 
-  virtual void UpdateEventEmitter(const std::shared_ptr<MovingLightEventEmitter> &eventEmitter) noexcept {
+  virtual void UpdateEventEmitter(const std::shared_ptr<AndroidDrawerLayoutEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
@@ -136,46 +167,54 @@ struct BaseMovingLight {
                                         winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
   }
 
-  // You must provide an implementation of this method to handle the "setLightOn" command
-  virtual void HandleSetLightOnCommand(bool value) noexcept = 0;
+  // You must provide an implementation of this method to handle the "openDrawer" command
+  virtual void HandleOpenDrawerCommand() noexcept = 0;
+
+  // You must provide an implementation of this method to handle the "closeDrawer" command
+  virtual void HandleCloseDrawerCommand() noexcept = 0;
 
   void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
     auto userData = view.UserData().as<TUserData>();
     auto commandName = args.CommandName();
-    if (commandName == L"setLightOn") {
-      bool value;
-      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), value);
-      userData->HandleSetLightOnCommand(value);
+    if (commandName == L"openDrawer") {
+
+      userData->HandleOpenDrawerCommand();
+      return;
+    }
+
+    if (commandName == L"closeDrawer") {
+
+      userData->HandleCloseDrawerCommand();
       return;
     }
   }
 
-  const std::shared_ptr<MovingLightEventEmitter>& EventEmitter() const { return m_eventEmitter; }
-  const winrt::com_ptr<MovingLightProps>& Props() const { return m_props; }
+  const std::shared_ptr<AndroidDrawerLayoutEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<AndroidDrawerLayoutProps>& Props() const { return m_props; }
 
 private:
-  winrt::com_ptr<MovingLightProps> m_props;
-  std::shared_ptr<MovingLightEventEmitter> m_eventEmitter;
+  winrt::com_ptr<AndroidDrawerLayoutProps> m_props;
+  std::shared_ptr<AndroidDrawerLayoutEventEmitter> m_eventEmitter;
 };
 
 template <typename TUserData>
-void RegisterMovingLightNativeComponent(
+void RegisterAndroidDrawerLayoutNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"MovingLight", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+      L"AndroidDrawerLayout", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
                               const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<MovingLightProps>(props, cloneFrom); 
+            return winrt::make<AndroidDrawerLayoutProps>(props, cloneFrom); 
         });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->UpdateProps(view, newProps ? newProps.as<MovingLightProps>() : nullptr, oldProps ? oldProps.as<MovingLightProps>() : nullptr);
+            userData->UpdateProps(view, newProps ? newProps.as<AndroidDrawerLayoutProps>() : nullptr, oldProps ? oldProps.as<AndroidDrawerLayoutProps>() : nullptr);
         });
 
         compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -188,10 +227,10 @@ void RegisterMovingLightNativeComponent(
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->UpdateEventEmitter(std::make_shared<MovingLightEventEmitter>(eventEmitter));
+          userData->UpdateEventEmitter(std::make_shared<AndroidDrawerLayoutEventEmitter>(eventEmitter));
         });
 
-        if constexpr (&TUserData::FinalizeUpdate != &BaseMovingLight<TUserData>::FinalizeUpdate) {
+        if constexpr (&TUserData::FinalizeUpdate != &BaseAndroidDrawerLayout<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -199,7 +238,7 @@ void RegisterMovingLightNativeComponent(
           });
         } 
 
-        if constexpr (&TUserData::UpdateState != &BaseMovingLight<TUserData>::UpdateState) {
+        if constexpr (&TUserData::UpdateState != &BaseAndroidDrawerLayout<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -213,7 +252,7 @@ void RegisterMovingLightNativeComponent(
           userData->HandleCommand(view, args);
         });
 
-        if constexpr (&TUserData::MountChildComponentView != &BaseMovingLight<TUserData>::MountChildComponentView) {
+        if constexpr (&TUserData::MountChildComponentView != &BaseAndroidDrawerLayout<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -221,7 +260,7 @@ void RegisterMovingLightNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::UnmountChildComponentView != &BaseMovingLight<TUserData>::UnmountChildComponentView) {
+        if constexpr (&TUserData::UnmountChildComponentView != &BaseAndroidDrawerLayout<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -231,13 +270,13 @@ void RegisterMovingLightNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if constexpr (&TUserData::Initialize != &BaseMovingLight<TUserData>::Initialize) {
+          if constexpr (&TUserData::Initialize != &BaseAndroidDrawerLayout<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if constexpr (&TUserData::CreateVisual != &BaseMovingLight<TUserData>::CreateVisual) {
+        if constexpr (&TUserData::CreateVisual != &BaseAndroidDrawerLayout<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);
@@ -251,6 +290,6 @@ void RegisterMovingLightNativeComponent(
       });
 }
 
-} // namespace winrt::SampleCustomComponent::Codegen
+} // namespace Microsoft::ReactNativeSpecs
 
 #endif // #ifdef RNW_NEW_ARCH
