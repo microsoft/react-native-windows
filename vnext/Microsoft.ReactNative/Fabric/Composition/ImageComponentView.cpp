@@ -281,6 +281,9 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
                 : winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::Uniform);
         break;
       }
+      case facebook::react::ImageResizeMode::None:
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
+        break;
       default:
         assert(false);
     }

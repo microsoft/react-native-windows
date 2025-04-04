@@ -849,6 +849,10 @@ void escapeStringImpl(
       }
       auto prefix = firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts);
       DCHECK_LE(prefix, avail);
+      // [Windows Sometimes prefix is completely wrong (corrupt?), only in Release, causing a later AV (see issue #14394).
+      // Prefix should always be <= avail, capping it here as a workaround, hoping the assert above eventually catches this in Debug.
+      prefix = std::min(prefix, (size_t)avail);
+      // Windows]
       firstEsc += prefix;
       if (prefix < 8) {
         break;

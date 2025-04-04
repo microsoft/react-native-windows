@@ -5,6 +5,8 @@
 
 #include "WindowsTextInputEventEmitter.h"
 
+#include <react/renderer/core/graphicsConversions.h>
+
 namespace facebook::react {
 
 void WindowsTextInputEventEmitter::onChange(OnChange event) const {
@@ -74,6 +76,5 @@ void WindowsTextInputEventEmitter::onEndEditing(OnEndEditing event) const {
     return payload;
   });
 }
-
 
 } // namespace facebook::react

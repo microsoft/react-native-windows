@@ -77,29 +77,11 @@ steps:
       displayName: Init new app project with @react-native-community/cli init
       workingDirectory: $(Agent.BuildDirectory)
 
-  - ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
+  - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
         npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type turbo-module --react-native-version $(reactNativeDevDependency) --example vanilla testcli
       displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)
-
-  - ${{ elseif and(endsWith(parameters.template, '-lib'), startsWith(parameters.template, 'old')) }}:
-    - script: |
-        npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
-      displayName: Init new lib project with create-react-native-module
-      workingDirectory: $(Agent.BuildDirectory)
-
-    - script: |
-        rmdir /s /q android
-      displayName: Remove broken android folder # See issue https://github.com/microsoft/react-native-windows/issues/12209
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-    
-    - script: |
-        call yarn install
-        call yarn upgrade react@$(reactDevDependency) --dev
-        call yarn upgrade react-native@$(reactNativeDevDependency) --dev
-      displayName: Update lib project react and react-native dev versions
-      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - script: |
       call yarn install
@@ -156,22 +138,21 @@ steps:
   - ${{ if eq(parameters.useExperimentalWinUI3, true) }}:
     - template:  ../templates/enable-experimental-winui3.yml
       parameters:
-        ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
+        ${{ if endsWith(parameters.template, '-lib') }}:
           workingDir: $(Agent.BuildDirectory)\testcli\example\windows
         ${{ else }}:
           workingDir: $(Agent.BuildDirectory)\testcli\windows
 
-  - ${{ if or(endsWith(parameters.template, '-app'), and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old')))) }}:
-    - powershell: |
-        $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
-        [xml] $manifest = Get-Content $path
-        $manifest.Package.Identity.Name = 'ReactNative.InitTest'
-        $manifest.Save("$path")
-      displayName: Set AppX package name to "ReactNative.InitTest"
-      ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
-        workingDirectory: $(Agent.BuildDirectory)\testcli\example\windows
-      ${{ else }}:
-        workingDirectory: $(Agent.BuildDirectory)\testcli\windows
+  - powershell: |
+      $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
+      [xml] $manifest = Get-Content $path
+      $manifest.Package.Identity.Name = 'ReactNative.InitTest'
+      $manifest.Save("$path")
+    displayName: Set AppX package name to "ReactNative.InitTest"
+    ${{ if endsWith(parameters.template, '-lib') }}:
+      workingDirectory: $(Agent.BuildDirectory)\testcli\example\windows
+    ${{ else }}:
+      workingDirectory: $(Agent.BuildDirectory)\testcli\windows
 
   # End npm test server
   - template: verdaccio-stop.yml
@@ -184,7 +165,7 @@ steps:
 
   - template: react-native-debug-info.yml
     parameters:
-      ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
+      ${{ if endsWith(parameters.template, '-lib') }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli\example
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
@@ -205,7 +186,7 @@ steps:
       buildPlatform: ${{ parameters.platform }}
       deployOption: ${{ parameters.additionalRunArguments }}
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
-      ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
+      ${{ if endsWith(parameters.template, '-lib') }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli\example
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
@@ -218,7 +199,7 @@ steps:
 
   # #13705 - Temporarily disable test:windows call until we get upstream fix
   # Only run the following on fabric apps
-  # - ${{ if and(endsWith(parameters.template, '-app'), not(startsWith(parameters.template, 'old'))) }}:
+  # - ${{ if and(endsWith(parameters.template, '-app')) }}:
   #   - script: call yarn test:windows
   #     displayName: Run jest tests with react-test-renderer
   #     workingDirectory: $(Agent.BuildDirectory)\testcli
