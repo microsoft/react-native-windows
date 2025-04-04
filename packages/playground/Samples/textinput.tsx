@@ -212,8 +212,6 @@ export default class Bootstrap extends React.Component<{}, any> {
               placeholderTextColor="grey"
               style={[styles.input, {backgroundColor: 'black', color: 'white'}]}
             />
-
-            {/* New TextInput with onEndEditing to log text on focus loss */}
             <TextInput
               style={[styles.input, {borderColor: 'red'}]}
               placeholder="Focus and then click outside"
