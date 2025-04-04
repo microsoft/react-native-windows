@@ -46,4 +46,34 @@ void WindowsTextInputEventEmitter::onKeyPress(OnKeyPress event) const {
   });
 }
 
+static jsi::Value textInputMetricsContentSizePayload(
+    jsi::Runtime &runtime,
+    const WindowsTextInputEventEmitter::OnContentSizeChange &event) {
+  auto payload = jsi::Object(runtime);
+  {
+    auto contentSize = jsi::Object(runtime);
+    contentSize.setProperty(runtime, "width", event.contentSize.width);
+    contentSize.setProperty(runtime, "height", event.contentSize.height);
+    payload.setProperty(runtime, "contentSize", contentSize);
+  }
+  return payload;
+};
+
+void WindowsTextInputEventEmitter::onContentSizeChange(OnContentSizeChange event) const {
+  dispatchEvent("textInputContentSizeChange", [event = std::move(event)](jsi::Runtime &runtime) {
+    return textInputMetricsContentSizePayload(runtime, event);
+  });
+}
+
+void WindowsTextInputEventEmitter::onEndEditing(OnEndEditing event) const {
+  dispatchEvent("textInputEndEditing", [event = std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    payload.setProperty(runtime, "eventCount", event.eventCount);
+    payload.setProperty(runtime, "target", event.target);
+    payload.setProperty(runtime, "text", event.text);
+    return payload;
+  });
+}
+
+
 } // namespace facebook::react
