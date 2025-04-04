@@ -290,6 +290,10 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
 }
 
 IAsyncAction WinRTWebSocketResource2::SendPendingMessages() noexcept {
+  // Enforcing execution in the background queue.
+  // Awaiting of this coroutine will schedule its execution in the thread pool, ignoring the intended dispatch queue.
+  co_await resume_in_queue(m_backgroundQueue);
+
   auto self = shared_from_this();
 
   while (!self->m_outgoingMessages.empty()) {
@@ -334,6 +338,7 @@ IAsyncAction WinRTWebSocketResource2::SendPendingMessages() noexcept {
     auto result = async.ErrorCode();
     if (result < 0) {
       Fail(std::move(result), ErrorType::Send);
+      co_return;
     }
   }
 }
