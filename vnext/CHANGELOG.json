@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Apr 2025 05:26:00 GMT",
+      "version": "0.0.0-canary.935",
+      "tag": "react-native-windows_v0.0.0-canary.935",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "79b49161dc9c1199bdbecb308c2c86382dff273c",
+            "comment": "Added override Text.d.ts to src-win/Libraries/Text/ to add  tooltip prop to Text component"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Apr 2025 05:22:09 GMT",
       "version": "0.0.0-canary.935",
       "tag": "react-native-windows_v0.0.0-canary.935",
