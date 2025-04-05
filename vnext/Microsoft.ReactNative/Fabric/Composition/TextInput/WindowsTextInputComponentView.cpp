@@ -938,10 +938,10 @@ void WindowsTextInputComponentView::onLostFocus(
   if (m_eventEmitter && !m_comingFromJS) {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnEndEditing onEndEditingArgs;
-    
+
     // Set event arguments
     onEndEditingArgs.eventCount = ++m_nativeEventCount;
-    onEndEditingArgs.text = GetTextFromRichEdit(); 
+    onEndEditingArgs.text = GetTextFromRichEdit();
 
     // Emit the event
     emitter->onEndEditing(onEndEditingArgs);
