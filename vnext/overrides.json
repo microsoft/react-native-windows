@@ -605,6 +605,13 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/Text/Text.d.ts",
+      "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
+      "baseHash": "21dab7f71254c429d592827ab313f77c18baeda1",
+      "issue": 0
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
       "baseHash": "8ad2e56ba09c1b5428d50cfd71972c60502ed2e2"
