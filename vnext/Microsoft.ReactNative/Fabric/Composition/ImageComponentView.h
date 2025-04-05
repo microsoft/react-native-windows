@@ -85,6 +85,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
 
   void ImageLoadStart() noexcept;
   void ImageLoaded() noexcept;
+  void didReceiveProgress(float progress, int loaded, int total) noexcept;
   void didReceiveImage(const std::shared_ptr<ImageResponseImage> &wicbmp) noexcept;
   void didReceiveFailureFromObserver(const facebook::react::ImageLoadError &error) noexcept;
   void setStateAndResubscribeImageResponseObserver(

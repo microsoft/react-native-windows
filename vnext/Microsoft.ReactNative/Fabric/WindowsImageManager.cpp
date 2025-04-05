@@ -78,7 +78,9 @@ wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessS
 }
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
-WindowsImageManager::GetImageRandomAccessStreamAsync(ReactImageSource source) const {
+WindowsImageManager::GetImageRandomAccessStreamAsync(
+    ReactImageSource source,
+    std::function<void(uint64_t progress, uint64_t total)> progressCallback) const {
   co_await winrt::resume_background();
 
   winrt::Windows::Foundation::Uri uri(winrt::to_hstring(source.uri));
@@ -130,8 +132,28 @@ WindowsImageManager::GetImageRandomAccessStreamAsync(ReactImageSource source) co
         response.ReasonPhrase(), response.StatusCode(), response.Headers());
   }
 
+  auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
+  uint64_t total = response.Content().Headers().ContentLength().GetUInt64();
+  uint64_t progress = 0;
+
   winrt::Windows::Storage::Streams::InMemoryRandomAccessStream memoryStream;
-  co_await response.Content().WriteToStreamAsync(memoryStream);
+  winrt::Windows::Storage::Streams::DataReader reader(inputStream);
+  constexpr uint32_t bufferSize = 16 * 1024;
+
+  while (true) {
+    uint32_t loaded = co_await reader.LoadAsync(bufferSize);
+    if (loaded == 0)
+      break;
+
+    auto buffer = reader.ReadBuffer(loaded);
+    co_await memoryStream.WriteAsync(buffer);
+    progress += loaded;
+
+    if (progressCallback) {
+      progressCallback(progress, total);
+    }
+  }
+
   memoryStream.Seek(0);
 
   co_return winrt::Microsoft::ReactNative::Composition::StreamImageResponse(memoryStream.CloneStream());
@@ -160,7 +182,13 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
     source.width = imageSource.size.width;
     source.sourceType = ImageSourceType::Download;
 
-    imageResponseTask = GetImageRandomAccessStreamAsync(source);
+    auto progressCallback = [weakObserverCoordinator](int64_t progress, int64_t total) {
+      if (auto observerCoordinator = weakObserverCoordinator.lock()) {
+        float normalizedProgress = total > 0 ? static_cast<float>(progress) / static_cast<float>(total) : 1.0f;
+        observerCoordinator->nativeImageResponseProgress(normalizedProgress, progress, total);
+      }
+    };
+    imageResponseTask = GetImageRandomAccessStreamAsync(source, progressCallback);
   }
 
   imageResponseTask.Completed([weakObserverCoordinator](auto asyncOp, auto status) {
@@ -193,11 +221,6 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
         auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
         errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
         observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
-        break;
-      }
-      case winrt::Windows::Foundation::AsyncStatus::Started: {
-        // TODO progress? - Can we register for progress off the download task?
-        // observerCoordinator->nativeImageResponseProgress(0.0/*progress*/, 0/*completed*/, 0/*total*/);
         break;
       }
     }

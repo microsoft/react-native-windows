@@ -36,7 +36,15 @@ ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress, int64_t loaded, int64_t total)
     const {
-  // TODO progress?
+  if (auto imgComponentView = m_wkImage.get()) {
+    int loadedInt = static_cast<int>(loaded);
+    int totalInt = static_cast<int>(total);
+    imgComponentView->m_reactContext.UIDispatcher().Post([progress, wkImage = m_wkImage, loadedInt, totalInt]() {
+      if (auto image = wkImage.get()) {
+        image->didReceiveProgress(progress, loadedInt, totalInt);
+      }
+    });
+  }
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
@@ -93,6 +101,21 @@ void ImageComponentView::ImageLoadStart() noexcept {
   if (imageEventEmitter) {
     imageEventEmitter->onLoadStart();
   }
+}
+
+void ImageComponentView::ImageLoaded() noexcept {
+  auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
+  if (imageEventEmitter) {
+    imageEventEmitter->onLoadEnd();
+  }
+}
+
+void ImageComponentView::didReceiveProgress(float progress, int loaded, int total) noexcept {
+  auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
+  if (imageEventEmitter) {
+    imageEventEmitter->onProgress(progress, loaded, total);
+  }
+  ensureDrawingSurface();
 }
 
 void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImage> &imageResponseImage) noexcept {
