@@ -10,6 +10,7 @@ REM /rn [version]   Use react-native@version (default: latest)
 REM /rnw [version]  Use react-native-windows@version (default: latest)
 REM /lt [template]  Use template (default: cpp-app)
 REM /linkrnw        Use your local RNW repo at RNW_ROOT
+REM /verdaccio      Configure new project to use verdaccio (used in CI)
 REM
 REM Requirements:
 REM - You've set the RNW_ROOT environment variable with the path to your clone
@@ -28,7 +29,9 @@ set R_VERSION=
 set RN_VERSION=
 set RNW_VERSION=
 set RNCLI_VERSION=
+
 set LINK_RNW=0
+set USE_VERDACCIO=0
 
 :loop
 set part=%1
@@ -36,6 +39,8 @@ set param=%2
 if not "%part%"=="" (
   if "%part%"=="/linkrnw" (
       set LINK_RNW=1
+  ) else if "%part%"=="/verdaccio" (
+      set USE_VERDACCIO=1
   ) else if "%part%"=="/r" (
       set R_VERSION=%param%
       shift
@@ -113,12 +118,20 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-ios"": "".*""', '""@react-native-community/cli-platform-ios"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
 )
 
+@echo creaternwapp.cmd: Calling yarn install
 call yarn install
 
 @echo creaternwapp.cmd: Creating commit to save current state
 if not exist ".git\" call git init .
 call git add .
 call git commit -m "npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true"
+
+if %USE_VERDACCIO% equ 1 (
+  @echo creaternwapp.cmd: Setting npm registry to verdaccio at http://localhost:4873
+  call yarn config set registry http://localhost:4873
+  call yarn config set npmRegistryServer http://localhost:4873
+  call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
+)
 
 @echo creaternwapp.cmd: Adding RNW dependency to app
 call yarn add react-native-windows@%RNW_VERSION%
@@ -135,6 +148,7 @@ if %LINK_RNW% equ 1 (
   )
 )
 
+@echo creaternwapp.cmd: Calling yarn install
 call yarn install
 
 @echo creaternwapp.cmd: Creating commit to save current state
