@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <react/renderer/imagemanager/ImageRequestParams.h>
 #include <react/renderer/graphics/Float.h>
 
 namespace facebook::react {
