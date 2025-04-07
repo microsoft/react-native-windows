@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 17 Mar 2025 15:29:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Apr 2025 15:25:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.6
+
+Mon, 07 Apr 2025 15:25:48 GMT
+
+### Patches
+
+- use non-alpha version of @react-native-community/cli (tatianakapos@microsoft.com)
 
 ## 0.76.5
 

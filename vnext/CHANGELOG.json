@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Apr 2025 15:25:48 GMT",
+      "version": "0.76.10",
+      "tag": "react-native-windows_v0.76.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a2aced6bb38c7d0ff2721ef1ec60edb93b9ff64b",
+            "comment": "use non-alpha version of @react-native-community/cli"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Mar 2025 15:29:08 GMT",
       "version": "0.76.9",
       "tag": "react-native-windows_v0.76.9",
