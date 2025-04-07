@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump folly to v2024.01.01.00 (#14452)",
-  "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}
