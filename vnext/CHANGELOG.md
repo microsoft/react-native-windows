@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 31 Mar 2025 15:24:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Apr 2025 15:26:10 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.7
+
+Mon, 07 Apr 2025 15:26:10 GMT
+
+### Patches
+
+- use non-alpha version of @react-native-community/cli (tatianakapos@microsoft.com)
+- Bump folly to v2024.01.01.00 (#14452) (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.77.2
 
 ## 0.77.6
 

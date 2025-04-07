@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Mon, 17 Mar 2025 15:30:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Apr 2025 15:26:10 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.3
+
+Mon, 07 Apr 2025 15:26:10 GMT
+
+### Patches
+
+- use non-alpha version of @react-native-community/cli (tatianakapos@microsoft.com)
 
 ## 0.77.2
 

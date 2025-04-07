@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 07 Apr 2025 15:26:10 GMT",
+      "version": "0.77.3",
+      "tag": "@office-iss/react-native-win32_v0.77.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "228eea1987290b0df2a8eb104fad98ed5cd8ecb8",
+            "comment": "use non-alpha version of @react-native-community/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Mar 2025 15:30:02 GMT",
       "version": "0.77.2",
       "tag": "@office-iss/react-native-win32_v0.77.2",
