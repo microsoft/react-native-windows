@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Apr 2025 15:26:14 GMT",
+      "version": "0.78.3",
+      "tag": "react-native-windows_v0.78.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8182feba1a1ffc3118cfea726cd4a0ab92ae563c",
+            "comment": "use non-alpha version of @react-native-community/cli"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a62387b6ca4f2be164d2c3c6ea91c9a61dcccae1",
+            "comment": "Fix use of ExperimentalWinUI3 in CI / Secure PR"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "04930ad6dce2cbc6d2e5d79760b13b77443912e4",
+            "comment": "Bump folly to v2024.01.01.00 (#14452)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Mar 2025 15:25:16 GMT",
       "version": "0.78.2",
       "tag": "react-native-windows_v0.78.2",

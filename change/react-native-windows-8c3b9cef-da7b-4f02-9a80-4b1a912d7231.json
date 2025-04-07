@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.78] Fix use of ExperimentalWinUI3 in CI / Secure PR",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
