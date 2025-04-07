@@ -71,14 +71,6 @@ steps:
           artifactName: CliInitNuGet.${{parameters.platform}}.${{parameters.configuration}}
           targetPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
 
-  - script: |
-      call yarn config set npmRegistryServer http://localhost:4873
-      call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
-    displayName: yarn config verdaccio
-    workingDirectory: $(Agent.BuildDirectory)
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
         $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /lt ${{ parameters.template }} testcli
