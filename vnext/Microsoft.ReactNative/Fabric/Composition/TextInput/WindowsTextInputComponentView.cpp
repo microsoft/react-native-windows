@@ -988,7 +988,8 @@ void WindowsTextInputComponentView::updateProps(
       (oldTextInputProps.textAttributes.allowFontScaling != newTextInputProps.textAttributes.allowFontScaling) ||
       oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
       !facebook::react::floatEquality(
-          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing)) {
+          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
+      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1298,6 +1299,14 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   // if (dFontStyle & FS_Underline) {
   //    cfNew.dwEffects |= CFE_UNDERLINE;
   //  }
+
+  // set font family
+  if (!props.textAttributes.fontFamily.empty()) {
+    cfNew.dwMask |= CFM_FACE;
+    std::wstring fontFamily =
+        std::wstring(props.textAttributes.fontFamily.begin(), props.textAttributes.fontFamily.end());
+    wcsncpy_s(cfNew.szFaceName, fontFamily.c_str(), LF_FACESIZE);
+  }
 
   // set char offset
   cfNew.dwMask |= CFM_OFFSET;
