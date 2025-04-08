@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from MovingLightNativeComponent spec file in flow / TypeScript.
+ * This file is auto-generated from ModalHostViewNativeComponent spec file in flow / TypeScript.
  */
 // clang-format off
 #pragma once
@@ -16,28 +16,25 @@
 
 #ifdef RNW_NEW_ARCH
 
-namespace winrt::SampleCustomComponent::Codegen {
+namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(MovingLightSpec_MovingLightProps_objectProp)
-struct MovingLightSpec_MovingLightProps_objectProp {
-  REACT_FIELD(number)
-  double number{};
-
-  REACT_FIELD(string)
-  std::string string;
-};
-
-REACT_STRUCT(MovingLightProps)
-struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  MovingLightProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+REACT_STRUCT(ModalHostViewProps)
+struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  ModalHostViewProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
     : ViewProps(props)
   {
      if (cloneFrom) {
-       auto cloneFromProps = cloneFrom.as<MovingLightProps>();
-       size = cloneFromProps->size;
-       color = cloneFromProps->color;
-       eventParam = cloneFromProps->eventParam;
-       objectProp = cloneFromProps->objectProp;  
+       auto cloneFromProps = cloneFrom.as<ModalHostViewProps>();
+       animationType = cloneFromProps->animationType;
+       presentationStyle = cloneFromProps->presentationStyle;
+       transparent = cloneFromProps->transparent;
+       statusBarTranslucent = cloneFromProps->statusBarTranslucent;
+       navigationBarTranslucent = cloneFromProps->navigationBarTranslucent;
+       hardwareAccelerated = cloneFromProps->hardwareAccelerated;
+       visible = cloneFromProps->visible;
+       animated = cloneFromProps->animated;
+       supportedOrientations = cloneFromProps->supportedOrientations;
+       identifier = cloneFromProps->identifier;  
      }
   }
 
@@ -45,38 +42,86 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
-  REACT_FIELD(size)
-  float size{42};
+  REACT_FIELD(animationType)
+  std::optional<std::string> animationType;
 
-  REACT_FIELD(color)
-  winrt::Microsoft::ReactNative::Color color{nullptr};
+  REACT_FIELD(presentationStyle)
+  std::optional<std::string> presentationStyle;
 
-  REACT_FIELD(eventParam)
-  std::optional<std::string> eventParam;
+  REACT_FIELD(transparent)
+  std::optional<bool> transparent{};
 
-  REACT_FIELD(objectProp)
-  std::optional<MovingLightSpec_MovingLightProps_objectProp> objectProp;
+  REACT_FIELD(statusBarTranslucent)
+  std::optional<bool> statusBarTranslucent{};
+
+  REACT_FIELD(navigationBarTranslucent)
+  std::optional<bool> navigationBarTranslucent{};
+
+  REACT_FIELD(hardwareAccelerated)
+  std::optional<bool> hardwareAccelerated{};
+
+  REACT_FIELD(visible)
+  std::optional<bool> visible{};
+
+  REACT_FIELD(animated)
+  std::optional<bool> animated{};
+
+  REACT_FIELD(supportedOrientations)
+  std::optional<std::vector<std::string>> supportedOrientations;
+
+  REACT_FIELD(identifier)
+  std::optional<int32_t> identifier{};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(MovingLight_OnSomething)
-struct MovingLight_OnSomething {
-  REACT_FIELD(value)
-  std::string value;
-
-  REACT_FIELD(target)
-  int32_t target{};
+REACT_STRUCT(ModalHostView_OnRequestClose)
+struct ModalHostView_OnRequestClose {
 };
 
-struct MovingLightEventEmitter {
-  MovingLightEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
+REACT_STRUCT(ModalHostView_OnShow)
+struct ModalHostView_OnShow {
+};
+
+REACT_STRUCT(ModalHostView_OnDismiss)
+struct ModalHostView_OnDismiss {
+};
+
+REACT_STRUCT(ModalHostView_OnOrientationChange)
+struct ModalHostView_OnOrientationChange {
+  REACT_FIELD(orientation)
+  std::string orientation;
+};
+
+struct ModalHostViewEventEmitter {
+  ModalHostViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnSomething = MovingLight_OnSomething;
+  using OnRequestClose = ModalHostView_OnRequestClose;
+  using OnShow = ModalHostView_OnShow;
+  using OnDismiss = ModalHostView_OnDismiss;
+  using OnOrientationChange = ModalHostView_OnOrientationChange;
 
-  void onSomething(OnSomething &value) const {
-    m_eventEmitter.DispatchEvent(L"something", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onRequestClose(OnRequestClose &value) const {
+    m_eventEmitter.DispatchEvent(L"requestClose", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onShow(OnShow &value) const {
+    m_eventEmitter.DispatchEvent(L"show", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onDismiss(OnDismiss &value) const {
+    m_eventEmitter.DispatchEvent(L"dismiss", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onOrientationChange(OnOrientationChange &value) const {
+    m_eventEmitter.DispatchEvent(L"orientationChange", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
@@ -86,12 +131,12 @@ struct MovingLightEventEmitter {
 };
 
 template<typename TUserData>
-struct BaseMovingLight {
+struct BaseModalHostView {
 
   virtual void UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
-    const winrt::com_ptr<MovingLightProps> &newProps,
-    const winrt::com_ptr<MovingLightProps> &/*oldProps*/) noexcept {
+    const winrt::com_ptr<ModalHostViewProps> &newProps,
+    const winrt::com_ptr<ModalHostViewProps> &/*oldProps*/) noexcept {
     m_props = newProps;
   }
 
@@ -108,7 +153,7 @@ struct BaseMovingLight {
     const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
   }
 
-  virtual void UpdateEventEmitter(const std::shared_ptr<MovingLightEventEmitter> &eventEmitter) noexcept {
+  virtual void UpdateEventEmitter(const std::shared_ptr<ModalHostViewEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
@@ -136,46 +181,34 @@ struct BaseMovingLight {
                                         winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
   }
 
-  // You must provide an implementation of this method to handle the "setLightOn" command
-  virtual void HandleSetLightOnCommand(bool value) noexcept = 0;
+  
 
-  void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
-    auto userData = view.UserData().as<TUserData>();
-    auto commandName = args.CommandName();
-    if (commandName == L"setLightOn") {
-      bool value;
-      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), value);
-      userData->HandleSetLightOnCommand(value);
-      return;
-    }
-  }
-
-  const std::shared_ptr<MovingLightEventEmitter>& EventEmitter() const { return m_eventEmitter; }
-  const winrt::com_ptr<MovingLightProps>& Props() const { return m_props; }
+  const std::shared_ptr<ModalHostViewEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<ModalHostViewProps>& Props() const { return m_props; }
 
 private:
-  winrt::com_ptr<MovingLightProps> m_props;
-  std::shared_ptr<MovingLightEventEmitter> m_eventEmitter;
+  winrt::com_ptr<ModalHostViewProps> m_props;
+  std::shared_ptr<ModalHostViewEventEmitter> m_eventEmitter;
 };
 
 template <typename TUserData>
-void RegisterMovingLightNativeComponent(
+void RegisterModalHostViewNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"MovingLight", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+      L"ModalHostView", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
                               const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<MovingLightProps>(props, cloneFrom); 
+            return winrt::make<ModalHostViewProps>(props, cloneFrom); 
         });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->UpdateProps(view, newProps ? newProps.as<MovingLightProps>() : nullptr, oldProps ? oldProps.as<MovingLightProps>() : nullptr);
+            userData->UpdateProps(view, newProps ? newProps.as<ModalHostViewProps>() : nullptr, oldProps ? oldProps.as<ModalHostViewProps>() : nullptr);
         });
 
         compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -188,10 +221,10 @@ void RegisterMovingLightNativeComponent(
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->UpdateEventEmitter(std::make_shared<MovingLightEventEmitter>(eventEmitter));
+          userData->UpdateEventEmitter(std::make_shared<ModalHostViewEventEmitter>(eventEmitter));
         });
 
-        if constexpr (&TUserData::FinalizeUpdate != &BaseMovingLight<TUserData>::FinalizeUpdate) {
+        if constexpr (&TUserData::FinalizeUpdate != &BaseModalHostView<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -199,7 +232,7 @@ void RegisterMovingLightNativeComponent(
           });
         } 
 
-        if constexpr (&TUserData::UpdateState != &BaseMovingLight<TUserData>::UpdateState) {
+        if constexpr (&TUserData::UpdateState != &BaseModalHostView<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -207,13 +240,7 @@ void RegisterMovingLightNativeComponent(
           });
         }
 
-        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
-                                          const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
-          auto userData = view.UserData().as<TUserData>();
-          userData->HandleCommand(view, args);
-        });
-
-        if constexpr (&TUserData::MountChildComponentView != &BaseMovingLight<TUserData>::MountChildComponentView) {
+        if constexpr (&TUserData::MountChildComponentView != &BaseModalHostView<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -221,7 +248,7 @@ void RegisterMovingLightNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::UnmountChildComponentView != &BaseMovingLight<TUserData>::UnmountChildComponentView) {
+        if constexpr (&TUserData::UnmountChildComponentView != &BaseModalHostView<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -231,13 +258,13 @@ void RegisterMovingLightNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if constexpr (&TUserData::Initialize != &BaseMovingLight<TUserData>::Initialize) {
+          if constexpr (&TUserData::Initialize != &BaseModalHostView<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if constexpr (&TUserData::CreateVisual != &BaseMovingLight<TUserData>::CreateVisual) {
+        if constexpr (&TUserData::CreateVisual != &BaseModalHostView<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);
@@ -251,6 +278,6 @@ void RegisterMovingLightNativeComponent(
       });
 }
 
-} // namespace winrt::SampleCustomComponent::Codegen
+} // namespace Microsoft::ReactNativeSpecs
 
 #endif // #ifdef RNW_NEW_ARCH
