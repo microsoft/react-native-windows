@@ -57,12 +57,14 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   void updateVisualBrush() noexcept;
   void DrawText() noexcept;
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
+  void resizeFontUsingLayoutMetrics(const facebook::react::LayoutMetrics &layoutMetrics) noexcept;
 
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
+  bool m_requireFontResize{false};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
 };
 

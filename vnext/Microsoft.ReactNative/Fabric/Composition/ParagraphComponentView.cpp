@@ -61,6 +61,21 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
+    m_requireFontResize = true;
+  }
+
+  if (newViewProps.paragraphAttributes.adjustsFontSizeToFit &&
+    (oldViewProps.paragraphAttributes.maximumNumberOfLines != newViewProps.paragraphAttributes.maximumNumberOfLines ||
+       !facebook::react::floatEquality(oldViewProps.textAttributes.fontSize, newViewProps.textAttributes.fontSize)))
+  {
+    m_requireFontResize = true;
+  }
+
+  if (oldViewProps.paragraphAttributes.maximumNumberOfLines != newViewProps.paragraphAttributes.maximumNumberOfLines) {
+    m_requireFontResize=newViewProps.paragraphAttributes.maximumNumberOfLines ? true:false;
+  }
+
   Super::updateProps(props, oldProps);
 }
 
@@ -70,7 +85,7 @@ void ParagraphComponentView::updateState(
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
   m_attributedStringBox = facebook::react::AttributedStringBox(newState.getData().attributedString);
-  m_paragraphAttributes = {}; // TODO
+  m_paragraphAttributes = facebook::react::ParagraphAttributes(newState.getData().paragraphAttributes);
 
   m_textLayout = nullptr;
 }
@@ -78,7 +93,12 @@ void ParagraphComponentView::updateState(
 void ParagraphComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+
+  if (m_requireFontResize) {
+    resizeFontUsingLayoutMetrics(layoutMetrics);
+  }
 
   if (layoutMetrics.pointScaleFactor != oldLayoutMetrics.pointScaleFactor) {
     m_textLayout = nullptr;
@@ -146,6 +166,29 @@ void ParagraphComponentView::updateTextAlignment(
   }
   // TODO
   // m_textFormat->SetTextAlignment(alignment);
+}
+
+void ParagraphComponentView::resizeFontUsingLayoutMetrics(
+  const facebook::react::LayoutMetrics& layoutMetrics) noexcept
+{
+  int numberOfLines = m_paragraphAttributes.maximumNumberOfLines;
+  float layout_Width = layoutMetrics.frame.origin.x;
+  layout_Width *= 20;
+  float total_Width = layout_Width * numberOfLines;
+  auto attributedString_to_resize = m_attributedStringBox.getValue();
+  auto fragments_copy_to_resize = attributedString_to_resize.getFragments();
+  attributedString_to_resize.getFragments().clear();
+  for (auto frag : fragments_copy_to_resize) {
+    float fontSize = frag.textAttributes.fontSize;
+    int fragmentLength = static_cast<int>(frag.string.length());
+    float fontConsumption = fragmentLength * fontSize;
+    if (fontConsumption > total_Width) {
+      float newSize = total_Width / fragmentLength;
+      frag.textAttributes.fontSize = newSize;
+    }
+    attributedString_to_resize.appendFragment(std::move(frag));
+  }
+  m_attributedStringBox = facebook::react::AttributedStringBox(attributedString_to_resize);
 }
 
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
