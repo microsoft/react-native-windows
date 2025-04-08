@@ -286,7 +286,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
             TrySetFocus(strongView.Parent());
           }
         });
-        m_bridge.Connect(contentIsland);
+    m_bridge.Connect(contentIsland);
 #endif
     m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
