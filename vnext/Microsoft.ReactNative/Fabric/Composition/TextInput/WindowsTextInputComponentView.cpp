@@ -933,6 +933,19 @@ void WindowsTextInputComponentView::onLostFocus(
     m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
   }
   m_caretVisual.IsVisible(false);
+
+  // Call onEndEditing when focus is lost
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnEndEditing onEndEditingArgs;
+
+    // Set event arguments
+    onEndEditingArgs.eventCount = ++m_nativeEventCount;
+    onEndEditingArgs.text = GetTextFromRichEdit();
+
+    // Emit the event
+    emitter->onEndEditing(onEndEditingArgs);
+  }
 }
 
 void WindowsTextInputComponentView::onGotFocus(
@@ -988,7 +1001,8 @@ void WindowsTextInputComponentView::updateProps(
       (oldTextInputProps.textAttributes.allowFontScaling != newTextInputProps.textAttributes.allowFontScaling) ||
       oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
       !facebook::react::floatEquality(
-          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing)) {
+          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
+      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1158,10 +1172,10 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     emitter->onChange(onChangeArgs);
   }
 
-  if (m_uiaProvider) {
+  if (UiaClientsAreListening()) {
     auto text = GetTextFromRichEdit();
     winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-        m_uiaProvider, UIA_ValueValuePropertyId, text, text);
+        EnsureUiaProvider(), UIA_ValueValuePropertyId, text, text);
   }
 }
 
@@ -1298,6 +1312,14 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   // if (dFontStyle & FS_Underline) {
   //    cfNew.dwEffects |= CFE_UNDERLINE;
   //  }
+
+  // set font family
+  if (!props.textAttributes.fontFamily.empty()) {
+    cfNew.dwMask |= CFM_FACE;
+    std::wstring fontFamily =
+        std::wstring(props.textAttributes.fontFamily.begin(), props.textAttributes.fontFamily.end());
+    wcsncpy_s(cfNew.szFaceName, fontFamily.c_str(), LF_FACESIZE);
+  }
 
   // set char offset
   cfNew.dwMask |= CFM_OFFSET;
