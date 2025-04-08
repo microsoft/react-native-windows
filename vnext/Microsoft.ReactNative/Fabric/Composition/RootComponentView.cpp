@@ -76,14 +76,8 @@ void RootComponentView::updateLayoutMetrics(
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::GetFocusedComponent() noexcept {
   return m_focusedComponent;
 }
-<<<<<<< HEAD
-void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept {
-=======
 
-void RootComponentView::SetFocusedComponent(
-    const winrt::Microsoft::ReactNative::ComponentView &value,
-    winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
->>>>>>> e3b41f85e2 ([Fabric] Fix Bug in Narrator Navigation (#14498))
+void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept {
   if (m_focusedComponent == value)
     return;
 
@@ -97,12 +91,8 @@ void RootComponentView::SetFocusedComponent(
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->TrySetFocus();
     }
-<<<<<<< HEAD
-    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value);
-=======
     m_focusedComponent = value;
-    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value, direction);
->>>>>>> e3b41f85e2 ([Fabric] Fix Bug in Narrator Navigation (#14498))
+    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value);
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onGotFocus(args);
   }
 }
@@ -169,9 +159,10 @@ bool RootComponentView::TrySetFocusedComponent(
 
 bool RootComponentView::TryMoveFocus(bool next) noexcept {
   if (!m_focusedComponent) {
-    return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
-        next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
-             : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
+    return NavigateFocus(
+        winrt::Microsoft::ReactNative::FocusNavigationRequest(
+            next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
+                 : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
   }
 
   Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
@@ -209,9 +200,10 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   }
 
   // Wrap focus around if nothing outside the island takes focus
-  return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
-      next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
-           : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
+  return NavigateFocus(
+      winrt::Microsoft::ReactNative::FocusNavigationRequest(
+          next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
+               : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
 }
 
 HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept {
