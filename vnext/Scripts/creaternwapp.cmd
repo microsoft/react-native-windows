@@ -64,6 +64,11 @@ if not "%part%"=="" (
 )
 :loopend
 
+if %USE_VERDACCIO% equ 1 (
+  @echo creaternwapp.cmd: Setting npm to use verdaccio at http://localhost:4873
+  call npm config set registry http://localhost:4873
+)
+
 if %LINK_RNW% equ 1 (
   @echo creaternwapp.cmd Determining versions from local RNW repo at %RNW_ROOT%
   for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" peerDependencies.react') do @set R_VERSION=%%a
@@ -127,7 +132,7 @@ call git add .
 call git commit -m "npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true"
 
 if %USE_VERDACCIO% equ 1 (
-  @echo creaternwapp.cmd: Setting npm registry to verdaccio at http://localhost:4873
+  @echo creaternwapp.cmd: Setting yarn to use verdaccio at http://localhost:4873
   call yarn config set registry http://localhost:4873
   call yarn config set npmRegistryServer http://localhost:4873
   call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"

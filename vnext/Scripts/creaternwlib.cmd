@@ -65,6 +65,11 @@ if not "%part%"=="" (
 )
 :loopend
 
+if %USE_VERDACCIO% equ 1 (
+  @echo creaternwlib.cmd: Setting npm to use verdaccio at http://localhost:4873
+  call npm config set registry http://localhost:4873
+)
+
 if %LINK_RNW% equ 1 (
   @echo creaternwlib.cmd Determining versions from local RNW repo at %RNW_ROOT%
   for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" peerDependencies.react') do @set R_VERSION=%%a
@@ -129,7 +134,7 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
 call yarn install
 
 if %USE_VERDACCIO% equ 1 (
-  @echo creaternwapp.cmd: Setting npm registry to verdaccio at http://localhost:4873
+  @echo creaternwlib.cmd: Setting yarn to use verdaccio at http://localhost:4873
   call yarn config set registry http://localhost:4873
   call yarn config set npmRegistryServer http://localhost:4873
   call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
