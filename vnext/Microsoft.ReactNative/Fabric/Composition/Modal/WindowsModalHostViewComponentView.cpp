@@ -184,9 +184,8 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       m_window.Show(true);
 
       auto navHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(m_bridge);
-      auto result = navHost.NavigateFocus(
-          winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
-              winrt::Microsoft::UI::Input::FocusNavigationReason::First));
+      auto result = navHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
+          winrt::Microsoft::UI::Input::FocusNavigationReason::First));
 
       // dispatch onShow event
       if (auto eventEmitter = EventEmitter()) {
