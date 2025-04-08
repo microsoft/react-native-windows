@@ -73,65 +73,27 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
-        npx --yes @react-native-community/cli@latest init testcli --version $(reactNativeDevDependency) --verbose --skip-install --install-pods false --skip-git-init true
-      displayName: Init new app project with @react-native-community/cli init
+        $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /lt ${{ parameters.template }} /verdaccio testcli
+      displayName: Init new app project with creaternwapp.cmd
       workingDirectory: $(Agent.BuildDirectory)
-
-  - ${{ if endsWith(parameters.template, '-lib') }}:
-    - script: |
-        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type turbo-module --react-native-version $(reactNativeDevDependency) --example vanilla testcli
-      displayName: Init new lib project with create-react-native-library
-      workingDirectory: $(Agent.BuildDirectory)
-
-  - script: |
-      call yarn install
-    displayName: pre-windows yarn install
-    workingDirectory: $(Agent.BuildDirectory)\testcli
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
-  - script: |
-      call yarn config set npmRegistryServer http://localhost:4873
-      call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
-    displayName: yarn config verdaccio
-    workingDirectory: $(Agent.BuildDirectory)\testcli
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
-  - ${{ if endsWith(parameters.template, '-app') }}:
-    - script: |
-        call yarn add react-native-windows@$(npmVersion)
-      displayName: yarn add react-native-windows
-      workingDirectory: $(Agent.BuildDirectory)\testcli
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
-        call yarn add react-native-windows@$(npmVersion) --dev
-      displayName: yarn add react-native-windows dev/peer
-      workingDirectory: $(Agent.BuildDirectory)\testcli
+        $(Build.SourcesDirectory)\vnext\Scripts\creaternwlib.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /verdaccio testcli
+      displayName: Init new lib project with creaternwlib.cmd
+      workingDirectory: $(Agent.BuildDirectory)
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
-  - script: |
-      call npx @react-native-community/cli init-windows --template ${{ parameters.template }} --overwrite --logging ${{ parameters.additionalInitArguments }}
-    displayName: Call @react-native-community/cli init-windows
-    workingDirectory: $(Agent.BuildDirectory)\testcli
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-  
-  - script: |
-      call yarn install
-    displayName: post-windows yarn install
-    workingDirectory: $(Agent.BuildDirectory)\testcli
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - ${{ if eq(parameters.UseChakra, true) }}:
     - template:  set-experimental-feature.yml
       parameters:
-        workingDir: ..\testcli\windows
+        ${{ if endsWith(parameters.template, '-lib') }}:
+          workingDir: $(Agent.BuildDirectory)\testcli\example\windows
+        ${{ else }}:
+          workingDir: $(Agent.BuildDirectory)\testcli\windows
         feature: UseHermes
         value: false
 
