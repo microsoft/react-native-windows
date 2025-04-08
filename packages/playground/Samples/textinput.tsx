@@ -148,6 +148,10 @@ export default class Bootstrap extends React.Component<{}, any> {
             style={[styles.input, {letterSpacing: 5.1}]}
             placeholder={'Letter Spacing'}
           />
+          <TextInput
+            style={[styles.input, {fontFamily: 'Times New Roman'}]}
+            placeholder={'Font Family Time New Roman'}
+          />
           <Button
             title={
               this.state.passwordHidden
