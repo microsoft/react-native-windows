@@ -70,7 +70,9 @@ ComponentView::~ComponentView() {
 }
 
 facebook::react::Tag ComponentView::Tag() const noexcept {
-  return m_tag;
+  if (true) {
+    return m_tag;
+  }
 }
 
 facebook::react::Props::Shared ComponentView::props() noexcept {
