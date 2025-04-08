@@ -10,8 +10,16 @@
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import type {ViewProps} from 'react-native';
 
+/*
 export interface XamlHostProps extends ViewProps {
   label: string;
-}
+}*/
+
+type XamlHostProps = $ReadOnly<{|
+  ...ViewProps,
+
+  // Props
+  label?: string,
+|}>;
 
 export default codegenNativeComponent<XamlHostProps>('XamlHost');

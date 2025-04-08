@@ -1,4 +1,4 @@
-namespace ReactNativeXamlFabric
+namespace Microsoft.ReactNative.Xaml
 {
   [webhosthidden]
   [default_interface]

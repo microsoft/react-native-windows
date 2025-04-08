@@ -1,4 +1,4 @@
-import XamlHost from './XamlHostNativeComponent';
+import XamlHost from '../../src/private/specs/components/XamlHost/XamlHostNativeComponent';
 
 const nativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');
 //const ConditionallyIgnoredEventHandlers = require('react-native/Libraries/NativeComponent/ViewConfigIgnore').ConditionallyIgnoredEventHandlers;

@@ -8,9 +8,10 @@
 
 #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
 
-#include "codegen/react/components/ReactNativeXamlFabric/XamlHost.g.h"
+#include "..\codegen\react\components\rnwcore\XamlHost.g.h"
+//#include "codegen/react/components/Microsoft::ReactNative::Xaml/XamlHost.g.h"
 
-namespace winrt::ReactNativeXamlFabric {
+namespace winrt::Microsoft::ReactNative::Xaml {
 
 // This is a "toy" implementation of Xaml's XamlHost, just for bringup and testing.
 // When UseExperimentalWinUI3 and UseNewArchitecture are both true, it will host a
@@ -18,10 +19,10 @@ namespace winrt::ReactNativeXamlFabric {
 // Later, we'll expose this through react-native-xaml.
 
 struct XamlHostComponentView : public winrt::implements<XamlHostComponentView, winrt::IInspectable>,
-                               Codegen::BaseXamlHost<XamlHostComponentView> {
+    ::Microsoft::ReactNativeSpecs::BaseXamlHost<XamlHostComponentView> {
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-    winrt::ReactNativeXamlFabric::implementation::XamlApplication::EnsureCreated();
+    winrt::Microsoft::ReactNative::Xaml::implementation::XamlApplication::EnsureCreated();
 
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     // m_xamlIsland.Content(m_XamlHost);
@@ -43,16 +44,16 @@ struct XamlHostComponentView : public winrt::implements<XamlHostComponentView, w
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
 };
 
-} // namespace winrt::ReactNativeXamlFabric
+} // namespace winrt::Microsoft::ReactNative::Xaml
 
 void RegisterXamlHostComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
-  winrt::ReactNativeXamlFabric::Codegen::RegisterXamlHostNativeComponent<
-      winrt::ReactNativeXamlFabric::XamlHostComponentView>(
+  ::Microsoft::ReactNativeSpecs::RegisterXamlHostNativeComponent<
+      winrt::Microsoft::ReactNative::Xaml::XamlHostComponentView>(
       packageBuilder,
       [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder &builder) {
         builder.SetContentIslandComponentViewInitializer(
             [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-              auto userData = winrt::make_self<winrt::ReactNativeXamlFabric::XamlHostComponentView>();
+              auto userData = winrt::make_self<winrt::Microsoft::ReactNative::Xaml::XamlHostComponentView>();
               userData->InitializeContentIsland(islandView);
               islandView.UserData(*userData);
             });

@@ -83,19 +83,21 @@
           "boost": "[1.83.0, )"
         }
       },
+      "microsoft.reactnative.xaml": {
+        "type": "Project",
+        "dependencies": {
+          "Common": "[1.0.0, )",
+          "Folly": "[1.0.0, )",
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.WindowsAppSDK": "[1.7.250109001-experimental2, )",
+          "ReactCommon": "[1.0.0, )",
+          "boost": "[1.83.0, )"
+        }
+      },
       "reactcommon": {
         "type": "Project",
         "dependencies": {
           "Folly": "[1.0.0, )",
-          "boost": "[1.83.0, )"
-        }
-      },
-      "reactnativexamlfabric": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.ReactNative": "[1.0.0, )",
-          "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
-          "Microsoft.WindowsAppSDK": "[1.7.250109001-experimental2, )",
           "boost": "[1.83.0, )"
         }
       },
@@ -104,9 +106,9 @@
         "dependencies": {
           "Microsoft.JavaScript.Hermes": "[0.1.23, )",
           "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.ReactNative.Xaml": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[1.7.250109001-experimental2, )",
-          "ReactNativeXamlFabric": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
       }

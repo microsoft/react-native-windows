@@ -25,7 +25,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {XamlHost, Button, StackPanel} from 'react-native-xaml-fabric';
+import {XamlHost} from 'react-native-windows';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -83,12 +83,8 @@ function App(): React.JSX.Element {
             screen and then come back to see your edits. OK I'll do that
             nddow!!!!
           </Section>
-          <XamlHost label="jerry" style={{width: 300, height: 100}}>
-            <StackPanel>
-              <Button content="Xaml: I am button 1" />
-              <Button content="Xaml: button 2" />
-              <Button content="Xaml: oh this is button 3" />
-            </StackPanel>
+          <XamlHost label="jerry" style={{width: 300, height: 100}}>          
+
           </XamlHost>
           <Section title="See Your Changes">
             <ReloadInstructions />

@@ -39,6 +39,7 @@ import typeof SafeAreaView from './Libraries/Components/SafeAreaView/SafeAreaVie
 import typeof ScrollView from './Libraries/Components/ScrollView/ScrollView';
 import typeof StatusBar from './Libraries/Components/StatusBar/StatusBar';
 import typeof Switch from './Libraries/Components/Switch/Switch';
+import typeof XamlHost from './Libraries/Components/XamlHost/XamlHost';
 import typeof InputAccessoryView from './Libraries/Components/TextInput/InputAccessoryView';
 import typeof TextInput from './Libraries/Components/TextInput/TextInput';
 import typeof ToastAndroid from './Libraries/Components/ToastAndroid/ToastAndroid';
@@ -177,6 +178,9 @@ module.exports = {
   },
   get Switch(): Switch {
     return require('./Libraries/Components/Switch/Switch').default;
+  },
+  get XamlHost(): XamlHost {
+    return require('./Libraries/Components/XamlHost/XamlHost').default;
   },
   get Text(): Text {
     return require('./Libraries/Text/Text');

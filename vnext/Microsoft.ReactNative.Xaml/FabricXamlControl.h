@@ -28,7 +28,7 @@ inline std::wstring ToWideString(const char *str) {
   return result;
 }
 
-namespace winrt::ReactNativeXamlFabric {
+namespace winrt::Microsoft::ReactNative::Xaml {
 
 REACT_STRUCT(FabricXamlControlProps)
 struct FabricXamlControlProps
@@ -132,10 +132,10 @@ struct BaseFabricXamlControl {
   std::shared_ptr<FabricXamlControlEventEmitter> m_eventEmitter;
 };
 
-struct XamlControlComponentView : public winrt::implements<XamlControlComponentView, winrt::IInspectable>,
+struct XamlControlComponentView: public winrt::implements<XamlControlComponentView, winrt::IInspectable>,
                                   BaseFabricXamlControl<XamlControlComponentView> {
-  XamlControlComponentView(winrt::hstring name) : m_xamlTypeName(name) {
-    ::OutputDebugString(L"XamlControlComponentView constructor\n");
+                                    XamlControlComponentView(winrt::hstring name) : m_xamlTypeName(name) {
+    ::OutputDebugString(L"Microsoft::ReactNative::Xaml constructor\n");
   }
 
   // MountChildComponentView will only be called if this method is overridden
@@ -174,7 +174,8 @@ struct XamlControlComponentView : public winrt::implements<XamlControlComponentV
         // xamlControl.SetValue(winrt::Microsoft::UI::Xaml::Controls::ContentControl::ContentProperty,
         // winrt::hstring{L""});
       } else {
-        throw std::exception("Unknown content type");
+        // TODO: Better error handling here.
+        ::OutputDebugString(L"UpdateProps: I don't recongnize this type.\n");
       }
     }
 
@@ -185,7 +186,9 @@ struct XamlControlComponentView : public winrt::implements<XamlControlComponentV
   void FinalizeUpdate(
       const winrt::Microsoft::ReactNative::ComponentView &view,
       winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept override {
+    UNREFERENCED_PARAMETER(mask);
     view.Mounted([](const winrt::IInspectable &, const winrt::Microsoft::ReactNative::ComponentView &view) {
+      UNREFERENCED_PARAMETER(view);
       // Do mounted things (?)
     });
     ::OutputDebugString(L"FinalizeUpdate\n");
@@ -214,6 +217,6 @@ struct XamlControlComponentView : public winrt::implements<XamlControlComponentV
   winrt::hstring m_xamlTypeName;
 };
 
-} // namespace winrt::ReactNativeXamlFabric
+} // namespace winrt::Microsoft::ReactNative::Xaml
 
 // #endif // #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)

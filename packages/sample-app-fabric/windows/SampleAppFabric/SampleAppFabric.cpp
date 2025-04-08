@@ -8,6 +8,8 @@
 
 #include "NativeModules.h"
 
+#include <winrt/Microsoft.ReactNative.Xaml.h>
+
 // A PackageProvider containing any turbo modules you define within this app project
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
@@ -39,6 +41,9 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   RegisterAutolinkedNativeModulePackages(settings.PackageProviders());
   // Register any native modules defined within this app project
   settings.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+
+  settings.PackageProviders().Append(winrt::Microsoft::ReactNative::Xaml::ReactPackageProvider());
+
 
 #if BUNDLE
   // Load the JS bundle from a file (not Metro):
