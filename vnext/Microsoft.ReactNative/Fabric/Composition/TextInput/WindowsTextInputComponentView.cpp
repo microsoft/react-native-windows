@@ -1159,10 +1159,10 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     emitter->onChange(onChangeArgs);
   }
 
-  if (m_uiaProvider) {
+  if (UiaClientsAreListening()) {
     auto text = GetTextFromRichEdit();
     winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-        m_uiaProvider, UIA_ValueValuePropertyId, text, text);
+        EnsureUiaProvider(), UIA_ValueValuePropertyId, text, text);
   }
 }
 
