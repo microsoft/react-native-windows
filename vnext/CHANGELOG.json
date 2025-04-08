@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Apr 2025 05:22:59 GMT",
+      "version": "0.0.0-canary.936",
+      "tag": "react-native-windows_v0.0.0-canary.936",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "121f97daa641a80582bf82055f9c91a90ee85d8f",
+            "comment": "Add Custom Font Family support in TextInput"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "96b0e0b4950f369fb4012e287c037baa4f30ab9a",
+            "comment": "Update creaternw scripts to use RNW devDependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Apr 2025 05:26:00 GMT",
       "version": "0.0.0-canary.935",
       "tag": "react-native-windows_v0.0.0-canary.935",
