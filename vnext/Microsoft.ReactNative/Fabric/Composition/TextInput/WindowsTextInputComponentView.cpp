@@ -463,6 +463,13 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   WindowsTextInputComponentView *m_outer;
 };
 
+int WINAPI
+AutoCorrectCallback(LANGID langid, const WCHAR *pszBefore, WCHAR *pszAfter, LONG cchAfter, LONG *pcchReplaced) {
+  wcsncpy_s(pszAfter, cchAfter, pszBefore, _TRUNCATE);
+  *pcchReplaced = static_cast<LONG>(wcslen(pszAfter));
+  return ATP_REPLACEALLTEXT;
+}
+
 facebook::react::AttributedString WindowsTextInputComponentView::getAttributedString() const {
   // Use BaseTextShadowNode to get attributed string from children
 
@@ -1067,6 +1074,14 @@ void WindowsTextInputComponentView::updateProps(
     m_propBits |= TXTBIT_PARAFORMATCHANGE;
   }
 
+  if (oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect || !oldProps) {
+    updateAutoCorrect(newTextInputProps.autoCorrect);
+  }
+
+  if (oldTextInputProps.spellCheck != newTextInputProps.spellCheck || !oldProps) {
+    updateSpellCheck(newTextInputProps.spellCheck);
+  }
+
   UpdatePropertyBits();
 }
 
@@ -1591,4 +1606,23 @@ void WindowsTextInputComponentView::updateLetterSpacing(float letterSpacing) noe
       m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&cf), &res));
 }
 
+void WindowsTextInputComponentView::updateAutoCorrect(bool enable) noexcept {
+  LRESULT lresult;
+  winrt::check_hresult(m_textServices->TxSendMessage(
+      EM_SETAUTOCORRECTPROC, !enable ? reinterpret_cast<WPARAM>(AutoCorrectCallback) : 0, 0, &lresult));
+}
+
+void WindowsTextInputComponentView::updateSpellCheck(bool enable) noexcept {
+  LRESULT currentLangOptions;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_GETLANGOPTIONS, 0, 0, &currentLangOptions));
+
+  DWORD newLangOptions = static_cast<DWORD>(currentLangOptions);
+  if (enable) {
+    newLangOptions |= IMF_SPELLCHECKING;
+  }
+
+  LRESULT lresult;
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETLANGOPTIONS, IMF_SPELLCHECKING, enable ? newLangOptions : 0, &lresult));
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
