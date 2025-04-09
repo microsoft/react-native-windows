@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Apr 2025 05:23:40 GMT",
+      "version": "0.0.0-canary.937",
+      "tag": "react-native-windows_v0.0.0-canary.937",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5959d3aa617c58f91394f7aa19d3fc29202bb19d",
+            "comment": "Enforce SendPendingMessages in dispatch queue"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e3b41f85e24d79aebfab05314e211431b145f409",
+            "comment": "Fix Narrator Bug"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3e70342d9661b23e816a05d67aa88e5368808421",
+            "comment": "Use creaternwapp.cmd and creaternwlib.cmd scripts to create new projects in CI"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e143a0ac79fabb4d80b6b214a802a47faf9a9b58",
+            "comment": "implemented on onEndEditing"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Apr 2025 05:22:59 GMT",
       "version": "0.0.0-canary.936",
       "tag": "react-native-windows_v0.0.0-canary.936",

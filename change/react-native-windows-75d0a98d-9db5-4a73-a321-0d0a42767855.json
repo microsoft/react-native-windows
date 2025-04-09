@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use creaternwapp.cmd and creaternwlib.cmd scripts to create new projects in CI",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
