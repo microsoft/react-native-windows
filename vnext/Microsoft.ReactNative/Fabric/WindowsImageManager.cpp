@@ -205,6 +205,14 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
   return imageRequest;
 }
 
+facebook::react::ImageRequest WindowsImageManager::requestImage(
+    const facebook::react::ImageSource &imageSource,
+    facebook::react::SurfaceId surfaceId,
+    const facebook::react::ImageRequestParams & /* imageRequestParams */,
+    facebook::react::Tag /* tag */) const {
+  return requestImage(imageSource, surfaceId);
+}
+
 } // namespace Microsoft::ReactNative
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
