@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 08 Apr 2025 05:22:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 09 Apr 2025 05:23:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.937
+
+Wed, 09 Apr 2025 05:23:40 GMT
+
+### Changes
+
+- Enforce SendPendingMessages in dispatch queue (julio.rocha@microsoft.com)
+- Fix Narrator Bug (34109996+chiaramooney@users.noreply.github.com)
+- Use creaternwapp.cmd and creaternwlib.cmd scripts to create new projects in CI (jthysell@microsoft.com)
 
 ## 0.0.0-canary.936
 
