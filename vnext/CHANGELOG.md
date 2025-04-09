@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 04 Apr 2025 00:22:00 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Apr 2025 00:43:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.41
+
+Wed, 09 Apr 2025 00:43:28 GMT
+
+### Patches
+
+- Enforce SendPendingMessages in dispatch queue (#14487) (julio.rocha@microsoft.com)
 
 ## 0.74.40
 

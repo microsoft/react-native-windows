@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Apr 2025 00:43:28 GMT",
+      "version": "0.74.41",
+      "tag": "react-native-windows_v0.74.41",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9cb5b6f1cdb748aa6cc7c042e1acbe21605da86c",
+            "comment": "Enforce SendPendingMessages in dispatch queue (#14487)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Apr 2025 00:22:00 GMT",
       "version": "0.74.40",
       "tag": "react-native-windows_v0.74.40",
