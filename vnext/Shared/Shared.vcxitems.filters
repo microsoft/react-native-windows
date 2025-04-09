@@ -158,6 +158,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.cpp">
       <Filter>Source Files\Fabric</Filter>
     </ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequestParams.cpp">
+      <Filter>Source Files\Fabric</Filter>
+    </ClInclude>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
