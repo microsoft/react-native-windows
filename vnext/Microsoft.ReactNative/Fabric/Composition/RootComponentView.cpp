@@ -76,6 +76,7 @@ void RootComponentView::updateLayoutMetrics(
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::GetFocusedComponent() noexcept {
   return m_focusedComponent;
 }
+
 void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept {
   if (m_focusedComponent == value)
     return;
@@ -90,11 +91,10 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->TrySetFocus();
     }
+    m_focusedComponent = value;
     auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value);
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onGotFocus(args);
   }
-
-  m_focusedComponent = value;
 }
 
 bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
