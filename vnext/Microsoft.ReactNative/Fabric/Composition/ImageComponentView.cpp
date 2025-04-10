@@ -31,32 +31,29 @@ extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICIma
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView> wkImage)
-    : m_wkImage(std::move(wkImage)) {}
+    : m_reactContext(reactContext), m_wkImage(std::move(wkImage)) {}
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress, int64_t loaded, int64_t total)
     const {
-  if (auto imgComponentView = m_wkImage.get()) {
-    int loadedInt = static_cast<int>(loaded);
-    int totalInt = static_cast<int>(total);
-    imgComponentView->m_reactContext.UIDispatcher().Post([progress, wkImage = m_wkImage, loadedInt, totalInt]() {
-      if (auto image = wkImage.get()) {
-        image->didReceiveProgress(progress, loadedInt, totalInt);
-      }
-    });
-  }
+  int loadedInt = static_cast<int>(loaded);
+  int totalInt = static_cast<int>(total);
+  m_reactContext.UIDispatcher().Post([progress, wkImage = m_wkImage, loadedInt, totalInt]() {
+    if (auto image = wkImage.get()) {
+      image->didReceiveProgress(progress, loadedInt, totalInt);
+    }
+  });
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
     facebook::react::ImageResponse const &imageResponse) const {
-  if (auto imgComponentView{m_wkImage.get()}) {
-    auto imageResponseImage = std::static_pointer_cast<ImageResponseImage>(imageResponse.getImage());
-    imgComponentView->m_reactContext.UIDispatcher().Post([imageResponseImage, wkImage = m_wkImage]() {
-      if (auto image{wkImage.get()}) {
-        image->didReceiveImage(imageResponseImage);
-      }
-    });
-  }
+  auto imageResponseImage = std::static_pointer_cast<ImageResponseImage>(imageResponse.getImage());
+  m_reactContext.UIDispatcher().Post([imageResponseImage, wkImage = m_wkImage]() {
+    if (auto image{wkImage.get()}) {
+      image->didReceiveImage(imageResponseImage);
+    }
+  });
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure(
@@ -175,7 +172,7 @@ void ImageComponentView::updateState(
   auto newImageState = std::static_pointer_cast<facebook::react::ImageShadowNode::ConcreteState const>(state);
 
   if (!m_imageResponseObserver) {
-    m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(get_weak());
+    m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(this->m_reactContext, get_weak());
   }
 
   setStateAndResubscribeImageResponseObserver(newImageState);

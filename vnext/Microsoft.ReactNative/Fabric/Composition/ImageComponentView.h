@@ -71,6 +71,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
    public:
     WindowsImageResponseObserver(
+        winrt::Microsoft::ReactNative::ReactContext const &reactContext,
         winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView> wkImage);
     void didReceiveProgress(float progress, int64_t loaded, int64_t total) const override;
     void didReceiveImage(const facebook::react::ImageResponse &imageResponse) const override;
@@ -78,6 +79,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
 
    private:
     winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView> m_wkImage;
+    winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   };
 
   void ensureDrawingSurface() noexcept;
