@@ -24,11 +24,11 @@ ImageRequest ImageManager::requestImage(const ImageSource &imageSource, SurfaceI
 
 ImageRequest ImageManager::requestImage(
     const ImageSource &imageSource,
-    SurfaceId /*surfaceId*/,
-    const ImageRequestParams & /*imageRequestParams*/,
-    Tag /*tag*/) const {
-  // Not implemented.
-  return {imageSource, nullptr, {}};
+    SurfaceId surfaceId,
+    const ImageRequestParams &imageRequestParams,
+    Tag tag) const {
+  return ((Microsoft::ReactNative::WindowsImageManager *)self_)
+      ->requestImage(imageSource, surfaceId, imageRequestParams, tag);
 }
 
 } // namespace react
