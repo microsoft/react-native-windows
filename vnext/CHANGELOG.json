@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Apr 2025 05:23:12 GMT",
+      "version": "0.0.0-canary.938",
+      "tag": "react-native-windows_v0.0.0-canary.938",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5de03a2cc8501a66bc476592ad6085fcb357e7a8",
+            "comment": "Add ImageRequestParams"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Apr 2025 05:23:40 GMT",
       "version": "0.0.0-canary.937",
       "tag": "react-native-windows_v0.0.0-canary.937",

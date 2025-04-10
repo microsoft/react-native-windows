@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 09 Apr 2025 05:23:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 10 Apr 2025 05:23:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.938
+
+Thu, 10 Apr 2025 05:23:12 GMT
+
+### Changes
+
+- Add ImageRequestParams (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.937
 
