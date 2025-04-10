@@ -464,10 +464,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 };
 
 int WINAPI
-AutoCorrectCallback(LANGID langid, const WCHAR *pszBefore, WCHAR *pszAfter, LONG cchAfter, LONG *pcchReplaced) {
+AutoCorrectOffCallback(LANGID langid, const WCHAR *pszBefore, WCHAR *pszAfter, LONG cchAfter, LONG *pcchReplaced) {
   wcsncpy_s(pszAfter, cchAfter, pszBefore, _TRUNCATE);
   *pcchReplaced = static_cast<LONG>(wcslen(pszAfter));
-  return ATP_REPLACEALLTEXT;
+  return ATP_CHANGE;
 }
 
 facebook::react::AttributedString WindowsTextInputComponentView::getAttributedString() const {
@@ -1074,12 +1074,20 @@ void WindowsTextInputComponentView::updateProps(
     m_propBits |= TXTBIT_PARAFORMATCHANGE;
   }
 
-  if (oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect || !oldProps) {
-    updateAutoCorrect(newTextInputProps.autoCorrect);
-  }
-
+  // Please note: spellcheck performs both red lines and autocorrect as per windows behaviour
   if (oldTextInputProps.spellCheck != newTextInputProps.spellCheck || !oldProps) {
     updateSpellCheck(newTextInputProps.spellCheck);
+  }
+
+  if (oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect || !oldProps) {
+    if (newTextInputProps.autoCorrect) {
+      updateSpellCheck(
+          newTextInputProps
+              .autoCorrect); // if spellcheck = false, autocorrect = true.. then spellcheck will be referred as true
+    }
+    // in case spellcheck is true and autocorrect is false then we can use this method that invokes a callback to toggle
+    // off autocorrect
+    updateAutoCorrect(newTextInputProps.autoCorrect);
   }
 
   UpdatePropertyBits();
@@ -1609,7 +1617,7 @@ void WindowsTextInputComponentView::updateLetterSpacing(float letterSpacing) noe
 void WindowsTextInputComponentView::updateAutoCorrect(bool enable) noexcept {
   LRESULT lresult;
   winrt::check_hresult(m_textServices->TxSendMessage(
-      EM_SETAUTOCORRECTPROC, !enable ? reinterpret_cast<WPARAM>(AutoCorrectCallback) : 0, 0, &lresult));
+      EM_SETAUTOCORRECTPROC, enable ? 0 : reinterpret_cast<WPARAM>(AutoCorrectOffCallback), 0, &lresult));
 }
 
 void WindowsTextInputComponentView::updateSpellCheck(bool enable) noexcept {

@@ -100,6 +100,12 @@ export default class Bootstrap extends React.Component<{}, any> {
             />
             <TextInput
               style={styles.input}
+              placeholder={'SpellChecking Disabled Autocorrect Enabled'}
+              spellCheck={false}
+              autoCorrect={true}
+            />
+            <TextInput
+              style={styles.input}
               placeholder={
                 'SpellChecking default (true) Autocorrect default (true)'
               }
