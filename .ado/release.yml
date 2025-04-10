@@ -34,6 +34,8 @@ extends:
         condition: succeeded()
         timeoutInMinutes: 0
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
@@ -59,6 +61,8 @@ extends:
         condition: succeeded()
         timeoutInMinutes: 0
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
@@ -86,6 +90,8 @@ extends:
         condition: and(succeeded(), endsWith(variables['Build.SourceBranchName'],'-stable'))
         timeoutInMinutes: 0
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
