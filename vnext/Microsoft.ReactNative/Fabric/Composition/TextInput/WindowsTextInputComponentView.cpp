@@ -116,25 +116,25 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the scroll bar
   BOOL TxShowScrollBar(INT fnBar, BOOL fShow) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Enable the scroll bar
   BOOL TxEnableScrollBar(INT fuSBFlags, INT fuArrowflags) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll range
   BOOL TxSetScrollRange(INT fnBar, LONG nMinPos, INT nMaxPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll position
   BOOL TxSetScrollPos(INT fnBar, INT nPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
@@ -377,8 +377,11 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the bits representing requested scroll bars for the window
   HRESULT TxGetScrollBars(DWORD *pdwScrollBar) override {
-    // TODO support scrolling
-    *pdwScrollBar = 0;
+    if (m_outer->m_multiline) {
+      *pdwScrollBar = WS_VSCROLL | WS_HSCROLL | ES_AUTOVSCROLL | ES_AUTOHSCROLL;
+    } else {
+      *pdwScrollBar = WS_HSCROLL | ES_AUTOHSCROLL;
+    }
     return S_OK;
   }
 
@@ -930,6 +933,19 @@ void WindowsTextInputComponentView::onLostFocus(
     m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
   }
   m_caretVisual.IsVisible(false);
+
+  // Call onEndEditing when focus is lost
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnEndEditing onEndEditingArgs;
+
+    // Set event arguments
+    onEndEditingArgs.eventCount = ++m_nativeEventCount;
+    onEndEditingArgs.text = GetTextFromRichEdit();
+
+    // Emit the event
+    emitter->onEndEditing(onEndEditingArgs);
+  }
 }
 
 void WindowsTextInputComponentView::onGotFocus(
@@ -983,7 +999,10 @@ void WindowsTextInputComponentView::updateProps(
   if (!facebook::react::floatEquality(
           oldTextInputProps.textAttributes.fontSize, newTextInputProps.textAttributes.fontSize) ||
       (oldTextInputProps.textAttributes.allowFontScaling != newTextInputProps.textAttributes.allowFontScaling) ||
-      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight) {
+      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
+      !facebook::react::floatEquality(
+          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
+      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1153,10 +1172,10 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     emitter->onChange(onChangeArgs);
   }
 
-  if (m_uiaProvider) {
+  if (UiaClientsAreListening()) {
     auto text = GetTextFromRichEdit();
     winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-        m_uiaProvider, UIA_ValueValuePropertyId, text, text);
+        EnsureUiaProvider(), UIA_ValueValuePropertyId, text, text);
   }
 }
 
@@ -1294,9 +1313,23 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   //    cfNew.dwEffects |= CFE_UNDERLINE;
   //  }
 
+  // set font family
+  if (!props.textAttributes.fontFamily.empty()) {
+    cfNew.dwMask |= CFM_FACE;
+    std::wstring fontFamily =
+        std::wstring(props.textAttributes.fontFamily.begin(), props.textAttributes.fontFamily.end());
+    wcsncpy_s(cfNew.szFaceName, fontFamily.c_str(), LF_FACESIZE);
+  }
+
   // set char offset
   cfNew.dwMask |= CFM_OFFSET;
   cfNew.yOffset = 0;
+
+  // set letter spacing
+  float letterSpacing = props.textAttributes.letterSpacing;
+  if (!std::isnan(letterSpacing)) {
+    updateLetterSpacing(letterSpacing);
+  }
 
   // set charset
   cfNew.dwMask |= CFM_CHARSET;
@@ -1489,6 +1522,9 @@ WindowsTextInputComponentView::createVisual() noexcept {
   winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
   spUnk.as(m_textServices);
 
+  LRESULT res;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
+
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);
   m_caretVisual.IsVisible(false);
@@ -1537,6 +1573,22 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
     winrt::check_hresult(m_textServices->TxSendMessage(
         EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
   }
+}
+
+void WindowsTextInputComponentView::updateLetterSpacing(float letterSpacing) noexcept {
+  CHARFORMAT2W cf = {};
+  cf.cbSize = sizeof(CHARFORMAT2W);
+  cf.dwMask = CFM_SPACING;
+  cf.sSpacing = static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
+
+  LRESULT res;
+
+  // Apply to all existing text like placeholder
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&cf), &res));
+
+  // Apply to future text input
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&cf), &res));
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

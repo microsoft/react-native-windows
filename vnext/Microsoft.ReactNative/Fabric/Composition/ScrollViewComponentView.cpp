@@ -1217,6 +1217,28 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
               ->onScroll(scrollMetrics);
         }
       });
+
+  m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        updateStateWithContentOffset();
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
+          scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
+          scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
+          scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
+          scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
+          scrollMetrics.zoomScale = 1.0;
+          scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
+          scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onScrollBeginDrag(scrollMetrics);
+        }
+      });
+
   return visual;
 }
 
