@@ -1075,18 +1075,16 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   // Please note: spellcheck performs both red lines and autocorrect as per windows behaviour
-  if (oldTextInputProps.spellCheck != newTextInputProps.spellCheck || !oldProps) {
-    updateSpellCheck(newTextInputProps.spellCheck);
+  bool shouldUpdateSpellCheck =
+      (!oldProps || (oldTextInputProps.spellCheck != newTextInputProps.spellCheck) ||
+       (oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect));
+
+  if (shouldUpdateSpellCheck) {
+    bool effectiveSpellCheck = newTextInputProps.spellCheck || newTextInputProps.autoCorrect;
+    updateSpellCheck(effectiveSpellCheck);
   }
 
-  if (oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect || !oldProps) {
-    if (newTextInputProps.autoCorrect) {
-      updateSpellCheck(
-          newTextInputProps
-              .autoCorrect); // if spellcheck = false, autocorrect = true.. then spellcheck will be referred as true
-    }
-    // in case spellcheck is true and autocorrect is false then we can use this method that invokes a callback to toggle
-    // off autocorrect
+  if (!oldProps || oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect) {
     updateAutoCorrect(newTextInputProps.autoCorrect);
   }
 
