@@ -1,8 +1,97 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 25 Mar 2025 05:21:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 10 Apr 2025 05:23:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.938
+
+Thu, 10 Apr 2025 05:23:12 GMT
+
+### Changes
+
+- Add ImageRequestParams (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.937
+
+Wed, 09 Apr 2025 05:23:40 GMT
+
+### Changes
+
+- Enforce SendPendingMessages in dispatch queue (julio.rocha@microsoft.com)
+- Fix Narrator Bug (34109996+chiaramooney@users.noreply.github.com)
+- Use creaternwapp.cmd and creaternwlib.cmd scripts to create new projects in CI (jthysell@microsoft.com)
+
+## 0.0.0-canary.936
+
+Tue, 08 Apr 2025 05:22:59 GMT
+
+### Changes
+
+- Add Custom Font Family support in TextInput (54227869+anupriya13@users.noreply.github.com)
+- Update creaternw scripts to use RNW devDependencies (jthysell@microsoft.com)
+
+## 0.0.0-canary.935
+
+Fri, 04 Apr 2025 05:22:09 GMT
+
+### Changes
+
+- Remove old library templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.934
+
+Thu, 03 Apr 2025 05:21:53 GMT
+
+### Changes
+
+- Implement letterSpacing for TextInput (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.933
+
+Wed, 02 Apr 2025 05:22:08 GMT
+
+### Changes
+
+- bump dep (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.259
+- Bump @react-native-windows/codegen to v0.0.0-canary.120
+- Bump @rnw-scripts/eslint-config to v1.2.33
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.37
+- Bump @rnw-scripts/just-task to v2.3.50
+- Bump react-native-platform-override to v1.9.52
+
+## 0.0.0-canary.932
+
+Tue, 01 Apr 2025 20:12:38 GMT
+
+### Changes
+
+- Implement OnScrollBeginDrag Event (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.931
+
+Fri, 28 Mar 2025 05:25:50 GMT
+
+### Changes
+
+- Bump folly to v2024.01.01.00 (jthysell@microsoft.com)
+
+## 0.0.0-canary.930
+
+Thu, 27 Mar 2025 05:23:14 GMT
+
+### Changes
+
+- Allow TextInput to scroll (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.929
+
+Wed, 26 Mar 2025 05:26:15 GMT
+
+### Changes
+
+- Allow text components to have children (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.928
 

@@ -245,7 +245,13 @@ export default class Bootstrap extends React.Component<{}, any> {
             snapToStart={this.state.snapToStartValue}
             snapToEnd={this.state.snapToEndValue}
             snapToAlignment={this.state.alignToStartValue ? 'start' : 'end'}
-            horizontal={this.state.horizontalValue}>
+            horizontal={this.state.horizontalValue}
+            onScrollBeginDrag={() => {
+              console.log('onScrollBeginDrag');
+            }}
+            onScroll={() => {
+              console.log('onScroll');
+            }}>
             {this.makeItems(20, [styles.itemWrapper])}
           </ScrollView>
         </View>
