@@ -219,6 +219,7 @@
     <ClInclude Include="$(FollyDir)\folly\SpinLock.h" />
     <ClInclude Include="$(FollyDir)\folly\stop_watch.h" />
     <ClInclude Include="$(FollyDir)\folly\String-inl.h" />
+    <ClInclude Include="$(FollyDir)\hash\MurmurHash.h" />
     <ClInclude Include="$(FollyDir)\folly\String.h" />
     <ClInclude Include="$(FollyDir)\folly\Subprocess.h" />
     <ClInclude Include="$(FollyDir)\folly\Synchronized.h" />
