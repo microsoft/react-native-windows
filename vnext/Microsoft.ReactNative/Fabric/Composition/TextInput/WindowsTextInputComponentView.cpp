@@ -1171,6 +1171,10 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
 
   m_imgWidth = newWidth;
   m_imgHeight = newHeight;
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    emitter->onLayout(m_layoutMetrics);
+  }
 }
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
@@ -1264,6 +1268,12 @@ void WindowsTextInputComponentView::onMounted() noexcept {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
+
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    emitter->onLayout(m_layoutMetrics);
+  }
+
   InternalFinalize();
 }
 

@@ -85,6 +85,9 @@ export default class Bootstrap extends React.Component<{}, any> {
               placeholder={'SpellChecking Enabled Autocorrect Disabled'}
               spellCheck={true}
               autoCorrect={false}
+              onLayout={() => {
+                console.log('onLayout Trigerred');
+              }}
             />
             <TextInput
               style={styles.input}
