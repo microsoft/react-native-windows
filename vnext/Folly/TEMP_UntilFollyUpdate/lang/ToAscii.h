@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,14 +61,14 @@ using to_ascii_alphabet_upper = to_ascii_alphabet<true>;
 //  In base 10, u64 requires at most 20 bytes, u32 at most 10, u16 at most 5,
 //  and u8 at most 3.
 /*
-template <uint64_t Base, typename I>
+template <uint64_t Base, typename Int>
 FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max =
-  detail::to_ascii_powers<Base, I>::size;
+    detail::to_ascii_powers<Base, Int>::size;
 */
 //  to_ascii_size_max_decimal
 //
 //  An alias to to_ascii_size_max<10>.
-template <typename I>
+template <typename Int>
 FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max_decimal;
 
 template <>
@@ -170,7 +170,7 @@ size_t to_ascii_upper(char (&out)[N], uint64_t v) {
 //
 //  An alias to to_ascii<10, false>.
 //
-//  async-signals-afe
+//  async-signal-safe
 inline size_t to_ascii_decimal(char* outb, char const* oute, uint64_t v) {
   return to_ascii_lower<10>(outb, oute, v);
 }
