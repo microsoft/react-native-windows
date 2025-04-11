@@ -97,6 +97,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   setProp(const PropsParserContext &context, RawPropsPropNameHash hash, const char *propName, RawValue const &value);
 
   bool allowFontScaling{true};
+  bool autoCorrect{true};
   bool clearTextOnFocus{false};
   bool editable{true};
   int maxLength{0};
@@ -108,7 +109,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   CompWindowsTextInputSelectionStruct selection{};
   SharedColor selectionColor{};
   bool selectTextOnFocus{false};
-  bool spellCheck{false};
+  bool spellCheck{true};
   std::string text{};
   int mostRecentEventCount{0};
   bool secureTextEntry{false};

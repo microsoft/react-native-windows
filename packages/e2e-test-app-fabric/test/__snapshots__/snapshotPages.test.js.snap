@@ -29354,8 +29354,10 @@ exports[`snapshotAllPages LegacyTextInputTest 1`] = `
     testID="textinput-field"
   />
   <TextInput
+    autoCorrect={false}
     multiline={true}
     placeholder="MultiLine"
+    spellCheck={false}
     style={
       {
         "height": 80,
