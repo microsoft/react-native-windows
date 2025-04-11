@@ -139,7 +139,6 @@ struct WindowsTextInputComponentView
   HCURSOR m_hcursor{nullptr};
   winrt::Windows::Foundation::Point m_lastClickPosition{};
   std::chrono::steady_clock::time_point m_lastClickTime{};
-  int m_clickCount = 0;
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 

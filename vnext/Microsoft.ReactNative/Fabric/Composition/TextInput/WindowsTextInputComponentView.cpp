@@ -648,12 +648,12 @@ void WindowsTextInputComponentView::OnPointerPressed(
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
     switch (pp.Properties().PointerUpdateKind()) {
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonPressed:
-      if (IsDoubleClick(position)) {
-        msg = WM_LBUTTONDBLCLK;
-      } else {
-        msg = WM_LBUTTONDOWN;
-      }
-      break;
+        if (IsDoubleClick(position)) {
+          msg = WM_LBUTTONDBLCLK;
+        } else {
+          msg = WM_LBUTTONDOWN;
+        }
+        break;
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::MiddleButtonPressed:
         msg = WM_MBUTTONDOWN;
         break;
