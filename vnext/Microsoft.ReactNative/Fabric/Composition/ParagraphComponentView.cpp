@@ -62,7 +62,7 @@ void ParagraphComponentView::updateProps(
   }
 
   if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
-    m_requireFontResize = true;
+    m_requireFontResize = newViewProps.paragraphAttributes.adjustsFontSizeToFit;
   }
 
   if (newViewProps.paragraphAttributes.adjustsFontSizeToFit &&
@@ -169,6 +169,12 @@ float ParagraphComponentView::getMinFontSize() noexcept {
 void ParagraphComponentView::adjustFontSizeToFit() noexcept {
   DWRITE_TEXT_METRICS metrics;
   winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
+  facebook::react::LayoutConstraints constraints;
+  constraints.maximumSize.width =
+      m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left - m_layoutMetrics.contentInsets.right;
+  constraints.maximumSize.height =
+      m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
+
   // Better Approach should be implemented , this uses O(n)
   while ((m_paragraphAttributes.maximumNumberOfLines != 0 &&
           m_paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
@@ -179,12 +185,6 @@ void ParagraphComponentView::adjustFontSizeToFit() noexcept {
     }
     reduceFontSize();
 
-    facebook::react::LayoutConstraints constraints;
-    constraints.maximumSize.width =
-        m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left - m_layoutMetrics.contentInsets.right;
-    constraints.maximumSize.height =
-        m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
-
     facebook::react::TextLayoutManager::GetTextLayout(
         m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout);
     winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
@@ -194,18 +194,18 @@ void ParagraphComponentView::adjustFontSizeToFit() noexcept {
 void ParagraphComponentView::reduceFontSize() noexcept {
   auto fontReduceFactor = 1.0f;
 
-  auto attributedString_to_resize = m_attributedStringBox.getValue();
+  auto attributedStringToResize = m_attributedStringBox.getValue();
 
-  auto fragments_copy_to_resize = attributedString_to_resize.getFragments();
+  auto fragmentsCopyToResize = attributedStringToResize.getFragments();
 
-  attributedString_to_resize.getFragments().clear();
+  attributedStringToResize.getFragments().clear();
 
-  for (auto frag : fragments_copy_to_resize) {
+  for (auto frag : fragmentsCopyToResize) {
     frag.textAttributes.fontSize -= fontReduceFactor;
 
-    attributedString_to_resize.appendFragment(std::move(frag));
+    attributedStringToResize.appendFragment(std::move(frag));
   }
-  m_attributedStringBox = facebook::react::AttributedStringBox(attributedString_to_resize);
+  m_attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
 }
 
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
