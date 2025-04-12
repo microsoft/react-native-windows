@@ -13,7 +13,6 @@ class ImageRequestParams {
   explicit ImageRequestParams(Float blurRadius) : blurRadius(blurRadius) {}
 
   Float blurRadius{};
-  // std::string crossOrigin{};
 
   bool operator==(const ImageRequestParams &rhs) const {
     return this->blurRadius == rhs.blurRadius;
