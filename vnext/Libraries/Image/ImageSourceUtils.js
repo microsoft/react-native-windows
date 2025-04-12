@@ -20,8 +20,9 @@ import resolveAssetSource from './resolveAssetSource';
  * by resolving the `source`, `src` and `srcSet` props.
  */
 export function getImageSourcesFromImageProps(
-  imageProps: ImageProps,
-): ?ResolvedAssetSource | $ReadOnlyArray<{uri: string, ...}> {
+    imageProps: ImageProps,
+    ):
+    ? ResolvedAssetSource|$ReadOnlyArray<{uri : string, ...}> {
   let source = resolveAssetSource(imageProps.source);
 
   let sources;
@@ -44,24 +45,23 @@ export function getImageSourcesFromImageProps(
       const [uri, xScale = '1x'] = imageSrc.split(' ');
       if (!xScale.endsWith('x')) {
         console.warn(
-          'The provided format for scale is not supported yet. Please use scales like 1x, 2x, etc.',
+            'The provided format for scale is not supported yet. Please use scales like 1x, 2x, etc.',
         );
       } else {
         const scale = parseInt(xScale.split('x')[0], 10);
         if (!isNaN(scale)) {
           // 1x scale is provided in `srcSet` prop so ignore the `src` prop if provided.
-          shouldUseSrcForDefaultScale =
-            scale === 1 ? false : shouldUseSrcForDefaultScale;
-          sourceList.push({headers: headers, scale, uri, width, height});
+          shouldUseSrcForDefaultScale = scale === 1 ? false : shouldUseSrcForDefaultScale;
+          sourceList.push({headers : headers, scale, uri, width, height});
         }
       }
     });
 
     if (shouldUseSrcForDefaultScale && src != null) {
       sourceList.push({
-        headers: headers,
-        scale: 1,
-        uri: src,
+        headers : headers,
+        scale : 1,
+        uri : src,
         width,
         height,
       });
@@ -72,11 +72,11 @@ export function getImageSourcesFromImageProps(
 
     sources = sourceList;
   } else if (src != null) {
-    sources = [{uri: src, headers: headers, width, height}];
+    sources = [ {uri : src, headers : headers, width, height} ];
   } else if (source && source.uri) {
-      sources = [{ ...source, headers }];
+    sources = [ {...source, headers} ];
   } else {
-      sources = source;
+    sources = source;
   }
   return sources;
 }
