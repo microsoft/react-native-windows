@@ -2060,4 +2060,144 @@ exports.examples = [
     },
     platform: 'android',
   },
+  {
+    title: 'Accessibility Properties',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Image
+            source={fullImage}
+            style={styles.base}
+            accessibilityHint="This is an accessibility hint"
+            accessibilityLabel="This is an accessibility label"
+            accessibilityRole="image"
+            accessibilityValue={{text: '50%'}}
+            importantForAccessibility="no-hide-descendants"
+            testID="image-accessibility-properties"
+            accessible
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Accessibility Actions',
+    render: function (): React.Node {
+      return (
+        <Image
+          source={fullImage}
+          style={styles.base}
+          accessibilityActions={[
+            {name: 'activate', label: 'Activate'},
+            {name: 'dismiss', label: 'Dismiss'},
+          ]}
+          onAccessibilityAction={event =>
+            console.log('Action:', event.nativeEvent.actionName)
+          }
+          testID="image-accessibility-actions"
+          accessible
+        />
+      );
+    },
+  },
+  {
+    title: 'Next Focus Properties',
+    render: function (): React.Node {
+      return (
+        <Image
+          source={fullImage}
+          style={styles.base}
+          nextFocusUp="nextFocusUpID"
+          nextFocusDown="nextFocusDownID"
+          nextFocusLeft="nextFocusLeftID"
+          nextFocusRight="nextFocusRightID"
+          testID="image-next-focus"
+          accessible
+        />
+      );
+    },
+  },
+  {
+    title: 'Style Properties',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Image
+            source={fullImage}
+            style={[styles.base, {elevation: 5, backfaceVisibility: 'hidden'}]}
+            testID="image-style-properties"
+            accessible
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Interaction Properties',
+    render: function (): React.Node {
+      return (
+        <Image
+          source={fullImage}
+          style={styles.base}
+          focusable
+          hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
+          nativeID="image-native-id"
+          onAccessibilityAction={event =>
+            console.log('Accessibility Action:', event.nativeEvent.actionName)
+          }
+          onAccessibilityTap={() => console.log('Accessibility Tap')}
+          onAccessibilityEscape={() => console.log('Accessibility Escape')}
+          onMoveShouldSetResponder={() => true}
+          onMoveShouldSetResponderCapture={() => true}
+          onResponderGrant={() => console.log('Responder Grant')}
+          onResponderMove={() => console.log('Responder Move')}
+          onResponderReject={() => console.log('Responder Reject')}
+          onResponderRelease={() => console.log('Responder Release')}
+          onResponderTerminate={() => console.log('Responder Terminate')}
+          onResponderTerminationRequest={() => true}
+          onStartShouldSetResponder={() => true}
+          onStartShouldSetResponderCapture={() => true}
+          pointerEvents="box-none"
+          removeClippedSubviews
+          needsOffscreenAlphaCompositing
+          tooltip="This is a tooltip"
+          testID="image-interaction-properties"
+          accessible
+        />
+      );
+    },
+  },
+  {
+    title: 'Loading Indicator Source',
+    render: function (): React.Node {
+      return (
+        <Image
+          source={fullImage}
+          loadingIndicatorSource={require('../../assets/loading-indicator.png')}
+          style={styles.base}
+          testID="image-loading-indicator-source"
+          accessible
+        />
+      );
+    },
+  },
+  {
+    title: 'Abort Prefetch and Resolve Asset Source',
+    render: function (): React.Node {
+      Image.abortPrefetch();
+      Image.getSizeWithHeaders(fullImage.uri, {}, (width, height) => {
+        console.log('Image size:', width, height);
+      });
+      const resolvedSource = Image.resolveAssetSource(fullImage);
+      console.log('Resolved Source:', resolvedSource);
+      return (
+        <Image
+          source={resolvedSource}
+          style={styles.base}
+          testID="image-asset-source"
+          accessible
+        />
+      );
+    },
+  },
 ] as Array<RNTesterModuleExample>;
