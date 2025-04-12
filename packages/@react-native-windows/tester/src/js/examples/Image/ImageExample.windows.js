@@ -634,6 +634,81 @@ const VectorDrawableExample = () => {
   );
 };
 
+const ImageFunctionsExample = () => {
+  const [prefetchStatus, setPrefetchStatus] = React.useState<string | null>(
+    null,
+  );
+  const [resolvedSource, setResolvedSource] = React.useState<any | null>(null);
+  const [imageSize, setImageSize] = React.useState<{
+    width: number,
+    height: number,
+  } | null>(null);
+
+  React.useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        // Prefetch the image
+        const requestId = await Image.prefetch(fullImage.uri);
+        if (requestId) {
+          setPrefetchStatus('Image prefetched successfully.');
+        } else {
+          setPrefetchStatus('Image prefetch failed.');
+        }
+
+        // Get image size with headers
+        Image.getSizeWithHeaders(
+          fullImage.uri,
+          {}, // Pass any required headers here
+          (width, height) => {
+            setImageSize({width, height});
+            console.log('Image size:', {width, height});
+          },
+          error => {
+            setImageSize(null);
+          },
+        );
+
+        // Resolve the asset source
+        const resolved = Image.resolveAssetSource(fullImage);
+        setResolvedSource(resolved);
+        console.log('Resolved Source:', resolved);
+
+        // Abort the prefetch request
+        Image.abortPrefetch(requestId);
+        console.log('Prefetch aborted.');
+      } catch (error) {
+        setPrefetchStatus('Error occurred during operations.');
+      }
+    };
+
+    fetchImage();
+  }, []);
+
+  return (
+    <View>
+      {resolvedSource ? (
+        <View style={styles.spaceBetweenView}>
+          <Image
+            source={resolvedSource}
+            style={styles.base}
+            testID="image-asset-source"
+            accessible
+          />
+        </View>
+      ) : (
+        <Text style={{color: 'red'}}>Failed to resolve image source.</Text>
+      )}
+      {imageSize ? (
+        <Text style={{color: 'black'}}>
+          Image Size: {imageSize.width}x{imageSize.height}
+        </Text>
+      ) : (
+        <Text style={{color: 'red'}}>Failed to get image size.</Text>
+      )}
+    </View>
+  );
+};
+
 function CacheControlAndroidExample(): React.Node {
   const [reload, setReload] = React.useState(0);
 
@@ -2062,6 +2137,8 @@ exports.examples = [
   },
   {
     title: 'Accessibility Properties',
+    description:
+      'Demonstrates how to use accessibility properties such as accessibilityHint, accessibilityLabel, accessibilityRole, and accessibilityValue to make an image accessible to screen readers.',
     render: function (): React.Node {
       return (
         <View>
@@ -2082,6 +2159,8 @@ exports.examples = [
   },
   {
     title: 'Accessibility Actions',
+    description:
+      'Shows how to define and handle custom accessibility actions for an image, such as "activate" and "dismiss".',
     render: function (): React.Node {
       return (
         <Image
@@ -2102,6 +2181,8 @@ exports.examples = [
   },
   {
     title: 'Next Focus Properties',
+    description:
+      'Demonstrates how to use nextFocusUp, nextFocusDown, nextFocusLeft, and nextFocusRight properties to control focus navigation for an image.',
     render: function (): React.Node {
       return (
         <Image
@@ -2119,6 +2200,8 @@ exports.examples = [
   },
   {
     title: 'Style Properties',
+    description:
+      'Illustrates how to apply style properties such as elevation and backfaceVisibility to an image.',
     render: function (): React.Node {
       return (
         <View>
@@ -2134,6 +2217,8 @@ exports.examples = [
   },
   {
     title: 'Interaction Properties',
+    description:
+      'Demonstrates various interaction properties for an image, including focusable, hitSlop, nativeID, and responder callbacks.',
     render: function (): React.Node {
       return (
         <Image
@@ -2168,36 +2253,11 @@ exports.examples = [
     },
   },
   {
-    title: 'Loading Indicator Source',
-    render: function (): React.Node {
-      return (
-        <Image
-          source={fullImage}
-          loadingIndicatorSource={this.loaderGif}
-          style={styles.base}
-          testID="image-loading-indicator-source"
-          accessible
-        />
-      );
-    },
-  },
-  {
     title: 'Abort Prefetch and Resolve Asset Source',
+    description:
+      'Demonstrates how to use Image..getSizeWithHeaders, Image.abortPrefetch, and Image.resolveAssetSource methods to manage image loading and resolve asset sources.',
     render: function (): React.Node {
-      Image.abortPrefetch();
-      Image.getSizeWithHeaders(fullImage.uri, {}, (width, height) => {
-        console.log('Image size:', width, height);
-      });
-      const resolvedSource = Image.resolveAssetSource(fullImage);
-      console.log('Resolved Source:', resolvedSource);
-      return (
-        <Image
-          source={resolvedSource}
-          style={styles.base}
-          testID="image-asset-source"
-          accessible
-        />
-      );
+      return <ImageFunctionsExample />;
     },
   },
 ] as Array<RNTesterModuleExample>;
