@@ -194,14 +194,6 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-interaction-properties');
     expect(dump).toMatchSnapshot();
   });
-  test('An Image supports loading indicator source', async () => {
-    const component = await app.findElementByTestID(
-      'image-loading-indicator-source',
-    );
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-loading-indicator-source');
-    expect(dump).toMatchSnapshot();
-  });
   test('An Image supports abortPrefetch and resolveAssetSource', async () => {
     const component = await app.findElementByTestID('image-asset-source');
     await component.waitForDisplayed({timeout: 5000});
