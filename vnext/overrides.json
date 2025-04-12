@@ -464,6 +464,13 @@
     },
     {
       "type": "patch",
+      "file": "src-win/Libraries/Image/ImageSourceUtils.js",
+      "baseFile": "packages/react-native/Libraries/Image/ImageSourceUtils.js",
+      "baseHash": "136d9dad53466468b288e2fb1b05adbb18c63ed1",
+      "issue": 0
+    },
+    {
+      "type": "patch",
       "file": "src-win/Libraries/Image/resolveAssetSource.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/resolveAssetSource.js",
       "baseHash": "5f95ed29c1af2c4636331cc663b8fc18cd9a3754",
