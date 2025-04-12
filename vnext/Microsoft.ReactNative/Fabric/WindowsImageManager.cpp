@@ -80,7 +80,8 @@ wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessS
 winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
 WindowsImageManager::GetImageRandomAccessStreamAsync(
     ReactImageSource source,
-    std::function<void(uint64_t loaded, uint64_t total)> progressCallback) const {
+    std::function<void(uint64_t loaded, uint64_t total)> progressCallback,
+    const facebook::react::ImageRequestParams &imageRequestParams) const {
   co_await winrt::resume_background();
 
   winrt::Windows::Foundation::Uri uri(winrt::to_hstring(source.uri));
@@ -114,6 +115,11 @@ WindowsImageManager::GetImageRandomAccessStreamAsync(
   if (!m_defaultUserAgent.empty()) {
     request.Headers().Append(L"User-Agent", m_defaultUserAgent);
   }
+
+  // Uncomment below when crossOrigin is supported in imageRequestParams
+  /* if (!imageRequestParams.crossOrigin.empty() && imageRequestParams.crossOrigin == "use-credentials") {
+    request.Headers().Append(L"Access-Control-Allow-Credentials", L"true");
+  }*/
 
   if (!source.headers.empty()) {
     for (auto &header : source.headers) {
@@ -189,7 +195,7 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
         observerCoordinator->nativeImageResponseProgress(progress, loaded, total);
       }
     };
-    imageResponseTask = GetImageRandomAccessStreamAsync(source, progressCallback);
+    imageResponseTask = GetImageRandomAccessStreamAsync(source, progressCallback, {});
   }
 
   imageResponseTask.Completed([weakObserverCoordinator](auto asyncOp, auto status) {
@@ -232,9 +238,72 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
 facebook::react::ImageRequest WindowsImageManager::requestImage(
     const facebook::react::ImageSource &imageSource,
     facebook::react::SurfaceId surfaceId,
-    const facebook::react::ImageRequestParams & /* imageRequestParams */,
+    const facebook::react::ImageRequestParams &imageRequestParams,
     facebook::react::Tag /* tag */) const {
-  return requestImage(imageSource, surfaceId);
+  auto imageRequest = facebook::react::ImageRequest(imageSource, nullptr, {});
+
+  auto weakObserverCoordinator = (std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator>)
+                                     imageRequest.getSharedObserverCoordinator();
+
+  auto rnImageSource = winrt::Microsoft::ReactNative::Composition::implementation::MakeImageSource(imageSource);
+  auto provider = m_uriImageManager->TryGetUriImageProvider(m_reactContext.Handle(), rnImageSource);
+
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+      imageResponseTask{nullptr};
+
+  if (provider) {
+    imageResponseTask = provider.GetImageResponseAsync(m_reactContext.Handle(), rnImageSource);
+  } else {
+    ReactImageSource source;
+    source.uri = imageSource.uri;
+    source.height = imageSource.size.height;
+    source.width = imageSource.size.width;
+    source.sourceType = ImageSourceType::Download;
+
+    auto progressCallback = [weakObserverCoordinator](int64_t loaded, int64_t total) {
+      if (auto observerCoordinator = weakObserverCoordinator.lock()) {
+        float progress = total > 0 ? static_cast<float>(loaded) / static_cast<float>(total) : 1.0f;
+        observerCoordinator->nativeImageResponseProgress(progress, loaded, total);
+      }
+    };
+    imageResponseTask = GetImageRandomAccessStreamAsync(source, progressCallback, imageRequestParams);
+  }
+
+  imageResponseTask.Completed([weakObserverCoordinator](auto asyncOp, auto status) {
+    auto observerCoordinator = weakObserverCoordinator.lock();
+    if (!observerCoordinator) {
+      return;
+    }
+
+    switch (status) {
+      case winrt::Windows::Foundation::AsyncStatus::Completed: {
+        auto imageResponse = asyncOp.GetResults();
+        auto selfImageResponse =
+            winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponse>(imageResponse);
+        auto imageResultOrError = selfImageResponse->ResolveImage();
+        if (imageResultOrError.image) {
+          observerCoordinator->nativeImageResponseComplete(
+              facebook::react::ImageResponse(imageResultOrError.image, nullptr /*metadata*/));
+        } else {
+          observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(imageResultOrError.errorInfo));
+        }
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Canceled: {
+        auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+        errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
+        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Error: {
+        auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+        errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
+        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        break;
+      }
+    }
+  });
+  return imageRequest;
 }
 
 } // namespace Microsoft::ReactNative
