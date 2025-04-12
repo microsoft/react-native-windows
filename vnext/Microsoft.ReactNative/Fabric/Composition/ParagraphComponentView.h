@@ -63,7 +63,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
 
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
-  facebook::react::ParagraphAttributes m_paragraphAttributes;  
+  facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
   bool m_requireFontResize{false};

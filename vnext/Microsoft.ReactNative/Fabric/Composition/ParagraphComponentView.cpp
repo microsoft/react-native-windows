@@ -66,9 +66,8 @@ void ParagraphComponentView::updateProps(
   }
 
   if (newViewProps.paragraphAttributes.adjustsFontSizeToFit &&
-    (oldViewProps.paragraphAttributes.maximumNumberOfLines != newViewProps.paragraphAttributes.maximumNumberOfLines ||
-       !facebook::react::floatEquality(oldViewProps.textAttributes.fontSize, newViewProps.textAttributes.fontSize)))
-  {
+      (oldViewProps.paragraphAttributes.maximumNumberOfLines != newViewProps.paragraphAttributes.maximumNumberOfLines ||
+       !facebook::react::floatEquality(oldViewProps.textAttributes.fontSize, newViewProps.textAttributes.fontSize))) {
     m_requireFontResize = true;
   }
 
@@ -89,7 +88,6 @@ void ParagraphComponentView::updateState(
 void ParagraphComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 
   if (layoutMetrics.pointScaleFactor != oldLayoutMetrics.pointScaleFactor) {
@@ -160,25 +158,22 @@ void ParagraphComponentView::updateTextAlignment(
   // m_textFormat->SetTextAlignment(alignment);
 }
 
-float ParagraphComponentView::getMinFontSize() noexcept{
+float ParagraphComponentView::getMinFontSize() noexcept {
   auto defaultFontSize = 2.0f;
-  //TODO:
-  // implementation of minimumFontScale prop can be added here 
+  // TODO:
+  //  implementation of minimumFontScale prop can be added here
   return std::max(
       defaultFontSize,
-      (isnan(m_paragraphAttributes.minimumFontSize) ? defaultFontSize:
-                                      m_paragraphAttributes.minimumFontSize));
+      (isnan(m_paragraphAttributes.minimumFontSize) ? defaultFontSize : m_paragraphAttributes.minimumFontSize));
 }
- void ParagraphComponentView::adjustFontSizeToFit() noexcept
-{   
-  DWRITE_TEXT_METRICS metrics; 
-  winrt::check_hresult(m_textLayout->GetMetrics(&metrics)); 
-  //Better Approach should be implemented , this uses O(n)
+void ParagraphComponentView::adjustFontSizeToFit() noexcept {
+  DWRITE_TEXT_METRICS metrics;
+  winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
+  // Better Approach should be implemented , this uses O(n)
   while ((m_paragraphAttributes.maximumNumberOfLines != 0 &&
-    m_paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
-         metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth)
-  {
-    if (m_textLayout->GetFontSize() <= getMinFontSize()) //reached minimum font size , so no more size reducing
+          m_paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
+         metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth) {
+    if (m_textLayout->GetFontSize() <= getMinFontSize()) // reached minimum font size , so no more size reducing
     {
       break;
     }
@@ -196,8 +191,7 @@ float ParagraphComponentView::getMinFontSize() noexcept{
   }
 }
 
-void ParagraphComponentView::reduceFontSize() noexcept
-{
+void ParagraphComponentView::reduceFontSize() noexcept {
   auto fontReduceFactor = 1.0f;
 
   auto attributedString_to_resize = m_attributedStringBox.getValue();
@@ -207,7 +201,7 @@ void ParagraphComponentView::reduceFontSize() noexcept
   attributedString_to_resize.getFragments().clear();
 
   for (auto frag : fragments_copy_to_resize) {
-    frag.textAttributes.fontSize -= fontReduceFactor; 
+    frag.textAttributes.fontSize -= fontReduceFactor;
 
     attributedString_to_resize.appendFragment(std::move(frag));
   }
@@ -235,8 +229,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     requireNewBrush = true;
   }
 
-  if (m_requireFontResize)
-  {
+  if (m_requireFontResize) {
     adjustFontSizeToFit();
   }
 
