@@ -268,6 +268,9 @@ export default class Bootstrap extends React.Component<
               onLoadStart={() => console.log('onLoadStart')}
               onLoadEnd={() => console.log('onLoadEnd')}
               onProgress={this.handleOnProgress}
+              crossOrigin="use-credentials"
+              referrerPolicy="no-referrer"
+              /* srcSet={this.state.imageUri}*/
             />
           )}
         </View>
