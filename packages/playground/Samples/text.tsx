@@ -7,6 +7,7 @@
 import React from 'react';
 import {AppRegistry, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-windows';
+import MultiContainerComponent from './AdjustFontSizeToFitTest';
 
 export default class Bootstrap extends React.Component {
   render() {
@@ -20,6 +21,7 @@ export default class Bootstrap extends React.Component {
           selectable={true}>
           Click here : This is a text with a tooltip.
         </Text>
+        <MultiContainerComponent/>
       </View>
     );
   }
