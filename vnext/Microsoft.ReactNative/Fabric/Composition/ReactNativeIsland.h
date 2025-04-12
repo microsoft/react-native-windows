@@ -76,7 +76,7 @@ struct ReactNativeIsland
   float ScaleFactor() noexcept;
   void ScaleFactor(float value) noexcept;
 
-  void SetAppProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept;
+  void SetProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept;
 
   float FontSizeMultiplier() const noexcept;
 

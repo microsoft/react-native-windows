@@ -970,7 +970,7 @@ void ReactNativeIsland::OnUnmounted() noexcept {
   }
 }
 
-void ReactNativeIsland::SetAppProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept {
+void ReactNativeIsland::SetProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept {
   auto initProps = DynamicWriter::ToDynamic(props);
   if (initProps.isNull()) {
     initProps = folly::dynamic::object();
