@@ -2173,7 +2173,7 @@ exports.examples = [
       return (
         <Image
           source={fullImage}
-          loadingIndicatorSource={require('../../assets/loading-indicator.png')}
+          loadingIndicatorSource={this.loaderGif}
           style={styles.base}
           testID="image-loading-indicator-source"
           accessible
