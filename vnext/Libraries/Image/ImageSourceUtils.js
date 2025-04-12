@@ -73,6 +73,8 @@ export function getImageSourcesFromImageProps(
     sources = sourceList;
   } else if (src != null) {
     sources = [{uri: src, headers: headers, width, height}];
+  } else if (source != null && source.uri) {
+    sources = [{uri: source.uri, headers: headers, width, height}];
   } else {
     sources = source;
   }
