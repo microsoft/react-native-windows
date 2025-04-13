@@ -242,6 +242,11 @@ export default class Bootstrap extends React.Component<{}, any> {
               placeholder="Focus and then click outside"
               onEndEditing={this.handleEndEditing}
             />
+            <TextInput
+              style={styles.input}
+              allowFontScaling={false}
+              placeholder={'Do not Allow Font Scaling'}
+            />
 
             <KeyboardAvoidingView
               style={styles.container}
