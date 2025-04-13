@@ -170,21 +170,6 @@ function SpellCheckSample() {
   );
 }
 
-function IsFocusedSample() {
-  const [isFocused, setIsFocused] = React.useState(false);
-  return (
-    <View accessible testID="isfocused-textinput">
-      <ExampleTextInput
-        defaultValue="Hello World!"
-        testID="isfocused-textinput"
-        style={isFocused ? styles.isFocused : undefined}
-        onBlur={() => setIsFocused(false)}
-        isFocused={() => setIsFocused(true) }
-      />
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   multiline: {
     height: 60,
@@ -795,9 +780,258 @@ const examples: Array<RNTesterModuleExample> = [
     },
   },
   {
-    title: 'TextInputs which have isFocused',
+    title: 'TextInput should take up to max length input when maxLength set',
     render: function (): React.Node {
-      return <IsFocusedSample />;
+      return (
+        <View>
+          <Text>Max Length</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            maxLength={10}
+            placeholder="Max length is 10"
+            testID="textinput-maxlength"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title:
+      'TextInput input should wrap to multiple lines when multiline set to true',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Multiline</Text>
+          <ExampleTextInput
+            style={styles.multiline}
+            multiline={true}
+            placeholder="This TextInput supports multiple lines"
+            testID="textinput-multiline"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should trigger action upon onBlur',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>onBlur</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            onBlur={() => console.log('onBlur triggered')}
+            placeholder="Focus and then blur this TextInput"
+            testID="textinput-onblur"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should trigger action upon onChange',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>onChange</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            onChangeText={text => console.log('onChange triggered', text)}
+            placeholder="Type something to trigger onChange"
+            testID="textinput-onchange"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should trigger action upon onPressIn',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>onPressIn</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            onPressIn={() => console.log('onPressIn triggered')}
+            placeholder="Press inside this TextInput"
+            testID="textinput-onpressin"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should trigger action upon onPressOut',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>onPressOut</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            onPressOut={() => console.log('onPressOut triggered')}
+            placeholder="Press and release inside this TextInput"
+            testID="textinput-onpressout"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should trigger action upon onFocus',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>onFocus</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            onFocus={() => console.log('onFocus triggered')}
+            placeholder="Focus on this TextInput"
+            testID="textinput-onfocus"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should trigger action upon onScroll',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>onScroll</Text>
+          <ExampleTextInput
+            style={styles.multiline}
+            multiline={true}
+            onScroll={() => console.log('onScroll triggered')}
+            placeholder="Scroll inside this TextInput"
+            testID="textinput-onscroll"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should trigger action upon onSelectionChange',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>onSelectionChange</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            onSelectionChange={() => console.log('onSelectionChange triggered')}
+            placeholder="Select text to trigger onSelectionChange"
+            testID="textinput-onselectionchange"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput placeholder text should update upon fast refresh',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Placeholder Refresh</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            placeholder="Placeholder text"
+            testID="textinput-placeholder-refresh"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput placeholder text color should update upon fast refresh',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Placeholder Color Refresh</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            placeholder="Placeholder text"
+            placeholderTextColor="blue"
+            testID="textinput-placeholder-color-refresh"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput textAlign should change upon fast refresh',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>TextAlign Refresh</Text>
+          <ExampleTextInput
+            style={[styles.singleLine, {textAlign: 'center'}]}
+            placeholder="Text is center-aligned"
+            testID="textinput-textalign-refresh"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput style should change upon fast refresh',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Style Refresh</Text>
+          <ExampleTextInput
+            style={[styles.singleLine, {borderColor: 'red', borderWidth: 2}]}
+            placeholder="Style updated"
+            testID="textinput-style-refresh"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should focus upon .focus() call',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Focus</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            placeholder="This TextInput will focus"
+            ref={input => input && input.focus()}
+            testID="textinput-focus"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput should lose focus upon .blur() call',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Blur</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            placeholder="This TextInput will blur"
+            ref={input => input && input.blur()}
+            testID="textinput-blur"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'TextInput text should clear upon clear() call',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Clear</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            defaultValue="This TextInput will clear"
+            ref={input => input && input.clear()}
+            testID="textinput-clear"
+          />
+        </View>
+      );
     },
   },
   // Windows]

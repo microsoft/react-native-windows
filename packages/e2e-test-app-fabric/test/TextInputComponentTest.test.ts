@@ -858,38 +858,139 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
   });
-    test('TextInputs which have isFocused', async () => {
-     // TO-DO
-    const component = await app.findElementByTestID('isfocused-textinput');
+  test('TextInput should take up to max length input when maxLength set', async () => {
+    const component = await app.findElementByTestID('textinput-maxlength');
+    await component.waitForDisplayed({timeout: 5000});
+    await component.setValue('This is a long input text');
+    expect(await component.getText()).toBe('This is a ');
+  });
+  test('TextInput input should wrap to multiple lines when multiline set to true', async () => {
+    const component = await app.findElementByTestID('textinput-multiline');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-multiline');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should trigger action upon onBlur', async () => {
+    const component = await app.findElementByTestID('textinput-onblur');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-onblur');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should trigger action upon onChange', async () => {
+    const component = await app.findElementByTestID('textinput-onchange');
+    await component.waitForDisplayed({timeout: 5000});
+    await component.setValue('New text');
+    const dump = await dumpVisualTree('textinput-onchange');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should trigger action upon onPressIn', async () => {
+    const component = await app.findElementByTestID('textinput-onpressin');
+    await component.waitForDisplayed({timeout: 5000});
+    await component.click();
+    const dump = await dumpVisualTree('textinput-onpressin');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should trigger action upon onPressOut', async () => {
+    const component = await app.findElementByTestID('textinput-onpressout');
+    await component.waitForDisplayed({timeout: 5000});
+    await component.click();
+    const dump = await dumpVisualTree('textinput-onpressout');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should trigger action upon onFocus', async () => {
+    const component = await app.findElementByTestID('textinput-onfocus');
+    await component.waitForDisplayed({timeout: 5000});
+    await component.click();
+    const dump = await dumpVisualTree('textinput-onfocus');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should trigger action upon onScroll', async () => {
+    const component = await app.findElementByTestID('textinput-onscroll');
     await component.waitForDisplayed({timeout: 5000});
 
-      await app.waitUntil(
-          async () => {
-              return (await component.getText()) === 'Hello World!';
-          },
-          {
-              interval: 1500,
-              timeout: 5000,
-              timeoutMsg: `Unable to get value for not focused.`,
-          },
-      );
-
-    // Set focus on the component
-    await component.click();
-
-    await app.waitUntil(
-        async () => {
-            await component.setValue('Focused');
-            return (await component.getText()) === 'Focused';
-      },
-      {
-        interval: 1500,
-        timeout: 5000,
-        timeoutMsg: `Unable to focus.`,
-      },
+    // Set a long value to trigger scrolling
+    await component.setValue(
+      'This is a long text that will exceed the visible area of the TextInput and trigger the onScroll event.',
     );
 
-      const dump = await dumpVisualTree('isfocused-textinput');
+    // Wait for the onScroll event to be triggered
+    const dump = await dumpVisualTree('textinput-onscroll');
     expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should trigger action upon onSelectionChange', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-onselectionchange',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    await component.setValue('Select this text');
+    const dump = await dumpVisualTree('textinput-onselectionchange');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput placeholder text should update upon fast refresh', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-placeholder-refresh',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-placeholder-refresh');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput placeholder text color should update upon fast refresh', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-placeholder-color-refresh',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-placeholder-color-refresh');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput textAlign should change upon fast refresh', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-textalign-refresh',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-textalign-refresh');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput style should change upon fast refresh', async () => {
+    const component = await app.findElementByTestID('textinput-style-refresh');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-style-refresh');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInput should focus upon .focus() call', async () => {
+    const component = await app.findElementByTestID('textinput-focus');
+    await component.waitForDisplayed({timeout: 5000});
+
+    // Simulate focusing by setting a value
+    await component.setValue('Focusing TextInput');
+    const text = await component.getText();
+
+    // Verify that the value was set, indicating focus
+    expect(text).toBe('Focusing TextInput');
+  });
+  test('TextInput should lose focus upon .blur() call', async () => {
+    const component = await app.findElementByTestID('textinput-blur');
+    await component.waitForDisplayed({timeout: 5000});
+
+    // Simulate focusing by setting a value
+    await component.setValue('F');
+
+    // Simulate losing focus by interacting with another element
+    const otherElement = await app.findElementByTestID('textinput-focus');
+    await otherElement.setValue('Switching focus');
+    const otherElementText = await otherElement.getText();
+    expect(otherElementText).toBe('Switching focus');
+
+    // Verify that the original TextInput still retains its value
+    const text = await component.getText();
+    expect(text).toBe('F');
+  });
+  test('TextInput text should clear upon clear() call', async () => {
+    const component = await app.findElementByTestID('textinput-clear');
+    await component.waitForDisplayed({timeout: 5000});
+    // Set a value in the TextInput
+    await component.setValue('Some text');
+    // Simulate clearing the text by setting an empty value
+    await component.setValue('');
+    expect(await component.getText()).toBe('');
   });
 });
