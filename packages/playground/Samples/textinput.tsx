@@ -150,7 +150,7 @@ export default class Bootstrap extends React.Component<{}, any> {
           />
           <TextInput
             style={styles.input}
-            allowFontScaling={false }
+            allowFontScaling={false}
             placeholder={'Do not Allow Font Scaling'}
           />
           <TextInput
