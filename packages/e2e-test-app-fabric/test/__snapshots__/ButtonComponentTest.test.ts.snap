@@ -1,5 +1,182 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Button Tests Button color should update on fast refresh 1`] = `
+{
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
+}
+`;
+
+exports[`Button Tests Button color should update on fast refresh 2`] = `
+{
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
+}
+`;
+
+exports[`Button Tests Button disabled status should update on fast refresh 1`] = `
+{
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
+}
+`;
+
+exports[`Button Tests Button disabled status should update on fast refresh 2`] = `
+{
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
+}
+`;
+
+exports[`Button Tests Button should update relevant styling upon press 1`] = `
+{
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
+}
+`;
+
+exports[`Button Tests Button should update relevant styling upon press 2`] = `
+{
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
+}
+`;
+
+exports[`Button Tests Button text should update on fast refresh 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "button_text_update",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "Name": "Updated Text",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Updated Text",
+        "TextRangePattern.GetText": "Updated Text",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Updated Text",
+      "TestId": "button_text_update",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
+    "Comment": "button_text_update",
+    "Offset": "0, 0, 0",
+    "Size": "916, 37",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "4, 4",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "4, 0, 0",
+        "Size": "908, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "-4, 0, 0",
+        "Size": "4, 4",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "-1, 4, 0",
+        "Size": "1, 28",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "-4, -5, 0",
+        "Size": "4, 5",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "4, -2, 0",
+        "Size": "908, 2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "0, -5, 0",
+        "Size": "4, 5",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 41)",
+        },
+        "Offset": "0, 4, 0",
+        "Size": "1, 28",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "9, 9, 0",
+        "Size": "898, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "898, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Button Tests Buttons can be disabled 1`] = `
 {
   "Automation Tree": {
