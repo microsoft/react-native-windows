@@ -149,6 +149,11 @@ export default class Bootstrap extends React.Component<{}, any> {
             placeholder={'Letter Spacing'}
           />
           <TextInput
+            style={styles.input}
+            allowFontScaling={false }
+            placeholder={'Do not Allow Font Scaling'}
+          />
+          <TextInput
             style={[styles.input, {fontFamily: 'Times New Roman'}]}
             placeholder={'Font Family Time New Roman'}
           />
