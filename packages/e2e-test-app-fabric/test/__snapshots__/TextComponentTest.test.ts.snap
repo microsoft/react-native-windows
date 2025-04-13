@@ -204,92 +204,6 @@ exports[`Text Tests Text can have advanced borders 1`] = `
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 40",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 40",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "0, 0, 0",
-                "Size": "27, 22",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "27, 0, 0",
-                "Size": "874, 15",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "-15, 0, 0",
-                "Size": "15, 20",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "-10, 20, 0",
-                "Size": "10, 14",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "-11, -6, 0",
-                "Size": "11, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "23, -5, 0",
-                "Size": "882, 5",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "0, -8, 0",
-                "Size": "23, 8",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "0, 22, 0",
-                "Size": "20, 10",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 38, 0",
         "Size": "916, 39",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -301,6 +215,92 @@ exports[`Text Tests Text can have advanced borders 1`] = `
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "27, 22",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "27, 0, 0",
+                "Size": "874, 15",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "-15, 0, 0",
+                "Size": "15, 20",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "-10, 20, 0",
+                "Size": "10, 13",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "-11, -6, 0",
+                "Size": "11, 6",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "23, -5, 0",
+                "Size": "882, 5",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "0, -8, 0",
+                "Size": "23, 8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "0, 22, 0",
+                "Size": "20, 9",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 38, 0",
+        "Size": "916, 40",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 40",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 0, 0",
@@ -331,7 +331,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "-10, 20, 0",
-                "Size": "10, 13",
+                "Size": "10, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -367,7 +367,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 22, 0",
-                "Size": "20, 9",
+                "Size": "20, 10",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -548,7 +548,7 @@ exports[`Text Tests Text can have borders 1`] = `
   "Visual Tree": {
     "Comment": "text-border",
     "Offset": "0, 0, 0",
-    "Size": "916, 385",
+    "Size": "916, 384",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -661,12 +661,12 @@ exports[`Text Tests Text can have borders 1`] = `
       },
       {
         "Offset": "0, 365, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -761,7 +761,7 @@ exports[`Text Tests Text can have inline views/images 1`] = `
   "Visual Tree": {
     "Comment": "text-view",
     "Offset": "0, 0, 0",
-    "Size": "916, 26",
+    "Size": "916, 23",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -781,13 +781,13 @@ exports[`Text Tests Text can have inline views/images 1`] = `
         ],
       },
       {
-        "Offset": "384, 0, 0",
-        "Size": "34, 23",
+        "Offset": "384, 18, 0",
+        "Size": "1, 1",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "34, 23",
+            "Size": "1, 1",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -845,17 +845,17 @@ exports[`Text Tests Text can have nested views 1`] = `
   "Visual Tree": {
     "Comment": "text-nested-view",
     "Offset": "0, 0, 0",
-    "Size": "916, 40",
+    "Size": "916, 41",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 20",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -913,7 +913,7 @@ exports[`Text Tests Text can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "text-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 27",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1031,7 +1031,7 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
   "Visual Tree": {
     "Comment": "text-view-images-clipped",
     "Offset": "0, 0, 0",
-    "Size": "916, 223",
+    "Size": "916, 222",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1094,12 +1094,12 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
       },
       {
         "Offset": "0, 103, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
