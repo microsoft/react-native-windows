@@ -138,4 +138,44 @@ describe('Button Tests', () => {
     const dump3 = await dumpVisualTree('accessible_focusable_false_button');
     expect(dump3).toMatchSnapshot();
   });
+  test('Button text should update on fast refresh', async () => {
+    await searchBox('text');
+    const component = await app.findElementByTestID('button_text_update');
+    await component.waitForDisplayed({timeout: 5000});
+    const dumpBefore = await dumpVisualTree('button_text_update_before');
+    expect(dumpBefore).toMatchSnapshot();
+    await component.click();
+    const dumpAfter = await dumpVisualTree('button_text_update_after');
+    expect(dumpAfter).toMatchSnapshot();
+  });
+  test('Button color should update on fast refresh', async () => {
+    await searchBox('color');
+    const component = await app.findElementByTestID('button_color_update');
+    await component.waitForDisplayed({timeout: 5000});
+    const dumpBefore = await dumpVisualTree('button_color_update_before');
+    expect(dumpBefore).toMatchSnapshot();
+    await component.click();
+    const dumpAfter = await dumpVisualTree('button_color_update_after');
+    expect(dumpAfter).toMatchSnapshot();
+  });
+  test('Button disabled status should update on fast refresh', async () => {
+    await searchBox('disabled');
+    const component = await app.findElementByTestID('button_disabled_update');
+    await component.waitForDisplayed({timeout: 5000});
+    const dumpBefore = await dumpVisualTree('button_disabled_update_before');
+    expect(dumpBefore).toMatchSnapshot();
+    await component.click();
+    const dumpAfter = await dumpVisualTree('button_disabled_update_after');
+    expect(dumpAfter).toMatchSnapshot();
+  });
+  test('Button should update relevant styling upon press', async () => {
+    await searchBox('styling');
+    const component = await app.findElementByTestID('button_style_update');
+    await component.waitForDisplayed({timeout: 5000});
+    const dumpBefore = await dumpVisualTree('button_style_update_before');
+    expect(dumpBefore).toMatchSnapshot();
+    await component.click();
+    const dumpAfter = await dumpVisualTree('button_style_update_after');
+    expect(dumpAfter).toMatchSnapshot();
+  });
 });

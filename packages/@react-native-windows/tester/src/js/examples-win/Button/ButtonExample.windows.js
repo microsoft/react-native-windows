@@ -25,6 +25,65 @@ exports.title = 'Button';
 exports.documentationURL = 'https://reactnative.dev/docs/button';
 exports.description = 'Simple React Native button component.';
 
+const ButtonFastRefreshText = () => {
+  const [buttonText, setButtonText] = React.useState('Initial Text');
+  return (
+    <View>
+      <Button
+        onPress={() => setButtonText('Updated Text')}
+        testID="button_text_update"
+        title={buttonText}
+        accessibilityLabel="Press to update button text"
+      />
+    </View>
+  );
+};
+
+const ButtonFastRefreshColor = () => {
+  const [buttonColor, setButtonColor] = React.useState('blue');
+  return (
+    <View>
+      <Button
+        onPress={() => setButtonColor('green')}
+        testID="button_color_update"
+        color={buttonColor}
+        title="Update Color"
+        accessibilityLabel="Press to update button color"
+      />
+    </View>
+  );
+};
+
+const ButtonDisabledUpdate = () => {
+  const [isDisabled, setIsDisabled] = React.useState(false);
+  return (
+    <View>
+      <Button
+        onPress={() => setIsDisabled(!isDisabled)}
+        testID="button_disabled_update"
+        disabled={isDisabled}
+        title={isDisabled ? 'Disabled' : 'Enabled'}
+        accessibilityLabel="Press to toggle button disabled status"
+      />
+    </View>
+  );
+};
+
+const ButtonStyleUpdate = () => {
+  const [buttonStyle, setButtonStyle] = React.useState(styles.defaultButton);
+  return (
+    <View>
+      <Button
+        onPress={() => setButtonStyle(styles.pressedButton)}
+        testID="button_style_update"
+        title="Press Me"
+        accessibilityLabel="Press to update button styling"
+        color={buttonStyle.backgroundColor}
+      />
+    </View>
+  );
+};
+
 exports.examples = [
   {
     title: 'Button with default styling',
@@ -273,11 +332,41 @@ exports.examples = [
       );
     },
   },
+  {
+    title: 'Button text should update on fast refresh',
+    render: function (): React.Node {
+      return <ButtonFastRefreshText />;
+    },
+  },
+  {
+    title: 'Button color should update on fast refresh',
+    render: function (): React.Node {
+      return <ButtonFastRefreshColor />;
+    },
+  },
+  {
+    title: 'Button disabled status should update on fast refresh',
+    render: function (): React.Node {
+      return <ButtonDisabledUpdate />;
+    },
+  },
+  {
+    title: 'Button should update relevant styling upon press',
+    render: function (): React.Node {
+      return <ButtonStyleUpdate />;
+    },
+  },
 ];
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  defaultButton: {
+    backgroundColor: 'blue',
+  },
+  pressedButton: {
+    backgroundColor: 'red',
   },
 });
