@@ -40,7 +40,7 @@ const ButtonFastRefreshText = () => {
       <Button
         testID="button_text_update"
         title={buttonText}
-        accessibilityLabel="Button text updates automatically after a delay"
+        accessibilityLabel={buttonText}
       />
     </View>
   );
@@ -53,7 +53,7 @@ const ButtonFastRefreshColor = () => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setButtonColor('green');
-    }, 2000); // Update color after 2 seconds
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -71,15 +71,23 @@ const ButtonFastRefreshColor = () => {
 };
 
 const ButtonDisabledUpdate = () => {
-  const [isDisabled, setIsDisabled] = React.useState(false);
+  const [isDisabled, setIsDisabled] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsDisabled(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [isDisabled]);
+
   return (
     <View>
       <Button
-        onPress={() => setIsDisabled(!isDisabled)}
         testID="button_disabled_update"
         disabled={isDisabled}
         title={isDisabled ? 'Disabled' : 'Enabled'}
-        accessibilityLabel="Press to toggle button disabled status"
+        accessibilityLabel="Button disabled status updates automatically after a delay"
       />
     </View>
   );
