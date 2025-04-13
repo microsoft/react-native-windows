@@ -27,13 +27,20 @@ exports.description = 'Simple React Native button component.';
 
 const ButtonFastRefreshText = () => {
   const [buttonText, setButtonText] = React.useState('Initial Text');
+  // Simulate a fast refresh-like behavior by updating the text after a delay
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setButtonText('Updated Text');
+    }, 2000); // Update text after 2 seconds
+
+    return () => clearTimeout(timer); // Cleanup the timer on unmount
+  }, []);
   return (
     <View>
       <Button
-        onPress={() => setButtonText('Updated Text')}
         testID="button_text_update"
         title={buttonText}
-        accessibilityLabel="Press to update button text"
+        accessibilityLabel="Button text updates automatically after a delay"
       />
     </View>
   );
@@ -41,14 +48,23 @@ const ButtonFastRefreshText = () => {
 
 const ButtonFastRefreshColor = () => {
   const [buttonColor, setButtonColor] = React.useState('blue');
+
+  // Simulate a fast refresh-like behavior by updating the color after a delay
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setButtonColor('green');
+    }, 2000); // Update color after 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <View>
       <Button
-        onPress={() => setButtonColor('green')}
         testID="button_color_update"
         color={buttonColor}
         title="Update Color"
-        accessibilityLabel="Press to update button color"
+        accessibilityLabel="Button color updates automatically after a delay"
       />
     </View>
   );

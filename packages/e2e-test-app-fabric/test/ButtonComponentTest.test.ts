@@ -142,9 +142,22 @@ describe('Button Tests', () => {
     await searchBox('text');
     const component = await app.findElementByTestID('button_text_update');
     await component.waitForDisplayed({timeout: 5000});
+
+    // Capture the initial state before the text update
     const dumpBefore = await dumpVisualTree('button_text_update_before');
     expect(dumpBefore).toMatchSnapshot();
-    await component.click();
+
+    // Wait for the text to update automatically
+    await app.waitUntil(
+      async () => {
+        const updatedText = await component.getText();
+        return updatedText === 'Updated Text';
+      },
+      {
+        timeout: 3000, // Wait up to 3 seconds for the update
+        timeoutMsg: 'Button text did not update as expected.',
+      },
+    );
     const dumpAfter = await dumpVisualTree('button_text_update_after');
     expect(dumpAfter).toMatchSnapshot();
   });
@@ -152,9 +165,22 @@ describe('Button Tests', () => {
     await searchBox('color');
     const component = await app.findElementByTestID('button_color_update');
     await component.waitForDisplayed({timeout: 5000});
+
+    // Capture the initial state before the color update
     const dumpBefore = await dumpVisualTree('button_color_update_before');
     expect(dumpBefore).toMatchSnapshot();
-    await component.click();
+
+    // Wait for the color to update automatically
+    await app.waitUntil(
+      async () => {
+        const updatedColor = await component.getAttribute('color');
+        return updatedColor === 'green';
+      },
+      {
+        timeout: 3000, // Wait up to 3 seconds for the update
+        timeoutMsg: 'Button color did not update as expected.',
+      },
+    );
     const dumpAfter = await dumpVisualTree('button_color_update_after');
     expect(dumpAfter).toMatchSnapshot();
   });
