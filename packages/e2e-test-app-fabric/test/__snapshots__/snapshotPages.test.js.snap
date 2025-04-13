@@ -80259,6 +80259,526 @@ exports[`snapshotAllPages TextInput 46`] = `
 </View>
 `;
 
+exports[`snapshotAllPages TextInput 47`] = `
+<View>
+  <Text>
+    Max Length
+  </Text>
+  <TextInput
+    maxLength={10}
+    placeholder="Max length is 10"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-maxlength"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 48`] = `
+<View>
+  <Text>
+    Multiline
+  </Text>
+  <TextInput
+    multiline={true}
+    placeholder="This TextInput supports multiple lines"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+          "height": 60,
+        },
+      ]
+    }
+    testID="textinput-multiline"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 49`] = `
+<View>
+  <Text>
+    onBlur
+  </Text>
+  <TextInput
+    onBlur={[Function]}
+    placeholder="Focus and then blur this TextInput"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-onblur"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 50`] = `
+<View>
+  <Text>
+    onChange
+  </Text>
+  <TextInput
+    onChangeText={[Function]}
+    placeholder="Type something to trigger onChange"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-onchange"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 51`] = `
+<View>
+  <Text>
+    onPressIn
+  </Text>
+  <TextInput
+    onPressIn={[Function]}
+    placeholder="Press inside this TextInput"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-onpressin"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 52`] = `
+<View>
+  <Text>
+    onPressOut
+  </Text>
+  <TextInput
+    onPressOut={[Function]}
+    placeholder="Press and release inside this TextInput"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-onpressout"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 53`] = `
+<View>
+  <Text>
+    onFocus
+  </Text>
+  <TextInput
+    onFocus={[Function]}
+    placeholder="Focus on this TextInput"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-onfocus"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 54`] = `
+<View>
+  <Text>
+    onScroll
+  </Text>
+  <TextInput
+    multiline={true}
+    onScroll={[Function]}
+    placeholder="Scroll inside this TextInput"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+          "height": 60,
+        },
+      ]
+    }
+    testID="textinput-onscroll"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 55`] = `
+<View>
+  <Text>
+    onSelectionChange
+  </Text>
+  <TextInput
+    onSelectionChange={[Function]}
+    placeholder="Select text to trigger onSelectionChange"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-onselectionchange"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 56`] = `
+<View>
+  <Text>
+    Placeholder Refresh
+  </Text>
+  <TextInput
+    placeholder="Placeholder text"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-placeholder-refresh"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 57`] = `
+<View>
+  <Text>
+    Placeholder Color Refresh
+  </Text>
+  <TextInput
+    placeholder="Placeholder text"
+    placeholderTextColor="blue"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-placeholder-color-refresh"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 58`] = `
+<View>
+  <Text>
+    TextAlign Refresh
+  </Text>
+  <TextInput
+    placeholder="Text is center-aligned"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "textAlign": "center",
+          },
+        ],
+      ]
+    }
+    testID="textinput-textalign-refresh"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 59`] = `
+<View>
+  <Text>
+    Style Refresh
+  </Text>
+  <TextInput
+    placeholder="Style updated"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "borderColor": "red",
+            "borderWidth": 2,
+          },
+        ],
+      ]
+    }
+    testID="textinput-style-refresh"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 60`] = `
+<View>
+  <Text>
+    Focus
+  </Text>
+  <TextInput
+    placeholder="This TextInput will focus"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-focus"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 61`] = `
+<View>
+  <Text>
+    Blur
+  </Text>
+  <TextInput
+    placeholder="This TextInput will blur"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-blur"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 62`] = `
+<View>
+  <Text>
+    Clear
+  </Text>
+  <TextInput
+    defaultValue="This TextInput will clear"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="textinput-clear"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages TextInputs with key prop 1`] = `
 <View>
   <TextInput
