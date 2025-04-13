@@ -70,6 +70,7 @@ struct WindowsTextInputComponentView
   std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
+  bool IsDoubleClick();
 
   WindowsTextInputComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -110,6 +111,10 @@ struct WindowsTextInputComponentView
       const std::string &previousCapitalizationType,
       const std::string &newcapitalizationType) noexcept;
 
+  void updateLetterSpacing(float letterSpacing) noexcept;
+  void updateAutoCorrect(bool value) noexcept;
+  void updateSpellCheck(bool value) noexcept;
+
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface{nullptr};
@@ -136,6 +141,7 @@ struct WindowsTextInputComponentView
   DWORD m_propBitsMask{0};
   DWORD m_propBits{0};
   HCURSOR m_hcursor{nullptr};
+  std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 

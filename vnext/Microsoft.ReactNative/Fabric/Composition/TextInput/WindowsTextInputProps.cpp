@@ -24,6 +24,7 @@ WindowsTextInputProps::WindowsTextInputProps(
           */
 
       allowFontScaling(convertRawProp(context, rawProps, "allowFontScaling", sourceProps.allowFontScaling, {true})),
+      autoCorrect(convertRawProp(context, rawProps, "autoCorrect", sourceProps.autoCorrect, {true})),
       clearTextOnFocus(convertRawProp(context, rawProps, "clearTextOnFocus", sourceProps.clearTextOnFocus, {false})),
       editable(convertRawProp(context, rawProps, "editable", sourceProps.editable, {true})),
       maxLength(convertRawProp(context, rawProps, "maxLength", sourceProps.maxLength, {0})),
@@ -36,7 +37,7 @@ WindowsTextInputProps::WindowsTextInputProps(
       selection(convertRawProp(context, rawProps, "selection", sourceProps.selection, {})),
       selectionColor(convertRawProp(context, rawProps, "selectionColor", sourceProps.selectionColor, {})),
       selectTextOnFocus(convertRawProp(context, rawProps, "selectTextOnFocus", sourceProps.selectTextOnFocus, {false})),
-      spellCheck(convertRawProp(context, rawProps, "spellCheck", sourceProps.spellCheck, {false})),
+      spellCheck(convertRawProp(context, rawProps, "spellCheck", sourceProps.spellCheck, {true})),
       text(convertRawProp(context, rawProps, "text", sourceProps.text, {})),
       mostRecentEventCount(
           convertRawProp(context, rawProps, "mostRecentEventCount", sourceProps.mostRecentEventCount, {0})),

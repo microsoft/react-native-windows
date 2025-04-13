@@ -195,13 +195,13 @@ extends:
 
           - template: .ado/templates/configure-git.yml@self
 
-          - script: |
-              echo "##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish"
+          - pwsh: |
+              Write-Host "##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish"
             displayName: Enable No-Publish (npm)
             condition: ${{ parameters.skipNpmPublish }}
 
-          - script: |
-              echo "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
+          - pwsh: |
+              Write-Host "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
             displayName: Enable No-Publish (git)
             condition: ${{ parameters.skipGitPush }}
 
