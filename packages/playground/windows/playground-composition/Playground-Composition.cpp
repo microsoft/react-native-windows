@@ -369,7 +369,7 @@ struct WindowData {
         m_forceRTL = !m_forceRTL;
       }
       case IDM_SETPROPS: {
-        m_compRootView.SetProps([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
+        m_compRootView.SetProperties([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
           static int value = 123;
           writer.WriteObjectBegin();
           winrt::Microsoft::ReactNative::WriteProperty(writer, L"testProp1", value++);
