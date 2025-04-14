@@ -90,6 +90,16 @@ export default class Bootstrap extends React.Component<
           backgroundColor: 'azure',
           paddingHorizontal: 20,
         }}>
+        <View
+          style={{
+            width: 100,
+            height: 100,
+            backgroundColor: 'gray',
+            overflow: 'hidden',
+          }}>
+          <View style={{width: 500, height: 500, backgroundColor: 'red'}} />
+        </View>
+
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <Switch
             onValueChange={value => this.setState({focusable: value})}

@@ -1083,6 +1083,9 @@ void ViewComponentView::updateProps(
     Visual().Comment(winrt::to_hstring(newViewProps.testId));
   }
 
+  // Clip children if overflow is not 'Visible' (i.e., it's 'Hidden' or 'Scroll')
+  m_shouldClipChildren = (newViewProps.yogaStyle.overflow() != facebook::yoga::Overflow::Visible);
+
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateTransformProps(oldViewProps, newViewProps, Visual());
@@ -1263,6 +1266,30 @@ void ViewComponentView::updateLayoutMetrics(
   Visual().Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  if (m_shouldClipChildren) {
+    // Convert layout size from logical units to physical pixels, accounting for DPI
+    const float width = layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor;
+    const float height = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
+
+    // Resolve border metrics including corner radii
+    const auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, *m_props);
+
+    // Create a clipping path as a rounded rectangle (or regular rectangle if radii are zero)
+    const winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
+        m_compContext,
+        borderMetrics.borderRadii, // Controls corner roundness
+        {0, 0, 0, 0}, // Border thickness (not relevant for clipping)
+        {0, 0, width, height} // Shape size for the clipping area
+    );
+
+    // Apply the clipping path to the visual
+    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        pathGeometry.get());
+  } else {
+    // Remove any existing clipping path if we don't need to clip children
+    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
+  }
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
