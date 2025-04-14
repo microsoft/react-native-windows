@@ -252,7 +252,7 @@ export default class Bootstrap extends React.Component<{}, any> {
             onScroll={() => {
               console.log('onScroll');
             }}
-            decelerationRate={'0.95'}>
+            decelerationRate={0.95}>
             {this.makeItems(20, [styles.itemWrapper])}
           </ScrollView>
         </View>
