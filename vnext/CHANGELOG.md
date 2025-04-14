@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 07 Apr 2025 15:26:10 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 14 Apr 2025 15:27:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.8
+
+Mon, 14 Apr 2025 15:27:12 GMT
+
+### Patches
+
+- Fix Narrator Bug (34109996+chiaramooney@users.noreply.github.com)
+- Enforce SendPendingMessages in dispatch queue (#14487) (julio.rocha@microsoft.com)
+- Allow portals to have independent layout constraints and scale factor (#14315) (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.77.3
+- Bump @react-native-windows/codegen to v0.77.2
 
 ## 0.77.7
 

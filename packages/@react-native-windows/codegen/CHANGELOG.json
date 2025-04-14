@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 14 Apr 2025 15:27:12 GMT",
+      "version": "0.77.2",
+      "tag": "@react-native-windows/codegen_v0.77.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "961389282c21fbf131f21bca64845903eefbb568",
+            "comment": "Fix UpdateState on generated base class"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Feb 2025 20:13:38 GMT",
       "version": "0.77.1",
       "tag": "@react-native-windows/codegen_v0.77.1",
