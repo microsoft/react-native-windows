@@ -621,6 +621,19 @@ WPARAM PointerRoutedEventArgsToMouseWParam(
   return wParam;
 }
 
+bool WindowsTextInputComponentView::IsDoubleClick() {
+  using namespace std::chrono;
+
+  auto now = steady_clock::now();
+  auto duration = duration_cast<milliseconds>(now - m_lastClickTime).count();
+
+  const int DOUBLE_CLICK_TIME_MS = ::GetDoubleClickTime();
+
+  m_lastClickTime = now;
+
+  return (duration < DOUBLE_CLICK_TIME_MS);
+}
+
 void WindowsTextInputComponentView::OnPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   UINT msg = 0;
@@ -637,7 +650,11 @@ void WindowsTextInputComponentView::OnPointerPressed(
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
     switch (pp.Properties().PointerUpdateKind()) {
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonPressed:
-        msg = WM_LBUTTONDOWN;
+        if (IsDoubleClick()) {
+          msg = WM_LBUTTONDBLCLK;
+        } else {
+          msg = WM_LBUTTONDOWN;
+        }
         break;
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::MiddleButtonPressed:
         msg = WM_MBUTTONDOWN;
