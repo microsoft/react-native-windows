@@ -1346,8 +1346,9 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
   } else {
     m_verticalScrollbarComponent->updateVisibility(false);
   }
+}
 
-  void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
-    m_scrollVisual.SetDecelerationRate({value, value, value});
-  }
+void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
+  m_scrollVisual.SetDecelerationRate({value, value, value});
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
