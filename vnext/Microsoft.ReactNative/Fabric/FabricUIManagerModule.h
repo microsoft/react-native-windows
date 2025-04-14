@@ -12,6 +12,7 @@
 namespace facebook::react {
 class Scheduler;
 class ReactNativeConfig;
+class SurfaceHandler;
 } // namespace facebook::react
 
 namespace Microsoft::ReactNative {

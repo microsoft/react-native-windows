@@ -579,12 +579,11 @@ void ReactNativeIsland::ShowInstanceLoaded() noexcept {
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
 
     m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
-    auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+
+    auto initProps =
+        m_props.isNull() ? m_props : DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
-    }
-    if (!m_props.isNull()) {
-      initProps.update(m_props);
     }
     initProps["concurrentRoot"] = true;
 
