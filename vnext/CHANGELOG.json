@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Apr 2025 15:27:55 GMT",
+      "version": "0.78.4",
+      "tag": "react-native-windows_v0.78.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "45417292a91d70c2ca27bfd39673884d9d22d0ea",
+            "comment": "Enforce SendPendingMessages in dispatch queue (#14487)"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "91955927907b66ed843ba6be7b9a0af891fd8305",
+            "comment": "Allow portals to have independent layout constraints and scale factor (#14315)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.78.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Apr 2025 15:26:14 GMT",
       "version": "0.78.3",
       "tag": "react-native-windows_v0.78.3",

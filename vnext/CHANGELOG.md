@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 07 Apr 2025 15:26:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 14 Apr 2025 15:27:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.4
+
+Mon, 14 Apr 2025 15:27:55 GMT
+
+### Patches
+
+- Enforce SendPendingMessages in dispatch queue (#14487) (julio.rocha@microsoft.com)
+- Allow portals to have independent layout constraints and scale factor (#14315) (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.78.2
+- Bump @react-native-windows/codegen to v0.78.1
 
 ## 0.78.3
 

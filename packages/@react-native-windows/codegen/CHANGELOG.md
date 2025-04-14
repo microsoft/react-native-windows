@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Thu, 27 Feb 2025 22:23:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 14 Apr 2025 15:27:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.1
+
+Mon, 14 Apr 2025 15:27:55 GMT
+
+### Patches
+
+- Fix UpdateState on generated base class (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.78.0
 
