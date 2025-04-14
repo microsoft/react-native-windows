@@ -112,6 +112,11 @@ struct ScrollBarComponent {
   }
 
   void updateVisibility() noexcept {
+    if (!m_visible) {
+      m_rootVisual.IsVisible(m_visible);
+      return;
+    }
+
     bool newVisibility = false;
     if (m_vertical) {
       newVisibility = (m_contentSize.Height > m_size.Height);
@@ -121,6 +126,13 @@ struct ScrollBarComponent {
 
     if (newVisibility != m_visible) {
       m_visible = newVisibility;
+      m_rootVisual.IsVisible(m_visible);
+    }
+  }
+
+  void updateVisibility(bool visible) noexcept {
+    if (visible != m_visible) {
+      m_visible = visible;
       m_rootVisual.IsVisible(m_visible);
     }
   }
@@ -561,7 +573,7 @@ struct ScrollBarComponent {
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   const bool m_vertical;
-  bool m_visible{false};
+  bool m_visible{true};
   bool m_shy{false};
   int m_thumbSize{0};
   float m_arrowSize{0};
@@ -752,6 +764,14 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
     m_scrollVisual.Horizontal(newViewProps.horizontal);
+  }
+
+  if (!oldProps || oldViewProps.showsHorizontalScrollIndicator != newViewProps.showsHorizontalScrollIndicator) {
+    updateShowsHorizontalScrollIndicator(newViewProps.showsHorizontalScrollIndicator);
+  }
+
+  if (!oldProps || oldViewProps.showsVerticalScrollIndicator != newViewProps.showsVerticalScrollIndicator) {
+    updateShowsVerticalScrollIndicator(newViewProps.showsVerticalScrollIndicator);
   }
 }
 
@@ -1316,4 +1336,19 @@ double ScrollViewComponentView::getHorizontalSize() noexcept {
   return std::min((m_layoutMetrics.frame.size.width / m_contentSize.width * 100.0), 100.0);
 }
 
+void ScrollViewComponentView::updateShowsHorizontalScrollIndicator(bool value) noexcept {
+  if (value) {
+    m_horizontalScrollbarComponent->updateVisibility(true);
+  } else {
+    m_horizontalScrollbarComponent->updateVisibility(false);
+  }
+}
+
+void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noexcept {
+  if (value) {
+    m_verticalScrollbarComponent->updateVisibility(true);
+  } else {
+    m_verticalScrollbarComponent->updateVisibility(false);
+  }
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
