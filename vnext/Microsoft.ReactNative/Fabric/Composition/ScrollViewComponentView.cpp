@@ -753,6 +753,10 @@ void ScrollViewComponentView::updateProps(
   if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
     m_scrollVisual.Horizontal(newViewProps.horizontal);
   }
+
+  if (!oldProps || oldViewProps.decelerationRate != newViewProps.decelerationRate) {
+    updateDecelerationRate(newViewProps.decelerationRate);
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -1316,4 +1320,7 @@ double ScrollViewComponentView::getHorizontalSize() noexcept {
   return std::min((m_layoutMetrics.frame.size.width / m_contentSize.width * 100.0), 100.0);
 }
 
+void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
+  m_scrollVisual.SetDecelerationRate({value, value, value});
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
