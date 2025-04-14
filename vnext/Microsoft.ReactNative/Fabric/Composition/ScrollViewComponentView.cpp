@@ -83,7 +83,7 @@ struct ScrollBarComponent {
   void ContentSize(winrt::Windows::Foundation::Size contentSize) noexcept {
     m_contentSize = contentSize;
     updateThumb();
-    updateVisibility();
+    updateVisibility(m_visible);
   }
 
   void updateTrack() noexcept {
@@ -108,12 +108,13 @@ struct ScrollBarComponent {
 
     updateTrack();
     updateThumb();
-    updateVisibility();
+    updateVisibility(m_visible);
   }
 
-  void updateVisibility() noexcept {
-    if (!m_visible) {
-      m_rootVisual.IsVisible(m_visible);
+  void updateVisibility(bool visible) noexcept {
+    if (!visible) {
+      m_visible = false;
+      m_rootVisual.IsVisible(visible);
       return;
     }
 
@@ -124,17 +125,8 @@ struct ScrollBarComponent {
       newVisibility = (m_contentSize.Width > m_size.Width);
     }
 
-    if (newVisibility != m_visible) {
-      m_visible = newVisibility;
-      m_rootVisual.IsVisible(m_visible);
-    }
-  }
-
-  void updateVisibility(bool visible) noexcept {
-    if (visible != m_visible) {
-      m_visible = visible;
-      m_rootVisual.IsVisible(m_visible);
-    }
+    m_visible = newVisibility;
+    m_rootVisual.IsVisible(m_visible);
   }
 
   void updateRootAndArrowVisualOffsets() noexcept {
