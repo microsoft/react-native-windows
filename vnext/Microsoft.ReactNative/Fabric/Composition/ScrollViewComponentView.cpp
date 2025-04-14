@@ -764,6 +764,7 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.showsVerticalScrollIndicator != newViewProps.showsVerticalScrollIndicator) {
     updateShowsVerticalScrollIndicator(newViewProps.showsVerticalScrollIndicator);
+  }
 
   if (!oldProps || oldViewProps.decelerationRate != newViewProps.decelerationRate) {
     updateDecelerationRate(newViewProps.decelerationRate);
@@ -1346,7 +1347,7 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
     m_verticalScrollbarComponent->updateVisibility(false);
   }
 
-void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
-  m_scrollVisual.SetDecelerationRate({value, value, value});
-}
+  void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
+    m_scrollVisual.SetDecelerationRate({value, value, value});
+  }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
