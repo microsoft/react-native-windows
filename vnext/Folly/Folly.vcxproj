@@ -105,7 +105,7 @@
     <ClInclude Include="$(FollyDir)\folly\Demangle.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\AtomicHashUtils.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\AtomicUnorderedMapUtils.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\CacheLocality.h" />
+    <ClInclude Include="$(FollyDir)\folly\concurrency\CacheLocality.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\DiscriminatedPtrDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\FileUtilDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\FingerprintPolynomial.h" />
