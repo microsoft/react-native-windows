@@ -128,6 +128,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
   void updateStateWithContentOffset() noexcept;
+  facebook::react::ScrollViewEventEmitter::Metrics getScrollMetrics(
+      facebook::react::SharedViewEventEmitter const &eventEmitter,
+      winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args);
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
