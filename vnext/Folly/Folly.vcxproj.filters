@@ -187,7 +187,16 @@
     <ClInclude Include="$(FollyDir)\folly\dynamic-inl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+     <ClInclude Include="$(FollyDir)\folly\json\dynamic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(FollyDir)\folly\json\dynamic-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="$(FollyDir)\folly\DynamicConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(FollyDir)\folly\json\DynamicConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(FollyDir)\folly\portability\Event.h">

@@ -126,6 +126,9 @@
     <ClInclude Include="$(FollyDir)\folly\dynamic-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\dynamic.h" />
     <ClInclude Include="$(FollyDir)\folly\DynamicConverter.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\dynamic-inl.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\dynamic.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\DynamicConverter.h" />
     <ClInclude Include="$(FollyDir)\folly\Exception.h" />
     <ClInclude Include="$(FollyDir)\folly\ExceptionString.h" />
     <ClInclude Include="$(FollyDir)\folly\ExceptionWrapper.h" />
@@ -220,6 +223,9 @@
     <ClInclude Include="$(FollyDir)\folly\stop_watch.h" />
     <ClInclude Include="$(FollyDir)\folly\String-inl.h" />
     <ClInclude Include="$(FollyDir)\hash\MurmurHash.h" />
+    <ClInclude Include="$(FollyDir)\hash\SpookyHashV1.h" />
+    <ClInclude Include="$(FollyDir)\hash\SpookyHashV2.h" />
+    <ClInclude Include="$(FollyDir)\functional\ApplyTuple.h" />
     <ClInclude Include="$(FollyDir)\folly\String.h" />
     <ClInclude Include="$(FollyDir)\folly\Subprocess.h" />
     <ClInclude Include="$(FollyDir)\folly\Synchronized.h" />
@@ -234,6 +240,7 @@
     <ClInclude Include="$(FollyDir)\folly\Unit.h" />
     <ClInclude Include="$(FollyDir)\folly\Uri-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\Uri.h" />
+    <ClInclude Include="$(FollyDir)\folly\Utility.h" />
     <ClInclude Include="$(FollyDir)\folly\Varint.h" />
     <ClInclude Include="$(FollyDir)\..\fast_float-6.1.4\include\fast_float\fast_float.h" />
     <ClInclude Include="pch.h" />
