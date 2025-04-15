@@ -268,6 +268,8 @@ export default class Bootstrap extends React.Component<
               onLoadStart={() => console.log('onLoadStart')}
               onLoadEnd={() => console.log('onLoadEnd')}
               onProgress={this.handleOnProgress}
+              alt={'This is an image for testing'}
+              onPartialLoad={() => console.log('onPartialLoad')}
             />
           )}
         </View>

@@ -111,6 +111,9 @@ void ImageComponentView::didReceiveProgress(float progress, int loaded, int tota
   auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
   if (imageEventEmitter) {
     imageEventEmitter->onProgress(progress, loaded, total);
+    if (progress > 0.0f && progress < 1.0f) {
+      imageEventEmitter->onPartialLoad();
+    }
   }
   ensureDrawingSurface();
 }
