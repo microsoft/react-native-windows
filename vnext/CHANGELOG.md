@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 12 Apr 2025 05:26:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 15 Apr 2025 05:24:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.940
+
+Tue, 15 Apr 2025 05:24:25 GMT
+
+### Changes
+
+- Implement decelerationRate in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.939
 
