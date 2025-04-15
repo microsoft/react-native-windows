@@ -187,9 +187,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     if (m_requireFontResize) {
       facebook::react::TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
           m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout, getMinFontSize());
-    }
-    else
-    {
+    } else {
       facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
     }
 

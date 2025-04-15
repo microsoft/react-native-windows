@@ -234,12 +234,11 @@ void TextLayoutManager::GetTextLayout(
 }
 
 void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
-  AttributedStringBox attributedStringBox,
-  const ParagraphAttributes& paragraphAttributes,
-  LayoutConstraints layoutConstraints,
-  winrt::com_ptr<IDWriteTextLayout>& spTextLayout,
-  const Float& minimumFontSize) noexcept
-{
+    AttributedStringBox attributedStringBox,
+    const ParagraphAttributes &paragraphAttributes,
+    LayoutConstraints layoutConstraints,
+    winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
+    const Float &minimumFontSize) noexcept {
   /* This function constructs a text layout from the given parameters.
   If the generated text layout doesn't fit within the given layout constraints,
   it will reduce the font size and construct a new text layout. This process will
@@ -249,7 +248,7 @@ void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
 
   // Better Approach should be implemented , this uses O(n)
   do {
-    if (spTextLayout) //Font Size reduction
+    if (spTextLayout) // Font Size reduction
     {
       constexpr auto fontReduceFactor = 1.0f;
 
@@ -270,22 +269,18 @@ void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
     facebook::react::TextLayoutManager::GetTextLayout(
         attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout);
 
-    if (spTextLayout)
-    {
-      if (spTextLayout->GetFontSize() <= minimumFontSize)
-      {
+    if (spTextLayout) {
+      if (spTextLayout->GetFontSize() <= minimumFontSize) {
         break; // reached minimum font size , so no more size reducing
       }
       winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-    }
-    else
-    {
+    } else {
       return;
     }
 
   } while ((paragraphAttributes.maximumNumberOfLines != 0 &&
-          paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
-         metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth);
+            paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
+           metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth);
 }
 
 // measure entire text (inluding attachments)

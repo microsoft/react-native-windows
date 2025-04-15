@@ -130,49 +130,65 @@ describe('Text Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, default a', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-default-a');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-default-a',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-a');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, default b', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-default-b');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-default-b',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-b');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 0 a', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-0-a');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-0-a',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-0-a');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 0 b', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-0-b');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-0-b',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-0-b');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 1 a', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-1-a');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-1-a',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-1-a');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 1 b', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-1-b');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-1-b',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-1-b');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 2 a', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-2-a');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-2-a',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-2-a');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 2 b', async () => {
-    const component = await app.findElementByTestID('text-adjustfontsizetofit-2-b');
+    const component = await app.findElementByTestID(
+      'text-adjustfontsizetofit-2-b',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-adjustfontsizetofit-default-2-b');
     expect(dump).toMatchSnapshot();
