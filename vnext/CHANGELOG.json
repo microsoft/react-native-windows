@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Apr 2025 05:24:25 GMT",
+      "version": "0.0.0-canary.940",
+      "tag": "react-native-windows_v0.0.0-canary.940",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e3da8102466c35973eb2b6dda52fa7f4348ce4fb",
+            "comment": "Implement decelerationRate in ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2de71985009cb62e7402d5e2aef4799e8da87242",
+            "comment": "Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Apr 2025 05:26:12 GMT",
       "version": "0.0.0-canary.939",
       "tag": "react-native-windows_v0.0.0-canary.939",
