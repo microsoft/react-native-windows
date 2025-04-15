@@ -1191,7 +1191,7 @@ void ScrollViewComponentView::StartBringIntoView(
 
 facebook::react::ScrollViewEventEmitter::Metrics ScrollViewComponentView::getScrollMetrics(
     facebook::react::SharedViewEventEmitter const &eventEmitter,
-    winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+    winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept {
   facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics{};
   if (eventEmitter) {
     scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;

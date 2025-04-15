@@ -130,7 +130,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void updateStateWithContentOffset() noexcept;
   facebook::react::ScrollViewEventEmitter::Metrics getScrollMetrics(
       facebook::react::SharedViewEventEmitter const &eventEmitter,
-      winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args);
+      winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
