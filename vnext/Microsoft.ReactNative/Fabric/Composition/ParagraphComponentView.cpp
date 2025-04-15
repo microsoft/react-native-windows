@@ -159,53 +159,12 @@ void ParagraphComponentView::updateTextAlignment(
 }
 
 float ParagraphComponentView::getMinFontSize() noexcept {
-  auto defaultFontSize = 2.0f;
+  constexpr auto defaultMinFontSize = 2.0f;
   // TODO:
   //  implementation of minimumFontScale prop can be added here
   return std::max(
-      defaultFontSize,
-      (isnan(m_paragraphAttributes.minimumFontSize) ? defaultFontSize : m_paragraphAttributes.minimumFontSize));
-}
-void ParagraphComponentView::adjustFontSizeToFit() noexcept {
-  DWRITE_TEXT_METRICS metrics;
-  winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
-  facebook::react::LayoutConstraints constraints;
-  constraints.maximumSize.width =
-      m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left - m_layoutMetrics.contentInsets.right;
-  constraints.maximumSize.height =
-      m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
-
-  // Better Approach should be implemented , this uses O(n)
-  while ((m_paragraphAttributes.maximumNumberOfLines != 0 &&
-          m_paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
-         metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth) {
-    if (m_textLayout->GetFontSize() <= getMinFontSize()) // reached minimum font size , so no more size reducing
-    {
-      break;
-    }
-    reduceFontSize();
-
-    facebook::react::TextLayoutManager::GetTextLayout(
-        m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout);
-    winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
-  }
-}
-
-void ParagraphComponentView::reduceFontSize() noexcept {
-  auto fontReduceFactor = 1.0f;
-
-  auto attributedStringToResize = m_attributedStringBox.getValue();
-
-  auto fragmentsCopyToResize = attributedStringToResize.getFragments();
-
-  attributedStringToResize.getFragments().clear();
-
-  for (auto frag : fragmentsCopyToResize) {
-    frag.textAttributes.fontSize -= fontReduceFactor;
-
-    attributedStringToResize.appendFragment(std::move(frag));
-  }
-  m_attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
+      defaultMinFontSize,
+      (isnan(m_paragraphAttributes.minimumFontSize) ? defaultMinFontSize : m_paragraphAttributes.minimumFontSize));
 }
 
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
@@ -225,12 +184,16 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     constraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
-    requireNewBrush = true;
-  }
+    if (m_requireFontResize) {
+      facebook::react::TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
+          m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout, getMinFontSize());
+    }
+    else
+    {
+      facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
+    }
 
-  if (m_requireFontResize) {
-    adjustFontSizeToFit();
+    requireNewBrush = true;
   }
 
   if (requireNewBrush || !m_drawingSurface) {

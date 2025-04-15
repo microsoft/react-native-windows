@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Implementation of adjustFontSizeToFit",
+  "comment": "Implementation of adjustFontSizeToFit for Text in Fabric",
   "packageName": "react-native-windows",
   "email": "kvineeth@microsoft.com",
   "dependentChangeType": "patch"
