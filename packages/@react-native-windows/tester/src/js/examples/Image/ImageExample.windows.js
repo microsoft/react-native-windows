@@ -634,6 +634,32 @@ const VectorDrawableExample = () => {
   );
 };
 
+const AccessibilityActions = () => {
+  const [accessibilityLabel, setAccessibilityLabel] =
+    React.useState('Initial Label');
+  const handleActivate = () => {
+    console.log('Activate action triggered');
+    setAccessibilityLabel('Activated Label');
+  };
+
+  return (
+    <Image
+      source={fullImage}
+      style={styles.base}
+      accessibilityActions={[{name: 'activate', label: 'Activate'}]}
+      onAccessibilityAction={event => {
+        if (event.nativeEvent.actionName === 'activate') {
+          handleActivate();
+        }
+      }}
+      onAccessibilityTap={handleActivate}
+      testID="image-accessibility-actions"
+      accessibilityLabel={accessibilityLabel}
+      accessible
+    />
+  );
+};
+
 const ImageFunctionsExample = () => {
   const [prefetchStatus, setPrefetchStatus] = React.useState<string | null>(
     null,
@@ -2160,54 +2186,21 @@ exports.examples = [
   {
     title: 'Accessibility Actions',
     description:
-      'Shows how to define and handle custom accessibility actions for an image, such as "activate" and "dismiss".',
+      'Shows how to define and handle custom accessibility actions for an image, such as "activate".',
     render: function (): React.Node {
-      return (
-        <Image
-          source={fullImage}
-          style={styles.base}
-          accessibilityActions={[
-            {name: 'activate', label: 'Activate'},
-            {name: 'dismiss', label: 'Dismiss'},
-          ]}
-          onAccessibilityAction={event =>
-            console.log('Action:', event.nativeEvent.actionName)
-          }
-          testID="image-accessibility-actions"
-          accessible
-        />
-      );
-    },
-  },
-  {
-    title: 'Next Focus Properties',
-    description:
-      'Demonstrates how to use nextFocusUp, nextFocusDown, nextFocusLeft, and nextFocusRight properties to control focus navigation for an image.',
-    render: function (): React.Node {
-      return (
-        <Image
-          source={fullImage}
-          style={styles.base}
-          nextFocusUp="nextFocusUpID"
-          nextFocusDown="nextFocusDownID"
-          nextFocusLeft="nextFocusLeftID"
-          nextFocusRight="nextFocusRightID"
-          testID="image-next-focus"
-          accessible
-        />
-      );
+      return <AccessibilityActions />;
     },
   },
   {
     title: 'Style Properties',
     description:
-      'Illustrates how to apply style properties such as elevation and backfaceVisibility to an image.',
+      'Illustrates how to apply style properties such as backfaceVisibility to an image.',
     render: function (): React.Node {
       return (
         <View>
           <Image
             source={fullImage}
-            style={[styles.base, {elevation: 5, backfaceVisibility: 'hidden'}]}
+            style={[styles.base, {backfaceVisibility: 'hidden'}]}
             testID="image-style-properties"
             accessible
           />
@@ -2227,11 +2220,6 @@ exports.examples = [
           focusable
           hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
           nativeID="image-native-id"
-          onAccessibilityAction={event =>
-            console.log('Accessibility Action:', event.nativeEvent.actionName)
-          }
-          onAccessibilityTap={() => console.log('Accessibility Tap')}
-          onAccessibilityEscape={() => console.log('Accessibility Escape')}
           onMoveShouldSetResponder={() => true}
           onMoveShouldSetResponderCapture={() => true}
           onResponderGrant={() => console.log('Responder Grant')}

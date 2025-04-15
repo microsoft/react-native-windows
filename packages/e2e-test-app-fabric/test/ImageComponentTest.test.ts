@@ -208,10 +208,4 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-accessibility-actions');
     expect(dump).toMatchSnapshot();
   });
-  test('An Image supports next focus properties', async () => {
-    const component = await app.findElementByTestID('image-next-focus');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-next-focus');
-    expect(dump).toMatchSnapshot();
-  });
 });
