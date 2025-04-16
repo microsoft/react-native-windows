@@ -66,10 +66,19 @@ void WindowsTextInputEventEmitter::onContentSizeChange(OnContentSizeChange event
     return textInputMetricsContentSizePayload(runtime, event);
   });
 }
-void WindowsTextInputEventEmitter::onPressIn(OnPressIn event) const {
-  dispatchEvent("textInputPressIn", [event = std::move(event)](jsi::Runtime &runtime) {
+
+void WindowsTextInputEventEmitter::onPressIn(const PressEvent &event) const {
+  dispatchEvent("textInputPressIn", [event](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
-    payload.setProperty(runtime, "target", event.target);
+    auto nativeEvent = jsi::Object(runtime);
+    nativeEvent.setProperty(runtime, "target", static_cast<double>(event.target));
+    nativeEvent.setProperty(runtime, "pageX", event.pagePoint.x);
+    nativeEvent.setProperty(runtime, "pageY", event.pagePoint.y);
+    nativeEvent.setProperty(runtime, "locationX", event.locationInView.x);
+    nativeEvent.setProperty(runtime, "locationY", event.locationInView.y);
+    nativeEvent.setProperty(runtime, "timestamp", event.timestamp);
+    nativeEvent.setProperty(runtime, "identifier", static_cast<double>(event.identifier));
+    payload.setProperty(runtime, "nativeEvent", nativeEvent);
     return payload;
   });
 }

@@ -46,4 +46,22 @@ void HostPlatformViewEventEmitter::onMouseLeave(PointerEvent const &pointerEvent
   dispatchEvent("mouseLeave", std::make_shared<PointerEvent>(pointerEvent), RawEvent::Category::ContinuousStart);
 }
 
+#pragma mark - Touch Events
+
+void HostPlatformViewEventEmitter::onPressIn(const PressEvent &event) const {
+  dispatchEvent("pressIn", [event](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    auto nativeEvent = jsi::Object(runtime);
+    nativeEvent.setProperty(runtime, "target", static_cast<double>(event.target));
+    nativeEvent.setProperty(runtime, "pageX", event.pagePoint.x);
+    nativeEvent.setProperty(runtime, "pageY", event.pagePoint.y);
+    nativeEvent.setProperty(runtime, "locationX", event.locationInView.x);
+    nativeEvent.setProperty(runtime, "locationY", event.locationInView.y);
+    nativeEvent.setProperty(runtime, "timestamp", event.timestamp);
+    nativeEvent.setProperty(runtime, "identifier", event.identifier);
+    payload.setProperty(runtime, "nativeEvent", nativeEvent);
+    return payload;
+  });
+}
+
 } // namespace facebook::react
