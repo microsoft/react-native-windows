@@ -150,7 +150,7 @@ describe('Text Tests', () => {
       'text-adjustfontsizetofit-0-a',
     );
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('text-adjustfontsizetofit-default-0-a');
+    const dump = await dumpVisualTree('text-adjustfontsizetofit-0-a');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 0 b', async () => {
@@ -158,7 +158,7 @@ describe('Text Tests', () => {
       'text-adjustfontsizetofit-0-b',
     );
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('text-adjustfontsizetofit-default-0-b');
+    const dump = await dumpVisualTree('text-adjustfontsizetofit-0-b');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 1 a', async () => {
@@ -166,7 +166,7 @@ describe('Text Tests', () => {
       'text-adjustfontsizetofit-1-a',
     );
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('text-adjustfontsizetofit-default-1-a');
+    const dump = await dumpVisualTree('text-adjustfontsizetofit-1-a');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 1 b', async () => {
@@ -174,7 +174,7 @@ describe('Text Tests', () => {
       'text-adjustfontsizetofit-1-b',
     );
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('text-adjustfontsizetofit-default-1-b');
+    const dump = await dumpVisualTree('text-adjustfontsizetofit-1-b');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 2 a', async () => {
@@ -182,7 +182,7 @@ describe('Text Tests', () => {
       'text-adjustfontsizetofit-2-a',
     );
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('text-adjustfontsizetofit-default-2-a');
+    const dump = await dumpVisualTree('text-adjustfontsizetofit-2-a');
     expect(dump).toMatchSnapshot();
   });
   test('Text can adjust its fontsize according to its limitations, case 2 b', async () => {
@@ -190,7 +190,7 @@ describe('Text Tests', () => {
       'text-adjustfontsizetofit-2-b',
     );
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('text-adjustfontsizetofit-default-2-b');
+    const dump = await dumpVisualTree('text-adjustfontsizetofit-2-b');
     expect(dump).toMatchSnapshot();
   });
 
