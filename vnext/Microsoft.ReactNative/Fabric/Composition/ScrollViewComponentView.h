@@ -147,6 +147,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_isHorizontal = false;
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
+  float m_scrollEventThrottle{0.0f};
+  std::chrono::steady_clock::time_point m_lastScrollEventTime{};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 };
 

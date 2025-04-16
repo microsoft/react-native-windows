@@ -769,6 +769,10 @@ void ScrollViewComponentView::updateProps(
   if (!oldProps || oldViewProps.decelerationRate != newViewProps.decelerationRate) {
     updateDecelerationRate(newViewProps.decelerationRate);
   }
+
+  if (!oldProps || oldViewProps.scrollEventThrottle != newViewProps.scrollEventThrottle) {
+    m_scrollEventThrottle = newViewProps.scrollEventThrottle;
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -1218,19 +1222,25 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
-        updateStateWithContentOffset();
-        auto eventEmitter = GetEventEmitter();
-        if (eventEmitter) {
-          facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
-          scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
-          scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
-          scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
-          scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
-          scrollMetrics.zoomScale = 1.0;
-          scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
-          scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
-          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
-              ->onScroll(scrollMetrics);
+        auto now = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastScrollEventTime).count();
+
+        if (elapsed >= m_scrollEventThrottle) {
+          m_lastScrollEventTime = now;
+          updateStateWithContentOffset();
+          auto eventEmitter = GetEventEmitter();
+          if (eventEmitter) {
+            facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
+            scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
+            scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
+            scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
+            scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
+            scrollMetrics.zoomScale = 1.0;
+            scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
+            scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
+            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+                ->onScroll(scrollMetrics);
+          }
         }
       });
 
