@@ -3,31 +3,245 @@
 exports[`LegacyImageTest ImageRTLTest 1`] = `
 {
   "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "image-container",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 0, 255)",
+    },
+    "Comment": "image-container",
+    "Offset": "0, 0, 0",
+    "Size": "500, 300",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "20, 0, 0",
+        "Size": "460, 10",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-20, 0, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-10, 20, 0",
+        "Size": "10, 260",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-20, -20, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "20, -10, 0",
+        "Size": "460, 10",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -20, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 20, 0",
+        "Size": "10, 260",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`LegacyImageTest ImageWithBorderTest 1`] = `
 {
   "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "image-container",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 0, 255)",
+    },
+    "Comment": "image-container",
+    "Offset": "0, 0, 0",
+    "Size": "500, 300",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "20, 0, 0",
+        "Size": "460, 10",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "-20, 0, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "-10, 20, 0",
+        "Size": "10, 260",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "-20, -20, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "20, -10, 0",
+        "Size": "460, 10",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "0, -20, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 255, 0, 85)",
+        },
+        "Offset": "0, 20, 0",
+        "Size": "10, 260",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`LegacyImageTest ImageWithoutBorderTest 1`] = `
 {
   "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "image-container",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 0, 255)",
+    },
+    "Comment": "image-container",
+    "Offset": "0, 0, 0",
+    "Size": "500, 300",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
 exports[`LegacyImageTest ImageWithoutBorderTestOneMoreClick 1`] = `
 {
   "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "image-container",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 0, 255)",
+    },
+    "Comment": "image-container",
+    "Offset": "0, 0, 0",
+    "Size": "500, 300",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "20, 0, 0",
+        "Size": "460, 10",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-20, 0, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-10, 20, 0",
+        "Size": "10, 260",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-20, -20, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "20, -10, 0",
+        "Size": "460, 10",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -20, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 20, 0",
+        "Size": "10, 260",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
