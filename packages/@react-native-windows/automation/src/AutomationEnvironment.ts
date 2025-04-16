@@ -6,7 +6,7 @@
  */
 
 import chalk from 'chalk';
-import {execSync, spawn, ChildProcess} from 'child_process';
+import {spawnSync, spawn, ChildProcess} from 'child_process';
 import fs from '@react-native-windows/fs';
 import path from 'path';
 import readlineSync from 'readline-sync';
@@ -199,7 +199,11 @@ export default class AutomationEnvironment extends NodeEnvironment {
 
       if (this.rootLaunchApp) {
         const appPackageName = resolveAppName(appName);
-        execSync(`start shell:AppsFolder\\${appPackageName}`);
+        spawnSync('cmd', [
+          '/c',
+          'start',
+          `shell:AppsFolder\\${appPackageName}`,
+        ]);
       }
 
       // Set up the "Desktop" or Root session
@@ -323,10 +327,10 @@ function resolveAppName(appName: string): string {
   }
 
   try {
-    const packageFamilyName = execSync(
-      `powershell (Get-AppxPackage -Name ${appName}).PackageFamilyName`,
-    )
-      .toString()
+    const packageFamilyName = spawnSync('powershell', [
+      `(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    ])
+      .stdout.toString()
       .trim();
 
     if (packageFamilyName.length === 0) {
