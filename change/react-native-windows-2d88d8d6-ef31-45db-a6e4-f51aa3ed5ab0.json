@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make ExperimentalFeatures overridable through props files",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

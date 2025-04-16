@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 16 Apr 2025 05:25:00 GMT",
+      "version": "0.0.0-canary.260",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.260",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "fcalise@gmail.com",
+            "package": "@react-native-windows/cli",
+            "commit": "82ae06a9b15189a4b180c0e09aeb0dd6ed035741",
+            "comment": "fix(cli): codegenWindows file glob for subpaths"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Apr 2025 05:22:08 GMT",
       "version": "0.0.0-canary.259",
       "tag": "@react-native-windows/cli_v0.0.0-canary.259",
