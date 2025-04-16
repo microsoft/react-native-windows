@@ -2,6 +2,56 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Apr 2025 05:24:25 GMT",
+      "version": "0.0.0-canary.940",
+      "tag": "react-native-windows_v0.0.0-canary.940",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e3da8102466c35973eb2b6dda52fa7f4348ce4fb",
+            "comment": "Implement decelerationRate in ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2de71985009cb62e7402d5e2aef4799e8da87242",
+            "comment": "Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Apr 2025 05:26:12 GMT",
+      "version": "0.0.0-canary.939",
+      "tag": "react-native-windows_v0.0.0-canary.939",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "96e9efada2ee9155eda1b1a70a725bf6fd63edb4",
+            "comment": "added check for double click on textInput component view connecting it to WM_LBUTTONDBLCLK"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "50497af0a1b78aa0c00f2bce0f9b776e61863cbd",
+            "comment": "Implement SpellCheck and AutoCorrect for TextInput"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d449c004271afb3d79f176f8b81c05ab48e3403e",
+            "comment": "Implement onProgress for Image"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Apr 2025 05:23:12 GMT",
       "version": "0.0.0-canary.938",
       "tag": "react-native-windows_v0.0.0-canary.938",

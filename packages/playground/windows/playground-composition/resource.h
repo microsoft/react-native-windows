@@ -26,6 +26,7 @@
 #define IDC_SIZETOCONTENT 112
 #define IDM_UNLOAD 113
 #define IDM_TOGGLE_LAYOUT_DIRECTION 114
+#define IDM_SETPROPS 115
 #define IDI_ICON1 1008
 
 // Next default values for new objects

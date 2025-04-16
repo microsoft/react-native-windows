@@ -6,13 +6,13 @@
 #include <NativeModules.h>
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
-#include <react/renderer/scheduler/SurfaceManager.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "Composition/ComponentViewRegistry.h"
 
 namespace facebook::react {
 class Scheduler;
 class ReactNativeConfig;
+class SurfaceHandler;
 } // namespace facebook::react
 
 namespace Microsoft::ReactNative {
@@ -47,6 +47,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::LayoutConstraints &layoutConstraints,
       const facebook::react::LayoutContext &layoutContext) const noexcept;
 
+  void setProps(facebook::react::SurfaceId surfaceId, const folly::dynamic &props) const noexcept;
+
   const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
   static winrt::Microsoft::ReactNative::ReactNotificationId<facebook::react::SurfaceId> NotifyMountedId() noexcept;
@@ -62,10 +64,13 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       facebook::react::SurfaceId surfaceId);
   void didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept;
 
+  void visit(
+      facebook::react::SurfaceId surfaceId,
+      const std::function<void(const facebook::react::SurfaceHandler &surfaceHandler)> &callback) const noexcept;
+
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   std::shared_ptr<facebook::react::Scheduler> m_scheduler;
-  std::shared_ptr<facebook::react::SurfaceManager> m_surfaceManager;
   std::mutex m_schedulerMutex; // Protect m_scheduler
   bool m_transactionInFlight{false};
   bool m_followUpTransactionRequired{false};
@@ -76,6 +81,9 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   };
 
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;
+
+  std::unordered_map<facebook::react::SurfaceId, facebook::react::SurfaceHandler> m_handlerRegistry{};
+  mutable std::shared_mutex m_handlerMutex;
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(
