@@ -341,6 +341,16 @@
             },
             "DevelopmentDependency": false
         }
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/fastfloat/fast_float",
+                  "CommitHash": "$(FastFloatCommitHash)"
+                }
+            },
+            "DevelopmentDependency": false
+        }
     ]
 }</CGManifestText>
     </PropertyGroup>
