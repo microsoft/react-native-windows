@@ -93,7 +93,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<char16_t> tmpArray;
       propValue.GetChar16Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (char16_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -103,7 +103,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<double_t> tmpArray;
       propValue.GetDoubleArray(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (double_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -123,7 +123,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<int16_t> tmpArray;
       propValue.GetInt16Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (int16_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -133,7 +133,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<int32_t> tmpArray;
       propValue.GetInt32Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (int32_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -143,7 +143,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<int64_t> tmpArray;
       propValue.GetInt64Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (int64_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -153,7 +153,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<float> tmpArray;
       propValue.GetSingleArray(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (float b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -173,7 +173,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<uint8_t> tmpArray;
       propValue.GetUInt8Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (uint8_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -183,7 +183,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<uint16_t> tmpArray;
       propValue.GetUInt16Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (uint16_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -193,7 +193,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<uint32_t> tmpArray;
       propValue.GetUInt32Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (uint32_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
@@ -203,7 +203,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
       com_array<uint64_t> tmpArray;
       propValue.GetUInt64Array(tmpArray);
       folly::dynamic d = folly::dynamic::array();
-      for (bool b : tmpArray) {
+      for (uint64_t b : tmpArray) {
         d.push_back(folly::dynamic(b));
       }
       value = d;
