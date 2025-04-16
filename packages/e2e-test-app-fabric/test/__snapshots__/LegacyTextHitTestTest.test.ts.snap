@@ -2,360 +2,120 @@
 
 exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextHitTestTest WrappedLTRInRTLFlowEdgeCaseNotPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;

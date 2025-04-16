@@ -2,314 +2,40 @@
 
 exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "textinput-log",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "onFocus
-<Log Start>",
-    "TextRangePattern.GetText": "onFocus
-<Log Start>",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "textinput-log",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-log",
-    "Offset": "0, 0, 0",
-    "Size": "998, 38",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextInputTest Click on multiline TextInput to move focus away from single line TextInput 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "textinput-log",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-    "TextRangePattern.GetText": "onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "textinput-log",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-log",
-    "Offset": "0, 0, 0",
-    "Size": "998, 75",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "textinput-log",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onFocus
-onEndEditing text: abc
-onBlur
-onSubmitEditing text: abc
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: def
-onSelectionChange range: 3,3
-onKeyPress key: f
-onChange text: de
-onSelectionChange range: 2,2
-onKeyPress key: e
-onChange text: d
-onSelectionChange range: 1,1
-onKeyPress key: d
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-    "TextRangePattern.GetText": "onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onFocus
-onEndEditing text: abc
-onBlur
-onSubmitEditing text: abc
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: def
-onSelectionChange range: 3,3
-onKeyPress key: f
-onChange text: de
-onSelectionChange range: 2,2
-onKeyPress key: e
-onChange text: d
-onSelectionChange range: 1,1
-onKeyPress key: d
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "textinput-log",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-log",
-    "Offset": "0, 0, 0",
-    "Size": "998, 839",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextInputTest Type abc on TextInput 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "textinput-log",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-    "TextRangePattern.GetText": "onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "textinput-log",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-log",
-    "Offset": "0, 0, 0",
-    "Size": "998, 261",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyTextInputTest Type abc on multiline TextInput then press Enter key 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "textinput-log",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "onSubmitEditing text: abc
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: def
-onSelectionChange range: 3,3
-onKeyPress key: f
-onChange text: de
-onSelectionChange range: 2,2
-onKeyPress key: e
-onChange text: d
-onSelectionChange range: 1,1
-onKeyPress key: d
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-    "TextRangePattern.GetText": "onSubmitEditing text: abc
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: def
-onSelectionChange range: 3,3
-onKeyPress key: f
-onChange text: de
-onSelectionChange range: 2,2
-onKeyPress key: e
-onChange text: d
-onSelectionChange range: 1,1
-onKeyPress key: d
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "textinput-log",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-log",
-    "Offset": "0, 0, 0",
-    "Size": "998, 690",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;

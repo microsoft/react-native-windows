@@ -54,21 +54,21 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
     },
     "Comment": "apis-tab",
     "Offset": "0, 0, 0",
-    "Size": "333, 65",
+    "Size": "328, 65",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "333, 65",
+        "Size": "328, 65",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "333, 65",
+            "Size": "328, 65",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "151, 13, 0",
+                "Offset": "149, 13, 0",
                 "Size": "30, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
@@ -80,13 +80,13 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                 ],
               },
               {
-                "Offset": "153, 33, 0",
-                "Size": "27, 19",
+                "Offset": "150, 33, 0",
+                "Size": "28, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "27, 19",
+                    "Size": "28, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -102,244 +102,25 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
 
 exports[`Home UIA Tree Dump Accessibility 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Accessibility",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Accessibility Examples of using Accessibility APIs.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Accessibility",
-        "TextRangePattern.GetText": "Accessibility",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Examples of using Accessibility APIs.",
-        "TextRangePattern.GetText": "Examples of using Accessibility APIs.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Accessibility Examples of using Accessibility APIs.",
-      "TestId": "Accessibility",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Accessibility",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "96, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "96, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Accessibility Windows",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Accessibility Windows Usage of accessibility properties.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Accessibility Windows",
-        "TextRangePattern.GetText": "Accessibility Windows",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Usage of accessibility properties.",
-        "TextRangePattern.GetText": "Usage of accessibility properties.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Accessibility Windows Usage of accessibility properties.",
-      "TestId": "Accessibility Windows",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Accessibility Windows",
-    "Offset": "0, 0, 0",
-    "Size": "966, 77",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "174, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "174, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "AccessibilityInfo",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "AccessibilityInfo Examples of using AccessibilityInfo APIs.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "AccessibilityInfo",
-        "TextRangePattern.GetText": "AccessibilityInfo",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Examples of using AccessibilityInfo APIs.",
-        "TextRangePattern.GetText": "Examples of using AccessibilityInfo APIs.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "AccessibilityInfo Examples of using AccessibilityInfo APIs.",
-      "TestId": "AccessibilityInfo",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "AccessibilityInfo",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "127, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "127, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -392,7 +173,7 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
     },
     "Comment": "ActivityIndicator",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -409,12 +190,12 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -426,487 +207,49 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
 
 exports[`Home UIA Tree Dump Alerts 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Alerts",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Alerts Alerts display a concise and informative message and prompt the user to make a decision.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Alerts",
-        "TextRangePattern.GetText": "Alerts",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Alerts display a concise and informative message and prompt the user to make a decision.",
-        "TextRangePattern.GetText": "Alerts display a concise and informative message and prompt the user to make a decision.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Alerts Alerts display a concise and informative message and prompt the user to make a decision.",
-      "TestId": "Alerts",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Alerts",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "46, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "46, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Animated - Gratuitous App",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Animated - Gratuitous App Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Animated - Gratuitous App",
-        "TextRangePattern.GetText": "Animated - Gratuitous App",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
-        "TextRangePattern.GetText": "Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Animated - Gratuitous App Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
-      "TestId": "Animated - Gratuitous App",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Animated - Gratuitous App",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "215, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "215, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Animated 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Animated",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Animated Library designed to make animations fluid, powerful, and painless to build and maintain.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Animated",
-        "TextRangePattern.GetText": "Animated",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Library designed to make animations fluid, powerful, and painless to build and maintain.",
-        "TextRangePattern.GetText": "Library designed to make animations fluid, powerful, and painless to build and maintain.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Animated Library designed to make animations fluid, powerful, and painless to build and maintain.",
-      "TestId": "Animated",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Animated",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "77, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "77, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump AppState 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "AppState",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "AppState app background status",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "AppState",
-        "TextRangePattern.GetText": "AppState",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "app background status",
-        "TextRangePattern.GetText": "app background status",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "AppState app background status",
-      "TestId": "AppState",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "AppState",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "73, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "73, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Appearance 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Appearance",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Appearance Light and dark user interface examples.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Appearance",
-        "TextRangePattern.GetText": "Appearance",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Light and dark user interface examples.",
-        "TextRangePattern.GetText": "Light and dark user interface examples.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Appearance Light and dark user interface examples.",
-      "TestId": "Appearance",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Appearance",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "95, 24",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "95, 24",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Border 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Border",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Border Demonstrates some of the border styles available to Views.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Border",
-        "TextRangePattern.GetText": "Border",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Demonstrates some of the border styles available to Views.",
-        "TextRangePattern.GetText": "Demonstrates some of the border styles available to Views.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Border Demonstrates some of the border styles available to Views.",
-      "TestId": "Border",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Border",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "54, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "54, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -959,7 +302,7 @@ exports[`Home UIA Tree Dump Button 1`] = `
     },
     "Comment": "Button",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "952, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -976,12 +319,12 @@ exports[`Home UIA Tree Dump Button 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1045,17 +388,17 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
     },
     "Comment": "components-tab",
     "Offset": "0, 0, 0",
-    "Size": "333, 65",
+    "Size": "328, 65",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "333, 65",
+        "Size": "328, 65",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "333, 65",
+            "Size": "328, 65",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1099,7 +442,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "156, 14, 0",
+                "Offset": "154, 14, 0",
                 "Size": "20, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
@@ -1111,7 +454,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 ],
               },
               {
-                "Offset": "126, 34, 0",
+                "Offset": "124, 34, 0",
                 "Size": "80, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
@@ -1133,487 +476,49 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
 
 exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Composition Bugs Example",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Composition Bugs Example See bugs in UI.Composition driven native animations",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Composition Bugs Example",
-        "TextRangePattern.GetText": "Composition Bugs Example",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "See bugs in UI.Composition driven native animations",
-        "TextRangePattern.GetText": "See bugs in UI.Composition driven native animations",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Composition Bugs Example See bugs in UI.Composition driven native animations",
-      "TestId": "Composition Bugs Example",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Composition Bugs Example",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "217, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "217, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Crash 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Crash",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Crash Crash examples.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Crash",
-        "TextRangePattern.GetText": "Crash",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Crash examples.",
-        "TextRangePattern.GetText": "Crash examples.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Crash Crash examples.",
-      "TestId": "Crash",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Crash",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "45, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "45, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Cxx TurboModule",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Cxx TurboModule Usage of Cxx TurboModule",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Cxx TurboModule",
-        "TextRangePattern.GetText": "Cxx TurboModule",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Usage of Cxx TurboModule",
-        "TextRangePattern.GetText": "Usage of Cxx TurboModule",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Cxx TurboModule Usage of Cxx TurboModule",
-      "TestId": "Cxx TurboModule",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Cxx TurboModule",
-    "Offset": "0, 0, 0",
-    "Size": "966, 77",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "141, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "141, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump DevSettings 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "DevSettings",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "DevSettings Customize the development settings",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "DevSettings",
-        "TextRangePattern.GetText": "DevSettings",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Customize the development settings",
-        "TextRangePattern.GetText": "Customize the development settings",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "DevSettings Customize the development settings",
-      "TestId": "DevSettings",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "DevSettings",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "95, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "95, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Dimensions 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Dimensions",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Dimensions Dimensions of the viewport",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Dimensions",
-        "TextRangePattern.GetText": "Dimensions",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Dimensions of the viewport",
-        "TextRangePattern.GetText": "Dimensions of the viewport",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Dimensions Dimensions of the viewport",
-      "TestId": "Dimensions",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Dimensions",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "93, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "93, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Display: contents 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Display: contents",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Display: contents Demonstrates various ways display: contents may be used in the tree",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Display: contents",
-        "TextRangePattern.GetText": "Display: contents",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Demonstrates various ways display: contents may be used in the tree",
-        "TextRangePattern.GetText": "Demonstrates various ways display: contents may be used in the tree",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Display: contents Demonstrates various ways display: contents may be used in the tree",
-      "TestId": "Display: contents",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Display: contents",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "135, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -1666,7 +571,7 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
     },
     "Comment": "Display:none Style",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1683,12 +588,12 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1747,7 +652,7 @@ exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
     },
     "Comment": "Drawing Island Example",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1764,12 +669,12 @@ exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1828,7 +733,7 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
     },
     "Comment": "Fabric Native Component",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1845,12 +750,12 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1909,7 +814,7 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
     },
     "Comment": "Fabric Native Component Yoga",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1926,12 +831,12 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1990,7 +895,7 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
     },
     "Comment": "Fast Path Texts",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2007,12 +912,12 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2024,82 +929,9 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
 
 exports[`Home UIA Tree Dump Filter 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Filter",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Filter A set of graphical effects that can be applied to a view.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Filter",
-        "TextRangePattern.GetText": "Filter",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "A set of graphical effects that can be applied to a view.",
-        "TextRangePattern.GetText": "A set of graphical effects that can be applied to a view.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Filter A set of graphical effects that can be applied to a view.",
-      "TestId": "Filter",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Filter",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "40, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "40, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -2152,7 +984,7 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
     },
     "Comment": "FlatList",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2169,12 +1001,12 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2233,7 +1065,7 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
     },
     "Comment": "Flyout",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2250,12 +1082,12 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2314,7 +1146,7 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
     },
     "Comment": "Glyph UWP",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2331,12 +1163,12 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2395,7 +1227,7 @@ exports[`Home UIA Tree Dump Image 1`] = `
     },
     "Comment": "Image",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2412,12 +1244,12 @@ exports[`Home UIA Tree Dump Image 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2429,244 +1261,25 @@ exports[`Home UIA Tree Dump Image 1`] = `
 
 exports[`Home UIA Tree Dump Keyboard 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Keyboard",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Keyboard Demonstrates usage of the "Keyboard" static API",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Keyboard",
-        "TextRangePattern.GetText": "Keyboard",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Demonstrates usage of the "Keyboard" static API",
-        "TextRangePattern.GetText": "Demonstrates usage of the "Keyboard" static API",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Keyboard Demonstrates usage of the "Keyboard" static API",
-      "TestId": "Keyboard",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Keyboard",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "76, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "76, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 16",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 16",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Keyboard 2`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Keyboard",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Keyboard Demonstrates usage of the "Keyboard" static API",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Keyboard",
-        "TextRangePattern.GetText": "Keyboard",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Demonstrates usage of the "Keyboard" static API",
-        "TextRangePattern.GetText": "Demonstrates usage of the "Keyboard" static API",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Keyboard Demonstrates usage of the "Keyboard" static API",
-      "TestId": "Keyboard",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Keyboard",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "76, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "76, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 16",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 16",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Keyboard Focus Example",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Keyboard Focus Example Demo of keyboard focus.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Keyboard Focus Example",
-        "TextRangePattern.GetText": "Keyboard Focus Example",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Demo of keyboard focus.",
-        "TextRangePattern.GetText": "Demo of keyboard focus.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Keyboard Focus Example Demo of keyboard focus.",
-      "TestId": "Keyboard Focus Example",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Keyboard Focus Example",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "198, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "198, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -2719,7 +1332,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
     },
     "Comment": "Keyboard extension Example",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "952, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2736,12 +1349,12 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2753,244 +1366,25 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
 
 exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Layout - Flexbox",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Layout - Flexbox Examples of using the flexbox API to layout views.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Layout - Flexbox",
-        "TextRangePattern.GetText": "Layout - Flexbox",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Examples of using the flexbox API to layout views.",
-        "TextRangePattern.GetText": "Examples of using the flexbox API to layout views.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Layout - Flexbox Examples of using the flexbox API to layout views.",
-      "TestId": "Layout - Flexbox",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Layout - Flexbox",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "131, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "131, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Layout Events 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Layout Events",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Layout Events Examples that show how Layout events can be used to measure view size and position.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Layout Events",
-        "TextRangePattern.GetText": "Layout Events",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Examples that show how Layout events can be used to measure view size and position.",
-        "TextRangePattern.GetText": "Examples that show how Layout events can be used to measure view size and position.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Layout Events Examples that show how Layout events can be used to measure view size and position.",
-      "TestId": "Layout Events",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Layout Events",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "110, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "110, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Legacy Native Module",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Legacy Native Module Usage of legacy Native Module",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Legacy Native Module",
-        "TextRangePattern.GetText": "Legacy Native Module",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Usage of legacy Native Module",
-        "TextRangePattern.GetText": "Usage of legacy Native Module",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Legacy Native Module Usage of legacy Native Module",
-      "TestId": "Legacy Native Module",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Legacy Native Module",
-    "Offset": "0, 0, 0",
-    "Size": "966, 77",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "177, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "177, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -3043,7 +1437,7 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
     },
     "Comment": "LegacyControlStyleTest",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3060,12 +1454,12 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3124,7 +1518,7 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
     },
     "Comment": "LegacyImageTest",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3141,12 +1535,12 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3205,7 +1599,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
     },
     "Comment": "LegacyLoginTest",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3222,12 +1616,12 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3286,7 +1680,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
     },
     "Comment": "LegacySelectableTextTest",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3303,12 +1697,12 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3367,7 +1761,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
     },
     "Comment": "LegacyTextHitTestTest",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3384,12 +1778,12 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "920, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "920, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3448,7 +1842,7 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
     },
     "Comment": "LegacyTextInputTest",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3465,12 +1859,12 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3482,82 +1876,9 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
 
 exports[`Home UIA Tree Dump Linking 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Linking",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Linking Shows how to use Linking to open URLs.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Linking",
-        "TextRangePattern.GetText": "Linking",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Shows how to use Linking to open URLs.",
-        "TextRangePattern.GetText": "Shows how to use Linking to open URLs.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Linking Shows how to use Linking to open URLs.",
-      "TestId": "Linking",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Linking",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "58, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "58, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -3610,7 +1931,7 @@ exports[`Home UIA Tree Dump Modal 1`] = `
     },
     "Comment": "Modal",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3627,12 +1948,12 @@ exports[`Home UIA Tree Dump Modal 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3644,163 +1965,17 @@ exports[`Home UIA Tree Dump Modal 1`] = `
 
 exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Mouse Click Events",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Mouse Click Events Tests that mouse click events work on intended components",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Mouse Click Events",
-        "TextRangePattern.GetText": "Mouse Click Events",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Tests that mouse click events work on intended components",
-        "TextRangePattern.GetText": "Tests that mouse click events work on intended components",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Mouse Click Events Tests that mouse click events work on intended components",
-      "TestId": "Mouse Click Events",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Mouse Click Events",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "152, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "152, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Mouse Events 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Mouse Events",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Mouse Events Tests that mouse events can be observed",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Mouse Events",
-        "TextRangePattern.GetText": "Mouse Events",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Tests that mouse events can be observed",
-        "TextRangePattern.GetText": "Tests that mouse events can be observed",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Mouse Events Tests that mouse events can be observed",
-      "TestId": "Mouse Events",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Mouse Events",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "110, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "110, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -3853,7 +2028,7 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
     },
     "Comment": "Moving Light Example",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3870,12 +2045,12 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3887,82 +2062,9 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
 
 exports[`Home UIA Tree Dump Native Animated Example 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Native Animated Example",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Native Animated Example Test out Native Animations",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Native Animated Example",
-        "TextRangePattern.GetText": "Native Animated Example",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Test out Native Animations",
-        "TextRangePattern.GetText": "Test out Native Animations",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Native Animated Example Test out Native Animations",
-      "TestId": "Native Animated Example",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Native Animated Example",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "205, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "205, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -4015,7 +2117,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
     },
     "Comment": "New App Screen",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4032,12 +2134,12 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4049,163 +2151,17 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
 
 exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "PanResponder Sample",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "PanResponder Sample Shows the Use of PanResponder to provide basic gesture handling",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "PanResponder Sample",
-        "TextRangePattern.GetText": "PanResponder Sample",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Shows the Use of PanResponder to provide basic gesture handling",
-        "TextRangePattern.GetText": "Shows the Use of PanResponder to provide basic gesture handling",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "PanResponder Sample Shows the Use of PanResponder to provide basic gesture handling",
-      "TestId": "PanResponder Sample",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "PanResponder Sample",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "178, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "178, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 16",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 16",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Performance API Examples 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Performance API Examples",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Performance API Examples Shows the performance API provided in React Native",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Performance API Examples",
-        "TextRangePattern.GetText": "Performance API Examples",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Shows the performance API provided in React Native",
-        "TextRangePattern.GetText": "Shows the performance API provided in React Native",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Performance API Examples Shows the performance API provided in React Native",
-      "TestId": "Performance API Examples",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Performance API Examples",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "211, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "211, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -4258,7 +2214,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
     },
     "Comment": "Performance Comparison Examples",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "952, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4275,12 +2231,12 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4292,244 +2248,25 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
 
 exports[`Home UIA Tree Dump PixelRatio 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "PixelRatio",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "PixelRatio Gives access to device's pixel density and font scale",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "PixelRatio",
-        "TextRangePattern.GetText": "PixelRatio",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Gives access to device's pixel density and font scale",
-        "TextRangePattern.GetText": "Gives access to device's pixel density and font scale",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "PixelRatio Gives access to device's pixel density and font scale",
-      "TestId": "PixelRatio",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "PixelRatio",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "78, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "78, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump PlatformColor 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "PlatformColor",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "PlatformColor Examples that show how PlatformColors may be used in an app.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "PlatformColor",
-        "TextRangePattern.GetText": "PlatformColor",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Examples that show how PlatformColors may be used in an app.",
-        "TextRangePattern.GetText": "Examples that show how PlatformColors may be used in an app.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "PlatformColor Examples that show how PlatformColors may be used in an app.",
-      "TestId": "PlatformColor",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "PlatformColor",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "111, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "111, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Home UIA Tree Dump Pointer Events 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Pointer Events",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Pointer Events Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Pointer Events",
-        "TextRangePattern.GetText": "Pointer Events",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
-        "TextRangePattern.GetText": "Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Pointer Events Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
-      "TestId": "Pointer Events",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Pointer Events",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "113, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "113, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -4582,7 +2319,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
     },
     "Comment": "Popup",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4599,12 +2336,12 @@ exports[`Home UIA Tree Dump Popup 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4663,7 +2400,7 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
     },
     "Comment": "Pressable",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4680,12 +2417,12 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4697,82 +2434,9 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
 
 exports[`Home UIA Tree Dump RTLExample 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "RTLExample",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "RTLExample Examples to show how to apply components to RTL layout.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "RTLExample",
-        "TextRangePattern.GetText": "RTLExample",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Examples to show how to apply components to RTL layout.",
-        "TextRangePattern.GetText": "Examples to show how to apply components to RTL layout.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "RTLExample Examples to show how to apply components to RTL layout.",
-      "TestId": "RTLExample",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "RTLExample",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "95, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "95, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -4825,7 +2489,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
     },
     "Comment": "ScrollView",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4842,12 +2506,12 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4906,7 +2570,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
     },
     "Comment": "ScrollViewAnimated",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4923,12 +2587,12 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4987,7 +2651,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
     },
     "Comment": "ScrollViewSimpleExample",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5004,12 +2668,12 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "920, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "920, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5039,7 +2703,7 @@ exports[`Home UIA Tree Dump Search Bar 1`] = `
   "Visual Tree": {
     "Comment": "explorer_search",
     "Offset": "0, 0, 0",
-    "Size": "938, 35",
+    "Size": "924, 35",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5057,7 +2721,7 @@ exports[`Home UIA Tree Dump Search Bar 1`] = `
           "Color": "rgba(60, 60, 67, 45)",
         },
         "Offset": "7, 0, 0",
-        "Size": "924, 1",
+        "Size": "910, 1",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -5093,7 +2757,7 @@ exports[`Home UIA Tree Dump Search Bar 1`] = `
           "Color": "rgba(60, 60, 67, 45)",
         },
         "Offset": "7, -1, 0",
-        "Size": "924, 1",
+        "Size": "910, 1",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -5178,7 +2842,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
     },
     "Comment": "SectionList",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5195,12 +2859,12 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5212,82 +2876,9 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
 
 exports[`Home UIA Tree Dump Share 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Share",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Share Share data with other Apps.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Share",
-        "TextRangePattern.GetText": "Share",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Share data with other Apps.",
-        "TextRangePattern.GetText": "Share data with other Apps.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Share Share data with other Apps.",
-      "TestId": "Share",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Share",
-    "Offset": "0, 0, 0",
-    "Size": "966, 77",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "45, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "45, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -5340,7 +2931,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
     },
     "Comment": "SwipeableCard",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5357,12 +2948,12 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5421,7 +3012,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
     },
     "Comment": "Switch",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5438,12 +3029,12 @@ exports[`Home UIA Tree Dump Switch 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5502,7 +3093,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
     },
     "Comment": "Text",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5519,12 +3110,12 @@ exports[`Home UIA Tree Dump Text 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5583,7 +3174,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
     },
     "Comment": "TextInput",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5600,12 +3191,12 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5664,7 +3255,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
     },
     "Comment": "TextInputs with key prop",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "952, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5681,12 +3272,12 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5698,82 +3289,9 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
 
 exports[`Home UIA Tree Dump Timers 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Timers",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Timers A demonstration of Timers in React Native.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Timers",
-        "TextRangePattern.GetText": "Timers",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "A demonstration of Timers in React Native.",
-        "TextRangePattern.GetText": "A demonstration of Timers in React Native.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Timers A demonstration of Timers in React Native.",
-      "TestId": "Timers",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Timers",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "53, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "53, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -5826,7 +3344,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
     },
     "Comment": "Touchable* and onPress",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5843,12 +3361,12 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5907,7 +3425,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
     },
     "Comment": "TransferProperties",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5924,12 +3442,12 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5941,82 +3459,9 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
 
 exports[`Home UIA Tree Dump Transforms 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "Transforms",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Transforms View transforms",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Transforms",
-        "TextRangePattern.GetText": "Transforms",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "View transforms",
-        "TextRangePattern.GetText": "View transforms",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Transforms View transforms",
-      "TestId": "Transforms",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Transforms",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "87, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "87, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -6069,7 +3514,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
     },
     "Comment": "TransparentHitTestExample",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6086,12 +3531,12 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6103,82 +3548,9 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
 
 exports[`Home UIA Tree Dump TurboModule 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "TurboModule",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "TurboModule Usage of TurboModule",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "TurboModule",
-        "TextRangePattern.GetText": "TurboModule",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Usage of TurboModule",
-        "TextRangePattern.GetText": "Usage of TurboModule",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "TurboModule Usage of TurboModule",
-      "TestId": "TurboModule",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "TurboModule",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "109, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "109, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -6231,7 +3603,7 @@ exports[`Home UIA Tree Dump View 1`] = `
     },
     "Comment": "View",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6248,12 +3620,12 @@ exports[`Home UIA Tree Dump View 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6265,82 +3637,9 @@ exports[`Home UIA Tree Dump View 1`] = `
 
 exports[`Home UIA Tree Dump WebSocket 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "WebSocket",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "WebSocket WebSocket API",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "WebSocket",
-        "TextRangePattern.GetText": "WebSocket",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "WebSocket API",
-        "TextRangePattern.GetText": "WebSocket API",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "WebSocket WebSocket API",
-      "TestId": "WebSocket",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "WebSocket",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "89, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "89, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
@@ -6393,7 +3692,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
     },
     "Comment": "XAML",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6410,12 +3709,12 @@ exports[`Home UIA Tree Dump XAML 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6474,7 +3773,7 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
     },
     "Comment": "XMLHttpRequest",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6491,12 +3790,12 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6555,7 +3854,7 @@ exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
     },
     "Comment": "Xaml WinUI3 (Experimental, for Fabric)",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "952, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6572,12 +3871,12 @@ exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "920, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "920, 17",
             "Visual Type": "SpriteVisual",
           },
         ],

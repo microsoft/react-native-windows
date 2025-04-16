@@ -2,96 +2,32 @@
 
 exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "pressed-state",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "pressed-state",
-    "Offset": "0, 0, 0",
-    "Size": "103, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
