@@ -10,6 +10,7 @@ REM /rn [version]   Use react-native@version (default: latest)
 REM /rnw [version]  Use react-native-windows@version (default: latest)
 REM /lt [template]  Use create-react-native-library template (default: turbo-module)
 REM /linkrnw        Use your local RNW repo at RNW_ROOT
+REM /verdaccio      Configure new project to use verdaccio (used in CI)
 REM
 REM Requirements:
 REM - You've set the RNW_ROOT environment variable with the path to your clone
@@ -31,6 +32,7 @@ set RNCLI_VERSION=
 set RNW_VERSION=
 
 set LINK_RNW=0
+set USE_VERDACCIO=0
 
 :loop
 set part=%1
@@ -38,6 +40,8 @@ set param=%2
 if not "%part%"=="" (
   if "%part%"=="/linkrnw" (
       set LINK_RNW=1
+  ) else if "%part%"=="/verdaccio" (
+      set USE_VERDACCIO=1
   ) else if "%part%"=="/r" (
       set R_VERSION=%param%
       shift
@@ -60,6 +64,11 @@ if not "%part%"=="" (
   goto :loop
 )
 :loopend
+
+if %USE_VERDACCIO% equ 1 (
+  @echo creaternwlib.cmd: Setting npm to use verdaccio at http://localhost:4873
+  call npm config set registry http://localhost:4873
+)
 
 if %LINK_RNW% equ 1 (
   @echo creaternwlib.cmd Determining versions from local RNW repo at %RNW_ROOT%
@@ -121,7 +130,15 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   popd
 )
 
+@echo creaternwlib.cmd: Calling yarn install
 call yarn install
+
+if %USE_VERDACCIO% equ 1 (
+  @echo creaternwlib.cmd: Setting yarn to use verdaccio at http://localhost:4873
+  call yarn config set registry http://localhost:4873
+  call yarn config set npmRegistryServer http://localhost:4873
+  call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
+)
 
 @echo creaternwlib.cmd Adding RNW dependency to library
 call yarn add react-native-windows@%RNW_VERSION% --dev
@@ -132,6 +149,7 @@ if %LINK_RNW% equ 1 (
   call yarn link %RNW_ROOT%\vnext
 )
 
+@echo creaternwlib.cmd: Calling yarn install
 call yarn install
 
 @echo creaternwlib.cmd Creating commit to save current state

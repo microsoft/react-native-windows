@@ -1,8 +1,44 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 08 Apr 2025 05:22:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 15 Apr 2025 05:24:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.940
+
+Tue, 15 Apr 2025 05:24:25 GMT
+
+### Changes
+
+- Implement decelerationRate in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.939
+
+Sat, 12 Apr 2025 05:26:12 GMT
+
+### Changes
+
+- Implement SpellCheck and AutoCorrect for TextInput (54227869+anupriya13@users.noreply.github.com)
+- Implement onProgress for Image (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.938
+
+Thu, 10 Apr 2025 05:23:12 GMT
+
+### Changes
+
+- Add ImageRequestParams (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.937
+
+Wed, 09 Apr 2025 05:23:40 GMT
+
+### Changes
+
+- Enforce SendPendingMessages in dispatch queue (julio.rocha@microsoft.com)
+- Fix Narrator Bug (34109996+chiaramooney@users.noreply.github.com)
+- Use creaternwapp.cmd and creaternwlib.cmd scripts to create new projects in CI (jthysell@microsoft.com)
 
 ## 0.0.0-canary.936
 
