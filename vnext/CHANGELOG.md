@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 10 Apr 2025 05:23:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 16 Apr 2025 05:25:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.941
+
+Wed, 16 Apr 2025 05:25:01 GMT
+
+### Changes
+
+- Add SetProperties method to ReactNativeIsland (30809111+acoates-ms@users.noreply.github.com)
+- Make ExperimentalFeatures overridable through props files (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.260
+
+## 0.0.0-canary.940
+
+Tue, 15 Apr 2025 05:24:25 GMT
+
+### Changes
+
+- Implement decelerationRate in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.939
+
+Sat, 12 Apr 2025 05:26:12 GMT
+
+### Changes
+
+- Implement SpellCheck and AutoCorrect for TextInput (54227869+anupriya13@users.noreply.github.com)
+- Implement onProgress for Image (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.938
 

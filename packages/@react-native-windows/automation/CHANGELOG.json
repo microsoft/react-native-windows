@@ -2,6 +2,51 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Wed, 16 Apr 2025 05:25:01 GMT",
+      "version": "0.3.363",
+      "tag": "@react-native-windows/automation_v0.3.363",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.281",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Apr 2025 05:24:26 GMT",
+      "version": "0.3.362",
+      "tag": "@react-native-windows/automation_v0.3.362",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.280",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Apr 2025 05:26:12 GMT",
+      "version": "0.3.361",
+      "tag": "@react-native-windows/automation_v0.3.361",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.279",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Apr 2025 05:23:12 GMT",
       "version": "0.3.360",
       "tag": "@react-native-windows/automation_v0.3.360",
