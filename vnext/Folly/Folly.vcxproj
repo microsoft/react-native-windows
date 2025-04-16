@@ -290,6 +290,10 @@
     <FollyZipFile>$(FollyZipDir)\folly-$(FollyVersion).zip</FollyZipFile>
     <CGManifestFile>$(MSBuildThisFileDirectory)cgmanifest.json</CGManifestFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <FastFloatZipDir>$(FollyDir)..\.fastfloatzip</FastFloatZipDir>
+    <FastFloatZipFile>$(FollyDir)..\.fastfloatzip\fastfloat.zip</FastFloatZipFile>
+  </PropertyGroup>
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild" Inputs="$(FollyZipFile)" Outputs="$(FollyZipFile)">
     <Message Importance="High" Text="Downloading folly..." />
     <DownloadFile
@@ -298,12 +302,12 @@
       DestinationFolder="$(FollyZipDir)"
       Retries="10" />
   </Target>
-  <Target Name="DownloadFastFloat" BeforeTargets="PrepareForBuild" Inputs="$(FollyDir)..\.fastfloatzip\fastfloat.zip" Outputs="$(FollyDir)..\.fastfloatzip\fastfloat.zip">
+  <Target Name="DownloadFastFloat" BeforeTargets="PrepareForBuild" Inputs="$(FastFloatZipFile)" Outputs="$(FastFloatZipFile)">
     <Message Importance="High" Text="Downloading FastFloat (folly dependency)..." />
     <DownloadFile
-      SourceUrl="https://github.com/fastfloat/fast_float/archive/refs/tags/v6.1.4.zip"
-      DestinationFileName="$(FollyDir)..\.fastfloatzip\fastfloat.zip"
-      DestinationFolder="$(FollyDir)..\.fastfloatzip"
+      SourceUrl="https://github.com/fastfloat/fast_float/archive/refs/tags/v$(FastFloatVersion).zip"
+      DestinationFileName="$(FastFloatZipFile)"
+      DestinationFolder="$(FastFloatZipDir)"
       Retries="10" />
   </Target>
   <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
@@ -315,10 +319,10 @@
       OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="UnzipFastFloat" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFastFloat">
-    <Message Condition="!Exists('$(FollyDir)..\.fastfloatzip\dynamic.h')" Importance="High" Text="Unzipping FastFloat to $([MSBuild]::NormalizePath($(FollyDir)..))." />
+    <Message Condition="!Exists('$(FastFloatZipDir)\include\fast_float.h')" Importance="High" Text="Unzipping FastFloat to $([MSBuild]::NormalizePath($(FastFloatZipDir)..))." />
     <Unzip
-      Condition="!Exists('$(FollyDir)..\.fastfloatzip\dynamic.h')"
-      SourceFiles="$(FollyDir)..\.fastfloatzip\fastfloat.zip"
+      Condition="!Exists('$(FastFloatZipDir)\include\fast_float.h')"
+      SourceFiles="$(FastFloatZipFile)"
       DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))"
       OverwriteReadOnlyFiles="true" />
   </Target>
