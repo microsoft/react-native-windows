@@ -119,6 +119,9 @@ namespace Microsoft.ReactNative
     Microsoft.ReactNative.Composition.Theme Theme { get; };
     Int64 RootTag { get; };
 
+    DOC_STRING("Initial props should be set on ReactViewHost. This is used to update props after the initial props are set")
+    void SetProperties(JSValueArgWriter props);
+
 #ifdef USE_WINUI3
     Microsoft.UI.Content.ContentIsland Island { get; };
 #endif

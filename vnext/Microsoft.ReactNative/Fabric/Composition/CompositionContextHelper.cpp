@@ -836,6 +836,10 @@ struct CompScrollerVisual : winrt::implements<
     UpdateInteractionModes();
   }
 
+  void SetDecelerationRate(winrt::Windows::Foundation::Numerics::float3 const &decelerationRate) noexcept {
+    m_interactionTracker.PositionInertiaDecayRate(decelerationRate);
+  }
+
   void Opacity(float opacity) noexcept {
     m_visual.Opacity(opacity);
   }

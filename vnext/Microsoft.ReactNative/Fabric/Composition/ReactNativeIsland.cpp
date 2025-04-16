@@ -195,6 +195,8 @@ void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewH
     return;
   }
 
+  m_props = nullptr;
+
   if (m_reactViewHost) {
     UninitRootView();
     m_reactViewHost.DetachViewInstance();
@@ -577,7 +579,9 @@ void ReactNativeIsland::ShowInstanceLoaded() noexcept {
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
 
     m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
-    auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+
+    auto initProps =
+        m_props.isNull() ? m_props : DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
     }
@@ -963,6 +967,24 @@ void ReactNativeIsland::OnUnmounted() noexcept {
   if (auto componentView = GetComponentView()) {
     componentView->onUnmounted();
   }
+}
+
+void ReactNativeIsland::SetProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept {
+  auto initProps = DynamicWriter::ToDynamic(props);
+  if (initProps.isNull()) {
+    initProps = folly::dynamic::object();
+  }
+
+  if (m_isJSViewAttached) {
+    if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
+      initProps["concurrentRoot"] = true;
+      fabricuiManager->setProps(static_cast<facebook::react::SurfaceId>(m_rootTag), initProps);
+      return;
+    }
+  }
+
+  m_props = initProps;
 }
 
 winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>

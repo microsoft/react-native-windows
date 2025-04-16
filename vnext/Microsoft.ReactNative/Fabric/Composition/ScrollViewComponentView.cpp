@@ -83,7 +83,7 @@ struct ScrollBarComponent {
   void ContentSize(winrt::Windows::Foundation::Size contentSize) noexcept {
     m_contentSize = contentSize;
     updateThumb();
-    updateVisibility();
+    updateVisibility(m_visible);
   }
 
   void updateTrack() noexcept {
@@ -108,10 +108,16 @@ struct ScrollBarComponent {
 
     updateTrack();
     updateThumb();
-    updateVisibility();
+    updateVisibility(m_visible);
   }
 
-  void updateVisibility() noexcept {
+  void updateVisibility(bool visible) noexcept {
+    if (!visible) {
+      m_visible = false;
+      m_rootVisual.IsVisible(visible);
+      return;
+    }
+
     bool newVisibility = false;
     if (m_vertical) {
       newVisibility = (m_contentSize.Height > m_size.Height);
@@ -119,10 +125,8 @@ struct ScrollBarComponent {
       newVisibility = (m_contentSize.Width > m_size.Width);
     }
 
-    if (newVisibility != m_visible) {
-      m_visible = newVisibility;
-      m_rootVisual.IsVisible(m_visible);
-    }
+    m_visible = newVisibility;
+    m_rootVisual.IsVisible(m_visible);
   }
 
   void updateRootAndArrowVisualOffsets() noexcept {
@@ -561,7 +565,7 @@ struct ScrollBarComponent {
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   const bool m_vertical;
-  bool m_visible{false};
+  bool m_visible{true};
   bool m_shy{false};
   int m_thumbSize{0};
   float m_arrowSize{0};
@@ -752,6 +756,18 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
     m_scrollVisual.Horizontal(newViewProps.horizontal);
+  }
+
+  if (!oldProps || oldViewProps.showsHorizontalScrollIndicator != newViewProps.showsHorizontalScrollIndicator) {
+    updateShowsHorizontalScrollIndicator(newViewProps.showsHorizontalScrollIndicator);
+  }
+
+  if (!oldProps || oldViewProps.showsVerticalScrollIndicator != newViewProps.showsVerticalScrollIndicator) {
+    updateShowsVerticalScrollIndicator(newViewProps.showsVerticalScrollIndicator);
+  }
+
+  if (!oldProps || oldViewProps.decelerationRate != newViewProps.decelerationRate) {
+    updateDecelerationRate(newViewProps.decelerationRate);
   }
 }
 
@@ -1316,4 +1332,23 @@ double ScrollViewComponentView::getHorizontalSize() noexcept {
   return std::min((m_layoutMetrics.frame.size.width / m_contentSize.width * 100.0), 100.0);
 }
 
+void ScrollViewComponentView::updateShowsHorizontalScrollIndicator(bool value) noexcept {
+  if (value) {
+    m_horizontalScrollbarComponent->updateVisibility(true);
+  } else {
+    m_horizontalScrollbarComponent->updateVisibility(false);
+  }
+}
+
+void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noexcept {
+  if (value) {
+    m_verticalScrollbarComponent->updateVisibility(true);
+  } else {
+    m_verticalScrollbarComponent->updateVisibility(false);
+  }
+}
+
+void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
+  m_scrollVisual.SetDecelerationRate({value, value, value});
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
