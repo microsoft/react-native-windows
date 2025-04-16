@@ -65,12 +65,6 @@ void ParagraphComponentView::updateProps(
     m_requireFontResize = newViewProps.paragraphAttributes.adjustsFontSizeToFit;
   }
 
-  if (newViewProps.paragraphAttributes.adjustsFontSizeToFit &&
-      (oldViewProps.paragraphAttributes.maximumNumberOfLines != newViewProps.paragraphAttributes.maximumNumberOfLines ||
-       !facebook::react::floatEquality(oldViewProps.textAttributes.fontSize, newViewProps.textAttributes.fontSize))) {
-    m_requireFontResize = true;
-  }
-
   Super::updateProps(props, oldProps);
 }
 
