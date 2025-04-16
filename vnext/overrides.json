@@ -467,7 +467,7 @@
       "file": "src-win/Libraries/Image/ImageSourceUtils.js",
       "baseFile": "packages/react-native/Libraries/Image/ImageSourceUtils.js",
       "baseHash": "136d9dad53466468b288e2fb1b05adbb18c63ed1",
-      "issue": 0
+      "issue": 14537
     },
     {
       "type": "patch",
