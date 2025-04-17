@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update WinAppSDK to 1.7.1",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
