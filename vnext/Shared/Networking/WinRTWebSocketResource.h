@@ -30,10 +30,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
     using CoroHandle = std::experimental::coroutine_handle<>;
 
     struct Suspender {
-     private:
       CoroHandle m_handle;
 
-     public:
       bool await_ready() const noexcept {
         return false;
       }
@@ -88,7 +86,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
       Suspender suspend;
 
       using Async = decltype(maker());
-      auto task = [&node, &suspend]() -> Async {
+      auto task = [&node, &suspend, &maker]() -> Async {
         Completer completer{node};
         auto localMaker = std::forward<Maker>(maker);
         auto context = winrt::apartment_context();
@@ -145,7 +143,9 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
       winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs const &args);
 
   winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
-  winrt::Windows::Foundation::IAsyncAction PerformWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::Windows::Foundation::IAsyncAction EnqueueWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::Windows::Foundation::IAsyncAction DequeueWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
   winrt::Windows::Foundation::IAsyncAction SendPendingMessages() noexcept;
 

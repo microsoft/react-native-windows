@@ -274,7 +274,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   }
 }
 
-IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
+fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
   auto self = shared_from_this();
   string coMessage = std::move(message);
 
@@ -286,6 +286,63 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
   co_await resume_in_queue(self->m_backgroundQueue);
 
   co_await self->SendPendingMessages();
+}
+
+IAsyncAction WinRTWebSocketResource2::EnqueueWrite(string &&message, bool isBinary) noexcept {
+  auto self = shared_from_this();
+  // TODO: Review captures
+  return m_sequencer.QueueTaskAsync([=]()
+  {
+    return DequeueWrite(string{message}, isBinary);
+    //return IAsyncAction{};
+  });
+}
+
+IAsyncAction WinRTWebSocketResource2::DequeueWrite(string &&message, bool isBinary) noexcept
+{
+  auto self = shared_from_this();
+
+  size_t length = 0;
+  string messageLocal = std::move(message);
+  bool isBinaryLocal = isBinary;
+  try {
+    //std::tie(messageLocal, isBinaryLocal) = self->m_outgoingMessages.front();
+    //self->m_outgoingMessages.pop();
+    if (isBinaryLocal) {
+      self->m_socket.Control().MessageType(SocketMessageType::Binary);
+
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
+      if (buffer) {
+        length = buffer.Length();
+        self->m_writer.WriteBuffer(buffer);
+      }
+    } else {
+      self->m_socket.Control().MessageType(SocketMessageType::Utf8);
+
+      length = messageLocal.size();
+      winrt::array_view<const uint8_t> view(
+          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
+          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
+      self->m_writer.WriteBytes(view);
+    }
+  } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
+    self->Fail(e, ErrorType::Send);
+    //co_return;
+    return;
+  } catch (const std::exception &e) {
+    self->Fail(e.what(), ErrorType::Send);
+    //co_return;
+    return;
+  }
+
+  auto async = self->m_writer.StoreAsync();
+  co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+
+  auto result = async.ErrorCode();
+  if (result < 0) {
+    Fail(std::move(result), ErrorType::Send);
+    co_return;
+  }
 }
 
 IAsyncAction WinRTWebSocketResource2::SendPendingMessages() noexcept {
