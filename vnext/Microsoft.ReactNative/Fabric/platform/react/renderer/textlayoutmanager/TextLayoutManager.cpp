@@ -230,7 +230,14 @@ void TextLayoutManager::GetTextLayout(
     return;
 
   TextMeasurement::Attachments attachments;
-  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+  if (paragraphAttributes.adjustsFontSizeToFit)
+  {
+    GetTextLayoutByAdjustingFontSizeToFit(attributedStringBox,paragraphAttributes, layoutConstraints, spTextLayout,attachments);
+  }
+  else
+  {
+    GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+  }
 }
 
 void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
@@ -238,7 +245,7 @@ void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
     const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
-    const Float &minimumFontSize) noexcept {
+    TextMeasurement::Attachments &attachments) noexcept {
   /* This function constructs a text layout from the given parameters.
   If the generated text layout doesn't fit within the given layout constraints,
   it will reduce the font size and construct a new text layout. This process will
@@ -266,11 +273,15 @@ void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
       attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
     }
 
-    facebook::react::TextLayoutManager::GetTextLayout(
-        attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout);
+    GetTextLayout(
+        attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout,attachments);
 
     if (spTextLayout) {
-      if (spTextLayout->GetFontSize() <= minimumFontSize) {
+      const auto defaultMinFontSize = 2.0f;
+
+      //TODO : changes for minimumFontScale prop can be added.
+
+      if (spTextLayout->GetFontSize() <= defaultMinFontSize) {
         break; // reached minimum font size , so no more size reducing
       }
       winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
