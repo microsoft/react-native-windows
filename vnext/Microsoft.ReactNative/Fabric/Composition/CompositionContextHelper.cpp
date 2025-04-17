@@ -842,7 +842,6 @@ struct CompScrollerVisual : winrt::implements<
 
   void SetMaximumZoomScale(float maximumZoomScale) const noexcept {
     m_interactionTracker.MaxScale(maximumZoomScale);
-    ;
   }
 
   void SetMinimumZoomScale(float minimumZoomScale) noexcept {
