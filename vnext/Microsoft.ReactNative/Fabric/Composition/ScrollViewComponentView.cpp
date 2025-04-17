@@ -786,6 +786,10 @@ void ScrollViewComponentView::updateProps(
   if (oldViewProps.minimumZoomScale != newViewProps.minimumZoomScale) {
     m_scrollVisual.SetMinimumZoomScale(newViewProps.minimumZoomScale);
   }
+
+  if (oldViewProps.zoomScale != newViewProps.zoomScale) {
+    m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
+  }
 }
 
 void ScrollViewComponentView::updateState(

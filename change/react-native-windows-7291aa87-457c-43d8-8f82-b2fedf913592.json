@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Implemet maximumZoomScale and minimumZoomScale in ScrollView",
+  "comment": "Implement zoomScale, maximumZoomScale and minimumZoomScale in ScrollView",
   "packageName": "react-native-windows",
   "email": "54227869+anupriya13@users.noreply.github.com",
   "dependentChangeType": "patch"
