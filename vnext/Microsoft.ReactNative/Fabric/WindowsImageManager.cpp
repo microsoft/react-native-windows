@@ -188,6 +188,7 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
     source.height = imageSource.size.height;
     source.width = imageSource.size.width;
     source.sourceType = ImageSourceType::Download;
+    source.body = imageSource.body;
 
     auto progressCallback = [weakObserverCoordinator](int64_t loaded, int64_t total) {
       if (auto observerCoordinator = weakObserverCoordinator.lock()) {
