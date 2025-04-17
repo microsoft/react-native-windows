@@ -125,6 +125,12 @@ WindowsImageManager::GetImageRandomAccessStreamAsync(
     }
   }
 
+  if (!source.body.empty()) {
+    auto bodyContent = winrt::Windows::Web::Http::HttpStringContent(
+        winrt::to_hstring(source.body), winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8, L"application/json");
+    request.Content(bodyContent);
+  }
+
   winrt::Windows::Web::Http::HttpResponseMessage response(co_await m_httpClient.SendRequestAsync(request));
 
   if (!response.IsSuccessStatusCode()) {
