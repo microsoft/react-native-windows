@@ -44,7 +44,6 @@ ContentIslandComponentView::ContentIslandComponentView(
 }
 
 void ContentIslandComponentView::OnMounted() noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
       rootComponentView()->parentContentIsland(),
       winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
@@ -84,21 +83,17 @@ void ContentIslandComponentView::OnMounted() noexcept {
         }));
     view = view.Parent();
   }
-#endif
 }
 
 void ContentIslandComponentView::OnUnmounted() noexcept {
   m_layoutMetricChangedRevokers.clear();
-#ifdef USE_EXPERIMENTAL_WINUI3
   if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
   }
-#endif
 }
 
 void ContentIslandComponentView::ParentLayoutChanged() noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   if (m_layoutChangePosted)
     return;
 
@@ -114,30 +109,21 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
       strongThis->m_layoutChangePosted = false;
     }
   });
-#endif
 }
 
 winrt::IInspectable ContentIslandComponentView::EnsureUiaProvider() noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   if (m_uiaProvider == nullptr) {
     m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
         *get_strong(), m_childSiteLink);
   }
   return m_uiaProvider;
-#else
-  return Super::EnsureUiaProvider();
-#endif
 }
 
 bool ContentIslandComponentView::focusable() const noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   // We don't have a way to check to see if the ContentIsland has focusable content,
   // so we'll always return true.  We'll have to handle the case where the content doesn't have
   // focusable content in the OnGotFocus handler.
   return true;
-#else
-  return Super::focusable();
-#endif
 }
 
 // Helper to convert a FocusNavigationDirection to a FocusNavigationReason.
@@ -156,17 +142,12 @@ winrt::Microsoft::UI::Input::FocusNavigationReason GetFocusNavigationReason(
 
 void ContentIslandComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   auto gotFocusEventArgs = args.as<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>();
   const auto navigationReason = GetFocusNavigationReason(gotFocusEventArgs->Direction());
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
-#else
-  return Super::onGotFocus(args);
-#endif // USE_EXPERIMENTAL_WINUI3
 }
 
 ContentIslandComponentView::~ContentIslandComponentView() noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
@@ -189,7 +170,6 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
       m_previousSiblingAutomationProviderRequestedToken = {};
     }
   }
-#endif // USE_EXPERIMENTAL_WINUI3
   if (m_islandToConnect) {
     m_islandToConnect.Close();
   }
@@ -212,31 +192,26 @@ void ContentIslandComponentView::UnmountChildComponentView(
 void ContentIslandComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   if (m_childSiteLink) {
     m_childSiteLink.ActualSize({layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
     ParentLayoutChanged();
   }
-#endif
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
 void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
   if (m_childSiteLink) {
     m_islandToConnect = nullptr;
     m_childSiteLink.Connect(contentIsland);
   } else {
     m_islandToConnect = contentIsland;
   }
-#endif // USE_EXPERIMENTAL_WINUI3
 }
 
 void ContentIslandComponentView::prepareForRecycle() noexcept {
   Super::prepareForRecycle();
 }
 
-#ifdef USE_EXPERIMENTAL_WINUI3
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
   // This automation mode must be set before connecting the child ContentIsland.
   // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
@@ -288,6 +263,5 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
         args.Handled(true);
       });
 }
-#endif // USE_EXPERIMENTAL_WINUI3
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
