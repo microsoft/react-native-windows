@@ -173,7 +173,7 @@ public:
     Suspender suspend;
 
     using Async = decltype(maker());
-    auto task = [&node]() -> Async
+    auto task = [&node, &suspend]() -> Async
     {
       Completer completer {node};
       auto localMaker = std::forward<Maker>(maker);
