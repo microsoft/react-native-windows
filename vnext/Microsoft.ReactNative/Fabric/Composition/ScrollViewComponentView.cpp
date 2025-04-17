@@ -792,7 +792,7 @@ void ScrollViewComponentView::updateProps(
       m_scrollEventThrottle = throttleInSeconds;
     }
   }
-  
+
   if (oldViewProps.maximumZoomScale != newViewProps.maximumZoomScale) {
     m_scrollVisual.SetMaximumZoomScale(newViewProps.maximumZoomScale);
   }
@@ -902,7 +902,6 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 }
 */
 
-  
 void ScrollViewComponentView::onThemeChanged() noexcept {
   updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->backgroundColor);
   m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
