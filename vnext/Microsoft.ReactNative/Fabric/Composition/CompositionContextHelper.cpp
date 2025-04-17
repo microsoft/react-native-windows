@@ -840,6 +840,14 @@ struct CompScrollerVisual : winrt::implements<
     m_interactionTracker.PositionInertiaDecayRate(decelerationRate);
   }
 
+  void SetMaximumZoomScale(float maximumZoomScale) const noexcept {
+    m_interactionTracker.MaxScale(maximumZoomScale);
+  }
+
+  void SetMinimumZoomScale(float minimumZoomScale) noexcept {
+    m_interactionTracker.MinScale(minimumZoomScale);
+  }
+
   void Opacity(float opacity) noexcept {
     m_visual.Opacity(opacity);
   }
