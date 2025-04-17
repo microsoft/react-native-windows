@@ -25,6 +25,7 @@ const UIView = {
   accessibilityShowsLargeContentViewer: true,
   accessibilityLargeContentTitle: true,
   importantForAccessibility: true,
+  accessibilityElementsHidden: false,
   nativeID: true,
   testID: true,
   renderToHardwareTextureAndroid: true,
