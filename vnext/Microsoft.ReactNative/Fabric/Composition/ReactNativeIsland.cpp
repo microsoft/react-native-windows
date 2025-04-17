@@ -893,20 +893,10 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (args.DidLayoutDirectionChange()) {
               pThis->Arrange(pThis->m_layoutConstraints, pThis->m_viewportOffset);
             }
-#ifndef USE_EXPERIMENTAL_WINUI3 // Use this in place of Connected/Disconnected events for now. -- Its not quite what we
-                                // want, but it will do for now.
-            if (args.DidSiteVisibleChange()) {
-              if (island.IsSiteVisible()) {
-                pThis->OnMounted();
-              } else {
-                pThis->OnUnmounted();
-              }
-            }
-#endif
           }
         });
 #ifdef USE_EXPERIMENTAL_WINUI3
-    if (!m_isFragment) {
+        if (!m_isFragment) {
       m_islandConnectedToken = m_island.Connected(
           [weakThis = get_weak()](
               winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
