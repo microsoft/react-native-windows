@@ -279,7 +279,7 @@ export default class Bootstrap extends React.Component<
                   : {tintColor: this.state.tintColor},
               ]}
               defaultSource={{uri: this.state.defaultImageUri}}
-              source={{uri: this.state.imageUri}}
+              source={{uri: this.state.imageUri, body: 'test'}}
               loadingIndicatorSource={{uri: loadingImageUri}}
               resizeMode={this.state.selectedResizeMode}
               blurRadius={this.state.blurRadius}
