@@ -117,8 +117,8 @@ export default class Bootstrap extends React.Component<
           <Text style={styles.text}>TEST setAccessibilityFocus</Text>
         </TouchableHighlight>
         <TextInput ref={this.myElement} />
-        <View style={styles.item} accessibilityElementsHidden={true }>
-                <Text style={styles.text}>TEST Accessibility Hidden </Text>
+        <View style={styles.item} accessibilityElementsHidden={true}>
+          <Text style={styles.text}>TEST Accessibility Hidden </Text>
         </View>
       </View>
     );

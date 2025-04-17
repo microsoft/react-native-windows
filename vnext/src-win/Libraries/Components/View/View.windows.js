@@ -272,7 +272,8 @@ const View: component(
         // [Windows
         accessible={_accessible}
         children={
-          importantForAccessibility === 'no-hide-descendants' || accessibilityElementsHidden === true
+          importantForAccessibility === 'no-hide-descendants' ||
+          accessibilityElementsHidden === true
             ? childrenWithImportantForAccessibility(otherProps.children)
             : otherProps.children
         }
@@ -327,7 +328,8 @@ const View: component(
                 // [Windows
                 accessible={_accessible}
                 children={
-                  importantForAccessibility === 'no-hide-descendants' || accessibilityElementsHidden === true
+                  importantForAccessibility === 'no-hide-descendants' ||
+                  accessibilityElementsHidden === true
                     ? childrenWithImportantForAccessibility(otherProps.children)
                     : otherProps.children
                 }
