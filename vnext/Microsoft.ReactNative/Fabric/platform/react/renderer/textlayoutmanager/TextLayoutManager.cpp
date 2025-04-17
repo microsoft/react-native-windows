@@ -230,12 +230,10 @@ void TextLayoutManager::GetTextLayout(
     return;
 
   TextMeasurement::Attachments attachments;
-  if (paragraphAttributes.adjustsFontSizeToFit)
-  {
-    GetTextLayoutByAdjustingFontSizeToFit(attributedStringBox,paragraphAttributes, layoutConstraints, spTextLayout,attachments);
-  }
-  else
-  {
+  if (paragraphAttributes.adjustsFontSizeToFit) {
+    GetTextLayoutByAdjustingFontSizeToFit(
+        attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout, attachments);
+  } else {
     GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
   }
 }
@@ -273,13 +271,12 @@ void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
       attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
     }
 
-    GetTextLayout(
-        attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout,attachments);
+    GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
 
     if (spTextLayout) {
       const auto defaultMinFontSize = 2.0f;
 
-      //TODO : changes for minimumFontScale prop can be added.
+      // TODO : changes for minimumFontScale prop can be added.
 
       if (spTextLayout->GetFontSize() <= defaultMinFontSize) {
         break; // reached minimum font size , so no more size reducing

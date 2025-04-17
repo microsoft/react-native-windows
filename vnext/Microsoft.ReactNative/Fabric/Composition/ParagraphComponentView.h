@@ -62,7 +62,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
-  bool m_requireRedraw{true}; 
+  bool m_requireRedraw{true};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
 };
 
