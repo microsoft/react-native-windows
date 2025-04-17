@@ -771,7 +771,17 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (!oldProps || oldViewProps.scrollEventThrottle != newViewProps.scrollEventThrottle) {
-    m_scrollEventThrottle = newViewProps.scrollEventThrottle;
+    // Zero means "send value only once per significant logical event".
+    // Prop value is in milliseconds.
+    auto throttleInSeconds = newViewProps.scrollEventThrottle / 1000.0;
+    auto msPerFrame = 1.0 / 60.0;
+    if (throttleInSeconds < 0) {
+      m_scrollEventThrottle = INFINITY;
+    } else if (throttleInSeconds <= msPerFrame) {
+      m_scrollEventThrottle = 0;
+    } else {
+      m_scrollEventThrottle = throttleInSeconds;
+    }
   }
 }
 
@@ -982,6 +992,8 @@ bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
 
   auto x = (m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor;
   auto y = (m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
+  // Ensure at least one scroll event will fire
+  m_allowNextScrollNoMatterWhat = true;
   m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
   return true;
 }
@@ -1223,10 +1235,10 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
         auto now = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastScrollEventTime).count();
+        auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_lastScrollEventTime).count();
 
-        if (elapsed >= m_scrollEventThrottle) {
-          m_lastScrollEventTime = now;
+        if (m_allowNextScrollNoMatterWhat ||
+            (m_scrollEventThrottle < std::max(std::chrono::duration<double>(0.017).count(), elapsed))) {
           updateStateWithContentOffset();
           auto eventEmitter = GetEventEmitter();
           if (eventEmitter) {
@@ -1240,6 +1252,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
             scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
             std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
                 ->onScroll(scrollMetrics);
+            m_lastScrollEventTime = now;
+            m_allowNextScrollNoMatterWhat = false;
           }
         }
       });
@@ -1249,6 +1263,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
