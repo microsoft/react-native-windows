@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Apr 2025 23:41:10 GMT",
+      "version": "0.74.42",
+      "tag": "react-native-windows_v0.74.42",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6ad7b0946466b7a6ea5cd8340d3c8ea53295e9ba",
+            "comment": "Update WinAppSDK to 1.7.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Apr 2025 00:43:28 GMT",
       "version": "0.74.41",
       "tag": "react-native-windows_v0.74.41",
