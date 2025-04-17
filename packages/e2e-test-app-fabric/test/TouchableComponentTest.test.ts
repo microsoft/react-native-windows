@@ -53,6 +53,9 @@ describe('Touchable Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('touchable_feedback_events_button');
     expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree('touchable_feedback_events_console');
+    expect(dump2).toMatchSnapshot();
   });
   test('Text components can be tappable', async () => {
     const component = await app.findElementByTestID('tappable_text');
@@ -81,5 +84,14 @@ describe('Touchable Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('touchable_set');
     expect(dump).toMatchSnapshot();
+  });
+  test('Touchables can be disabled', async () => {
+    const component = await app.findElementByTestID('disabled_touchable');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('disabled_touchable');
+    expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree('disabled_touchable');
+    expect(dump2).toMatchSnapshot();
   });
 });
