@@ -875,7 +875,7 @@ void DrawingIsland::Window_Initialize() {
       });
 
 #ifdef USE_EXPERIMENTAL_WINUI3
-      (void)window.ThemeChanged(
+  (void)window.ThemeChanged(
       [this](winrt::ContentIslandEnvironment const &, winrt::IInspectable const &) { return Window_OnThemeChanged(); });
 #endif
 
