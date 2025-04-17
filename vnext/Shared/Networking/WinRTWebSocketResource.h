@@ -118,6 +118,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::handle m_connectPerformed;
 
   ReadyState m_readyState;
+  TaskSequencer m_sequencer;
   Mso::DispatchQueue m_callingQueue;
   Mso::DispatchQueue m_backgroundQueue;
   std::queue<std::pair<std::string, bool>> m_outgoingMessages;
@@ -144,7 +145,7 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
       winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs const &args);
 
   winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
-  winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::Windows::Foundation::IAsyncAction PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
   winrt::Windows::Foundation::IAsyncAction SendPendingMessages() noexcept;
 

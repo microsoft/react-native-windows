@@ -274,7 +274,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   }
 }
 
-fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
+IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
   auto self = shared_from_this();
   string coMessage = std::move(message);
 
