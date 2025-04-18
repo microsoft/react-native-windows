@@ -140,7 +140,6 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::fire_and_forget EnqueueWrite(std::string &&message, bool isBinary) noexcept;
   winrt::Windows::Foundation::IAsyncAction PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
-  winrt::Windows::Foundation::IAsyncAction SendPendingMessages() noexcept;
 
   WinRTWebSocketResource2(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,

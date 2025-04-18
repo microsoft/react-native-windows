@@ -331,60 +331,6 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
   }
 }
 
-IAsyncAction WinRTWebSocketResource2::SendPendingMessages() noexcept {
-  // Enforcing execution in the background queue.
-  // Awaiting of this coroutine will schedule its execution in the thread pool, ignoring the intended dispatch queue.
-  co_await resume_in_queue(m_backgroundQueue);
-
-  auto self = shared_from_this();
-
-  while (!self->m_outgoingMessages.empty()) {
-    if (self->m_readyState != ReadyState::Open) {
-      co_return;
-    }
-
-    size_t length = 0;
-    string messageLocal;
-    bool isBinaryLocal;
-    try {
-      std::tie(messageLocal, isBinaryLocal) = self->m_outgoingMessages.front();
-      self->m_outgoingMessages.pop();
-      if (isBinaryLocal) {
-        self->m_socket.Control().MessageType(SocketMessageType::Binary);
-
-        auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
-        if (buffer) {
-          length = buffer.Length();
-          self->m_writer.WriteBuffer(buffer);
-        }
-      } else {
-        self->m_socket.Control().MessageType(SocketMessageType::Utf8);
-
-        length = messageLocal.size();
-        winrt::array_view<const uint8_t> view(
-            CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
-            CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
-        self->m_writer.WriteBytes(view);
-      }
-    } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
-      self->Fail(e, ErrorType::Send);
-      co_return;
-    } catch (const std::exception &e) {
-      self->Fail(e.what(), ErrorType::Send);
-      co_return;
-    }
-
-    auto async = self->m_writer.StoreAsync();
-    co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
-
-    auto result = async.ErrorCode();
-    if (result < 0) {
-      Fail(std::move(result), ErrorType::Send);
-      co_return;
-    }
-  }
-}
-
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
