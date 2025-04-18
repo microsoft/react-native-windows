@@ -219,15 +219,15 @@ void WinRTWebSocketResource2::OnClosed(IWebSocket const &sender, IWebSocketClose
 
 fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   auto self = shared_from_this();
-  auto coUri = std::move(uri);
+  auto movedUri = std::move(uri);
 
   co_await resume_in_queue(self->m_backgroundQueue);
 
-  co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
+  co_await self->m_sequencer.QueueTaskAsync(
+      [self = self->shared_from_this(), coUri = std::move(movedUri)]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
-    auto coUri2 = coUri;
 
-    auto async = coSelf->m_socket.ConnectAsync(coUri2);
+    auto async = coSelf->m_socket.ConnectAsync(coUri);
     co_await lessthrow_await_adapter<IAsyncAction>{async};
 
     auto result = async.ErrorCode();
@@ -255,11 +255,11 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
 
   co_await resume_in_queue(self->m_backgroundQueue);
 
-  co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
+  co_await self->m_sequencer.QueueTaskAsync([self = self->shared_from_this()]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
 
     try {
-      coSelf->m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
+      coSelf->m_socket.Close(static_cast<uint16_t>(coSelf->m_closeCode), winrt::to_hstring(coSelf->m_closeReason));
       coSelf->m_readyState = ReadyState::Closing;
     } catch (winrt::hresult_invalid_argument const &e) {
       coSelf->Fail(e, ErrorType::Close);
@@ -279,10 +279,12 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
 
   co_await resume_in_queue(self->m_backgroundQueue);
 
-  co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
+  co_await self->m_sequencer.QueueTaskAsync(
+      [self = self->shared_from_this(), message = std::move(coMessage), isBinary]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
+    auto coMessage = std::move(message);
 
-    co_await coSelf->DequeueWrite(string{coMessage}, isBinary);
+    co_await coSelf->DequeueWrite(std::move(coMessage), isBinary);
   });
 }
 
