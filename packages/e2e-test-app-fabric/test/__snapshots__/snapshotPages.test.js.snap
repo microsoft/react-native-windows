@@ -68978,6 +68978,181 @@ exports[`snapshotAllPages Text 45`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Text 47`] = `
+<View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
+  </Text>
+</View>
+`;
+
 exports[`snapshotAllPages TextInput 1`] = `
 <View>
   <TextInput
