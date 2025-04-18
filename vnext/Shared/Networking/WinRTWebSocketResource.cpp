@@ -224,36 +224,6 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   auto self = shared_from_this();
   auto coUri = std::move(uri);
 
-  //co_await resume_in_queue(self->m_backgroundQueue);
-
-  //auto async = self->m_socket.ConnectAsync(coUri);
-  //co_await lessthrow_await_adapter<IAsyncAction>{async};
-
-  //co_await resume_in_queue(self->m_callingQueue);
-
-  //auto result = async.ErrorCode();
-
-  //try {
-  //  if (result >= 0) { // Non-failing HRESULT
-  //    co_await resume_in_queue(self->m_backgroundQueue);
-  //    self->m_readyState = ReadyState::Open;
-
-  //    co_await resume_in_queue(self->m_callingQueue);
-  //    if (self->m_connectHandler) {
-  //      self->m_connectHandler();
-  //    }
-  //  } else {
-  //    self->Fail(std::move(result), ErrorType::Connection);
-  //  }
-  //} catch (hresult_error const &e) {
-  //  self->Fail(e, ErrorType::Connection);
-  //} catch (std::exception const &e) {
-  //  self->Fail(e.what(), ErrorType::Connection);
-  //}
-
-  //SetEvent(self->m_connectPerformed.get());
-
-  //co_await winrt::resume_background();
   co_await resume_in_queue(self->m_backgroundQueue);
 
   currTid = GetCurrentThreadId();
@@ -291,40 +261,12 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   auto self = shared_from_this();
 
-  //backTid = GetCurrentThreadId();
-
-  //co_await resume_on_signal(self->m_connectPerformed.get());
-
-  //co_await resume_in_queue(self->m_backgroundQueue);
-
-  //// See https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
-  //co_await self->SendPendingMessages();
-
-  //try {
-  //  self->m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
-  //  self->m_readyState = ReadyState::Closing;
-  //} catch (winrt::hresult_invalid_argument const &e) {
-  //  Fail(e, ErrorType::Close);
-  //} catch (hresult_error const &e) {
-  //  Fail(e, ErrorType::Close);
-  //} catch (const std::exception &e) {
-  //  Fail(e.what(), ErrorType::Close);
-  //}
-
-  //co_await winrt::resume_background();
   co_await resume_in_queue(self->m_backgroundQueue);
 
   currTid = GetCurrentThreadId();
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
     currTid = GetCurrentThreadId();
-
-    //co_await resume_on_signal(coSelf->m_connectPerformed.get());
-
-    //co_await resume_in_queue(coSelf->m_backgroundQueue);
-
-    // See https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
-    //co_await coSelf->SendPendingMessages();
 
     try {
       coSelf->m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
@@ -345,23 +287,11 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   auto self = shared_from_this();
   string coMessage = std::move(message);
 
-  //co_await resume_in_queue(self->m_backgroundQueue); // Ensure writes happen sequentially
-  //self->m_outgoingMessages.emplace(std::move(coMessage), isBinary);
-
-  //co_await resume_on_signal(self->m_connectPerformed.get());
-
-  //co_await resume_in_queue(self->m_backgroundQueue);
-
-  //co_await self->SendPendingMessages();
-  //co_await self->EnqueueWrite(std::move(coMessage), isBinary);
-
-  //co_await winrt::resume_background();
   co_await resume_in_queue(self->m_backgroundQueue);
 
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
 
-    //co_await resume_on_signal(coSelf->m_connectPerformed.get());
     co_await coSelf->DequeueWrite(string{coMessage}, isBinary);
   });
 }
@@ -383,10 +313,7 @@ IAsyncAction WinRTWebSocketResource2::DequeueWrite(string &&message, bool isBina
   size_t length = 0;
   string messageLocal = std::move(message);
   bool isBinaryLocal = isBinary;
-
-    try {
-    //std::tie(messageLocal, isBinaryLocal) = self->m_outgoingMessages.front();
-    //self->m_outgoingMessages.pop();
+  try {
     if (isBinaryLocal) {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
