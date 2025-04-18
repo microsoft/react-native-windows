@@ -286,7 +286,11 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   //co_await resume_in_queue(self->m_backgroundQueue);
 
   //co_await self->SendPendingMessages();
-  co_await self->EnqueueWrite(std::move(coMessage), isBinary);
+  //co_await self->EnqueueWrite(std::move(coMessage), isBinary);
+
+  co_await self->m_sequencer.QueueTaskAsync([=]() {
+    return self->DequeueWrite(string{message}, isBinary);
+  });
 }
 
 IAsyncAction WinRTWebSocketResource2::EnqueueWrite(string &&message, bool isBinary) noexcept {
