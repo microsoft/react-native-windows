@@ -225,29 +225,29 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 
   co_await self->m_sequencer.QueueTaskAsync(
       [self = self->shared_from_this(), coUri = std::move(movedUri)]() -> IAsyncAction {
-    auto coSelf = self->shared_from_this();
+        auto coSelf = self->shared_from_this();
 
-    auto async = coSelf->m_socket.ConnectAsync(coUri);
-    co_await lessthrow_await_adapter<IAsyncAction>{async};
+        auto async = coSelf->m_socket.ConnectAsync(coUri);
+        co_await lessthrow_await_adapter<IAsyncAction>{async};
 
-    auto result = async.ErrorCode();
-    try {
-      if (result >= 0) { // Non-failing HRESULT
-        coSelf->m_readyState = ReadyState::Open;
+        auto result = async.ErrorCode();
+        try {
+          if (result >= 0) { // Non-failing HRESULT
+            coSelf->m_readyState = ReadyState::Open;
 
-        co_await resume_in_queue(coSelf->m_callingQueue);
-        if (coSelf->m_connectHandler) {
-          coSelf->m_connectHandler();
+            co_await resume_in_queue(coSelf->m_callingQueue);
+            if (coSelf->m_connectHandler) {
+              coSelf->m_connectHandler();
+            }
+          } else {
+            coSelf->Fail(std::move(result), ErrorType::Connection);
+          }
+        } catch (hresult_error const &e) {
+          coSelf->Fail(e, ErrorType::Connection);
+        } catch (std::exception const &e) {
+          coSelf->Fail(e.what(), ErrorType::Connection);
         }
-      } else {
-        coSelf->Fail(std::move(result), ErrorType::Connection);
-      }
-    } catch (hresult_error const &e) {
-      coSelf->Fail(e, ErrorType::Connection);
-    } catch (std::exception const &e) {
-      coSelf->Fail(e.what(), ErrorType::Connection);
-    }
-  });
+      });
 }
 
 fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
@@ -281,15 +281,14 @@ fire_and_forget WinRTWebSocketResource2::EnqueueWrite(string &&message, bool isB
 
   co_await self->m_sequencer.QueueTaskAsync(
       [self = self->shared_from_this(), message = std::move(coMessage), isBinary]() -> IAsyncAction {
-    auto coSelf = self->shared_from_this();
-    auto coMessage = std::move(message);
+        auto coSelf = self->shared_from_this();
+        auto coMessage = std::move(message);
 
-    co_await coSelf->PerformWrite(std::move(coMessage), isBinary);
-  });
+        co_await coSelf->PerformWrite(std::move(coMessage), isBinary);
+      });
 }
 
-IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept
-{
+IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
   auto self = shared_from_this();
 
   try {
