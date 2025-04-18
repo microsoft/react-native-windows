@@ -254,7 +254,8 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 
   //SetEvent(self->m_connectPerformed.get());
 
-  co_await winrt::resume_background();
+  //co_await winrt::resume_background();
+  co_await resume_in_queue(self->m_backgroundQueue);
 
   currTid = GetCurrentThreadId();
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
@@ -312,7 +313,8 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   //  Fail(e.what(), ErrorType::Close);
   //}
 
-  co_await winrt::resume_background();
+  //co_await winrt::resume_background();
+  co_await resume_in_queue(self->m_backgroundQueue);
 
   currTid = GetCurrentThreadId();
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
@@ -353,7 +355,8 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   //co_await self->SendPendingMessages();
   //co_await self->EnqueueWrite(std::move(coMessage), isBinary);
 
-  co_await winrt::resume_background();
+  //co_await winrt::resume_background();
+  co_await resume_in_queue(self->m_backgroundQueue);
 
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
