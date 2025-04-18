@@ -315,9 +315,13 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
     }
   } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
     self->Fail(e, ErrorType::Send);
-    co_return;
   } catch (const std::exception &e) {
     self->Fail(e.what(), ErrorType::Send);
+  }
+
+  co_await resume_in_queue(self->m_backgroundQueue);
+  // If an exception occurred, abort write process.
+  if (self->m_readyState != ReadyState::Open) {
     co_return;
   }
 
@@ -327,7 +331,6 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
   auto result = async.ErrorCode();
   if (result < 0) {
     Fail(std::move(result), ErrorType::Send);
-    co_return;
   }
 }
 
