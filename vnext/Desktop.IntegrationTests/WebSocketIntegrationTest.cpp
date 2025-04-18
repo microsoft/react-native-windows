@@ -43,6 +43,7 @@ void SetPromise(once_flag& flag, promise<string>& prom, string value)
 }
 
 DWORD testTid = 0;
+DWORD lambTid = 0;
 } // namespace <anonymous>
 
 namespace Microsoft::React::Test {
@@ -108,10 +109,12 @@ TEST_CLASS (WebSocketIntegrationTest)
     once_flag doneFlag;
     ws->SetOnConnect([&connected]()
     {
+      lambTid = GetCurrentThreadId();
       connected = true;
     });
     ws->SetOnClose([&closed, &doneFlag, &donePromise](CloseCode code, const string& reason)
     {
+      lambTid = GetCurrentThreadId();
       closed = true;
 
       SetPromise(doneFlag, donePromise);

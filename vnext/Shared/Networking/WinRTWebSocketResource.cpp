@@ -91,7 +91,7 @@ DispatchQueue GetCurrentOrSerialQueue() noexcept {
 }
 
 DWORD callTid = 0;
-DWORD backTid = 0;
+DWORD currTid = 0;
 } // namespace
 
 namespace Microsoft::React::Networking {
@@ -258,7 +258,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
     auto coSelf = self->shared_from_this();
 
     auto async = coSelf->m_socket.ConnectAsync(coUri);
-    backTid = GetCurrentThreadId();
+    currTid = GetCurrentThreadId();
     co_await lessthrow_await_adapter<IAsyncAction>{async};
 
     auto result = async.ErrorCode();
@@ -286,23 +286,49 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   auto self = shared_from_this();
 
-  co_await resume_on_signal(self->m_connectPerformed.get());
+  //backTid = GetCurrentThreadId();
 
-  co_await resume_in_queue(self->m_backgroundQueue);
+  //co_await resume_on_signal(self->m_connectPerformed.get());
 
-  // See https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
-  co_await self->SendPendingMessages();
+  //co_await resume_in_queue(self->m_backgroundQueue);
 
-  try {
-    self->m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
-    self->m_readyState = ReadyState::Closing;
-  } catch (winrt::hresult_invalid_argument const &e) {
-    Fail(e, ErrorType::Close);
-  } catch (hresult_error const &e) {
-    Fail(e, ErrorType::Close);
-  } catch (const std::exception &e) {
-    Fail(e.what(), ErrorType::Close);
-  }
+  //// See https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
+  //co_await self->SendPendingMessages();
+
+  //try {
+  //  self->m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
+  //  self->m_readyState = ReadyState::Closing;
+  //} catch (winrt::hresult_invalid_argument const &e) {
+  //  Fail(e, ErrorType::Close);
+  //} catch (hresult_error const &e) {
+  //  Fail(e, ErrorType::Close);
+  //} catch (const std::exception &e) {
+  //  Fail(e.what(), ErrorType::Close);
+  //}
+
+  currTid = GetCurrentThreadId();
+  co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
+    auto coSelf = self->shared_from_this();
+    currTid = GetCurrentThreadId();
+
+    co_await resume_on_signal(coSelf->m_connectPerformed.get());
+
+    co_await resume_in_queue(coSelf->m_backgroundQueue);
+
+    // See https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
+    //co_await coSelf->SendPendingMessages();
+
+    try {
+      coSelf->m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
+      coSelf->m_readyState = ReadyState::Closing;
+    } catch (winrt::hresult_invalid_argument const &e) {
+      coSelf->Fail(e, ErrorType::Close);
+    } catch (hresult_error const &e) {
+      coSelf->Fail(e, ErrorType::Close);
+    } catch (const std::exception &e) {
+      coSelf->Fail(e.what(), ErrorType::Close);
+    }
+  });
 }
 
 fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
