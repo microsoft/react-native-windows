@@ -294,9 +294,8 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
 
   size_t length = 0;
   string messageLocal = std::move(message);
-  bool isBinaryLocal = isBinary;
   try {
-    if (isBinaryLocal) {
+    if (isBinary) {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
       auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
