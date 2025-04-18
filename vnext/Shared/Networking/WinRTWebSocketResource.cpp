@@ -291,22 +291,19 @@ fire_and_forget WinRTWebSocketResource2::EnqueueWrite(string &&message, bool isB
 IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept
 {
   auto self = shared_from_this();
+  auto messageLocal = std::move(message);
 
-  size_t length = 0;
-  string messageLocal = std::move(message);
   try {
     if (isBinary) {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
       auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
       if (buffer) {
-        length = buffer.Length();
         self->m_writer.WriteBuffer(buffer);
       }
     } else {
       self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
-      length = messageLocal.size();
       winrt::array_view<const uint8_t> view(
           CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
           CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
