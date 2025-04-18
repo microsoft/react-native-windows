@@ -222,34 +222,61 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
   auto self = shared_from_this();
   auto coUri = std::move(uri);
 
-  co_await resume_in_queue(self->m_backgroundQueue);
+  //co_await resume_in_queue(self->m_backgroundQueue);
 
-  auto async = self->m_socket.ConnectAsync(coUri);
-  co_await lessthrow_await_adapter<IAsyncAction>{async};
+  //auto async = self->m_socket.ConnectAsync(coUri);
+  //co_await lessthrow_await_adapter<IAsyncAction>{async};
 
-  co_await resume_in_queue(self->m_callingQueue);
+  //co_await resume_in_queue(self->m_callingQueue);
 
-  auto result = async.ErrorCode();
+  //auto result = async.ErrorCode();
 
-  try {
-    if (result >= 0) { // Non-failing HRESULT
-      co_await resume_in_queue(self->m_backgroundQueue);
-      self->m_readyState = ReadyState::Open;
+  //try {
+  //  if (result >= 0) { // Non-failing HRESULT
+  //    co_await resume_in_queue(self->m_backgroundQueue);
+  //    self->m_readyState = ReadyState::Open;
 
-      co_await resume_in_queue(self->m_callingQueue);
-      if (self->m_connectHandler) {
-        self->m_connectHandler();
+  //    co_await resume_in_queue(self->m_callingQueue);
+  //    if (self->m_connectHandler) {
+  //      self->m_connectHandler();
+  //    }
+  //  } else {
+  //    self->Fail(std::move(result), ErrorType::Connection);
+  //  }
+  //} catch (hresult_error const &e) {
+  //  self->Fail(e, ErrorType::Connection);
+  //} catch (std::exception const &e) {
+  //  self->Fail(e.what(), ErrorType::Connection);
+  //}
+
+  //SetEvent(self->m_connectPerformed.get());
+
+  co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
+    auto coSelf = self->shared_from_this();
+
+    auto async = coSelf->m_socket.ConnectAsync(coUri);
+    co_await lessthrow_await_adapter<IAsyncAction>{async};
+
+    auto result = async.ErrorCode();
+    try {
+      if (result >= 0) { // Non-failing HRESULT
+        coSelf->m_readyState = ReadyState::Open;
+
+        co_await resume_in_queue(coSelf->m_callingQueue);
+        if (coSelf->m_connectHandler) {
+          coSelf->m_connectHandler();
+        }
+      } else {
+        coSelf->Fail(std::move(result), ErrorType::Connection);
       }
-    } else {
-      self->Fail(std::move(result), ErrorType::Connection);
+    } catch (hresult_error const &e) {
+      coSelf->Fail(e, ErrorType::Connection);
+    } catch (std::exception const &e) {
+      coSelf->Fail(e.what(), ErrorType::Connection);
     }
-  } catch (hresult_error const &e) {
-    self->Fail(e, ErrorType::Connection);
-  } catch (std::exception const &e) {
-    self->Fail(e.what(), ErrorType::Connection);
-  }
 
-  SetEvent(self->m_connectPerformed.get());
+    SetEvent(coSelf->m_connectPerformed.get());
+  });
 }
 
 fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
