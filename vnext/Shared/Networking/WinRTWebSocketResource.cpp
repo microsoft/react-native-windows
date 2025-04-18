@@ -254,11 +254,12 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 
   //SetEvent(self->m_connectPerformed.get());
 
+  co_await winrt::resume_background();
+
+  currTid = GetCurrentThreadId();
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
     auto coUri2 = coUri;
-
-    co_await winrt::resume_background();
 
     auto async = coSelf->m_socket.ConnectAsync(coUri2);
     currTid = GetCurrentThreadId();
@@ -269,6 +270,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
       if (result >= 0) { // Non-failing HRESULT
         coSelf->m_readyState = ReadyState::Open;
 
+        currTid = GetCurrentThreadId();
         co_await resume_in_queue(coSelf->m_callingQueue);
         if (coSelf->m_connectHandler) {
           coSelf->m_connectHandler();
@@ -310,6 +312,8 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   //  Fail(e.what(), ErrorType::Close);
   //}
 
+  co_await winrt::resume_background();
+
   currTid = GetCurrentThreadId();
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
@@ -317,7 +321,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
 
     co_await resume_on_signal(coSelf->m_connectPerformed.get());
 
-    co_await resume_in_queue(coSelf->m_backgroundQueue);
+    //co_await resume_in_queue(coSelf->m_backgroundQueue);
 
     // See https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
     //co_await coSelf->SendPendingMessages();
@@ -349,8 +353,13 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   //co_await self->SendPendingMessages();
   //co_await self->EnqueueWrite(std::move(coMessage), isBinary);
 
-  co_await self->m_sequencer.QueueTaskAsync([=]() {
-    return self->DequeueWrite(string{message}, isBinary);
+  co_await winrt::resume_background();
+
+  co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
+    auto coSelf = self->shared_from_this();
+
+    co_await resume_on_signal(coSelf->m_connectPerformed.get());
+    co_await coSelf->DequeueWrite(string{coMessage}, isBinary);
   });
 }
 
@@ -371,7 +380,8 @@ IAsyncAction WinRTWebSocketResource2::DequeueWrite(string &&message, bool isBina
   size_t length = 0;
   string messageLocal = std::move(message);
   bool isBinaryLocal = isBinary;
-  try {
+
+    try {
     //std::tie(messageLocal, isBinaryLocal) = self->m_outgoingMessages.front();
     //self->m_outgoingMessages.pop();
     if (isBinaryLocal) {
@@ -393,12 +403,10 @@ IAsyncAction WinRTWebSocketResource2::DequeueWrite(string &&message, bool isBina
     }
   } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
     self->Fail(e, ErrorType::Send);
-    //co_return;
-    return;
+    co_return;
   } catch (const std::exception &e) {
     self->Fail(e.what(), ErrorType::Send);
-    //co_return;
-    return;
+    co_return;
   }
 
   auto async = self->m_writer.StoreAsync();
