@@ -81,6 +81,9 @@ struct ScrollBarComponent {
   }
 
   void ContentSize(winrt::Windows::Foundation::Size contentSize) noexcept {
+    if (m_contentSize == contentSize) {
+      return;
+    }
     m_contentSize = contentSize;
     updateThumb();
     updateVisibility(m_visible);
@@ -112,6 +115,12 @@ struct ScrollBarComponent {
   }
 
   void updateVisibility(bool visible) noexcept {
+    if ((m_size.Width <= 0.0f && m_size.Height <= 0.0f) ||
+        (m_contentSize.Width <= 0.0f && m_contentSize.Height <= 0.0f)) {
+      m_rootVisual.IsVisible(false);
+      return;
+    }
+
     if (!visible) {
       m_visible = false;
       m_rootVisual.IsVisible(visible);
@@ -769,6 +778,18 @@ void ScrollViewComponentView::updateProps(
   if (!oldProps || oldViewProps.decelerationRate != newViewProps.decelerationRate) {
     updateDecelerationRate(newViewProps.decelerationRate);
   }
+
+  if (oldViewProps.maximumZoomScale != newViewProps.maximumZoomScale) {
+    m_scrollVisual.SetMaximumZoomScale(newViewProps.maximumZoomScale);
+  }
+
+  if (oldViewProps.minimumZoomScale != newViewProps.minimumZoomScale) {
+    m_scrollVisual.SetMinimumZoomScale(newViewProps.minimumZoomScale);
+  }
+
+  if (oldViewProps.zoomScale != newViewProps.zoomScale) {
+    m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -800,14 +821,15 @@ void ScrollViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
   ensureVisual();
-
-  m_verticalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
-  m_horizontalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
-  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-  m_scrollVisual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  updateContentVisualSize();
+  if (oldLayoutMetrics != layoutMetrics) {
+    m_verticalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
+    m_horizontalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
+    base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+    m_scrollVisual.Size(
+        {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+         layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+    updateContentVisualSize();
+  }
 }
 
 void ScrollViewComponentView::updateContentVisualSize() noexcept {
