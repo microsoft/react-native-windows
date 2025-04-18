@@ -1237,8 +1237,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
-        auto scrollMetrics = getScrollMetrics(eventEmitter, args);
-        std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)->onScroll(scrollMetrics);
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onScroll(scrollMetrics);
+        }
       });
 
   m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
@@ -1248,9 +1251,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
-        auto scrollMetrics = getScrollMetrics(eventEmitter, args);
-        std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
-            ->onScrollBeginDrag(scrollMetrics);
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onScrollBeginDrag(scrollMetrics);
+        }
       });
 
   m_scrollEndDragRevoker = m_scrollVisual.ScrollEndDrag(
@@ -1260,9 +1265,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
-        auto scrollMetrics = getScrollMetrics(eventEmitter, args);
-        std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
-            ->onScrollEndDrag(scrollMetrics);
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onScrollEndDrag(scrollMetrics);
+        }
       });
 
   return visual;
