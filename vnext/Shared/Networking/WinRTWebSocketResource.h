@@ -113,7 +113,6 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   TaskSequencer m_sequencer;
   Mso::DispatchQueue m_callingQueue;
   Mso::DispatchQueue m_backgroundQueue;
-  std::queue<std::pair<std::string, bool>> m_outgoingMessages;
   CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;
 
