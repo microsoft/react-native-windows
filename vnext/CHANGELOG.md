@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 16 Apr 2025 05:25:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 18 Apr 2025 05:22:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.942
+
+Fri, 18 Apr 2025 05:22:17 GMT
+
+### Changes
+
+- Implementation of adjustFontSizeToFit for Text in Fabric (kvineeth@microsoft.com)
+- Implement zoomScale, maximumZoomScale and minimumZoomScale in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Implement body in Image Source (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.941
 
