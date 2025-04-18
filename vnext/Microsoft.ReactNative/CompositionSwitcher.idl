@@ -110,6 +110,7 @@ namespace Microsoft.ReactNative.Composition.Experimental
     void ScrollEnabled(Boolean isScrollEnabled);
     event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollPositionChanged;
     event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollBeginDrag;
+	  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollEndDrag;
     void ContentSize(Windows.Foundation.Numerics.Vector2 size);
     Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
     void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
