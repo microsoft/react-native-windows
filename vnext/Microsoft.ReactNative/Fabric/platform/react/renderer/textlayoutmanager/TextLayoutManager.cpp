@@ -136,6 +136,77 @@ void TextLayoutManager::GetTextLayout(
   }
 }
 
+void TextLayoutManager::GetTextLayout(
+    const AttributedStringBox &attributedStringBox,
+    const ParagraphAttributes &paragraphAttributes,
+    LayoutConstraints layoutConstraints,
+    winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
+  if (attributedStringBox.getValue().isEmpty())
+    return;
+
+  TextMeasurement::Attachments attachments;
+  if (paragraphAttributes.adjustsFontSizeToFit) {
+    GetTextLayoutByAdjustingFontSizeToFit(
+        attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout, attachments);
+  } else {
+    GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+  }
+}
+
+void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
+    AttributedStringBox attributedStringBox,
+    const ParagraphAttributes &paragraphAttributes,
+    LayoutConstraints layoutConstraints,
+    winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
+    TextMeasurement::Attachments &attachments) noexcept {
+  /* This function constructs a text layout from the given parameters.
+  If the generated text layout doesn't fit within the given layout constraints,
+  it will reduce the font size and construct a new text layout. This process will
+  be repeated until the text layout meets the constraints.*/
+
+  DWRITE_TEXT_METRICS metrics;
+
+  // Better Approach should be implemented , this uses O(n)
+  do {
+    if (spTextLayout) // Font Size reduction
+    {
+      constexpr auto fontReduceFactor = 1.0f;
+
+      auto attributedStringToResize = attributedStringBox.getValue();
+
+      auto fragmentsCopyToResize = attributedStringToResize.getFragments();
+
+      attributedStringToResize.getFragments().clear();
+
+      for (auto fragment : fragmentsCopyToResize) {
+        fragment.textAttributes.fontSize -= fontReduceFactor;
+
+        attributedStringToResize.appendFragment(std::move(fragment));
+      }
+      attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
+    }
+
+    GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+
+    if (spTextLayout) {
+      const auto defaultMinFontSize = 2.0f;
+
+      // TODO : changes for minimumFontScale prop can be added.
+
+      if (spTextLayout->GetFontSize() <= defaultMinFontSize) {
+        break; // reached minimum font size , so no more size reducing
+      }
+      winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
+    } else {
+      return;
+    }
+
+  } while ((paragraphAttributes.maximumNumberOfLines != 0 &&
+            paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
+           metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth);
+}
+
+// measure entire text (inluding attachments)
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
