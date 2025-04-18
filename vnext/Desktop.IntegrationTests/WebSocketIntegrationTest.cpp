@@ -123,7 +123,6 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     ws->Connect("ws://localhost:5555");
     ws->Close(CloseCode::Normal, "Closing");
-
     donePromise.get_future().wait();
 
     Assert::AreEqual({}, errorMessage);
