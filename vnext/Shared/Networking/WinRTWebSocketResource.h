@@ -109,12 +109,6 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   };
 
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
-
-  ///
-  // Connection attempt performed, either succeeding or failing
-  ///
-  winrt::handle m_connectPerformed;
-
   ReadyState m_readyState;
   TaskSequencer m_sequencer;
   Mso::DispatchQueue m_callingQueue;

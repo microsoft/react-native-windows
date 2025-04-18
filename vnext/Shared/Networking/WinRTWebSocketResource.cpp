@@ -106,7 +106,6 @@ WinRTWebSocketResource2::WinRTWebSocketResource2(
     : m_socket{std::move(socket)},
       m_writer(std::move(writer)),
       m_readyState{ReadyState::Connecting},
-      m_connectPerformed{CreateEvent(/*attributes*/ nullptr, /*manual reset*/ true, /*state*/ false, /*name*/ nullptr)},
       m_callingQueue{callingQueue} {
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
@@ -286,7 +285,6 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
     }
 
     currTid = GetCurrentThreadId();
-    SetEvent(coSelf->m_connectPerformed.get());
   });
 }
 
@@ -321,7 +319,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
     auto coSelf = self->shared_from_this();
     currTid = GetCurrentThreadId();
 
-    co_await resume_on_signal(coSelf->m_connectPerformed.get());
+    //co_await resume_on_signal(coSelf->m_connectPerformed.get());
 
     //co_await resume_in_queue(coSelf->m_backgroundQueue);
 
@@ -338,6 +336,8 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
     } catch (const std::exception &e) {
       coSelf->Fail(e.what(), ErrorType::Close);
     }
+
+    co_return;
   });
 }
 
@@ -361,7 +361,7 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
 
-    co_await resume_on_signal(coSelf->m_connectPerformed.get());
+    //co_await resume_on_signal(coSelf->m_connectPerformed.get());
     co_await coSelf->DequeueWrite(string{coMessage}, isBinary);
   });
 }
@@ -526,11 +526,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
       m_socket.SetRequestHeader(L"Origin", std::move(origin));
     }
   } catch (hresult_error const &e) {
-    Fail(e, ErrorType::Connection);
-
-    SetEvent(m_connectPerformed.get());
-
-    return;
+    return Fail(e, ErrorType::Connection);
   }
 
   callTid = GetCurrentThreadId();
