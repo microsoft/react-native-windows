@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implementing overflow prop",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}
