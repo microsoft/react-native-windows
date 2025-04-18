@@ -291,13 +291,12 @@ fire_and_forget WinRTWebSocketResource2::EnqueueWrite(string &&message, bool isB
 IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept
 {
   auto self = shared_from_this();
-  auto messageLocal = std::move(message);
 
   try {
     if (isBinary) {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
       if (buffer) {
         self->m_writer.WriteBuffer(buffer);
       }
@@ -305,8 +304,8 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
       self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
       winrt::array_view<const uint8_t> view(
-          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
-          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
+          CheckedReinterpretCast<const uint8_t *>(message.c_str()),
+          CheckedReinterpretCast<const uint8_t *>(message.c_str()) + message.length());
       self->m_writer.WriteBytes(view);
     }
   } catch (hresult_error const &e) { // TODO: Remove after fixing unit tests exceptions.
