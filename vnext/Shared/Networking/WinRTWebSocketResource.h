@@ -137,9 +137,8 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
       winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs const &args);
 
   winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
-  winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
-  winrt::Windows::Foundation::IAsyncAction EnqueueWrite(std::string &&message, bool isBinary) noexcept;
-  winrt::Windows::Foundation::IAsyncAction DequeueWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::fire_and_forget EnqueueWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::Windows::Foundation::IAsyncAction PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
   winrt::Windows::Foundation::IAsyncAction SendPendingMessages() noexcept;
 

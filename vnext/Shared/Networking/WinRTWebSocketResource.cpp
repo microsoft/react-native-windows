@@ -273,7 +273,7 @@ fire_and_forget WinRTWebSocketResource2::PerformClose() noexcept {
   });
 }
 
-fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept {
+fire_and_forget WinRTWebSocketResource2::EnqueueWrite(string &&message, bool isBinary) noexcept {
   auto self = shared_from_this();
   string coMessage = std::move(message);
 
@@ -284,21 +284,11 @@ fire_and_forget WinRTWebSocketResource2::PerformWrite(string &&message, bool isB
     auto coSelf = self->shared_from_this();
     auto coMessage = std::move(message);
 
-    co_await coSelf->DequeueWrite(std::move(coMessage), isBinary);
+    co_await coSelf->PerformWrite(std::move(coMessage), isBinary);
   });
 }
 
-IAsyncAction WinRTWebSocketResource2::EnqueueWrite(string &&message, bool isBinary) noexcept {
-  auto self = shared_from_this();
-  // TODO: Review captures
-  return m_sequencer.QueueTaskAsync([=]()
-  {
-    return DequeueWrite(string{message}, isBinary);
-    //return IAsyncAction{};
-  });
-}
-
-IAsyncAction WinRTWebSocketResource2::DequeueWrite(string &&message, bool isBinary) noexcept
+IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBinary) noexcept
 {
   auto self = shared_from_this();
 
@@ -454,11 +444,11 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
 void WinRTWebSocketResource2::Ping() noexcept {}
 
 void WinRTWebSocketResource2::Send(string &&message) noexcept {
-  PerformWrite(std::move(message), false);
+  EnqueueWrite(std::move(message), false);
 }
 
 void WinRTWebSocketResource2::SendBinary(string &&base64String) noexcept {
-  PerformWrite(std::move(base64String), true);
+  EnqueueWrite(std::move(base64String), true);
 }
 
 void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexcept {
