@@ -41,6 +41,8 @@ void SetPromise(once_flag& flag, promise<string>& prom, string value)
     prom.set_value(value);
   });
 }
+
+DWORD testTid = 0;
 } // namespace <anonymous>
 
 namespace Microsoft::React::Test {
@@ -123,6 +125,8 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     ws->Connect("ws://localhost:5555");
     ws->Close(CloseCode::Normal, "Closing");
+
+    testTid = GetCurrentThreadId();
     donePromise.get_future().wait();
 
     Assert::AreEqual({}, errorMessage);

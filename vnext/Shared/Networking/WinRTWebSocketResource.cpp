@@ -89,6 +89,9 @@ DispatchQueue GetCurrentOrSerialQueue() noexcept {
 
   return queue;
 }
+
+DWORD callTid = 0;
+DWORD backTid = 0;
 } // namespace
 
 namespace Microsoft::React::Networking {
@@ -255,6 +258,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
     auto coSelf = self->shared_from_this();
 
     auto async = coSelf->m_socket.ConnectAsync(coUri);
+    backTid = GetCurrentThreadId();
     co_await lessthrow_await_adapter<IAsyncAction>{async};
 
     auto result = async.ErrorCode();
@@ -488,6 +492,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
     return;
   }
 
+  callTid = GetCurrentThreadId();
   PerformConnect(std::move(uri));
 }
 
