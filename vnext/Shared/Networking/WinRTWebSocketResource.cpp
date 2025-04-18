@@ -256,8 +256,11 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
 
   co_await self->m_sequencer.QueueTaskAsync([=]() -> IAsyncAction {
     auto coSelf = self->shared_from_this();
+    auto coUri2 = coUri;
 
-    auto async = coSelf->m_socket.ConnectAsync(coUri);
+    co_await winrt::resume_background();
+
+    auto async = coSelf->m_socket.ConnectAsync(coUri2);
     currTid = GetCurrentThreadId();
     co_await lessthrow_await_adapter<IAsyncAction>{async};
 
@@ -279,6 +282,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
       coSelf->Fail(e.what(), ErrorType::Connection);
     }
 
+    currTid = GetCurrentThreadId();
     SetEvent(coSelf->m_connectPerformed.get());
   });
 }
