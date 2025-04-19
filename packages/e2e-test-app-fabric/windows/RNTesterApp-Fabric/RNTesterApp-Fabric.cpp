@@ -461,16 +461,16 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     winrt::com_ptr<ITextRangeProvider> textRangePattern;
     hr = textPattern->get_DocumentRange(textRangePattern.put());
     if (SUCCEEDED(hr) && textRangePattern) {
-      hr=textRangePattern->GetText(20, &text);
+      hr = textRangePattern->GetText(20, &text);
       if (SUCCEEDED(hr)) {
         InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
       }
-      hr=textRangePattern->GetAttributeValue(UIA_FontSizeAttributeId, &varFontAttr);
-      if (SUCCEEDED(hr) && varFontAttr.vt==VARENUM::VT_R8) {
+      hr = textRangePattern->GetAttributeValue(UIA_FontSizeAttributeId, &varFontAttr);
+      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_R8) {
         InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontNameAttributeId, &varFontAttr);
-      if(SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
+      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
         InsertStringValueIfNotEmpty(result, L"TextRangePattern.fontName", varFontAttr.bstrVal);
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontWeightAttributeId, &varFontAttr);
