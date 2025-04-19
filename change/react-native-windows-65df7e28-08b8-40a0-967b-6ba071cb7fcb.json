@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Implement WebSocket resource task sequencer (#14577)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
