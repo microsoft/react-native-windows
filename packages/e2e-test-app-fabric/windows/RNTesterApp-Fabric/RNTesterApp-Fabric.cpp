@@ -365,6 +365,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL selectionRequired;
   BSTR text = nullptr;
   BOOL horizontallyScrollable;
+  VARIANT varFontAttr;
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;
@@ -460,12 +461,37 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     winrt::com_ptr<ITextRangeProvider> textRangePattern;
     hr = textPattern->get_DocumentRange(textRangePattern.put());
     if (SUCCEEDED(hr) && textRangePattern) {
-      textRangePattern->GetText(20, &text);
+      hr=textRangePattern->GetText(20, &text);
       if (SUCCEEDED(hr)) {
         InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
       }
+      hr=textRangePattern->GetAttributeValue(UIA_FontSizeAttributeId, &varFontAttr);
+      if (SUCCEEDED(hr) && varFontAttr.vt==VARENUM::VT_R8) {
+        InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
+      }
+      hr = textRangePattern->GetAttributeValue(UIA_FontNameAttributeId, &varFontAttr);
+      if(SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
+        InsertStringValueIfNotEmpty(result, L"TextRangePattern.fontName", varFontAttr.bstrVal);
+      }
+      hr = textRangePattern->GetAttributeValue(UIA_FontWeightAttributeId, &varFontAttr);
+      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
+        InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontWeight", varFontAttr.lVal);
+      }
+      hr = textRangePattern->GetAttributeValue(UIA_IsReadOnlyAttributeId, &varFontAttr);
+      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BOOL) {
+        InsertBooleanValueIfNotDefault(result, L"TextRangePattern.readOnly", varFontAttr.boolVal);
+      }
+      hr = textRangePattern->GetAttributeValue(UIA_BackgroundColorAttributeId, &varFontAttr);
+      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
+        InsertNumberValueIfNotDefault(result, L"TextRangePattern.backgroundColor", varFontAttr.lVal);
+      }
+      hr = textRangePattern->GetAttributeValue(UIA_CapStyleAttributeId, &varFontAttr);
+      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
+        InsertNumberValueIfNotDefault(result, L"TextRangePattern.capStyleAttr", varFontAttr.lVal);
+      }
     }
   }
+  CapStyle_SmallCap;
 
   // Dump IScrollProvider Information
   winrt::com_ptr<IScrollProvider> scrollPattern;
