@@ -34,6 +34,8 @@ extends:
         condition: succeeded()
         timeoutInMinutes: 0
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
@@ -60,6 +62,8 @@ extends:
         condition: succeeded()
         timeoutInMinutes: 0
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
@@ -87,6 +91,8 @@ extends:
         displayName: Push packages
         timeoutInMinutes: 0
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
