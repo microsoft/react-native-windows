@@ -324,7 +324,7 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
 
   auto result = async.ErrorCode();
   if (result < 0) {
-    Fail(std::move(result), ErrorType::Send);
+    self->Fail(std::move(result), ErrorType::Send);
   }
 }
 
