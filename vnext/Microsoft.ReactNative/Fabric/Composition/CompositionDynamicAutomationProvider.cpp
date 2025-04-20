@@ -563,6 +563,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
           : SysAllocString(L"");
       break;
     }
+    case UIA_FullDescriptionPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto helpText = props->accessibilityHint.empty()
+          ? ::Microsoft::Common::Unicode::Utf8ToUtf16(compositionView->DefaultHelpText())
+          : ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityHint);
+      pRetVal->bstrVal = SysAllocString(helpText.c_str());
+      hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
+      break;
+    }
   }
 
   return hr;

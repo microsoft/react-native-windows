@@ -226,6 +226,10 @@ winrt::hstring ViewProps::AccessibilityLabel() noexcept {
   return m_viewProps ? winrt::to_hstring(m_viewProps->accessibilityLabel) : winrt::hstring{};
 }
 
+winrt::hstring ViewProps::AccessibilityHint() noexcept {
+  return m_viewProps ? winrt::to_hstring(m_viewProps->accessibilityHint) : winrt::hstring{};
+}
+
 ImageProps::ImageProps(facebook::react::SharedViewProps props) noexcept : Super(props) {}
 
 winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::ImageSource>
