@@ -467,7 +467,9 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontSizeAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_R8) {
-        InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
+        // InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
+        result.Insert(
+            L"TextRangePattern.fontSize", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(varFontAttr.dblVal));
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontNameAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
