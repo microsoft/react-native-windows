@@ -475,7 +475,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
         InsertStringValueIfNotEmpty(result, L"TextRangePattern.fontName", varFontAttr.bstrVal);
       }
-      hr = textRangePattern->GetAttributeValue(UIA_FontWeightAttributeId, &varFontAttr);
+      /*hr = textRangePattern->GetAttributeValue(UIA_FontWeightAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
         InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontWeight", varFontAttr.lVal);
       }
@@ -490,7 +490,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       hr = textRangePattern->GetAttributeValue(UIA_CapStyleAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
         InsertNumberValueIfNotDefault(result, L"TextRangePattern.capStyleAttr", varFontAttr.lVal);
-      }
+      }*/
     }
   }
   CapStyle_SmallCap;
