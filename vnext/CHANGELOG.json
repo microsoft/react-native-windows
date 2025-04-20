@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 20 Apr 2025 05:22:30 GMT",
+      "version": "0.0.0-canary.943",
+      "tag": "react-native-windows_v0.0.0-canary.943",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cdf1d343cb739690a4fff3260ff1129a41be8b13",
+            "comment": "Add TaskSequencer for WebSocket resource"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Apr 2025 05:22:17 GMT",
       "version": "0.0.0-canary.942",
       "tag": "react-native-windows_v0.0.0-canary.942",
