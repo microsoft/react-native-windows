@@ -119,18 +119,19 @@ export default class Bootstrap extends React.Component<
         <TextInput ref={this.myElement} />
 
         <TouchableHighlight
-            style={styles.item}
-            accessibilityLabel="Test accessibilityDescription prop"
-            accessible={true}
-            accessibilityHint="Full Description for the accessibilty control on Group"
-            {...{
-                // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-                focusable: true,
-            }}
-            >
-            <Text style={styles.text} accessibilityHint="Full Description for the accessibilty control on Text">
-                TEST Accessibility Description
-            </Text>
+          style={styles.item}
+          accessibilityLabel="Test accessibilityDescription prop"
+          accessible={true}
+          accessibilityHint="Full Description for the accessibilty control on Group"
+          {...{
+            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
+            focusable: true,
+          }}>
+          <Text
+            style={styles.text}
+            accessibilityHint="Full Description for the accessibilty control on Text">
+            TEST Accessibility Description
+          </Text>
         </TouchableHighlight>
       </View>
     );
