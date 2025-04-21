@@ -1059,22 +1059,19 @@ void CompositionEventHandler::onPointerMoved(
 
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
-    //check if this pointer corresponds to active touch that has a responder
+    // check if this pointer corresponds to active touch that has a responder
     auto activeTouch = m_activeTouches.find(pointerId);
     bool isActiveTouch = activeTouch != m_activeTouches.end() && activeTouch->second.eventEmitter != nullptr;
 
-
-    auto handler = [&targetView,
-                    &pointerEvent, isActiveTouch](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
+    auto handler = [&targetView, &pointerEvent, isActiveTouch](
+                       std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
       const auto eventEmitter = targetView
           ? winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetView)
                 ->eventEmitterAtPoint(pointerEvent.offsetPoint)
           : nullptr;
-      bool hasMoveEventListeners =
-          isActiveTouch ||
+      bool hasMoveEventListeners = isActiveTouch ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
-
 
       if (eventEmitter != nullptr && hasMoveEventListeners) {
         // Add logging before dispatching the event
