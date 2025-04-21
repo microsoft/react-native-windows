@@ -61,6 +61,10 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
+    m_requireRedraw = true;
+  }
+
   Super::updateProps(props, oldProps);
 }
 
@@ -70,7 +74,7 @@ void ParagraphComponentView::updateState(
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
   m_attributedStringBox = facebook::react::AttributedStringBox(newState.getData().attributedString);
-  m_paragraphAttributes = {}; // TODO
+  m_paragraphAttributes = facebook::react::ParagraphAttributes(newState.getData().paragraphAttributes);
 
   m_textLayout = nullptr;
 }
@@ -165,7 +169,9 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     constraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
+    facebook::react::TextLayoutManager::GetTextLayout(
+        m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout);
+
     requireNewBrush = true;
   }
 

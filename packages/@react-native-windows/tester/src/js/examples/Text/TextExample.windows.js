@@ -1926,6 +1926,76 @@ const examples = [
       );
     },
   },
+  {
+    title: 'AdjustFontSize according to the Width, Height and LinesCount',
+    name: 'adjustFontSizeToFit',
+    render: function (): React.Node {
+      return (
+        <View>
+          <RNTesterText
+            style={{
+              width: 500,
+              height: 100,
+              fontSize: 20,
+              backgroundColor: 'lightcoral',
+              padding: 10,
+              marginBottom: 10,
+            }}
+            testID="text-adjustfontsizetofit-default-a">
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
+          </RNTesterText>
+          <RNTesterText
+            adjustsFontSizeToFit
+            style={{
+              width: 500,
+              height: 100,
+              fontSize: 20,
+              backgroundColor: 'lightcoral',
+              padding: 10,
+              marginBottom: 10,
+            }}
+            testID="text-adjustfontsizetofit-default-b">
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
+          </RNTesterText>
+          {[
+            {width: 500, height: 80, lineCount: 3},
+            {width: 475, height: 120, lineCount: 5},
+            {width: 450, height: 160, lineCount: 0},
+          ].map((item, index) => (
+            <React.Fragment key={index}>
+              <RNTesterText
+                testID={`text-adjustfontsizetofit-${index}-a`}
+                numberOfLines={item.lineCount}
+                adjustsFontSizeToFit
+                style={{
+                  width: item.width,
+                  height: item.height,
+                  fontSize: 40,
+                  backgroundColor: '#A0C782',
+                  padding: 10,
+                  marginBottom: 10,
+                }}>
+                {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
+              </RNTesterText>
+              <RNTesterText
+                testID={`text-adjustfontsizetofit-${index}-b`}
+                numberOfLines={item.lineCount}
+                style={{
+                  width: item.width,
+                  height: item.height,
+                  fontSize: 40,
+                  backgroundColor: 'lightblue',
+                  padding: 10,
+                  marginBottom: 10,
+                }}>
+                {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
+              </RNTesterText>
+            </React.Fragment>
+          ))}
+        </View>
+      );
+    },
+  },
 ];
 
 const styles = StyleSheet.create({

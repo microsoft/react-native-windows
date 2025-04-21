@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 20 Apr 2025 05:22:30 GMT",
+      "version": "0.0.0-canary.943",
+      "tag": "react-native-windows_v0.0.0-canary.943",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cdf1d343cb739690a4fff3260ff1129a41be8b13",
+            "comment": "Add TaskSequencer for WebSocket resource"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Apr 2025 05:22:17 GMT",
+      "version": "0.0.0-canary.942",
+      "tag": "react-native-windows_v0.0.0-canary.942",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "58160260f489a2435fc703bdab10675059442f49",
+            "comment": "Implementation of adjustFontSizeToFit for Text in Fabric"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91dca2441c12d9d3722ab05ddcefdc7f570b0baa",
+            "comment": "Implement zoomScale, maximumZoomScale and minimumZoomScale in ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9685da51de887ed3ab30a1f4a4cf26d8e0822500",
+            "comment": "Implement body in Image Source"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Apr 2025 05:25:01 GMT",
+      "version": "0.0.0-canary.941",
+      "tag": "react-native-windows_v0.0.0-canary.941",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b54b8b237707452b32c78f095ecb0685ba36bf3a",
+            "comment": "Add SetProperties method to ReactNativeIsland"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dda13b305735e35c13dfe02c13321ed59a0b87e3",
+            "comment": "Make ExperimentalFeatures overridable through props files"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.260",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Apr 2025 05:24:25 GMT",
       "version": "0.0.0-canary.940",
       "tag": "react-native-windows_v0.0.0-canary.940",
