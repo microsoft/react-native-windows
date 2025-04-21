@@ -78,6 +78,23 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       const winrt::Microsoft::ReactNative::ComponentView &view,
       const winrt::com_ptr<::Microsoft::ReactNativeSpecs::ModalHostViewProps> &newProps,
       const winrt::com_ptr<::Microsoft::ReactNativeSpecs::ModalHostViewProps> &oldProps) noexcept override {
+    // Set title from props if available, otherwise use default
+    if (newProps && newProps->title.has_value()) {
+      m_pendingTitle = newProps->title.value();
+      OutputDebugString(
+          (L"UpdateProps: Setting title from props: '" + winrt::to_hstring(m_pendingTitle) + L"'.\n").c_str());
+    } else {
+      m_pendingTitle = "Modal Title Default"; // Fallback title
+      OutputDebugString(L"UpdateProps: Using default title 'Modal Title'.\n");
+    }
+
+    m_showTitleBar = true;
+
+    // Debug log for m_window
+    if (!oldProps || newProps->visible != oldProps->visible) {
+      OutputDebugString(L"UpdateProps: visible prop has changed.\n");
+    }
+
     if (!oldProps || newProps->visible != oldProps->visible) {
       if (newProps->visible.value_or(true)) {
         // We do not immediately show the window, since we want to resize/position
@@ -87,6 +104,21 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         CloseWindow();
       }
     }
+
+    std::wostringstream debugStream;
+    debugStream << L"m_window is " << (m_window ? L"initialized" : L"null") << L"\n";
+    OutputDebugString(debugStream.str().c_str());
+
+    // Apply title immediately if window exists
+    if (m_window) {
+      try {
+        m_window.Title(winrt::to_hstring(m_pendingTitle));
+        OutputDebugString(L"Applied title to window immediately in UpdateProps.\n");
+      } catch (...) {
+        OutputDebugString(L"Failed to apply title to window in UpdateProps.\n");
+      }
+    }
+
     ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView>::UpdateProps(view, newProps, oldProps);
   }
 
@@ -211,6 +243,21 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       auto result = navHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
           winrt::Microsoft::UI::Input::FocusNavigationReason::First));
 
+      if (m_window) {
+        try {
+          // Use the title that was set from props
+          m_window.Title(winrt::to_hstring(m_pendingTitle));
+          OutputDebugString(L"EnsureModalCreated: Applied pending title to window.\n");
+
+          // Also set border and title bar explicitly
+          auto presenter = m_window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>();
+          presenter.SetBorderAndTitleBar(true, true);
+          OutputDebugString(L"EnsureModalCreated: Set border and title bar explicitly.\n");
+        } catch (...) {
+          OutputDebugString(L"EnsureModalCreated: Failed to apply title to window.\n");
+        }
+      }
+
       // dispatch onShow event
       if (auto eventEmitter = EventEmitter()) {
         ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnShow eventArgs;
@@ -252,8 +299,10 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   // creates a new modal window
   void EnsureModalCreated(const winrt::Microsoft::ReactNative::ComponentView &view) {
     if (m_window) {
+      OutputDebugString(L"EnsureModalCreated: m_window already initialized.\n");
       return;
     }
+    OutputDebugString(L"EnsureModalCreated: Attempting to create m_window.\n");
 
 #ifdef USE_EXPERIMENTAL_WINUI3
     if (m_popUp) {
@@ -296,8 +345,9 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
 #else
     auto presenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::CreateForDialog();
-    presenter.SetBorderAndTitleBar(true, false);
+    presenter.SetBorderAndTitleBar(true, true);
     presenter.IsModal(true);
+    presenter.IsResizable(true);
 
     m_window = winrt::Microsoft::UI::Windowing::AppWindow::Create(
         presenter, winrt::Microsoft::UI::GetWindowIdFromWindow(m_parentHwnd));
@@ -323,6 +373,22 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         });
     m_bridge.Connect(contentIsland);
 
+    if (m_window) {
+      try {
+        // Force a title even if m_pendingTitle is empty
+        std::string titleToApply = m_pendingTitle.empty() ? "Modal Title" : m_pendingTitle;
+        m_window.Title(winrt::to_hstring(titleToApply));
+        OutputDebugString(L"EnsureModalCreated: Applied pending title to window.\n");
+
+        // Also set border and title bar explicitly
+        auto presenter = m_window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>();
+        presenter.SetBorderAndTitleBar(true, true);
+        OutputDebugString(L"EnsureModalCreated: Set border and title bar explicitly.\n");
+      } catch (...) {
+        OutputDebugString(L"EnsureModalCreated: Failed to apply title to window.\n");
+      }
+    }
+
 #endif
 
     m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
@@ -344,6 +410,12 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       AdjustWindowSize(portal.ContentRoot().Children().GetAt(0).LayoutMetrics());
     }
     m_bridge.Show();
+
+    if (m_window) {
+      OutputDebugString(L"EnsureModalCreated: m_window successfully created.\n");
+    } else {
+      OutputDebugString(L"EnsureModalCreated: Failed to create m_window.\n");
+    }
   }
 
   void UpdateConstraints() noexcept {
@@ -386,6 +458,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   bool m_showTitleBar{false};
   bool m_showQueued{false};
   bool m_mounted{false};
+  std::string m_pendingTitle;
   winrt::event_token m_islandStateChangedToken;
   winrt::Microsoft::UI::Input::InputFocusNavigationHost::DepartFocusRequested_revoker m_departFocusRevoker;
   winrt::event_token m_departFocusToken;

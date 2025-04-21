@@ -174,6 +174,11 @@ export type Props = $ReadOnly<{|
    * Defaults to `white` if not provided and transparent is `false`. Ignored if `transparent` is `true`.
    */
   backdropColor?: ?string,
+
+  /*
+  title for modal , windows only
+  */
+  title?: ?string,
 |}>;
 
 function confirmProps(props: Props) {
@@ -269,6 +274,11 @@ class Modal extends React.Component<Props, State> {
   }
 
   render(): React.Node {
+    // Add this near the beginning of the render method
+    if (__DEV__ && this.props.title) {
+      console.log('Modal: title prop is being passed:', this.props.title);
+    }
+
     if (!this._shouldShowModal()) {
       return null;
     }
@@ -325,6 +335,7 @@ class Modal extends React.Component<Props, State> {
         navigationBarTranslucent={this.props.navigationBarTranslucent}
         identifier={this._identifier}
         style={styles.modal}
+        title={this.props.title}
         // $FlowFixMe[method-unbinding] added when improving typing for this parameters
         onStartShouldSetResponder={this._shouldSetResponder}
         supportedOrientations={this.props.supportedOrientations}
