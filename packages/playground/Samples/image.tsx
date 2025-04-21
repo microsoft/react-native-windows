@@ -125,11 +125,11 @@ export default class Bootstrap extends React.Component<
     const {imageUri} = this.state;
     if (imageUri && NativeModules.ImageLoader?.prefetchImage) {
       NativeModules.ImageLoader.prefetchImage(imageUri)
-        .then(result => {
+        .then((result: boolean) => {
           console.log('Prefetch result:', result);
           this.setState({prefetchResult: true});
         })
-        .catch(err => {
+        .catch((err: unknown) => {
           console.error('Prefetch failed:', err);
           this.setState({prefetchResult: false});
         });
