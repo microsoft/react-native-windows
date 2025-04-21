@@ -487,7 +487,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontSizeAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_R8) {
-         InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
+        InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontNameAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
@@ -511,7 +511,6 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       }
     }
   }
-  CapStyle_SmallCap;
 
   // Dump IScrollProvider Information
   winrt::com_ptr<IScrollProvider> scrollPattern;
