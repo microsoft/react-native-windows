@@ -15,6 +15,7 @@ struct ReactImageSource {
   std::string uri;
   std::string method;
   std::vector<std::pair<std::string, std::string>> headers;
+  std::string body;
   double width = 0;
   double height = 0;
   double scale = 1.0;
