@@ -563,6 +563,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
           : SysAllocString(L"");
       break;
     }
+    case UIA_LevelPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = props->accessibilityLevel;
+      break;
+    }
   }
 
   return hr;
