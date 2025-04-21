@@ -376,7 +376,7 @@ class TouchableDisabled extends React.Component<{...}> {
           ]}
           testID="disabled_touchable" // Windows
           onPress={() => {
-            this.setState({disabledColor: 'grey'});
+            this.setState({disabledColor: 'blue'});
           }} // Windows
         >
           <RNTesterText style={styles.disabledButton}>
