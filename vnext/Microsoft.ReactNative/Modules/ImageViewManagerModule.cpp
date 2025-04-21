@@ -156,8 +156,30 @@ void ImageLoader::getSizeWithHeaders(
 }
 
 void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&result) noexcept {
-  // NYI
-  result.Resolve(true);
+  m_context.UIDispatcher().Post(
+      [context = m_context, uri = std::move(uri), result = std::move(result)]() mutable noexcept {
+        try {
+          ReactImageSource source;
+          source.uri = uri;
+
+          GetImageStreamAsync(context.Properties().Handle(), source)
+              .Completed([context, result = std::move(result)](
+                             winrt::Windows::Foundation::IAsyncOperation<winrt::IRandomAccessStream> op,
+                             winrt::Windows::Foundation::AsyncStatus status) mutable {
+                if (status == winrt::Windows::Foundation::AsyncStatus::Completed && op.GetResults()) {
+                  context.JSDispatcher().Post([result = std::move(result)]() mutable {
+                    result.Resolve(true); // Successfully prefetched
+                  });
+                } else {
+                  context.JSDispatcher().Post([result = std::move(result)]() mutable {
+                    result.Resolve(false); // Prefetch failed, but still resolve
+                  });
+                }
+              });
+        } catch (...) {
+          context.JSDispatcher().Post([result = std::move(result)]() mutable { result.Resolve(false); });
+        }
+      });
 }
 
 void ImageLoader::prefetchImageWithMetadata(

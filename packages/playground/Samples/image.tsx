@@ -12,6 +12,7 @@ import {
   Switch,
   StyleSheet,
   PlatformColor,
+  NativeModules,
 } from 'react-native';
 import {TestPickerView} from './testPicker';
 
@@ -55,6 +56,7 @@ export default class Bootstrap extends React.Component<
     currentPicker: string | null;
     defaultImageUri: string;
     includedefaultSourceOnly: boolean;
+    prefetchResult: boolean;
   }
 > {
   state = {
@@ -68,6 +70,7 @@ export default class Bootstrap extends React.Component<
     currentPicker: '',
     defaultImageUri: reactLogoUri,
     includedefaultSourceOnly: false,
+    prefetchResult: false,
   };
 
   switchImageUri = (value: string) => {
@@ -118,6 +121,21 @@ export default class Bootstrap extends React.Component<
     this.setModalVisible(false);
   };
 
+  componentDidMount() {
+    const {imageUri} = this.state;
+    if (imageUri && NativeModules.ImageLoader?.prefetchImage) {
+      NativeModules.ImageLoader.prefetchImage(imageUri)
+        .then(result => {
+          console.log('Prefetch result:', result);
+          this.setState({prefetchResult: true});
+        })
+        .catch(err => {
+          console.error('Prefetch failed:', err);
+          this.setState({prefetchResult: false});
+        });
+    }
+  }
+
   handleResizeModesSelect = (value: any) => {
     this.setState({selectedResizeMode: value});
     this.state.currentPicker = 'resizeMode';
@@ -147,6 +165,8 @@ export default class Bootstrap extends React.Component<
     console.log(`Progress: ${progress}, Loaded = ${loaded} , Total = ${total}`);
   };
   render() {
+    const {prefetchResult} = this.state;
+
     const resizeModes = [
       {label: 'center', value: 'center'},
       {label: 'cover', value: 'cover'},
@@ -181,6 +201,10 @@ export default class Bootstrap extends React.Component<
 
     return (
       <View style={styles.container}>
+        <Text>
+          Prefetch Status: {prefetchResult ? 'Success ✅' : 'Failed ❌'}
+        </Text>
+
         <TestPickerView
           options={resizeModes}
           id="Resize Mode"
