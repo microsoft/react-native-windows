@@ -57,7 +57,7 @@
     <ClCompile Include="$(FollyDir)\folly\json\json_pointer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\json.cpp">
+    <ClCompile Include="$(FollyDir)\folly\json\json.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Format.cpp">
@@ -280,7 +280,7 @@
     <ClInclude Include="$(FollyDir)\folly\IPAddressV6.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(FollyDir)\folly\json.h">
+    <ClInclude Include="$(FollyDir)\folly\json\json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(FollyDir)\folly\Lazy.h">

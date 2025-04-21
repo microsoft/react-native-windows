@@ -73,7 +73,7 @@
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json\dynamic.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\json.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\json\json.cpp" />
     <ClCompile Include="$(FollyDir)\folly\hash\SpookyHashV2.cpp" />
     <ClCompile Include="$(FollyDir)\folly\ScopeGuard.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp" />
@@ -153,7 +153,7 @@
     <ClInclude Include="$(FollyDir)\folly\IPAddressException.h" />
     <ClInclude Include="$(FollyDir)\folly\IPAddressV4.h" />
     <ClInclude Include="$(FollyDir)\folly\IPAddressV6.h" />
-    <ClInclude Include="$(FollyDir)\folly\json.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\json.h" />
     <ClInclude Include="$(FollyDir)\folly\lang\ToAscii.h" />
     <ClInclude Include="$(FollyDir)\folly\Lazy.h" />
     <ClInclude Include="$(FollyDir)\folly\Likely.h" />
@@ -340,7 +340,7 @@
                 }
             },
             "DevelopmentDependency": false
-        }
+        },
         {
             "Component": {
                 "Type": "git",
