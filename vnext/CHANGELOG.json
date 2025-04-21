@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Apr 2025 21:34:28 GMT",
+      "version": "0.74.43",
+      "tag": "react-native-windows_v0.74.43",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0de32f17b3b6b02f1ac60e17ef47a426b7445868",
+            "comment": "Implement WebSocket resource task sequencer (#14577)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Apr 2025 23:41:10 GMT",
       "version": "0.74.42",
       "tag": "react-native-windows_v0.74.42",
