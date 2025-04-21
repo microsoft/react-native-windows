@@ -179,6 +179,30 @@ describe('TextInput Tests', () => {
       },
     );
   });
+  test('TextInput triggers onPressIn and updates state text', async () => {
+    // Find the TextInput component and trigger the onPressIn event
+    const input = await app.findElementByTestID('textinput-press');
+    await input.click(); // This triggers the onPressIn event
+
+    // Find the Text component that displays the updated state
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    // Wait for the state to update and ensure the text is updated correctly
+    await app.waitUntil(
+        async () => {
+            const currentText = await stateText.getText();
+            console.log('Current text:', currentText); // Debugging the current text
+            return currentText === 'Holding down the click/touch';
+        },
+        {
+            timeout: 5000, // Give it some more time if needed
+            timeoutMsg: 'Text not updated after onPressIn.',
+        }
+    );
+
+    // Final assertion to verify the state text has been updated correctly
+    expect(await stateText.getText()).toBe('Holding down the click/touch');
+  });
   test('TextInputs can have attributed text', async () => {
     const component = await app.findElementByTestID('text-input');
     await component.waitForDisplayed({timeout: 5000});

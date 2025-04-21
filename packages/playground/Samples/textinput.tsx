@@ -149,6 +149,13 @@ export default class Bootstrap extends React.Component<{}, any> {
             style={[styles.input, {letterSpacing: 5.1}]}
             placeholder={'Letter Spacing'}
           />
+		  <TextInput
+            style={styles.input}
+            placeholder="OnPressIn..."
+            onPressIn={event => {
+              Alert.alert('Pressed!');
+            }}
+          />
           <Button
             title={
               this.state.passwordHidden
@@ -203,13 +210,6 @@ export default class Bootstrap extends React.Component<{}, any> {
             selectionColor="yellow"
             placeholderTextColor="grey"
             style={[styles.input, {backgroundColor: 'black', color: 'white'}]}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="OnPressIn..."
-            onPressIn={event => {
-              Alert.alert('Pressed!');
-            }}
           />
           <KeyboardAvoidingView
             style={styles.container}
