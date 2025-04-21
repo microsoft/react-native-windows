@@ -790,6 +790,22 @@ void ScrollViewComponentView::updateProps(
   if (oldViewProps.zoomScale != newViewProps.zoomScale) {
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
+
+  if (oldViewProps.snapToEnd != newViewProps.snapToEnd) {
+    m_snapToEnd = newViewProps.snapToEnd;
+  }
+
+  if (oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+    m_snapToInterval = newViewProps.snapToInterval;
+  }
+
+  if (oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
+    m_snapToOffsets = newViewProps.snapToOffsets;
+  }
+
+  if (oldViewProps.snapToStart != newViewProps.snapToStart) {
+    m_snapToStart = newViewProps.snapToStart;
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -800,12 +816,21 @@ void ScrollViewComponentView::updateState(
   updateContentVisualSize();
 }
 
-void ScrollViewComponentView::updateStateWithContentOffset() noexcept {
+void ScrollViewComponentView::updateStateWithContentOffset(bool applySnapping) noexcept {
   if (!m_state) {
     return;
   }
 
   auto scrollPosition = m_scrollVisual.ScrollPosition();
+
+  // Apply snapping if applicable
+  if (applySnapping) {
+    float snapX = calculateSnapPosition(scrollPosition.x, true);
+    float snapY = calculateSnapPosition(scrollPosition.y, false);
+    scrollPosition.x = snapX;
+    scrollPosition.y = snapY;
+  }
+
   m_verticalScrollbarComponent->ContentOffset(scrollPosition);
   m_horizontalScrollbarComponent->ContentOffset(scrollPosition);
 
@@ -1240,7 +1265,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
-        updateStateWithContentOffset();
+        updateStateWithContentOffset(true); // TO-DO: When onScrollEndDrag is implemented, we can set this to false here
+                                            // and true for onScrollEndDrag only
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
           facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
@@ -1261,7 +1287,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
-        updateStateWithContentOffset();
+        updateStateWithContentOffset(false);
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
           facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
@@ -1372,5 +1398,72 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+float ScrollViewComponentView::calculateSnapPosition(float currentOffset, bool isHorizontal) noexcept {
+  float targetOffset = currentOffset;
+
+  // Calculate maximum content offset
+  float viewportSize = isHorizontal ? m_layoutMetrics.frame.size.width : m_layoutMetrics.frame.size.height;
+  float maximumOffset = isHorizontal ? std::max(0.0f, m_contentSize.width - viewportSize)
+                                     : std::max(0.0f, m_contentSize.height - viewportSize);
+
+  // Handle snapToOffsets
+  if (!m_snapToOffsets.empty()) {
+    float targetOffset = currentOffset;
+    float smallerOffset = 0.0f;
+    float largerOffset = maximumOffset;
+
+    // Find the closest smaller and larger offsets
+    for (float offset : m_snapToOffsets) {
+      if (offset <= targetOffset && (targetOffset - offset < targetOffset - smallerOffset)) {
+        smallerOffset = offset;
+      }
+      if (offset >= targetOffset && (offset - targetOffset < largerOffset - targetOffset)) {
+        largerOffset = offset;
+      }
+    }
+
+    // Determine the nearest offset
+    float nearestOffset = (targetOffset - smallerOffset < largerOffset - targetOffset) ? smallerOffset : largerOffset;
+
+    // Handle snapToStart and snapToEnd
+    if (!m_snapToStart && targetOffset <= m_snapToOffsets.front()) {
+      if (currentOffset <= m_snapToOffsets.front()) {
+        // Free scrolling
+        targetOffset = currentOffset;
+      } else {
+        // Snap to start
+        targetOffset = m_snapToOffsets.front();
+      }
+    } else if (!m_snapToEnd && targetOffset >= m_snapToOffsets.back()) {
+      if (currentOffset >= m_snapToOffsets.back()) {
+        // Free scrolling
+        targetOffset = currentOffset;
+      } else {
+        // Snap to end
+        targetOffset = m_snapToOffsets.back();
+      }
+    } else {
+      targetOffset = nearestOffset;
+    }
+  } else if (m_snapToInterval > 0.0f) {
+    // Handle snapToInterval
+    float alignmentOffset = 0.0f;
+
+    // TODO: Add additional checks for disableIntervalMomentum and snapToAlignment here
+
+    // Calculate the fractional index for snapping
+    float fractionalIndex = (currentOffset + alignmentOffset) / m_snapToInterval;
+
+    // Determine the snap index based on direction
+    int snapIndex = static_cast<int>(std::round(fractionalIndex));
+    targetOffset = (snapIndex * m_snapToInterval) - alignmentOffset;
+  }
+
+  // Ensure the snap position is within bounds
+  targetOffset = std::clamp(targetOffset, 0.0f, maximumOffset);
+
+  return targetOffset;
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

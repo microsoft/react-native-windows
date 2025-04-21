@@ -128,9 +128,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollLeft(float delta, bool aniamte) noexcept;
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
-  void updateStateWithContentOffset() noexcept;
+  void updateStateWithContentOffset(bool applySnapping) noexcept;
   void updateShowsHorizontalScrollIndicator(bool value) noexcept;
   void updateShowsVerticalScrollIndicator(bool value) noexcept;
+  float calculateSnapPosition(float currentOffset, bool isHorizontal) noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
@@ -147,6 +148,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_isHorizontal = false;
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
+  bool m_snapToEnd{true};
+  float m_snapToInterval{0.0f};
+  std::vector<float> m_snapToOffsets{};
+  bool m_snapToStart{true};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 };
 

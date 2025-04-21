@@ -290,6 +290,7 @@ export default class Bootstrap extends React.Component<{}, any> {
             zoomScale={this.state.zoomValue ? 2.0 : 1.0}
             snapToStart={this.state.snapToStartValue}
             snapToEnd={this.state.snapToEndValue}
+            snapToInterval={150}
             snapToAlignment={this.state.alignToStartValue ? 'start' : 'end'}
             horizontal={this.state.horizontalValue}
             showsHorizontalScrollIndicator={
