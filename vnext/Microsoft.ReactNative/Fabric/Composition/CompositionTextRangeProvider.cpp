@@ -98,7 +98,7 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
       textTransform = props->textAttributes.textTransform.value();
     }
     if (fontVariant == facebook::react::FontVariant::SmallCaps) {
-      pRetVal->intVal= CapStyle_SmallCap;
+      pRetVal->intVal = CapStyle_SmallCap;
     } else if (textTransform == facebook::react::TextTransform::Capitalize) {
       pRetVal->intVal = CapStyle_Titling;
     } else if (textTransform == facebook::react::TextTransform::Lowercase) {
