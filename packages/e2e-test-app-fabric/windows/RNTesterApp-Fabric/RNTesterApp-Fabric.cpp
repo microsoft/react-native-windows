@@ -230,6 +230,26 @@ void InsertNumberValueIfNotDefault(
   }
 }
 
+void InsertNumberValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    double value,
+    double defaultValue = 0.0f) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
+void InsertNumberValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    long value,
+    long defaultValue = 0) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
 void InsertIntValueIfNotDefault(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
@@ -467,15 +487,13 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontSizeAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_R8) {
-        // InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
-        result.Insert(
-            L"TextRangePattern.fontSize", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(varFontAttr.dblVal));
+         InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
       }
       hr = textRangePattern->GetAttributeValue(UIA_FontNameAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
         InsertStringValueIfNotEmpty(result, L"TextRangePattern.fontName", varFontAttr.bstrVal);
       }
-      /*hr = textRangePattern->GetAttributeValue(UIA_FontWeightAttributeId, &varFontAttr);
+      hr = textRangePattern->GetAttributeValue(UIA_FontWeightAttributeId, &varFontAttr);
       if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
         InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontWeight", varFontAttr.lVal);
       }
@@ -488,9 +506,9 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
         InsertNumberValueIfNotDefault(result, L"TextRangePattern.backgroundColor", varFontAttr.lVal);
       }
       hr = textRangePattern->GetAttributeValue(UIA_CapStyleAttributeId, &varFontAttr);
-      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
-        InsertNumberValueIfNotDefault(result, L"TextRangePattern.capStyleAttr", varFontAttr.lVal);
-      }*/
+      if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_INT) {
+        InsertIntValueIfNotDefault(result, L"TextRangePattern.capStyleAttr", varFontAttr.intVal);
+      }
     }
   }
   CapStyle_SmallCap;

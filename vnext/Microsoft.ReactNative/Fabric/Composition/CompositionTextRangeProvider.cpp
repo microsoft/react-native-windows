@@ -88,7 +88,7 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
     pRetVal->vt = VT_I4;
     pRetVal->lVal = (*props->backgroundColor).AsColorRefWithAlpha();
   } else if (attributeId == UIA_CapStyleAttributeId) {
-    pRetVal->vt = VT_I4;
+    pRetVal->vt = VT_INT;
     auto fontVariant = facebook::react::FontVariant::Default;
     auto textTransform = facebook::react::TextTransform::None;
     if (props->textAttributes.fontVariant.has_value()) {
@@ -98,13 +98,13 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
       textTransform = props->textAttributes.textTransform.value();
     }
     if (fontVariant == facebook::react::FontVariant::SmallCaps) {
-      return CapStyle_SmallCap;
+      pRetVal->intVal= CapStyle_SmallCap;
     } else if (textTransform == facebook::react::TextTransform::Capitalize) {
-      return CapStyle_Titling;
+      pRetVal->intVal = CapStyle_Titling;
     } else if (textTransform == facebook::react::TextTransform::Lowercase) {
-      return CapStyle_None;
+      pRetVal->intVal = CapStyle_None;
     } else if (textTransform == facebook::react::TextTransform::Uppercase) {
-      return CapStyle_AllCap;
+      pRetVal->intVal = CapStyle_AllCap;
     }
   } else if (attributeId == UIA_FontNameAttributeId) {
     pRetVal->vt = VT_BSTR;
