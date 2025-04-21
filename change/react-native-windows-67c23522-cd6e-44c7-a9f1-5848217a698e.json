@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric ] Implement snapToStart, snapToEnd, snapToInterval and snapToOffsets in Scrollview",
+  "packageName": "react-native-windows",
+  "email": "54227869+anupriya13@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
