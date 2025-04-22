@@ -980,28 +980,24 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
     </View>
   ) : (
     <View>
-      <RNTesterText style={subtitleStyle}>{'Nested <Text/>s:'}</RNTesterText>
+      <Text style={subtitleStyle}>{'Nested <Text/>s:'}</Text>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
         {marker}
-        <RNTesterText>{texts}</RNTesterText>
+        <Text>{texts}</Text>
         {marker}
       </View>
 
-      <RNTesterText style={subtitleStyle}>
-        {'Array of <Text/>s in <View>:'}
-      </RNTesterText>
+      <Text style={subtitleStyle}>{'Array of <Text/>s in <View>:'}</Text>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
         {marker}
         {texts}
         {marker}
       </View>
       <View>
-        <RNTesterText style={subtitleStyle}>
-          {'Interleaving <View> and <Text>:'}
-        </RNTesterText>
+        <Text style={subtitleStyle}>{'Interleaving <View> and <Text>:'}</Text>
         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
           {marker}
-          <RNTesterText selectable={true}>
+          <Text selectable={true}>
             Some text.
             <View
               style={{
@@ -1010,59 +1006,55 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
                 backgroundColor: '#eee',
               }}>
               {marker}
-              <RNTesterText>Text inside View.</RNTesterText>
+              <Text>Text inside View.</Text>
               {marker}
             </View>
-          </RNTesterText>
+          </Text>
           {marker}
         </View>
 
-        <RNTesterText style={subtitleStyle}>
+        <Text style={subtitleStyle}>
           {'Multi-line interleaved <View> and <Text>:'}
-        </RNTesterText>
+        </Text>
         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-          <RNTesterText selectable={true}>
+          <Text selectable={true}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
             venenatis,{' '}
             <View
               style={{
                 backgroundColor: 'yellow',
               }}>
-              <RNTesterText>mauris eu commodo maximus</RNTesterText>
+              <Text>mauris eu commodo maximus</Text>
             </View>{' '}
             , ante arcu vestibulum ligula, et scelerisque diam.
-          </RNTesterText>
+          </Text>
         </View>
 
-        <RNTesterText style={subtitleStyle}>
-          {'Multi-line <Text> alignment'}
-        </RNTesterText>
+        <Text style={subtitleStyle}>{'Multi-line <Text> alignment'}</Text>
         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
           <View style={{width: 50, height: 50, backgroundColor: 'gray'}} />
           <View style={{width: 125, backgroundColor: '#eee'}}>
-            <RNTesterText style={{fontSize: 15}}>
+            <Text style={{fontSize: 15}}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </RNTesterText>
+            </Text>
           </View>
           <View style={{width: 125, backgroundColor: '#eee'}}>
-            <RNTesterText style={{fontSize: 10}}>
+            <Text style={{fontSize: 10}}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </RNTesterText>
+            </Text>
           </View>
         </View>
 
-        <RNTesterText style={subtitleStyle}>{'<TextInput/>:'}</RNTesterText>
+        <Text style={subtitleStyle}>{'<TextInput/>:'}</Text>
         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
           {marker}
           <TextInput style={{margin: 0, padding: 0}}>{texts}</TextInput>
           {marker}
         </View>
 
-        <RNTesterText style={subtitleStyle}>
-          {'<TextInput multiline/>:'}
-        </RNTesterText>
+        <Text style={subtitleStyle}>{'<TextInput multiline/>:'}</Text>
         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
           {marker}
           <TextInput multiline={true} style={{margin: 0, padding: 0}}>
@@ -1726,7 +1718,7 @@ const examples = [
     render: function (): React.Node {
       return (
         <View>
-          <RNTesterText
+          <Text
             style={{
               width: 500,
               height: 100,
@@ -1737,8 +1729,8 @@ const examples = [
             }}
             testID="text-adjustfontsizetofit-default-a">
             {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
-          </RNTesterText>
-          <RNTesterText
+          </Text>
+          <Text
             adjustsFontSizeToFit
             style={{
               width: 500,
@@ -1750,14 +1742,14 @@ const examples = [
             }}
             testID="text-adjustfontsizetofit-default-b">
             {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
-          </RNTesterText>
+          </Text>
           {[
             {width: 500, height: 80, lineCount: 3},
             {width: 475, height: 120, lineCount: 5},
             {width: 450, height: 160, lineCount: 0},
           ].map((item, index) => (
             <React.Fragment key={index}>
-              <RNTesterText
+              <Text
                 testID={`text-adjustfontsizetofit-${index}-a`}
                 numberOfLines={item.lineCount}
                 adjustsFontSizeToFit
@@ -1770,8 +1762,8 @@ const examples = [
                   marginBottom: 10,
                 }}>
                 {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
-              </RNTesterText>
-              <RNTesterText
+              </Text>
+              <Text
                 testID={`text-adjustfontsizetofit-${index}-b`}
                 numberOfLines={item.lineCount}
                 style={{
@@ -1783,7 +1775,7 @@ const examples = [
                   marginBottom: 10,
                 }}>
                 {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
-              </RNTesterText>
+              </Text>
             </React.Fragment>
           ))}
         </View>

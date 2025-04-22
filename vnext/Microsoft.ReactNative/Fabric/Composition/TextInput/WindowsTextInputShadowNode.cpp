@@ -24,14 +24,6 @@ void WindowsTextInputShadowNode::setTextLayoutManager(std::shared_ptr<const Text
 Size WindowsTextInputShadowNode::measureContent(
     const LayoutContext &layoutContext,
     const LayoutConstraints &layoutConstraints) const {
-  if (getStateData().cachedAttributedStringId != 0) {
-    facebook::react::ParagraphAttributes paragraphAttributes{};
-    paragraphAttributes.maximumNumberOfLines = getConcreteProps().multiline ? 0 : 1;
-    return textLayoutManager_
-        ->measureCachedSpannableById(getStateData().cachedAttributedStringId, paragraphAttributes, layoutConstraints)
-        .size;
-  }
-
   // Layout is called right after measure.
   // Measure is marked as `const`, and `layout` is not; so State can be updated
   // during layout, but not during `measure`. If State is out-of-date in layout,
@@ -131,7 +123,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // current attributedString unchanged, and pass in zero for the "event count"
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
-  setStateData(facebook::react::TextInputState{
+  setStateData(facebook::react::WindowsTextInputState{
       AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
 }
 
@@ -150,7 +142,6 @@ AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutCon
   auto attributedString = AttributedString{};
   auto attachments = BaseTextShadowNode::Attachments{};
   BaseTextShadowNode::buildAttributedString(childTextAttributes, *this, attributedString, attachments);
-  attributedString.setBaseTextAttributes(childTextAttributes);
 
   // BaseTextShadowNode only gets children. We must detect and prepend text
   // value attributes manually.

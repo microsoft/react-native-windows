@@ -4,31 +4,21 @@
 
 #include "WindowsTextInputState.h"
 
-#include <react/renderer/components/text/conversions.h>
-#include <react/renderer/debug/debugStringConvertibleUtils.h>
-#include <react/renderer/mapbuffer/MapBuffer.h>
-#include <react/renderer/mapbuffer/MapBufferBuilder.h>
-
-#include <utility>
+#ifdef ANDROID
+#include <react/renderer/attributedstring/conversions.h>
+#include <react/renderer/components/text/ParagraphState.h>
+#endif
 
 namespace facebook::react {
 
 WindowsTextInputState::WindowsTextInputState(
-    int64_t mostRecentEventCount,
-    AttributedString attributedString,
+    AttributedStringBox attributedStringBox,
     AttributedString reactTreeAttributedString,
     ParagraphAttributes paragraphAttributes,
-    double defaultThemePaddingStart,
-    double defaultThemePaddingEnd,
-    double defaultThemePaddingTop,
-    double defaultThemePaddingBottom)
-    : mostRecentEventCount(mostRecentEventCount),
-      attributedString(std::move(attributedString)),
+    int64_t mostRecentEventCount)
+    : attributedStringBox(std::move(attributedStringBox)),
       reactTreeAttributedString(std::move(reactTreeAttributedString)),
       paragraphAttributes(std::move(paragraphAttributes)),
-      defaultThemePaddingStart(defaultThemePaddingStart),
-      defaultThemePaddingEnd(defaultThemePaddingEnd),
-      defaultThemePaddingTop(defaultThemePaddingTop),
-      defaultThemePaddingBottom(defaultThemePaddingBottom) {}
+      mostRecentEventCount(mostRecentEventCount) {}
 
 } // namespace facebook::react

@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <react/renderer/imagemanager/ImageRequest.h>
-#include <react/renderer/imagemanager/ImageRequestParams.h>
 
 #include <Fabric/Composition/UriImageManager.h>
 #include <ReactContext.h>
@@ -20,12 +19,6 @@ struct WindowsImageManager {
   facebook::react::ImageRequest requestImage(
       const facebook::react::ImageSource &imageSource,
       facebook::react::SurfaceId surfaceId) const;
-
-  facebook::react::ImageRequest requestImage(
-      const facebook::react::ImageSource &imageSource,
-      facebook::react::SurfaceId surfaceId,
-      const facebook::react::ImageRequestParams & /* imageRequestParams */,
-      facebook::react::Tag /* tag */) const;
 
  private:
   winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>

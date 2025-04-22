@@ -75,8 +75,6 @@ virtual State::Shared createInitialState(
     // and communicate text rendering metrics to mounting layer.
     textInputShadowNode.setTextLayoutManager(m_textLayoutManager);
 
-    textInputShadowNode.setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
-
     /*
             int surfaceId = textInputShadowNode.getSurfaceId();
     if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
