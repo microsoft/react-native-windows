@@ -156,7 +156,7 @@ struct ReactNativeIsland
   bool m_isJSViewAttached{false};
   bool m_hasRenderedVisual{false};
   bool m_showingLoadingUI{false};
-  bool m_mounted{false};
+  bool m_mounted{true};
   winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::PortalComponentView> m_portal{nullptr};
   IReactDispatcher m_uiDispatcher{nullptr};
   winrt::IInspectable m_uiaProvider{nullptr};
