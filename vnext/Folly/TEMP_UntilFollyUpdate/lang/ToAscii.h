@@ -1,18 +1,18 @@
 /*
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright (c) Meta Platforms, Inc. and affiliates.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 #pragma once
 
@@ -39,14 +39,14 @@ namespace folly {
 //  the constructibility/destructibility and the interface of this one.
 template <bool Upper>
 struct to_ascii_alphabet {
-  //  operator()
-  //
-  //  Translates a single digit to 0-9,a-z or 0-9,A-Z.
-  //
-  //  async-signal-safe
-  constexpr char operator()(uint8_t b) const {
-    return b < 10 ? '0' + b : (Upper ? 'A' : 'a') + (b - 10);
-  }
+//  operator()
+//
+//  Translates a single digit to 0-9,a-z or 0-9,A-Z.
+//
+//  async-signal-safe
+constexpr char operator()(uint8_t b) const {
+  return b < 10 ? '0' + b : (Upper ? 'A' : 'a') + (b - 10);
+}
 };
 using to_ascii_alphabet_lower = to_ascii_alphabet<false>;
 using to_ascii_alphabet_upper = to_ascii_alphabet<true>;
@@ -63,7 +63,7 @@ using to_ascii_alphabet_upper = to_ascii_alphabet<true>;
 /*
 template <uint64_t Base, typename Int>
 inline  constexpr size_t to_ascii_size_max =
-    detail::to_ascii_powers<Base, Int>::size;
+  detail::to_ascii_powers<Base, Int>::size;
 */
 //  to_ascii_size_max_decimal
 //
@@ -104,7 +104,7 @@ FOLLY_ALWAYS_INLINE size_t to_ascii_with_route(char (&out)[N], uint64_t v);
 //  async-signal-safe
 template <uint64_t Base>
 size_t to_ascii_size(uint64_t v) {
-  return detail::to_ascii_size_route<Base>(v);
+return detail::to_ascii_size_route<Base>(v);
 }
 
 //  to_ascii_size_decimal
@@ -113,7 +113,7 @@ size_t to_ascii_size(uint64_t v) {
 //
 //  async-signal-safe
 inline size_t to_ascii_size_decimal(uint64_t v) {
-  return to_ascii_size<10>(v);
+return to_ascii_size<10>(v);
 }
 
 //  to_ascii_with
@@ -131,11 +131,11 @@ inline size_t to_ascii_size_decimal(uint64_t v) {
 //  async-signal-safe
 template <uint64_t Base, typename Alphabet>
 size_t to_ascii_with(char* outb, char const* oute, uint64_t v) {
-  return detail::to_ascii_with_route<Base, Alphabet>(outb, oute, v);
+return detail::to_ascii_with_route<Base, Alphabet>(outb, oute, v);
 }
 template <uint64_t Base, typename Alphabet, size_t N>
 size_t to_ascii_with(char (&out)[N], uint64_t v) {
-  return detail::to_ascii_with_route<Base, Alphabet>(out, v);
+return detail::to_ascii_with_route<Base, Alphabet>(out, v);
 }
 
 //  to_ascii_lower
@@ -145,11 +145,11 @@ size_t to_ascii_with(char (&out)[N], uint64_t v) {
 //  async-signal-safe
 template <uint64_t Base>
 size_t to_ascii_lower(char* outb, char const* oute, uint64_t v) {
-  return to_ascii_with<Base, to_ascii_alphabet_lower>(outb, oute, v);
+return to_ascii_with<Base, to_ascii_alphabet_lower>(outb, oute, v);
 }
 template <uint64_t Base, size_t N>
 size_t to_ascii_lower(char (&out)[N], uint64_t v) {
-  return to_ascii_with<Base, to_ascii_alphabet_lower>(out, v);
+return to_ascii_with<Base, to_ascii_alphabet_lower>(out, v);
 }
 
 //  to_ascii_upper
@@ -159,11 +159,11 @@ size_t to_ascii_lower(char (&out)[N], uint64_t v) {
 //  async-signal-safe
 template <uint64_t Base>
 size_t to_ascii_upper(char* outb, char const* oute, uint64_t v) {
-  return to_ascii_with<Base, to_ascii_alphabet_upper>(outb, oute, v);
+return to_ascii_with<Base, to_ascii_alphabet_upper>(outb, oute, v);
 }
 template <uint64_t Base, size_t N>
 size_t to_ascii_upper(char (&out)[N], uint64_t v) {
-  return to_ascii_with<Base, to_ascii_alphabet_upper>(out, v);
+return to_ascii_with<Base, to_ascii_alphabet_upper>(out, v);
 }
 
 //  to_ascii_decimal
@@ -172,11 +172,11 @@ size_t to_ascii_upper(char (&out)[N], uint64_t v) {
 //
 //  async-signal-safe
 inline size_t to_ascii_decimal(char* outb, char const* oute, uint64_t v) {
-  return to_ascii_lower<10>(outb, oute, v);
+return to_ascii_lower<10>(outb, oute, v);
 }
 template <size_t N>
 inline size_t to_ascii_decimal(char (&out)[N], uint64_t v) {
-  return to_ascii_lower<10>(out, v);
+return to_ascii_lower<10>(out, v);
 }
 
 } // namespace folly
