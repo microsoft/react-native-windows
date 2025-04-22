@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Apr 2025 05:24:03 GMT",
+      "version": "0.0.0-canary.944",
+      "tag": "react-native-windows_v0.0.0-canary.944",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ba877502d9af4c86c541f444a321a69359187bc9",
+            "comment": "Implement scrollEventThrottle for ScrollView in Fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 20 Apr 2025 05:22:30 GMT",
       "version": "0.0.0-canary.943",
       "tag": "react-native-windows_v0.0.0-canary.943",
