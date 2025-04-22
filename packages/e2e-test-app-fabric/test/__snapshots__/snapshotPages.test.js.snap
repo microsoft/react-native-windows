@@ -4,12 +4,15 @@ exports[`Component Control 1`] = `<View />`;
 
 exports[`snapshotAllPages Accessibility Windows 1`] = `
 <View>
-  <Text>
+  <Text
+    accessibilityLevel={1}
+  >
     The following has accessibilityLabel and accessibilityHint:
   </Text>
   <View
     accessibilityHint="A hint for the blue box."
     accessibilityLabel="A blue box"
+    accessibilityLevel={2}
     style={
       {
         "backgroundColor": "blue",
@@ -23,6 +26,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
   </Text>
   <View
     accessibilityLabel="A hint for the red box."
+    accessibilityLevel={3}
     accessible={true}
     style={
       {
@@ -32,17 +36,20 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
       }
     }
   />
-  <Text>
+  <Text
+    accessibilityLevel={4}
+  >
     The following has accessibilitySetSize, accessibilityPosInSet and accessibilityLabel:
   </Text>
   <View
     accessibilityLabel="This label should not be used"
-    accessibilityLevel={4}
+    accessibilityLevel={5}
     accessibilityPosInSet={2}
     accessibilityRole="listitem"
     accessibilitySetSize={5}
     accessible={true}
     aria-label="Aria label takes precedence"
+    aria-level={9}
     style={
       {
         "backgroundColor": "red",

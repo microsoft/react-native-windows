@@ -47,7 +47,7 @@ class AccessibilityBaseExample extends React.Component {
           aria-label="Aria label takes precedence"
           accessibilitySetSize={5}
           accessibilityPosInSet={2}
-          aria-level={9} //aria-level taked precedence over accessibilityLevel
+          aria-level={9} //aria-level takes precedence over accessibilityLevel
           accessibilityLevel={5}
         />
       </View>
