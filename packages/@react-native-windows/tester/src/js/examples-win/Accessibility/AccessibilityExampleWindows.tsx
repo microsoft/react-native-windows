@@ -19,19 +19,23 @@ class AccessibilityBaseExample extends React.Component {
   public render() {
     return (
       <View>
-        <Text>The following has accessibilityLabel and accessibilityHint:</Text>
+        <Text accessibilityLevel={1}>
+          The following has accessibilityLabel and accessibilityHint:
+        </Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'blue'}}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
+          accessibilityLevel={2}
         />
         <Text>The following has accessible and accessibilityLabel:</Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'red'}}
           accessible={true}
           accessibilityLabel="A hint for the red box."
+          accessibilityLevel={3}
         />
-        <Text>
+        <Text accessibilityLevel={4}>
           The following has accessibilitySetSize, accessibilityPosInSet and
           accessibilityLabel:
         </Text>
@@ -43,7 +47,8 @@ class AccessibilityBaseExample extends React.Component {
           aria-label="Aria label takes precedence"
           accessibilitySetSize={5}
           accessibilityPosInSet={2}
-          accessibilityLevel={4}
+          aria-level={9} //aria-level taked precedence over accessibilityLevel
+          accessibilityLevel={5}
         />
       </View>
     );
