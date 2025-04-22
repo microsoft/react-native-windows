@@ -8,7 +8,7 @@
        -->
 
   <PropertyGroup>
-    <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">false</RestoreLockedMode>
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">true</RestoreLockedMode>
     <NuGetLockFileName>packages</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(UseFabric)'=='true'">$(NuGetLockFileName).fabric</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(UseExperimentalWinUI3)'=='true'">$(NuGetLockFileName).experimentalwinui3</NuGetLockFileName>
