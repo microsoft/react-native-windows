@@ -10,9 +10,9 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2903.40 )",
+        "requested": "[1.0.2903.40, )",
         "resolved": "1.0.2903.40",
-        "contentHash": "KOlLJSq70OySfU8mdhWdh9iOyApazWsIb6CmSz+YTJ5MmwLcsCLMW0qemORo7Si3A7VhLDIH3jwpMhPxodfkuA=="
+        "contentHash": "THrzYAnJgE3+cNH+9Epr44XjoZoRELdVpXlWGPs6K9C9G6TqyDfVCeVAR/Er8ljLitIUX5gaSkPsy9wRhD1sgQ=="
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
@@ -126,9 +126,9 @@
     "native,Version=v0.0/win": {
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2903.40 )",
+        "requested": "[1.0.2903.40, )",
         "resolved": "1.0.2903.40",
-        "contentHash": "KOlLJSq70OySfU8mdhWdh9iOyApazWsIb6CmSz+YTJ5MmwLcsCLMW0qemORo7Si3A7VhLDIH3jwpMhPxodfkuA=="
+        "contentHash": "THrzYAnJgE3+cNH+9Epr44XjoZoRELdVpXlWGPs6K9C9G6TqyDfVCeVAR/Er8ljLitIUX5gaSkPsy9wRhD1sgQ=="
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
@@ -143,9 +143,9 @@
     "native,Version=v0.0/win-arm64": {
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2903.40 )",
+        "requested": "[1.0.2903.40, )",
         "resolved": "1.0.2903.40",
-        "contentHash": "KOlLJSq70OySfU8mdhWdh9iOyApazWsIb6CmSz+YTJ5MmwLcsCLMW0qemORo7Si3A7VhLDIH3jwpMhPxodfkuA=="
+        "contentHash": "THrzYAnJgE3+cNH+9Epr44XjoZoRELdVpXlWGPs6K9C9G6TqyDfVCeVAR/Er8ljLitIUX5gaSkPsy9wRhD1sgQ=="
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
@@ -160,9 +160,9 @@
     "native,Version=v0.0/win-x64": {
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2903.40 )",
+        "requested": "[1.0.2903.40, )",
         "resolved": "1.0.2903.40",
-        "contentHash": "KOlLJSq70OySfU8mdhWdh9iOyApazWsIb6CmSz+YTJ5MmwLcsCLMW0qemORo7Si3A7VhLDIH3jwpMhPxodfkuA=="
+        "contentHash": "THrzYAnJgE3+cNH+9Epr44XjoZoRELdVpXlWGPs6K9C9G6TqyDfVCeVAR/Er8ljLitIUX5gaSkPsy9wRhD1sgQ=="
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
@@ -177,9 +177,9 @@
     "native,Version=v0.0/win-x86": {
       "Microsoft.Web.WebView2": {
         "type": "Direct",
-        "requested": "[1.0.2903.40 )",
+        "requested": "[1.0.2903.40, )",
         "resolved": "1.0.2903.40",
-        "contentHash": "KOlLJSq70OySfU8mdhWdh9iOyApazWsIb6CmSz+YTJ5MmwLcsCLMW0qemORo7Si3A7VhLDIH3jwpMhPxodfkuA=="
+        "contentHash": "THrzYAnJgE3+cNH+9Epr44XjoZoRELdVpXlWGPs6K9C9G6TqyDfVCeVAR/Er8ljLitIUX5gaSkPsy9wRhD1sgQ=="
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
