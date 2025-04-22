@@ -2112,57 +2112,6 @@
     "@babel/traverse" "^7.25.3"
     "@react-native/codegen" "0.79.0-nightly-20250123-d1028885e"
 
-"@react-native/babel-preset@0.78.0-nightly-20250113-d4407d6f7":
-  version "0.78.0-nightly-20250113-d4407d6f7"
-  resolved "https://registry.yarnpkg.com/@react-native/babel-preset/-/babel-preset-0.78.0-nightly-20250113-d4407d6f7.tgz#69f1ef9d7228848f919d39eaa1204d035948ca9b"
-  integrity sha512-u59SWdCbRTUMJt6kvVD5a7drclfiQ0qYV3P2twiPPauQOvIcqv/l31RR6ZhYXCzh9rB3AY2e39QkVOexawPl+Q==
-  dependencies:
-    "@babel/core" "^7.25.2"
-    "@babel/plugin-proposal-export-default-from" "^7.24.7"
-    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
-    "@babel/plugin-syntax-export-default-from" "^7.24.7"
-    "@babel/plugin-syntax-nullish-coalescing-operator" "^7.8.3"
-    "@babel/plugin-syntax-optional-chaining" "^7.8.3"
-    "@babel/plugin-transform-arrow-functions" "^7.24.7"
-    "@babel/plugin-transform-async-generator-functions" "^7.25.4"
-    "@babel/plugin-transform-async-to-generator" "^7.24.7"
-    "@babel/plugin-transform-block-scoping" "^7.25.0"
-    "@babel/plugin-transform-class-properties" "^7.25.4"
-    "@babel/plugin-transform-classes" "^7.25.4"
-    "@babel/plugin-transform-computed-properties" "^7.24.7"
-    "@babel/plugin-transform-destructuring" "^7.24.8"
-    "@babel/plugin-transform-flow-strip-types" "^7.25.2"
-    "@babel/plugin-transform-for-of" "^7.24.7"
-    "@babel/plugin-transform-function-name" "^7.25.1"
-    "@babel/plugin-transform-literals" "^7.25.2"
-    "@babel/plugin-transform-logical-assignment-operators" "^7.24.7"
-    "@babel/plugin-transform-modules-commonjs" "^7.24.8"
-    "@babel/plugin-transform-named-capturing-groups-regex" "^7.24.7"
-    "@babel/plugin-transform-nullish-coalescing-operator" "^7.24.7"
-    "@babel/plugin-transform-numeric-separator" "^7.24.7"
-    "@babel/plugin-transform-object-rest-spread" "^7.24.7"
-    "@babel/plugin-transform-optional-catch-binding" "^7.24.7"
-    "@babel/plugin-transform-optional-chaining" "^7.24.8"
-    "@babel/plugin-transform-parameters" "^7.24.7"
-    "@babel/plugin-transform-private-methods" "^7.24.7"
-    "@babel/plugin-transform-private-property-in-object" "^7.24.7"
-    "@babel/plugin-transform-react-display-name" "^7.24.7"
-    "@babel/plugin-transform-react-jsx" "^7.25.2"
-    "@babel/plugin-transform-react-jsx-self" "^7.24.7"
-    "@babel/plugin-transform-react-jsx-source" "^7.24.7"
-    "@babel/plugin-transform-regenerator" "^7.24.7"
-    "@babel/plugin-transform-runtime" "^7.24.7"
-    "@babel/plugin-transform-shorthand-properties" "^7.24.7"
-    "@babel/plugin-transform-spread" "^7.24.7"
-    "@babel/plugin-transform-sticky-regex" "^7.24.7"
-    "@babel/plugin-transform-typescript" "^7.25.2"
-    "@babel/plugin-transform-unicode-regex" "^7.24.7"
-    "@babel/template" "^7.25.0"
-    "@react-native/babel-plugin-codegen" "0.78.0-nightly-20250113-d4407d6f7"
-    babel-plugin-syntax-hermes-parser "0.25.1"
-    babel-plugin-transform-flow-enums "^0.0.2"
-    react-refresh "^0.14.0"
-
 "@react-native/babel-preset@0.79.0-nightly-20250123-d1028885e":
   version "0.79.0-nightly-20250123-d1028885e"
   resolved "https://registry.yarnpkg.com/@react-native/babel-preset/-/babel-preset-0.79.0-nightly-20250123-d1028885e.tgz#fd1b3b1ef836b1ae3498b341d7ebeb559b3d6dfc"
@@ -2265,14 +2214,14 @@
     serve-static "^1.16.2"
     ws "^6.2.3"
 
-"@react-native/eslint-config@0.78.0-nightly-20250113-d4407d6f7":
-  version "0.78.0-nightly-20250113-d4407d6f7"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.78.0-nightly-20250113-d4407d6f7.tgz#1135a73ff3a8084f4bdf854e7e954ce3d427f05d"
-  integrity sha512-jQXg0QAlQOo4x6UTkd/h9HW+dq+BHdn+FjQihi00b8/DFpgMQFUrWuHmiKNdb2K+pU0w8mJu0Rh0gItEXTPyMQ==
+"@react-native/eslint-config@0.79.0-nightly-20250123-d1028885e":
+  version "0.79.0-nightly-20250123-d1028885e"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.79.0-nightly-20250123-d1028885e.tgz#a4c538e720e9474a7cabdca8d93a266006f53de0"
+  integrity sha512-iVAyq5j7FfxY0fhQnAnpA6rjjLW0gG33cS58Qf6vAl0Vfh9XIC9vM9eoUgBZyUHzdvF6BQztgcmpg/DCOS4vdA==
   dependencies:
     "@babel/core" "^7.25.2"
     "@babel/eslint-parser" "^7.25.1"
-    "@react-native/eslint-plugin" "0.78.0-nightly-20250113-d4407d6f7"
+    "@react-native/eslint-plugin" "0.79.0-nightly-20250123-d1028885e"
     "@typescript-eslint/eslint-plugin" "^7.1.1"
     "@typescript-eslint/parser" "^7.1.1"
     eslint-config-prettier "^8.5.0"
@@ -2283,10 +2232,10 @@
     eslint-plugin-react-hooks "^4.6.0"
     eslint-plugin-react-native "^4.0.0"
 
-"@react-native/eslint-plugin@0.78.0-nightly-20250113-d4407d6f7":
-  version "0.78.0-nightly-20250113-d4407d6f7"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.78.0-nightly-20250113-d4407d6f7.tgz#c0e7c3c9f877a397b6ae8b5288b9a9b795fd9cd1"
-  integrity sha512-JSREFVcxH1EqrE+dJbLn6EH1y08q6+RM3LNsOqjQKhzEYJr2dvqnJs1qRWUF2LUhQWxSJeJZLISv/xtMKZuCBg==
+"@react-native/eslint-plugin@0.79.0-nightly-20250123-d1028885e":
+  version "0.79.0-nightly-20250123-d1028885e"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.79.0-nightly-20250123-d1028885e.tgz#7983608a83b724ab2f31d2e84e67fb5f9a7ad3b1"
+  integrity sha512-vYrjxRh3wvL9MmmmsO52keyONK8O7CqayB1gvgSf/EeptcnnCpd0YdJ06NU54aB3zh6p+k4vkxHliNFqpBTFBg==
 
 "@react-native/gradle-plugin@0.79.0-nightly-20250123-d1028885e":
   version "0.79.0-nightly-20250123-d1028885e"
@@ -2308,16 +2257,6 @@
     hermes-parser "0.25.1"
     nullthrows "^1.1.1"
 
-"@react-native/metro-config@0.78.0-nightly-20250113-d4407d6f7":
-  version "0.78.0-nightly-20250113-d4407d6f7"
-  resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.78.0-nightly-20250113-d4407d6f7.tgz#e55dbe37bf226d8424064c5355cbc3d534b2ce4b"
-  integrity sha512-vWTEpasHyu9XNpN2AedWz3i3M8rAf+rnUrSYDWUCSc2ZwX/K56Nzc78ziSdIUEYtVEyVZwKM6W/43xg2Sw0yOQ==
-  dependencies:
-    "@react-native/js-polyfills" "0.78.0-nightly-20250113-d4407d6f7"
-    "@react-native/metro-babel-transformer" "0.78.0-nightly-20250113-d4407d6f7"
-    metro-config "^0.81.0"
-    metro-runtime "^0.81.0"
-
 "@react-native/metro-config@0.79.0-nightly-20250123-d1028885e":
   version "0.79.0-nightly-20250123-d1028885e"
   resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.79.0-nightly-20250123-d1028885e.tgz#0767c94a9f6b7cc23bf924e9e40863373b025c70"
@@ -2333,10 +2272,10 @@
   resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.79.0-nightly-20250123-d1028885e.tgz#c2f5f3790cea75c4452d7171c503a57cbb329947"
   integrity sha512-DUN8UAD+YDL8Jdqi5BIvnnzv5tKNkbc7+Om+l0fKvYkGiOWdw9jAyQPFejNPLBc9sUSG5aBbRcN0qL6kIIkpZw==
 
-"@react-native/popup-menu-android@0.78.0-nightly-20250113-d4407d6f7":
-  version "0.78.0-nightly-20250113-d4407d6f7"
-  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.78.0-nightly-20250113-d4407d6f7.tgz#65a8156af0d4e06add38b1192ed04d3d50817280"
-  integrity sha512-ZOSgKM0I6fjzM2FeQQhvsILZM3fSg798BA8Ek0eQmaQEP3taa7bDpQQaQ+ZimPf00Hu/kZh4A/5IZXxCxV3Icg==
+"@react-native/popup-menu-android@0.79.0-nightly-20250123-d1028885e":
+  version "0.79.0-nightly-20250123-d1028885e"
+  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.79.0-nightly-20250123-d1028885e.tgz#d7f5ed675e66bee93b2d4580bc17ff21c3e3c167"
+  integrity sha512-APMAasySWMiPgkFbTDJZpVF6eJFwIVzoQqQ2oSDWH9IZ3dGnr7wZUW4IH2DKqwpNHZqYup7QPQMG+q627FqFtA==
   dependencies:
     nullthrows "^1.1.1"
 
