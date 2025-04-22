@@ -708,6 +708,8 @@ struct CompScrollerVisual : winrt::implements<
         typename TTypeRedirects::InteractionTrackerInertiaStateEnteredArgs args) noexcept {
       m_outer->m_custom = false;
       m_outer->m_inertia = true;
+      m_outer->m_currentPosition = args.NaturalRestingPosition();
+      m_outer->FireScrollBeginDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
     }
     void InteractingStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
@@ -834,6 +836,18 @@ struct CompScrollerVisual : winrt::implements<
     UpdateInteractionModes();
   }
 
+  void SetDecelerationRate(winrt::Windows::Foundation::Numerics::float3 const &decelerationRate) noexcept {
+    m_interactionTracker.PositionInertiaDecayRate(decelerationRate);
+  }
+
+  void SetMaximumZoomScale(float maximumZoomScale) const noexcept {
+    m_interactionTracker.MaxScale(maximumZoomScale);
+  }
+
+  void SetMinimumZoomScale(float minimumZoomScale) noexcept {
+    m_interactionTracker.MinScale(minimumZoomScale);
+  }
+
   void Opacity(float opacity) noexcept {
     m_visual.Opacity(opacity);
   }
@@ -918,8 +932,19 @@ struct CompScrollerVisual : winrt::implements<
     return m_scrollPositionChangedEvent.add(handler);
   }
 
+  winrt::event_token ScrollBeginDrag(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs> const
+          &handler) noexcept {
+    return m_scrollBeginDragEvent.add(handler);
+  }
+
   void ScrollPositionChanged(winrt::event_token const &token) noexcept {
     m_scrollPositionChangedEvent.remove(token);
+  }
+
+  void ScrollBeginDrag(winrt::event_token const &token) noexcept {
+    m_scrollBeginDragEvent.remove(token);
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
@@ -992,6 +1017,10 @@ struct CompScrollerVisual : winrt::implements<
     m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
   }
 
+  void FireScrollBeginDrag(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
+    m_scrollBeginDragEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
+  }
+
   void UpdateMaxPosition() noexcept {
     m_interactionTracker.MaxPosition(
         {std::max<float>(m_contentSize.x - m_visualSize.x, 0),
@@ -1010,6 +1039,9 @@ struct CompScrollerVisual : winrt::implements<
   winrt::event<winrt::Windows::Foundation::EventHandler<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs>>
       m_scrollPositionChangedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs>>
+      m_scrollBeginDragEvent;
   typename TTypeRedirects::SpriteVisual m_visual{nullptr};
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
   typename TTypeRedirects::InteractionTracker m_interactionTracker{nullptr};

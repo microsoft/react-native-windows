@@ -142,22 +142,9 @@ jobs:
                   certificatePassword: ${{ parameters.certificatePassword }}
         
             - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
-              - template:  ../templates/set-experimental-feature.yml
+              - template:  ../templates/enable-experimental-winui3.yml
                 parameters:
-                  package: packages\playground
-                  feature: UseExperimentalWinUI3
-                  value: true
-
-              - task: PowerShell@2
-                displayName: Enable the internal WinAppSDK Feed
-                inputs:
-                  targetType: filePath # filePath | inline
-                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\EnableInternalWinAppSDKFeed.ps1
-
-              - task: NuGetAuthenticate@1
-                displayName: 'NuGet Authenticate Internal WinAppSDK Feed'
-                inputs:
-                  nuGetServiceConnections: 'WinAppSDK Experimental NuGet for RNW'
+                  workingDir: packages\playground\windows
 
             # NuGet ignores packages.config if it detects <PackageReference>.
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.

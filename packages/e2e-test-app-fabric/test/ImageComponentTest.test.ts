@@ -94,6 +94,12 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-border');
     expect(dump).toMatchSnapshot();
   });
+  test('An Image can have border colors', async () => {
+    const component = await app.findElementByTestID('image-border-colors');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-border-colors');
+    expect(dump).toMatchSnapshot();
+  });
   test('An Image can a border radius', async () => {
     const component = await app.findElementByTestID('image-border-radius');
     await component.waitForDisplayed({timeout: 5000});
@@ -164,6 +170,42 @@ describe('Image Tests', () => {
     const component = await app.findElementByTestID('image-set');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('image-set');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image supports accessibility properties', async () => {
+    const component = await app.findElementByTestID(
+      'image-accessibility-properties',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-accessibility-properties');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image supports style properties', async () => {
+    const component = await app.findElementByTestID('image-style-properties');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-style-properties');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image supports interaction properties', async () => {
+    const component = await app.findElementByTestID(
+      'image-interaction-properties',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-interaction-properties');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image supports abortPrefetch and resolveAssetSource', async () => {
+    const component = await app.findElementByTestID('image-asset-source');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-asset-source');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image supports accessibility actions', async () => {
+    const component = await app.findElementByTestID(
+      'image-accessibility-actions',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-accessibility-actions');
     expect(dump).toMatchSnapshot();
   });
 });

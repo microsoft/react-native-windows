@@ -7,6 +7,7 @@ exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
+    "TextRangePattern.GetText": "Pressed: 2 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -30,6 +31,7 @@ exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
+    "TextRangePattern.GetText": "Pressed: 2 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -53,6 +55,7 @@ exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
+    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -76,6 +79,7 @@ exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
+    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",

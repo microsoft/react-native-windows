@@ -111,7 +111,12 @@
         %(AdditionalDependencies);
         Bcrypt.lib;
         Chakrart.lib;
-        Pathcch.lib
+        D2D1.lib;
+        D3D11.lib;
+        DWrite.lib;
+        Pathcch.lib;
+        ShCore.lib;
+        Uiautomationcore.lib
       </AdditionalDependencies>
       <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>

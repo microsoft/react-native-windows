@@ -84,7 +84,7 @@ jobs:
 
             - template: ../templates/set-experimental-feature.yml
               parameters:
-                package: packages/integration-test-app
+                workingDir: packages/integration-test-app/windows
                 feature: UseHermes
                 ${{ if eq(matrix.UseChakra, true) }}:
                   value: false

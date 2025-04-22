@@ -152,6 +152,7 @@ type ButtonProps = $ReadOnly<{
   accessible?: ?boolean,
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
+  onAccessibilityTap?: ?() => mixed, // Windows
   accessibilityState?: ?AccessibilityState,
 
   /**
@@ -333,6 +334,7 @@ const Button: component(
     accessibilityHint,
     accessibilityLanguage,
     onAccessibilityAction,
+    onAccessibilityTap, // Windows
     tabIndex,
   } = props;
   const buttonStyles: Array<ViewStyleProp> = [styles.button];
@@ -391,6 +393,7 @@ const Button: component(
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"
         accessibilityState={_accessibilityState}
+        onAccessibilityTap={onAccessibilityTap} // Windows
         importantForAccessibility={_importantForAccessibility}
         hasTVPreferredFocus={hasTVPreferredFocus}
         nextFocusDown={nextFocusDown}

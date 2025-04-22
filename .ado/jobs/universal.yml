@@ -56,14 +56,17 @@
               BuildConfiguration: Release
               BuildPlatform: x64
               UseFabric: false
+              UseExperimentalWinUI3: true
             - Name: X64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: x64
               UseFabric: true
+              UseExperimentalWinUI3: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
               UseFabric: true
+              UseExperimentalWinUI3: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: X64Debug
@@ -145,14 +148,16 @@
 
                 - template: ../templates/apply-published-version-vars.yml
 
-                - ${{ if eq(matrix.UseFabric, true) }}:
-                  - template: ../templates/enable-fabric-experimental-feature.yml
+                - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
+                  - template:  ../templates/enable-experimental-winui3.yml
+                    parameters:
+                      workingDir: vnext
 
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
                     ${{ if eq(matrix.UseFabric, true) }}:
-                      solutionName: Microsoft.ReactNative.CppOnly.slnf
+                      solutionName: Microsoft.ReactNative.NewArch.sln
                     ${{ else }}:
                       solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
@@ -193,6 +198,7 @@
                       Microsoft.ReactNative.Cxx.UnitTests\**
                       Microsoft.ReactNative.IntegrationTests\**
                       Microsoft.ReactNative.ComponentTests\**
+                      Microsoft.ReactNative.CsWinRT\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
                       Microsoft.ReactNative.Managed.CodeGen.UnitTests\**

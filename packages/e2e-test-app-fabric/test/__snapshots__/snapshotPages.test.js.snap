@@ -751,7 +751,6 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     The following View exposes the accessibilityValue.Text field
   </Text>
   <View
-    accessibilityRole="combobox"
     accessibilityValue={
       {
         "text": "testText",
@@ -759,6 +758,7 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     }
     accessible={true}
     aria-readonly={true}
+    role="combobox"
     style={
       {
         "backgroundColor": "gray",
@@ -14534,6 +14534,7 @@ exports[`snapshotAllPages FlatList 2`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -15113,6 +15114,7 @@ exports[`snapshotAllPages FlatList 3`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -16006,6 +16008,7 @@ exports[`snapshotAllPages FlatList 4`] = `
       </View>
     </View>
     <RCTScrollView
+      accessible={true}
       automaticallyAdjustContentInsets={false}
       contentInset={
         {
@@ -16878,6 +16881,7 @@ exports[`snapshotAllPages FlatList 5`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -17652,6 +17656,7 @@ exports[`snapshotAllPages FlatList 6`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -18421,6 +18426,7 @@ exports[`snapshotAllPages FlatList 7`] = `
 >
   <RCTScrollView
     ItemSeparatorComponent={[Function]}
+    accessible={true}
     data={
       [
         "Pizza",
@@ -19393,6 +19399,7 @@ exports[`snapshotAllPages FlatList 7`] = `
 
 exports[`snapshotAllPages FlatList 8`] = `
 <RCTScrollView
+  accessible={true}
   data={
     [
       "Sticky Pizza",
@@ -19433,6 +19440,7 @@ exports[`snapshotAllPages FlatList 8`] = `
       "flex": 1,
     }
   }
+  testID="flatlist-sticky"
   viewabilityConfigCallbackPairs={[]}
 >
   <View>
@@ -19796,6 +19804,7 @@ exports[`snapshotAllPages FlatList 9`] = `
       </Text>
     </Text>
     <RCTScrollView
+      accessible={true}
       data={
         [
           "head",
@@ -19828,6 +19837,7 @@ exports[`snapshotAllPages FlatList 9`] = `
           "borderWidth": 1,
         }
       }
+      testID="flatlist-nested"
       viewabilityConfigCallbackPairs={
         [
           {
@@ -19903,6 +19913,7 @@ exports[`snapshotAllPages FlatList 10`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -20693,6 +20704,7 @@ exports[`snapshotAllPages FlatList 11`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -21483,6 +21495,7 @@ exports[`snapshotAllPages FlatList 12`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -22344,6 +22357,7 @@ exports[`snapshotAllPages FlatList 13`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -23212,6 +23226,7 @@ exports[`snapshotAllPages FlatList 14`] = `
     }
   />
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -24002,6 +24017,7 @@ exports[`snapshotAllPages FlatList 15`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -29354,8 +29370,10 @@ exports[`snapshotAllPages LegacyTextInputTest 1`] = `
     testID="textinput-field"
   />
   <TextInput
+    autoCorrect={false}
     multiline={true}
     placeholder="MultiLine"
+    spellCheck={false}
     style={
       {
         "height": 80,
@@ -72795,6 +72813,181 @@ exports[`snapshotAllPages Text 46`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Text 47`] = `
+<View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
+  </Text>
+</View>
+`;
+
 exports[`snapshotAllPages TextInput 1`] = `
 <View>
   <TextInput
@@ -78413,6 +78606,234 @@ exports[`snapshotAllPages TextInput 24`] = `
 `;
 
 exports[`snapshotAllPages TextInput 25`] = `
+<View
+  testID="style-fontFamily"
+>
+  <TextInput
+    defaultValue="Font Family (default)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-default"
+  />
+  <TextInput
+    defaultValue="Font Family (normal)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "normal",
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-normal"
+  />
+  <TextInput
+    defaultValue="Font Family (Times New Roman)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "Times New Roman",
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-Times New Roman"
+  />
+  <TextInput
+    defaultValue="Font Family (Courier New)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "Courier New",
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-Courier New"
+  />
+  <TextInput
+    defaultValue="Font Family (Arial)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "Arial",
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-Arial"
+  />
+  <TextInput
+    defaultValue="Font Family (Comic Sans MS)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "Comic Sans MS",
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-Comic Sans MS"
+  />
+  <TextInput
+    defaultValue="Font Family (Georgia)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "Georgia",
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-Georgia"
+  />
+  <TextInput
+    defaultValue="Font Family (Verdana)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "Verdana",
+          },
+        ],
+      ]
+    }
+    testID="textinput-family-Verdana"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 26`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -78440,7 +78861,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -78557,7 +78978,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -78616,7 +79037,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -78643,7 +79064,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -78759,7 +79180,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View>
   <TextInput
     editable={true}
@@ -78852,7 +79273,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View
   style={
     {
@@ -78951,7 +79372,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View
   style={
     {
@@ -79069,7 +79490,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -79183,7 +79604,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -79404,7 +79825,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -79481,7 +79902,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View>
   <TextInput
     style={
@@ -79511,7 +79932,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <Text>
     PressIn/PressOut message
@@ -79546,7 +79967,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -79682,7 +80103,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 [
   <View
     focusable={true}
@@ -79748,7 +80169,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -79797,7 +80218,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text>
     CaretHidden
@@ -79829,7 +80250,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View>
   <Text>
     Cursorcolor
@@ -79861,7 +80282,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View>
   <Text>
     Shadow
@@ -79899,7 +80320,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -79982,7 +80403,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"

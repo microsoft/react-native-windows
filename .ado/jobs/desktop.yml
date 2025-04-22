@@ -18,31 +18,24 @@ parameters:
           - Name: X64Debug
             BuildConfiguration: Debug
             BuildPlatform: x64
-            UseFabric: false
           - Name: X64Release
             BuildConfiguration: Release
             BuildPlatform: x64
-            UseFabric: false
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
-            UseFabric: false
           - Name: ARM64ECDebug
             BuildConfiguration: Debug
             BuildPlatform: ARM64EC
           - Name: ARM64ECRelease
             BuildConfiguration: Release
             BuildPlatform: ARM64EC
-          - Name: X64DebugFabric
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            UseFabric: true
       - BuildEnvironment: SecurePullRequest
         Matrix:
-          - Name: X64DebugFabric
+          - Name: X64Debug
             BuildConfiguration: Debug
             BuildPlatform: x64
-            UseFabric: true
+            UseExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Debug
@@ -63,14 +56,6 @@ parameters:
           - Name: ARM64ECRelease
             BuildConfiguration: Release
             BuildPlatform: ARM64EC
-          - Name: X64DebugFabric
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            UseFabric: true
-          - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
-            BuildConfiguration: Release
-            BuildPlatform: x86
-            UseFabric: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -91,12 +76,40 @@ jobs:
             #12714 -  Disable for first deployment of test website.
             #         RNTesterIntegrationTests::WebSocket
             #         RNTesterIntegrationTests::WebSocketBlob
+            #         RNTesterIntegrationTests::WebSocketMultipleSend
+            #14217 - Reneable RNTesterIntegrationTests
+            #         RNTesterIntegrationTests::Dummy
+            #         RNTesterIntegrationTests::Fetch
+            #         RNTesterIntegrationTests::XHRSample
+            #         RNTesterIntegrationTests::Blob
+            #         RNTesterIntegrationTests::Logging
+            #      - CI agents show the following server-side errors (local runs succeed):
+            #         - [0x801901f4] Internal server error (500).
+            #         - [0x800710dd] The operation identifier is not valid.
+            #         WebSocketIntegrationTest::ConnectClose)&
+            #         WebSocketIntegrationTest::ConnectNoClose)&
+            #         WebSocketIntegrationTest::SendReceiveClose)&
+            #         WebSocketIntegrationTest::SendConsecutive)&
+            #         WebSocketIntegrationTest::SendReceiveLargeMessage)&
+            #         WebSocketIntegrationTest::SendReceiveSsl)&
             - name: Desktop.IntegrationTests.Filter
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)
+                (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
+                (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
+                (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Fetch)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Logging)
             #6799 -
             #       HostFunctionTest              - Crashes under JSI/V8
             #       HostObjectProtoTest           - Crashes under JSI/V8
@@ -155,8 +168,10 @@ jobs:
                   Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
                 displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
-            - ${{ if eq(matrix.UseFabric, true) }}:
-              - template: ../templates/enable-fabric-experimental-feature.yml
+            - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
+              - template:  ../templates/enable-experimental-winui3.yml
+                parameters:
+                  workingDir: vnext
 
             - template: ../templates/msbuild-sln.yml
               parameters:
@@ -323,10 +338,7 @@ jobs:
 
             - template: ../templates/publish-build-artifacts.yml
               parameters:
-                ${{ if eq(matrix.UseFabric, true) }}:
-                  artifactName: DesktopFabric
-                ${{ else }}:
-                  artifactName: Desktop
+                artifactName: Desktop
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |

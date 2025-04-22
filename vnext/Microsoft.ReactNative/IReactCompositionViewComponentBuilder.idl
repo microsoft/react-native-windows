@@ -54,6 +54,15 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  DOC_STRING("StateData type to be used with a PortalComponentView. The LayoutConstraints and PointScaleFactor will be used to layout the content of the Portal")
+  interface IPortalStateData
+  {
+    Microsoft.ReactNative.LayoutConstraints LayoutConstraints { get; };
+    Single PointScaleFactor { get; };
+  };
+
+  [webhosthidden]
+  [experimental]
   DOC_STRING(".")
   interface IReactCompositionViewComponentBuilder
   {
@@ -66,4 +75,4 @@ namespace Microsoft.ReactNative.Composition
     void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl);
   };
 
-} // namespace Microsoft.ReactNative
+} // namespace Microsoft.ReactNative.Composition

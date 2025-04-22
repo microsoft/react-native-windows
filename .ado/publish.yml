@@ -33,43 +33,21 @@ parameters:
     - Name: X64Debug
       BuildConfiguration: Debug
       BuildPlatform: x64
-      UseFabric: false
     - Name: X64Release
       BuildConfiguration: Release
       BuildPlatform: x64
-      UseFabric: false
     - Name: X86Debug
       BuildConfiguration: Debug
       BuildPlatform: x86
-      UseFabric: false
     - Name: X86Release
       BuildConfiguration: Release
       BuildPlatform: x86
-      UseFabric: false
     - Name: ARM64ECDebug
       BuildConfiguration: Debug
       BuildPlatform: ARM64EC
-      UseFabric: false
     - Name: ARM64ECRelease
       BuildConfiguration: Release
       BuildPlatform: ARM64EC
-      UseFabric: false
-    - Name: X64DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: x64
-      UseFabric: true
-    - Name: X64ReleaseFabric
-      BuildConfiguration: Release
-      BuildPlatform: x64
-      UseFabric: true
-    - Name: X86DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: x86
-      UseFabric: true
-    - Name: X86ReleaseFabric
-      BuildConfiguration: Release
-      BuildPlatform: x86
-      UseFabric: true
 
 - name: universalBuildMatrix
   type: object
@@ -190,6 +168,9 @@ extends:
 
           - template: .ado/templates/run-compliance-prebuild.yml@self
 
+          - script: if not exist %USERPROFILE%\AppData\Roaming\npm (mkdir %USERPROFILE%\AppData\Roaming\npm)
+            displayName: Fix missing npm config
+
           - pwsh: |
               npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
               $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
@@ -214,14 +195,14 @@ extends:
 
           - template: .ado/templates/configure-git.yml@self
 
-          - script: |
-              echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
-            displayName: Enable No-Publish
+          - pwsh: |
+              Write-Host "##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish"
+            displayName: Enable No-Publish (npm)
             condition: ${{ parameters.skipNpmPublish }}
 
-          - script: |
-              echo ##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push
-            displayName: Enable No-Publish
+          - pwsh: |
+              Write-Host "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
+            displayName: Enable No-Publish (git)
             condition: ${{ parameters.skipGitPush }}
 
           - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
@@ -277,9 +258,6 @@ extends:
 
             - template: .ado/templates/apply-published-version-vars.yml@self
 
-            - ${{ if eq(matrix.UseFabric, true) }}:
-              - template: .ado/templates/enable-fabric-experimental-feature.yml@self
-
             - template: .ado/templates/msbuild-sln.yml@self
               parameters:
                 solutionDir: vnext
@@ -291,10 +269,7 @@ extends:
             - template: .ado/templates/publish-build-artifacts.yml@self
               parameters:
                 oneESMode: true ## Files are only copied to staging, not published
-                ${{ if eq(matrix.UseFabric, true) }}:
-                  artifactName: DesktopFabric
-                ${{ else }}:
-                  artifactName: Desktop
+                artifactName: Desktop
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
@@ -320,14 +295,9 @@ extends:
                 targetPath: '$(CrashDumpRootPath)'
                 artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
               - output: pipelineArtifact
-                ${{ if eq(matrix.UseFabric, true) }}:
-                  displayName: 'Publish Artifact: DesktopFabric.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}'
-                  artifactName: DesktopFabric.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}
-                  targetPath: $(Build.StagingDirectory)/NuGet/DesktopFabric/${{matrix.buildPlatform}}/${{matrix.buildConfiguration}}
-                ${{ else }}:
-                  displayName: 'Publish Artifact: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}'
-                  artifactName: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}
-                  targetPath: $(Build.StagingDirectory)/NuGet/Desktop/${{matrix.buildPlatform}}/${{matrix.buildConfiguration}}
+                displayName: 'Publish Artifact: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}'
+                artifactName: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}
+                targetPath: $(Build.StagingDirectory)/NuGet/Desktop/${{matrix.buildPlatform}}/${{matrix.buildConfiguration}}
 
         - ${{ each matrix in parameters.universalBuildMatrix }}:
           - job: RnwNativeBuildUniversal${{ matrix.Name }}
@@ -346,14 +316,11 @@ extends:
 
             - template: .ado/templates/apply-published-version-vars.yml@self
 
-            - ${{ if eq(matrix.UseFabric, true) }}:
-              - template: .ado/templates/enable-fabric-experimental-feature.yml@self
-
             - template: .ado/templates/msbuild-sln.yml@self
               parameters:
                 solutionDir: vnext
                 ${{ if eq(matrix.UseFabric, true) }}:
-                  solutionName: Microsoft.ReactNative.CppOnly.slnf
+                  solutionName: Microsoft.ReactNative.NewArch.sln
                 ${{ else }}:
                   solutionName: Microsoft.ReactNative.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
@@ -379,6 +346,7 @@ extends:
                   Microsoft.ReactNative\**
                   Microsoft.ReactNative.Managed\**
                   Microsoft.ReactNative.Managed.CodeGen\**
+                  Microsoft.ReactNative.CsWinRT\**
 
             - template: .ado/templates/component-governance.yml@self
 
@@ -448,7 +416,7 @@ extends:
               packMicrosoftReactNativeManaged: true
               packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -462,7 +430,6 @@ extends:
                   configuration: Debug
                 - platform: ARM64
                   configuration: Debug
-
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
@@ -471,7 +438,7 @@ extends:
               npmVersion: $(npmVersion)
               packDesktop: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
+                signMicrosoft: true
               slices:
                 - platform: x64
                   configuration: Release
@@ -485,33 +452,11 @@ extends:
                   configuration: Debug
                 - platform: ARM64EC
                   configuration: Debug
-
-          - template: .ado/templates/prep-and-pack-nuget.yml@self
-            parameters:
-              artifactName: DesktopFabric
-              publishCommitId: $(publishCommitId)
-              npmVersion: $(npmVersion)-Fabric
-              packDesktop: true
-              ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: false # Temporarily disabled for all builds, see issue #14030
-              slices:
-                - platform: x64
-                  configuration: Release
-                - platform: x86
-                  configuration: Release
-                # - platform: ARM64EC
-                #   configuration: Release
-                - platform: x64
-                  configuration: Debug
-                - platform: x86
-                  configuration: Debug
-                # - platform: ARM64EC
-                #   configuration: Debug
 
           templateContext:
             sdl:
               binskim:
-                analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\ReactWindows\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\Desktop\**\React.Windows.Desktop.DLL\react-native-win32.dll'
+                analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'
             outputs:
             - output: pipelineArtifact
               displayName: 'Publish final nuget artifacts'

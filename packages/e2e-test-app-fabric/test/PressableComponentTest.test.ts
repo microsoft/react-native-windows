@@ -45,7 +45,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -84,7 +84,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -93,7 +93,45 @@ describe('Pressable Tests', () => {
       },
     );
   });
-  test('Pressables can have event handlers', async () => {
+  test('Pressables can have event handlers, hover', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue('fee');
+        return (await searchBox.getText()) === 'fee';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+    const component = await app.findElementByTestID(
+      'pressable_feedback_events_button',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('pressable_feedback_events_button');
+    expect(dump).toMatchSnapshot();
+    await component.moveTo();
+    const console = await app.findElementByTestID(
+      'pressable_feedback_events_console',
+    );
+    await console.moveTo();
+    const dump2 = await dumpVisualTree('pressable_feedback_events_console');
+    expect(dump2).toMatchSnapshot();
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        return (await searchBox.getText()) === 'Search...';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+  });
+  test('Pressables can have event handlers, hover and click', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
@@ -118,7 +156,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -152,7 +190,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -181,7 +219,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,
@@ -210,7 +248,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === '';
+        return (await searchBox.getText()) === 'Search...';
       },
       {
         interval: 1500,

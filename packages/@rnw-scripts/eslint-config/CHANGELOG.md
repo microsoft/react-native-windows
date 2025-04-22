@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-<!-- This log was last generated on Sat, 11 Jan 2025 06:30:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.2.33
+
+Wed, 02 Apr 2025 05:22:08 GMT
+
+### Patches
+
+- bump dependencies missed in integrations (tatianakapos@microsoft.com)
 
 ## 1.2.32
 

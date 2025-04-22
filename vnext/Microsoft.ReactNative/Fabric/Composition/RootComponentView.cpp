@@ -76,7 +76,10 @@ void RootComponentView::updateLayoutMetrics(
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::GetFocusedComponent() noexcept {
   return m_focusedComponent;
 }
-void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept {
+
+void RootComponentView::SetFocusedComponent(
+    const winrt::Microsoft::ReactNative::ComponentView &value,
+    winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
   if (m_focusedComponent == value)
     return;
 
@@ -90,11 +93,10 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->TrySetFocus();
     }
-    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value);
+    m_focusedComponent = value;
+    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value, direction);
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onGotFocus(args);
   }
-
-  m_focusedComponent = value;
 }
 
 bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
@@ -118,7 +120,8 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
 
 bool RootComponentView::TrySetFocusedComponent(
     const winrt::Microsoft::ReactNative::ComponentView &view,
-    winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
+    winrt::Microsoft::ReactNative::FocusNavigationDirection direction,
+    bool forceNoSelectionIfCannotMove /*= false*/) noexcept {
   auto target = view;
   auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   if (selfView && !selfView->focusable()) {
@@ -126,7 +129,7 @@ bool RootComponentView::TrySetFocusedComponent(
               direction == winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous)
         ? FocusManager::FindLastFocusableElement(target)
         : FocusManager::FindFirstFocusableElement(target);
-    if (!target)
+    if (!target && !forceNoSelectionIfCannotMove)
       return false;
     selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   }
@@ -151,7 +154,9 @@ bool RootComponentView::TrySetFocusedComponent(
 
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(losingFocusArgs.NewFocusedComponent())
         ->rootComponentView()
-        ->SetFocusedComponent(gettingFocusArgs.NewFocusedComponent());
+        ->SetFocusedComponent(gettingFocusArgs.NewFocusedComponent(), direction);
+  } else {
+    SetFocusedComponent(nullptr, direction);
   }
 
   return true;
@@ -241,7 +246,7 @@ void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIs
 }
 
 void RootComponentView::stop() noexcept {
-  SetFocusedComponent(nullptr);
+  SetFocusedComponent(nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
   if (m_visualAddedToIsland) {
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(

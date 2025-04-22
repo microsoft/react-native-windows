@@ -1,8 +1,34 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.120
+
+Wed, 02 Apr 2025 05:22:08 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.62
+- Bump @rnw-scripts/eslint-config to v1.2.33
+- Bump @rnw-scripts/just-task to v2.3.50
+
+## 0.0.0-canary.119
+
+Fri, 07 Mar 2025 06:27:16 GMT
+
+### Changes
+
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.118
+
+Fri, 31 Jan 2025 18:29:44 GMT
+
+### Changes
+
+- Fix UpdateState on generated base class (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.117
 

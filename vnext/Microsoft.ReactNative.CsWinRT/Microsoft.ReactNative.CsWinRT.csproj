@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
+    <Platforms>x86;x64;arm64</Platforms>
+    <!-- Workaround for MSB3271 error on processor architecture mismatch -->
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <NoWarn>CS0108;CS8305;CS0436;NU1701</NoWarn>
+    <AssemblyName>Microsoft.ReactNative.Projection</AssemblyName>
+
+    <!-- Prevent all WebView2 DLLs from being added to our output and therefore erroneously to the projection DLL's dependencies -->
+    <WebView2UseWinRT>true</WebView2UseWinRT>
+    <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
+    <WebView2EnableCsWinRTProjection>false</WebView2EnableCsWinRTProjection>
+  </PropertyGroup>
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+
+  <ItemGroup>
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
+    <CSWinRTIncludes>
+      Microsoft.ReactNative;
+    </CSWinRTIncludes>
+    <CSWinRTExcludes>
+      Windows;
+      Microsoft;
+    </CSWinRTExcludes>
+  </PropertyGroup>
+
+</Project>

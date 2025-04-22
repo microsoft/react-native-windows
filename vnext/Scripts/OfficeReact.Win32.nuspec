@@ -15,23 +15,23 @@
   </metadata>
   <files>
 
-    <file src="$nugetroot$\Desktop*\x86\Debug\React.Windows.Desktop.DLL\react-native-win32.*"          target="lib\debug\x86"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\x64\Debug\React.Windows.Desktop.DLL\react-native-win32.*"          target="lib\debug\x64"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\ARM64EC\Debug\React.Windows.Desktop.DLL\react-native-win32.*"      target="lib\debug\ARM64EC"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\x86\Release\React.Windows.Desktop.DLL\react-native-win32.*"        target="lib\ship\x86"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\x64\Release\React.Windows.Desktop.DLL\react-native-win32.*"        target="lib\ship\x64"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\ARM64EC\Release\React.Windows.Desktop.DLL\react-native-win32.*"    target="lib\ship\ARM64EC"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\x86\Debug\React.Windows.Desktop\Microsoft.ReactNative.winmd"       target="lib\debug\x86"/>
-    <file src="$nugetroot$\Desktop*\x64\Debug\React.Windows.Desktop\Microsoft.ReactNative.winmd"       target="lib\debug\x64"/>
-    <file src="$nugetroot$\Desktop*\ARM64EC\Debug\React.Windows.Desktop\Microsoft.ReactNative.winmd"   target="lib\debug\ARM64EC"/>
-    <file src="$nugetroot$\Desktop*\x86\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd"     target="lib\ship\x86"/>
-    <file src="$nugetroot$\Desktop*\x64\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd"     target="lib\ship\x64"/>
-    <file src="$nugetroot$\Desktop*\ARM64EC\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd" target="lib\ship\ARM64EC"/>
+    <file src="$nugetroot$\Desktop\x86\Debug\React.Windows.Desktop.DLL\react-native-win32.*"          target="lib\debug\x86"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x64\Debug\React.Windows.Desktop.DLL\react-native-win32.*"          target="lib\debug\x64"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\ARM64EC\Debug\React.Windows.Desktop.DLL\react-native-win32.*"      target="lib\debug\ARM64EC"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x86\Release\React.Windows.Desktop.DLL\react-native-win32.*"        target="lib\ship\x86"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x64\Release\React.Windows.Desktop.DLL\react-native-win32.*"        target="lib\ship\x64"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\ARM64EC\Release\React.Windows.Desktop.DLL\react-native-win32.*"    target="lib\ship\ARM64EC"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x86\Debug\React.Windows.Desktop\Microsoft.ReactNative.winmd"       target="lib\debug\x86"/>
+    <file src="$nugetroot$\Desktop\x64\Debug\React.Windows.Desktop\Microsoft.ReactNative.winmd"       target="lib\debug\x64"/>
+    <file src="$nugetroot$\Desktop\ARM64EC\Debug\React.Windows.Desktop\Microsoft.ReactNative.winmd"   target="lib\debug\ARM64EC"/>
+    <file src="$nugetroot$\Desktop\x86\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd"     target="lib\ship\x86"/>
+    <file src="$nugetroot$\Desktop\x64\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd"     target="lib\ship\x64"/>
+    <file src="$nugetroot$\Desktop\ARM64EC\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd" target="lib\ship\ARM64EC"/>
 
-    <file src="$nugetroot$\Desktop*\x86\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"        target="lib\debug\x86"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\x64\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"        target="lib\debug\x64"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\x86\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"      target="lib\ship\x86"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\Desktop*\x64\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"      target="lib\ship\x64"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x86\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"        target="lib\debug\x86"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x64\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"        target="lib\debug\x64"      exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x86\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"      target="lib\ship\x86"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\Desktop\x64\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"      target="lib\ship\x64"       exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
 
     <file src="$nugetroot$\inc\callinvoker\ReactCommon\CallInvoker.h" target="inc\ReactCommon"/>
     <file src="$nugetroot$\inc\callinvoker\ReactCommon\SchedulerPriority.h" target="inc\ReactCommon"/>

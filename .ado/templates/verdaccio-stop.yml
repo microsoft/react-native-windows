@@ -19,3 +19,12 @@ steps:
         targetPath: 'verdaccio.log'
         artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
       condition: failed()
+
+  - script: | 
+      call npm config delete registry
+      call yarn config delete registry
+      call yarn config delete npmRegistryServer
+      call yarn config delete unsafeHttpWhitelist
+    displayName: Reset npm/yarn config to stop poiting at local verdaccio server
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false

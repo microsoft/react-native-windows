@@ -2,6 +2,63 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 02 Apr 2025 05:22:08 GMT",
+      "version": "0.0.0-canary.120",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.120",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.62",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.33",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.50",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 07 Mar 2025 06:27:16 GMT",
+      "version": "0.0.0-canary.119",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.119",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "cddb8348d7a97d610efb89c634fd5d72bbd2ec27",
+            "comment": "Fix build issue building component codegen using clang"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 31 Jan 2025 18:29:44 GMT",
+      "version": "0.0.0-canary.118",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.118",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "ad17235cc0c2fbab2c1f889fe2641793ea3d2fc6",
+            "comment": "Fix UpdateState on generated base class"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2025 06:24:57 GMT",
       "version": "0.0.0-canary.117",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.117",

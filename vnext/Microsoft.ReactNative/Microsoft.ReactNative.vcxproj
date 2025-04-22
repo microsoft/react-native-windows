@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) Microsoft Corporation. Licensed under the MIT License. See LICENSE in the project root for license information. -->
 <Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -334,10 +335,6 @@
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ReactPointerEventArgs.h">
-      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="XamlUIService.h">
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -361,6 +358,10 @@
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ReactHost\ViewManagerProvider.h" />
+    <ClInclude Include="ReactPointerEventArgs.h">
+      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ReactRootView.h">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -464,10 +465,6 @@
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
-    <ClCompile Include="ReactPointerEventArgs.cpp">
-      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -503,6 +500,10 @@
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="ReactApplication.cpp">
       <DependentUpon>ReactApplication.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="ReactPointerEventArgs.cpp">
+      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
+      <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactRootView.cpp">
       <DependentUpon>ReactRootView.idl</DependentUpon>
@@ -568,7 +569,6 @@
   <ItemGroup>
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="DocString.idl" />
-    <Midl Include="ReactPointerEventArgs.idl" />
     <Midl Include="XamlUIService.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -585,6 +585,7 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactApplication.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
     <Midl Include="ReactRootView.idl">
       <SubType>Designer</SubType>
     </Midl>

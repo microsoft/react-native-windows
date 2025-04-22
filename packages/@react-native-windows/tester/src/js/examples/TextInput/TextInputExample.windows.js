@@ -311,6 +311,36 @@ const examples: Array<RNTesterModuleExample> = [
     },
   },
   {
+    title: 'Font Family',
+    render: function (): React.Node {
+      return (
+        <View testID="style-fontFamily">
+          <ExampleTextInput
+            defaultValue="Font Family (default)"
+            style={[styles.singleLine]}
+            testID="textinput-family-default"
+          />
+          {[
+            'normal',
+            'Times New Roman',
+            'Courier New',
+            'Arial',
+            'Comic Sans MS',
+            'Georgia',
+            'Verdana',
+          ].map(fontFamily => (
+            <ExampleTextInput
+              defaultValue={`Font Family (${fontFamily})`}
+              key={fontFamily}
+              style={[styles.singleLine, {fontFamily}]}
+              testID={'textinput-family-' + fontFamily}
+            />
+          ))}
+        </View>
+      );
+    },
+  },
+  {
     title: 'Text input, themes and heights',
     render: function (): React.Node {
       return (

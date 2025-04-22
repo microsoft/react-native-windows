@@ -22,6 +22,7 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+            publishNuGet: true
           - Name: FabricX86Debug
             template: cpp-app
             configuration: Debug
@@ -72,16 +73,6 @@ parameters:
             configuration: Debug
             platform: x86
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-          - Name: PaperLibX86DebugCpp
-            template: old/uwp-cpp-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
-          - Name: PaperLibX86DebugCs
-            template: old/uwp-cpp-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
           - Name: PaperX86DebugCppChakra
             template: old/uwp-cpp-app
             configuration: Debug
@@ -118,11 +109,14 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+            publishNuGet: true
+            useExperimentalWinUI3: true
           - Name: PaperX64ReleaseCpp
             template: old/uwp-cpp-app
             configuration: Release
             platform: x64
             runWack: true
+            useExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
@@ -137,6 +131,7 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+            publishNuGet: true
           - Name: FabricX86Debug
             template: cpp-app
             configuration: Debug
@@ -148,6 +143,7 @@ parameters:
             configuration: Release
             platform: x86
             useNuGet: true
+            publishNuGet: true
           - Name: FabricArm64Debug
             template: cpp-app
             configuration: Debug
@@ -160,6 +156,7 @@ parameters:
             platform: ARM64
             additionalRunArguments: --no-autolink --no-deploy
             useNuGet: true
+            publishNuGet: true
           - Name: FabricLibX64Debug
             template: cpp-lib
             configuration: Debug
@@ -216,16 +213,6 @@ parameters:
             configuration: Debug
             platform: x86
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-          - Name: PaperLibX86DebugCpp
-            template: old/uwp-cpp-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
-          - Name: PaperLibX86DebugCs
-            template: old/uwp-cs-lib
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --no-deploy
           - Name: PaperX86DebugCppChakra
             template: old/uwp-cpp-app
             configuration: Debug
@@ -343,3 +330,5 @@ jobs:
                   buildEnvironment: ${{ parameters.buildEnvironment }}
                   useChakra: ${{ coalesce(matrix.useChakra, false) }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
+                  useExperimentalWinUI3: ${{ coalesce(matrix.useExperimentalWinUI3, false) }}
+                  publishNuGet:  ${{ coalesce(matrix.publishNuGet, false) }}

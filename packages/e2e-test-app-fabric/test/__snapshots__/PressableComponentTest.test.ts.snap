@@ -20,6 +20,7 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Pressable 1 of 3",
+            "TextRangePattern.GetText": "Pressable 1 of 3",
           },
         ],
       },
@@ -37,6 +38,7 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Pressable 2 of 3",
+            "TextRangePattern.GetText": "Pressable 2 of 3",
           },
         ],
       },
@@ -54,6 +56,7 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Pressable 3 of 3",
+            "TextRangePattern.GetText": "Pressable 3 of 3",
           },
         ],
       },
@@ -199,6 +202,7 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Enabled Pressable",
+        "TextRangePattern.GetText": "Enabled Pressable",
       },
     ],
   },
@@ -251,6 +255,7 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Disabled Pressable",
+        "TextRangePattern.GetText": "Disabled Pressable",
       },
     ],
   },
@@ -305,6 +310,7 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
       },
     ],
   },
@@ -354,6 +360,7 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Press Me",
+    "TextRangePattern.GetText": "Press Me",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -377,6 +384,7 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 2`
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "onPress",
+    "TextRangePattern.GetText": "onPress",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -406,6 +414,7 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Press Outside This View",
+        "TextRangePattern.GetText": "Press Outside This View",
       },
     ],
   },
@@ -461,6 +470,7 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
       },
     ],
   },
@@ -511,12 +521,14 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "pressOut",
+        "TextRangePattern.GetText": "pressOut",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "pressIn",
+        "TextRangePattern.GetText": "pressIn",
       },
     ],
   },
@@ -615,7 +627,7 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
 }
 `;
 
-exports[`Pressable Tests Pressables can have event handlers 1`] = `
+exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_feedback_events_button",
@@ -630,6 +642,7 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
       },
     ],
   },
@@ -669,7 +682,157 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
 }
 `;
 
-exports[`Pressable Tests Pressables can have event handlers 2`] = `
+exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_console",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "hover in",
+        "TextRangePattern.GetText": "hover in",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_feedback_events_console",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(249, 249, 249, 255)",
+    },
+    "Comment": "pressable_feedback_events_console",
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can have event handlers, hover and click 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_button",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "pressable feedback events",
+    "ValuePattern.Value": "Press Me",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "pressable feedback events",
+      "TestId": "pressable_feedback_events_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_feedback_events_button",
+    "Offset": "0, 0, 0",
+    "Size": "56, 18",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "56, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "56, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can have event handlers, hover and click 2`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_feedback_events_console",
@@ -681,24 +844,28 @@ exports[`Pressable Tests Pressables can have event handlers 2`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "pressOut",
+        "TextRangePattern.GetText": "pressOut",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "press",
+        "TextRangePattern.GetText": "press",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "pressIn",
+        "TextRangePattern.GetText": "pressIn",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "hover in",
+        "TextRangePattern.GetText": "hover in",
       },
     ],
   },
@@ -842,6 +1009,7 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Press Outside This View",
+        "TextRangePattern.GetText": "Press Outside This View",
       },
     ],
   },
@@ -1246,6 +1414,7 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Pressable with accessible=true and focusable=true",
+            "TextRangePattern.GetText": "Pressable with accessible=true and focusable=true",
           },
         ],
       },
@@ -1254,6 +1423,7 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Pressable with accessible=false",
+        "TextRangePattern.GetText": "Pressable with accessible=false",
       },
       {
         "AutomationId": "",
@@ -1265,6 +1435,7 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Pressable with focusable=false",
+            "TextRangePattern.GetText": "Pressable with focusable=false",
           },
         ],
       },
@@ -1273,6 +1444,7 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Pressable with accessible=false and focusable=false",
+        "TextRangePattern.GetText": "Pressable with accessible=false and focusable=false",
       },
     ],
   },
@@ -1452,6 +1624,7 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Pressable with ToolTip "Pressable"",
+        "TextRangePattern.GetText": "Pressable with ToolTip "Pressable"",
       },
     ],
   },
@@ -1502,6 +1675,7 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "View #1, front is visible, back is hidden.",
+        "TextRangePattern.GetText": "View #1, front is visible, back is hidden.",
       },
       {
         "AutomationId": "",
@@ -1514,6 +1688,7 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Front",
+            "TextRangePattern.GetText": "Front",
           },
         ],
       },
@@ -1528,6 +1703,7 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Back (You should not see this)",
+            "TextRangePattern.GetText": "Back (You should not see this)",
           },
         ],
       },
@@ -1536,6 +1712,7 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "View #2, front is hidden, back is visible.",
+        "TextRangePattern.GetText": "View #2, front is hidden, back is visible.",
       },
       {
         "AutomationId": "",
@@ -1548,6 +1725,7 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Front (You should not see this)",
+            "TextRangePattern.GetText": "Front (You should not see this)",
           },
         ],
       },
@@ -1562,6 +1740,7 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "ControlType": 50020,
             "LocalizedControlType": "text",
             "Name": "Back",
+            "TextRangePattern.GetText": "Back",
           },
         ],
       },
@@ -1785,6 +1964,7 @@ exports[`Pressable Tests Text can have pressable behavior 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Text has built-in onPress handling",
+    "TextRangePattern.GetText": "Text has built-in onPress handling",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -1808,6 +1988,7 @@ exports[`Pressable Tests Text can have pressable behavior 2`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "2x text onPress",
+    "TextRangePattern.GetText": "2x text onPress",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",

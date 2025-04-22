@@ -1,6 +1,6 @@
 {
   "name": "@react-native/tester",
-  "version": "0.76.0-main",
+  "version": "0.78.0-main",
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/popup-menu-android": "0.77.0-nightly-20241001-223e98cc4",
+    "@react-native/popup-menu-android": "0.78.0-nightly-20250113-d4407d6f7",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"

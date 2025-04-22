@@ -25,6 +25,7 @@ TEST_MODULE_INITIALIZE(InitModule) {
   using Microsoft::React::SetRuntimeOptionBool;
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
+  SetRuntimeOptionBool("WebSocket.ResourceV2", true); // Use WinRTWebSocketResource2
 
   // WebSocketJSExecutor can't register native log hooks.
   SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
@@ -204,6 +205,17 @@ TEST_CLASS (RNTesterIntegrationTests) {
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocketBlob) {
     auto result = m_runner.RunTest("IntegrationTests/WebSocketBlobTest", "WebSocketBlobTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+  ///
+  // This test currently fails (skipped in CI).
+  // Sending multiple messages in sequence and immediately closing does not comply with the behavior described in
+  // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketMultipleSend)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(WebSocketMultipleSend) {
+    auto result = m_runner.RunTest("IntegrationTests/WebSocketMultipleSendTest", "WebSocketMultipleSendTest");
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 

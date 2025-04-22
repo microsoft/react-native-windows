@@ -1,8 +1,28 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.283
+
+Wed, 02 Apr 2025 05:22:08 GMT
+
+### Changes
+
+- bump dependencies missed in integrations (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.33
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.37
+- Bump @rnw-scripts/just-task to v2.3.50
+- Bump react-native-platform-override to v1.9.52
+
+## 0.0.0-canary.282
+
+Fri, 07 Mar 2025 06:27:15 GMT
+
+### Changes
+
+- Refactor WebSocket resource class (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.281
 

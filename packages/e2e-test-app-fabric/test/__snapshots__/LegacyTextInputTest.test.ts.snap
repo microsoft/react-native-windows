@@ -8,6 +8,8 @@ exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
     "LocalizedControlType": "text",
     "Name": "onFocus
 <Log Start>",
+    "TextRangePattern.GetText": "onFocus
+<Log Start>",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -30,7 +32,12 @@ exports[`LegacyTextInputTest Click on multiline TextInput to move focus away fro
     "AutomationId": "textinput-log",
     "ControlType": 50020,
     "LocalizedControlType": "text",
-    "Name": "onBlur
+    "Name": "onEndEditing text: 
+onBlur
+onFocus
+<Log Start>",
+    "TextRangePattern.GetText": "onEndEditing text: 
+onBlur
 onFocus
 <Log Start>",
   },
@@ -43,7 +50,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 56",
+    "Size": "998, 75",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -61,6 +68,7 @@ onKeyPress key: a
 onChange text: 
 onSelectionChange range: 0,0
 onFocus
+onEndEditing text: abc
 onBlur
 onSubmitEditing text: abc
 onChange text: abc
@@ -92,10 +100,55 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
+onSelectionChange range: 1,1
+onKeyPress key: a
+onFocus
+onEndEditing text: 
+onBlur
+onFocus
+<Log Start>",
+    "TextRangePattern.GetText": "onChange text: a
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: 
+onSelectionChange range: 0,0
+onFocus
+onEndEditing text: abc
+onBlur
+onSubmitEditing text: abc
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: c
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: b
+onChange text: a
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: 
+onSelectionChange range: 0,0
+onChange text: def
+onSelectionChange range: 3,3
+onKeyPress key: f
+onChange text: de
+onSelectionChange range: 2,2
+onKeyPress key: e
+onChange text: d
+onSelectionChange range: 1,1
+onKeyPress key: d
+onChange text: 
+onSelectionChange range: 0,0
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: c
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",
@@ -109,7 +162,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 820",
+    "Size": "998, 839",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -128,10 +181,24 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
+onSelectionChange range: 1,1
+onKeyPress key: a
+onFocus
+onEndEditing text: 
+onBlur
+onFocus
+<Log Start>",
+    "TextRangePattern.GetText": "onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: c
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",
@@ -187,10 +254,47 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
+onSelectionChange range: 1,1
+onKeyPress key: a
+onFocus
+onEndEditing text: 
+onBlur
+onFocus
+<Log Start>",
+    "TextRangePattern.GetText": "onSubmitEditing text: abc
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: c
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: b
+onChange text: a
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: 
+onSelectionChange range: 0,0
+onChange text: def
+onSelectionChange range: 3,3
+onKeyPress key: f
+onChange text: de
+onSelectionChange range: 2,2
+onKeyPress key: e
+onChange text: d
+onSelectionChange range: 1,1
+onKeyPress key: d
+onChange text: 
+onSelectionChange range: 0,0
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: c
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",

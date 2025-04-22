@@ -254,4 +254,18 @@ ToggleState GetToggleState(const std::optional<facebook::react::AccessibilitySta
   return ToggleState::ToggleState_Off;
 }
 
+TextDecorationLineStyle GetTextDecorationLineStyle(facebook::react::TextDecorationStyle style) noexcept {
+  if (style == facebook::react::TextDecorationStyle::Dashed) {
+    return TextDecorationLineStyle_Dash;
+  } else if (style == facebook::react::TextDecorationStyle::Dotted) {
+    return TextDecorationLineStyle_Dot;
+  } else if (style == facebook::react::TextDecorationStyle::Double) {
+    return TextDecorationLineStyle_Double;
+  } else if (style == facebook::react::TextDecorationStyle::Solid) {
+    return TextDecorationLineStyle_Single;
+  } else {
+    return TextDecorationLineStyle_Single;
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

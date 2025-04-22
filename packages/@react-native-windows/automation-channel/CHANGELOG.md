@@ -1,8 +1,250 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Tue, 28 Jan 2025 20:34:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 22 Apr 2025 05:24:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.284
+
+Tue, 22 Apr 2025 05:24:03 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.944
+
+## 0.12.283
+
+Sun, 20 Apr 2025 05:22:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.943
+
+## 0.12.282
+
+Fri, 18 Apr 2025 05:22:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.942
+
+## 0.12.281
+
+Wed, 16 Apr 2025 05:25:01 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.941
+
+## 0.12.280
+
+Tue, 15 Apr 2025 05:24:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.940
+
+## 0.12.279
+
+Sat, 12 Apr 2025 05:26:12 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.939
+
+## 0.12.278
+
+Thu, 10 Apr 2025 05:23:12 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.938
+
+## 0.12.277
+
+Wed, 09 Apr 2025 05:23:40 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.937
+
+## 0.12.276
+
+Tue, 08 Apr 2025 05:23:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.936
+
+## 0.12.275
+
+Fri, 04 Apr 2025 05:22:09 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.935
+
+## 0.12.274
+
+Thu, 03 Apr 2025 05:21:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.934
+
+## 0.12.273
+
+Wed, 02 Apr 2025 05:22:08 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.33
+- Bump @rnw-scripts/just-task to v2.3.50
+- Bump react-native-windows to v0.0.0-canary.933
+
+## 0.12.272
+
+Tue, 01 Apr 2025 20:12:38 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.932
+
+## 0.12.271
+
+Fri, 28 Mar 2025 05:25:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.931
+
+## 0.12.270
+
+Thu, 27 Mar 2025 05:23:14 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.930
+
+## 0.12.269
+
+Wed, 26 Mar 2025 05:26:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.929
+
+## 0.12.268
+
+Tue, 25 Mar 2025 05:21:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.928
+
+## 0.12.267
+
+Sat, 22 Mar 2025 05:24:35 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.927
+
+## 0.12.266
+
+Sat, 15 Mar 2025 05:21:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.926
+
+## 0.12.265
+
+Fri, 14 Mar 2025 05:22:28 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.925
+
+## 0.12.264
+
+Thu, 13 Mar 2025 05:21:35 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.924
+
+## 0.12.263
+
+Wed, 12 Mar 2025 05:22:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.923
+
+## 0.12.262
+
+Sat, 08 Mar 2025 06:23:48 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.922
+
+## 0.12.261
+
+Fri, 07 Mar 2025 06:27:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.921
+
+## 0.12.260
+
+Thu, 27 Feb 2025 06:33:22 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.920
+
+## 0.12.259
+
+Wed, 12 Feb 2025 01:18:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.919
+
+## 0.12.258
+
+Mon, 10 Feb 2025 23:53:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.918
+
+## 0.12.257
+
+Wed, 05 Feb 2025 18:09:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.917
+
+## 0.12.256
+
+Mon, 03 Feb 2025 22:47:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.916
+
+## 0.12.255
+
+Fri, 31 Jan 2025 18:29:45 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.915
 
 ## 0.12.254
 

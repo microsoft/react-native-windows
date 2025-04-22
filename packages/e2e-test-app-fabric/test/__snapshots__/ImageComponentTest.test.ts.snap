@@ -119,12 +119,89 @@ exports[`Image Tests An Image can a border radius 1`] = `
           ],
         },
       },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
     ],
   },
   "Visual Tree": {
     "Comment": "image-border-radius",
     "Offset": "0, 0, 0",
-    "Size": "916, 72",
+    "Size": "916, 144",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -507,6 +584,512 @@ exports[`Image Tests An Image can a border radius 1`] = `
           },
         ],
       },
+      {
+        "Offset": "586, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "4, 0, 0",
+                "Size": "82, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 4, 0",
+                "Size": "4, 26",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-34, -34, 0",
+                "Size": "34, 34",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "4, -4, 0",
+                "Size": "52, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 4, 0",
+                "Size": "4, 56",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "684, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "4, 0, 0",
+                "Size": "82, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 4, 0",
+                "Size": "4, 56",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "34, -4, 0",
+                "Size": "52, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, -34, 0",
+                "Size": "34, 34",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 4, 0",
+                "Size": "4, 26",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "782, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -12",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -8, 0",
+                "Size": "4, 8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -8, 0",
+                "Size": "-8, 8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -8, 0",
+                "Size": "4, 8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "4, -12",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "4, 76, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "8, 0, 0",
+                "Size": "-12, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "8, -4, 0",
+                "Size": "-12, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "8, -8",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "102, 76, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "4, 0, 0",
+                "Size": "52, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-34, 0, 0",
+                "Size": "34, 34",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 34, 0",
+                "Size": "4, 26",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "4, -4, 0",
+                "Size": "82, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 4, 0",
+                "Size": "4, 56",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "200, 76, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "34, 34",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "34, 0, 0",
+                "Size": "52, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 4, 0",
+                "Size": "4, 56",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "4, -4, 0",
+                "Size": "82, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 34, 0",
+                "Size": "4, 26",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "298, 76, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 8, 0",
+                "Size": "4, -12",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 8, 0",
+                "Size": "4, -12",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 }
@@ -552,6 +1135,7 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "React",
+        "TextRangePattern.GetText": "React",
       },
     ],
   },
@@ -1137,18 +1721,21 @@ exports[`Image Tests An Image can have a tint color 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "It also works using the \`tintColor\` style prop",
+        "TextRangePattern.GetText": "It also works using the \`tintColor\` style prop",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "The \`tintColor\` prop has precedence over the \`tintColor\` style prop",
+        "TextRangePattern.GetText": "The \`tintColor\` prop has precedence over the \`tintColor\` style prop",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "It also works with downloaded images:",
+        "TextRangePattern.GetText": "It also works with downloaded images:",
       },
     ],
   },
@@ -1637,6 +2224,454 @@ exports[`Image Tests An Image can have an accessibilityLabel 1`] = `
     "Offset": "0, 0, 0",
     "Size": "64, 64",
     "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have border colors 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-border-colors",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50006,
+        "LocalizedControlType": "image",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50006,
+        "LocalizedControlType": "image",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50006,
+        "LocalizedControlType": "image",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50006,
+        "LocalizedControlType": "image",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50006,
+        "LocalizedControlType": "image",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50006,
+        "LocalizedControlType": "image",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "image-border-colors",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "image-border-colors",
+    "Offset": "0, 0, 0",
+    "Size": "916, 72",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "4, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "102, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "200, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "298, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "396, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "494, 4, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -2174,60 +3209,70 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Contain",
+        "TextRangePattern.GetText": "Contain",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Cover",
+        "TextRangePattern.GetText": "Cover",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Fill",
+        "TextRangePattern.GetText": "Fill",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Scale Down",
+        "TextRangePattern.GetText": "Scale Down",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "None",
+        "TextRangePattern.GetText": "None",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Contain",
+        "TextRangePattern.GetText": "Contain",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Cover",
+        "TextRangePattern.GetText": "Cover",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Fill",
+        "TextRangePattern.GetText": "Fill",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Scale Down",
+        "TextRangePattern.GetText": "Scale Down",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "None",
+        "TextRangePattern.GetText": "None",
       },
     ],
   },
@@ -2991,12 +4036,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 388, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3056,6 +4101,153 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         ],
       },
     ],
+  },
+}
+`;
+
+exports[`Image Tests An Image supports abortPrefetch and resolveAssetSource 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-asset-source",
+    "ControlType": 50006,
+    "LocalizedControlType": "image",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+    "_Props": {
+      "Sources": [
+        {
+          "Type": "Remote",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+        },
+      ],
+      "TestId": "image-asset-source",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "image-asset-source",
+    "Offset": "0, 0, 0",
+    "Size": "64, 64",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image supports accessibility actions 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-accessibility-actions",
+    "ControlType": 50006,
+    "LocalizedControlType": "image",
+    "Name": "Initial Label",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Initial Label",
+      "Sources": [
+        {
+          "Type": "Remote",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+        },
+      ],
+      "TestId": "image-accessibility-actions",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "image-accessibility-actions",
+    "Offset": "0, 0, 0",
+    "Size": "64, 64",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image supports accessibility properties 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-accessibility-properties",
+    "ControlType": 50006,
+    "HelpText": "This is an accessibility hint",
+    "LocalizedControlType": "image",
+    "Name": "This is an accessibility label",
+    "ValuePattern.Value": "50%",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+    "_Props": {
+      "AccessibilityLabel": "This is an accessibility label",
+      "Sources": [
+        {
+          "Type": "Remote",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+        },
+      ],
+      "TestId": "image-accessibility-properties",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "image-accessibility-properties",
+    "Offset": "0, 0, 0",
+    "Size": "64, 64",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image supports interaction properties 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-interaction-properties",
+    "ControlType": 50006,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "image",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+    "_Props": {
+      "Sources": [
+        {
+          "Type": "Remote",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+        },
+      ],
+      "TestId": "image-interaction-properties",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "image-interaction-properties",
+    "Offset": "0, 0, 0",
+    "Size": "64, 64",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image supports style properties 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-style-properties",
+    "ControlType": 50006,
+    "LocalizedControlType": "image",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+    "_Props": {
+      "Sources": [
+        {
+          "Type": "Remote",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+        },
+      ],
+      "TestId": "image-style-properties",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "image-style-properties",
+    "Offset": "0, 0, 0",
+    "Size": "64, 64",
+    "Visual Type": "SpriteVisual",
   },
 }
 `;
@@ -3162,72 +4354,84 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Contain",
+        "TextRangePattern.GetText": "Contain",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Cover",
+        "TextRangePattern.GetText": "Cover",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Stretch",
+        "TextRangePattern.GetText": "Stretch",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Repeat",
+        "TextRangePattern.GetText": "Repeat",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Center",
+        "TextRangePattern.GetText": "Center",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "None",
+        "TextRangePattern.GetText": "None",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Contain",
+        "TextRangePattern.GetText": "Contain",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Cover",
+        "TextRangePattern.GetText": "Cover",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Stretch",
+        "TextRangePattern.GetText": "Stretch",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Repeat",
+        "TextRangePattern.GetText": "Repeat",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Center",
+        "TextRangePattern.GetText": "Center",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "None",
+        "TextRangePattern.GetText": "None",
       },
     ],
   },

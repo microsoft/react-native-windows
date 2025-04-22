@@ -211,6 +211,10 @@
     },
     {
       "type": "platform",
+      "file": "src-win/IntegrationTests/WebSocketMultipleSendTest.js"
+    },
+    {
+      "type": "platform",
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
@@ -316,6 +320,12 @@
       "file": "src-win/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/RefreshControl/RefreshControl.js",
       "baseHash": "7679b5551268452d931735c992d6c23feac235af"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
+      "baseHash": "eb392989a1ca57ffd2c583eab45c939c510936fd"
     },
     {
       "type": "derived",
@@ -539,6 +549,13 @@
     {
       "type": "platform",
       "file": "src-win/Libraries/StyleSheet/PlatformColorValueTypes.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Text/Text.d.ts",
+      "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
+      "baseHash": "21dab7f71254c429d592827ab313f77c18baeda1",
+      "issue": 0
     },
     {
       "type": "derived",
