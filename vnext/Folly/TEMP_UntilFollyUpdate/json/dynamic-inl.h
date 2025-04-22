@@ -1,18 +1,18 @@
 /*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #pragma once
 
@@ -140,10 +140,10 @@ struct Destroy {
 };
 
 /*
-* Helper for implementing numeric conversions in operators on
-* numbers.  Just promotes to double when one of the arguments is
-* double, or throws if either is not a numeric type.
-*/
+ * Helper for implementing numeric conversions in operators on
+ * numbers.  Just promotes to double when one of the arguments is
+ * double, or throws if either is not a numeric type.
+ */
 template <template <class> class Op>
 dynamic numericOp(dynamic const& a, dynamic const& b) {
   if (!a.isNumber() || !b.isNumber()) {
@@ -160,18 +160,18 @@ dynamic numericOp(dynamic const& a, dynamic const& b) {
 //////////////////////////////////////////////////////////////////////
 
 /*
-* We're doing this instead of a simple member typedef to avoid the
-* undefined behavior of parameterizing F14NodeMap<> with an
-* incomplete type.
-*
-* Note: Later we may add separate order tracking here (a multi-index
-* type of thing.)
-*/
+ * We're doing this instead of a simple member typedef to avoid the
+ * undefined behavior of parameterizing F14NodeMap<> with an
+ * incomplete type.
+ *
+ * Note: Later we may add separate order tracking here (a multi-index
+ * type of thing.)
+ */
 struct dynamic::ObjectImpl : F14NodeMap<
-                                dynamic,
-                                dynamic,
-                                detail::DynamicHasher,
-                                detail::DynamicKeyEqual> {};
+                                 dynamic,
+                                 dynamic,
+                                 detail::DynamicHasher,
+                                 detail::DynamicKeyEqual> {};
 
 //////////////////////////////////////////////////////////////////////
 
@@ -200,7 +200,7 @@ struct dynamic::ObjectMaker {
     return std::move(*this);
   }
 
-private:
+ private:
   dynamic val_;
 };
 
@@ -237,10 +237,10 @@ struct dynamic::item_iterator : detail::IteratorAdaptor<
 };
 
 struct dynamic::value_iterator : detail::IteratorAdaptor<
-                                    dynamic::value_iterator,
-                                    dynamic::ObjectImpl::iterator,
-                                    dynamic,
-                                    std::forward_iterator_tag> {
+                                     dynamic::value_iterator,
+                                     dynamic::ObjectImpl::iterator,
+                                     dynamic,
+                                     std::forward_iterator_tag> {
   using Super = detail::IteratorAdaptor<
       dynamic::value_iterator,
       dynamic::ObjectImpl::iterator,
@@ -274,10 +274,10 @@ struct dynamic::const_item_iterator
 };
 
 struct dynamic::const_key_iterator : detail::IteratorAdaptor<
-                                        dynamic::const_key_iterator,
-                                        dynamic::ObjectImpl::const_iterator,
-                                        dynamic const,
-                                        std::forward_iterator_tag> {
+                                         dynamic::const_key_iterator,
+                                         dynamic::ObjectImpl::const_iterator,
+                                         dynamic const,
+                                         std::forward_iterator_tag> {
   using Super = detail::IteratorAdaptor<
       dynamic::const_key_iterator,
       dynamic::ObjectImpl::const_iterator,
@@ -293,10 +293,10 @@ struct dynamic::const_key_iterator : detail::IteratorAdaptor<
 };
 
 struct dynamic::const_value_iterator : detail::IteratorAdaptor<
-                                          dynamic::const_value_iterator,
-                                          dynamic::ObjectImpl::const_iterator,
-                                          dynamic const,
-                                          std::forward_iterator_tag> {
+                                           dynamic::const_value_iterator,
+                                           dynamic::ObjectImpl::const_iterator,
+                                           dynamic const,
+                                           std::forward_iterator_tag> {
   using Super = detail::IteratorAdaptor<
       dynamic::const_value_iterator,
       dynamic::ObjectImpl::const_iterator,
@@ -434,7 +434,7 @@ struct dynamic::IterableProxy {
 
   It end() const { return o_->end(); }
 
-private:
+ private:
   object_type* o_;
 };
 
@@ -1110,36 +1110,36 @@ struct dynamic::GetAddrImpl<dynamic::ObjectImpl> {
 // interface)
 template <class T>
 T &dynamic::get() {
-if (auto *p = get_nothrow<T>()) {
-  return *p;
-}
+  if (auto *p = get_nothrow<T>()) {
+    return *p;
+  }
 
-switch (type()) {
-  case dynamic::NULLT:
-    throw_exception<TypeError>("null", dynamic::NULLT);
-    break;
-  case dynamic::BOOL:
-    throw_exception<TypeError>("boolean", dynamic::BOOL);
-    break;
-  case dynamic::STRING:
-    throw_exception<TypeError>("string", dynamic::STRING);
-    break;
-  case dynamic::ARRAY:
-    throw_exception<TypeError>("array", dynamic::ARRAY);
-    break;
-  case dynamic::DOUBLE:
-    throw_exception<TypeError>("double", dynamic::DOUBLE);
-    break;
-  case dynamic::INT64:
-    throw_exception<TypeError>("int64", dynamic::INT64);
-    break;
-  case dynamic::OBJECT:
-    throw_exception<TypeError>("object", dynamic::OBJECT);
-    break;
-  default:
-    throw_exception<TypeError>("never", dynamic::OBJECT);
-    break;
-}
+  switch (type()) {
+    case dynamic::NULLT:
+      throw_exception<TypeError>("null", dynamic::NULLT);
+      break;
+    case dynamic::BOOL:
+      throw_exception<TypeError>("boolean", dynamic::BOOL);
+      break;
+    case dynamic::STRING:
+      throw_exception<TypeError>("string", dynamic::STRING);
+      break;
+    case dynamic::ARRAY:
+      throw_exception<TypeError>("array", dynamic::ARRAY);
+      break;
+    case dynamic::DOUBLE:
+      throw_exception<TypeError>("double", dynamic::DOUBLE);
+      break;
+    case dynamic::INT64:
+      throw_exception<TypeError>("int64", dynamic::INT64);
+      break;
+    case dynamic::OBJECT:
+      throw_exception<TypeError>("object", dynamic::OBJECT);
+      break;
+    default:
+      throw_exception<TypeError>("never", dynamic::OBJECT);
+      break;
+  }
 }
 // Win]
 
@@ -1151,9 +1151,9 @@ T const& dynamic::get() const {
 //////////////////////////////////////////////////////////////////////
 
 /*
-* Helper for implementing operator<<.  Throws if the type shouldn't
-* support it.
-*/
+ * Helper for implementing operator<<.  Throws if the type shouldn't
+ * support it.
+ */
 template <class T>
 struct dynamic::PrintImpl {
   static void print(dynamic const&, std::ostream& out, T const& t) { out << t; }
@@ -1357,7 +1357,7 @@ inline std::string dynamic_view::move_string_or(Stringish&& val) {
 // Specialization of FormatValue so dynamic objects can be formatted
 template <>
 class FormatValue<dynamic> {
-public:
+ public:
   explicit FormatValue(const dynamic& val) : val_(val) {}
 
   template <class FormatCallback>
@@ -1387,13 +1387,13 @@ public:
     }
   }
 
-private:
+ private:
   const dynamic& val_;
 };
 
 template <class V>
 class FormatValue<detail::DefaultValueWrapper<dynamic, V>> {
-public:
+ public:
   explicit FormatValue(const detail::DefaultValueWrapper<dynamic, V>& val)
       : val_(val) {}
 
@@ -1429,7 +1429,7 @@ public:
     }
   }
 
-private:
+ private:
   const detail::DefaultValueWrapper<dynamic, V>& val_;
 };
 

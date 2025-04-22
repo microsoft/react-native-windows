@@ -1,18 +1,18 @@
 /*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #pragma once
 
@@ -139,14 +139,14 @@ struct constexpr_iterated_squares_desc {
   base_type base;
   item_type scaling[size];
 
-private:
+ private:
   using lim = std::numeric_limits<base_type>;
 
   static_assert(
       lim::max_exponent < std::numeric_limits<size_type>::max(),
       "size_type too small for base_type");
 
-public:
+ public:
   explicit constexpr constexpr_iterated_squares_desc(base_type r) noexcept
       : base{r}, scaling{} {
     assert(size <= detail::constexpr_iterated_squares_desc_size_(base));
@@ -248,24 +248,24 @@ constexpr auto& constexpr_iterated_squares_desc_2_v =
 // See http://stepanovpapers.com/notes.pdf for details.
 template <typename T, typename... Ts>
 constexpr T constexpr_max(T a, Ts... ts) {
-T list[] = {ts..., a}; // 0-length arrays are illegal
-// [Windows #12703 - Fix folly CodeQL issues]
-for (size_t i = 0; i < sizeof...(Ts); ++i) {
-  a = list[i] < a ? a : list[i];
-}
-return a;
+  T list[] = {ts..., a}; // 0-length arrays are illegal
+  // [Windows #12703 - Fix folly CodeQL issues]
+  for (size_t i = 0; i < sizeof...(Ts); ++i) {
+    a = list[i] < a ? a : list[i];
+  }
+  return a;
 }
 
 // When a and b are equivalent objects, we return a to
 // make sorting stable.
 template <typename T, typename... Ts>
 constexpr T constexpr_min(T a, Ts... ts) {
-T list[] = {ts..., a}; // 0-length arrays are illegal
-// [Windows #12703 - Fix folly CodeQL issues]
-for (size_t i = 0; i < sizeof...(Ts); ++i) {
-  a = list[i] < a ? list[i] : a;
-}
-return a;
+  T list[] = {ts..., a}; // 0-length arrays are illegal
+  // [Windows #12703 - Fix folly CodeQL issues]
+  for (size_t i = 0; i < sizeof...(Ts); ++i) {
+    a = list[i] < a ? list[i] : a;
+  }
+  return a;
 }
 
 template <typename T, typename Less>

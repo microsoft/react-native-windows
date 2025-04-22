@@ -1,18 +1,18 @@
 /*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include <folly/json/json.h>
 
@@ -57,7 +57,7 @@ struct Printer {
   // Context class is allows to restore the path to element that we are about to
   // print so that if error happens we can throw meaningful exception.
   class Context {
-  public:
+   public:
     Context(const Context* parent_context, const dynamic& key)
         : parent_context_(parent_context), key_(key), is_key_(false) {}
     Context(const Context* parent_context, const dynamic& key, bool is_key)
@@ -88,7 +88,7 @@ struct Printer {
     }
     std::string typeDescription() const { return is_key_ ? "key" : "value"; }
 
-  private:
+   private:
     const Context* const parent_context_;
     const dynamic& key_;
     bool is_key_;
@@ -154,7 +154,7 @@ struct Printer {
     }
   }
 
-private:
+ private:
   void printKV(
       dynamic const& o,
       const std::pair<const dynamic, dynamic>& p,
@@ -270,7 +270,7 @@ private:
     out_ += ']';
   }
 
-private:
+ private:
   void outdent() const {
     if (indentLevel_) {
       --*indentLevel_;
@@ -292,7 +292,7 @@ private:
 
   void mapColon() const { out_ += indentLevel_ ? ": " : ":"; }
 
-private:
+ private:
   std::string& out_;
   unsigned* const indentLevel_;
   serialization_opts const& opts_;
@@ -427,10 +427,10 @@ struct Input {
 
   void decrementRecursionLevel() { currentRecursionLevel_--; }
 
-private:
+ private:
   void storeCurrent() { current_ = range_.empty() ? EOF : range_.front(); }
 
-private:
+ private:
   StringPiece range_;
   json::serialization_opts const& opts_;
   unsigned lineNum_;
@@ -439,14 +439,14 @@ private:
 };
 
 class RecursionGuard {
-public:
+ public:
   explicit RecursionGuard(Input& in) : in_(in) {
     in_.incrementRecursionLevel();
   }
 
   ~RecursionGuard() { in_.decrementRecursionLevel(); }
 
-private:
+ private:
   Input& in_;
 };
 
@@ -683,7 +683,7 @@ std::string parseString(Input& in) {
     if (*in == '\\') {
       ++in;
       switch (*in) {
-          // clang-format off
+        // clang-format off
         case '\"':    ret.push_back('\"'); ++in; break;
         case '\\':    ret.push_back('\\'); ++in; break;
         case '/':     ret.push_back('/');  ++in; break;
@@ -705,12 +705,12 @@ std::string parseString(Input& in) {
     }
     if (!*in) {
       /*
-      * Apparently we're actually supposed to ban all control
-      * characters from strings.  This seems unnecessarily
-      * restrictive, so we're only banning zero bytes.  (Since the
-      * string is presumed to be UTF-8 encoded it's fine to just
-      * check this way.)
-      */
+       * Apparently we're actually supposed to ban all control
+       * characters from strings.  This seems unnecessarily
+       * restrictive, so we're only banning zero bytes.  (Since the
+       * string is presumed to be UTF-8 encoded it's fine to just
+       * check this way.)
+       */
       in.error("null byte in string");
     }
 
@@ -852,10 +852,10 @@ void escapeStringImpl(
       }
       auto prefix = firstEscapableInWord<EnableExtraAsciiEscapes>(word, opts);
       DCHECK_LE(prefix, avail);
-    // [Windows Sometimes prefix is completely wrong (corrupt?), only in Release, causing a later AV (see issue #14394).
-    // Prefix should always be <= avail, capping it here as a workaround, hoping the assert above eventually catches this in Debug.
-    prefix = std::min(prefix, (size_t)avail);
-    // Windows]
+      // [Windows Sometimes prefix is completely wrong (corrupt?), only in Release, causing a later AV (see issue #14394).
+      // Prefix should always be <= avail, capping it here as a workaround, hoping the assert above eventually catches this in Debug.
+      prefix = std::min(prefix, (size_t)avail);
+      // Windows]
       firstEsc += prefix;
       if (prefix < 8) {
         break;
@@ -901,7 +901,7 @@ void escapeStringImpl(
     if /* constexpr */ (EnableExtraAsciiEscapes) {
       encodeUnicode = encodeUnicode ||
           (*p >= 0x20 && *p < 0x80 &&
-          (opts.extra_ascii_to_escape_bitmap[*p / 64] &
+           (opts.extra_ascii_to_escape_bitmap[*p / 64] &
             (uint64_t(1) << (*p % 64))));
     }
 
@@ -940,7 +940,7 @@ void escapeStringImpl(
       out.append(buf, 2);
     } else if (*p <= 0x1f) {
       switch (*p) {
-          // clang-format off
+        // clang-format off
         case '\b': out.append("\\b"); p++; break;
         case '\f': out.append("\\f"); p++; break;
         case '\n': out.append("\\n"); p++; break;
