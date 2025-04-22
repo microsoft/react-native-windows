@@ -1,14 +1,14 @@
-// Change the below to true for autolink to target playground-win32 instead of playground.
+// Change the below to true for autolink to target playground-composition instead of playground.
 // Then run `npx @react-native-community/cli autolink-windows` to actually run the autolink.
-const targetWin32 = true;
+const targetComposition = true;
 
 module.exports = {
   project: {
     windows: {
       sourceDir: 'windows',
-      solutionFile: targetWin32 ? 'playground-win32.sln' : 'playground.sln',
+      solutionFile: targetComposition ? 'playground-composition.sln' : 'playground.sln',
       project: {
-        projectFile: targetWin32 ? 'playground-win32\\playground-win32.vcxproj' : 'playground\\playground.vcxproj',
+        projectFile: targetComposition ? 'playground-composition\\playground-composition.vcxproj' : 'playground\\playground.vcxproj',
       },
     },
   },
