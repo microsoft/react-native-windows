@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sun, 20 Apr 2025 05:22:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 23 Apr 2025 05:25:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.945
+
+Wed, 23 Apr 2025 05:25:48 GMT
+
+### Changes
+
+- Update WindowsAppSDK version to 1.7.250401001 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.944
+
+Tue, 22 Apr 2025 05:24:03 GMT
+
+### Changes
+
+- Implement scrollEventThrottle for ScrollView in Fabric (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.943
 
