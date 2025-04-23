@@ -11,7 +11,7 @@
       "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
-      "baseHash": "e644fe80f0d405382d180ec7a822794454943ff1"
+      "baseHash": "40db48c2d0556cc66f8ac6940441b1bc01ad1d48"
     },
     {
       "type": "derived",

@@ -372,7 +372,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "eb392989a1ca57ffd2c583eab45c939c510936fd"
+      "baseHash": "c3895c941a120159ce9a8b2b306c5341466fca05"
     },
     {
       "type": "derived",
@@ -607,8 +607,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.d.ts",
       "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
-      "baseHash": "21dab7f71254c429d592827ab313f77c18baeda1",
-      "issue": 0
+      "baseHash": "4b523469a5c8dcfe53749d1739ccf77c0106375e"
     },
     {
       "type": "derived",

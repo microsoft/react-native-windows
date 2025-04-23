@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "prerpatchelease",
   "comment": "Implement SpellCheck and AutoCorrect for TextInput",
   "packageName": "react-native-windows",
   "email": "54227869+anupriya13@users.noreply.github.com",

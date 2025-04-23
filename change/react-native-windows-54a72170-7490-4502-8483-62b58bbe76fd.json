@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": " Add Custom Font Family support in TextInput",
   "packageName": "react-native-windows",
   "email": "54227869+anupriya13@users.noreply.github.com",
