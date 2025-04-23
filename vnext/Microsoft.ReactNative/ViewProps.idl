@@ -53,6 +53,7 @@ namespace Microsoft.ReactNative {
     Color BackgroundColor { get; };
     String TestId { get; };
     String AccessibilityLabel { get; };
+    String AccessibilityHint { get; };
     
     // TODO add accessors to all the properties on ViewProps
   };
