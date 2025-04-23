@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@azure/core-auth": "1.5.0",
-    "@react-native-windows/fs": "0.75.2",
     "@microsoft/1ds-core-js": "^4.3.0",
     "@microsoft/1ds-post-js": "^4.3.0",
+    "@react-native-windows/fs": "0.75.2",
     "@xmldom/xmldom": "^0.7.7",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",
@@ -42,10 +42,10 @@
     "@typescript-eslint/parser": "^7.1.1",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
-    "jest": "^29.6.3",
+    "jest": "^29.7.0",
     "lookpath": "^1.2.1",
     "prettier": "2.8.8",
-    "semver": "^7.3.5",
+    "semver": "^7.6.3",
     "typescript": "5.0.4"
   },
   "files": [
