@@ -82781,6 +82781,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
     </View>
   </View>
   <View
+    accessible={true}
     style={
       {
         "borderColor": "#f0f0f0",
@@ -83247,12 +83248,14 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
+        "backgroundColor": "transparent",
         "flexDirection": "row",
         "justifyContent": "center",
         "opacity": 1,
         "padding": 10,
       }
     }
+    testID="disabled_touchable"
   >
     <Text
       style={
