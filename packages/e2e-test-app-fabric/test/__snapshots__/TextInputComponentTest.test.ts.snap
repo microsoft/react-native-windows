@@ -9,6 +9,9 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "multiline text selection
 can also be changed imperatively",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "multiline text selection
 can also be changed imperatively",
   },
@@ -88,6 +91,9 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "multiline text selection
 can also be changed",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "multiline text selection
 can also be changed",
   },
@@ -166,6 +172,9 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "text selection can be changed imperatively",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "text selection can be changed imperatively",
   },
   "Component Tree": {
@@ -243,6 +252,9 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "text selection can be changed",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "text selection can be changed",
   },
   "Component Tree": {
@@ -322,6 +334,9 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
     "LocalizedControlType": "edit",
     "Name": "cursorColor={"green"}",
     "TextRangePattern.GetText": "Hello World",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "Hello World",
   },
   "Component Tree": {
@@ -398,6 +413,9 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -473,6 +491,9 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -551,6 +572,9 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
     "LocalizedControlType": "edit",
     "Name": "postal-address-country",
     "TextRangePattern.GetText": "postal-address-country",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -629,6 +653,9 @@ exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
     "LocalizedControlType": "edit",
     "Name": "country",
     "TextRangePattern.GetText": "country",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -707,6 +734,9 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
     "LocalizedControlType": "edit",
     "Name": "one-time-code",
     "TextRangePattern.GetText": "one-time-code",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -785,6 +815,9 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
     "LocalizedControlType": "edit",
     "Name": "sms-otp",
     "TextRangePattern.GetText": "sms-otp",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -861,6 +894,9 @@ exports[`TextInput Tests TextInputs can autogrow 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "small small small small small small",
+    "TextRangePattern.backgroundColor": -1118482,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "small small small small small small",
   },
   "Component Tree": {
@@ -947,6 +983,9 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "PositionInSet": 1,
         "SizeofSet": 3,
         "TextRangePattern.GetText": "TextInput 1 in Set of 3",
+        "TextRangePattern.backgroundColor": -1,
+        "TextRangePattern.fontName": "Segoe UI",
+        "TextRangePattern.fontSize": 16,
       },
       {
         "AutomationId": "",
@@ -959,6 +998,9 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "PositionInSet": 2,
         "SizeofSet": 3,
         "TextRangePattern.GetText": "TextInput 2 in Set of 3",
+        "TextRangePattern.backgroundColor": -1,
+        "TextRangePattern.fontName": "Segoe UI",
+        "TextRangePattern.fontSize": 16,
       },
       {
         "AutomationId": "",
@@ -971,6 +1013,9 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "PositionInSet": 3,
         "SizeofSet": 3,
         "TextRangePattern.GetText": "TextInput 3 in Set of 3",
+        "TextRangePattern.backgroundColor": -1,
+        "TextRangePattern.fontName": "Segoe UI",
+        "TextRangePattern.fontSize": 16,
       },
     ],
   },
@@ -1207,6 +1252,9 @@ exports[`TextInput Tests TextInputs can be editable 1`] = `
     "LocalizedControlType": "edit",
     "Name": "editable text input using editable prop",
     "TextRangePattern.GetText": "editable text input using editable prop",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1283,6 +1331,9 @@ exports[`TextInput Tests TextInputs can be multiline, bottomright alignment 1`] 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "multiline with children, aligned bottom-right",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "multiline with children, aligned bottom-right",
   },
   "Component Tree": {
@@ -1362,6 +1413,9 @@ exports[`TextInput Tests TextInputs can be multiline, center alignment 1`] = `
     "LocalizedControlType": "edit",
     "Name": "multiline, aligned center",
     "TextRangePattern.GetText": "multiline, aligned center",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1440,6 +1494,9 @@ exports[`TextInput Tests TextInputs can be multiline, topleft alignment 1`] = `
     "LocalizedControlType": "edit",
     "Name": "multiline, aligned top-left",
     "TextRangePattern.GetText": "multiline, aligned top-left",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1516,6 +1573,10 @@ exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
+    "TextRangePattern.readOnly": true,
     "ValuePattern.Value": "Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^",
   },
   "Component Tree": {
@@ -1595,6 +1656,10 @@ exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
     "LocalizedControlType": "edit",
     "Name": "uneditable text input using editable prop",
     "TextRangePattern.GetText": "uneditable text input using editable prop",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
+    "TextRangePattern.readOnly": true,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1670,6 +1735,9 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1745,6 +1813,9 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1820,6 +1891,9 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1895,6 +1969,9 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1973,6 +2050,9 @@ exports[`TextInput Tests TextInputs can enable spellcheck 1`] = `
     "LocalizedControlType": "edit",
     "Name": "Type text to test spell check functionality.",
     "TextRangePattern.GetText": "Type text to test spell check functionality.",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2049,6 +2129,9 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2126,6 +2209,9 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2203,6 +2289,9 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "sans-serif",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2280,6 +2369,9 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 8,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2357,6 +2449,9 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2434,6 +2529,10 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
+    "TextRangePattern.fontWeight": 400,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2511,6 +2610,9 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Hello ",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "Hello ",
   },
   "Component Tree": {
@@ -2590,6 +2692,9 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
     "LocalizedControlType": "edit",
     "Name": "caretHidden={true}",
     "TextRangePattern.GetText": "Hello World",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "Hello World",
   },
   "Component Tree": {
@@ -2669,6 +2774,9 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
     "LocalizedControlType": "edit",
     "Name": "returnKeyLabel: Compile",
     "TextRangePattern.GetText": "returnKeyLabel: Compile",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2747,6 +2855,9 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
     "LocalizedControlType": "edit",
     "Name": "returnKeyLabel: React Native",
     "TextRangePattern.GetText": "returnKeyLabel: React Native",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2825,6 +2936,9 @@ exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = 
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: done",
     "TextRangePattern.GetText": "returnKeyType: done",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2903,6 +3017,9 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: go",
     "TextRangePattern.GetText": "returnKeyType: go",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2981,6 +3098,9 @@ exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = 
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: next",
     "TextRangePattern.GetText": "returnKeyType: next",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3059,6 +3179,9 @@ exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = 
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: none",
     "TextRangePattern.GetText": "returnKeyType: none",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3137,6 +3260,9 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: previous",
     "TextRangePattern.GetText": "returnKeyType: previous",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3215,6 +3341,9 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: search",
     "TextRangePattern.GetText": "returnKeyType: search",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3293,6 +3422,9 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: send",
     "TextRangePattern.GetText": "returnKeyType: send",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3371,6 +3503,9 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = -1",
     "TextRangePattern.GetText": "letterSpacing = -1",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3449,6 +3584,9 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = 0",
     "TextRangePattern.GetText": "letterSpacing = 0",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3527,6 +3665,9 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = 2",
     "TextRangePattern.GetText": "letterSpacing = 2",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3605,6 +3746,9 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = 9",
     "TextRangePattern.GetText": "letterSpacing = 9",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3777,6 +3921,9 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -3854,6 +4001,9 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Hel",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "Hel",
   },
   "Component Tree": {
@@ -3933,6 +4083,9 @@ exports[`TextInput Tests TextInputs can have inline images 1`] = `
     "LocalizedControlType": "edit",
     "Name": "This has drawableLeft set",
     "TextRangePattern.GetText": "This has drawableLeft set",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4011,6 +4164,9 @@ exports[`TextInput Tests TextInputs can have inline images, drawable props not s
     "LocalizedControlType": "edit",
     "Name": "This does not have drawable props set",
     "TextRangePattern.GetText": "This does not have drawable props set",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4089,6 +4245,9 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
     "LocalizedControlType": "edit",
     "Name": "This has drawableLeft and drawablePadding set",
     "TextRangePattern.GetText": "This has drawableLeft and drawablePadding set",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4167,6 +4326,9 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
     "LocalizedControlType": "edit",
     "Name": "shadowColor: purple",
     "TextRangePattern.GetText": "shadowColor: purple",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4243,6 +4405,9 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -4320,6 +4485,9 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "He",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -4399,6 +4567,9 @@ exports[`TextInput Tests TextInputs can propagate events 1`] = `
     "LocalizedControlType": "edit",
     "Name": "Click inside the box to observe events being fired.",
     "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4477,6 +4648,9 @@ exports[`TextInput Tests TextInputs can register press events 1`] = `
     "LocalizedControlType": "edit",
     "Name": "Click inside the box to observe events being fired.",
     "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4552,6 +4726,9 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4627,6 +4804,9 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4702,6 +4882,9 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4780,6 +4963,9 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
     "LocalizedControlType": "edit",
     "Name": "editable text input using readOnly prop",
     "TextRangePattern.GetText": "editable text input using readOnly prop",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4858,6 +5044,10 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
     "LocalizedControlType": "edit",
     "Name": "uneditable text input using readOnly prop",
     "TextRangePattern.GetText": "uneditable text input using readOnly prop",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
+    "TextRangePattern.readOnly": true,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -4933,6 +5123,9 @@ exports[`TextInput Tests TextInputs can submit with custom key, multilined and s
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -5009,6 +5202,9 @@ exports[`TextInput Tests TextInputs have a custom background color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Same BackgroundColor as View ",
+    "TextRangePattern.backgroundColor": 1298424932,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "Same BackgroundColor as View ",
   },
   "Component Tree": {
@@ -5086,6 +5282,9 @@ exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Selection Color is red",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "Selection Color is red",
   },
   "Component Tree": {
@@ -5165,6 +5364,9 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
     "LocalizedControlType": "edit",
     "Name": "Red placeholder text color",
     "TextRangePattern.GetText": "Red placeholder text color",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -5241,6 +5443,9 @@ exports[`TextInput Tests TextInputs have a custom text color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Green Text",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "Green Text",
   },
   "Component Tree": {
@@ -5320,6 +5525,9 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
     "LocalizedControlType": "edit",
     "Name": "Blue underline color",
     "TextRangePattern.GetText": "Blue underline color",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -5398,6 +5606,9 @@ exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = 
     "LocalizedControlType": "edit",
     "Name": "Default placeholder text color",
     "TextRangePattern.GetText": "Default placeholder text color",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -5474,6 +5685,9 @@ exports[`TextInput Tests TextInputs have a default text color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Default color text",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "Default color text",
   },
   "Component Tree": {
@@ -5553,6 +5767,9 @@ exports[`TextInput Tests TextInputs have a default underline color 1`] = `
     "LocalizedControlType": "edit",
     "Name": "Default underline color",
     "TextRangePattern.GetText": "Default underline color",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -5629,6 +5846,9 @@ exports[`TextInput Tests TextInputs support secure entry 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "iloveturtles",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
     "ValuePattern.Value": "iloveturtles",
   },
   "Component Tree": {
@@ -5708,6 +5928,9 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
     "LocalizedControlType": "edit",
     "Name": "color is supported too",
     "TextRangePattern.GetText": "color is supported too",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 16,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -5789,6 +6012,9 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "edit",
         "TextRangePattern.GetText": "Search",
+        "TextRangePattern.backgroundColor": -1,
+        "TextRangePattern.fontName": "Segoe UI",
+        "TextRangePattern.fontSize": 16,
         "ValuePattern.Value": "Search",
       },
     ],
@@ -5890,6 +6116,9 @@ exports[`TextInput Tests TextInputs with set height and padding from theme 1`] =
     "LocalizedControlType": "edit",
     "Name": "If you set height, beware of padding set from themes",
     "TextRangePattern.GetText": "If you set height, beware of padding set from themes",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -5966,6 +6195,9 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "TextRangePattern.GetText": "Hello World!",
+    "TextRangePattern.backgroundColor": -1,
+    "TextRangePattern.fontName": "Segoe UI",
+    "TextRangePattern.fontSize": 13,
     "ValuePattern.Value": "Hello World!",
   },
   "Component Tree": {
