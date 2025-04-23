@@ -347,7 +347,8 @@ struct Input {
   }
 
   void skipWhitespace() {
-    unsigned index = 0;
+    // [Windows #12703 - CodeQL patch]
+    std::size_t index = 0;
     while (true) {
       while (index < range_.size() && range_[index] == ' ') {
         index++;
