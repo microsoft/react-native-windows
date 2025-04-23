@@ -76,9 +76,7 @@ DrawingIsland::DrawingIsland(const winrt::Microsoft::UI::Composition::Compositor
 
 DrawingIsland::~DrawingIsland() {
   m_siteBridge = nullptr;
-#ifdef USE_EXPERIMENTAL_WINUI3
   m_popupSiteBridge = nullptr;
-#endif
   // m_fragmentRoot = nullptr;
   m_compositor = nullptr;
 }
@@ -187,9 +185,7 @@ void DrawingIsland::RightClickAndRelease(const winrt::float2 currentPoint) {
 
 void DrawingIsland::SetHostBridge(const winrt::IContentSiteBridge &bridge) {
   m_siteBridge = bridge;
-#ifdef USE_EXPERIMENTAL_WINUI3
-  m_popupSiteBridge = m_siteBridge.try_as<winrt::PopupWindowSiteBridge>();
-#endif
+  m_popupSiteBridge = m_siteBridge.try_as<winrt::DesktopPopupSiteBridge>();
   Accessibility_Initialize();
   SystemBackdrop_Initialize();
   EvaluateLightDismissPopup();
@@ -470,11 +466,7 @@ void DrawingIsland::Input_Initialize() {
 }
 
 bool DrawingIsland::IsHostedByPopupWindowSiteBridge() {
-#ifdef USE_EXPERIMENTAL_WINUI3
   return (m_popupSiteBridge != nullptr);
-#else
-  return false;
-#endif
 }
 
 bool DrawingIsland::Input_OnKeyDown(winrt::Windows::System::VirtualKey virtualKey) {
@@ -671,17 +663,11 @@ void DrawingIsland::OnRightClick(const winrt::float2 point) {
 
   if (selectedVisual != nullptr) {
     // Right button brings up a context menu if clicked on a visual
-#ifdef USE_EXPERIMENTAL_WINUI3
     if (m_siteBridge != nullptr) {
-      // Create a new popup window.
-      auto desktopBridge2 = m_siteBridge.try_as<winrt::IDesktopSiteBridge2>();
-      auto popupBridge = desktopBridge2.TryCreatePopupSiteBridge();
-
       // Convert the current position to screen coordinates and display.
       winrt::Rect initialPosition(point.x, point.y, 200, 300);
 
       auto convertedPosition = m_island.CoordinateConverter().ConvertLocalToScreen(initialPosition);
-      popupBridge.MoveAndResize(convertedPosition);
 
       // Put a new instance of the content and connect it with the popup bridge.
       auto popupContent = winrt::make_self<DrawingIsland>(m_compositor);
@@ -691,8 +677,13 @@ void DrawingIsland::OnRightClick(const winrt::float2 point) {
       popupContent->LightDismissPopup(m_lightDismissPopup);
       popupContent->UseSystemBackdrop(m_useSystemBackdrop);
 
+#ifdef USE_EXPERIMENTAL_WINUI3
       // Funnel through the existing backdrop controller, we do not want to create a new one for every popup.
       popupContent->SetSystemBackdropController(m_backdropController);
+#endif
+
+      auto popupBridge = winrt::Microsoft::UI::Content::DesktopPopupSiteBridge::Create(popupContent->Island());
+      popupBridge.MoveAndResize(convertedPosition);
 
       // Connect the content and input site to the DesktopWindowDrawingIslandBridge
       popupBridge.Connect(popupContent->Island());
@@ -723,7 +714,6 @@ void DrawingIsland::OnRightClick(const winrt::float2 point) {
       childFragment->SetParent(parentFragment);
       */
     }
-#endif
   }
 }
 
