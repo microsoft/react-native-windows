@@ -50,7 +50,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 75",
+    "Size": "998, 76",
     "Visual Type": "SpriteVisual",
   },
 }

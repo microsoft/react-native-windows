@@ -383,8 +383,7 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
       if (pRootProvider != nullptr) {
         pRootProvider->SetIsland(m_island);
       }
-    }
-    else if (m_hwnd) {
+    } else if (m_hwnd) {
       auto pRootProvider =
           static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
               m_uiaProvider.as<IRawElementProviderSimple>().get());
