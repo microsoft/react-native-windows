@@ -19,7 +19,6 @@ import RNTesterText from '../../components/RNTesterText';
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
 import TextInlineViewsExample from './TextInlineViewsExample';
-import { capitalize } from 'lodash';
 const TextInlineView = require('../../components/TextInlineView');
 const React = require('react');
 const {
@@ -1942,8 +1941,8 @@ const examples = [
               backgroundColor: 'lightcoral',
               padding: 10,
               marginBottom: 10,
-              fontWeight:200,
-              fontVariant:'small-caps',
+              fontWeight: 200,
+              fontVariant: 'small-caps',
             }}
             testID="text-adjustfontsizetofit-default-a">
             {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
@@ -1969,7 +1968,7 @@ const examples = [
           ].map((item, index) => (
             <React.Fragment key={index}>
               <RNTesterText
-              accessible
+                accessible
                 testID={`text-adjustfontsizetofit-${index}-a`}
                 numberOfLines={item.lineCount}
                 adjustsFontSizeToFit
