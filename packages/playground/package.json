@@ -3,7 +3,6 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "bundle-win32": "rnw-scripts prepareBundleWin32 && npx @react-native-community/cli bundle --entry-file Samples/rntester.tsx --bundle-output windows/playground-win32/Bundle/Samples/rntester.bundle --platform windows --assets-dest windows/playground-win32/Bundle",
     "start": "npx @react-native-community/cli start",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
@@ -17,7 +16,7 @@
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.0.0",
     "react-native": "0.78.0-nightly-20250113-d4407d6f7",
-    "react-native-windows": "^0.0.0-canary.944"
+    "react-native-windows": "^0.0.0-canary.945"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

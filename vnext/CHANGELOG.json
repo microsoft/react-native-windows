@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Apr 2025 05:25:48 GMT",
+      "version": "0.0.0-canary.945",
+      "tag": "react-native-windows_v0.0.0-canary.945",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "83f8afd590eb3b597277eb71fcfeb5637be4004d",
+            "comment": "Update WindowsAppSDK version to 1.7.250401001"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Apr 2025 05:24:03 GMT",
       "version": "0.0.0-canary.944",
       "tag": "react-native-windows_v0.0.0-canary.944",
