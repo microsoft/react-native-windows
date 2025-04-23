@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.1",
+  "baseVersion": "0.77.2",
   "overrides": [
     {
       "type": "derived",
