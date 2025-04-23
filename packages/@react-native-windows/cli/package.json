@@ -20,7 +20,7 @@
     "@react-native-windows/codegen": "0.75.6",
     "@react-native-windows/fs": "0.75.2",
     "@react-native-windows/package-utils": "0.75.2",
-    "@react-native-windows/telemetry": "0.75.3",
+    "@react-native-windows/telemetry": "0.75.5",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",

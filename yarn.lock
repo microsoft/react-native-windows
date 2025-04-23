@@ -2344,8 +2344,8 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
-"@react-native-community/template@0.75.3":
-  version "0.75.3"
+"@react-native-community/template@0.75.5":
+  version "0.75.5"
   resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.75.3.tgz#654c759fc181ff26777b52947385712b7db8da8e"
   integrity sha512-/3jw3j6N0FDkhQcjVcUdIc+wQP7E+TjMtKS0D4BU2Ex++M01pCs1dw0sbq0s/kWLcTiAGuNXqQzMU/P3SxMFLA==
 
@@ -2476,14 +2476,14 @@
     serve-static "^1.13.1"
     ws "^6.2.2"
 
-"@react-native/eslint-config@0.75.3":
-  version "0.75.3"
+"@react-native/eslint-config@0.75.5":
+  version "0.75.5"
   resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.75.3.tgz#dd1bf7872a705d30fb1a963d69fb2259165a505e"
   integrity sha512-BUkgQ3+irVZFfikIX3JgQQut/LABcumMZD3lzWRpf1hpbsEsXmYLo3u9qpfyYsavnqVGtWg8bLZDDGG6lmQBhA==
   dependencies:
     "@babel/core" "^7.20.0"
     "@babel/eslint-parser" "^7.20.0"
-    "@react-native/eslint-plugin" "0.75.3"
+    "@react-native/eslint-plugin" "0.75.5"
     "@typescript-eslint/eslint-plugin" "^7.1.1"
     "@typescript-eslint/parser" "^7.1.1"
     eslint-config-prettier "^8.5.0"
@@ -2494,8 +2494,8 @@
     eslint-plugin-react-hooks "^4.6.0"
     eslint-plugin-react-native "^4.0.0"
 
-"@react-native/eslint-plugin@0.75.3":
-  version "0.75.3"
+"@react-native/eslint-plugin@0.75.5":
+  version "0.75.5"
   resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.75.3.tgz#a599653915e353a0888ce521916271fab69274ce"
   integrity sha512-p0BwuqflumZtUJ8VUt5YQPsYnxrwfHJZCTQ0N1X+4B8aoBNIKxtfzeIqJsSz/GvM86HGgGnd/nyxEo8IwkPo7Q==
 
