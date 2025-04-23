@@ -152,7 +152,7 @@ type ButtonProps = $ReadOnly<{|
   accessible?: ?boolean,
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
-  onAccessibilityTap?: ?() => mixed, // Windows
+  onAccessibilityTap?: ?() => void, // Windows
   accessibilityState?: ?AccessibilityState,
 
   /**
