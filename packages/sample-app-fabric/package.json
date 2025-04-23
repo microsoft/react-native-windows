@@ -16,7 +16,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^18.2.0",
-    "react-native": "0.75.3",
+    "react-native": "0.75.5",
     "react-native-windows": "0.75.16"
   },
   "devDependencies": {
@@ -26,7 +26,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@jest/globals": "^29.7.0",
-    "@react-native/metro-config": "0.75.3",
+    "@react-native/metro-config": "0.75.5",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.23",

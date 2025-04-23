@@ -17,7 +17,7 @@
     "@typescript-eslint/parser": "^7.1.1",
     "chai": "^4.2.0",
     "react": "^18.2.0",
-    "react-native": "0.75.3",
+    "react-native": "0.75.5",
     "react-native-windows": "0.75.16"
   },
   "devDependencies": {
@@ -27,7 +27,7 @@
     "@babel/preset-typescript": "^7.11.5",
     "@babel/traverse": "^7.11.5",
     "@babel/types": "^7.11.5",
-    "@react-native/metro-config": "0.75.3",
+    "@react-native/metro-config": "0.75.5",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/eslint-config": "^1.2.23",
     "@rnw-scripts/just-task": "^2.3.40",
@@ -40,7 +40,7 @@
     "@types/ws": "^7.4.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
-    "jest": "^29.6.3",
+    "jest": "^29.7.0",
     "ora": "^3.4.0",
     "prettier": "2.8.8",
     "typescript": "5.0.4",

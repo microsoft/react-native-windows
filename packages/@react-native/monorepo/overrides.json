@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.75.3",
+  "baseVersion": "0.75.5",
   "overrides": [
     {
       "type": "patch",
       "file": "package.json",
       "baseFile": "package.json",
-      "baseHash": "b9d9e79b91a169b5ad27790efec809353f0fcd6b"
+      "baseHash": "252ed88a32b84649684cee889e7cbc0830ad863c"
     }
   ]
 }
