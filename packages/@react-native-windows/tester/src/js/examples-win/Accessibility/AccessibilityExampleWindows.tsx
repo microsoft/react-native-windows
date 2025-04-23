@@ -19,28 +19,30 @@ class AccessibilityBaseExample extends React.Component {
   public render() {
     return (
       <View>
-        <Text accessibilityLevel={1}>
-          The following has accessibilityLabel and accessibilityHint:
-        </Text>
+        <Text>The following has accessibilityLabel and accessibilityHint:</Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'blue'}}
+          accessible={true}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
-          accessibilityLevel={2}
+          accessibilityLevel={1}
+          testID="accessibility-base-view-1"
         />
         <Text>The following has accessible and accessibilityLabel:</Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'red'}}
           accessible={true}
           accessibilityLabel="A hint for the red box."
-          accessibilityLevel={3}
+          accessibilityLevel={2}
+          testID="accessibility-base-view-2"
         />
-        <Text accessibilityLevel={4}>
+        <Text>
           The following has accessibilitySetSize, accessibilityPosInSet and
           accessibilityLabel:
         </Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'red'}}
+          testID="accessibility-base-view-3"
           accessible={true}
           accessibilityRole="listitem"
           accessibilityLabel="This label should not be used"
