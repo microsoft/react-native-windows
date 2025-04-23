@@ -12,7 +12,7 @@
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.20.0",
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@react-native/eslint-config": "0.75.5",
+    "@react-native/eslint-config": "0.75.3",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ft-flow": "^2.0.1"
   },
