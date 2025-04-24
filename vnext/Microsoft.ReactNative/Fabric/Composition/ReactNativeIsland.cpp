@@ -195,6 +195,8 @@ void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewH
     return;
   }
 
+  m_props = nullptr;
+
   if (m_reactViewHost) {
     UninitRootView();
     m_reactViewHost.DetachViewInstance();
@@ -374,7 +376,14 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider =
         winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
-    if (m_hwnd && !m_island) {
+    if (m_island) {
+      auto pRootProvider =
+          static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
+              m_uiaProvider.as<IRawElementProviderSimple>().get());
+      if (pRootProvider != nullptr) {
+        pRootProvider->SetIsland(m_island);
+      }
+    } else if (m_hwnd) {
       auto pRootProvider =
           static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
               m_uiaProvider.as<IRawElementProviderSimple>().get());
@@ -577,7 +586,9 @@ void ReactNativeIsland::ShowInstanceLoaded() noexcept {
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
 
     m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
-    auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+
+    auto initProps =
+        m_props.isNull() ? m_props : DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
     }
@@ -900,16 +911,6 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (args.DidLayoutDirectionChange()) {
               pThis->Arrange(pThis->m_layoutConstraints, pThis->m_viewportOffset);
             }
-#ifndef USE_EXPERIMENTAL_WINUI3 // Use this in place of Connected/Disconnected events for now. -- Its not quite what we
-                                // want, but it will do for now.
-            if (args.DidSiteVisibleChange()) {
-              if (island.IsSiteVisible()) {
-                pThis->OnMounted();
-              } else {
-                pThis->OnUnmounted();
-              }
-            }
-#endif
           }
         });
 #ifdef USE_EXPERIMENTAL_WINUI3
@@ -963,6 +964,24 @@ void ReactNativeIsland::OnUnmounted() noexcept {
   if (auto componentView = GetComponentView()) {
     componentView->onUnmounted();
   }
+}
+
+void ReactNativeIsland::SetProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept {
+  auto initProps = DynamicWriter::ToDynamic(props);
+  if (initProps.isNull()) {
+    initProps = folly::dynamic::object();
+  }
+
+  if (m_isJSViewAttached) {
+    if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
+      initProps["concurrentRoot"] = true;
+      fabricuiManager->setProps(static_cast<facebook::react::SurfaceId>(m_rootTag), initProps);
+      return;
+    }
+  }
+
+  m_props = initProps;
 }
 
 winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>

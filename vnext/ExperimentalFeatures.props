@@ -3,10 +3,9 @@
     <RnwNewArch>true</RnwNewArch>
     <UseFabric>true</UseFabric>
     <UseWinUI3>true</UseWinUI3>
-    <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
-    <WindowsAppSdkAutoInitialize>false</WindowsAppSdkAutoInitialize>
   </PropertyGroup>
   <PropertyGroup>
+    <WindowsAppSdkAutoInitialize>false</WindowsAppSdkAutoInitialize>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 </Project>

@@ -333,7 +333,7 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
   "Visual Tree": {
     "Comment": "textinput-cursorColor",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -561,7 +561,7 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-address-country",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -717,7 +717,7 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-one-time-code",
     "Offset": "0, 0, 0",
-    "Size": "916, 29",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -872,7 +872,7 @@ exports[`TextInput Tests TextInputs can autogrow 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autogrow",
     "Offset": "0, 0, 0",
-    "Size": "300, 131",
+    "Size": "300, 130",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1002,12 +1002,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 33",
+        "Size": "916, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 33",
+            "Size": "916, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1130,12 +1130,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
       },
       {
         "Offset": "0, 62, 0",
-        "Size": "916, 32",
+        "Size": "916, 33",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 32",
+            "Size": "916, 33",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1527,7 +1527,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
   "Visual Tree": {
     "Comment": "textinput-not-editable",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1605,7 +1605,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
   "Visual Tree": {
     "Comment": "textinput-not-editable2",
     "Offset": "0, 0, 0",
-    "Size": "916, 29",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1680,7 +1680,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1830,7 +1830,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit-2",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1905,7 +1905,7 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
   "Visual Tree": {
     "Comment": "textinput-padding",
     "Offset": "0, 0, 0",
-    "Size": "916, 29",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2601,7 +2601,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
   "Visual Tree": {
     "Comment": "textinput-carethidden",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2679,7 +2679,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
   "Visual Tree": {
     "Comment": "textinput-return-Compile",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2757,7 +2757,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
   "Visual Tree": {
     "Comment": "textinput-return-React Native",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2913,7 +2913,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
   "Visual Tree": {
     "Comment": "textinput-return-go",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3069,7 +3069,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = 
   "Visual Tree": {
     "Comment": "textinput-return-none",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3147,7 +3147,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
   "Visual Tree": {
     "Comment": "textinput-return-previous",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3303,7 +3303,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
   "Visual Tree": {
     "Comment": "textinput-return-send",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3381,7 +3381,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
   "Visual Tree": {
     "Comment": "textinput-letterspacing--1",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3459,7 +3459,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 
   "Visual Tree": {
     "Comment": "textinput-letterspacing-0",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3615,7 +3615,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 
   "Visual Tree": {
     "Comment": "textinput-letterspacing-9",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4021,7 +4021,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawable props not s
   "Visual Tree": {
     "Comment": "textinput-inline-images-3",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4868,7 +4868,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
   "Visual Tree": {
     "Comment": "textinput-readyonly",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {

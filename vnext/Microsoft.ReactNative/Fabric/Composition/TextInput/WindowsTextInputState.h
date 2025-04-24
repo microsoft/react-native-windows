@@ -3,33 +3,29 @@
 
 #pragma once
 
-#include <folly/dynamic.h>
-#include <react/renderer/attributedstring/AttributedString.h>
+#include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
-#include <react/renderer/mapbuffer/MapBuffer.h>
-#include <react/renderer/mapbuffer/MapBufferBuilder.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
 namespace facebook::react {
 
 /*
- * State for <WindowsTextInput> component.
+ * State for <TextInput> component.
  */
 class WindowsTextInputState final {
  public:
-  int64_t mostRecentEventCount{0};
+  WindowsTextInputState() = default;
 
-  /**
-   * Stores an opaque cache ID used on the Java side to refer to a specific
-   * AttributedString for measurement purposes only.
-   */
-  int64_t cachedAttributedStringId{0};
+  WindowsTextInputState(
+      AttributedStringBox attributedStringBox,
+      AttributedString reactTreeAttributedString,
+      ParagraphAttributes paragraphAttributes,
+      int64_t mostRecentEventCount);
 
   /*
-   * All content of <TextInput> component represented as an `AttributedString`.
-   * Only set if changed from the React tree's perspective.
+   * All content of <TextInput> component.
    */
-  AttributedString attributedString{};
+  AttributedStringBox attributedStringBox;
 
   /*
    * All content of <TextInput> component represented as an `AttributedString`.
@@ -44,28 +40,9 @@ class WindowsTextInputState final {
    * Represents all visual attributes of a paragraph of text represented as
    * a ParagraphAttributes.
    */
-  ParagraphAttributes paragraphAttributes{};
+  ParagraphAttributes paragraphAttributes;
 
-  /**
-   * Communicates Android theme padding back to the ShadowNode / Component
-   * Descriptor for layout.
-   */
-  double defaultThemePaddingStart{NAN};
-  double defaultThemePaddingEnd{NAN};
-  double defaultThemePaddingTop{NAN};
-  double defaultThemePaddingBottom{NAN};
-
-  WindowsTextInputState(
-      int64_t mostRecentEventCount,
-      AttributedString attributedString,
-      AttributedString reactTreeAttributedString,
-      ParagraphAttributes paragraphAttributes,
-      double defaultThemePaddingStart,
-      double defaultThemePaddingEnd,
-      double defaultThemePaddingTop,
-      double defaultThemePaddingBottom);
-
-  WindowsTextInputState() = default;
+  int64_t mostRecentEventCount{0};
 };
 
 } // namespace facebook::react

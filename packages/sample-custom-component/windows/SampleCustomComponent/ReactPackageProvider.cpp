@@ -21,11 +21,8 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
 #ifdef RNW_NEW_ARCH
   RegisterDrawingIslandComponentView(packageBuilder);
   RegisterMovingLightNativeComponent(packageBuilder);
-#endif // #ifdef RNW_NEW_ARCH
-
-#if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
   RegisterCalendarViewComponentView(packageBuilder);
-#endif // #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
+#endif // #if defined(RNW_NEW_ARCH)
 }
 
 } // namespace winrt::SampleCustomComponent::implementation

@@ -76,6 +76,8 @@ struct ReactNativeIsland
   float ScaleFactor() noexcept;
   void ScaleFactor(float value) noexcept;
 
+  void SetProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept;
+
   float FontSizeMultiplier() const noexcept;
 
   winrt::event_token SizeChanged(
@@ -154,10 +156,13 @@ struct ReactNativeIsland
   bool m_isJSViewAttached{false};
   bool m_hasRenderedVisual{false};
   bool m_showingLoadingUI{false};
-  bool m_mounted{false};
+  bool m_mounted{true};
   winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::PortalComponentView> m_portal{nullptr};
   IReactDispatcher m_uiDispatcher{nullptr};
   winrt::IInspectable m_uiaProvider{nullptr};
+
+  // If SetProps is called before the surface is loaded, store it locally to use on start
+  folly::dynamic m_props;
 
   // This is the surfaceId that this island belongs to.
   // In the case of portal content root, this will be the surfaceId that contains the portal.

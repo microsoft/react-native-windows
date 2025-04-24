@@ -1,4 +1,3 @@
-
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -32,14 +31,12 @@ ParagraphComponentView::ParagraphComponentView(
 void ParagraphComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::MountChildComponentView(childComponentView, index);
 }
 
 void ParagraphComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
@@ -64,6 +61,10 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
+    m_requireRedraw = true;
+  }
+
   Super::updateProps(props, oldProps);
 }
 
@@ -73,7 +74,7 @@ void ParagraphComponentView::updateState(
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
   m_attributedStringBox = facebook::react::AttributedStringBox(newState.getData().attributedString);
-  m_paragraphAttributes = {}; // TODO
+  m_paragraphAttributes = facebook::react::ParagraphAttributes(newState.getData().paragraphAttributes);
 
   m_textLayout = nullptr;
 }
@@ -168,7 +169,9 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     constraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
+    facebook::react::TextLayoutManager::GetTextLayout(
+        m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout);
+
     requireNewBrush = true;
   }
 
@@ -199,6 +202,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
     float horizAlignment{0.f};
+
     /*
     const auto &props = paragraphProps()
     if (props.textAttributes.alignment) {
@@ -227,7 +231,6 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     // TODO Using brush alignment to align the text makes it blurry...
     if (m_drawingSurface) {
       m_drawingSurface.HorizontalAlignmentRatio(horizAlignment);
-      m_drawingSurface.VerticalAlignmentRatio(0.f);
       m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     }
     Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);

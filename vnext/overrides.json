@@ -370,6 +370,12 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
+      "baseHash": "c3895c941a120159ce9a8b2b306c5341466fca05"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
       "baseHash": "21f339b78c92e68ed9ed34c36bee75bc27949060"
@@ -596,6 +602,12 @@
     {
       "type": "platform",
       "file": "src-win/Libraries/StyleSheet/PlatformColorValueTypes.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Text/Text.d.ts",
+      "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
+      "baseHash": "4b523469a5c8dcfe53749d1739ccf77c0106375e"
     },
     {
       "type": "derived",

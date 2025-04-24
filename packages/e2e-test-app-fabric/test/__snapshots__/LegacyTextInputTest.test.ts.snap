@@ -32,10 +32,12 @@ exports[`LegacyTextInputTest Click on multiline TextInput to move focus away fro
     "AutomationId": "textinput-log",
     "ControlType": 50020,
     "LocalizedControlType": "text",
-    "Name": "onBlur
+    "Name": "onEndEditing text: 
+onBlur
 onFocus
 <Log Start>",
-    "TextRangePattern.GetText": "onBlur
+    "TextRangePattern.GetText": "onEndEditing text: 
+onBlur
 onFocus
 <Log Start>",
   },
@@ -48,7 +50,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 57",
+    "Size": "998, 76",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -66,6 +68,7 @@ onKeyPress key: a
 onChange text: 
 onSelectionChange range: 0,0
 onFocus
+onEndEditing text: abc
 onBlur
 onSubmitEditing text: abc
 onChange text: abc
@@ -97,10 +100,10 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
-onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",
@@ -110,6 +113,7 @@ onKeyPress key: a
 onChange text: 
 onSelectionChange range: 0,0
 onFocus
+onEndEditing text: abc
 onBlur
 onSubmitEditing text: abc
 onChange text: abc
@@ -141,10 +145,10 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
-onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",
@@ -158,7 +162,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 820",
+    "Size": "998, 839",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -177,10 +181,10 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
-onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",
@@ -191,10 +195,10 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
-onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",
@@ -250,10 +254,10 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
-onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",
@@ -287,10 +291,10 @@ onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
 onChange text: a
-onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onFocus
+onEndEditing text: 
 onBlur
 onFocus
 <Log Start>",

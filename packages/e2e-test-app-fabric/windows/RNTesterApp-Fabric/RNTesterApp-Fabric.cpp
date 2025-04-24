@@ -364,6 +364,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL multipleSelection;
   BOOL selectionRequired;
   BSTR text = nullptr;
+  BOOL horizontallyScrollable;
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;
@@ -463,6 +464,16 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       if (SUCCEEDED(hr)) {
         InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
       }
+    }
+  }
+
+  // Dump IScrollProvider Information
+  winrt::com_ptr<IScrollProvider> scrollPattern;
+  hr = pTarget->GetCurrentPattern(UIA_ScrollPatternId, reinterpret_cast<IUnknown **>(scrollPattern.put()));
+  if (SUCCEEDED(hr) && scrollPattern) {
+    hr = scrollPattern->get_HorizontallyScrollable(&horizontallyScrollable);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ScrollPattern.HorizontallyScrollable", horizontallyScrollable, false);
     }
   }
 
