@@ -1,5 +1,95 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Accessibility Tests Accessibility data for Label and Level 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibility-base-view-2",
+    "ControlType": 50026,
+    "Level": 2,
+    "LocalizedControlType": "group",
+    "Name": "A hint for the red box.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "A hint for the red box.",
+      "TestId": "accessibility-base-view-2",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 0, 255)",
+    },
+    "Comment": "accessibility-base-view-2",
+    "Offset": "0, 0, 0",
+    "Size": "50, 50",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Accessibility Tests Accessibility data for Label,Level and Hint 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibility-base-view-1",
+    "ControlType": 50026,
+    "HelpText": "A hint for the blue box.",
+    "Level": 1,
+    "LocalizedControlType": "group",
+    "Name": "A blue box",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "A blue box",
+      "TestId": "accessibility-base-view-1",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(0, 0, 255, 255)",
+    },
+    "Comment": "accessibility-base-view-1",
+    "Offset": "0, 0, 0",
+    "Size": "50, 50",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Accessibility Tests Accessibility data for Role, Setsize etc. 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibility-base-view-3",
+    "ControlType": 50007,
+    "Level": 9,
+    "LocalizedControlType": "list item",
+    "Name": "Aria label takes precedence",
+    "PositionInSet": 2,
+    "SizeofSet": 5,
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Aria label takes precedence",
+      "TestId": "accessibility-base-view-3",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 0, 255)",
+    },
+    "Comment": "accessibility-base-view-3",
+    "Offset": "0, 0, 0",
+    "Size": "50, 50",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`Accessibility Tests Components can store range data by setting the min, max, and now of accessibilityValue 1`] = `
 {
   "Automation Tree": {
