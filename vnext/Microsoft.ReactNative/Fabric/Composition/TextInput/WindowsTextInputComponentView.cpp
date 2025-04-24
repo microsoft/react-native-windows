@@ -695,7 +695,7 @@ void WindowsTextInputComponentView::OnPointerPressed(
     facebook::react::PressEvent pressInArgs;
     pressInArgs.target = m_tag;
     pressInArgs.pagePoint = {position.X, position.Y};
-    pressInArgs.offsetPoint = {offsetX, offsetY};//{LocationX,LocationY}
+    pressInArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}
     pressInArgs.timestamp = static_cast<double>(pp.Timestamp()) / 1000.0;
     pressInArgs.identifier = pp.PointerId();
 
