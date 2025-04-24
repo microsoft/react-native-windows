@@ -120,7 +120,8 @@ test.each(projects)(
   },
 );
 
-test('useWinUI3=true in react-native.config.js, UseWinUI3=false in ExperimentalFeatures.props', async () => {
+// Skipping this test as the feature is broken and needs to be removed, see https://github.com/microsoft/react-native-windows/issues/14601
+test.skip('useWinUI3=true in react-native.config.js, UseWinUI3=false in ExperimentalFeatures.props', async () => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
 
   // Create project with UseWinUI3 == false in ExperimentalFeatures.props
