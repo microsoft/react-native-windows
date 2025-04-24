@@ -1,0 +1,10 @@
+{
+        "WinUIPackageName": "Microsoft.WindowsAppSDK",
+        "WinUIPackageVersion": "1.6.240923002",
+        "WindowsTargetPlatformVersion": "10.0.22621.0",
+        "UseExperimentalNuGet": "false",
+        "UseHermes": "true",
+        "UseWinUI3": "true",
+        "UseFabric": "true",
+        "RnwNewArch": "true"
+      }
