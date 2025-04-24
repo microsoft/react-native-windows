@@ -12,7 +12,7 @@
     "@react-native-windows/fs": "0.77.1",
     "@rnw-scripts/eslint-config": "1.2.30",
     "@rnw-scripts/ts-config": "2.0.5",
-    "@types/jest": "^29.2.2",
+    "@types/jest": "^29.5.3",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "lodash": "^4.17.15",
