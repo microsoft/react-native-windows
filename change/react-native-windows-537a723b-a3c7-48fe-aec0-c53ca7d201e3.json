@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "added check for double click on textInput component view connecting it to WM_LBUTTONDBLCLK",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}

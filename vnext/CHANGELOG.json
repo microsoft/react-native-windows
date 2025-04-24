@@ -2,6 +2,155 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Apr 2025 22:24:03 GMT",
+      "version": "0.76.12",
+      "tag": "react-native-windows_v0.76.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implementation of adjustFontSizeToFit for Text in Fabric"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement scrollEventThrottle for ScrollView in Fabric"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement decelerationRate in ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Add Custom Font Family support in TextInput"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Fix Narrator Bug"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement zoomScale, maximumZoomScale and minimumZoomScale in ScrollView"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Add IScrollProvider Implementation"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement SpellCheck and AutoCorrect for TextInput"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement letterSpacing for TextInput"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement OnScrollBeginDrag Event"
+          },
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implemented textAlign in TextInput for Fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Allow TextInput to scroll"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9d947595a854423fc26ff3a42f314bc0047209bf",
+            "comment": "Implement WebSocket resource task sequencer (#14577)"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Button should pass onAccessibilityTap to native"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement onProgress for Image"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Implement body in Image Source"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Allow text components to have children"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Add ImageRequestParams"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Add SetProperties method to ReactNativeIsland"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "added check for double click on textInput component view connecting it to WM_LBUTTONDBLCLK"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "implemented on onEndEditing"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e9875d85951d401de0b9c8b26abdee6ce09e807d",
+            "comment": "Added override Text.d.ts to src-win/Libraries/Text/ to add  tooltip prop to Text component"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Apr 2025 15:26:06 GMT",
       "version": "0.76.11",
       "tag": "react-native-windows_v0.76.11",
