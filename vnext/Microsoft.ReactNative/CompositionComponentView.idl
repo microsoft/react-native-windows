@@ -89,11 +89,6 @@ namespace Microsoft.ReactNative.Composition
     Microsoft.ReactNative.ViewProps ViewProps { get; };
   };
 
-  // Some other interfaces we could consider implementing/exposing
-  // Use ifdef USE_EXPERIMENTAL_WINUI3 to add these
-  // Microsoft.UI.Content.IContentLink // Use ifdef USE_EXPERIMENTAL_WINUI3
-  // Microsoft.UI.Content.IContentSiteBridge 
-  // Microsoft.UI.Content.IContentSiteBridge2 // Use ifdef USE_EXPERIMENTAL_WINUI3
   [experimental]
   [webhosthidden]
   runtimeclass ContentIslandComponentView : ViewComponentView { 
