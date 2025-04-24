@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Wed, 16 Apr 2025 05:25:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 24 Apr 2025 05:24:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.261
+
+Thu, 24 Apr 2025 05:24:03 GMT
+
+### Changes
+
+- Fix broken CLI tests (jthysell@microsoft.com)
 
 ## 0.0.0-canary.260
 

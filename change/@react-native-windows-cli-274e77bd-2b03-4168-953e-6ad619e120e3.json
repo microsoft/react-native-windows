@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix broken CLI tests",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
