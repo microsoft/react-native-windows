@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Integrate changes for 0.76 from RN 0.76.9",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "abhijeetjha@microsoft.com",
+  "dependentChangeType": "none"
+}
