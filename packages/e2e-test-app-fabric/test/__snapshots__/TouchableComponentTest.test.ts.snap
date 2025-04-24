@@ -238,6 +238,124 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
 }
 `;
 
+exports[`Touchable Tests Touchables can be disabled 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "disabled_touchable",
+    "ControlType": 50026,
+    "IsEnabled": false,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Disabled TouchableOpacity",
+        "TextRangePattern.GetText": "Disabled TouchableOpacity",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "disabled_touchable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {
+          "Opacity": 0.5,
+        },
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(0, 0, 0, 0)",
+    },
+    "Comment": "disabled_touchable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 38",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "374, 10, 0",
+        "Size": "168, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Opacity": 0.5,
+            "Size": "168, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Touchable Tests Touchables can be disabled 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "disabled_touchable",
+    "ControlType": 50026,
+    "IsEnabled": false,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Disabled TouchableOpacity",
+        "TextRangePattern.GetText": "Disabled TouchableOpacity",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "disabled_touchable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {
+          "Opacity": 0.5,
+        },
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(0, 0, 0, 0)",
+    },
+    "Comment": "disabled_touchable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 38",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "374, 10, 0",
+        "Size": "168, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Opacity": 0.5,
+            "Size": "168, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Touchable Tests Touchables can contain a Text component 1`] = `
 {
   "Automation Tree": {
@@ -483,17 +601,131 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
   "Visual Tree": {
     "Comment": "touchable_feedback_events_button",
     "Offset": "0, 0, 0",
-    "Size": "56, 18",
+    "Size": "56, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "56, 20",
+        "Size": "56, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "56, 20",
+            "Size": "56, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Touchable Tests Touchables can register feedback events 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "touchable_feedback_events_console",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "press",
+        "TextRangePattern.GetText": "press",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "pressIn",
+        "TextRangePattern.GetText": "pressIn",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "touchable_feedback_events_console",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "touchable_feedback_events_console",
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 29, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
             "Visual Type": "SpriteVisual",
           },
         ],

@@ -115,6 +115,9 @@ namespace Microsoft.ReactNative.Composition.Experimental
     void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
     void TryUpdatePosition(Windows.Foundation.Numerics.Vector3 position, Boolean animate);
     void OnPointerPressed(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
+    void SetDecelerationRate(Windows.Foundation.Numerics.Vector3 decelerationRate);
+    void SetMaximumZoomScale(Single maximumZoomScale);
+    void SetMinimumZoomScale(Single minimumZoomScale);
     Boolean Horizontal;
   }
 

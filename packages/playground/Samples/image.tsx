@@ -20,7 +20,9 @@ const loadingImageUri =
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
 
-const smallImageUri =
+const smallImageUri = 'https://reactnative.dev/img/tiny_logo.png';
+
+const flowerImageUri =
   'https://cdn.pixabay.com/photo/2021/08/02/00/10/flowers-6515538_1280.jpg';
 
 const reactLogoUri = 'https://reactjs.org/logo-og.png';
@@ -74,6 +76,8 @@ export default class Bootstrap extends React.Component<
     let imageUri = '';
     if (value === 'small') {
       imageUri = smallImageUri;
+    } else if (value === 'flower') {
+      imageUri = flowerImageUri;
     } else if (value === 'large') {
       imageUri = largeImageUri;
     } else if (value === 'data-svg') {
@@ -138,6 +142,10 @@ export default class Bootstrap extends React.Component<
     this.setSelection(value);
   };
 
+  handleOnProgress = (event: any) => {
+    const {progress, loaded, total} = event.nativeEvent;
+    console.log(`Progress: ${progress}, Loaded = ${loaded} , Total = ${total}`);
+  };
   render() {
     const resizeModes = [
       {label: 'center', value: 'center'},
@@ -149,6 +157,7 @@ export default class Bootstrap extends React.Component<
 
     const imageSources = [
       {label: 'small', value: 'small'},
+      {label: 'flower', value: 'flower'},
       {label: 'large', value: 'large'},
       {label: 'data', value: 'data'},
       {label: 'data-svg', value: 'data-svg'},
@@ -251,13 +260,14 @@ export default class Bootstrap extends React.Component<
                   : {tintColor: this.state.tintColor},
               ]}
               defaultSource={{uri: this.state.defaultImageUri}}
-              source={{uri: this.state.imageUri}}
+              source={{uri: this.state.imageUri, body: 'test'}}
               loadingIndicatorSource={{uri: loadingImageUri}}
               resizeMode={this.state.selectedResizeMode}
               blurRadius={this.state.blurRadius}
               onLoad={() => console.log('onLoad')}
               onLoadStart={() => console.log('onLoadStart')}
               onLoadEnd={() => console.log('onLoadEnd')}
+              onProgress={this.handleOnProgress}
             />
           )}
         </View>

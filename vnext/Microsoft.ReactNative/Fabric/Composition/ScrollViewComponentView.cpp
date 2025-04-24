@@ -81,9 +81,12 @@ struct ScrollBarComponent {
   }
 
   void ContentSize(winrt::Windows::Foundation::Size contentSize) noexcept {
+    if (m_contentSize == contentSize) {
+      return;
+    }
     m_contentSize = contentSize;
     updateThumb();
-    updateVisibility();
+    updateVisibility(m_visible);
   }
 
   void updateTrack() noexcept {
@@ -108,10 +111,22 @@ struct ScrollBarComponent {
 
     updateTrack();
     updateThumb();
-    updateVisibility();
+    updateVisibility(m_visible);
   }
 
-  void updateVisibility() noexcept {
+  void updateVisibility(bool visible) noexcept {
+    if ((m_size.Width <= 0.0f && m_size.Height <= 0.0f) ||
+        (m_contentSize.Width <= 0.0f && m_contentSize.Height <= 0.0f)) {
+      m_rootVisual.IsVisible(false);
+      return;
+    }
+
+    if (!visible) {
+      m_visible = false;
+      m_rootVisual.IsVisible(visible);
+      return;
+    }
+
     bool newVisibility = false;
     if (m_vertical) {
       newVisibility = (m_contentSize.Height > m_size.Height);
@@ -119,10 +134,8 @@ struct ScrollBarComponent {
       newVisibility = (m_contentSize.Width > m_size.Width);
     }
 
-    if (newVisibility != m_visible) {
-      m_visible = newVisibility;
-      m_rootVisual.IsVisible(m_visible);
-    }
+    m_visible = newVisibility;
+    m_rootVisual.IsVisible(m_visible);
   }
 
   void updateRootAndArrowVisualOffsets() noexcept {
@@ -561,7 +574,7 @@ struct ScrollBarComponent {
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   const bool m_vertical;
-  bool m_visible{false};
+  bool m_visible{true};
   bool m_shy{false};
   int m_thumbSize{0};
   float m_arrowSize{0};
@@ -753,6 +766,44 @@ void ScrollViewComponentView::updateProps(
   if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
     m_scrollVisual.Horizontal(newViewProps.horizontal);
   }
+
+  if (!oldProps || oldViewProps.showsHorizontalScrollIndicator != newViewProps.showsHorizontalScrollIndicator) {
+    updateShowsHorizontalScrollIndicator(newViewProps.showsHorizontalScrollIndicator);
+  }
+
+  if (!oldProps || oldViewProps.showsVerticalScrollIndicator != newViewProps.showsVerticalScrollIndicator) {
+    updateShowsVerticalScrollIndicator(newViewProps.showsVerticalScrollIndicator);
+  }
+
+  if (!oldProps || oldViewProps.decelerationRate != newViewProps.decelerationRate) {
+    updateDecelerationRate(newViewProps.decelerationRate);
+  }
+
+  if (!oldProps || oldViewProps.scrollEventThrottle != newViewProps.scrollEventThrottle) {
+    // Zero means "send value only once per significant logical event".
+    // Prop value is in milliseconds.
+    auto throttleInSeconds = newViewProps.scrollEventThrottle / 1000.0;
+    auto msPerFrame = 1.0 / 60.0;
+    if (throttleInSeconds < 0) {
+      m_scrollEventThrottle = INFINITY;
+    } else if (throttleInSeconds <= msPerFrame) {
+      m_scrollEventThrottle = 0;
+    } else {
+      m_scrollEventThrottle = throttleInSeconds;
+    }
+  }
+
+  if (oldViewProps.maximumZoomScale != newViewProps.maximumZoomScale) {
+    m_scrollVisual.SetMaximumZoomScale(newViewProps.maximumZoomScale);
+  }
+
+  if (oldViewProps.minimumZoomScale != newViewProps.minimumZoomScale) {
+    m_scrollVisual.SetMinimumZoomScale(newViewProps.minimumZoomScale);
+  }
+
+  if (oldViewProps.zoomScale != newViewProps.zoomScale) {
+    m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -784,14 +835,15 @@ void ScrollViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
   ensureVisual();
-
-  m_verticalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
-  m_horizontalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
-  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-  m_scrollVisual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  updateContentVisualSize();
+  if (oldLayoutMetrics != layoutMetrics) {
+    m_verticalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
+    m_horizontalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
+    base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+    m_scrollVisual.Size(
+        {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+         layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+    updateContentVisualSize();
+  }
 }
 
 void ScrollViewComponentView::updateContentVisualSize() noexcept {
@@ -962,6 +1014,8 @@ bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
 
   auto x = (m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor;
   auto y = (m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
+  // Ensure at least one scroll event will fire
+  m_allowNextScrollNoMatterWhat = true;
   m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
   return true;
 }
@@ -1202,19 +1256,27 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
-        updateStateWithContentOffset();
-        auto eventEmitter = GetEventEmitter();
-        if (eventEmitter) {
-          facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
-          scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
-          scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
-          scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
-          scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
-          scrollMetrics.zoomScale = 1.0;
-          scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
-          scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
-          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
-              ->onScroll(scrollMetrics);
+        auto now = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_lastScrollEventTime).count();
+
+        if (m_allowNextScrollNoMatterWhat ||
+            (m_scrollEventThrottle < std::max(std::chrono::duration<double>(0.017).count(), elapsed))) {
+          updateStateWithContentOffset();
+          auto eventEmitter = GetEventEmitter();
+          if (eventEmitter) {
+            facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
+            scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
+            scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
+            scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
+            scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
+            scrollMetrics.zoomScale = 1.0;
+            scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
+            scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
+            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+                ->onScroll(scrollMetrics);
+            m_lastScrollEventTime = now;
+            m_allowNextScrollNoMatterWhat = false;
+          }
         }
       });
 
@@ -1223,6 +1285,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
@@ -1316,4 +1379,23 @@ double ScrollViewComponentView::getHorizontalSize() noexcept {
   return std::min((m_layoutMetrics.frame.size.width / m_contentSize.width * 100.0), 100.0);
 }
 
+void ScrollViewComponentView::updateShowsHorizontalScrollIndicator(bool value) noexcept {
+  if (value) {
+    m_horizontalScrollbarComponent->updateVisibility(true);
+  } else {
+    m_horizontalScrollbarComponent->updateVisibility(false);
+  }
+}
+
+void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noexcept {
+  if (value) {
+    m_verticalScrollbarComponent->updateVisibility(true);
+  } else {
+    m_verticalScrollbarComponent->updateVisibility(false);
+  }
+}
+
+void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
+  m_scrollVisual.SetDecelerationRate({value, value, value});
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -10,6 +10,7 @@ REM /rn [version]   Use react-native@version (default: latest)
 REM /rnw [version]  Use react-native-windows@version (default: latest)
 REM /lt [template]  Use create-react-native-library template (default: turbo-module)
 REM /linkrnw        Use your local RNW repo at RNW_ROOT
+REM /verdaccio      Configure new project to use verdaccio (used in CI)
 REM
 REM Requirements:
 REM - You've set the RNW_ROOT environment variable with the path to your clone
@@ -31,6 +32,7 @@ set RNCLI_VERSION=
 set RNW_VERSION=
 
 set LINK_RNW=0
+set USE_VERDACCIO=0
 
 :loop
 set part=%1
@@ -38,6 +40,8 @@ set param=%2
 if not "%part%"=="" (
   if "%part%"=="/linkrnw" (
       set LINK_RNW=1
+  ) else if "%part%"=="/verdaccio" (
+      set USE_VERDACCIO=1
   ) else if "%part%"=="/r" (
       set R_VERSION=%param%
       shift
@@ -61,10 +65,15 @@ if not "%part%"=="" (
 )
 :loopend
 
+if %USE_VERDACCIO% equ 1 (
+  @echo creaternwlib.cmd: Setting npm to use verdaccio at http://localhost:4873
+  call npm config set registry http://localhost:4873
+)
+
 if %LINK_RNW% equ 1 (
   @echo creaternwlib.cmd Determining versions from local RNW repo at %RNW_ROOT%
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" peerDependencies.react') do @set R_VERSION=%%a
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" peerDependencies.react-native') do @set RN_VERSION=%%a
+  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" devDependencies.react') do @set R_VERSION=%%a
+  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" devDependencies.react-native') do @set RN_VERSION=%%a
   for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" version') do @set RNW_VERSION=%%a
   for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" dependencies.@react-native-community/cli') do @set RNCLI_VERSION=%%a
 )
@@ -76,7 +85,7 @@ if "%RNW_VERSION%"=="" (
 
 if "%RN_VERSION%"=="" (
   @echo creaternwlib.cmd Determining react-native version from react-native-windows dependency
-  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% peerDependencies.react-native') do @set RN_VERSION=%%a
+  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% devDependencies.react-native') do @set RN_VERSION=%%a
 )
 
 if "%RNCLI_VERSION%"=="" (
@@ -86,7 +95,7 @@ if "%RNCLI_VERSION%"=="" (
 
 if "%R_VERSION%"=="" (
   @echo creaternwlib.cmd Determining react version from react-native-windows dependency
-  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% peerDependencies.react') do @set R_VERSION=%%a
+  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% devDependencies.react') do @set R_VERSION=%%a
 )
 
 @echo creaternwlib.cmd Determining concrete versions for react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION% 
@@ -121,7 +130,15 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   popd
 )
 
+@echo creaternwlib.cmd: Calling yarn install
 call yarn install
+
+if %USE_VERDACCIO% equ 1 (
+  @echo creaternwlib.cmd: Setting yarn to use verdaccio at http://localhost:4873
+  call yarn config set registry http://localhost:4873
+  call yarn config set npmRegistryServer http://localhost:4873
+  call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
+)
 
 @echo creaternwlib.cmd Adding RNW dependency to library
 call yarn add react-native-windows@%RNW_VERSION% --dev
@@ -132,6 +149,7 @@ if %LINK_RNW% equ 1 (
   call yarn link %RNW_ROOT%\vnext
 )
 
+@echo creaternwlib.cmd: Calling yarn install
 call yarn install
 
 @echo creaternwlib.cmd Creating commit to save current state

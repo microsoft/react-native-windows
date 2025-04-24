@@ -119,6 +119,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double getHorizontalSize() noexcept;
 
  private:
+  void updateDecelerationRate(float value) noexcept;
   void updateContentVisualSize() noexcept;
   bool scrollToEnd(bool animate) noexcept;
   bool scrollToStart(bool animate) noexcept;
@@ -128,6 +129,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
   void updateStateWithContentOffset() noexcept;
+  void updateShowsHorizontalScrollIndicator(bool value) noexcept;
+  void updateShowsVerticalScrollIndicator(bool value) noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
@@ -144,6 +147,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_isHorizontal = false;
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
+  double m_scrollEventThrottle{0.0};
+  bool m_allowNextScrollNoMatterWhat{false};
+  std::chrono::steady_clock::time_point m_lastScrollEventTime{};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 };
 

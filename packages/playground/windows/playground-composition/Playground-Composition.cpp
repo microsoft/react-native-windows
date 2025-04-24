@@ -104,11 +104,7 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
     RegisterCustomComponent(packageBuilder);
-#else
-    UNREFERENCED_PARAMETER(packageBuilder);
-#endif // USE_EXPERIMENTAL_WINUI3
   }
 };
 
@@ -367,6 +363,15 @@ struct WindowData {
                            : winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
         }
         m_forceRTL = !m_forceRTL;
+      }
+      case IDM_SETPROPS: {
+        m_compRootView.SetProperties([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
+          static int value = 123;
+          writer.WriteObjectBegin();
+          winrt::Microsoft::ReactNative::WriteProperty(writer, L"testProp1", value++);
+          winrt::Microsoft::ReactNative::WriteProperty(writer, L"testProp2", L"value2");
+          writer.WriteObjectEnd();
+        });
       }
     }
 
@@ -707,12 +712,9 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
   g_liftedCompositor = winrt::Microsoft::UI::Composition::Compositor();
 
-// We only want to init XAML if we are using XAML islands
-#ifdef USE_EXPERIMENTAL_WINUI3
   // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
   // in Microsoft.ui.xaml.controls.dll.
   auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
-#endif
 
   return RunPlayground(showCmd, false);
 }

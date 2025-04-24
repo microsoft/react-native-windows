@@ -280,7 +280,6 @@ describe('TextInput Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('style-fontFamily');
     expect(dump).toMatchSnapshot();
-    // Behavior not implemented yet
   });
   test('TextInputs can have a font size', async () => {
     const component = await app.findElementByTestID('style-fontSize');
