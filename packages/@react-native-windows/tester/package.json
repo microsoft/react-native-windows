@@ -23,7 +23,7 @@
     "react-native-xaml": "^0.0.78"
   },
   "devDependencies": {
-    "@react-native/tester": "0.74.87",
+    "@react-native/tester": "0.74.89",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.9",
     "@rnw-scripts/just-task": "2.3.25",

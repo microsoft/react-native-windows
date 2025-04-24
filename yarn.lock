@@ -2601,10 +2601,10 @@
   resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.74.89.tgz#b8ac17d1bbccd3ef9a1f921665d04d42cff85976"
   integrity sha512-qoMMXddVKVhZ8PA1AbUCk83trpd6N+1nF2A6k1i6LsQObyS92fELuk8kU/lQs6M7BsMHwqyLCpQJ1uFgNvIQXg==
 
-"@react-native/popup-menu-android@0.74.87":
-  version "0.74.87"
-  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.74.87.tgz#08d3ecef7ea60efd7657bf6a616daf437d5bd0a7"
-  integrity sha512-EMdn9risSm9AjHPViOxLkCtwTFwsi6uVDdPQHcSuMgPc0QtCN171Abp7WQJJUgPjqBAxtD8/mNZw/bYQJX0bqg==
+"@react-native/popup-menu-android@0.74.89":
+  version "0.74.89"
+  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.74.89.tgz#490a2cbf0e0b93d75b44adaf43c0911540924f97"
+  integrity sha512-P3/joMXUqIKbRHs/18ck0Vbvbzzu718Ue5zKxesTTjgGbFpV3KB7nZiPnQhcSr39n1lr2MmQd+IR2QlM9PXS4g==
   dependencies:
     nullthrows "^1.1.1"
 
