@@ -199,7 +199,30 @@ export default class Bootstrap extends React.Component<
             </View>
           </ScrollView>
           <TicTacButton />
-          <ActivityIndicator size="large" color="green" />
+          <ActivityIndicator
+            size="large"
+            color="green"
+            animating={true}
+            hidesWhenStopped={false}
+          />
+          <ActivityIndicator
+            size="large"
+            color="green"
+            animating={true}
+            hidesWhenStopped={true}
+          />
+          <ActivityIndicator
+            size="large"
+            color="green"
+            animating={false}
+            hidesWhenStopped={false}
+          />
+          <ActivityIndicator
+            size="large"
+            color="green"
+            animating={false}
+            hidesWhenStopped={true}
+          />
           <Text style={{marginTop: 15}}>Big Border & Clipping Tests:</Text>
           <View style={{flexDirection: 'row'}}>
             <View style={{flexDirection: 'column', alignItems: 'center'}}>

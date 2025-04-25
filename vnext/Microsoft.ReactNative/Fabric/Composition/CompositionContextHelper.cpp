@@ -1524,6 +1524,12 @@ struct CompActivityVisual : winrt::implements<
     SetAnimationClass<TTypeRedirects>(value, m_visual);
   }
 
+  void StopAnimation() noexcept {
+    _root.Properties().InsertScalar(L"Progress", 0.7f);
+    _root.Properties().StopAnimation(L"Progress");
+    _root.StopAnimation(L"Progress");
+  }
+
  private:
   typename TTypeRedirects::SpriteVisual m_visual{nullptr};
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};

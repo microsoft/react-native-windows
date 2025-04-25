@@ -67,8 +67,14 @@ void ActivityIndicatorComponentView::updateProps(
     updateProgressColor(newViewProps->color);
   }
 
-  if (newViewProps->animating != oldViewProps->animating) {
-    m_ActivityIndicatorVisual.IsVisible(newViewProps->animating);
+  if (newViewProps->animating != oldViewProps->animating ||
+      newViewProps->hidesWhenStopped != oldViewProps->hidesWhenStopped) {
+    bool setHidden = (newViewProps->hidesWhenStopped && !newViewProps->animating);
+    m_ActivityIndicatorVisual.IsVisible(!setHidden);
+
+    if (!newViewProps->animating && !newViewProps->hidesWhenStopped) {
+      m_ActivityIndicatorVisual.StopAnimation();
+    }
   }
 }
 
