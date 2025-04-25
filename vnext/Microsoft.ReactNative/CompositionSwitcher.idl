@@ -127,6 +127,8 @@ namespace Microsoft.ReactNative.Composition.Experimental
   {
     void Size(Single value);
     void Brush(IBrush brush);
+    void StartAnimation();
+    void StopAnimation();
   }
 
   [webhosthidden]
