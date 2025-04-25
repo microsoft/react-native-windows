@@ -141,6 +141,7 @@ export default class Bootstrap extends React.Component<
     switchIsOn: boolean;
     highlightPressed: boolean;
     mouseEntered: boolean;
+    isAnimating: boolean;
   }
 > {
   constructor(props: {}) {
@@ -151,10 +152,17 @@ export default class Bootstrap extends React.Component<
       mouseEntered: false,
       switchIsOn: true,
       highlightPressed: false,
+      isAnimating: false,
     };
   }
 
   inputRef: React.RefObject<TextInput | null>;
+
+  toggleAnimation = () => {
+    this.setState(prevState => ({
+      isAnimating: !prevState.isAnimating,
+    }));
+  };
 
   render() {
     return (
@@ -202,27 +210,23 @@ export default class Bootstrap extends React.Component<
           <ActivityIndicator
             size="large"
             color="green"
-            animating={true}
+            animating={this.state.isAnimating}
             hidesWhenStopped={false}
           />
           <ActivityIndicator
             size="large"
             color="green"
-            animating={true}
+            animating={this.state.isAnimating}
             hidesWhenStopped={true}
           />
-          <ActivityIndicator
-            size="large"
-            color="green"
-            animating={false}
-            hidesWhenStopped={false}
-          />
-          <ActivityIndicator
-            size="large"
-            color="green"
-            animating={false}
-            hidesWhenStopped={true}
-          />
+          <View>
+            <Button
+              title={
+                this.state.isAnimating ? 'Stop Animation' : 'Start Animation'
+              }
+              onPress={this.toggleAnimation}
+            />
+          </View>
           <Text style={{marginTop: 15}}>Big Border & Clipping Tests:</Text>
           <View style={{flexDirection: 'row'}}>
             <View style={{flexDirection: 'column', alignItems: 'center'}}>

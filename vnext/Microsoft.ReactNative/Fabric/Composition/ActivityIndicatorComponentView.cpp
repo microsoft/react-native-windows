@@ -73,7 +73,11 @@ void ActivityIndicatorComponentView::updateProps(
     m_ActivityIndicatorVisual.IsVisible(!setHidden);
 
     if (!newViewProps->animating && !newViewProps->hidesWhenStopped) {
+      m_animationStopped = true;
       m_ActivityIndicatorVisual.StopAnimation();
+    } else if (m_animationStopped) {
+      m_ActivityIndicatorVisual.StartAnimation();
+      m_animationStopped = false;
     }
   }
 }
