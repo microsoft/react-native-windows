@@ -1389,16 +1389,7 @@ struct CompActivityVisual : winrt::implements<
     _themeProperties.InsertVector4(L"Foreground", ColorAsVector4({0, 0, 0, 0}));
 
     visual.Children().InsertAtTop(Root());
-
-    auto easing = _c.CreateLinearEasingFunction();
-    const auto progressAnimation = _c.CreateScalarKeyFrameAnimation();
-    progressAnimation.Duration(winrt::Windows::Foundation::TimeSpan{c_durationTicks});
-    progressAnimation.InsertKeyFrame(0.0f, 0.0f);
-    progressAnimation.InsertKeyFrame(1.0f, 1.0f, easing);
-    progressAnimation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Forever);
-
-    _root.Properties().StartAnimation(L"Progress", progressAnimation);
-    _root.StartAnimation(L"Progress", progressAnimation);
+    StartAnimation();
   }
 
   void Brush(winrt::Microsoft::ReactNative::Composition::Experimental::IBrush brush) noexcept {
@@ -1522,6 +1513,24 @@ struct CompActivityVisual : winrt::implements<
 
   void AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass value) noexcept {
     SetAnimationClass<TTypeRedirects>(value, m_visual);
+  }
+
+  void StartAnimation() noexcept {
+    auto easing = _c.CreateLinearEasingFunction();
+    const auto progressAnimation = _c.CreateScalarKeyFrameAnimation();
+    progressAnimation.Duration(winrt::Windows::Foundation::TimeSpan{c_durationTicks});
+    progressAnimation.InsertKeyFrame(0.0f, 0.0f);
+    progressAnimation.InsertKeyFrame(1.0f, 1.0f, easing);
+    progressAnimation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Forever);
+
+    _root.Properties().StartAnimation(L"Progress", progressAnimation);
+    _root.StartAnimation(L"Progress", progressAnimation);
+  }
+
+  void StopAnimation() noexcept {
+    _root.Properties().InsertScalar(L"Progress", 0.7f);
+    _root.Properties().StopAnimation(L"Progress");
+    _root.StopAnimation(L"Progress");
   }
 
  private:
