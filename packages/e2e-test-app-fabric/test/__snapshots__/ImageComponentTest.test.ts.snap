@@ -1431,12 +1431,12 @@ exports[`Image Tests An Image can have a tint color 1`] = `
       },
       {
         "Offset": "0, 29, 0",
-        "Size": "916, 20",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1491,12 +1491,12 @@ exports[`Image Tests An Image can have a tint color 1`] = `
       },
       {
         "Offset": "0, 82, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2394,12 +2394,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2460,12 +2460,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 0, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2526,12 +2526,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2592,12 +2592,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2658,12 +2658,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 155, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2724,12 +2724,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 155, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2790,12 +2790,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2856,12 +2856,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3255,7 +3255,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
   "Visual Tree": {
     "Comment": "image-resize-mode",
     "Offset": "0, 0, 0",
-    "Size": "916, 310",
+    "Size": "916, 311",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3392,12 +3392,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3458,12 +3458,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3524,12 +3524,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "200, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3590,12 +3590,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 155, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3656,12 +3656,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 155, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3722,12 +3722,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3788,12 +3788,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 233, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3854,12 +3854,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "200, 233, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],

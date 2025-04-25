@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 14 Apr 2025 15:26:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 24 Apr 2025 22:24:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.12
+
+Thu, 24 Apr 2025 22:24:03 GMT
+
+### Patches
+
+- Implementation of adjustFontSizeToFit for Text in Fabric (kvineeth@microsoft.com)
+- Implement scrollEventThrottle for ScrollView in Fabric (54227869+anupriya13@users.noreply.github.com)
+- Implement decelerationRate in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Add Custom Font Family support in TextInput (54227869+anupriya13@users.noreply.github.com)
+- Fix Narrator Bug (34109996+chiaramooney@users.noreply.github.com)
+- Implement zoomScale, maximumZoomScale and minimumZoomScale in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Add IScrollProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
+- Implement SpellCheck and AutoCorrect for TextInput (54227869+anupriya13@users.noreply.github.com)
+- Implement letterSpacing for TextInput (54227869+anupriya13@users.noreply.github.com)
+- Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Implement OnScrollBeginDrag Event (54227869+anupriya13@users.noreply.github.com)
+- Implemented textAlign in TextInput for Fabric (14967941+danielayala94@users.noreply.github.com)
+- Allow TextInput to scroll (30809111+acoates-ms@users.noreply.github.com)
+- Implement WebSocket resource task sequencer (#14577) (julio.rocha@microsoft.com)
+- Button should pass onAccessibilityTap to native (34109996+chiaramooney@users.noreply.github.com)
+- Implement onProgress for Image (54227869+anupriya13@users.noreply.github.com)
+- Implement body in Image Source (54227869+anupriya13@users.noreply.github.com)
+- Allow text components to have children (tatianakapos@microsoft.com)
+- Add ImageRequestParams (54227869+anupriya13@users.noreply.github.com)
+- Add SetProperties method to ReactNativeIsland (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.76.11
 

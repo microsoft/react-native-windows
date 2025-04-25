@@ -4,7 +4,7 @@
 
 #include "CalendarView.h"
 
-#if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
+#if defined(RNW_NEW_ARCH)
 
 #include "codegen/react/components/SampleCustomComponent/CalendarView.g.h"
 
@@ -71,4 +71,4 @@ void RegisterCalendarViewComponentView(winrt::Microsoft::ReactNative::IReactPack
       });
 }
 
-#endif // defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
+#endif // defined(RNW_NEW_ARCH)

@@ -9,10 +9,10 @@
 #include "WindowsTextInputProps.h"
 #include "WindowsTextInputState.h"
 
+#include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/utils/ContextContainer.h>
 
-#include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
 namespace facebook::react {
@@ -28,56 +28,59 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
                                              WindowsTextInputEventEmitter,
                                              WindowsTextInputState> {
  public:
+  using ConcreteViewShadowNode::ConcreteViewShadowNode;
+
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();
     traits.set(ShadowNodeTraits::Trait::LeafYogaNode);
+    traits.set(ShadowNodeTraits::Trait::MeasurableYogaNode);
     traits.set(ShadowNodeTraits::Trait::BaselineYogaNode);
     return traits;
   }
 
-  using ConcreteViewShadowNode::ConcreteViewShadowNode;
-
-  void setContextContainer(ContextContainer *contextContainer);
-
-  /*
-   * Returns a `AttributedString` which represents text content of the node.
-   */
-  AttributedString getAttributedString(const LayoutContext &layoutContext) const;
-  AttributedString getPlaceholderAttributedString(const LayoutContext &layoutContext) const;
-
   /*
    * Associates a shared TextLayoutManager with the node.
-   * `ParagraphShadowNode` uses the manager to measure text content
-   * and construct `ParagraphState` objects.
+   * `TextInputShadowNode` uses the manager to measure text content
+   * and construct `TextInputState` objects.
    */
-  void setTextLayoutManager(SharedTextLayoutManager textLayoutManager);
+  void setTextLayoutManager(std::shared_ptr<const TextLayoutManager> textLayoutManager);
 
 #pragma mark - LayoutableShadowNode
-
+ protected:
   Size measureContent(const LayoutContext &layoutContext, const LayoutConstraints &layoutConstraints) const override;
+
   void layout(LayoutContext layoutContext) override;
 
- private:
-  ContextContainer *m_contextContainer{};
+  Float baseline(const LayoutContext &layoutContext, Size size) const override {
+    // Calculate baseline as 80% of the text height
+    return size.height * 0.8f;
+  }
 
-  /**
-   * Get the most up-to-date attributed string for measurement and State.
+  std::shared_ptr<const TextLayoutManager> textLayoutManager_;
+
+  /*
+   * Determines the constraints to use while measure the underlying text
    */
-  AttributedString getMostRecentAttributedString(const LayoutContext &layoutContext) const;
+  LayoutConstraints getTextConstraints(const LayoutConstraints &layoutConstraints) const;
 
+ private:
   /*
    * Creates a `State` object (with `AttributedText` and
    * `TextLayoutManager`) if needed.
    */
   void updateStateIfNeeded(const LayoutContext &layoutContext);
 
-  SharedTextLayoutManager m_textLayoutManager;
-
   /*
-   * Cached attributed string that represents the content of the subtree started
-   * from the node.
+   * Returns a `AttributedString` which represents text content of the node.
    */
-  mutable std::optional<AttributedString> m_cachedAttributedString{};
+  AttributedString getAttributedString(const LayoutContext &layoutContext) const;
+
+  /**
+   * Get the most up-to-date attributed string for measurement and State.
+   */
+  AttributedString getMostRecentAttributedString(const LayoutContext &layoutContext) const;
+
+  AttributedString getPlaceholderAttributedString(const LayoutContext &layoutContext) const;
 };
 
 } // namespace facebook::react

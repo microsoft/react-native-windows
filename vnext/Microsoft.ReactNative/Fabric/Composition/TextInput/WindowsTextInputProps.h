@@ -4,6 +4,7 @@
 #pragma once
 
 #include <react/components/rnwcore/Props.h>
+#include <react/renderer/attributedstring/conversions.h>
 #include <react/renderer/components/text/BaseTextProps.h>
 #include <react/renderer/core/propsConversions.h>
 
@@ -96,6 +97,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   setProp(const PropsParserContext &context, RawPropsPropNameHash hash, const char *propName, RawValue const &value);
 
   bool allowFontScaling{true};
+  bool autoCorrect{true};
   bool clearTextOnFocus{false};
   bool editable{true};
   int maxLength{0};
@@ -107,7 +109,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   CompWindowsTextInputSelectionStruct selection{};
   SharedColor selectionColor{};
   bool selectTextOnFocus{false};
-  bool spellCheck{false};
+  bool spellCheck{true};
   std::string text{};
   int mostRecentEventCount{0};
   bool secureTextEntry{false};
@@ -118,6 +120,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   bool clearTextOnSubmit{false};
   std::vector<CompWindowsTextInputSubmitKeyEventsStruct> submitKeyEvents{};
   bool autoFocus{false};
+  facebook::react::TextAlignment textAlign{};
 };
 
 } // namespace facebook::react

@@ -49,13 +49,12 @@ describe('ScrollView Tests', () => {
     const dump = await dumpVisualTree('flash_scroll_indicators_button');
     expect(dump).toMatchSnapshot();
   });
-  // Disable tests where testID is not found.
-  /*test('ScrollViews can scroll an item list horizontally', async () => {
+  test('ScrollViews can scroll an item list horizontally', async () => {
     const component = await app.findElementByTestID('scroll_horizontal');
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('scroll_horizontal');
     expect(dump).toMatchSnapshot();
-  });*/
+  });
   test('ScrollView has scrollTo method, scroll to start button', async () => {
     const component = await app.findElementByTestID('scroll_to_start_button');
     await component.waitForDisplayed({timeout: 20000});

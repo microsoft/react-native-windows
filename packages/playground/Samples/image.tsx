@@ -15,11 +15,18 @@ import {
   PlatformColor,
 } from 'react-native';
 
+const loadingImageUri =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
+
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
 
-const smallImageUri =
-  'https://facebook.github.io/react-native/img/header_logo.png';
+const smallImageUri = 'https://reactnative.dev/img/tiny_logo.png';
+
+const flowerImageUri =
+  'https://cdn.pixabay.com/photo/2021/08/02/00/10/flowers-6515538_1280.jpg';
+
+const reactLogoUri = 'https://reactjs.org/logo-og.png';
 
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
@@ -42,6 +49,10 @@ export default class Bootstrap extends React.Component<
     selectedSource: string;
     imageUri: string;
     tintColor: string;
+    modalVisible: boolean;
+    currentPicker: string | null;
+    defaultImageUri: string;
+    includedefaultSourceOnly: boolean;
   }
 > {
   state = {
@@ -50,7 +61,11 @@ export default class Bootstrap extends React.Component<
     includeBorder: false,
     tintColor: 'transparent',
     blurRadius: 0,
-    imageUri: 'https://facebook.github.io/react-native/img/header_logo.png',
+    imageUri: smallImageUri,
+    modalVisible: false,
+    currentPicker: '',
+    defaultImageUri: reactLogoUri,
+    includedefaultSourceOnly: false,
   };
 
   switchImageUri = (value: string) => {
@@ -60,6 +75,8 @@ export default class Bootstrap extends React.Component<
 
     if (value === 'small') {
       imageUri = smallImageUri;
+    } else if (value === 'flower') {
+      imageUri = flowerImageUri;
     } else if (value === 'large') {
       imageUri = largeImageUri;
     } else if (value === 'data-svg') {
@@ -71,6 +88,60 @@ export default class Bootstrap extends React.Component<
     this.setState({imageUri});
   };
 
+  setModalVisible = (visible: boolean, pickerName: string | null = null) => {
+    this.setState({modalVisible: visible, currentPicker: pickerName});
+  };
+
+  setSelection = (value: any) => {
+    const {currentPicker} = this.state;
+    switch (currentPicker) {
+      case 'resizeMode':
+        this.setState({selectedResizeMode: value});
+        break;
+      case 'imageSource':
+        this.switchImageUri(value);
+        break;
+      case 'blurRadius':
+        this.setState({blurRadius: value});
+        break;
+      case 'tintColor':
+        this.setState({tintColor: value});
+        break;
+      default:
+        break;
+    }
+
+    this.setModalVisible(false);
+  };
+
+  handleResizeModesSelect = (value: any) => {
+    this.setState({selectedResizeMode: value});
+    this.state.currentPicker = 'resizeMode';
+    this.setSelection(value);
+  };
+
+  handleImageSourcesSelect = (value: any) => {
+    this.setState({selectedSource: value});
+    this.state.currentPicker = 'imageSource';
+    this.setSelection(value);
+  };
+
+  handleBlurRadiusSelect = (value: any) => {
+    this.setState({blurRadius: value});
+    this.state.currentPicker = 'blurRadius';
+    this.setSelection(value);
+  };
+
+  handleTintColorSelect = (value: any) => {
+    this.setState({tintColor: value});
+    this.state.currentPicker = 'tintColor';
+    this.setSelection(value);
+  };
+
+  handleOnProgress = (event: any) => {
+    const {progress, loaded, total} = event.nativeEvent;
+    console.log(`Progress: ${progress}, Loaded = ${loaded} , Total = ${total}`);
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -151,6 +222,49 @@ export default class Bootstrap extends React.Component<
             resizeMode={this.state.selectedResizeMode}
             blurRadius={this.state.blurRadius}
           />
+          <Text>Include defaultSource Only</Text>
+        </View>
+        <View
+          style={
+            this.state.includedefaultSourceOnly
+              ? styles.imageContainerDefault
+              : styles.imageContainer
+          }>
+          {this.state.includedefaultSourceOnly ? (
+            <Image
+              style={[
+                styles.image,
+                this.state.includeBorder ? styles.imageWithBorder : {},
+                this.state.tintColor === 'accentDark1'
+                  ? styles.imageWithPlatformColor
+                  : this.state.tintColor === 'textFillColorPrimary'
+                  ? styles.imageWithPlatformColorPrimary
+                  : {tintColor: this.state.tintColor},
+              ]}
+              defaultSource={{uri: this.state.defaultImageUri}}
+            />
+          ) : (
+            <Image
+              style={[
+                styles.image,
+                this.state.includeBorder ? styles.imageWithBorder : {},
+                this.state.tintColor === 'accentDark1'
+                  ? styles.imageWithPlatformColor
+                  : this.state.tintColor === 'textFillColorPrimary'
+                  ? styles.imageWithPlatformColorPrimary
+                  : {tintColor: this.state.tintColor},
+              ]}
+              defaultSource={{uri: this.state.defaultImageUri}}
+              source={{uri: this.state.imageUri, body: 'test'}}
+              loadingIndicatorSource={{uri: loadingImageUri}}
+              resizeMode={this.state.selectedResizeMode}
+              blurRadius={this.state.blurRadius}
+              onLoad={() => console.log('onLoad')}
+              onLoadStart={() => console.log('onLoadStart')}
+              onLoadEnd={() => console.log('onLoadEnd')}
+              onProgress={this.handleOnProgress}
+            />
+          )}
         </View>
       </View>
     );
@@ -178,6 +292,12 @@ const styles = StyleSheet.create({
     height: '50%',
     width: '75%',
   },
+  imageContainerDefault: {
+    marginTop: 5,
+    backgroundColor: 'skyblue',
+    height: '50%',
+    width: '75%',
+  },
   image: {
     height: '100%',
     width: '100%',
@@ -190,6 +310,13 @@ const styles = StyleSheet.create({
   },
   imageWithPlatformColor: {
     tintColor: PlatformColor('SystemAccentColor'),
+  },
+  imageWithPlatformColorPrimary: {
+    tintColor: PlatformColor('TextFillColorPrimary'),
+  },
+  loading: {
+    height: '10%',
+    width: '10%',
   },
   title: {
     fontWeight: 'bold',

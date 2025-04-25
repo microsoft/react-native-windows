@@ -116,25 +116,25 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the scroll bar
   BOOL TxShowScrollBar(INT fnBar, BOOL fShow) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Enable the scroll bar
   BOOL TxEnableScrollBar(INT fuSBFlags, INT fuArrowflags) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll range
   BOOL TxSetScrollRange(INT fnBar, LONG nMinPos, INT nMaxPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll position
   BOOL TxSetScrollPos(INT fnBar, INT nPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
@@ -377,8 +377,11 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the bits representing requested scroll bars for the window
   HRESULT TxGetScrollBars(DWORD *pdwScrollBar) override {
-    // TODO support scrolling
-    *pdwScrollBar = 0;
+    if (m_outer->m_multiline) {
+      *pdwScrollBar = WS_VSCROLL | WS_HSCROLL | ES_AUTOVSCROLL | ES_AUTOHSCROLL;
+    } else {
+      *pdwScrollBar = WS_HSCROLL | ES_AUTOHSCROLL;
+    }
     return S_OK;
   }
 
@@ -459,6 +462,13 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   WindowsTextInputComponentView *m_outer;
 };
+
+int WINAPI
+AutoCorrectOffCallback(LANGID langid, const WCHAR *pszBefore, WCHAR *pszAfter, LONG cchAfter, LONG *pcchReplaced) {
+  wcsncpy_s(pszAfter, cchAfter, pszBefore, _TRUNCATE);
+  *pcchReplaced = static_cast<LONG>(wcslen(pszAfter));
+  return ATP_CHANGE;
+}
 
 facebook::react::AttributedString WindowsTextInputComponentView::getAttributedString() const {
   // Use BaseTextShadowNode to get attributed string from children
@@ -611,6 +621,19 @@ WPARAM PointerRoutedEventArgsToMouseWParam(
   return wParam;
 }
 
+bool WindowsTextInputComponentView::IsDoubleClick() {
+  using namespace std::chrono;
+
+  auto now = steady_clock::now();
+  auto duration = duration_cast<milliseconds>(now - m_lastClickTime).count();
+
+  const int DOUBLE_CLICK_TIME_MS = ::GetDoubleClickTime();
+
+  m_lastClickTime = now;
+
+  return (duration < DOUBLE_CLICK_TIME_MS);
+}
+
 void WindowsTextInputComponentView::OnPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   UINT msg = 0;
@@ -627,7 +650,11 @@ void WindowsTextInputComponentView::OnPointerPressed(
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
     switch (pp.Properties().PointerUpdateKind()) {
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonPressed:
-        msg = WM_LBUTTONDOWN;
+        if (IsDoubleClick()) {
+          msg = WM_LBUTTONDBLCLK;
+        } else {
+          msg = WM_LBUTTONDOWN;
+        }
         break;
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::MiddleButtonPressed:
         msg = WM_MBUTTONDOWN;
@@ -930,6 +957,19 @@ void WindowsTextInputComponentView::onLostFocus(
     m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
   }
   m_caretVisual.IsVisible(false);
+
+  // Call onEndEditing when focus is lost
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnEndEditing onEndEditingArgs;
+
+    // Set event arguments
+    onEndEditingArgs.eventCount = ++m_nativeEventCount;
+    onEndEditingArgs.text = GetTextFromRichEdit();
+
+    // Emit the event
+    emitter->onEndEditing(onEndEditingArgs);
+  }
 }
 
 void WindowsTextInputComponentView::onGotFocus(
@@ -983,7 +1023,10 @@ void WindowsTextInputComponentView::updateProps(
   if (!facebook::react::floatEquality(
           oldTextInputProps.textAttributes.fontSize, newTextInputProps.textAttributes.fontSize) ||
       (oldTextInputProps.textAttributes.allowFontScaling != newTextInputProps.textAttributes.allowFontScaling) ||
-      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight) {
+      oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
+      !facebook::react::floatEquality(
+          oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
+      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1042,6 +1085,26 @@ void WindowsTextInputComponentView::updateProps(
     autoCapitalizeOnUpdateProps(oldTextInputProps.autoCapitalize, newTextInputProps.autoCapitalize);
   }
 
+  if (oldTextInputProps.textAlign != newTextInputProps.textAlign) {
+    // Let UpdateParaFormat() to refresh the text field with the new text alignment.
+    m_propBitsMask |= TXTBIT_PARAFORMATCHANGE;
+    m_propBits |= TXTBIT_PARAFORMATCHANGE;
+  }
+
+  // Please note: spellcheck performs both red lines and autocorrect as per windows behaviour
+  bool shouldUpdateSpellCheck =
+      (!oldProps || (oldTextInputProps.spellCheck != newTextInputProps.spellCheck) ||
+       (oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect));
+
+  if (shouldUpdateSpellCheck) {
+    bool effectiveSpellCheck = newTextInputProps.spellCheck || newTextInputProps.autoCorrect;
+    updateSpellCheck(effectiveSpellCheck);
+  }
+
+  if (!oldProps || oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect) {
+    updateAutoCorrect(newTextInputProps.autoCorrect);
+  }
+
   UpdatePropertyBits();
 }
 
@@ -1070,7 +1133,7 @@ void WindowsTextInputComponentView::updateState(
 
   if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
     m_comingFromState = true;
-    auto &fragments = m_state->getData().attributedString.getFragments();
+    auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
     UpdateText(fragments.size() ? fragments[0].string : "");
 
     m_comingFromState = false;
@@ -1133,7 +1196,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   // auto newAttributedString = getAttributedString();
   // if (data.attributedString == newAttributedString)
   //    return;
-  data.attributedString = getAttributedString();
+  data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
   data.mostRecentEventCount = m_nativeEventCount;
 
   m_state->updateState(std::move(data));
@@ -1288,9 +1351,23 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   //    cfNew.dwEffects |= CFE_UNDERLINE;
   //  }
 
+  // set font family
+  if (!props.textAttributes.fontFamily.empty()) {
+    cfNew.dwMask |= CFM_FACE;
+    std::wstring fontFamily =
+        std::wstring(props.textAttributes.fontFamily.begin(), props.textAttributes.fontFamily.end());
+    wcsncpy_s(cfNew.szFaceName, fontFamily.c_str(), LF_FACESIZE);
+  }
+
   // set char offset
   cfNew.dwMask |= CFM_OFFSET;
   cfNew.yOffset = 0;
+
+  // set letter spacing
+  float letterSpacing = props.textAttributes.letterSpacing;
+  if (!std::isnan(letterSpacing)) {
+    updateLetterSpacing(letterSpacing);
+  }
 
   // set charset
   cfNew.dwMask |= CFM_CHARSET;
@@ -1305,7 +1382,15 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   m_pf.cbSize = sizeof(PARAFORMAT2);
   m_pf.dwMask = PFM_ALL;
 
-  m_pf.wAlignment = PFA_LEFT;
+  auto &textAlign = windowsTextInputProps().textAlign;
+
+  if (textAlign == facebook::react::TextAlignment::Center) {
+    m_pf.wAlignment = PFA_CENTER;
+  } else if (textAlign == facebook::react::TextAlignment::Right) {
+    m_pf.wAlignment = PFA_RIGHT;
+  } else {
+    m_pf.wAlignment = PFA_LEFT;
+  }
 
   m_pf.cTabCount = 1;
   m_pf.rgxTabs[0] = lDefaultTab;
@@ -1475,6 +1560,9 @@ WindowsTextInputComponentView::createVisual() noexcept {
   winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
   spUnk.as(m_textServices);
 
+  LRESULT res;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
+
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);
   m_caretVisual.IsVisible(false);
@@ -1525,4 +1613,39 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
   }
 }
 
+void WindowsTextInputComponentView::updateLetterSpacing(float letterSpacing) noexcept {
+  CHARFORMAT2W cf = {};
+  cf.cbSize = sizeof(CHARFORMAT2W);
+  cf.dwMask = CFM_SPACING;
+  cf.sSpacing = static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
+
+  LRESULT res;
+
+  // Apply to all existing text like placeholder
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&cf), &res));
+
+  // Apply to future text input
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&cf), &res));
+}
+
+void WindowsTextInputComponentView::updateAutoCorrect(bool enable) noexcept {
+  LRESULT lresult;
+  winrt::check_hresult(m_textServices->TxSendMessage(
+      EM_SETAUTOCORRECTPROC, enable ? 0 : reinterpret_cast<WPARAM>(AutoCorrectOffCallback), 0, &lresult));
+}
+
+void WindowsTextInputComponentView::updateSpellCheck(bool enable) noexcept {
+  LRESULT currentLangOptions;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_GETLANGOPTIONS, 0, 0, &currentLangOptions));
+
+  DWORD newLangOptions = static_cast<DWORD>(currentLangOptions);
+  if (enable) {
+    newLangOptions |= IMF_SPELLCHECKING;
+  }
+
+  LRESULT lresult;
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETLANGOPTIONS, IMF_SPELLCHECKING, enable ? newLangOptions : 0, &lresult));
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
