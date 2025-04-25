@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 23 Apr 2025 05:25:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 24 Apr 2025 05:24:04 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.946
+
+Thu, 24 Apr 2025 05:24:04 GMT
+
+### Changes
+
+- Implement accessibilityLevel for Fabric (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.261
 
 ## 0.0.0-canary.945
 
