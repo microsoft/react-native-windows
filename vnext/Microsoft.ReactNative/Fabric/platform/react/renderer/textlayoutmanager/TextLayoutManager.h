@@ -93,7 +93,8 @@ class TextLayoutManager {
       const ParagraphAttributes &paragraphAttributes,
       LayoutConstraints layoutConstraints,
       winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
-      TextMeasurement::Attachments &attachments) noexcept;
+      TextMeasurement::Attachments &attachments,
+      float minimumFontScale) noexcept;
 
 #pragma endregion
 
