@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix",
+  "packageName": "@react-native-windows/cli",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
