@@ -35,7 +35,7 @@
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "^2.0.5",
     "@types/chai": "^4.2.14",
-    "@types/jest": "^29.5.3",
+    "@types/jest": "^29.2.2",
     "@types/node": "^18.0.0",
     "@types/ora": "^3.2.0",
     "@types/ws": "^7.4.0",

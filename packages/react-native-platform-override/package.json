@@ -54,7 +54,7 @@
     "@types/chalk": "^2.2.0",
     "@types/diff-match-patch": "^1.0.32",
     "@types/inquirer": "^6.5.0",
-    "@types/jest": "^29.5.3",
+    "@types/jest": "^29.2.2",
     "@types/lodash": "^4.14.168",
     "@types/node": "^18.0.0",
     "@types/node-fetch": "^2.5.8",
