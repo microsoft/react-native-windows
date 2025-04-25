@@ -233,7 +233,7 @@ void TextLayoutManager::GetTextLayout(
   if (paragraphAttributes.adjustsFontSizeToFit) {
     auto minimumFontScale = 1.0f;
     // Uncomment below part when minimumFontScale is available in ParagraphAttributes
-    //if (paragraphAttributes.minimumFontScale && paragraphAttributes.minimumFontScale >= 0.01f &&
+    // if (paragraphAttributes.minimumFontScale && paragraphAttributes.minimumFontScale >= 0.01f &&
     //    paragraphAttributes.minimumFontScale <= 1.0f) {
     //  minimumFontScale = paragraphAttributes.minimumFontScale;
     //}
