@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Integrate changes for 0.76.9 and update with custom modifications",
+  "packageName": "react-native-windows",
+  "email": "abhijeetjha@microsoft.com",
+  "dependentChangeType": "none"
+}
