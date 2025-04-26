@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 24 Apr 2025 22:24:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 26 Apr 2025 21:03:37 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.13
+
+Sat, 26 Apr 2025 21:03:37 GMT
+
+### Patches
+
+- Fix initialProps (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.76.12
 
