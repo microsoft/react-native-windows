@@ -80,16 +80,17 @@ class PressInOutEvents extends React.Component<
     super(props);
     this.state = {text: 'PressIn/PressOut message'};
   }
+
   render() {
     return (
       <View>
-        <Text>{this.state.text}</Text>
+        <Text testID="textinput-state-display">{this.state.text}</Text>
         <ExampleTextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
-          onPressIn={() =>
-            this.setState({text: 'Holding down the click/touch'})
-          }
+          onPressIn={() => {
+            this.setState({text: 'Holding down the click/touch'});
+          }}
           onPressOut={() => this.setState({text: 'Released click/touch'})}
           testID="textinput-press"
         />

@@ -391,6 +391,84 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
 }
 `;
 
+exports[`TextInput Tests TextInput triggers onPressIn and updates state text 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-press",
+    "ControlType": 50004,
+    "HelpText": "Click inside the box to observe events being fired.",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "Click inside the box to observe events being fired.",
+    "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-press",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-press",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
 exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Characters 1`] = `
 {
   "Automation Tree": {
