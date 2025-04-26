@@ -15,6 +15,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 
 import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/EventEmitter';
@@ -218,6 +219,13 @@ export default class Bootstrap extends React.Component<{}, any> {
                 styles.input,
                 {backgroundColor: 'black', color: 'white', marginBottom: 4},
               ]}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="OnPressIn..."
+              onPressIn={event => {
+                Alert.alert('Pressed!');
+              }}
             />
             <TextInput
               placeholder="Single line with selection color"
