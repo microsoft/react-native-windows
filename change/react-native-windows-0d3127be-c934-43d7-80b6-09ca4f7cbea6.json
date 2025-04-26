@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix(vnext-templates): update gitignore for MS Build logs",
+  "packageName": "react-native-windows",
+  "email": "fcalise@gmail.com",
+  "dependentChangeType": "patch"
+}
