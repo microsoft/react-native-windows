@@ -126,6 +126,27 @@ constexpr bool operator!=(
   return !(rhs == lhs);
 }
 
+struct AccessibilityAnnotation {
+  std::optional<std::string> typeID{};
+  std::optional<std::string> typeName{};
+  std::optional<std::string> author{};
+  std::optional<std::string> dateTime{};
+  std::optional<std::string> target{};
+};
+
+
+constexpr bool operator==(
+    const AccessibilityAnnotation& lhs,
+    const AccessibilityAnnotation& rhs) {
+  return lhs.typeID == rhs.typeID && lhs.typeName == rhs.typeName;
+}
+
+constexpr bool operator!=(
+    const AccessibilityAnnotation& lhs,
+    const AccessibilityAnnotation& rhs) {
+  return !(rhs == lhs);
+}
+
 enum class ImportantForAccessibility : uint8_t {
   Auto,
   Yes,
