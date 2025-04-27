@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 27 Apr 2025 05:26:09 GMT",
+      "version": "0.0.0-canary.947",
+      "tag": "react-native-windows_v0.0.0-canary.947",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb437815d04872f88dade42219599e420febac40",
+            "comment": "Implemented OnPressIn event for textinput"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Apr 2025 05:27:07 GMT",
       "version": "0.0.0-canary.947",
       "tag": "react-native-windows_v0.0.0-canary.947",
