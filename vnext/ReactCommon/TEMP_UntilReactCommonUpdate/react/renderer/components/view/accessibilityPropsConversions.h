@@ -246,7 +246,7 @@ inline void fromRawValue(
 }
 
 inline void fromRawValue(
-    const PropsParserContext& context,
+    const PropsParserContext&,
     const RawValue& value,
     AccessibilityValue& result) {
   auto map = (std::unordered_map<std::string, RawValue>)value;
@@ -276,48 +276,6 @@ inline void fromRawValue(
   if (text != map.end()) {
     if (text->second.hasType<std::string>()) {
       result.text = (std::string)text->second;
-    }
-  }
-}
-
-inline void fromRawValue(
-    const PropsParserContext& context,
-    const RawValue& value,
-    AccessibilityAnnotation& result) {
-  auto map = (std::unordered_map<std::string, RawValue>)value;
-
-  auto typeID = map.find("typeID");
-  if (typeID != map.end()) {
-    if (typeID->second.hasType<std::string>()) {
-      result.typeID = (std::string)typeID->second;
-    }
-  }
-
-  auto typeName = map.find("typeName");
-  if (typeName != map.end()) {
-    if (typeName->second.hasType<std::string>()) {
-      result.typeName = (std::string)typeName->second;
-    }
-  }
-
-  auto author = map.find("author");
-  if (author != map.end()) {
-    if (author->second.hasType<std::string>()) {
-      result.author = (std::string)author->second;
-    }
-  }
-
-  auto dateTime = map.find("dateTime");
-  if (dateTime != map.end()) {
-    if (dateTime->second.hasType<std::string>()) {
-      result.dateTime = (std::string)dateTime->second;
-    }
-  }
-
-  auto target = map.find("target");
-  if (target != map.end()) {
-    if (target->second.hasType<std::string>()) {
-      result.target = (std::string)target->second;
     }
   }
 }
