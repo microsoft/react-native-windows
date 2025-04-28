@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 28 Apr 2025 15:26:13 GMT",
+      "version": "0.75.7",
+      "tag": "@react-native-windows/codegen_v0.75.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "a70e22673d68cb41141dceee72b2f6d1541d0e3e",
+            "comment": "Integrate 0.75.5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Dec 2024 16:30:59 GMT",
       "version": "0.75.6",
       "tag": "@react-native-windows/codegen_v0.75.6",

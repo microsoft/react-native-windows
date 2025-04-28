@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate 0.75.5",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "54227869+anupriya13@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

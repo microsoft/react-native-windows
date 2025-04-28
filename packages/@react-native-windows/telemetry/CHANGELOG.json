@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 28 Apr 2025 15:26:13 GMT",
+      "version": "0.75.4",
+      "tag": "@react-native-windows/telemetry_v0.75.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "a70e22673d68cb41141dceee72b2f6d1541d0e3e",
+            "comment": "Integrate 0.75.5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 19:26:14 GMT",
       "version": "0.75.3",
       "tag": "@react-native-windows/telemetry_v0.75.3",

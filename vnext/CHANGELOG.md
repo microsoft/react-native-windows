@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Apr 2025 15:26:06 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Apr 2025 15:26:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.17
+
+Mon, 28 Apr 2025 15:26:14 GMT
+
+### Patches
+
+- Implement WebSocket resource task sequencer (#14577) (julio.rocha@microsoft.com)
+- Integrate 0.75.5 (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.75.9
+- Bump @react-native-windows/codegen to v0.75.7
 
 ## 0.75.16
 

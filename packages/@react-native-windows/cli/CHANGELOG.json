@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 28 Apr 2025 15:26:13 GMT",
+      "version": "0.75.9",
+      "tag": "@react-native-windows/cli_v0.75.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "a70e22673d68cb41141dceee72b2f6d1541d0e3e",
+            "comment": "Integrate 0.75.5"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.75.7",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.75.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Dec 2024 16:31:00 GMT",
       "version": "0.75.8",
       "tag": "@react-native-windows/cli_v0.75.8",
