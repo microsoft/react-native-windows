@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 26 Apr 2025 21:03:37 GMT",
+      "version": "0.76.13",
+      "tag": "react-native-windows_v0.76.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "838423173a985d81b925df7c668072db0324a555",
+            "comment": "Fix initialProps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Apr 2025 22:24:03 GMT",
       "version": "0.76.12",
       "tag": "react-native-windows_v0.76.12",

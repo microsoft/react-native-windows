@@ -588,7 +588,7 @@ void ReactNativeIsland::ShowInstanceLoaded() noexcept {
     m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
 
     auto initProps =
-        m_props.isNull() ? m_props : DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+        m_props.isNull() ? DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())) : m_props;
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
     }
