@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Apr 2025 05:24:25 GMT",
+      "version": "0.0.0-canary.948",
+      "tag": "react-native-windows_v0.0.0-canary.948",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f640c8e5ed5befdecefea42f9e4221c051d8e215",
+            "comment": "Implement onScrollEndDrag prop"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 27 Apr 2025 05:26:09 GMT",
       "version": "0.0.0-canary.947",
       "tag": "react-native-windows_v0.0.0-canary.947",
