@@ -2,6 +2,7 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionTextRangeProvider.h>
+#include <Fabric/Composition/CompositionAnnotationProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
@@ -35,6 +36,12 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     m_textProvider = winrt::make<CompositionTextProvider>(
                          strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
                          .try_as<ITextProvider2>();
+  }
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
+    m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
+                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                         .try_as<IAnnotationProvider>();
   }
 }
 
@@ -281,6 +288,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_TextPattern2Id &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  }
+  if (patternId == UIA_AnnotationPatternId &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
+    m_annotationProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   return S_OK;

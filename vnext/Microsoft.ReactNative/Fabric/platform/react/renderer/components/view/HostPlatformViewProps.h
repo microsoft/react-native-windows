@@ -7,7 +7,7 @@
 #include <react/renderer/core/PropsParserContext.h>
 #include "KeyEvent.h"
 #include "WindowsViewEvents.h"
-#include "AccessibilityAnnotation.h"
+#include "CompositionAccessibilityProps.h"
 
 namespace facebook::react {
 class HostPlatformViewProps : public BaseViewProps {

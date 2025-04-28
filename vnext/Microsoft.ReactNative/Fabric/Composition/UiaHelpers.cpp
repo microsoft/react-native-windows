@@ -189,6 +189,103 @@ long GetLiveSetting(const std::string &liveRegion) noexcept {
   return LiveSetting::Off;
 }
 
+long GetAnnotationTypeId(const std::string &annotationType) noexcept {
+
+  if (annotationType == "Author")
+  {
+    return AnnotationType_Author;
+  }
+  else if (annotationType == "CircularReferenceError")
+  {
+    return AnnotationType_CircularReferenceError;
+  }
+  else if (annotationType == "Comment")
+  {
+    return AnnotationType_Comment;
+  }
+  else if (annotationType == "ConflictingChange")
+  {
+    return AnnotationType_ConflictingChange;
+  }
+  else if (annotationType == "DataValidationError")
+  {
+    return AnnotationType_DataValidationError;
+  }
+  else if (annotationType == "DeletionChange")
+  {
+    return AnnotationType_DeletionChange;
+  }
+  else if (annotationType == "EditingLockedChange")
+  {
+    return AnnotationType_EditingLockedChange;
+  }
+  else if (annotationType == "Endnote")
+  {
+    return AnnotationType_Endnote;
+  }
+  else if (annotationType == "ExternalChange")
+  {
+    return AnnotationType_ExternalChange;
+  }
+  else if (annotationType == "Footer")
+  {
+    return AnnotationType_Footer;
+  }
+  else if (annotationType == "Footnote")
+  {
+    return AnnotationType_Footnote;
+  }
+  else if (annotationType == "FormatChange")
+  {
+    return AnnotationType_FormatChange;
+  }
+  else if (annotationType == "FormulaError")
+  {
+    return AnnotationType_FormulaError;
+  }
+  else if (annotationType == "GrammarError")
+  {
+    return AnnotationType_GrammarError;
+  }
+  else if (annotationType == "Header")
+  {
+    return AnnotationType_Header;
+  }
+  else if (annotationType == "Highlighted")
+  {
+    return AnnotationType_Highlighted;
+  }
+  else if (annotationType == "InsertionChange")
+  {
+    return AnnotationType_InsertionChange;
+  }
+  else if (annotationType == "Mathematics")
+  {
+    return AnnotationType_Mathematics;
+  }
+  else if (annotationType == "MoveChange")
+  {
+    return AnnotationType_MoveChange;
+  }
+  else if (annotationType == "SpellingError")
+  {
+    return AnnotationType_SpellingError;
+  }
+  else if (annotationType == "TrackChanges")
+  {
+    return AnnotationType_TrackChanges;
+  }
+  else if (annotationType == "AdvanceProofingIssue")
+  {
+    return AnnotationType_AdvancedProofingIssue;
+  }
+  else if (annotationType == "UnsyncedChange")
+  {
+    return AnnotationType_UnsyncedChange;
+  }
+  return AnnotationType_Unknown;
+}
+
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
   auto strongView = view.view();
 

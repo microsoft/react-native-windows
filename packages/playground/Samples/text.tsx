@@ -23,10 +23,11 @@ export default class Bootstrap extends React.Component {
         <View 
           style={styles.container2}
           accessible={true}
-          accessibilityLabel="Annotation Check"
+          accessibilityLabel="Annotation Checkc"
           accessibilityAnnotation={{
             typeID: 'Comment',
-            author: 'Clint Eastwood',
+            typeName:'Check Comment',
+            author: 'Christopher tarantino',
             dateTime: '3/19/2025 1:03 PM',
           }}>
           <Text
