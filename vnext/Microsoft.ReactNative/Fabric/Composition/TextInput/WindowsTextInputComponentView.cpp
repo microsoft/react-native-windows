@@ -683,6 +683,24 @@ void WindowsTextInputComponentView::OnPointerPressed(
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
   }
+
+  // Emits the OnPressIn event
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    float offsetX = position.X - m_layoutMetrics.frame.origin.x;
+    float offsetY = position.Y - m_layoutMetrics.frame.origin.y;
+    float neutralX = m_layoutMetrics.frame.origin.x;
+    float neutralY = m_layoutMetrics.frame.origin.y;
+
+    facebook::react::PressEvent pressInArgs;
+    pressInArgs.target = m_tag;
+    pressInArgs.pagePoint = {position.X, position.Y};
+    pressInArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}
+    pressInArgs.timestamp = static_cast<double>(pp.Timestamp()) / 1000.0;
+    pressInArgs.identifier = pp.PointerId();
+
+    emitter->onPressIn(pressInArgs);
+  }
 }
 
 void WindowsTextInputComponentView::OnPointerReleased(

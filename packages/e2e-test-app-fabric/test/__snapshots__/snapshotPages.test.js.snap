@@ -79941,7 +79941,9 @@ exports[`snapshotAllPages TextInput 37`] = `
 
 exports[`snapshotAllPages TextInput 38`] = `
 <View>
-  <Text>
+  <Text
+    testID="textinput-state-display"
+  >
     PressIn/PressOut message
   </Text>
   <TextInput

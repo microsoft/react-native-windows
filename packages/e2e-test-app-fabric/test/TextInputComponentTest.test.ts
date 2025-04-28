@@ -21,6 +21,21 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
+const searchBox = async (input: string) => {
+  const searchBox = await app.findElementByTestID('example_search');
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(input);
+      return (await searchBox.getText()) === input;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
+};
+
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
@@ -178,6 +193,34 @@ describe('TextInput Tests', () => {
         timeoutMsg: `Unable to enter correct text.`,
       },
     );
+  });
+  test('TextInput triggers onPressIn and updates state text', async () => {
+    // Scroll the example into view
+    await searchBox('onPressIn');
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-press');
+    expect(dump).toMatchSnapshot();
+
+    // Trigger onPressIn (click only)
+    await component.click();
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Holding down the click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'State text not updated after onPressIn.',
+      },
+    );
+    //  Assertion
+    expect(await stateText.getText()).toBe('Holding down the click/touch');
+    //  This step helps avoid UI lock by unfocusing the input
+    const search = await app.findElementByTestID('example_search');
+    await search.setValue('');
   });
   test('TextInputs can have attributed text', async () => {
     const component = await app.findElementByTestID('text-input');
