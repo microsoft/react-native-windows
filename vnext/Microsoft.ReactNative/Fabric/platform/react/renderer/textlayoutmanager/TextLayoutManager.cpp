@@ -218,11 +218,18 @@ void TextLayoutManager::GetTextLayout(
               attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
           range));
       winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
-      winrt::check_hresult(spTextLayout->SetFontSize(
-          (attributes.allowFontScaling.value_or(true) && !std::isnan(attributes.fontSizeMultiplier))
-              ? (attributes.fontSizeMultiplier * attributes.fontSize)
-              : attributes.fontSize,
-          range));
+
+      float maxFontSizeMultiplier = cDefaultMaxFontSizeMultiplier;
+      // Uncomment below line when maxFontSizeMultiplier is available in TextAttributes
+      // maxFontSizeMultiplier = (!std::isnan(attributes.maxFontSizeMultiplier) ? attributes.maxFontSizeMultiplier :
+      // cDefaultMaxFontSizeMultiplier);
+      float fontSize = attributes.fontSize;
+      if (attributes.allowFontScaling.value_or(true) && (!std::isnan(attributes.fontSizeMultiplier))) {
+        fontSize *= (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, attributes.fontSizeMultiplier)
+                                                    : attributes.fontSizeMultiplier;
+      }
+
+      winrt::check_hresult(spTextLayout->SetFontSize(fontSize, range));
 
       if (!isnan(attributes.letterSpacing)) {
         winrt::check_hresult(
