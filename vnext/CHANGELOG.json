@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Apr 2025 15:24:30 GMT",
+      "version": "0.74.44",
+      "tag": "react-native-windows_v0.74.44",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "47d2ccdf0c6c9819757e442c98a6ce79763f67a6",
+            "comment": "Integrate 0.74.7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Apr 2025 21:34:28 GMT",
       "version": "0.74.43",
       "tag": "react-native-windows_v0.74.43",
