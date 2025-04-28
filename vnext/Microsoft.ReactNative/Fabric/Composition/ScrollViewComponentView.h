@@ -129,6 +129,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
   void updateStateWithContentOffset() noexcept;
+  facebook::react::ScrollViewEventEmitter::Metrics getScrollMetrics(
+      facebook::react::SharedViewEventEmitter const &eventEmitter,
+      winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
   void updateShowsHorizontalScrollIndicator(bool value) noexcept;
   void updateShowsVerticalScrollIndicator(bool value) noexcept;
 
@@ -140,6 +143,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       m_scrollPositionChangedRevoker{};
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollBeginDrag_revoker
       m_scrollBeginDragRevoker{};
+
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollEndDrag_revoker
+      m_scrollEndDragRevoker{};
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;
