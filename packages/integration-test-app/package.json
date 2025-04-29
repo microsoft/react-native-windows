@@ -28,7 +28,7 @@
     "@babel/traverse": "^7.11.5",
     "@babel/types": "^7.11.5",
     "@react-native-community/cli": "^15.0.0",
-    "@react-native/metro-config": "0.77.0-nightly-20241001-223e98cc4",
+    "@react-native/metro-config": "0.77.2",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/eslint-config": "^1.2.30",
     "@rnw-scripts/just-task": "^2.3.47",

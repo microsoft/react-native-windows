@@ -32,7 +32,7 @@
     "@react-native-community/cli": "^15.0.0",
     "@react-native-windows/automation": "^0.3.325",
     "@react-native-windows/automation-commands": "^0.1.346",
-    "@react-native/metro-config": "0.77.0-nightly-20241020-e7a3f479f",
+    "@react-native/metro-config": "0.77.2",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.30",
