@@ -4,36 +4,49 @@
  * @format
  */
 
-import React from 'react';
-import {AppRegistry, StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-windows';
+import React, {useState} from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  Pressable,
+} from 'react-native';
+import {Modal} from 'react-native-windows';
 
-export default class Bootstrap extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text
-          style={styles.welcome}
-          tooltip=" tooltip message for the text"
-          accessible={true}
-          selectable={true}>
-          Click here : This is a text with a tooltip.
-        </Text>
-        <View style={styles.container2}>
-          <Text
-            adjustsFontSizeToFit
-            style={{maxHeight: 80, fontSize: 72}}
-            minimumFontScale={0.5}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </Text>
+export default function Bootstrap() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  return (
+    <View style={styles.container}>
+      <Button
+        title="Show Modal"
+        onPress={() => setModalVisible(true)}
+        color="#007AFF"
+      />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        //title="RNW Modal"
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              This is a modal in React Native Windows!
+            </Text>
+            <Pressable
+              style={styles.button}
+              onPress={() => setModalVisible(false)}>
+              <Text style={styles.buttonText}>Close Modal</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
-    );
-  }
+      </Modal>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -41,19 +54,41 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#C5CCFF',
+    backgroundColor: '#f3f3f3',
   },
-  container2: {
-    backgroundColor: 'lightcoral',
-    padding: 10,
-    marginBottom: 10,
-    width: 500,
-    height: 100,
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  welcome: {
-    fontSize: 20,
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 15,
     textAlign: 'center',
-    margin: 10,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
 
