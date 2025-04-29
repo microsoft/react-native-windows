@@ -3,6 +3,7 @@
 exports[`Text Tests Padding can be added to Text 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-padding",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -27,6 +28,7 @@ exports[`Text Tests Padding can be added to Text 1`] = `
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 0 a 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-0-a",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -51,6 +53,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 0 b 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-0-b",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -75,6 +78,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 1 a 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-1-a",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -99,6 +103,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 1 b 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-1-b",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -123,6 +128,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 2 a 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-2-a",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -147,6 +153,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 2 b 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-2-b",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -171,6 +178,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
 exports[`Text Tests Text can adjust its fontsize according to its limitations, default a 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-default-a",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -195,6 +203,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, d
 exports[`Text Tests Text can adjust its fontsize according to its limitations, default b 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-adjustfontsizetofit-default-b",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -219,6 +228,7 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, d
 exports[`Text Tests Text can be restricted to one line 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-one-line",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -243,6 +253,7 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
 exports[`Text Tests Text can be selectable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-selectable",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -267,6 +278,7 @@ exports[`Text Tests Text can be selectable 1`] = `
 exports[`Text Tests Text can have a color 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-color",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -291,6 +303,7 @@ exports[`Text Tests Text can have a color 1`] = `
 exports[`Text Tests Text can have a customized selection color 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-selection-color",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -315,6 +328,7 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
 exports[`Text Tests Text can have a size 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-size",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -339,12 +353,14 @@ exports[`Text Tests Text can have a size 1`] = `
 exports[`Text Tests Text can have advanced borders 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "advanced-borders",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Advanced Border Example",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -352,6 +368,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
         "TextRangePattern.GetText": "This text has customized borders.",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -359,6 +376,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
         "TextRangePattern.GetText": "This text has customized borders.",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -660,6 +678,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
 exports[`Text Tests Text can have an outer color 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-outer-color",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -684,12 +703,14 @@ exports[`Text Tests Text can have an outer color 1`] = `
 exports[`Text Tests Text can have borders 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-border",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Border Example",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -697,6 +718,7 @@ exports[`Text Tests Text can have borders 1`] = `
         "TextRangePattern.GetText": "Sample bordered text with default styling.",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -708,6 +730,7 @@ exports[`Text Tests Text can have borders 1`] = `
 2nd Inside text!",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -871,6 +894,7 @@ exports[`Text Tests Text can have borders 1`] = `
 exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-decoration-solid-linethru",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -895,6 +919,7 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
 exports[`Text Tests Text can have decoration lines: Underline 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-decoration-underline",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -919,6 +944,7 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
 exports[`Text Tests Text can have inline views/images 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-view",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -992,11 +1018,13 @@ exports[`Text Tests Text can have inline views/images 1`] = `
 exports[`Text Tests Text can have nested views 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-nested-view",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1004,6 +1032,7 @@ exports[`Text Tests Text can have nested views 1`] = `
         "TextRangePattern.GetText": "This is the first row",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1090,6 +1119,7 @@ exports[`Text Tests Text can have nested views 1`] = `
 exports[`Text Tests Text can have shadows 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-shadow",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -1114,6 +1144,7 @@ exports[`Text Tests Text can have shadows 1`] = `
 exports[`Text Tests Text can wrap 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-wrap",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -1138,11 +1169,13 @@ exports[`Text Tests Text can wrap 1`] = `
 exports[`Text Tests Texts can clip inline View/Images 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-view-images-clipped",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1150,6 +1183,7 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
         "TextRangePattern.GetText": "The inline view below is taller than its Text parent and should be clipped.",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1157,6 +1191,7 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
         "TextRangePattern.GetText": "This is an inline view￯﾿ﾼ",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1164,6 +1199,7 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
         "TextRangePattern.GetText": "The inline image below is taller than its Text parent and should be clipped.",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",

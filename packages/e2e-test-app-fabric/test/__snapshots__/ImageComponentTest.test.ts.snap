@@ -3,6 +3,7 @@
 exports[`Image Tests A network Image example 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-network",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -32,6 +33,7 @@ exports[`Image Tests A network Image example 1`] = `
 exports[`Image Tests An Image can a border radius 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-border-radius",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -1098,6 +1100,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
 exports[`Image Tests An Image can be added to the accessibility tree 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-accessible",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -1126,11 +1129,13 @@ exports[`Image Tests An Image can be added to the accessibility tree 1`] = `
 exports[`Image Tests An Image can be nested inside of a component 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-nested",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1200,6 +1205,7 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
 exports[`Image Tests An Image can be rendered at a different size 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-size",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -1228,6 +1234,7 @@ exports[`Image Tests An Image can be rendered at a different size 1`] = `
 exports[`Image Tests An Image can borders 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-border",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -1298,6 +1305,7 @@ exports[`Image Tests An Image can borders 1`] = `
 exports[`Image Tests An Image can have a background color 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "background-color-example",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -1490,6 +1498,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
 exports[`Image Tests An Image can have a can have alt text 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-alt",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -1520,6 +1529,7 @@ exports[`Image Tests An Image can have a can have alt text 1`] = `
 exports[`Image Tests An Image can have a custom blur radius 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-blur-radius",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -1684,6 +1694,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
 exports[`Image Tests An Image can have a loading indicator visual 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-loading-indicator",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -1712,11 +1723,13 @@ exports[`Image Tests An Image can have a loading indicator visual 1`] = `
 exports[`Image Tests An Image can have a tint color 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-tint-color",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1724,6 +1737,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
         "TextRangePattern.GetText": "It also works using the \`tintColor\` style prop",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1731,6 +1745,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
         "TextRangePattern.GetText": "The \`tintColor\` prop has precedence over the \`tintColor\` style prop",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2201,6 +2216,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
 exports[`Image Tests An Image can have an accessibilityLabel 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-accessibilitylabel",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -2231,36 +2247,43 @@ exports[`Image Tests An Image can have an accessibilityLabel 1`] = `
 exports[`Image Tests An Image can have border colors 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-border-colors",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LocalizedControlType": "image",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LocalizedControlType": "image",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LocalizedControlType": "image",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LocalizedControlType": "image",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LocalizedControlType": "image",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LocalizedControlType": "image",
@@ -2679,6 +2702,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
 exports[`Image Tests An Image can have custom opacity 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-opacity",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -2853,6 +2877,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
 exports[`Image Tests An Image can have multiple sources 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-multiple-sources",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -2887,6 +2912,7 @@ exports[`Image Tests An Image can have multiple sources 1`] = `
 exports[`Image Tests An Image can have multiple sources through the srcSet prop 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-srcset",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -2923,6 +2949,7 @@ exports[`Image Tests An Image can have multiple sources through the srcSet prop 
 exports[`Image Tests An Image can have onLayout behavior 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-onlayout",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -2962,6 +2989,7 @@ exports[`Image Tests An Image can have onLayout behavior 1`] = `
 exports[`Image Tests An Image can load a static image 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-static",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -3088,6 +3116,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
 exports[`Image Tests An Image can load an image through its source prop 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-plain-source",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -3116,6 +3145,7 @@ exports[`Image Tests An Image can load an image through its source prop 1`] = `
 exports[`Image Tests An Image can load an image through its src prop 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-plain-src",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -3144,6 +3174,7 @@ exports[`Image Tests An Image can load an image through its src prop 1`] = `
 exports[`Image Tests An Image component can have a network callback 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-network-callback",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -3172,6 +3203,7 @@ exports[`Image Tests An Image component can have a network callback 1`] = `
 exports[`Image Tests An Image component can render a blob image 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-blob",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -3200,11 +3232,13 @@ exports[`Image Tests An Image component can render a blob image 1`] = `
 exports[`Image Tests An Image customized how it is rendered within the frame using the objectFit styles 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-object-fit",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3212,6 +3246,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Contain",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3219,6 +3254,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Cover",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3226,6 +3262,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Fill",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3233,6 +3270,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Scale Down",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3240,6 +3278,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "None",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3247,6 +3286,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Contain",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3254,6 +3294,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Cover",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3261,6 +3302,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Fill",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3268,6 +3310,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "TextRangePattern.GetText": "Scale Down",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4108,6 +4151,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
 exports[`Image Tests An Image supports abortPrefetch and resolveAssetSource 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-asset-source",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -4136,6 +4180,7 @@ exports[`Image Tests An Image supports abortPrefetch and resolveAssetSource 1`] 
 exports[`Image Tests An Image supports accessibility actions 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-accessibility-actions",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -4166,6 +4211,7 @@ exports[`Image Tests An Image supports accessibility actions 1`] = `
 exports[`Image Tests An Image supports accessibility properties 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-accessibility-properties",
     "ControlType": 50006,
     "HelpText": "This is an accessibility hint",
@@ -4198,6 +4244,7 @@ exports[`Image Tests An Image supports accessibility properties 1`] = `
 exports[`Image Tests An Image supports interaction properties 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-interaction-properties",
     "ControlType": 50006,
     "IsKeyboardFocusable": true,
@@ -4227,6 +4274,7 @@ exports[`Image Tests An Image supports interaction properties 1`] = `
 exports[`Image Tests An Image supports style properties 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-style-properties",
     "ControlType": 50006,
     "LocalizedControlType": "image",
@@ -4255,11 +4303,13 @@ exports[`Image Tests An Image supports style properties 1`] = `
 exports[`Image Tests Images can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-set",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LiveSetting": "Polite",
@@ -4268,6 +4318,7 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
         "SizeofSet": 2,
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50006,
         "LiveSetting": "Assertive",
@@ -4345,11 +4396,13 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
 exports[`Image Tests Images have multiple resize modes 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "image-resize-mode",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4357,6 +4410,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Contain",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4364,6 +4418,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Cover",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4371,6 +4426,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Stretch",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4378,6 +4434,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Repeat",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4385,6 +4442,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Center",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4392,6 +4450,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "None",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4399,6 +4458,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Contain",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4406,6 +4466,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Cover",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4413,6 +4474,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Stretch",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4420,6 +4482,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Repeat",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4427,6 +4490,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "TextRangePattern.GetText": "Center",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",

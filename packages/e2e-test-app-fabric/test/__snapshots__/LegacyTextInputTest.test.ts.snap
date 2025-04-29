@@ -3,6 +3,7 @@
 exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-log",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -29,6 +30,7 @@ exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
 exports[`LegacyTextInputTest Click on multiline TextInput to move focus away from single line TextInput 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-log",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -59,6 +61,7 @@ onFocus
 exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-log",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -171,6 +174,7 @@ onFocus
 exports[`LegacyTextInputTest Type abc on TextInput 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-log",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -221,6 +225,7 @@ onFocus
 exports[`LegacyTextInputTest Type abc on multiline TextInput then press Enter key 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-log",
     "ControlType": 50020,
     "LocalizedControlType": "text",

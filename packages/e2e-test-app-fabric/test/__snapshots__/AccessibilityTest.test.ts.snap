@@ -3,6 +3,7 @@
 exports[`Accessibility Tests Accessibility data for Label and Level 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibility-base-view-2",
     "ControlType": 50026,
     "Level": 2,
@@ -32,6 +33,10 @@ exports[`Accessibility Tests Accessibility data for Label and Level 1`] = `
 exports[`Accessibility Tests Accessibility data for Label,Level and Hint 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.Author": "Clint Westwood",
+    "AnnotationPattern.DateTime": "3/19/2025 1:03 PM",
+    "AnnotationPattern.TypeId": 60003,
+    "AnnotationPattern.TypeName": "Check Comment",
     "AutomationId": "accessibility-base-view-1",
     "ControlType": 50026,
     "HelpText": "A hint for the blue box.",
@@ -62,6 +67,7 @@ exports[`Accessibility Tests Accessibility data for Label,Level and Hint 1`] = `
 exports[`Accessibility Tests Accessibility data for Role, Setsize etc. 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibility-base-view-3",
     "ControlType": 50007,
     "Level": 9,
@@ -93,6 +99,7 @@ exports[`Accessibility Tests Accessibility data for Role, Setsize etc. 1`] = `
 exports[`Accessibility Tests Components can store range data by setting the min, max, and now of accessibilityValue 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibilityValue-number",
     "ControlType": 50015,
     "IsKeyboardFocusable": true,
@@ -103,6 +110,7 @@ exports[`Accessibility Tests Components can store range data by setting the min,
     "RangeValuePattern.Value": 10,
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -153,6 +161,7 @@ exports[`Accessibility Tests Components can store range data by setting the min,
 exports[`Accessibility Tests Components can store value data by setting the text of accessibilityValue 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibilityValue-text",
     "ControlType": 50003,
     "LocalizedControlType": "combo box",
@@ -160,6 +169,7 @@ exports[`Accessibility Tests Components can store value data by setting the text
     "ValuePattern.Value": "testText",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -210,6 +220,7 @@ exports[`Accessibility Tests Components can store value data by setting the text
 exports[`Accessibility Tests Elements can set accessibilityState:selected to false 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Selectable item 1",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -217,6 +228,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to fal
     "Name": "Selectable item 1",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -268,6 +280,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to fal
 exports[`Accessibility Tests Elements can set accessibilityState:selected to true 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Selectable item 1",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -276,6 +289,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
     "SelectionItemPattern.IsSelected": true,
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -327,6 +341,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
 exports[`Accessibility Tests Selectable items must have a Selection Container. Elements can set accessibilityState:multiselectable and accessibilityState:required to true 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "selection-container",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -335,12 +350,14 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
     "SelectionPattern.IsSelectionRequired": true,
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50033,
         "LocalizedControlType": "pane",
         "Name": "List of selectable items",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "Selectable item 1",
             "ControlType": 50000,
             "IsKeyboardFocusable": true,
@@ -348,6 +365,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "Name": "Selectable item 1",
             "__Children": [
               {
+                "AnnotationPattern.TypeId": 60000,
                 "AutomationId": "",
                 "ControlType": 50020,
                 "LocalizedControlType": "text",
@@ -357,6 +375,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             ],
           },
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "Selectable item 2",
             "ControlType": 50000,
             "IsKeyboardFocusable": true,
@@ -364,6 +383,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "Name": "Selectable item 2",
             "__Children": [
               {
+                "AnnotationPattern.TypeId": 60000,
                 "AutomationId": "",
                 "ControlType": 50020,
                 "LocalizedControlType": "text",
@@ -373,6 +393,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             ],
           },
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "Selectable item 3",
             "ControlType": 50000,
             "IsKeyboardFocusable": true,
@@ -380,6 +401,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "Name": "Selectable item 3",
             "__Children": [
               {
+                "AnnotationPattern.TypeId": 60000,
                 "AutomationId": "",
                 "ControlType": 50020,
                 "LocalizedControlType": "text",

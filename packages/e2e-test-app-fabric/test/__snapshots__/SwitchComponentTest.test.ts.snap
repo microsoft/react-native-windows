@@ -3,6 +3,7 @@
 exports[`SwitchTests Change events can be detected, event bottom 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "event-switch-bottom",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -40,6 +41,7 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
 exports[`SwitchTests Change events can be detected, event regression top 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "event-switch-regression-top",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -78,6 +80,7 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
 exports[`SwitchTests Change events can be detected, event top 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "event-switch-top",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -115,6 +118,7 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
 exports[`SwitchTests Change events can be detected, events regression bottom 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "event-switch-regression-bottom",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -153,6 +157,7 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
 exports[`SwitchTests Controlled switch 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "controlled-switch",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -190,6 +195,7 @@ exports[`SwitchTests Controlled switch 1`] = `
 exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "initial-false-switch",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -227,6 +233,7 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
 exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "initial-true-switch",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -265,6 +272,7 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
 exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "disabled-initial-off",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -302,6 +310,7 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 exports[`SwitchTests Switches can be disabled, initial false 2`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "disabled-initial-off",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -339,6 +348,7 @@ exports[`SwitchTests Switches can be disabled, initial false 2`] = `
 exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "disabled-initial-on",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -377,6 +387,7 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "on-off-initial-off",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -414,6 +425,7 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
 exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "on-off-initial-off",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -452,6 +464,7 @@ exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
 exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "on-off-initial-on",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -490,11 +503,13 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
 exports[`SwitchTests Switches can have customized accessibility 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibility-switch",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",
@@ -506,6 +521,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "TogglePattern.ToggleState": "On",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",
@@ -517,6 +533,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "TogglePattern.ToggleState": "On",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",
@@ -528,6 +545,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "SizeofSet": 4,
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",

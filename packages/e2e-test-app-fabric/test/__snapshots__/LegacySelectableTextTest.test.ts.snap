@@ -3,6 +3,7 @@
 exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -27,6 +28,7 @@ exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
 exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -51,6 +53,7 @@ exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
 exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -75,6 +78,7 @@ exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
 exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",

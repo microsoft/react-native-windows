@@ -3,17 +3,20 @@
 exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flatlist-basic",
     "ControlType": 50008,
     "LocalizedControlType": "list",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -478,17 +481,20 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
 exports[`FlatList Tests A FlatList can be inverted 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flat_list",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Pizza",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -498,12 +504,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -513,12 +521,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -528,12 +538,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -543,12 +555,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -558,12 +572,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -573,12 +589,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -588,12 +606,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -603,12 +623,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -618,12 +640,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -633,12 +657,14 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1246,17 +1272,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
 exports[`FlatList Tests A FlatList can have a content inset 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flat_list",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Pizza",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1266,12 +1295,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1281,12 +1312,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1296,12 +1329,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1311,12 +1346,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1326,12 +1363,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1341,12 +1380,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1356,12 +1397,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1371,12 +1414,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1386,12 +1431,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1401,12 +1448,14 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2014,17 +2063,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
 exports[`FlatList Tests A FlatList can have separators 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flat_list",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Pizza",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2034,6 +2086,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2041,12 +2094,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Pizza and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2056,6 +2111,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2063,12 +2119,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Burger and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2078,6 +2136,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2085,12 +2144,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Risotto and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2100,6 +2161,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2107,12 +2169,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading French Fries and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2122,6 +2186,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2129,12 +2194,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Onion Rings and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2144,6 +2211,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2151,12 +2219,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Fried Shrimps and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2166,6 +2236,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2173,12 +2244,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Water and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2188,6 +2261,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2195,12 +2269,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Coke and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2210,6 +2286,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2217,12 +2294,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Beer and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2232,6 +2311,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "flat_list_separator",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2239,12 +2319,14 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "TextRangePattern.GetText": "Separator for leading Cheesecake and trailing undefined has not been pressed",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -3242,11 +3324,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
 exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flatlist-sticky",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3254,6 +3338,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Burger",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3261,6 +3346,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "French Fries",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3268,6 +3354,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Fried Shrimps",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3275,6 +3362,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Water",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3282,6 +3370,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Coke",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3289,6 +3378,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Beer",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3296,6 +3386,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Cheesecake",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3303,6 +3394,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Ice Cream",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3310,6 +3402,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Sticky Pizza",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3317,6 +3410,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "TextRangePattern.GetText": "Sticky Risotto",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3905,11 +3999,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
 exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flatlist-nested",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3917,6 +4013,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "Header",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3924,6 +4021,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "16",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3931,6 +4029,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "17",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3938,6 +4037,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "18",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3945,6 +4045,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "19",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3952,6 +4053,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "21",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3959,6 +4061,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "22",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3966,6 +4069,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "TextRangePattern.GetText": "23",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4838,17 +4942,20 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
 exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flat_list",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Pizza",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4858,12 +4965,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4873,12 +4982,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4888,12 +4999,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4903,12 +5016,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4918,12 +5033,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4933,12 +5050,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4948,12 +5067,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4963,12 +5084,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4978,12 +5101,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -4993,12 +5118,14 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5606,17 +5733,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
 exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flat_list",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Pizza",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5626,12 +5756,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5641,12 +5773,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5656,12 +5790,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5671,12 +5807,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5686,12 +5824,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5701,12 +5841,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5716,12 +5858,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5731,12 +5875,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5746,12 +5892,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -5761,12 +5909,14 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",

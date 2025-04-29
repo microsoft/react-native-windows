@@ -3,6 +3,7 @@
 exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -27,6 +28,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
 exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -51,6 +53,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -75,6 +78,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -99,6 +103,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
 exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -123,6 +128,7 @@ exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
 exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -147,6 +153,7 @@ exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
 exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -171,6 +178,7 @@ exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
 exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -195,6 +203,7 @@ exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
 exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -219,6 +228,7 @@ exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
 exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -243,6 +253,7 @@ exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
 exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -267,6 +278,7 @@ exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
 exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -291,6 +303,7 @@ exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
 exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -315,6 +328,7 @@ exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
 exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -339,6 +353,7 @@ exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
 exports[`LegacyTextHitTestTest WrappedLTRInRTLFlowEdgeCaseNotPressable 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressed-state",
     "ControlType": 50020,
     "LocalizedControlType": "text",

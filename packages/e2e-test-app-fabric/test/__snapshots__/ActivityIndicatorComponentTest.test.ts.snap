@@ -3,26 +3,31 @@
 exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "activity-color",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
@@ -191,26 +196,31 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
 exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and large sizing 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "activity-large-color",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50012,
         "LocalizedControlType": "progress bar",
@@ -379,6 +389,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
 exports[`ActivityIndicator Tests An ActivityIndicator can have custom sizing 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "activity-size",
     "ControlType": 50012,
     "LocalizedControlType": "progress bar",
@@ -401,6 +412,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom sizing 1`]
 exports[`ActivityIndicator Tests An ActivityIndicator can have large sizing 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "activity-large",
     "ControlType": 50012,
     "LocalizedControlType": "progress bar",
@@ -423,6 +435,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have large sizing 1`] 
 exports[`ActivityIndicator Tests An ActivityIndicator can have styling 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "activity-gray",
     "ControlType": 50012,
     "LocalizedControlType": "progress bar",
@@ -445,6 +458,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have styling 1`] = `
 exports[`ActivityIndicator Tests An ActivityIndicator can have toggle animation 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "activity-toggle",
     "ControlType": 50012,
     "LocalizedControlType": "progress bar",
@@ -467,6 +481,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have toggle animation 
 exports[`ActivityIndicator Tests An ActivityIndicator can render 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "default_activity_indicator",
     "ControlType": 50012,
     "LiveSetting": "Polite",

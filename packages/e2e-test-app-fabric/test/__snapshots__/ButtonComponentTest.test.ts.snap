@@ -3,6 +3,7 @@
 exports[`Button Tests Buttons can be disabled 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "disabled_button",
     "ControlType": 50000,
     "IsEnabled": false,
@@ -10,6 +11,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
     "Name": "Press to submit your application!",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "IsEnabled": false,
@@ -152,6 +154,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
 exports[`Button Tests Buttons can have accessibility labels 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibilityLabel_button",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -159,6 +162,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
     "Name": "Press to submit your application!",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -300,6 +304,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
 exports[`Button Tests Buttons can have accessibility props 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibility_props",
     "ControlType": 50000,
     "HelpText": "Submit Button",
@@ -308,6 +313,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
     "Name": "Press to submit your application!",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -431,6 +437,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
 exports[`Button Tests Buttons can have accessibility states 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibilityState_button",
     "ControlType": 50000,
     "IsEnabled": false,
@@ -438,6 +445,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
     "Name": "Press to submit your application!",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "IsEnabled": false,
@@ -580,6 +588,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
 exports[`Button Tests Buttons can have custom colors 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "cancel_button",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -587,6 +596,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
     "Name": "Press to cancel your application!",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -843,6 +853,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
 exports[`Button Tests Buttons can have custom focusable and accessible props 2`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "focusable_false_button",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -850,6 +861,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
     "Name": "Press to submit your application!",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1088,11 +1100,13 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
 exports[`Button Tests Buttons can have flexbox styling 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "two_button_container",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "two_cancel_button",
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
@@ -1100,6 +1114,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         "Name": "Press to cancel your application!",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1109,6 +1124,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "two_submit_button",
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
@@ -1116,6 +1132,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         "Name": "Press to submit your application!",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1416,11 +1433,13 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
 exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "three_button_container",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "three_cancel_button",
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
@@ -1428,6 +1447,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "Name": "Press to cancel your application!",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1437,6 +1457,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "three_save_button",
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
@@ -1444,6 +1465,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "Name": "Press to save your application!",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1453,6 +1475,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         ],
       },
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "three_submit_button",
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
@@ -1460,6 +1483,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "Name": "Press to submit your application!",
         "__Children": [
           {
+            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1894,6 +1918,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
 exports[`Button Tests Buttons have default styling 1`] = `
 {
   "Automation Tree": {
+    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "button_default_styling",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -1901,6 +1926,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
     "Name": "Press to submit your application!",
     "__Children": [
       {
+        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
