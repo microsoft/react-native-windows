@@ -28,7 +28,7 @@ class AccessibilityBaseExample extends React.Component {
           accessibilityLevel={1}
           accessibilityAnnotation={{
             typeID: 'Comment',
-            typeName:'Check Comment',
+            typeName: 'Check Comment',
             author: 'Clint Westwood',
             dateTime: '3/19/2025 1:03 PM',
           }}
