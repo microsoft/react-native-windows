@@ -3,6 +3,8 @@
 
   <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
     <UseHermes>true</UseHermes>
+    <!-- This ReactNativeXaml flag forces it to use PackageReferences instead of the old packages.config. -->
+    <RnwUsesPackageReference>true</RnwUsesPackageReference>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 

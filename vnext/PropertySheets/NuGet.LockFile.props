@@ -9,8 +9,16 @@
 
   <PropertyGroup>
     <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">true</RestoreLockedMode>
+
+    <!-- RnwNewArchOnly is for projects that always build with RnwNewArch so they don't add .newarch to the filename. -->
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(SolutionName)'=='ReactWindows-Desktop'">true</RnwNewArchOnly>
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(RnwExternalPropsLoaded)'=='Microsoft.ReactNative.Composition.CppApp.props'">true</RnwNewArchOnly>
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(RnwExternalPropsLoaded)'=='Microsoft.ReactNative.Composition.Package.props'">true</RnwNewArchOnly>
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'==''">false</RnwNewArchOnly>
+
     <NuGetLockFileName>packages</NuGetLockFileName>
-    <NuGetLockFileName Condition="'$(UseFabric)'=='true'">$(NuGetLockFileName).fabric</NuGetLockFileName>
+    <NuGetLockFileName Condition="'$(UseHermes)'=='false'">$(NuGetLockFileName).chakra</NuGetLockFileName>
+    <NuGetLockFileName Condition="'$(RnwNewArch)'=='true' AND '$(RnwNewArchOnly)'=='false'">$(NuGetLockFileName).newarch</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(UseExperimentalWinUI3)'=='true'">$(NuGetLockFileName).experimentalwinui3</NuGetLockFileName>
     <NuGetLockFilePath>.\$(NuGetLockFileName).lock.json</NuGetLockFilePath>
   </PropertyGroup>
