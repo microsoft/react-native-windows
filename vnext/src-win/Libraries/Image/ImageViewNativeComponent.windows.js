@@ -1,4 +1,61 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow strict-local
+ * @format
+ */
 
+import type {ViewProps} from '../Components/View/ViewPropTypes';
+import type {
+  HostComponent,
+  HostInstance,
+  PartialViewConfig,
+} from '../Renderer/shims/ReactNativeTypes';
+import type {
+  ColorValue,
+  DangerouslyImpreciseStyle,
+  ImageStyleProp,
+} from '../StyleSheet/StyleSheet';
+import type {ResolvedAssetSource} from './AssetSourceResolver';
+import type {ImageProps} from './ImageProps';
+
+import * as NativeComponentRegistry from '../NativeComponent/NativeComponentRegistry';
+import {ConditionallyIgnoredEventHandlers} from '../NativeComponent/ViewConfigIgnore';
+import codegenNativeCommands from '../Utilities/codegenNativeCommands';
+import Platform from '../Utilities/Platform';
+
+type Props = $ReadOnly<{
+  ...ImageProps,
+  ...ViewProps,
+
+  style?: ImageStyleProp | DangerouslyImpreciseStyle,
+
+  // iOS native props
+  tintColor?: ColorValue,
+
+  // Android native props
+  shouldNotifyLoadEvents?: boolean,
+  src?:
+    | ?ResolvedAssetSource
+    | ?$ReadOnlyArray<?$ReadOnly<{uri?: ?string, ...}>>,
+  headers?: ?{[string]: string},
+  defaultSrc?: ?string,
+  loadingIndicatorSrc?: ?string,
+}>;
+
+interface NativeCommands {
+  +setIsVisible_EXPERIMENTAL: (
+    viewRef: HostInstance,
+    isVisible: boolean,
+    time: number,
+  ) => void;
+}
+
+export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
+  supportedCommands: ['setIsVisible_EXPERIMENTAL'],
 });
 
 export const __INTERNAL_VIEW_CONFIG: PartialViewConfig =
@@ -26,7 +83,7 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig =
         validAttributes: {
           blurRadius: true,
           defaultSource: {
-            process: require('./resolveAssetSource'),
+            process: require('./resolveAssetSource').default,
           },
           internal_analyticTag: true,
           resizeMethod: true,
@@ -89,7 +146,7 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig =
             diff: require('../Utilities/differ/insetsDiffer'),
           },
           defaultSource: {
-            process: require('./resolveAssetSource'),
+            process: require('./resolveAssetSource').default,
           },
           internal_analyticTag: true,
           resizeMode: true,
