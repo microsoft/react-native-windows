@@ -477,19 +477,19 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   if (SUCCEEDED(hr) && annotationProvider) {
     hr = annotationProvider->get_AnnotationTypeId(&annotationTypeID);
     if (SUCCEEDED(hr)) {
-      InsertIntValueIfNotDefault(result, L"AnnotationPattern.AnnotationTypeId", annotationTypeID, 0);
+      InsertIntValueIfNotDefault(result, L"AnnotationPattern.TypeId", annotationTypeID, 0);
     }
     hr = annotationProvider->get_AnnotationTypeName(&annotationTypeName);
     if (SUCCEEDED(hr)) {
-      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.AnnotationTypeName", annotationTypeName);
+      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.TypeName", annotationTypeName);
     }
     hr = annotationProvider->get_Author(&annotationAuthor);
     if (SUCCEEDED(hr)) {
-      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.AnnotationAuthor", annotationAuthor);
+      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.Author", annotationAuthor);
     }
     hr = annotationProvider->get_DateTime(&annotationDateTime);
     if (SUCCEEDED(hr)) {
-      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.AnnotationDateTime", annotationDateTime);
+      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.DateTime", annotationDateTime);
     }
   }
 

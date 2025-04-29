@@ -26,7 +26,7 @@ HRESULT __stdcall CompositionAnnotationProvider::get_AnnotationTypeId(int *retVa
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  if (!props->accessibilityAnnotation.typeID.has_value()) {
+  if (!props->accessibilityAnnotation.typeID.has_value() || props->accessibilityAnnotation.typeID.value().empty()) {
     return E_FAIL;
   }
   *retVal = static_cast<int>(GetAnnotationTypeId(props->accessibilityAnnotation.typeID.value()));
@@ -45,7 +45,7 @@ HRESULT __stdcall CompositionAnnotationProvider::get_AnnotationTypeName(BSTR *re
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  if (!props->accessibilityAnnotation.typeName.has_value()) {
+  if (!props->accessibilityAnnotation.typeName.has_value() || props->accessibilityAnnotation.typeName.value().empty()) {
     return E_FAIL;
   }
   auto typeName = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAnnotation.typeName.value());
@@ -65,7 +65,7 @@ HRESULT __stdcall CompositionAnnotationProvider::get_Author(BSTR *retVal) {
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  if (!props->accessibilityAnnotation.author.has_value()) {
+  if (!props->accessibilityAnnotation.author.has_value() || props->accessibilityAnnotation.author.value().empty()) {
     return E_FAIL;
   }
   auto author = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAnnotation.author.value());
@@ -85,7 +85,7 @@ HRESULT __stdcall CompositionAnnotationProvider::get_DateTime(BSTR *retVal) {
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  if (!props->accessibilityAnnotation.dateTime.has_value()) {
+  if (!props->accessibilityAnnotation.dateTime.has_value() || props->accessibilityAnnotation.author.value().empty()) {
     return E_FAIL;
   }
   auto dateTime = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAnnotation.dateTime.value());
