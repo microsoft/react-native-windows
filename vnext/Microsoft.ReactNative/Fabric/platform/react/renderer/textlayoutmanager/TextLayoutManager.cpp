@@ -231,8 +231,14 @@ void TextLayoutManager::GetTextLayout(
 
   TextMeasurement::Attachments attachments;
   if (paragraphAttributes.adjustsFontSizeToFit) {
+    auto minimumFontScale = 0.01f;
+    // Uncomment below part when minimumFontScale is available in ParagraphAttributes
+    // if (paragraphAttributes.minimumFontScale && paragraphAttributes.minimumFontScale >= 0.01f &&
+    //    paragraphAttributes.minimumFontScale <= 1.0f) {
+    //  minimumFontScale = paragraphAttributes.minimumFontScale;
+    //}
     GetTextLayoutByAdjustingFontSizeToFit(
-        attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout, attachments);
+        attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout, attachments, minimumFontScale);
   } else {
     GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
   }
@@ -243,7 +249,8 @@ void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
     const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
-    TextMeasurement::Attachments &attachments) noexcept {
+    TextMeasurement::Attachments &attachments,
+    float minimumFontScale) noexcept {
   /* This function constructs a text layout from the given parameters.
   If the generated text layout doesn't fit within the given layout constraints,
   it will reduce the font size and construct a new text layout. This process will
@@ -251,44 +258,54 @@ void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
 
   DWRITE_TEXT_METRICS metrics;
 
-  // Better Approach should be implemented , this uses O(n)
-  do {
-    if (spTextLayout) // Font Size reduction
-    {
-      constexpr auto fontReduceFactor = 1.0f;
+  // Better Approach should be implemented, this uses O(n)
+  constexpr auto fontReduceFactor = 1.0f;
+  auto attributedStringToResize = attributedStringBox.getValue();
+  auto fragmentsCopyToResize = attributedStringToResize.getFragments();
+  if (fragmentsCopyToResize.empty()) {
+    return; // No fragments to process
+  }
 
-      auto attributedStringToResize = attributedStringBox.getValue();
+  float initialFontSize = fragmentsCopyToResize[0].textAttributes.fontSize;
+  float currentFontSize = initialFontSize;
 
-      auto fragmentsCopyToResize = attributedStringToResize.getFragments();
+  // Calculate the minimum font size as per Android/IOS
+  float minimumFontSize = std::max(minimumFontScale * initialFontSize, 4.0f);
 
-      attributedStringToResize.getFragments().clear();
+  // Initial measurement
+  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+  if (spTextLayout) {
+    winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
+  } else {
+    return;
+  }
 
-      for (auto fragment : fragmentsCopyToResize) {
-        fragment.textAttributes.fontSize -= fontReduceFactor;
+  // Loop until the font size is reduced to the minimum or the layout fits
+  while ((currentFontSize > minimumFontSize) &&
+         ((paragraphAttributes.maximumNumberOfLines != 0 &&
+           paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
+          metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth)) {
+    // Reduce the font size by 1 point (or a configurable factor)
+    currentFontSize = std::max(currentFontSize - fontReduceFactor, minimumFontSize);
 
-        attributedStringToResize.appendFragment(std::move(fragment));
-      }
-      attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
+    // Adjust font size for all fragments proportionally
+    attributedStringToResize.getFragments().clear();
+    for (auto fragment : fragmentsCopyToResize) {
+      fragment.textAttributes.fontSize =
+          std::max(fragment.textAttributes.fontSize * (currentFontSize / initialFontSize), minimumFontSize);
+      attributedStringToResize.appendFragment(std::move(fragment));
     }
 
+    attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
+
+    // Re-measure the text layout
     GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
-
     if (spTextLayout) {
-      const auto defaultMinFontSize = 2.0f;
-
-      // TODO : changes for minimumFontScale prop can be added.
-
-      if (spTextLayout->GetFontSize() <= defaultMinFontSize) {
-        break; // reached minimum font size , so no more size reducing
-      }
       winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
     } else {
       return;
     }
-
-  } while ((paragraphAttributes.maximumNumberOfLines != 0 &&
-            paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
-           metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth);
+  }
 }
 
 // measure entire text (inluding attachments)

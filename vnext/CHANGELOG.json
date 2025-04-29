@@ -2,6 +2,137 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Apr 2025 05:24:25 GMT",
+      "version": "0.0.0-canary.948",
+      "tag": "react-native-windows_v0.0.0-canary.948",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f640c8e5ed5befdecefea42f9e4221c051d8e215",
+            "comment": "Implement onScrollEndDrag prop"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 27 Apr 2025 05:26:09 GMT",
+      "version": "0.0.0-canary.947",
+      "tag": "react-native-windows_v0.0.0-canary.947",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb437815d04872f88dade42219599e420febac40",
+            "comment": "Implemented OnPressIn event for textinput"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Apr 2025 05:27:07 GMT",
+      "version": "0.0.0-canary.947",
+      "tag": "react-native-windows_v0.0.0-canary.947",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a4e227eb668feae3a9696f339432dfbb1d1f9878",
+            "comment": "[Fabric] Implement minimumFontScale in Text"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0bdc5486f30bae8584ff54f3fb61d620e7af425e",
+            "comment": "Fix InitialProps"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0ab2ba16e1607bd4eeb7e01d89ee4041c4f65db3",
+            "comment": "[Fabric] Implement hidesWhenStopped in ActivityIndicator"
+          }
+        ],
+        "none": [
+          {
+            "author": "abhijeetjha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d2bf5ea7808cc4deda95da7910cad12b23daba0a",
+            "comment": "Fix: Text component pressRetentionOffset issue on Windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Apr 2025 05:24:04 GMT",
+      "version": "0.0.0-canary.946",
+      "tag": "react-native-windows_v0.0.0-canary.946",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a2a9434b4548df44bf512647ce2737ee21ac0e0b",
+            "comment": "Implement accessibilityLevel for Fabric"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.261",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Apr 2025 05:25:48 GMT",
+      "version": "0.0.0-canary.945",
+      "tag": "react-native-windows_v0.0.0-canary.945",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "83f8afd590eb3b597277eb71fcfeb5637be4004d",
+            "comment": "Update WindowsAppSDK version to 1.7.250401001"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Apr 2025 05:24:03 GMT",
+      "version": "0.0.0-canary.944",
+      "tag": "react-native-windows_v0.0.0-canary.944",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ba877502d9af4c86c541f444a321a69359187bc9",
+            "comment": "Implement scrollEventThrottle for ScrollView in Fabric"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 20 Apr 2025 05:22:30 GMT",
+      "version": "0.0.0-canary.943",
+      "tag": "react-native-windows_v0.0.0-canary.943",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cdf1d343cb739690a4fff3260ff1129a41be8b13",
+            "comment": "Add TaskSequencer for WebSocket resource"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Apr 2025 05:22:17 GMT",
       "version": "0.0.0-canary.942",
       "tag": "react-native-windows_v0.0.0-canary.942",

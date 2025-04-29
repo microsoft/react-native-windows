@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 18 Apr 2025 05:22:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 28 Apr 2025 05:24:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.948
+
+Mon, 28 Apr 2025 05:24:25 GMT
+
+### Changes
+
+- Implement onScrollEndDrag prop (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.947
+
+Sat, 26 Apr 2025 05:27:07 GMT
+
+### Changes
+
+- [Fabric] Implement minimumFontScale in Text (54227869+anupriya13@users.noreply.github.com)
+- Fix InitialProps (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement hidesWhenStopped in ActivityIndicator (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.946
+
+Thu, 24 Apr 2025 05:24:04 GMT
+
+### Changes
+
+- Implement accessibilityLevel for Fabric (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.261
+
+## 0.0.0-canary.945
+
+Wed, 23 Apr 2025 05:25:48 GMT
+
+### Changes
+
+- Update WindowsAppSDK version to 1.7.250401001 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.944
+
+Tue, 22 Apr 2025 05:24:03 GMT
+
+### Changes
+
+- Implement scrollEventThrottle for ScrollView in Fabric (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.943
+
+Sun, 20 Apr 2025 05:22:30 GMT
+
+### Changes
+
+- Add TaskSequencer for WebSocket resource (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.942
 

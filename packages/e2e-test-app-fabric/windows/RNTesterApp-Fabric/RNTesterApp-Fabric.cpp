@@ -541,6 +541,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BSTR name;
   int positionInSet = 0;
   int sizeOfSet = 0;
+  int level = 0;
   LiveSetting liveSetting = LiveSetting::Off;
   BSTR itemStatus;
 
@@ -558,6 +559,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     pTarget4->get_CurrentPositionInSet(&positionInSet);
     pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
     pTarget4->get_CurrentLiveSetting(&liveSetting);
+    pTarget4->get_CurrentLevel(&level);
     pTarget4->Release();
   }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
@@ -570,6 +572,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
+  InsertIntValueIfNotDefault(result, L"Level", level);
   InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
   InsertStringValueIfNotEmpty(result, L"ItemStatus", itemStatus);
   DumpUIAPatternInfo(pTarget, result);

@@ -27,6 +27,7 @@ class HostPlatformViewProps : public BaseViewProps {
   int accessibilityPosInSet{0};
   int accessibilitySetSize{0};
   std::string accessibilityLiveRegion{"none"};
+  int accessibilityLevel{0};
 
   // std::optional<std::string> overflowAnchor{};
   std::optional<std::string> tooltip{};

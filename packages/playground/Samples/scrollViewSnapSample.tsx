@@ -301,10 +301,14 @@ export default class Bootstrap extends React.Component<{}, any> {
             onScrollBeginDrag={() => {
               console.log('onScrollBeginDrag');
             }}
+            onScrollEndDrag={() => {
+              console.log('onScrollEndDrag');
+            }}
             onScroll={() => {
               console.log('onScroll');
             }}
-            decelerationRate={0.95}>
+            decelerationRate={0.95}
+            scrollEventThrottle={50}>
             {this.makeItems(20, [styles.itemWrapper])}
           </ScrollView>
         </View>
