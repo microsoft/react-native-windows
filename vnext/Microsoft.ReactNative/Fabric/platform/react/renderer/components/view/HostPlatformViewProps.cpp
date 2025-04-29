@@ -23,7 +23,7 @@ HostPlatformViewProps::HostPlatformViewProps(
       accessibilityAnnotation(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilityAnnotation
-              : convertRawProp(context, rawProps,"accessibilityAnnotation", sourceProps.accessibilityAnnotation, {})),
+              : convertRawProp(context, rawProps, "accessibilityAnnotation", sourceProps.accessibilityAnnotation, {})),
       enableFocusRing(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.enableFocusRing
@@ -55,8 +55,7 @@ HostPlatformViewProps::HostPlatformViewProps(
                                                                         rawProps,
                                                                         "accessibilityLiveRegion",
                                                                         sourceProps.accessibilityLiveRegion,
-                                                                        "none")) {
-}
+                                                                        "none")) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \

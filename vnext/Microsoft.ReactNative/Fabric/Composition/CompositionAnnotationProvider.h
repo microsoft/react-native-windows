@@ -21,7 +21,7 @@ class CompositionAnnotationProvider : public winrt::implements<CompositionAnnota
   virtual HRESULT __stdcall get_Author(BSTR *retVal) override;
   virtual HRESULT __stdcall get_DateTime(BSTR *retVal) override;
   virtual HRESULT __stdcall get_Target(IRawElementProviderSimple **retVal) override;
- 
+
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   winrt::com_ptr<IAnnotationProvider> m_annotationProvider;

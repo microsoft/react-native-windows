@@ -2,6 +2,6 @@
   "type": "prerelease",
   "comment": "[Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider",
   "packageName": "react-native-windows",
-  "email": "vinikuttan99@gmail.com",
+  "email": "kvineeth@microsoft.com",
   "dependentChangeType": "patch"
 }

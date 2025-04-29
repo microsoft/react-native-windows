@@ -365,10 +365,10 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL selectionRequired;
   BSTR text = nullptr;
   BOOL horizontallyScrollable;
-  BSTR annotationAuthor=nullptr;
-  BSTR annotationTypeName=nullptr;
-  BSTR annotationDateTime=nullptr;
-  int annotationTypeID=0;
+  BSTR annotationAuthor = nullptr;
+  BSTR annotationTypeName = nullptr;
+  BSTR annotationDateTime = nullptr;
+  int annotationTypeID = 0;
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;

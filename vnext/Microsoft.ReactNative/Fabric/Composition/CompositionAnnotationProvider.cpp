@@ -1,7 +1,7 @@
 #include "pch.h"
+#include "CompositionAnnotationProvider.h"
 #include <Fabric/ComponentView.h>
 #include <Unicode.h>
-#include "CompositionAnnotationProvider.h"
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
 
@@ -26,8 +26,7 @@ HRESULT __stdcall CompositionAnnotationProvider::get_AnnotationTypeId(int *retVa
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  if (!props->accessibilityAnnotation.typeID.has_value())
-  {
+  if (!props->accessibilityAnnotation.typeID.has_value()) {
     return E_FAIL;
   }
   *retVal = static_cast<int>(GetAnnotationTypeId(props->accessibilityAnnotation.typeID.value()));

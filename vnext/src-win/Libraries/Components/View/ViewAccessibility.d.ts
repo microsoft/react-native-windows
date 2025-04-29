@@ -290,11 +290,11 @@ export type AnnotationType =
 export type AccessibilityAnnotationInfo = Readonly<{
   typeID: AnnotationType | undefined;
   typeName?: string | undefined;
-  author?: string |undefined;
+  author?: string | undefined;
   dateTime?: string | undefined;
-  target?: string |undefined;
+  target?: string | undefined;
 }>;
-export interface AccessibilityPropsWindows{
+export interface AccessibilityPropsWindows {
   /**
    * Tells a person using a screen reader what kind of annotation they
    * have selected. If available, it will also tell a person the author of the annotation and

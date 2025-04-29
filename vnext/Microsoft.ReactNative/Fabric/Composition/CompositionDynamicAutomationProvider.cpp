@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
-#include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/CompositionAnnotationProvider.h>
+#include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
@@ -40,8 +40,8 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 
   if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
     m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
-                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                         .try_as<IAnnotationProvider>();
+                               strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                               .try_as<IAnnotationProvider>();
   }
 }
 

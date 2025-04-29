@@ -20,13 +20,13 @@ export default class Bootstrap extends React.Component {
           selectable={true}>
           Click here : This is a text with a tooltip.
         </Text>
-        <View 
+        <View
           style={styles.container2}
           accessible={true}
           accessibilityLabel="Annotation Checkc"
           accessibilityAnnotation={{
             typeID: 'Comment',
-            typeName:'Check Comment',
+            typeName: 'Check Comment',
             author: 'Christopher tarantino',
             dateTime: '3/19/2025 1:03 PM',
           }}>

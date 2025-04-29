@@ -18,7 +18,8 @@ struct AccessibilityAnnotation {
 };
 
 constexpr bool operator==(const AccessibilityAnnotation &lhs, const AccessibilityAnnotation &rhs) {
-  return lhs.typeID == rhs.typeID && lhs.typeName == rhs.typeName && lhs.author==rhs.author && lhs.dateTime==rhs.dateTime && lhs.target==rhs.target;
+  return lhs.typeID == rhs.typeID && lhs.typeName == rhs.typeName && lhs.author == rhs.author &&
+      lhs.dateTime == rhs.dateTime && lhs.target == rhs.target;
 }
 
 constexpr bool operator!=(const AccessibilityAnnotation &lhs, const AccessibilityAnnotation &rhs) {
