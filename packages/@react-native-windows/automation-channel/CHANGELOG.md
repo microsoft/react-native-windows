@@ -1,8 +1,49 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Tue, 22 Apr 2025 05:24:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 30 Apr 2025 05:27:56 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.289
+
+Wed, 30 Apr 2025 05:27:56 GMT
+
+### Patches
+
+- Fix NuGet lock files and enforce them not changing accidentally (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.949
+
+## 0.12.288
+
+Mon, 28 Apr 2025 05:24:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.948
+
+## 0.12.287
+
+Sat, 26 Apr 2025 05:27:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.947
+
+## 0.12.286
+
+Thu, 24 Apr 2025 05:24:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.946
+
+## 0.12.285
+
+Wed, 23 Apr 2025 05:25:48 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.945
 
 ## 0.12.284
 

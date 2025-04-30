@@ -2,6 +2,87 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 30 Apr 2025 05:27:56 GMT",
+      "version": "0.12.289",
+      "tag": "@react-native-windows/automation-channel_v0.12.289",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "99b2a74ecb0b06435eaa1efc8c1f34025943d3a7",
+            "comment": "Fix NuGet lock files and enforce them not changing accidentally"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.949",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Apr 2025 05:24:25 GMT",
+      "version": "0.12.288",
+      "tag": "@react-native-windows/automation-channel_v0.12.288",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.948",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Apr 2025 05:27:07 GMT",
+      "version": "0.12.287",
+      "tag": "@react-native-windows/automation-channel_v0.12.287",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.947",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Apr 2025 05:24:04 GMT",
+      "version": "0.12.286",
+      "tag": "@react-native-windows/automation-channel_v0.12.286",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.946",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Apr 2025 05:25:48 GMT",
+      "version": "0.12.285",
+      "tag": "@react-native-windows/automation-channel_v0.12.285",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.945",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Apr 2025 05:24:03 GMT",
       "version": "0.12.284",
       "tag": "@react-native-windows/automation-channel_v0.12.284",

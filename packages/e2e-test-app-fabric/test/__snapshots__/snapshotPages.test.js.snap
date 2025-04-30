@@ -10,6 +10,8 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
   <View
     accessibilityHint="A hint for the blue box."
     accessibilityLabel="A blue box"
+    accessibilityLevel={1}
+    accessible={true}
     style={
       {
         "backgroundColor": "blue",
@@ -17,12 +19,14 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-1"
   />
   <Text>
     The following has accessible and accessibilityLabel:
   </Text>
   <View
     accessibilityLabel="A hint for the red box."
+    accessibilityLevel={2}
     accessible={true}
     style={
       {
@@ -31,18 +35,20 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-2"
   />
   <Text>
     The following has accessibilitySetSize, accessibilityPosInSet and accessibilityLabel:
   </Text>
   <View
     accessibilityLabel="This label should not be used"
-    accessibilityLevel={4}
+    accessibilityLevel={5}
     accessibilityPosInSet={2}
     accessibilityRole="listitem"
     accessibilitySetSize={5}
     accessible={true}
     aria-label="Aria label takes precedence"
+    aria-level={9}
     style={
       {
         "backgroundColor": "red",
@@ -50,6 +56,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-3"
   />
 </View>
 `;
@@ -79934,7 +79941,9 @@ exports[`snapshotAllPages TextInput 37`] = `
 
 exports[`snapshotAllPages TextInput 38`] = `
 <View>
-  <Text>
+  <Text
+    testID="textinput-state-display"
+  >
     PressIn/PressOut message
   </Text>
   <TextInput
@@ -82781,6 +82790,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
     </View>
   </View>
   <View
+    accessible={true}
     style={
       {
         "borderColor": "#f0f0f0",
@@ -83247,12 +83257,14 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
+        "backgroundColor": "transparent",
         "flexDirection": "row",
         "justifyContent": "center",
         "opacity": 1,
         "padding": 10,
       }
     }
+    testID="disabled_touchable"
   >
     <Text
       style={

@@ -84,6 +84,7 @@ jobs:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app
+                errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
 
             - script: |
                 echo ##vso[task.setvariable variable=StartedTests]true

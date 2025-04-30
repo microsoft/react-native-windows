@@ -21,7 +21,10 @@ export default class Bootstrap extends React.Component {
           Click here : This is a text with a tooltip.
         </Text>
         <View style={styles.container2}>
-          <Text adjustsFontSizeToFit style={{maxHeight: 80, fontSize: 72}}>
+          <Text
+            adjustsFontSizeToFit
+            style={{maxHeight: 80, fontSize: 72}}
+            minimumFontScale={0.5}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

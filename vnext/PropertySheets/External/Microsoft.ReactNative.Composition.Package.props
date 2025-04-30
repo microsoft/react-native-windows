@@ -12,4 +12,8 @@
    <!-- Fixes NuGet restore issues: -->
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+
+  <PropertyGroup>
+    <RnwExternalPropsLoaded>$(MSBuildThisFile)</RnwExternalPropsLoaded>
+  </PropertyGroup>
 </Project>

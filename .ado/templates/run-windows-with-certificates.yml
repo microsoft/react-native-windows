@@ -26,6 +26,9 @@ parameters:
   - name: restoreForceEvaluate
     type: boolean
     default: true
+  - name: errorOnNuGetLockChanges
+    type: boolean
+    default : true
   - name: moreMSBuildProps
     type: string
     default: ''
@@ -77,3 +80,8 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
 
     - template: ../templates/cleanup-certificate.yml
+
+  - ${{ if eq(parameters.restoreLockedMode, 'true') }}:
+    - template: detect-nuget-lockfile-changes.yml
+      parameters:
+        errorOnNuGetLockChanges: ${{ parameters.errorOnNuGetLockChanges }}

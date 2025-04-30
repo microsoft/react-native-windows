@@ -8,15 +8,6 @@
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 
-  <PropertyGroup Label="Unpackaged playground-win32" Condition="'$(SolutionName)'=='playground-win32' OR '$(SolutionName)'=='playground-composition'">
-    <!--
-      WARNING - DO NOT MAKE THE VERSION OF MICROSOFT.UI.XAML BE ANYTHING BUT PRERELEASE.
-      Playground-Win32 is an unpackaged win32 app, and needs to use Microsoft.UI.Xaml from a prerelease,
-      to be able to carry WinUI in-app instead of using the Framework Package
-    -->
-    <WinUI2xVersion>2.7.0-prerelease.210913003</WinUI2xVersion>
-  </PropertyGroup>
-
   <PropertyGroup Label="WinUI3 for fabric" Condition="'$(SolutionName)'=='playground-composition'">
     <RnwNewArch>true</RnwNewArch>
     <UseExperimentalNuget>false</UseExperimentalNuget>

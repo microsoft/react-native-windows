@@ -1,0 +1,22 @@
+parameters:
+  - name: errorOnNuGetLockChanges
+    type: boolean
+    default: true
+
+steps:
+  - powershell: |
+        & git add */packages*.lock.json
+        $changed = git status --porcelain=v1 */packages*.lock.json
+        if ($changed -ne $null) {
+          Write-Host "Detected NuGet lock file changes during the build:"
+          Write-Host Files changed:`n([string]::Join("`n", $changed))
+          $diff = git diff --cached -- */packages*.lock.json
+          Write-Host Diff:`n([string]::Join("`n", $diff))
+          $msg = "Detected NuGet lock file changes during the build. Run vnext/Scripts/NuGetRestoreForceEvaluateAllSolutions.ps1 locally in a VS Dev PowerShell to update lock files, then submit the changes."
+          if ("${{ parameters.errorOnNuGetLockChanges }}" -eq "True") {
+            Write-Host "##vso[task.logissue type=error]Detected NuGet lock file changes during the build. Run vnext/Scripts/NuGetRestoreForceEvaluateAllSolutions.ps1 locally in a VS Dev PowerShell to update lock files, then submit the changes."
+            [Environment]::Exit(-1)
+          }
+        }
+    displayName: Detect NuGet lock file changes during build
+    condition: succeededOrFailed()
