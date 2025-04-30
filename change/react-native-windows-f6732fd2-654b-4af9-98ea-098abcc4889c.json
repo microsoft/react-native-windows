@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix NuGet lock files and enforce them not changing accidentally",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
