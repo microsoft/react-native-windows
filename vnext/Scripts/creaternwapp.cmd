@@ -123,10 +123,9 @@ pushd "%APP_NAME%"
 
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwapp.cmd Fixing react-native nightly issues
-  pwsh.exe -Command "(gc package.json) -replace '""nightly""', '""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli"": "".*""', '""@react-native-community/cli"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-android"": "".*""', '""@react-native-community/cli-platform-android"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-ios"": "".*""', '""@react-native-community/cli-platform-ios"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
 )
 
 @echo creaternwapp.cmd: Calling yarn install
