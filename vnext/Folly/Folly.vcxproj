@@ -334,6 +334,6 @@
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
   <ItemGroup>
-    <ProjectReference Include="..\Fmt\Fmt.vcxproj" Project="{14b93DC8-FD93-4A6D-81CB-8BC96644501C}" />
+    <ProjectReference Include="..\fmt\fmt.vcxproj" Project="{14b93DC8-FD93-4A6D-81CB-8BC96644501C}" />
   </ItemGroup>
 </Project>
