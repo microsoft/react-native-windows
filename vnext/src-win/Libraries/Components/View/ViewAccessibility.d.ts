@@ -288,11 +288,11 @@ export type AnnotationType =
 
 // [Windows]
 export type AccessibilityAnnotationInfo = Readonly<{
-  typeID: AnnotationType | undefined;
-  typeName?: string | undefined;
-  author?: string | undefined;
-  dateTime?: string | undefined;
-  target?: string | undefined;
+  typeID: AnnotationType;
+  typeName?: string;
+  author?: string;
+  dateTime?: string;
+  target?: string;
 }>;
 export interface AccessibilityPropsWindows {
   /**

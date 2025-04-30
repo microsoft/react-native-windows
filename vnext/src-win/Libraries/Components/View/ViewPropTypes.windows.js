@@ -28,6 +28,7 @@ import type {
   AccessibilityRole,
   AccessibilityState,
   AccessibilityValue,
+  AccessibilityAnnotationInfo, // [Windows]
   Role,
 } from './ViewAccessibility';
 import type {Node} from 'react';
@@ -529,6 +530,8 @@ type WindowsViewProps = $ReadOnly<{|
   onBlur?: ?(event: FocusEvent) => mixed,
   onMouseLeave?: ?(event: MouseEvent) => mixed,
   onMouseEnter?: ?(event: MouseEvent) => mixed,
+
+  accessibilityAnnotation?: ?AccessibilityAnnotationInfo,
 |}>;
 // Windows]
 

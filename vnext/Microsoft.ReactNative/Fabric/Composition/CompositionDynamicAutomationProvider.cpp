@@ -290,7 +290,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
   if (patternId == UIA_AnnotationPatternId &&
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>() &&
+      accessibilityAnnotationHasValue(props->accessibilityAnnotation)) {
     m_annotationProvider.as<IUnknown>().copy_to(pRetVal);
   }
 

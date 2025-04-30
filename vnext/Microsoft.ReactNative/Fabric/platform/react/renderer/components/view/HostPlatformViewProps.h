@@ -29,7 +29,7 @@ class HostPlatformViewProps : public BaseViewProps {
   int accessibilitySetSize{0};
   std::string accessibilityLiveRegion{"none"};
   int accessibilityLevel{0};
-  AccessibilityAnnotation accessibilityAnnotation{};
+  std::optional<AccessibilityAnnotation> accessibilityAnnotation{};
 
   // std::optional<std::string> overflowAnchor{};
   std::optional<std::string> tooltip{};

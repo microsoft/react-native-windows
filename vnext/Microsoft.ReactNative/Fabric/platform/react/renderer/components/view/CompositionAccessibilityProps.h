@@ -10,11 +10,11 @@
 
 namespace facebook::react {
 struct AccessibilityAnnotation {
-  std::optional<std::string> typeID{};
-  std::optional<std::string> typeName{};
-  std::optional<std::string> author{};
-  std::optional<std::string> dateTime{};
-  std::optional<std::string> target{};
+  std::string typeID{};
+  std::string typeName{};
+  std::string author{};
+  std::string dateTime{};
+  std::string target{};
 };
 
 constexpr bool operator==(const AccessibilityAnnotation &lhs, const AccessibilityAnnotation &rhs) {

@@ -240,6 +240,13 @@ long GetAnnotationTypeId(const std::string &annotationType) noexcept {
   return AnnotationType_Unknown;
 }
 
+bool accessibilityAnnotationHasValue(
+    const std::optional<facebook::react::AccessibilityAnnotation> &annotation) noexcept {
+  return annotation.has_value() &&
+      !(annotation.value().typeID.empty() && annotation.value().typeName.empty() && annotation.value().author.empty() &&
+        annotation.value().dateTime.empty() && annotation.value().target.empty());
+}
+
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
   auto strongView = view.view();
 
