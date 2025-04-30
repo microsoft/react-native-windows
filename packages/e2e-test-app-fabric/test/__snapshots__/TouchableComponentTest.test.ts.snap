@@ -3,7 +3,6 @@
 exports[`Touchable Tests Text components can be tappable 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "tappable_text",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -28,14 +27,12 @@ exports[`Touchable Tests Text components can be tappable 1`] = `
 exports[`Touchable Tests TouchableWithoutFeedback components should not give visual feedback 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_without_feedback_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -82,13 +79,11 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
 exports[`Touchable Tests Touchables can be defined in a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_set",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
@@ -97,7 +92,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         "SizeofSet": 3,
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -107,7 +101,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
@@ -117,7 +110,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         "SizeofSet": 3,
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -127,7 +119,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "IsKeyboardFocusable": true,
@@ -250,14 +241,12 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
 exports[`Touchable Tests Touchables can be disabled 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "disabled_touchable",
     "ControlType": 50026,
     "IsEnabled": false,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -311,14 +300,12 @@ exports[`Touchable Tests Touchables can be disabled 1`] = `
 exports[`Touchable Tests Touchables can be disabled 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "disabled_touchable",
     "ControlType": 50026,
     "IsEnabled": false,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -372,14 +359,12 @@ exports[`Touchable Tests Touchables can be disabled 2`] = `
 exports[`Touchable Tests Touchables can contain a Text component 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_highlight_text_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -426,7 +411,6 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
 exports[`Touchable Tests Touchables can contain an Image component 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_highlight_image_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -477,14 +461,12 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
 exports[`Touchable Tests Touchables can delay events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_delay_events_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -531,14 +513,12 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
 exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_hit_slop_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -589,7 +569,6 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
 exports[`Touchable Tests Touchables can register feedback events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_feedback_events_button",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -598,7 +577,6 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -646,13 +624,11 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
 exports[`Touchable Tests Touchables can register feedback events 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "touchable_feedback_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -660,7 +636,6 @@ exports[`Touchable Tests Touchables can register feedback events 2`] = `
         "TextRangePattern.GetText": "press",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",

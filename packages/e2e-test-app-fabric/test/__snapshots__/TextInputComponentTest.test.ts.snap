@@ -3,7 +3,6 @@
 exports[`TextInput Tests Multi-line TextInputs can enable text selection (Imperative) 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "multilineImperative-text-input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -83,7 +82,6 @@ can also be changed imperatively",
 exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "multiline-text-input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -163,7 +161,6 @@ can also be changed",
 exports[`TextInput Tests Single-line TextInputs can enable text selection (Imperative) 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "singlelineImperative-text-input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -241,7 +238,6 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
 exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "singleline-text-input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -319,7 +315,6 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
 exports[`TextInput Tests Text have cursorColor 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-cursorColor",
     "ControlType": 50004,
     "HelpText": "cursorColor={"green"}",
@@ -399,7 +394,6 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
 exports[`TextInput Tests TextInput triggers onPressIn and updates state text 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-press",
     "ControlType": 50004,
     "HelpText": "Click inside the box to observe events being fired.",
@@ -478,7 +472,6 @@ exports[`TextInput Tests TextInput triggers onPressIn and updates state text 1`]
 exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Characters 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "capitalize-characters",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -554,7 +547,6 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
 exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Off 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "capitalize-none",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -630,7 +622,6 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
 exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-autocomplete-address-country",
     "ControlType": 50004,
     "HelpText": "postal-address-country",
@@ -709,7 +700,6 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
 exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-autocomplete-country",
     "ControlType": 50004,
     "HelpText": "country",
@@ -788,7 +778,6 @@ exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
 exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-autocomplete-one-time-code",
     "ControlType": 50004,
     "HelpText": "one-time-code",
@@ -867,7 +856,6 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
 exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-autocomplete-sms-otp",
     "ControlType": 50004,
     "HelpText": "sms-otp",
@@ -946,7 +934,6 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
 exports[`TextInput Tests TextInputs can autogrow 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-autogrow",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -1024,13 +1011,11 @@ exports[`TextInput Tests TextInputs can autogrow 1`] = `
 exports[`TextInput Tests TextInputs can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-set",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50004,
         "HelpText": "TextInput 1 in Set of 3",
@@ -1042,7 +1027,6 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "TextRangePattern.GetText": "TextInput 1 in Set of 3",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50004,
         "HelpText": "TextInput 2 in Set of 3",
@@ -1055,7 +1039,6 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "TextRangePattern.GetText": "TextInput 2 in Set of 3",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50004,
         "HelpText": "TextInput 3 in Set of 3",
@@ -1295,7 +1278,6 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
 exports[`TextInput Tests TextInputs can be editable 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-editable",
     "ControlType": 50004,
     "HelpText": "editable text input using editable prop",
@@ -1374,7 +1356,6 @@ exports[`TextInput Tests TextInputs can be editable 1`] = `
 exports[`TextInput Tests TextInputs can be multiline, bottomright alignment 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-multiline-bottomright",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -1452,7 +1433,6 @@ exports[`TextInput Tests TextInputs can be multiline, bottomright alignment 1`] 
 exports[`TextInput Tests TextInputs can be multiline, center alignment 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-multiline-center",
     "ControlType": 50004,
     "HelpText": "multiline, aligned center",
@@ -1531,7 +1511,6 @@ exports[`TextInput Tests TextInputs can be multiline, center alignment 1`] = `
 exports[`TextInput Tests TextInputs can be multiline, topleft alignment 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-multiline-topleft",
     "ControlType": 50004,
     "HelpText": "multiline, aligned top-left",
@@ -1610,7 +1589,6 @@ exports[`TextInput Tests TextInputs can be multiline, topleft alignment 1`] = `
 exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-not-editable",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -1688,7 +1666,6 @@ exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
 exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-not-editable2",
     "ControlType": 50004,
     "HelpText": "uneditable text input using editable prop",
@@ -1767,7 +1744,6 @@ exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
 exports[`TextInput Tests TextInputs can clear on submit 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-clear-on-submit",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -1843,7 +1819,6 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
 exports[`TextInput Tests TextInputs can clear on submit with custom submit key event (Shift + Enter), multi-line 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-clear-on-submit-3",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -1919,7 +1894,6 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
 exports[`TextInput Tests TextInputs can clear on submit with custom submit key event (Shift + Enter), single-line 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-clear-on-submit-2",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -1995,7 +1969,6 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
 exports[`TextInput Tests TextInputs can customize its padding 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-padding",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2071,7 +2044,6 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
 exports[`TextInput Tests TextInputs can enable spellcheck 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-spellcheck",
     "ControlType": 50004,
     "HelpText": "Type text to test spell check functionality.",
@@ -2150,7 +2122,6 @@ exports[`TextInput Tests TextInputs can enable spellcheck 1`] = `
 exports[`TextInput Tests TextInputs can have a background color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-backgroundColor",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2228,7 +2199,6 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
 exports[`TextInput Tests TextInputs can have a color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-color",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2306,7 +2276,6 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
 exports[`TextInput Tests TextInputs can have a font family 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-fontFamily",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2384,7 +2353,6 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
 exports[`TextInput Tests TextInputs can have a font size 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-fontSize",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2462,7 +2430,6 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
 exports[`TextInput Tests TextInputs can have a font style 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-fontStyle",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2540,7 +2507,6 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
 exports[`TextInput Tests TextInputs can have a font weight 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-fontWeight",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2618,7 +2584,6 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
 exports[`TextInput Tests TextInputs can have attributed text 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "text-input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -2696,7 +2661,6 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
 exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-carethidden",
     "ControlType": 50004,
     "HelpText": "caretHidden={true}",
@@ -2776,7 +2740,6 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
 exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-Compile",
     "ControlType": 50004,
     "HelpText": "returnKeyLabel: Compile",
@@ -2855,7 +2818,6 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
 exports[`TextInput Tests TextInputs can have custom return key label, React Native 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-React Native",
     "ControlType": 50004,
     "HelpText": "returnKeyLabel: React Native",
@@ -2934,7 +2896,6 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
 exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-done",
     "ControlType": 50004,
     "HelpText": "returnKeyType: done",
@@ -3013,7 +2974,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = 
 exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-go",
     "ControlType": 50004,
     "HelpText": "returnKeyType: go",
@@ -3092,7 +3052,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
 exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-next",
     "ControlType": 50004,
     "HelpText": "returnKeyType: next",
@@ -3171,7 +3130,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = 
 exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-none",
     "ControlType": 50004,
     "HelpText": "returnKeyType: none",
@@ -3250,7 +3208,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = 
 exports[`TextInput Tests TextInputs can have custom return key type, previous 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-previous",
     "ControlType": 50004,
     "HelpText": "returnKeyType: previous",
@@ -3329,7 +3286,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
 exports[`TextInput Tests TextInputs can have custom return key type, search 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-search",
     "ControlType": 50004,
     "HelpText": "returnKeyType: search",
@@ -3408,7 +3364,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
 exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-return-send",
     "ControlType": 50004,
     "HelpText": "returnKeyType: send",
@@ -3487,7 +3442,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-letterspacing--1",
     "ControlType": 50004,
     "HelpText": "letterSpacing = -1",
@@ -3566,7 +3520,6 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-letterspacing-0",
     "ControlType": 50004,
     "HelpText": "letterSpacing = 0",
@@ -3645,7 +3598,6 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-letterspacing-2",
     "ControlType": 50004,
     "HelpText": "letterSpacing = 2",
@@ -3724,7 +3676,6 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-letterspacing-9",
     "ControlType": 50004,
     "HelpText": "letterSpacing = 9",
@@ -3899,7 +3850,6 @@ exports[`TextInput Tests TextInputs can have customized font weight, normal 1`] 
 exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-letterSpacing",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -3977,7 +3927,6 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
 exports[`TextInput Tests TextInputs can have customized line height 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-lineHeight",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -4055,7 +4004,6 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
 exports[`TextInput Tests TextInputs can have inline images 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-inline-images",
     "ControlType": 50004,
     "HelpText": "This has drawableLeft set",
@@ -4134,7 +4082,6 @@ exports[`TextInput Tests TextInputs can have inline images 1`] = `
 exports[`TextInput Tests TextInputs can have inline images, drawable props not set 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-inline-images-3",
     "ControlType": 50004,
     "HelpText": "This does not have drawable props set",
@@ -4213,7 +4160,6 @@ exports[`TextInput Tests TextInputs can have inline images, drawable props not s
 exports[`TextInput Tests TextInputs can have inline images, drawableLeft and drawablePadding set 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-inline-images-2",
     "ControlType": 50004,
     "HelpText": "This has drawableLeft and drawablePadding set",
@@ -4292,7 +4238,6 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
 exports[`TextInput Tests TextInputs can have shadows 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-shadow",
     "ControlType": 50004,
     "HelpText": "shadowColor: purple",
@@ -4371,7 +4316,6 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
 exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-textDecorationLine",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -4449,7 +4393,6 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
 exports[`TextInput Tests TextInputs can have text shadows 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-textShadow",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -4527,7 +4470,6 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
 exports[`TextInput Tests TextInputs can propagate events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-propagation",
     "ControlType": 50004,
     "HelpText": "Click inside the box to observe events being fired.",
@@ -4606,7 +4548,6 @@ exports[`TextInput Tests TextInputs can propagate events 1`] = `
 exports[`TextInput Tests TextInputs can register press events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-press",
     "ControlType": 50004,
     "HelpText": "Click inside the box to observe events being fired.",
@@ -4685,7 +4626,6 @@ exports[`TextInput Tests TextInputs can register press events 1`] = `
 exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with Clear 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "rewrite_clear_input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -4761,7 +4701,6 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
 exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with No Character 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "rewrite_no_sp_input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -4837,7 +4776,6 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
 exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with Underscore 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "rewrite_sp_underscore_input",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -4913,7 +4851,6 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
 exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-readonly-false",
     "ControlType": 50004,
     "HelpText": "editable text input using readOnly prop",
@@ -4992,7 +4929,6 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
 exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-readyonly",
     "ControlType": 50004,
     "HelpText": "uneditable text input using readOnly prop",
@@ -5071,7 +5007,6 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
 exports[`TextInput Tests TextInputs can submit with custom key, multilined and submit with enter 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-clear-on-submit-4",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -5147,7 +5082,6 @@ exports[`TextInput Tests TextInputs can submit with custom key, multilined and s
 exports[`TextInput Tests TextInputs have a custom background color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-custom-background-color",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -5225,7 +5159,6 @@ exports[`TextInput Tests TextInputs have a custom background color 1`] = `
 exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-custom-highlight-color",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -5303,7 +5236,6 @@ exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
 exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-custom-placeholder-color",
     "ControlType": 50004,
     "HelpText": "Red placeholder text color",
@@ -5382,7 +5314,6 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
 exports[`TextInput Tests TextInputs have a custom text color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-custom-color",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -5460,7 +5391,6 @@ exports[`TextInput Tests TextInputs have a custom text color 1`] = `
 exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-custom-underline-color",
     "ControlType": 50004,
     "HelpText": "Blue underline color",
@@ -5539,7 +5469,6 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
 exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-default-placeholder-color",
     "ControlType": 50004,
     "HelpText": "Default placeholder text color",
@@ -5618,7 +5547,6 @@ exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = 
 exports[`TextInput Tests TextInputs have a default text color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-default-color",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -5696,7 +5624,6 @@ exports[`TextInput Tests TextInputs have a default text color 1`] = `
 exports[`TextInput Tests TextInputs have a default underline color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-default-underline-color",
     "ControlType": 50004,
     "HelpText": "Default underline color",
@@ -5775,7 +5702,6 @@ exports[`TextInput Tests TextInputs have a default underline color 1`] = `
 exports[`TextInput Tests TextInputs support secure entry 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-password",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
@@ -5853,7 +5779,6 @@ exports[`TextInput Tests TextInputs support secure entry 1`] = `
 exports[`TextInput Tests TextInputs support secure entry, with placeholder text 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-password-placeholder",
     "ControlType": 50004,
     "HelpText": "color is supported too",
@@ -5932,13 +5857,11 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
 exports[`TextInput Tests TextInputs which have a searchbox role should also support the value pattern. 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-searchbox",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50004,
         "IsKeyboardFocusable": true,
@@ -6038,7 +5961,6 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
 exports[`TextInput Tests TextInputs with set height and padding from theme 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "textinput-theme-padding",
     "ControlType": 50004,
     "HelpText": "If you set height, beware of padding set from themes",
@@ -6117,7 +6039,6 @@ exports[`TextInput Tests TextInputs with set height and padding from theme 1`] =
 exports[`TextInput Tests Uncontrolled TextInput 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "uncontrolled-textinput",
     "ControlType": 50004,
     "IsKeyboardFocusable": true,

@@ -3,14 +3,12 @@
 exports[`Home UIA Tree Dump APIs Tab 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "apis-tab",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -105,7 +103,6 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
 exports[`Home UIA Tree Dump Accessibility 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Accessibility",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -113,7 +110,6 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
     "Name": "Accessibility Examples of using Accessibility APIs.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -121,7 +117,6 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
         "TextRangePattern.GetText": "Accessibility",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -189,7 +184,6 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
 exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Accessibility Windows",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -197,7 +191,6 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
     "Name": "Accessibility Windows Usage of accessibility properties.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -205,7 +198,6 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
         "TextRangePattern.GetText": "Accessibility Windows",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -273,7 +265,6 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
 exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "AccessibilityInfo",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -281,7 +272,6 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
     "Name": "AccessibilityInfo Examples of using AccessibilityInfo APIs.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -289,7 +279,6 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
         "TextRangePattern.GetText": "AccessibilityInfo",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -357,7 +346,6 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
 exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "ActivityIndicator",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -365,7 +353,6 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
     "Name": "ActivityIndicator Animated loading indicators.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -373,7 +360,6 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
         "TextRangePattern.GetText": "ActivityIndicator",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -441,7 +427,6 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
 exports[`Home UIA Tree Dump Alerts 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Alerts",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -449,7 +434,6 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
     "Name": "Alerts Alerts display a concise and informative message and prompt the user to make a decision.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -457,7 +441,6 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
         "TextRangePattern.GetText": "Alerts",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -525,7 +508,6 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
 exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Animated - Gratuitous App",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -533,7 +515,6 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
     "Name": "Animated - Gratuitous App Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -541,7 +522,6 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
         "TextRangePattern.GetText": "Animated - Gratuitous App",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -609,7 +589,6 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
 exports[`Home UIA Tree Dump Animated 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Animated",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -617,7 +596,6 @@ exports[`Home UIA Tree Dump Animated 1`] = `
     "Name": "Animated Library designed to make animations fluid, powerful, and painless to build and maintain.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -625,7 +603,6 @@ exports[`Home UIA Tree Dump Animated 1`] = `
         "TextRangePattern.GetText": "Animated",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -693,7 +670,6 @@ exports[`Home UIA Tree Dump Animated 1`] = `
 exports[`Home UIA Tree Dump AppState 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "AppState",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -701,7 +677,6 @@ exports[`Home UIA Tree Dump AppState 1`] = `
     "Name": "AppState app background status",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -709,7 +684,6 @@ exports[`Home UIA Tree Dump AppState 1`] = `
         "TextRangePattern.GetText": "AppState",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -777,7 +751,6 @@ exports[`Home UIA Tree Dump AppState 1`] = `
 exports[`Home UIA Tree Dump Appearance 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Appearance",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -785,7 +758,6 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
     "Name": "Appearance Light and dark user interface examples.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -793,7 +765,6 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
         "TextRangePattern.GetText": "Appearance",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -861,7 +832,6 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
 exports[`Home UIA Tree Dump Border 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Border",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -869,7 +839,6 @@ exports[`Home UIA Tree Dump Border 1`] = `
     "Name": "Border Demonstrates some of the border styles available to Views.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -877,7 +846,6 @@ exports[`Home UIA Tree Dump Border 1`] = `
         "TextRangePattern.GetText": "Border",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -945,7 +913,6 @@ exports[`Home UIA Tree Dump Border 1`] = `
 exports[`Home UIA Tree Dump Button 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -953,7 +920,6 @@ exports[`Home UIA Tree Dump Button 1`] = `
     "Name": "Button Simple React Native button component.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -961,7 +927,6 @@ exports[`Home UIA Tree Dump Button 1`] = `
         "TextRangePattern.GetText": "Button",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1029,14 +994,12 @@ exports[`Home UIA Tree Dump Button 1`] = `
 exports[`Home UIA Tree Dump Components Tab 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "components-tab",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1171,7 +1134,6 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
 exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Composition Bugs Example",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1179,7 +1141,6 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
     "Name": "Composition Bugs Example See bugs in UI.Composition driven native animations",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1187,7 +1148,6 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
         "TextRangePattern.GetText": "Composition Bugs Example",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1255,7 +1215,6 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
 exports[`Home UIA Tree Dump Crash 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Crash",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1263,7 +1222,6 @@ exports[`Home UIA Tree Dump Crash 1`] = `
     "Name": "Crash Crash examples.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1271,7 +1229,6 @@ exports[`Home UIA Tree Dump Crash 1`] = `
         "TextRangePattern.GetText": "Crash",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1339,7 +1296,6 @@ exports[`Home UIA Tree Dump Crash 1`] = `
 exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Cxx TurboModule",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1347,7 +1303,6 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
     "Name": "Cxx TurboModule Usage of Cxx TurboModule",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1355,7 +1310,6 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
         "TextRangePattern.GetText": "Cxx TurboModule",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1423,7 +1377,6 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
 exports[`Home UIA Tree Dump DevSettings 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "DevSettings",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1431,7 +1384,6 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
     "Name": "DevSettings Customize the development settings",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1439,7 +1391,6 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
         "TextRangePattern.GetText": "DevSettings",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1507,7 +1458,6 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
 exports[`Home UIA Tree Dump Dimensions 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Dimensions",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1515,7 +1465,6 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
     "Name": "Dimensions Dimensions of the viewport",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1523,7 +1472,6 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
         "TextRangePattern.GetText": "Dimensions",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1591,7 +1539,6 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
 exports[`Home UIA Tree Dump Display: contents 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Display: contents",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1599,7 +1546,6 @@ exports[`Home UIA Tree Dump Display: contents 1`] = `
     "Name": "Display: contents Demonstrates various ways display: contents may be used in the tree",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1607,7 +1553,6 @@ exports[`Home UIA Tree Dump Display: contents 1`] = `
         "TextRangePattern.GetText": "Display: contents",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1675,7 +1620,6 @@ exports[`Home UIA Tree Dump Display: contents 1`] = `
 exports[`Home UIA Tree Dump Display:none Style 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Display:none Style",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1683,7 +1627,6 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
     "Name": "Display:none Style Style prop which will collapse the element in XAML tree.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1691,7 +1634,6 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
         "TextRangePattern.GetText": "Display:none Style",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1759,7 +1701,6 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
 exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Drawing Island Example",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1767,7 +1708,6 @@ exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
     "Name": "Drawing Island Example Sample Fabric Native Component that contains a custom ContentIsland",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1775,7 +1715,6 @@ exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
         "TextRangePattern.GetText": "Drawing Island Example",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1843,7 +1782,6 @@ exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
 exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Fabric Native Component",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1851,7 +1789,6 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
     "Name": "Fabric Native Component Sample Fabric Native Component that sizes based on max desired size of native XAML contained within",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1859,7 +1796,6 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
         "TextRangePattern.GetText": "Fabric Native Component",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1927,7 +1863,6 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
 exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Fabric Native Component Yoga",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -1935,7 +1870,6 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
     "Name": "Fabric Native Component Yoga Sample Fabric Native Component that places native XAML inside a container sized by yoga",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1943,7 +1877,6 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
         "TextRangePattern.GetText": "Fabric Native Component Yoga",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2011,7 +1944,6 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
 exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Fast Path Texts",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2019,7 +1951,6 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
     "Name": "Fast Path Texts Examples of performant fast path texts, turn on IsTextPerformanceVisualizationEnabled to visualize examples",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2027,7 +1958,6 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
         "TextRangePattern.GetText": "Fast Path Texts",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2095,7 +2025,6 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
 exports[`Home UIA Tree Dump Filter 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Filter",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2103,7 +2032,6 @@ exports[`Home UIA Tree Dump Filter 1`] = `
     "Name": "Filter A set of graphical effects that can be applied to a view.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2111,7 +2039,6 @@ exports[`Home UIA Tree Dump Filter 1`] = `
         "TextRangePattern.GetText": "Filter",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2179,7 +2106,6 @@ exports[`Home UIA Tree Dump Filter 1`] = `
 exports[`Home UIA Tree Dump FlatList 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "FlatList",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2187,7 +2113,6 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
     "Name": "FlatList Performant, scrollable list of data.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2195,7 +2120,6 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
         "TextRangePattern.GetText": "FlatList",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2263,7 +2187,6 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
 exports[`Home UIA Tree Dump Flyout 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Flyout",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2271,7 +2194,6 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
     "Name": "Flyout Displays content on top of existing content, within the bounds of the application window.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2279,7 +2201,6 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
         "TextRangePattern.GetText": "Flyout",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2347,7 +2268,6 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
 exports[`Home UIA Tree Dump Glyph UWP 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Glyph UWP",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2355,7 +2275,6 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
     "Name": "Glyph UWP Usage of Glyph control.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2363,7 +2282,6 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
         "TextRangePattern.GetText": "Glyph UWP",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2431,7 +2349,6 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
 exports[`Home UIA Tree Dump Image 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Image",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2439,7 +2356,6 @@ exports[`Home UIA Tree Dump Image 1`] = `
     "Name": "Image Base component for displaying different types of images.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2447,7 +2363,6 @@ exports[`Home UIA Tree Dump Image 1`] = `
         "TextRangePattern.GetText": "Image",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2515,7 +2430,6 @@ exports[`Home UIA Tree Dump Image 1`] = `
 exports[`Home UIA Tree Dump Keyboard 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Keyboard",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2523,7 +2437,6 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
     "Name": "Keyboard Demonstrates usage of the "Keyboard" static API",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2531,7 +2444,6 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
         "TextRangePattern.GetText": "Keyboard",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2599,7 +2511,6 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
 exports[`Home UIA Tree Dump Keyboard 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Keyboard",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2607,7 +2518,6 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
     "Name": "Keyboard Demonstrates usage of the "Keyboard" static API",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2615,7 +2525,6 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
         "TextRangePattern.GetText": "Keyboard",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2683,7 +2592,6 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
 exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Keyboard Focus Example",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2691,7 +2599,6 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
     "Name": "Keyboard Focus Example Demo of keyboard focus.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2699,7 +2606,6 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
         "TextRangePattern.GetText": "Keyboard Focus Example",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2767,7 +2673,6 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
 exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Keyboard extension Example",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2775,7 +2680,6 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
     "Name": "Keyboard extension Example Demo of keyboard properties.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2783,7 +2687,6 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
         "TextRangePattern.GetText": "Keyboard extension Example",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2851,7 +2754,6 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
 exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Layout - Flexbox",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2859,7 +2761,6 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
     "Name": "Layout - Flexbox Examples of using the flexbox API to layout views.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2867,7 +2768,6 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
         "TextRangePattern.GetText": "Layout - Flexbox",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2935,7 +2835,6 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
 exports[`Home UIA Tree Dump Layout Events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Layout Events",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -2943,7 +2842,6 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
     "Name": "Layout Events Examples that show how Layout events can be used to measure view size and position.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2951,7 +2849,6 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
         "TextRangePattern.GetText": "Layout Events",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3019,7 +2916,6 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
 exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Legacy Native Module",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3027,7 +2923,6 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
     "Name": "Legacy Native Module Usage of legacy Native Module",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3035,7 +2930,6 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
         "TextRangePattern.GetText": "Legacy Native Module",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3103,7 +2997,6 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
 exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "LegacyControlStyleTest",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3111,7 +3004,6 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
     "Name": "LegacyControlStyleTest Legacy e2e test for Control Styles",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3119,7 +3011,6 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
         "TextRangePattern.GetText": "LegacyControlStyleTest",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3187,7 +3078,6 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
 exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "LegacyImageTest",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3195,7 +3085,6 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
     "Name": "LegacyImageTest Legacy e2e test for Image",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3203,7 +3092,6 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
         "TextRangePattern.GetText": "LegacyImageTest",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3271,7 +3159,6 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
 exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "LegacyLoginTest",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3279,7 +3166,6 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
     "Name": "LegacyLoginTest Legacy e2e test for TextInput with password",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3287,7 +3173,6 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
         "TextRangePattern.GetText": "LegacyLoginTest",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3355,7 +3240,6 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
 exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "LegacySelectableTextTest",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3363,7 +3247,6 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
     "Name": "LegacySelectableTextTest Legacy e2e test for selectable Text hit testing",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3371,7 +3254,6 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
         "TextRangePattern.GetText": "LegacySelectableTextTest",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3439,7 +3321,6 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
 exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "LegacyTextHitTestTest",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3447,7 +3328,6 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
     "Name": "LegacyTextHitTestTest Legacy e2e test for Text hit testing",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3455,7 +3335,6 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
         "TextRangePattern.GetText": "LegacyTextHitTestTest",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3523,7 +3402,6 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
 exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "LegacyTextInputTest",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3531,7 +3409,6 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
     "Name": "LegacyTextInputTest Legacy e2e test for TextInput",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3539,7 +3416,6 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
         "TextRangePattern.GetText": "LegacyTextInputTest",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3607,7 +3483,6 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
 exports[`Home UIA Tree Dump Linking 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Linking",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3615,7 +3490,6 @@ exports[`Home UIA Tree Dump Linking 1`] = `
     "Name": "Linking Shows how to use Linking to open URLs.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3623,7 +3497,6 @@ exports[`Home UIA Tree Dump Linking 1`] = `
         "TextRangePattern.GetText": "Linking",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3691,7 +3564,6 @@ exports[`Home UIA Tree Dump Linking 1`] = `
 exports[`Home UIA Tree Dump Modal 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Modal",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3699,7 +3571,6 @@ exports[`Home UIA Tree Dump Modal 1`] = `
     "Name": "Modal Component for presenting modal views.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3707,7 +3578,6 @@ exports[`Home UIA Tree Dump Modal 1`] = `
         "TextRangePattern.GetText": "Modal",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3775,7 +3645,6 @@ exports[`Home UIA Tree Dump Modal 1`] = `
 exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Mouse Click Events",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3783,7 +3652,6 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
     "Name": "Mouse Click Events Tests that mouse click events work on intended components",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3791,7 +3659,6 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
         "TextRangePattern.GetText": "Mouse Click Events",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3859,7 +3726,6 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
 exports[`Home UIA Tree Dump Mouse Events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Mouse Events",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3867,7 +3733,6 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
     "Name": "Mouse Events Tests that mouse events can be observed",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3875,7 +3740,6 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
         "TextRangePattern.GetText": "Mouse Events",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3943,7 +3807,6 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
 exports[`Home UIA Tree Dump Moving Light Example 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Moving Light Example",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -3951,7 +3814,6 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
     "Name": "Moving Light Example Sample Custom Fabric Native Component",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3959,7 +3821,6 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
         "TextRangePattern.GetText": "Moving Light Example",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4027,7 +3888,6 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
 exports[`Home UIA Tree Dump Native Animated Example 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Native Animated Example",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4035,7 +3895,6 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
     "Name": "Native Animated Example Test out Native Animations",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4043,7 +3902,6 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
         "TextRangePattern.GetText": "Native Animated Example",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4111,7 +3969,6 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
 exports[`Home UIA Tree Dump New App Screen 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "New App Screen",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4119,7 +3976,6 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
     "Name": "New App Screen Displays the content of the new app screen",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4127,7 +3983,6 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
         "TextRangePattern.GetText": "New App Screen",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4195,7 +4050,6 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
 exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "PanResponder Sample",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4203,7 +4057,6 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
     "Name": "PanResponder Sample Shows the Use of PanResponder to provide basic gesture handling",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4211,7 +4064,6 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
         "TextRangePattern.GetText": "PanResponder Sample",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4279,7 +4131,6 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
 exports[`Home UIA Tree Dump Performance API Examples 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Performance API Examples",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4287,7 +4138,6 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
     "Name": "Performance API Examples Shows the performance API provided in React Native",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4295,7 +4145,6 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
         "TextRangePattern.GetText": "Performance API Examples",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4363,7 +4212,6 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
 exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Performance Comparison Examples",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4371,7 +4219,6 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
     "Name": "Performance Comparison Examples Compare performance with bad and good examples. Use React DevTools to highlight re-renders is recommended.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4379,7 +4226,6 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
         "TextRangePattern.GetText": "Performance Comparison Examples",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4447,7 +4293,6 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
 exports[`Home UIA Tree Dump PixelRatio 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "PixelRatio",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4455,7 +4300,6 @@ exports[`Home UIA Tree Dump PixelRatio 1`] = `
     "Name": "PixelRatio Gives access to device's pixel density and font scale",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4463,7 +4307,6 @@ exports[`Home UIA Tree Dump PixelRatio 1`] = `
         "TextRangePattern.GetText": "PixelRatio",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4531,7 +4374,6 @@ exports[`Home UIA Tree Dump PixelRatio 1`] = `
 exports[`Home UIA Tree Dump PlatformColor 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "PlatformColor",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4539,7 +4381,6 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
     "Name": "PlatformColor Examples that show how PlatformColors may be used in an app.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4547,7 +4388,6 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
         "TextRangePattern.GetText": "PlatformColor",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4615,7 +4455,6 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
 exports[`Home UIA Tree Dump Pointer Events 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Pointer Events",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4623,7 +4462,6 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
     "Name": "Pointer Events Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4631,7 +4469,6 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
         "TextRangePattern.GetText": "Pointer Events",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4699,7 +4536,6 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
 exports[`Home UIA Tree Dump Popup 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Popup",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4707,7 +4543,6 @@ exports[`Home UIA Tree Dump Popup 1`] = `
     "Name": "Popup Displays content on top of existing content, within the bounds of the application window.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4715,7 +4550,6 @@ exports[`Home UIA Tree Dump Popup 1`] = `
         "TextRangePattern.GetText": "Popup",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4783,7 +4617,6 @@ exports[`Home UIA Tree Dump Popup 1`] = `
 exports[`Home UIA Tree Dump Pressable 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Pressable",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4791,7 +4624,6 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
     "Name": "Pressable Component for making views pressable.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4799,7 +4631,6 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
         "TextRangePattern.GetText": "Pressable",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4867,7 +4698,6 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
 exports[`Home UIA Tree Dump RTLExample 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "RTLExample",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4875,7 +4705,6 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
     "Name": "RTLExample Examples to show how to apply components to RTL layout.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4883,7 +4712,6 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
         "TextRangePattern.GetText": "RTLExample",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4951,7 +4779,6 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
 exports[`Home UIA Tree Dump ScrollView 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "ScrollView",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -4959,7 +4786,6 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
     "Name": "ScrollView Component that enables scrolling through child components",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -4967,7 +4793,6 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
         "TextRangePattern.GetText": "ScrollView",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5035,7 +4860,6 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
 exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "ScrollViewAnimated",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5043,7 +4867,6 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
     "Name": "ScrollViewAnimated Component that is animated when ScrollView is offset.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5051,7 +4874,6 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
         "TextRangePattern.GetText": "ScrollViewAnimated",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5119,7 +4941,6 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
 exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "ScrollViewSimpleExample",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5127,7 +4948,6 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
     "Name": "ScrollViewSimpleExample Component that enables scrolling through child components.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5135,7 +4955,6 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
         "TextRangePattern.GetText": "ScrollViewSimpleExample",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5203,7 +5022,6 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
 exports[`Home UIA Tree Dump Search Bar 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "explorer_search",
     "ControlType": 50004,
     "HelpText": "Search...",
@@ -5314,7 +5132,6 @@ exports[`Home UIA Tree Dump Search Bar 1`] = `
 exports[`Home UIA Tree Dump SectionList 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "SectionList",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5322,7 +5139,6 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
     "Name": "SectionList Performant, scrollable list of data.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5330,7 +5146,6 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
         "TextRangePattern.GetText": "SectionList",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5398,7 +5213,6 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
 exports[`Home UIA Tree Dump Share 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Share",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5406,7 +5220,6 @@ exports[`Home UIA Tree Dump Share 1`] = `
     "Name": "Share Share data with other Apps.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5414,7 +5227,6 @@ exports[`Home UIA Tree Dump Share 1`] = `
         "TextRangePattern.GetText": "Share",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5482,7 +5294,6 @@ exports[`Home UIA Tree Dump Share 1`] = `
 exports[`Home UIA Tree Dump SwipeableCard 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "SwipeableCard",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5490,7 +5301,6 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
     "Name": "SwipeableCard Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5498,7 +5308,6 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
         "TextRangePattern.GetText": "SwipeableCard",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5566,7 +5375,6 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
 exports[`Home UIA Tree Dump Switch 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Switch",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5574,7 +5382,6 @@ exports[`Home UIA Tree Dump Switch 1`] = `
     "Name": "Switch Native boolean input",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5582,7 +5389,6 @@ exports[`Home UIA Tree Dump Switch 1`] = `
         "TextRangePattern.GetText": "Switch",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5650,7 +5456,6 @@ exports[`Home UIA Tree Dump Switch 1`] = `
 exports[`Home UIA Tree Dump Text 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Text",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5658,7 +5463,6 @@ exports[`Home UIA Tree Dump Text 1`] = `
     "Name": "Text Base component for rendering styled text.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5666,7 +5470,6 @@ exports[`Home UIA Tree Dump Text 1`] = `
         "TextRangePattern.GetText": "Text",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5734,7 +5537,6 @@ exports[`Home UIA Tree Dump Text 1`] = `
 exports[`Home UIA Tree Dump TextInput 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "TextInput",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5742,7 +5544,6 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
     "Name": "TextInput Single and multi-line text inputs.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5750,7 +5551,6 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
         "TextRangePattern.GetText": "TextInput",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5818,7 +5618,6 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
 exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "TextInputs with key prop",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5826,7 +5625,6 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
     "Name": "TextInputs with key prop Periodically render large number of TextInputs with key prop without a Runtime Error",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5834,7 +5632,6 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
         "TextRangePattern.GetText": "TextInputs with key prop",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5902,7 +5699,6 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
 exports[`Home UIA Tree Dump Timers 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Timers",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5910,7 +5706,6 @@ exports[`Home UIA Tree Dump Timers 1`] = `
     "Name": "Timers A demonstration of Timers in React Native.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5918,7 +5713,6 @@ exports[`Home UIA Tree Dump Timers 1`] = `
         "TextRangePattern.GetText": "Timers",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5986,7 +5780,6 @@ exports[`Home UIA Tree Dump Timers 1`] = `
 exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Touchable* and onPress",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -5994,7 +5787,6 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
     "Name": "Touchable* and onPress Touchable and onPress examples.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6002,7 +5794,6 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
         "TextRangePattern.GetText": "Touchable* and onPress",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6070,7 +5861,6 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
 exports[`Home UIA Tree Dump TransferProperties 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "TransferProperties",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6078,7 +5868,6 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
     "Name": "TransferProperties Some tests that change the backing XAML element to see if transfer properties is working.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6086,7 +5875,6 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
         "TextRangePattern.GetText": "TransferProperties",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6154,7 +5942,6 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
 exports[`Home UIA Tree Dump Transforms 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Transforms",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6162,7 +5949,6 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
     "Name": "Transforms View transforms",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6170,7 +5956,6 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
         "TextRangePattern.GetText": "Transforms",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6238,7 +6023,6 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
 exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "TransparentHitTestExample",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6246,7 +6030,6 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
     "Name": "TransparentHitTestExample Transparent view receiving touch events",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6254,7 +6037,6 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
         "TextRangePattern.GetText": "TransparentHitTestExample",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6322,7 +6104,6 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
 exports[`Home UIA Tree Dump TurboModule 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "TurboModule",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6330,7 +6111,6 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
     "Name": "TurboModule Usage of TurboModule",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6338,7 +6118,6 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
         "TextRangePattern.GetText": "TurboModule",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6406,7 +6185,6 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
 exports[`Home UIA Tree Dump View 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "View",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6414,7 +6192,6 @@ exports[`Home UIA Tree Dump View 1`] = `
     "Name": "View Basic building block of all UI, examples that demonstrate some of the many styles available.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6422,7 +6199,6 @@ exports[`Home UIA Tree Dump View 1`] = `
         "TextRangePattern.GetText": "View",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6490,7 +6266,6 @@ exports[`Home UIA Tree Dump View 1`] = `
 exports[`Home UIA Tree Dump WebSocket 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "WebSocket",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6498,7 +6273,6 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
     "Name": "WebSocket WebSocket API",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6506,7 +6280,6 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
         "TextRangePattern.GetText": "WebSocket",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6574,7 +6347,6 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
 exports[`Home UIA Tree Dump XAML 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "XAML",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6582,7 +6354,6 @@ exports[`Home UIA Tree Dump XAML 1`] = `
     "Name": "XAML Usage of react-native-xaml controls",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6590,7 +6361,6 @@ exports[`Home UIA Tree Dump XAML 1`] = `
         "TextRangePattern.GetText": "XAML",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6658,7 +6428,6 @@ exports[`Home UIA Tree Dump XAML 1`] = `
 exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "XMLHttpRequest",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6666,7 +6435,6 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
     "Name": "XMLHttpRequest Example that demonstrates upload and download requests using XMLHttpRequest.",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6674,7 +6442,6 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
         "TextRangePattern.GetText": "XMLHttpRequest",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6742,7 +6509,6 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
 exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "Xaml WinUI3 (Experimental, for Fabric)",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
@@ -6750,7 +6516,6 @@ exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
     "Name": "Xaml WinUI3 (Experimental, for Fabric) Requires UseExperimentalWinUI3 - Xaml content that works in Fabric",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -6758,7 +6523,6 @@ exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
         "TextRangePattern.GetText": "Xaml WinUI3 (Experimental, for Fabric)",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",

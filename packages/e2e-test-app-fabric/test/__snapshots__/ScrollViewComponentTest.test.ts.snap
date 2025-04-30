@@ -3,14 +3,12 @@
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom button 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "scroll_to_bottom_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -61,14 +59,12 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "scroll_to_end_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -119,14 +115,12 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "scroll_to_start_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -177,14 +171,12 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "scroll_to_top_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -235,14 +227,12 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
 exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "scroll_horizontal",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "ScrollPattern.HorizontallyScrollable": true,
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -250,7 +240,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 0",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -258,7 +247,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 1",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -266,7 +254,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 2",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -274,7 +261,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 3",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -282,7 +268,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 4",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -290,7 +275,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -298,7 +282,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 6",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -306,7 +289,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 7",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -314,7 +296,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 8",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -322,7 +303,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 9",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -330,7 +310,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         "TextRangePattern.GetText": "Item 10",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -895,14 +874,12 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
 exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "flash_scroll_indicators_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",

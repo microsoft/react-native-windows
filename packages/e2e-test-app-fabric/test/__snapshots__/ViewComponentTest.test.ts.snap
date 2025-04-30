@@ -3,7 +3,6 @@
 exports[`View Tests Views can have a hitslop region 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "hitslop",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -32,14 +31,12 @@ exports[`View Tests Views can have a hitslop region 1`] = `
 exports[`View Tests Views can have a nativeid 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "nativeid",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "NativeID Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -87,14 +84,12 @@ exports[`View Tests Views can have a nativeid 1`] = `
 exports[`View Tests Views can have a z-index 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "z-index-button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -102,7 +97,6 @@ exports[`View Tests Views can have a z-index 1`] = `
         "TextRangePattern.GetText": "ZIndex -1",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -110,7 +104,6 @@ exports[`View Tests Views can have a z-index 1`] = `
         "TextRangePattern.GetText": "Tap to flip sorting order",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -118,7 +111,6 @@ exports[`View Tests Views can have a z-index 1`] = `
         "TextRangePattern.GetText": "ZIndex 0",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -126,7 +118,6 @@ exports[`View Tests Views can have a z-index 1`] = `
         "TextRangePattern.GetText": "ZIndex 1",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -333,14 +324,12 @@ exports[`View Tests Views can have a z-index 1`] = `
 exports[`View Tests Views can have aria-labels 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-aria-label",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Blue background View with Text",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -392,14 +381,12 @@ exports[`View Tests Views can have aria-labels 1`] = `
 exports[`View Tests Views can have backface visibility 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-backface-visibility",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Backface Visibility Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -407,7 +394,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "TextRangePattern.GetText": "View #1, front is visible, back is hidden.",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -415,7 +401,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "TextRangePattern.GetText": "Front",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -423,7 +408,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "TextRangePattern.GetText": "Back (You should not see this)",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -431,7 +415,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "TextRangePattern.GetText": "View #2, front is hidden, back is visible.",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -439,7 +422,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "TextRangePattern.GetText": "Front (You should not see this)",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -651,14 +633,12 @@ exports[`View Tests Views can have backface visibility 1`] = `
 exports[`View Tests Views can have background color 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-background-color",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Background Color Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -710,14 +690,12 @@ exports[`View Tests Views can have background color 1`] = `
 exports[`View Tests Views can have border styles 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "border-style-button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -725,7 +703,6 @@ exports[`View Tests Views can have border styles 1`] = `
         "TextRangePattern.GetText": "Dashed border style",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -904,14 +881,12 @@ exports[`View Tests Views can have border styles 1`] = `
 exports[`View Tests Views can have borders 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-border",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Border Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -999,7 +974,6 @@ exports[`View Tests Views can have borders 1`] = `
 exports[`View Tests Views can have customized accessibility 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessibility",
     "ControlType": 50000,
     "ExpandCollapsePattern.ExpandCollapseState": "Expanded",
@@ -1014,7 +988,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
     "TogglePattern.ToggleState": "On",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1022,7 +995,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
         "TextRangePattern.GetText": "A View with accessibility values.",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1030,13 +1002,11 @@ exports[`View Tests Views can have customized accessibility 1`] = `
         "TextRangePattern.GetText": "Current Number of Accessibility Taps: 0",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "LocalizedControlType": "group",
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1154,14 +1124,12 @@ exports[`View Tests Views can have customized accessibility 1`] = `
 exports[`View Tests Views can have customized opacity 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-opacity",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Opacity Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1169,7 +1137,6 @@ exports[`View Tests Views can have customized opacity 1`] = `
         "TextRangePattern.GetText": "Opacity 0",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1177,7 +1144,6 @@ exports[`View Tests Views can have customized opacity 1`] = `
         "TextRangePattern.GetText": "Opacity 0.1",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1185,7 +1151,6 @@ exports[`View Tests Views can have customized opacity 1`] = `
         "TextRangePattern.GetText": "Opacity 0.3",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1193,7 +1158,6 @@ exports[`View Tests Views can have customized opacity 1`] = `
         "TextRangePattern.GetText": "Opacity 0.5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1201,7 +1165,6 @@ exports[`View Tests Views can have customized opacity 1`] = `
         "TextRangePattern.GetText": "Opacity 0.7",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1209,7 +1172,6 @@ exports[`View Tests Views can have customized opacity 1`] = `
         "TextRangePattern.GetText": "Opacity 0.9",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1491,14 +1453,12 @@ exports[`View Tests Views can have customized opacity 1`] = `
 exports[`View Tests Views can have customized pasdding and margins 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-padding-margin",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Padding/Margin Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1506,7 +1466,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
         "TextRangePattern.GetText": "5px padding",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1514,7 +1473,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
         "TextRangePattern.GetText": "5px margin",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1522,7 +1480,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
         "TextRangePattern.GetText": "5px margin and padding,",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1844,14 +1801,12 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
 exports[`View Tests Views can have display: none 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "display-none-button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1898,7 +1853,6 @@ exports[`View Tests Views can have display: none 1`] = `
 exports[`View Tests Views can have flexgap 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-flexgap",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -2187,13 +2141,11 @@ exports[`View Tests Views can have flexgap 1`] = `
 exports[`View Tests Views can have insets 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-insets",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2201,7 +2153,6 @@ exports[`View Tests Views can have insets 1`] = `
         "TextRangePattern.GetText": "inset 5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2209,7 +2160,6 @@ exports[`View Tests Views can have insets 1`] = `
         "TextRangePattern.GetText": "insetBlock 5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2217,7 +2167,6 @@ exports[`View Tests Views can have insets 1`] = `
         "TextRangePattern.GetText": "insetBlockEnd 5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2225,7 +2174,6 @@ exports[`View Tests Views can have insets 1`] = `
         "TextRangePattern.GetText": "insetBlockStart 5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2233,7 +2181,6 @@ exports[`View Tests Views can have insets 1`] = `
         "TextRangePattern.GetText": "insetInline 5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2241,7 +2188,6 @@ exports[`View Tests Views can have insets 1`] = `
         "TextRangePattern.GetText": "insetInlineEnd 5",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2930,14 +2876,12 @@ exports[`View Tests Views can have insets 1`] = `
 exports[`View Tests Views can have logical border colors 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-logical-border-color",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Logical Border Color Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2945,7 +2889,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
         "TextRangePattern.GetText": "borderBlockColor orange",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -2953,7 +2896,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
         "TextRangePattern.GetText": "borderBlockStartColor purple",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3265,14 +3207,12 @@ exports[`View Tests Views can have logical border colors 1`] = `
 exports[`View Tests Views can have offscreen alpha compositing 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "offscreen-alpha-compositing-button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3280,7 +3220,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
         "TextRangePattern.GetText": "Blobs",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3288,7 +3227,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
         "TextRangePattern.GetText": "Same blobs, but their shared container have 0.5 opacity",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3470,14 +3408,12 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
 exports[`View Tests Views can have overflow 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-overflow",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Rounded Borders Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3485,7 +3421,6 @@ exports[`View Tests Views can have overflow 1`] = `
         "TextRangePattern.GetText": "undefined",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3493,7 +3428,6 @@ exports[`View Tests Views can have overflow 1`] = `
         "TextRangePattern.GetText": "hidden",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -3767,7 +3701,6 @@ exports[`View Tests Views can have overflow 1`] = `
 exports[`View Tests Views can have rounded borders 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-rounded-borders",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -4516,7 +4449,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
 exports[`View Tests Views can have rounded borders 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "view-test-rounded-borders",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -5265,7 +5197,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
 exports[`View Tests Views can have shadows 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "shadow",
     "ControlType": 50026,
     "LocalizedControlType": "group",
@@ -5290,14 +5221,12 @@ exports[`View Tests Views can have shadows 1`] = `
 exports[`View Tests Views can have tooltips 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "tool-tip",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Tooltip Example",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5305,7 +5234,6 @@ exports[`View Tests Views can have tooltips 1`] = `
         "TextRangePattern.GetText": "This Parent View has tooltip "Parent View"",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -5313,7 +5241,6 @@ exports[`View Tests Views can have tooltips 1`] = `
         "TextRangePattern.GetText": "This view has tooltip "Child View 1"",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",

@@ -3,13 +3,11 @@
 exports[`Pressable Tests Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_set",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
@@ -18,7 +16,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "SizeofSet": 3,
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -28,7 +25,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
@@ -38,7 +34,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "SizeofSet": 3,
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -48,7 +43,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
@@ -58,7 +52,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "SizeofSet": 3,
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -199,14 +192,12 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
 exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_disabled_false",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -253,7 +244,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
 exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_disabled_true",
     "ControlType": 50026,
     "IsEnabled": false,
@@ -261,7 +251,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -311,14 +300,12 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
 exports[`Pressable Tests Pressables can change style when pressed 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "style-change-pressable",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -369,7 +356,6 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
 exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "one_press_me_button",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -394,7 +380,6 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`
 exports[`Pressable Tests Pressables can change text on press/rest, state rest 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_press_console",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -419,14 +404,12 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 2`
 exports[`Pressable Tests Pressables can have advanced borders 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_hit_slop_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -477,14 +460,12 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
 exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_delay_events_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -531,13 +512,11 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
 exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_delay_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -545,7 +524,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
         "TextRangePattern.GetText": "pressOut",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -652,7 +630,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
 exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_feedback_events_button",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -661,7 +638,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -709,13 +685,11 @@ exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
 exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_feedback_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -806,7 +780,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
 exports[`Pressable Tests Pressables can have event handlers, hover and click 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_feedback_events_button",
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
@@ -815,7 +788,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 1`]
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -863,13 +835,11 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 1`]
 exports[`Pressable Tests Pressables can have event handlers, hover and click 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_feedback_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -877,7 +847,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
         "TextRangePattern.GetText": "pressOut",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -885,7 +854,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
         "TextRangePattern.GetText": "press",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -893,7 +861,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
         "TextRangePattern.GetText": "pressIn",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1032,14 +999,12 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
 exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "pressable_hit_slop_button",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1090,83 +1055,71 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
 exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "opacity_pressable",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
@@ -1446,20 +1399,17 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
 exports[`Pressable Tests Pressables can have their accessibility and keyboard focus removed 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "accessible_pressable",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1469,7 +1419,6 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1477,13 +1426,11 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
         "TextRangePattern.GetText": "Pressable with accessible=false",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "LocalizedControlType": "group",
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1493,7 +1440,6 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1668,14 +1614,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
 exports[`Pressable Tests Pressables can have tooltips 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "tooltip_pressable",
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1722,13 +1666,11 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
 exports[`Pressable Tests Pressables can hide their backface 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "backface_pressable",
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1736,14 +1678,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "TextRangePattern.GetText": "View #1, front is visible, back is hidden.",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1753,14 +1693,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1770,7 +1708,6 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
@@ -1778,14 +1715,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "TextRangePattern.GetText": "View #2, front is hidden, back is visible.",
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -1795,14 +1730,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         ],
       },
       {
-        "AnnotationPattern.TypeId": 60000,
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
         "__Children": [
           {
-            "AnnotationPattern.TypeId": 60000,
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
@@ -2027,7 +1960,6 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
 exports[`Pressable Tests Text can have pressable behavior 1`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "tappable_text",
     "ControlType": 50020,
     "LocalizedControlType": "text",
@@ -2052,7 +1984,6 @@ exports[`Pressable Tests Text can have pressable behavior 1`] = `
 exports[`Pressable Tests Text can have pressable behavior 2`] = `
 {
   "Automation Tree": {
-    "AnnotationPattern.TypeId": 60000,
     "AutomationId": "tappable_text_console",
     "ControlType": 50020,
     "LocalizedControlType": "text",
