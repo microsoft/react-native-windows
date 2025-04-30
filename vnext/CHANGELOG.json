@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 30 Apr 2025 05:27:57 GMT",
+      "version": "0.0.0-canary.949",
+      "tag": "react-native-windows_v0.0.0-canary.949",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "99b2a74ecb0b06435eaa1efc8c1f34025943d3a7",
+            "comment": "Fix NuGet lock files and enforce them not changing accidentally"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 05:24:25 GMT",
       "version": "0.0.0-canary.948",
       "tag": "react-native-windows_v0.0.0-canary.948",
