@@ -94,6 +94,8 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\WinUI.props" Condition="'$(UseWinUI3)'=='true'" />
     <Import Project="..\PropertySheets\WebView2.props" Condition="'$(UseWinUI3)'=='true'" />
+    <!-- Added since we build this project with/without UseExperimentalWinUI3. -->
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>

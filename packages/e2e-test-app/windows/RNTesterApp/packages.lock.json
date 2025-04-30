@@ -40,6 +40,11 @@
         "resolved": "1.83.0",
         "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
+      "CDebug": {
+        "type": "Transitive",
+        "resolved": "0.0.3",
+        "contentHash": "C6pojNJ2rdJuOdhe0xhJ/FedNLRJkpCVLEEHsfgoU5d5kkOOVKK+7xlGWYgttB51nDB5dLDu/O8j03jSxu81oA=="
+      },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
         "resolved": "1.1.1",
@@ -224,6 +229,7 @@
       "reactnativexaml": {
         "type": "Project",
         "dependencies": {
+          "CDebug": "[0.0.3, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.UI.Xaml": "[2.8.0, )"
         }
