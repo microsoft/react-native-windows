@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add git repo check to creaternwapp.cmd and creaternwlib.cmd",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

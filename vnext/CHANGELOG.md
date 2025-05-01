@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 30 Apr 2025 05:27:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 01 May 2025 05:24:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.950
+
+Thu, 01 May 2025 05:24:00 GMT
+
+### Changes
+
+- Add git repo check to creaternwapp.cmd and creaternwlib.cmd (jthysell@microsoft.com)
 
 ## 0.0.0-canary.949
 
