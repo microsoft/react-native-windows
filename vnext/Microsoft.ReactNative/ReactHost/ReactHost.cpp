@@ -283,7 +283,15 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
  public:
   bool disableEventLoopOnBridgeless() override {
-    return true; // Disable event loop until we are on a JSI version that supports microtasks
+    return GetRuntimeOptionBool("ReactFeatureFlag.enableEventLoopOnBridgeless");
+  }
+
+  bool enableBridgelessArchitecture() override {
+#ifdef USE_FABRIC
+    return true;
+#else
+    return false;
+#endif
   }
 
   bool enableCppPropsIteratorSetter() override {
