@@ -26,7 +26,7 @@
     <FmtVersion>10.1.0</FmtVersion>
     <FmtCommitHash>ca2e3685b160617d3d95fcd9e789c4e06ca88</FmtCommitHash>
     <!-- Commit hash for https://github.com/microsoft/node-api-jsi code. -->
-    <NodeApiJsiCommitHash>83cfef428a97627c9185c73da097e42742de56eb</NodeApiJsiCommitHash>
+    <NodeApiJsiCommitHash>c961df09276263f52b36abe172d9664425d935f5</NodeApiJsiCommitHash>
   </PropertyGroup>
 
   <!--
