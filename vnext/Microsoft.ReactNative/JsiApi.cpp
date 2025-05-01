@@ -553,6 +553,14 @@ bool JsiRuntime::DrainMicrotasks(int32_t maxMicrotasksHint) try {
   throw;
 }
 
+void JsiRuntime::QueueMicrotask(JsiObjectRef callback) try {
+  auto funcPtr = RuntimeAccessor::AsPointerValue(callback);
+  auto const &jsiFunc = RuntimeAccessor::AsFunction(&funcPtr);
+  m_runtimeAccessor->queueMicrotask(jsiFunc);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
 JsiObjectRef JsiRuntime::Global() try {
   return PointerAccessor::MakeJsiObjectData(m_runtimeAccessor->global());
 } catch (JSI_SET_ERROR) {

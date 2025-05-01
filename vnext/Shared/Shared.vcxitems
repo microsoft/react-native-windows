@@ -558,8 +558,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\defaults\DefaultTurboModules.cpp" />
-    <!-- Uncomment this when we move to a newer JSI -->
-    <!-- <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\microtasks\NativeMicrotasks.cpp" /> -->
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\microtasks\NativeMicrotasks.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\featureflags\NativeReactNativeFeatureFlags.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\dom\NativeDOM.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\idlecallbacks\NativeIdleCallbacks.cpp" />
