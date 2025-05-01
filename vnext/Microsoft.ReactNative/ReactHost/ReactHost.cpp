@@ -6,6 +6,8 @@
 #include <ReactPropertyBag.h>
 #include <winrt/Windows.Foundation.h>
 
+#include <CppRuntimeOptions.h>
+
 #include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/featureflags/ReactNativeFeatureFlagsDefaults.h>
 
@@ -283,7 +285,7 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
  public:
   bool disableEventLoopOnBridgeless() override {
-    return GetRuntimeOptionBool("ReactFeatureFlag.enableEventLoopOnBridgeless");
+    return Microsoft::React::GetRuntimeOptionBool("ReactFeatureFlag.enableEventLoopOnBridgeless");
   }
 
   bool enableBridgelessArchitecture() override {
