@@ -136,7 +136,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::shared_ptr<Mso::React::IRedBoxHandler> GetRedBoxHandler() noexcept;
   std::function<void()> GetWaitingForDebuggerCallback() noexcept;
   std::function<void()> GetDebuggerAttachCallback() noexcept;
-  bool IsBridgeless() noexcept;
 
   void OnError(const Mso::ErrorCode &errorcode) noexcept;
   void OnErrorWithMessage(const std::string &errorMessage) noexcept;

@@ -350,12 +350,10 @@ void ReactInstanceWin::LoadModules(
 #endif
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  if (!IsBridgeless()) {
-    registerTurboModule(
-        L"UIManager",
-        // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
-  }
+  registerTurboModule(
+      L"UIManager",
+      // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
 #endif
 
 #ifndef CORE_ABI
@@ -489,7 +487,7 @@ void ReactInstanceWin::LoadModules(
 //! Initialize() is called from the native queue.
 void ReactInstanceWin::Initialize() noexcept {
 #ifdef USE_FABRIC
-  if (IsBridgeless()) {
+  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
     InitializeBridgeless();
   } else
 #endif
@@ -1159,11 +1157,6 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
       [batchingUIThread, instance = std::weak_ptr<facebook::react::Instance>(m_instance.Load())]() noexcept {
         batchingUIThread->decoratedNativeCallInvokerReady(instance);
       });
-}
-
-bool ReactInstanceWin::IsBridgeless() noexcept {
-  return winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetIsBridgeless(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 }
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
