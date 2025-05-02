@@ -174,6 +174,12 @@ export type Props = $ReadOnly<{|
    * Defaults to `white` if not provided and transparent is `false`. Ignored if `transparent` is `true`.
    */
   backdropColor?: ?string,
+
+  /**
+   * [Windows] The `title` prop sets the title of the modal window.
+   * Only applicable when `transparent` is `false`.
+   */
+  title?: ?string,
 |}>;
 
 function confirmProps(props: Props) {
@@ -329,7 +335,9 @@ class Modal extends React.Component<Props, State> {
         onStartShouldSetResponder={this._shouldSetResponder}
         supportedOrientations={this.props.supportedOrientations}
         onOrientationChange={this.props.onOrientationChange}
-        testID={this.props.testID}>
+        testID={this.props.testID}
+        title={this.props.title} // Add title prop here
+      >
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>
             <View

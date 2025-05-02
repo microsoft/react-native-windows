@@ -494,6 +494,13 @@
       "baseHash": "663d3325298404d7c012a6aa53e833eb5fc2ec76"
     },
     {
+      "type": "patch",
+      "file": "src-win/Libraries/Modal/Modal.d.ts",
+      "baseFile": "packages/react-native/Libraries/Modal/Modal.d.ts",
+      "baseHash": "aeebd34b8cccade2637e310a63a1e9a41f149f64",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "src-win/Libraries/Modal/Modal.windows.js",
       "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
@@ -612,6 +619,13 @@
       "file": "src-win/src/private/debugging/ReactDevToolsSettingsManager.windows.js",
       "baseFile": "packages/react-native/src/private/debugging/ReactDevToolsSettingsManager.android.js",
       "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/src/private/specs/components/RCTModalHostViewNativeComponent.windows.js",
+      "baseFile": "packages/react-native/src/private/specs/components/RCTModalHostViewNativeComponent.js",
+      "baseHash": "a5e0c9fe3a0777f704e0685589019b4dd443d385",
+      "issue": 0
     },
     {
       "type": "platform",
