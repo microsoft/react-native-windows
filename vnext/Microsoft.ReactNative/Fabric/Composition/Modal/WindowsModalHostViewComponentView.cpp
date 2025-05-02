@@ -7,12 +7,12 @@
 
 #include "../../../codegen/react/components/rnwcore/ModalHostView.g.h"
 #include <ComponentView.Experimental.interop.h>
+#include <debugapi.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
-#include <winrt/Windows.Foundation.h> 
-#include <debugapi.h>
+#include <winrt/Windows.Foundation.h>
 #include <winuser.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -81,7 +81,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     m_localProps = newProps;
 
     const auto &oldViewProps = *oldProps;
-    const auto &newViewProps = *newProps; 
+    const auto &newViewProps = *newProps;
 
     if (!oldProps || newViewProps.visible != oldViewProps.visible) {
       if (newProps->visible.value_or(true)) {
@@ -311,23 +311,23 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       }
 
       // Handle close request ('X' button)
-      m_appWindowClosingToken = m_appWindow.Closing(
-          [wkThis = get_weak()](
-              const winrt::Microsoft::UI::Windowing::AppWindow & /*sender*/,
-              const winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs &args) {
+      m_appWindowClosingToken =
+          m_appWindow.Closing([wkThis = get_weak()](
+                                  const winrt::Microsoft::UI::Windowing::AppWindow & /*sender*/,
+                                  const winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs &args) {
             OutputDebugStringW(L"[ModalHostView] AppWindow Closing event received.\n");
             args.Cancel(true); // Prevent default close
             if (auto strongThis = wkThis.get()) {
               // Dispatch onRequestClose event
               if (auto eventEmitter = strongThis->EventEmitter()) {
-                 OutputDebugStringW(L"[ModalHostView] Dispatching onRequestClose event.\n");
+                OutputDebugStringW(L"[ModalHostView] Dispatching onRequestClose event.\n");
                 ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnRequestClose eventArgs;
                 eventEmitter->onRequestClose(eventArgs);
               }
             }
           });
     } else {
-       OutputDebugStringW(L"[ModalHostView] Failed to get AppWindow from WindowId.\n");
+      OutputDebugStringW(L"[ModalHostView] Failed to get AppWindow from WindowId.\n");
     }
 
     // set the top-level windows as the new hwnd

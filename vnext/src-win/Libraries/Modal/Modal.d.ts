@@ -108,10 +108,10 @@ export interface ModalPropsAndroid {
   navigationBarTranslucent?: boolean | undefined;
 }
 export interface ModalWindowsProps {
-    /* title for the modal, shown in the title bar */
-    // [Windows
-    title?: string | undefined;
-    // Windows]
+  /* title for the modal, shown in the title bar */
+  // [Windows
+  title?: string | undefined;
+  // Windows]
 }
 
 export type ModalProps = ModalBaseProps &
