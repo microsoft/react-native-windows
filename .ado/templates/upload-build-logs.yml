@@ -45,10 +45,9 @@ steps:
         $HasCrashDumps = (Get-ChildItem -Path $(CrashDumpRootPath) -File -Recurse | Measure-Object).Count -gt 0;
         Write-Host "##vso[task.setvariable variable=HasCrashDumps]$HasCrashDumps";
 
-  - ${{ if not(parameters.oneESMode) }}:
-    - task: PublishBuildArtifacts@1
-      displayName: Upload crash dumps
-      condition: and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }}, eq(variables.HasCrashDumps, 'True'),  not(parameters.oneESMode))
-      inputs:
-        pathtoPublish: '$(CrashDumpRootPath)'
-        artifactName: 'Crash dumps - ${{ parameters.artifactName }}'
+  - task: PublishBuildArtifacts@1
+    displayName: Upload crash dumps
+    condition: succeededOrFailed()
+    inputs:
+      pathtoPublish: '$(CrashDumpRootPath)'
+      artifactName: 'Crash dumps - ${{ parameters.artifactName }}'
