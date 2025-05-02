@@ -5,7 +5,10 @@
 #include "TestReactNativeHostHolder.h"
 #include "..\codegen\NativeDeviceInfoSpec.g.h"
 #include <NativeModules.h>
+
+#ifdef USE_FABRIC
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#endif
 
 namespace ReactNativeIntegrationTests {
 
