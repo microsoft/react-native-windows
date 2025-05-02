@@ -10,9 +10,9 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.0.0-2505.1001-6aa014c6, )",
-        "resolved": "0.0.0-2505.1001-6aa014c6",
-        "contentHash": "Xjp1BKHzPvZLYtlx8wSYhixnl7yujq2rvTzNMFx8UcgZnPUSaxQXsyKgcQ9Wc8pVpsORpUQxAKuSLywkXSwRyg=="
+        "requested": "[0.0.0-2505.2001-0e4bc3b9, )",
+        "resolved": "0.0.0-2505.2001-0e4bc3b9",
+        "contentHash": "VNSUBgaGzJ/KkK3Br0b9FORkCgKqke54hi48vG42xRACIlxN+uLFMz0hRo+KHogz+Fsn+ltXicGwQsDVpmaCMg=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
@@ -87,7 +87,7 @@
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.1001-6aa014c6, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.Web.WebView2": "[1.0.2903.40, )",
           "Microsoft.WindowsAppSDK": "[1.7.250401001, )",

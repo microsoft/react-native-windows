@@ -32,8 +32,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.0.0-2505.1001-6aa014c6",
-        "contentHash": "Xjp1BKHzPvZLYtlx8wSYhixnl7yujq2rvTzNMFx8UcgZnPUSaxQXsyKgcQ9Wc8pVpsORpUQxAKuSLywkXSwRyg=="
+        "resolved": "0.0.0-2505.2001-0e4bc3b9",
+        "contentHash": "VNSUBgaGzJ/KkK3Br0b9FORkCgKqke54hi48vG42xRACIlxN+uLFMz0hRo+KHogz+Fsn+ltXicGwQsDVpmaCMg=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -96,7 +96,7 @@
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.1001-6aa014c6, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.Web.WebView2": "[1.0.2903.40, )",
           "Microsoft.WindowsAppSDK": "[1.7.250127003-experimental3, )",
@@ -108,7 +108,7 @@
       "react.windows.desktop.dll": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.1001-6aa014c6, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "React.Windows.Desktop": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.8, )",
