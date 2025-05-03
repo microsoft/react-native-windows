@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "solved access read violation due to incorrect view access to obtain contentIsland",
-  "packageName": "react-native-windows",
-  "email": "abhijeetjha@microsoft.com",
-  "dependentChangeType": "none"
-}
