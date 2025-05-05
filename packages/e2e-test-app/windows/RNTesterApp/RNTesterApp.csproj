@@ -138,6 +138,8 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />
+    <!-- Added since we build this project with/without Chakra. -->
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <ItemGroup>
     <PackageReference Include="XamlTreeDump">

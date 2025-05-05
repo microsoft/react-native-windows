@@ -231,7 +231,6 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
     m_popUp = winrt::Microsoft::UI::Content::DesktopPopupSiteBridge::Create(
         portal.Parent()
-            .Parent()
             .as<winrt::Microsoft::ReactNative::Composition::ComponentView>()
             .Root()
             .ReactNativeIsland()

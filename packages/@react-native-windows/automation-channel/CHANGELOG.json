@@ -2,6 +2,42 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Thu, 01 May 2025 05:24:00 GMT",
+      "version": "0.12.290",
+      "tag": "@react-native-windows/automation-channel_v0.12.290",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.950",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 30 Apr 2025 05:27:56 GMT",
+      "version": "0.12.289",
+      "tag": "@react-native-windows/automation-channel_v0.12.289",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "99b2a74ecb0b06435eaa1efc8c1f34025943d3a7",
+            "comment": "Fix NuGet lock files and enforce them not changing accidentally"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.949",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 05:24:25 GMT",
       "version": "0.12.288",
       "tag": "@react-native-windows/automation-channel_v0.12.288",
