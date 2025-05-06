@@ -11,7 +11,7 @@
       "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
-      "baseHash": "e644fe80f0d405382d180ec7a822794454943ff1"
+      "baseHash": "74a0b8d26ba5e62ea6e39e17a9fc9bc2d5c235fa"
     },
     {
       "type": "derived",
@@ -43,14 +43,14 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "9c1244c03d22578ac09fe2143b04664ba61f7b97",
+      "baseHash": "c6a0e4108757edf7b214bb0412e3c11917ae97fc",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "194b5caf919b2acb35ba5e0766b8b8451345e7a8",
+      "baseHash": "552b83b0c8e7188471e709f2a6dac2621badcfe9",
       "issue": 12869
     },
     {
