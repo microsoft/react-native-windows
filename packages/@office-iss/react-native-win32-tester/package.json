@@ -14,7 +14,7 @@
     "@react-native/tester": "0.78.0-main",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "flow-enums-runtime": "^0.0.5"
+    "flow-enums-runtime": "^0.0.6"
   },
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.283",
