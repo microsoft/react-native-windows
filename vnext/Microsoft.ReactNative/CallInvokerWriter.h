@@ -3,11 +3,11 @@
 #pragma once
 
 #include <JSI/LongLivedJsiValue.h>
+#include <ReactCommon/CallInvoker.h>
 #include <functional/functor.h>
 #include "DynamicWriter.h"
 #include "JsiWriter.h"
 #include "winrt/Microsoft.ReactNative.h"
-#include <ReactCommon/CallInvoker.h>
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -38,7 +38,7 @@ struct CallInvokerWriter : winrt::implements<CallInvokerWriter, IJSValueWriter> 
   IJSValueWriter GetWriter() noexcept;
 
  private:
-   const std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
+  const std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
   std::weak_ptr<LongLivedJsiRuntime> m_jsiRuntimeHolder;
   winrt::com_ptr<DynamicWriter> m_dynamicWriter;
   winrt::com_ptr<JsiWriter> m_jsiWriter;
