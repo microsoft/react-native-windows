@@ -48,6 +48,7 @@ import typeof TouchableNativeFeedback from './Libraries/Components/Touchable/Tou
 import typeof TouchableOpacity from './Libraries/Components/Touchable/TouchableOpacity';
 import typeof TouchableWithoutFeedback from './Libraries/Components/Touchable/TouchableWithoutFeedback';
 import typeof View from './Libraries/Components/View/View';
+import typeof RegisterCallableModule from './Libraries/Core/registerCallableModule';
 import typeof NativeEventEmitter from './Libraries/EventEmitter/NativeEventEmitter';
 import typeof RCTDeviceEventEmitter from './Libraries/EventEmitter/RCTDeviceEventEmitter';
 import typeof RCTNativeAppEventEmitter from './Libraries/EventEmitter/RCTNativeAppEventEmitter';
@@ -107,6 +108,9 @@ const invariant = require('invariant');
 export type {HostComponent, HostInstance};
 
 module.exports = {
+  get registerCallableModule(): RegisterCallableModule {
+    return require('./Libraries/Core/registerCallableModule').default;
+  },
   // Components
   get AccessibilityInfo(): AccessibilityInfo {
     return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo')
@@ -286,7 +290,6 @@ module.exports = {
   get NativeEventEmitter(): NativeEventEmitter {
     return require('./Libraries/EventEmitter/NativeEventEmitter').default;
   },
-  // $FlowFixMe[value-as-type]
   get Networking(): Networking {
     return require('./Libraries/Network/RCTNetworking').default;
   },
@@ -308,7 +311,6 @@ module.exports = {
     );
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS');
   },
-  // $FlowFixMe[value-as-type]
   get Settings(): Settings {
     return require('./Libraries/Settings/Settings');
   },

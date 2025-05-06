@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.23, )",
-        "resolved": "0.1.23",
-        "contentHash": "cA9t1GjY4Yo0JD1AfA//e1lOwk48hLANfuX6GXrikmEBNZVr2TIX5ONJt5tqCnpZyLz6xGiPDgTfFNKbSfb21g=="
+        "requested": "[0.0.0-2505.2001-0e4bc3b9, )",
+        "resolved": "0.0.0-2505.2001-0e4bc3b9",
+        "contentHash": "VNSUBgaGzJ/KkK3Br0b9FORkCgKqke54hi48vG42xRACIlxN+uLFMz0hRo+KHogz+Fsn+ltXicGwQsDVpmaCMg=="
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
@@ -198,7 +198,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.23, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
           "ReactCommon": "[1.0.0, )",
