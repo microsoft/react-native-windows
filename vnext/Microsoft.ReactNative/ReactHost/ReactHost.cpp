@@ -284,13 +284,13 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 
 class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
  public:
-
   bool enableBridgelessArchitecture() override {
 #ifdef USE_FABRIC
     return true;
 #else
     return false;
 #endif
+  }
 
   bool enableCppPropsIteratorSetter() override {
     return true;
