@@ -50,6 +50,8 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <!-- Added since we build this project with/without UseExperimentalWinUI3. -->
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>

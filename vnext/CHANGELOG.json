@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 03 May 2025 05:25:01 GMT",
+      "version": "0.0.0-canary.950",
+      "tag": "react-native-windows_v0.0.0-canary.950",
+      "comments": {
+        "none": [
+          {
+            "author": "abhijeetjha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "da62e3e5da21e05f67ccb1660e2b0c84039546b7",
+            "comment": "solved access read violation due to incorrect view access to obtain contentIsland"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 May 2025 05:24:00 GMT",
+      "version": "0.0.0-canary.950",
+      "tag": "react-native-windows_v0.0.0-canary.950",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ed524b80c1ccee18225fb512c684763e99d92000",
+            "comment": "Add git repo check to creaternwapp.cmd and creaternwlib.cmd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 30 Apr 2025 05:27:57 GMT",
+      "version": "0.0.0-canary.949",
+      "tag": "react-native-windows_v0.0.0-canary.949",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "99b2a74ecb0b06435eaa1efc8c1f34025943d3a7",
+            "comment": "Fix NuGet lock files and enforce them not changing accidentally"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 05:24:25 GMT",
       "version": "0.0.0-canary.948",
       "tag": "react-native-windows_v0.0.0-canary.948",

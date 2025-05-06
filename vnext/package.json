@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.948",
+  "version": "0.0.0-canary.950",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -145,8 +145,7 @@
     "/metro.config.js",
     "/react-native.config.js",
     "/rn-get-polyfills.js",
-    "!packages.lock.json",
-    "!packages.fabric.lock.json"
+    "!packages*.lock.json"
   ],
   "promoteRelease": true,
   "engines": {

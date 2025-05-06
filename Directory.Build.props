@@ -28,6 +28,7 @@
   <PropertyGroup Label="NuGet">
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' != ''">$(RootIntDir)\ProjectExtensions\$(ProjectName)\</MSBuildProjectExtensionsPath>
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' == ''">$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
   </PropertyGroup>
 
   <!-- User overrides -->

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-channel",
-  "version": "0.12.288",
+  "version": "0.12.290",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -33,14 +33,13 @@
     "prettier": "2.8.8",
     "react": "19.0.0",
     "react-native": "0.78.0-nightly-20250113-d4407d6f7",
-    "react-native-windows": "^0.0.0-canary.948",
+    "react-native-windows": "^0.0.0-canary.950",
     "typescript": "5.0.4"
   },
   "files": [
     "lib-commonjs",
     "windows",
-    "!packages.lock.json",
-    "!packages.fabric.lock.json"
+    "!packages*.lock.json"
   ],
   "engines": {
     "node": ">= 18"
