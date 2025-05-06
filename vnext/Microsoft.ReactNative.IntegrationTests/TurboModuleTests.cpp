@@ -570,6 +570,7 @@ TEST_CLASS (TurboModuleTests) {
     TestCheck(!registered);
   }
 
+  #if !USE_FABRIC
   TEST_METHOD(ExecuteSampleTurboModule) {
     TestEventService::Initialize();
 
@@ -645,6 +646,7 @@ TEST_CLASS (TurboModuleTests) {
         TestEvent{"sayHelloSync", "Hello"},
     });
   }
+  #endif
 
   TEST_METHOD(JSDispatcherAfterInstanceUnload) {
     TestEventService::Initialize();

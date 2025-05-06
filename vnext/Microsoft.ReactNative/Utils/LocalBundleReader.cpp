@@ -54,38 +54,45 @@ std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri 
 }
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring bundleUri) {
-  co_await winrt::resume_background();
+  try {
+    co_await winrt::resume_background();
 
-  winrt::Windows::Storage::StorageFile file{nullptr};
+    winrt::Windows::Storage::StorageFile file{nullptr};
 
-  // Supports "ms-appx://" or "ms-appdata://"
-  if (bundleUri.starts_with(L"ms-app")) {
-    winrt::Windows::Foundation::Uri uri(bundleUri);
-    file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
-  } else if (bundleUri.starts_with(L"resource://")) {
-    winrt::Windows::Foundation::Uri uri(bundleUri);
-    co_return GetBundleFromEmbeddedResource(uri);
-  } else {
-    file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(bundleUri);
+    // Supports "ms-appx://" or "ms-appdata://"
+    if (bundleUri.starts_with(L"ms-app")) {
+      winrt::Windows::Foundation::Uri uri(bundleUri);
+      file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
+    } else if (bundleUri.starts_with(L"resource://")) {
+      winrt::Windows::Foundation::Uri uri(bundleUri);
+      co_return GetBundleFromEmbeddedResource(uri);
+    } else {
+      file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(bundleUri);
+    }
+
+    // Read the buffer manually to avoid a Utf8 -> Utf16 -> Utf8 encoding
+    // roundtrip.
+    auto fileBuffer{co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file)};
+    auto dataReader{winrt::Windows::Storage::Streams::DataReader::FromBuffer(fileBuffer)};
+
+    // No need to use length + 1, STL guarantees that string storage is null-terminated.
+    std::string script(fileBuffer.Length(), '\0');
+
+    // Construct the array_view to slice into the first fileBuffer.Length bytes.
+    // DataReader.ReadBytes will read as many bytes as are present in the
+    // array_view. The backing string has fileBuffer.Length() + 1 bytes, without
+    // an explicit end it will read 1 byte to many and throw.
+    dataReader.ReadBytes(winrt::array_view<uint8_t>{
+        reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
+    dataReader.Close();
+
+    co_return script;
+  } 
+  // RuntimeScheduler only handles std::exception or jsi::JSError
+  catch (winrt::hresult_error const& e)
+  {
+    throw std::exception(winrt::to_string(e.message()).c_str());
   }
-
-  // Read the buffer manually to avoid a Utf8 -> Utf16 -> Utf8 encoding
-  // roundtrip.
-  auto fileBuffer{co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file)};
-  auto dataReader{winrt::Windows::Storage::Streams::DataReader::FromBuffer(fileBuffer)};
-
-  // No need to use length + 1, STL guarantees that string storage is null-terminated.
-  std::string script(fileBuffer.Length(), '\0');
-
-  // Construct the array_view to slice into the first fileBuffer.Length bytes.
-  // DataReader.ReadBytes will read as many bytes as are present in the
-  // array_view. The backing string has fileBuffer.Length() + 1 bytes, without
-  // an explicit end it will read 1 byte to many and throw.
-  dataReader.ReadBytes(winrt::array_view<uint8_t>{
-      reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
-  dataReader.Close();
-
-  co_return script;
 }
 
 std::string LocalBundleReader::LoadBundle(const std::wstring &bundlePath) {
