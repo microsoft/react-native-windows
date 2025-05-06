@@ -9,8 +9,7 @@ AsynchronousEventBeat::AsynchronousEventBeat(
     : EventBeat(ownerBox, *runtimeScheduler), m_context(context) {}
 
 void AsynchronousEventBeat::request() const {
-  bool alreadyRequested = isEventBeatRequested_;
-  EventBeat::request();
+  bool alreadyRequested = isEventBeatRequested_.exchange(true);
   if (!alreadyRequested) {
     auto uiDispatcher = m_context.UIDispatcher();
     if (uiDispatcher.HasThreadAccess()) {
