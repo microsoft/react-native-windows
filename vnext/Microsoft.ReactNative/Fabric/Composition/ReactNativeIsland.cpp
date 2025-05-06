@@ -581,7 +581,7 @@ void ReactNativeIsland::ShowInstanceLoaded() noexcept {
     m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
 
     auto initProps =
-        m_props.isNull() ? m_props : DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+        m_props.isNull() ? DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())) : m_props;
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
     }
@@ -904,16 +904,6 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (args.DidLayoutDirectionChange()) {
               pThis->Arrange(pThis->m_layoutConstraints, pThis->m_viewportOffset);
             }
-#ifndef USE_EXPERIMENTAL_WINUI3 // Use this in place of Connected/Disconnected events for now. -- Its not quite what we
-                                // want, but it will do for now.
-            if (args.DidSiteVisibleChange()) {
-              if (island.IsSiteVisible()) {
-                pThis->OnMounted();
-              } else {
-                pThis->OnUnmounted();
-              }
-            }
-#endif
           }
         });
 #ifdef USE_EXPERIMENTAL_WINUI3

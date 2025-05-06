@@ -77,4 +77,31 @@ describe('Accessibility Tests', () => {
     const dump = await dumpVisualTree('accessibilityValue-text');
     expect(dump).toMatchSnapshot();
   });
+  test('Accessibility data for Label,Level and Hint', async () => {
+    await searchBox('Lab');
+    const componentsTab = await app.findElementByTestID(
+      'accessibility-base-view-1',
+    );
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('accessibility-base-view-1');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Accessibility data for Label and Level', async () => {
+    await searchBox('Lab');
+    const componentsTab = await app.findElementByTestID(
+      'accessibility-base-view-2',
+    );
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('accessibility-base-view-2');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Accessibility data for Role, Setsize etc.', async () => {
+    await searchBox('Lab');
+    const componentsTab = await app.findElementByTestID(
+      'accessibility-base-view-3',
+    );
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('accessibility-base-view-3');
+    expect(dump).toMatchSnapshot();
+  });
 });

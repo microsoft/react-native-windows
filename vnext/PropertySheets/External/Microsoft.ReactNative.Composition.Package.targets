@@ -8,6 +8,10 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Check that the correct props have already been imported. -->
+  <Target Name="EnsureRnwExternalPropsLoadedTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwExternalPropsLoaded)'!='Microsoft.ReactNative.Composition.Package.props'">
+    <Warning Text="Property `RnwExternalPropsLoaded` was incorrectly set to '$(RnwExternalPropsLoaded)'. Please ensure your project imports 'Microsoft.ReactNative.Composition.Package.props' before importing this prop sheet." />
+  </Target>
   
   <ItemGroup>
     <SDKReference Include="Microsoft.VCLibs.Desktop, Version=14.0" />

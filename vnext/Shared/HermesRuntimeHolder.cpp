@@ -12,6 +12,7 @@
 #include <cxxreact/TraceSection.h>
 #include <jsinspector-modern/ConsoleMessage.h>
 #include <jsinspector-modern/InspectorInterfaces.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <mutex>
 #include "SafeLoadLibrary.h"
 
@@ -324,6 +325,11 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   CRASH_ON_ERROR(api.jsr_config_set_inspector_runtime_name(config, devSettings->debuggerRuntimeName.c_str()));
   CRASH_ON_ERROR(api.jsr_config_set_inspector_port(config, devSettings->debuggerPort));
   CRASH_ON_ERROR(api.jsr_config_set_inspector_break_on_start(config, devSettings->debuggerBreakOnNextLine));
+  CRASH_ON_ERROR(api.jsr_config_set_explicit_microtasks(
+      config,
+      facebook::react::ReactNativeFeatureFlags::enableBridgelessArchitecture() &&
+          !facebook::react::ReactNativeFeatureFlags::disableEventLoopOnBridgeless()));
+
   if (m_jsQueue) {
     HermesTaskRunner::Create(config, m_jsQueue);
   }

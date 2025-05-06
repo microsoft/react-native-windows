@@ -1059,21 +1059,33 @@ void CompositionEventHandler::onPointerMoved(
 
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
-    auto handler = [&targetView,
-                    &pointerEvent](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
+    // check if this pointer corresponds to active touch that has a responder
+    auto activeTouch = m_activeTouches.find(pointerId);
+    bool isActiveTouch = activeTouch != m_activeTouches.end() && activeTouch->second.eventEmitter != nullptr;
+
+    auto handler = [&targetView, &pointerEvent, isActiveTouch](
+                       std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
       const auto eventEmitter = targetView
           ? winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetView)
                 ->eventEmitterAtPoint(pointerEvent.offsetPoint)
           : nullptr;
-      bool hasMoveEventListeners =
+      bool hasMoveEventListeners = isActiveTouch ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
+
       if (eventEmitter != nullptr && hasMoveEventListeners) {
+        // Add logging before dispatching the event
         eventEmitter->onPointerMove(pointerEvent);
       }
     };
 
     HandleIncomingPointerEvent(pointerEvent, targetView, pointerPoint, keyModifiers, handler);
+
+    if (isActiveTouch) {
+      // For active touches with responders, also dispatch through touch event system
+      UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
+      DispatchTouchEvent(TouchEventType::Move, pointerId, pointerPoint, keyModifiers);
+    }
   }
 }
 
@@ -1387,12 +1399,7 @@ void CompositionEventHandler::DispatchTouchEvent(
           activeTouch.eventEmitter->onPointerDown(pointerEvent);
           break;
         case TouchEventType::Move: {
-          bool hasMoveEventListeners =
-              IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
-              IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
-          if (hasMoveEventListeners) {
-            activeTouch.eventEmitter->onPointerMove(pointerEvent);
-          }
+          activeTouch.eventEmitter->onPointerMove(pointerEvent);
           break;
         }
         case TouchEventType::End:

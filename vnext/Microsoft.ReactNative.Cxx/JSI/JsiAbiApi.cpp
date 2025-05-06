@@ -233,6 +233,13 @@ bool JsiAbiRuntime::drainMicrotasks(int maxMicrotasksHint) try {
   throw;
 }
 
+void JsiAbiRuntime::queueMicrotask(const facebook::jsi::Function &callback) try {
+  return m_runtime.QueueMicrotask(AsJsiObjectRef(callback));
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
 Object JsiAbiRuntime::global() try { return MakeObject(m_runtime.Global()); } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -956,7 +963,7 @@ JsiAbiRuntime::DataPointerValue::DataPointerValue(winrt::weak_ref<JsiRuntime> &&
 
 JsiAbiRuntime::DataPointerValue::DataPointerValue(uint64_t data) noexcept : m_data{data} {}
 
-void JsiAbiRuntime::DataPointerValue::invalidate() {}
+void JsiAbiRuntime::DataPointerValue::invalidate() noexcept {}
 
 //===========================================================================
 // JsiAbiRuntime::SymbolPointerValue implementation
@@ -967,7 +974,7 @@ JsiAbiRuntime::SymbolPointerValue::SymbolPointerValue(
     JsiSymbolRef &&symbol) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(symbol.Data, 0)} {}
 
-void JsiAbiRuntime::SymbolPointerValue::invalidate() {
+void JsiAbiRuntime::SymbolPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -993,7 +1000,7 @@ JsiAbiRuntime::BigIntPointerValue::BigIntPointerValue(
     JsiBigIntRef &&bigInt) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(bigInt.Data, 0)} {}
 
-void JsiAbiRuntime::BigIntPointerValue::invalidate() {
+void JsiAbiRuntime::BigIntPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -1019,7 +1026,7 @@ JsiAbiRuntime::StringPointerValue::StringPointerValue(
     JsiStringRef &&str) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(str.Data, 0)} {}
 
-void JsiAbiRuntime::StringPointerValue::invalidate() {
+void JsiAbiRuntime::StringPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -1047,7 +1054,7 @@ JsiAbiRuntime::ObjectPointerValue::ObjectPointerValue(
     JsiObjectRef &&obj) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(obj.Data, 0)} {}
 
-void JsiAbiRuntime::ObjectPointerValue::invalidate() {
+void JsiAbiRuntime::ObjectPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -1075,7 +1082,7 @@ JsiAbiRuntime::PropNameIDPointerValue::PropNameIDPointerValue(
     JsiPropertyIdRef &&propertyId) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(propertyId.Data, 0)} {}
 
-void JsiAbiRuntime::PropNameIDPointerValue::invalidate() {
+void JsiAbiRuntime::PropNameIDPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;

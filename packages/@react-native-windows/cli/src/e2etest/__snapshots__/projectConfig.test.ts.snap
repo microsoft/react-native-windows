@@ -10,6 +10,9 @@ exports[`projectConfig - MissingProjectFilesApp (Ignore react-native.config.js) 
   "project": {
     "projectFile": "Error: No app project file found, please specify in react-native.config.",
   },
+  "rnwConfig": {
+    "init-windows": {},
+  },
   "solutionFile": "Error: No app solution file found, please specify in react-native.config.",
   "sourceDir": "windows",
 }
@@ -20,6 +23,9 @@ exports[`projectConfig - MissingProjectFilesApp (Use react-native.config.js) 1`]
   "folder": StringContaining "MissingProjectFilesApp",
   "project": {
     "projectFile": "Error: Project is required but not specified in react-native.config.",
+  },
+  "rnwConfig": {
+    "init-windows": {},
   },
   "solutionFile": "Error: Solution file is required but not specified in react-native.config.",
   "sourceDir": "windows",
@@ -32,7 +38,6 @@ exports[`projectConfig - SimpleCSharpApp (Ignore react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "false",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "SimpleCSharpApp",
   "project": {
@@ -40,6 +45,11 @@ exports[`projectConfig - SimpleCSharpApp (Ignore react-native.config.js) 1`] = `
     "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cs",
     "projectName": "SimpleCSharpApp",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cs-app",
+    },
   },
   "solutionFile": "SimpleCSharpApp.sln",
   "sourceDir": "windows",
@@ -52,7 +62,6 @@ exports[`projectConfig - SimpleCSharpApp (Use react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "false",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "SimpleCSharpApp",
   "project": {
@@ -60,6 +69,11 @@ exports[`projectConfig - SimpleCSharpApp (Use react-native.config.js) 1`] = `
     "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cs",
     "projectName": "SimpleCSharpApp",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cs-app",
+    },
   },
   "solutionFile": "SimpleCSharpApp.sln",
   "sourceDir": "windows",
@@ -72,7 +86,6 @@ exports[`projectConfig - SimpleCppApp (Ignore react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "false",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "SimpleCppApp",
   "project": {
@@ -80,6 +93,11 @@ exports[`projectConfig - SimpleCppApp (Ignore react-native.config.js) 1`] = `
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "SimpleCppApp",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "SimpleCppApp.sln",
   "sourceDir": "windows",
@@ -92,7 +110,6 @@ exports[`projectConfig - SimpleCppApp (Use react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "false",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "SimpleCppApp",
   "project": {
@@ -100,6 +117,11 @@ exports[`projectConfig - SimpleCppApp (Use react-native.config.js) 1`] = `
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "SimpleCppApp",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "SimpleCppApp.sln",
   "sourceDir": "windows",
@@ -112,7 +134,6 @@ exports[`projectConfig - WithExperimentalNuget (Ignore react-native.config.js) 1
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "true",
     "UseHermes": "false",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "WithExperimentalNuget",
   "project": {
@@ -120,6 +141,11 @@ exports[`projectConfig - WithExperimentalNuget (Ignore react-native.config.js) 1
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "WithExperimentalNuGet",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "WithExperimentalNuGet.sln",
   "sourceDir": "windows",
@@ -132,7 +158,6 @@ exports[`projectConfig - WithExperimentalNuget (Use react-native.config.js) 1`] 
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "true",
     "UseHermes": "false",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "WithExperimentalNuget",
   "project": {
@@ -140,6 +165,11 @@ exports[`projectConfig - WithExperimentalNuget (Use react-native.config.js) 1`] 
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "WithExperimentalNuGet",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "WithExperimentalNuGet.sln",
   "sourceDir": "windows",
@@ -152,7 +182,6 @@ exports[`projectConfig - WithHermes (Ignore react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "true",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "WithHermes",
   "project": {
@@ -160,6 +189,11 @@ exports[`projectConfig - WithHermes (Ignore react-native.config.js) 1`] = `
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "WithHermes",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "WithHermes.sln",
   "sourceDir": "windows",
@@ -172,7 +206,6 @@ exports[`projectConfig - WithHermes (Use react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "true",
-    "UseWinUI3": "false",
   },
   "folder": StringContaining "WithHermes",
   "project": {
@@ -180,6 +213,11 @@ exports[`projectConfig - WithHermes (Use react-native.config.js) 1`] = `
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "WithHermes",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "WithHermes.sln",
   "sourceDir": "windows",
@@ -196,6 +234,9 @@ exports[`projectConfig - WithIndirectDependency (Ignore react-native.config.js) 
   "folder": StringContaining "WithIndirectDependency",
   "project": {
     "projectFile": "Error: Too many app project files found, please specify in react-native.config.",
+  },
+  "rnwConfig": {
+    "init-windows": {},
   },
   "solutionFile": "WithIndirectDependency.sln",
   "sourceDir": "windows",
@@ -216,6 +257,11 @@ exports[`projectConfig - WithIndirectDependency (Use react-native.config.js) 1`]
     "projectLang": "cpp",
     "projectName": "WithIndirectDependency",
   },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
+  },
   "solutionFile": "WithIndirectDependency.sln",
   "sourceDir": "windows",
   "useWinUI3": false,
@@ -228,7 +274,6 @@ exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "false",
-    "UseWinUI3": "true",
   },
   "folder": StringContaining "WithWinUI3",
   "project": {
@@ -236,6 +281,11 @@ exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "WithWinUI3",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "WithWinUI3.sln",
   "sourceDir": "windows",
@@ -248,7 +298,6 @@ exports[`projectConfig - WithWinUI3 (Use react-native.config.js) 1`] = `
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
     "UseHermes": "false",
-    "UseWinUI3": "true",
   },
   "folder": StringContaining "WithWinUI3",
   "project": {
@@ -256,6 +305,11 @@ exports[`projectConfig - WithWinUI3 (Use react-native.config.js) 1`] = `
     "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
     "projectLang": "cpp",
     "projectName": "WithWinUI3",
+  },
+  "rnwConfig": {
+    "init-windows": {
+      "template": "old/uwp-cpp-app",
+    },
   },
   "solutionFile": "WithWinUI3.sln",
   "sourceDir": "windows",
@@ -280,14 +334,6 @@ exports[`useWinUI3=true in react-native.config.js, UseWinUI3=false in Experiment
       See https://microsoft.github.io/react-native-windows/docs/hermes
     -->
     <UseHermes>false</UseHermes>
-
-    <!--
-      Changes compilation to assume use of WinUI 3 instead of System XAML.
-      Requires creation of new project.
-
-      See https://microsoft.github.io/react-native-windows/docs/winui3
-    -->
-    <UseWinUI3>false</UseWinUI3>
 
     <!--
       Changes compilation to assume use of Microsoft.ReactNative NuGet packages
