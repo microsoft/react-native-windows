@@ -1049,6 +1049,16 @@ void WindowsTextInputComponentView::updateProps(
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
 
+  // Uncomment below when this commit is merged in RNW:
+  // https://github.com/facebook/react-native/commit/97cf42f979e8303a3caeecb94cba1f5a82d1000c
+  // if (!facebook::react::floatEquality(
+  //        oldTextInputProps.textAttributes.maxFontSizeMultiplier,
+  //        newTextInputProps.textAttributes.maxFontSizeMultiplier)) {
+  //  m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
+  //  m_propBits |= TXTBIT_CHARFORMATCHANGE;
+  //  m_maxFontSizeMultiplier = newTextInputProps.textAttributes.maxFontSizeMultiplier;
+  //}
+
   if (oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
     m_propBitsMask |= TXTBIT_USEPASSWORD;
     if (newTextInputProps.secureTextEntry) {
@@ -1344,9 +1354,14 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
 
   // set font size -- 15 to convert twips to pt
   const auto &props = windowsTextInputProps();
-  float fontSize = m_fontSizeMultiplier *
+  float fontSize =
       (std::isnan(props.textAttributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
                                                  : props.textAttributes.fontSize);
+
+  // Apply maxFontSizeMultiplier if specified
+  fontSize *= (m_maxFontSizeMultiplier >= 1.0f) ? std::min(m_maxFontSizeMultiplier, m_fontSizeMultiplier)
+                                                : m_fontSizeMultiplier;
+
   // TODO get fontSize from props.textAttributes, or defaultTextAttributes, or fragment?
   cfNew.dwMask |= CFM_SIZE;
   cfNew.yHeight = static_cast<LONG>(fontSize * 15);
