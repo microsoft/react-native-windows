@@ -87,10 +87,9 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
     dataReader.Close();
 
     co_return script;
-  } 
+  }
   // RuntimeScheduler only handles std::exception or jsi::JSError
-  catch (winrt::hresult_error const& e)
-  {
+  catch (winrt::hresult_error const &e) {
     throw std::exception(winrt::to_string(e.message()).c_str());
   }
 }

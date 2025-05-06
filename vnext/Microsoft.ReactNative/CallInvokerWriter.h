@@ -7,16 +7,17 @@
 #include "DynamicWriter.h"
 #include "JsiWriter.h"
 #include "winrt/Microsoft.ReactNative.h"
+#include <ReactCommon/CallInvoker.h>
 
 namespace winrt::Microsoft::ReactNative {
 
-// IJSValueWriter to ensure that JsiWriter is always used from JSDispatcher.
-// In case if writing is done outside of JSDispatcher, it uses DynamicWriter to create
-// folly::dynamic which then is written to JsiWriter in JSDispatcher.
-struct JSDispatcherWriter : winrt::implements<JSDispatcherWriter, IJSValueWriter> {
-  ~JSDispatcherWriter();
-  JSDispatcherWriter(
-      IReactDispatcher const &jsDispatcher,
+// IJSValueWriter to ensure that JsiWriter is always used from a RuntimeExecutor.
+// In case if writing is done outside of RuntimeExecutor, it uses DynamicWriter to create
+// folly::dynamic which then is written to JsiWriter in RuntimeExecutor.
+struct CallInvokerWriter : winrt::implements<CallInvokerWriter, IJSValueWriter> {
+  ~CallInvokerWriter();
+  CallInvokerWriter(
+      const std::shared_ptr<facebook::react::CallInvoker> &jsInvoker,
       std::weak_ptr<LongLivedJsiRuntime> jsiRuntimeHolder) noexcept;
   void WithResultArgs(Mso::Functor<void(facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t argCount)>
                           handler) noexcept;
@@ -37,7 +38,7 @@ struct JSDispatcherWriter : winrt::implements<JSDispatcherWriter, IJSValueWriter
   IJSValueWriter GetWriter() noexcept;
 
  private:
-  IReactDispatcher m_jsDispatcher;
+   const std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
   std::weak_ptr<LongLivedJsiRuntime> m_jsiRuntimeHolder;
   winrt::com_ptr<DynamicWriter> m_dynamicWriter;
   winrt::com_ptr<JsiWriter> m_jsiWriter;
