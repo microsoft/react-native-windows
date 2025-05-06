@@ -201,7 +201,7 @@
     <ClInclude Include="DynamicWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="JSDispatcherWriter.h">
+    <ClInclude Include="JSCallInvokerWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="HResult.h" />
