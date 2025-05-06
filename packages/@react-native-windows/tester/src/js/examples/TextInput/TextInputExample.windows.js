@@ -210,6 +210,30 @@ const examples: Array<RNTesterModuleExample> = [
     },
   },
   {
+    title: 'Select text on focus',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Select text on focus:</Text>
+          <ExampleTextInput
+            selectTextOnFocus={true}
+            style={styles.singleLine}
+            testID="select-text-on-focus"
+          />
+          <Text>
+            Do not select text on focus if clear text on focus is enabled:
+          </Text>
+          <ExampleTextInput
+            selectTextOnFocus={true}
+            clearTextOnFocus={true}
+            style={styles.singleLine}
+            testID="select-text-on-focus-while-clear-text-on-focus"
+          />
+        </View>
+      );
+    },
+  },
+  {
     title: 'Colors and text inputs',
     render: function (): React.Node {
       return (
