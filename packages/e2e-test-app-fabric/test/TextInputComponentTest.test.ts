@@ -504,6 +504,59 @@ describe('TextInput Tests', () => {
     // Verify the textInput contents are cleared after regaining focus
     expect(await componentFocusTrue.getText()).toBe('');
   });
+  test('TextInputs can select text on focus', async () => {
+    const component = await app.findElementByTestID('select-text-on-focus');
+    await component.waitForDisplayed({timeout: 5000});
+
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+
+    // Check if the text is selected on focus.
+    await component.click();
+
+    const dump = await dumpVisualTree('select-text-on-focus');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can clear text on focus even if selectTextOnFocus == true', async () => {
+    const targetComponent = await app.findElementByTestID(
+      'select-text-on-focus-while-clear-text-on-focus',
+    );
+    await targetComponent.waitForDisplayed({timeout: 5000});
+
+    await app.waitUntil(
+      async () => {
+        await targetComponent.setValue('Hello World');
+        return (await targetComponent.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+
+    // Click on the previous textInput to move focus away from this TextInput
+    const anotherTextInput = await app.findElementByTestID(
+      'select-text-on-focus',
+    );
+    await anotherTextInput.waitForDisplayed({timeout: 5000});
+    await anotherTextInput.click();
+
+    // Now click on the tested component, make sure the text is cleared.
+    await targetComponent.click();
+
+    // Verify the textInput contents are cleared after regaining focus
+    expect(await targetComponent.getText()).toBe('');
+  });
   test('TextInputs can have inline images', async () => {
     const component = await app.findElementByTestID('textinput-inline-images');
     await component.waitForDisplayed({timeout: 5000});

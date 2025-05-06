@@ -973,6 +973,10 @@ void WindowsTextInputComponentView::onLostFocus(
     LRESULT lresult;
     DrawBlock db(*this);
     m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
+    if (windowsTextInputProps().selectTextOnFocus) {
+      LRESULT res;
+      m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(-1), static_cast<WPARAM>(-1), &res);
+    }
   }
   m_caretVisual.IsVisible(false);
 
@@ -1001,6 +1005,9 @@ void WindowsTextInputComponentView::onGotFocus(
 
     if (windowsTextInputProps().clearTextOnFocus) {
       m_textServices->TxSetText(L"");
+    } else if (windowsTextInputProps().selectTextOnFocus) {
+      LRESULT res;
+      m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(0), static_cast<WPARAM>(-1), &res);
     }
   }
 }
