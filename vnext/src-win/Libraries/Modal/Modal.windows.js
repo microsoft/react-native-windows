@@ -177,7 +177,6 @@ export type Props = $ReadOnly<{|
 
   /**
    * [Windows] The `title` prop sets the title of the modal window.
-   * Only applicable when `transparent` is `false`.
    */
   title?: ?string,
 |}>;
@@ -336,7 +335,7 @@ class Modal extends React.Component<Props, State> {
         supportedOrientations={this.props.supportedOrientations}
         onOrientationChange={this.props.onOrientationChange}
         testID={this.props.testID}
-        title={this.props.title} // Add title prop here
+        title={this.props.title} 
       >
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>

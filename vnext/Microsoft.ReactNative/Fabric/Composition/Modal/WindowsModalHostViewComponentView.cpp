@@ -97,10 +97,9 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
     // Update Title if changed and AppWindow exists
     if (m_appWindow && (!oldProps || newViewProps.title != oldViewProps.title)) {
-      winrt::hstring titleValue = winrt::to_hstring(newViewProps.title.value_or("RNW Modal"));
-      OutputDebugStringW(L"[ModalHostView] Updating title: ");
-      OutputDebugStringW(titleValue.c_str());
-      OutputDebugStringW(L"\n");
+      // Use empty string if title is not set
+      winrt::hstring titleValue = newViewProps.title.has_value() ? 
+          winrt::to_hstring(newViewProps.title.value()) : winrt::hstring();
       m_appWindow.Title(titleValue);
     }
 
@@ -167,8 +166,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   }
 
   void AdjustWindowSize(const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics) noexcept {
-    // Revert to the simpler version before non-client calculation
-    if (!m_popUp) {
+    if (!m_appWindow) {
       return;
     }
 
@@ -176,25 +174,26 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       return;
     }
 
-    // get Modal's position based on parent
+    // Calculate physical pixels from DIPs
+    int32_t clientWidthPx = static_cast<int32_t>(layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor);
+    int32_t clientHeightPx = static_cast<int32_t>(layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor);
+    
+    // Ensure minimum size for the window
+    clientWidthPx = std::max(100, clientWidthPx);
+    clientHeightPx = std::max(100, clientHeightPx);
+
+    // Size the client area directly
+    m_appWindow.ResizeClient({clientWidthPx, clientHeightPx});
+    
+    // Center the window on its parent
     RECT parentRC;
     GetWindowRect(m_parentHwnd, &parentRC);
-    int32_t xCor = static_cast<int32_t>(
-        (parentRC.left + parentRC.right - layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor) / 2);
-    int32_t yCor = static_cast<int32_t>(
-        (parentRC.top + parentRC.bottom - layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor) / 2);
-
-    winrt::Windows::Graphics::RectInt32 rect2{
-        (int)xCor,
-        (int)yCor,
-        static_cast<int32_t>(layoutMetrics.Frame.Width * (layoutMetrics.PointScaleFactor)),
-        static_cast<int32_t>(layoutMetrics.Frame.Height * (layoutMetrics.PointScaleFactor))};
-
-    // Log the dimensions for debugging
-    OutputDebugStringW(L"[ModalHostView] AdjustWindowSize Resizing to: ");
-    OutputDebugStringW((winrt::to_hstring(rect2.Width) + L"x" + winrt::to_hstring(rect2.Height) + L"\n").c_str());
-
-    m_popUp.MoveAndResize(rect2);
+    auto outerSize = m_appWindow.Size();
+    
+    int32_t xCor = parentRC.left + (parentRC.right - parentRC.left - outerSize.Width) / 2;
+    int32_t yCor = parentRC.top + (parentRC.bottom - parentRC.top - outerSize.Height) / 2;
+    
+    m_appWindow.Move({xCor, yCor});
   };
 
   void ShowOnUIThread(const winrt::Microsoft::ReactNative::ComponentView &view) {
@@ -277,37 +276,21 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     // Get AppWindow and configure presenter
     m_appWindow = winrt::Microsoft::UI::Windowing::AppWindow::GetFromWindowId(m_popUp.WindowId());
     if (m_appWindow) {
-      // Log the initial presenter type
-      OutputDebugStringW(L"[ModalHostView] AppWindow Presenter Kind: ");
-      OutputDebugStringW(winrt::to_hstring((int32_t)m_appWindow.Presenter().Kind()).c_str());
-      OutputDebugStringW(L"\n");
       auto overlappedPresenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::Create();
 
       // Configure presenter for modal behavior
       overlappedPresenter.IsModal(true);
-      overlappedPresenter.IsResizable(true);
       overlappedPresenter.SetBorderAndTitleBar(true, true);
 
       // Apply the presenter to the window
       m_appWindow.SetPresenter(overlappedPresenter);
-      OutputDebugStringW(L"[ModalHostView] Created and set new OverlappedPresenter.\n");
 
       // Set initial title using the stored local props
-      if (m_localProps) {
-        winrt::hstring titleValue = winrt::to_hstring(m_localProps->title.value_or("RNW Modal"));
-        OutputDebugStringW(L"[ModalHostView] Setting initial title: ");
-        OutputDebugStringW(titleValue.c_str());
-        OutputDebugStringW(L"\n");
-
+      if (m_localProps && m_localProps->title.has_value()) {
+        winrt::hstring titleValue = winrt::to_hstring(m_localProps->title.value());
         m_appWindow.Title(titleValue);
-
-        // Double check if the title was set
-        OutputDebugStringW(L"[ModalHostView] Current window title: ");
-        OutputDebugStringW(m_appWindow.Title().c_str());
-        OutputDebugStringW(L"\n");
       } else {
-        OutputDebugStringW(L"[ModalHostView] Setting default title (no props yet).\n");
-        m_appWindow.Title(L"RNW Modal"); // Set a default title
+        m_appWindow.Title(L""); // Empty title if not provided
       }
 
       // Handle close request ('X' button)
@@ -315,19 +298,15 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
           m_appWindow.Closing([wkThis = get_weak()](
                                   const winrt::Microsoft::UI::Windowing::AppWindow & /*sender*/,
                                   const winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs &args) {
-            OutputDebugStringW(L"[ModalHostView] AppWindow Closing event received.\n");
             args.Cancel(true); // Prevent default close
             if (auto strongThis = wkThis.get()) {
               // Dispatch onRequestClose event
               if (auto eventEmitter = strongThis->EventEmitter()) {
-                OutputDebugStringW(L"[ModalHostView] Dispatching onRequestClose event.\n");
                 ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnRequestClose eventArgs;
                 eventEmitter->onRequestClose(eventArgs);
               }
             }
           });
-    } else {
-      OutputDebugStringW(L"[ModalHostView] Failed to get AppWindow from WindowId.\n");
     }
 
     // set the top-level windows as the new hwnd
