@@ -365,6 +365,10 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL selectionRequired;
   BSTR text = nullptr;
   BOOL horizontallyScrollable;
+  BSTR annotationAuthor = nullptr;
+  BSTR annotationTypeName = nullptr;
+  BSTR annotationDateTime = nullptr;
+  int annotationTypeID = 0;
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;
@@ -464,6 +468,28 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       if (SUCCEEDED(hr)) {
         InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
       }
+    }
+  }
+
+  // Dump IAnnotationProvider Information
+  winrt::com_ptr<IAnnotationProvider> annotationProvider;
+  hr = pTarget->GetCurrentPattern(UIA_AnnotationPatternId, reinterpret_cast<IUnknown **>(annotationProvider.put()));
+  if (SUCCEEDED(hr) && annotationProvider) {
+    hr = annotationProvider->get_AnnotationTypeId(&annotationTypeID);
+    if (SUCCEEDED(hr)) {
+      InsertIntValueIfNotDefault(result, L"AnnotationPattern.TypeId", annotationTypeID, 0);
+    }
+    hr = annotationProvider->get_AnnotationTypeName(&annotationTypeName);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.TypeName", annotationTypeName);
+    }
+    hr = annotationProvider->get_Author(&annotationAuthor);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.Author", annotationAuthor);
+    }
+    hr = annotationProvider->get_DateTime(&annotationDateTime);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"AnnotationPattern.DateTime", annotationDateTime);
     }
   }
 

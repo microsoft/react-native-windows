@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import {AppRegistry, StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-windows';
+import {AppRegistry, StyleSheet} from 'react-native';
+import {Text, View} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component {
   render() {
@@ -20,7 +20,16 @@ export default class Bootstrap extends React.Component {
           selectable={true}>
           Click here : This is a text with a tooltip.
         </Text>
-        <View style={styles.container2}>
+        <View
+          style={styles.container2}
+          accessible={true}
+          accessibilityLabel="Annotation Checkc"
+          accessibilityAnnotation={{
+            typeID: 'Comment',
+            typeName: 'Check Comment',
+            author: 'Christopher tarantino',
+            dateTime: '3/19/2025 1:03 PM',
+          }}>
           <Text
             adjustsFontSizeToFit
             style={{maxHeight: 80, fontSize: 72}}
