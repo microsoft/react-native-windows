@@ -8,6 +8,14 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
     The following has accessibilityLabel and accessibilityHint:
   </Text>
   <View
+    accessibilityAnnotation={
+      {
+        "author": "Clint Westwood",
+        "dateTime": "3/19/2025 1:03 PM",
+        "typeID": "Comment",
+        "typeName": "Check Comment",
+      }
+    }
     accessibilityHint="A hint for the blue box."
     accessibilityLabel="A blue box"
     accessibilityLevel={1}
