@@ -19,5 +19,6 @@ extern const char DebuggingOverlayComponentName[] = "DebuggingOverlay";
 extern const char PullToRefreshViewComponentName[] = "PullToRefreshView";
 extern const char SwitchComponentName[] = "Switch";
 extern const char UnimplementedNativeViewComponentName[] = "UnimplementedNativeView";
+extern const char XamlHostComponentName[] = "XamlHost";
 
 } // namespace facebook::react
