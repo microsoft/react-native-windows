@@ -13,17 +13,17 @@
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {InspectedElement} from './Inspector';
 
+import React from 'react';
 // import Dimensions from '../Utilities/Dimensions'; [Win32]
 
 const View = require('../Components/View/View');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const ElementBox = require('./ElementBox');
-const React = require('react');
 
-type Props = $ReadOnly<{|
+type Props = $ReadOnly<{
   inspected?: ?InspectedElement,
   onTouchPoint: (locationX: number, locationY: number) => void,
-|}>;
+}>;
 
 function InspectorOverlay({inspected, onTouchPoint}: Props): React.Node {
   const findViewForTouchEvent = (e: PressEvent) => {

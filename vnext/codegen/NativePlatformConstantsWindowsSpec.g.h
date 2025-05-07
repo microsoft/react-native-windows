@@ -14,7 +14,7 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeVersion {
+struct PlatformConstantsWindowsSpec_ReactNativeVersionAndroid {
     double major;
     double minor;
     double patch;
@@ -30,18 +30,18 @@ struct PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeWindowsV
 struct PlatformConstantsWindowsSpec_PlatformConstantsWindows {
     bool isTesting;
     std::optional<bool> isDisableAnimations;
-    PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeVersion reactNativeVersion;
+    PlatformConstantsWindowsSpec_ReactNativeVersionAndroid reactNativeVersion;
     PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeWindowsVersion reactNativeWindowsVersion;
     double osVersion;
 };
 
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeVersion*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWindowsSpec_ReactNativeVersionAndroid*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"major", &PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeVersion::major},
-        {L"minor", &PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeVersion::minor},
-        {L"patch", &PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeVersion::patch},
-        {L"prerelease", &PlatformConstantsWindowsSpec_PlatformConstantsWindows_reactNativeVersion::prerelease},
+        {L"major", &PlatformConstantsWindowsSpec_ReactNativeVersionAndroid::major},
+        {L"minor", &PlatformConstantsWindowsSpec_ReactNativeVersionAndroid::minor},
+        {L"patch", &PlatformConstantsWindowsSpec_ReactNativeVersionAndroid::patch},
+        {L"prerelease", &PlatformConstantsWindowsSpec_ReactNativeVersionAndroid::prerelease},
     };
     return fieldMap;
 }

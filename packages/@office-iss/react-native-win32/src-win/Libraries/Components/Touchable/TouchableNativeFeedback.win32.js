@@ -12,7 +12,7 @@ import * as React from 'react';
 import requireNativeComponent from '../../ReactNative/requireNativeComponent';
 import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
 
-type Props = $ReadOnly<{|
+type Props = $ReadOnly<{
   ...React.ElementConfig<TouchableWithoutFeedback>,
 
   /**
@@ -22,19 +22,19 @@ type Props = $ReadOnly<{|
    * methods to generate that dictionary.
    */
   background?: ?(
-    | $ReadOnly<{|
+    | $ReadOnly<{
         type: 'ThemeAttrAndroid',
         attribute:
           | 'selectableItemBackground'
           | 'selectableItemBackgroundBorderless',
         rippleRadius: ?number,
-      |}>
-    | $ReadOnly<{|
+      }>
+    | $ReadOnly<{
         type: 'RippleAndroid',
         color: ?number,
         borderless: boolean,
         rippleRadius: ?number,
-      |}>
+      }>
   ),
 
   /**
@@ -80,7 +80,7 @@ type Props = $ReadOnly<{|
   useForeground?: ?boolean,
 
   tooltip?: string, // Win32
-|}>;
+}>;
 
 const RCTTouchableNativeFeedback = requireNativeComponent<Props>(
   'RCTTouchableNativeFeedback',
