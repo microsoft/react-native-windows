@@ -64,6 +64,7 @@
 #include <react/runtime/JSRuntimeFactory.h>
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
+#include "CallInvokerDispatcher.h"
 #endif
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -645,11 +646,12 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 Mso::DispatchQueue::MakeLooperQueue(CreateDispatchQueueSettings(m_reactContext->Notifications()));
             auto jsDispatcher =
                 winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
-            m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
             m_jsMessageThread.Exchange(std::make_shared<Mso::React::MessageDispatchQueue>(
                 jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
             m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+
+            std::shared_ptr<facebook::react::CallInvoker> callInvoker;
 
             m_jsMessageThread.Load()->runOnQueueSync([&]() {
               SetJSThreadDescription();
@@ -684,6 +686,11 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
                   winrt::Microsoft::ReactNative::ReactPropertyBag(m_options.Properties),
                   m_bridgelessReactInstance->getRuntimeScheduler());
+
+              callInvoker = std::make_shared<facebook::react::RuntimeSchedulerCallInvoker>(
+              m_bridgelessReactInstance->getRuntimeScheduler());
+
+              m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), winrt::make<Microsoft::ReactNative::CallInvokerDispatcher>(std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
             });
 
             m_options.TurboModuleProvider->SetReactContext(
@@ -703,8 +710,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
                   auto turboModuleManager = std::make_shared<facebook::react::TurboModuleManager>(
                       m_options.TurboModuleProvider,
-                      std::make_shared<facebook::react::RuntimeSchedulerCallInvoker>(
-                          m_bridgelessReactInstance->getRuntimeScheduler()));
+                      callInvoker);
 
                   auto binding =
                       [turboModuleManager](const std::string &name) -> std::shared_ptr<facebook::react::TurboModule> {
