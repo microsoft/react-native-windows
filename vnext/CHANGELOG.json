@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 May 2025 05:27:07 GMT",
+      "version": "0.0.0-canary.951",
+      "tag": "react-native-windows_v0.0.0-canary.951",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4ba70cf9f197b2e46b7c07b92a72ccde0b3bc136",
+            "comment": "[Fabric] Implement selectTextOnFocus in Text Input"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f66ee05b5060a970fc0391afaddd917d84cebba4",
+            "comment": "Bump hermes version"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "aa48a7a281bfac19101c151949a252d77b953dee",
+            "comment": "[Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 03 May 2025 05:25:01 GMT",
       "version": "0.0.0-canary.950",
       "tag": "react-native-windows_v0.0.0-canary.950",
