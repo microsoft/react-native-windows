@@ -688,9 +688,12 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                   m_bridgelessReactInstance->getRuntimeScheduler());
 
               callInvoker = std::make_shared<facebook::react::RuntimeSchedulerCallInvoker>(
-              m_bridgelessReactInstance->getRuntimeScheduler());
+                  m_bridgelessReactInstance->getRuntimeScheduler());
 
-              m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), winrt::make<Microsoft::ReactNative::CallInvokerDispatcher>(std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
+              m_options.Properties.Set(
+                  ReactDispatcherHelper::JSDispatcherProperty(),
+                  winrt::make<Microsoft::ReactNative::CallInvokerDispatcher>(
+                      std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
             });
 
             m_options.TurboModuleProvider->SetReactContext(
@@ -708,9 +711,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                   };
                   facebook::react::bindNativeLogger(runtime, logger);
 
-                  auto turboModuleManager = std::make_shared<facebook::react::TurboModuleManager>(
-                      m_options.TurboModuleProvider,
-                      callInvoker);
+                  auto turboModuleManager =
+                      std::make_shared<facebook::react::TurboModuleManager>(m_options.TurboModuleProvider, callInvoker);
 
                   auto binding =
                       [turboModuleManager](const std::string &name) -> std::shared_ptr<facebook::react::TurboModule> {
