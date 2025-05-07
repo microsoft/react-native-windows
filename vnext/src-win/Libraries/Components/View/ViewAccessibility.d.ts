@@ -13,7 +13,8 @@ import {NativeSyntheticEvent} from '../../Types/CoreEventTypes';
  * @see https://reactnative.dev/docs/accessibility#accessibility-properties
  */
 export interface AccessibilityProps
-  extends AccessibilityPropsAndroid,
+  extends AccessibilityPropsWindows,
+    AccessibilityPropsAndroid,
     AccessibilityPropsIOS {
   /**
    * When true, indicates that the view is an accessibility element.
@@ -257,6 +258,52 @@ export type AccessibilityRole =
   | 'treeitem' // Windows
   | 'listitem' // Windows
   | 'toolbar';
+
+// [Windows]
+export type AnnotationType =
+  | 'AdvanceProofingIssue'
+  | 'Author'
+  | 'CircularReferenceError'
+  | 'Comment'
+  | 'ConflictingChange'
+  | 'DataValidationError'
+  | 'DeletionChange'
+  | 'EditingLockedChange'
+  | 'Endnote'
+  | 'ExternalChange'
+  | 'Footer'
+  | 'Footnote'
+  | 'FormatChange'
+  | 'FormulaError'
+  | 'GrammarError'
+  | 'Header'
+  | 'Highlighted'
+  | 'InsertionChange'
+  | 'Mathematics'
+  | 'MoveChange'
+  | 'SpellingError'
+  | 'TrackChanges'
+  | 'Unknown'
+  | 'UnsyncedChange';
+
+// [Windows]
+export type AccessibilityAnnotationInfo = Readonly<{
+  typeID: AnnotationType;
+  typeName?: string;
+  author?: string;
+  dateTime?: string;
+  target?: string;
+}>;
+export interface AccessibilityPropsWindows {
+  /**
+   * Tells a person using a screen reader what kind of annotation they
+   * have selected. If available, it will also tell a person the author of the annotation and
+   * the date and time the annotation was posted.
+   *
+   * Note: If typeID is 'Unknown', a typeName must be provided.
+   */
+  accessibilityAnnotation?: AccessibilityAnnotationInfo; //Windows
+}
 
 export interface AccessibilityPropsAndroid {
   /**

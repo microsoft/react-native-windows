@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 01 May 2025 05:24:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 07 May 2025 05:27:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.951
+
+Wed, 07 May 2025 05:27:07 GMT
+
+### Changes
+
+- [Fabric] Implement selectTextOnFocus in Text Input (54227869+anupriya13@users.noreply.github.com)
+- Bump hermes version (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.950
 

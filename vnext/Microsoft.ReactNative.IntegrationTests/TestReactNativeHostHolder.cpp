@@ -6,6 +6,10 @@
 #include "..\codegen\NativeDeviceInfoSpec.g.h"
 #include <NativeModules.h>
 
+#ifdef USE_FABRIC
+#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#endif
+
 namespace ReactNativeIntegrationTests {
 
 using namespace winrt;
@@ -72,6 +76,18 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     m_host.InstanceSettings().UseLiveReload(false);
     m_host.InstanceSettings().EnableDeveloperMenu(false);
     m_host.PackageProviders().Append(winrt::make<TestReactPackageProvider>());
+
+#if USE_FABRIC
+    // To properly enable fabric you need to set a compositor.
+    // Since the UTs are ui-less we can force fabric by setting a CompositionContext with a null compositor
+    winrt::Microsoft::ReactNative::ReactPropertyBag(m_host.InstanceSettings().Properties())
+        .Set(
+            winrt::Microsoft::ReactNative::ReactPropertyId<
+                winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
+                L"ReactNative.Composition", L"CompositionContext"},
+            winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateContext(
+                nullptr));
+#endif
 
     hostInitializer(m_host);
 
