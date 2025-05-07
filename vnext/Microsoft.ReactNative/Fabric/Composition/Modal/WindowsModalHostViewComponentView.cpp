@@ -7,13 +7,10 @@
 
 #include "../../../codegen/react/components/rnwcore/ModalHostView.g.h"
 #include <ComponentView.Experimental.interop.h>
-#include <debugapi.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
-#include <winrt/Windows.Foundation.h>
-#include <winuser.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
