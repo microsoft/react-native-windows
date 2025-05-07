@@ -284,10 +284,6 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 
 class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
  public:
-  bool disableEventLoopOnBridgeless() override {
-    return Microsoft::React::GetRuntimeOptionBool("ReactFeatureFlag.enableEventLoopOnBridgeless");
-  }
-
   bool enableBridgelessArchitecture() override {
 #ifdef USE_FABRIC
     return true;

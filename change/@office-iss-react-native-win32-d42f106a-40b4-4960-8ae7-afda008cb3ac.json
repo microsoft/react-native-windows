@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "initial commit",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "yajurgrover24@gmail.com",
+  "dependentChangeType": "patch"
+}

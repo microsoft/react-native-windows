@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@babel/core": "^7.25.2",
-    "@react-native/babel-preset": "0.78.0-nightly-20250113-d4407d6f7",
+    "@react-native/babel-preset": "0.79.0-nightly-20250123-d1028885e",
     "babel-plugin-transform-flow-enums": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@react-native/babel-preset": "0.78.0-nightly-20250113-d4407d6f7",
+    "@react-native/babel-preset": "0.79.0-nightly-20250123-d1028885e",
     "eslint": "^8.19.0",
     "prettier": "2.8.8"
   },
