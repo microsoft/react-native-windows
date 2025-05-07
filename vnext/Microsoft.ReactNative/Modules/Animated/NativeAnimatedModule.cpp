@@ -56,9 +56,7 @@ void NativeAnimatedModule::getValue(double tag, std::function<void(double)> cons
        callback = std::move(saveValueCallback)]() {
         if (auto pThis = wkThis.lock()) {
           pThis->m_nodesManager->GetValue(
-              tag, [context = pThis->m_context, callback = std::move(callback)](double value) {
-                callback(value);
-              });
+              tag, [context = pThis->m_context, callback = std::move(callback)](double value) { callback(value); });
         }
       });
 }

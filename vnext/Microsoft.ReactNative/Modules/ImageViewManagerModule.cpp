@@ -112,9 +112,7 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
             [result](double width, double height) noexcept {
               result.Resolve(std::vector<double>{width, height});
             },
-            [result]() noexcept {
-              result.Reject("Failed");
-            }
+            [result]() noexcept { result.Reject("Failed"); }
 #ifdef USE_FABRIC
             ,
             IsFabricEnabled(context.Properties().Handle())
@@ -137,12 +135,9 @@ void ImageLoader::getSizeWithHeaders(
         std::move(uri),
         std::move(headers),
         [result](double width, double height) noexcept {
-          result.Resolve(
-              Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
+          result.Resolve(Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
         },
-        [result]() noexcept {
-          result.Reject("Failed");
-        }
+        [result]() noexcept { result.Reject("Failed"); }
 #ifdef USE_FABRIC
         ,
         IsFabricEnabled(context.Properties().Handle())

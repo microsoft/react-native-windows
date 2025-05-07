@@ -26,7 +26,7 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &o
     if (auto strongThis = weakThis.lock()) {
       winrt::Windows::UI::ViewManagement::UISettings uiSettings;
       auto animationsEnabled = uiSettings.AnimationsEnabled();
-      onSuccess(!animationsEnabled);;
+      onSuccess(!animationsEnabled);
     }
   });
 }
