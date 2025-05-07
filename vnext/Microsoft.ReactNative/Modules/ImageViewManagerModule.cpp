@@ -109,13 +109,11 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
             context.Properties().Handle(),
             std::move(uri),
             {},
-            [result, context](double width, double height) noexcept {
-              context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
-                result.Resolve(std::vector<double>{width, height});
-              });
+            [result](double width, double height) noexcept {
+              result.Resolve(std::vector<double>{width, height});
             },
-            [result, context]() noexcept {
-              context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
+            [result]() noexcept {
+              result.Reject("Failed");
             }
 #ifdef USE_FABRIC
             ,
@@ -138,14 +136,12 @@ void ImageLoader::getSizeWithHeaders(
         context.Properties().Handle(),
         std::move(uri),
         std::move(headers),
-        [result, context](double width, double height) noexcept {
-          context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
-            result.Resolve(
-                Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
-          });
+        [result](double width, double height) noexcept {
+          result.Resolve(
+              Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
         },
-        [result, context]() noexcept {
-          context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
+        [result]() noexcept {
+          result.Reject("Failed");
         }
 #ifdef USE_FABRIC
         ,
