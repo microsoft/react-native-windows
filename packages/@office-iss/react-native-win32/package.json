@@ -90,7 +90,6 @@
     "prettier": "2.8.8",
     "react": "19.0.0",
     "react-native": "0.79.0-nightly-20250206-fb8a6a5bb",
-    "react-native-platform-override": "^1.9.52",
     "react-native-platform-override": "^1.9.53",
     "typescript": "5.0.4"
   },

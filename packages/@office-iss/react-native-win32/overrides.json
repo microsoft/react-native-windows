@@ -504,21 +504,18 @@
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeAccessibilityInfoWin32.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativeAccessibilityInfo.js",
-      "baseVersion": "0.79.0-nightly-20250123-d1028885e",
       "baseHash": "82fc086f675dec489e485c3aabaabe1225ef5f36"
     },
     {
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeImageLoaderWin32.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativeImageLoaderAndroid.js",
-      "baseVersion": "0.79.0-nightly-20250123-d1028885e",
       "baseHash": "98c031d5f249af5f8d9198290750825b70827dcc"
     },
     {
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativePlatformConstantsAndroid.js",
-      "baseVersion": "0.79.0-nightly-20250123-d1028885e",
       "baseHash": "365c5df75b38b129d364af3f6700cb206ce5bd2a"
     }
   ]

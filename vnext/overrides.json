@@ -112,6 +112,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.cpp",
+      "baseHash": "d97a42728cde15f2d48eed71b5642a28fabc0d37",
+      "issue": 14257
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.h",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.h",
       "baseHash": "2e7b78e224f658c55105ccfc35d416d1743352e2",
@@ -620,14 +627,12 @@
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeDialogManagerWindows.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativeDialogManagerAndroid.js",
-      "baseVersion": "0.79.0-nightly-20250123-d1028885e",
       "baseHash": "0aff9f1f951580ae27eca18c83bc8ee016b51e2c"
     },
     {
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativePlatformConstantsWindows.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativePlatformConstantsAndroid.js",
-      "baseVersion": "0.79.0-nightly-20250123-d1028885e",
       "baseHash": "365c5df75b38b129d364af3f6700cb206ce5bd2a"
     }
   ]
