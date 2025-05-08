@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "initial commit",
-  "packageName": "@rnw-scripts/eslint-config",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
