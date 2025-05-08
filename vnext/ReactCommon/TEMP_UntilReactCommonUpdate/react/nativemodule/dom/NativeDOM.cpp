@@ -81,7 +81,7 @@ static bool isRootShadowNode(const ShadowNode& shadowNode) {
 NativeDOM::NativeDOM(std::shared_ptr<CallInvoker> jsInvoker)
     : NativeDOMCxxSpec(std::move(jsInvoker)) {}
 
-#pragma mark - Methods from the `Node` interface (for `ReadOnlyNode`).
+#pragma mark - Methods from the Node interface (for ReadOnlyNode).
 
 double NativeDOM::compareDocumentPosition(
     jsi::Runtime& rt,
@@ -108,7 +108,7 @@ double NativeDOM::compareDocumentPosition(
 
       if (isRootShadowNode(*otherShadowNode)) {
         // If the other is a root node, we just need to check if it is its
-        // `documentElement`
+        // documentElement
         return (surfaceId == otherShadowNode->getSurfaceId())
             ? dom::DOCUMENT_POSITION_CONTAINED_BY |
                 dom::DOCUMENT_POSITION_FOLLOWING
@@ -204,7 +204,7 @@ bool NativeDOM::isConnected(jsi::Runtime& rt, jsi::Value nativeNodeReference) {
   return dom::isConnected(currentRevision, *shadowNode);
 }
 
-#pragma mark - Methods from the `Element` interface (for `ReactNativeElement`).
+#pragma mark - Methods from the Element interface (for ReactNativeElement).
 
 std::tuple<
     /* topWidth: */ int,
@@ -336,7 +336,7 @@ void NativeDOM::setPointerCapture(
       static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, shadowNodeValue));
 }
 
-#pragma mark - Methods from the `HTMLElement` interface (for `ReactNativeElement`).
+#pragma mark - Methods from the HTMLElement interface (for ReactNativeElement).
 
 std::tuple<
     /* offsetParent: */ jsi::Value,
@@ -378,7 +378,7 @@ jsi::Value NativeDOM::linkRootNode(
   return valueFromShadowNode(rt, currentRevision);
 }
 
-#pragma mark - Legacy layout APIs (for `ReactNativeElement`).
+#pragma mark - Legacy layout APIs (for ReactNativeElement).
 
 void NativeDOM::measure(
     jsi::Runtime& rt,
