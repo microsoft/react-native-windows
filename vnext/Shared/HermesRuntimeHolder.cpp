@@ -326,9 +326,7 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   CRASH_ON_ERROR(api.jsr_config_set_inspector_port(config, devSettings->debuggerPort));
   CRASH_ON_ERROR(api.jsr_config_set_inspector_break_on_start(config, devSettings->debuggerBreakOnNextLine));
   CRASH_ON_ERROR(api.jsr_config_set_explicit_microtasks(
-      config,
-      facebook::react::ReactNativeFeatureFlags::enableBridgelessArchitecture() &&
-          !facebook::react::ReactNativeFeatureFlags::disableEventLoopOnBridgeless()));
+      config, facebook::react::ReactNativeFeatureFlags::enableBridgelessArchitecture()));
 
   if (m_jsQueue) {
     HermesTaskRunner::Create(config, m_jsQueue);

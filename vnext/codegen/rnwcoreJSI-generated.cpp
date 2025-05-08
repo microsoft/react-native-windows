@@ -26,11 +26,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_complet
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableEventLoopOnBridgeless(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableEventLoopOnBridgeless(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableMountItemReorderingAndroid(
     rt
@@ -93,6 +88,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableI
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImagePrefetchingAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableImagePrefetchingAndroid(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableJSRuntimeGCOnMemoryPressureOnIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableJSRuntimeGCOnMemoryPressureOnIOS(
     rt
   );
 }
@@ -196,6 +196,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useAlwa
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useEditTextStockAndroidFocusBehavior(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useFabricInterop(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useFabricInterop(
     rt
@@ -247,7 +252,6 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["commonTestFlag"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlag};
   methodMap_["commonTestFlagWithoutNativeImplementation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlagWithoutNativeImplementation};
   methodMap_["completeReactInstanceCreationOnBgThreadOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_completeReactInstanceCreationOnBgThreadOnAndroid};
-  methodMap_["disableEventLoopOnBridgeless"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableEventLoopOnBridgeless};
   methodMap_["disableMountItemReorderingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid};
   methodMap_["enableAccumulatedUpdatesInRawPropsAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccumulatedUpdatesInRawPropsAndroid};
   methodMap_["enableBridgelessArchitecture"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBridgelessArchitecture};
@@ -261,6 +265,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableGranularShadowTreeStateReconciliation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableGranularShadowTreeStateReconciliation};
   methodMap_["enableIOSViewClipToPaddingBox"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableIOSViewClipToPaddingBox};
   methodMap_["enableImagePrefetchingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImagePrefetchingAndroid};
+  methodMap_["enableJSRuntimeGCOnMemoryPressureOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableJSRuntimeGCOnMemoryPressureOnIOS};
   methodMap_["enableLayoutAnimationsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLayoutAnimationsOnAndroid};
   methodMap_["enableLayoutAnimationsOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLayoutAnimationsOnIOS};
   methodMap_["enableLongTaskAPI"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLongTaskAPI};
@@ -281,6 +286,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["loadVectorDrawablesOnImages"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_loadVectorDrawablesOnImages};
   methodMap_["traceTurboModulePromiseRejectionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_traceTurboModulePromiseRejectionsOnAndroid};
   methodMap_["useAlwaysAvailableJSErrorHandling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useAlwaysAvailableJSErrorHandling};
+  methodMap_["useEditTextStockAndroidFocusBehavior"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useEditTextStockAndroidFocusBehavior};
   methodMap_["useFabricInterop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useFabricInterop};
   methodMap_["useImmediateExecutorInAndroidBridgeless"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useImmediateExecutorInAndroidBridgeless};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
@@ -1439,6 +1445,15 @@ static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_stopSurface(jsi::Runtime
   );
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_dispatchNativeEvent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->dispatchNativeEvent(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0]),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asString(rt),
+    count <= 2 || args[2].isUndefined() ? std::nullopt : std::make_optional(jsi::Value(rt, args[2]))
+  );
+  return jsi::Value::undefined();
+}
 static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_getMountingManagerLogs(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->getMountingManagerLogs(
     rt,
@@ -1447,6 +1462,12 @@ static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_getMountingManagerLogs(j
 }
 static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_flushMessageQueue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->flushMessageQueue(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_flushEventQueue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->flushEventQueue(
     rt
   );
   return jsi::Value::undefined();
@@ -1470,8 +1491,10 @@ NativeFantomCxxSpecJSI::NativeFantomCxxSpecJSI(std::shared_ptr<CallInvoker> jsIn
   : TurboModule("NativeFantomCxx", jsInvoker) {
   methodMap_["startSurface"] = MethodMetadata {4, __hostFunction_NativeFantomCxxSpecJSI_startSurface};
   methodMap_["stopSurface"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_stopSurface};
+  methodMap_["dispatchNativeEvent"] = MethodMetadata {3, __hostFunction_NativeFantomCxxSpecJSI_dispatchNativeEvent};
   methodMap_["getMountingManagerLogs"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_getMountingManagerLogs};
   methodMap_["flushMessageQueue"] = MethodMetadata {0, __hostFunction_NativeFantomCxxSpecJSI_flushMessageQueue};
+  methodMap_["flushEventQueue"] = MethodMetadata {0, __hostFunction_NativeFantomCxxSpecJSI_flushEventQueue};
   methodMap_["getRenderedOutput"] = MethodMetadata {2, __hostFunction_NativeFantomCxxSpecJSI_getRenderedOutput};
   methodMap_["reportTestSuiteResultsJSON"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_reportTestSuiteResultsJSON};
 }

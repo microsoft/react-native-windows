@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.78.0-nightly-20250113-d4407d6f7",
+  "baseVersion": "0.79.0-nightly-20250123-d1028885e",
   "overrides": [
     {
       "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
-      "baseHash": "e644fe80f0d405382d180ec7a822794454943ff1"
+      "baseHash": "74a0b8d26ba5e62ea6e39e17a9fc9bc2d5c235fa"
     },
     {
       "type": "derived",
@@ -23,7 +23,7 @@
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "30cd53b51d41dfdd9d2268921a4280038b470995"
+      "baseHash": "72db5711fe07e139f5d66c7246bf04f059782ebb"
     },
     {
       "type": "patch",
@@ -43,14 +43,14 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "9c1244c03d22578ac09fe2143b04664ba61f7b97",
+      "baseHash": "c6a0e4108757edf7b214bb0412e3c11917ae97fc",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "194b5caf919b2acb35ba5e0766b8b8451345e7a8",
+      "baseHash": "552b83b0c8e7188471e709f2a6dac2621badcfe9",
       "issue": 12869
     },
     {
@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "e840e1c091d2644d0a682b8baffad3b3dda2b207",
+      "baseHash": "4084d994a59f9f46fc173b54a3619e7268b50fa6",
       "issue": 12869
     },
     {
@@ -104,7 +104,7 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "05e9aba7bc765ca0f9e15313bb60a92a9c7688eb"
+      "baseHash": "fa8a3c8b4faacdeab85d418392009c4243e41158"
     },
     {
       "type": "derived",
@@ -123,20 +123,20 @@
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "c1e71d618beb2c2abaacae346d9a74e671330ce1"
+      "baseHash": "4c775e7c65698d82130a55302fb53f65bcb96c08"
     },
     {
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "10d44f85e6fbdab7620a7ce4f6ca2d8f43e8de19",
+      "baseHash": "5c878523dfe3052b6658d29f320f46383774af70",
       "issue": 0
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "3e58378bbd296da6d628789f52eabd036aa856cd"
+      "baseHash": "cd3f3d900971880d9d35a97f42f370bdcccc36d1"
     },
     {
       "type": "copy",
