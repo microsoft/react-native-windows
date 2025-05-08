@@ -95,8 +95,8 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     // Update Title if changed and AppWindow exists
     if (m_appWindow && (!oldProps || newViewProps.title != oldViewProps.title)) {
       // Use empty string if title is not set
-      winrt::hstring titleValue = newViewProps.title.has_value() ? 
-          winrt::to_hstring(newViewProps.title.value()) : winrt::hstring();
+      winrt::hstring titleValue =
+          newViewProps.title.has_value() ? winrt::to_hstring(newViewProps.title.value()) : winrt::hstring();
       m_appWindow.Title(titleValue);
     }
 
@@ -174,22 +174,22 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     // Calculate physical pixels from DIPs
     int32_t clientWidthPx = static_cast<int32_t>(layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor);
     int32_t clientHeightPx = static_cast<int32_t>(layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor);
-    
+
     // Ensure minimum size for the window
     clientWidthPx = std::max(100, clientWidthPx);
     clientHeightPx = std::max(100, clientHeightPx);
 
     // Size the client area directly
     m_appWindow.ResizeClient({clientWidthPx, clientHeightPx});
-    
+
     // Center the window on its parent
     RECT parentRC;
     GetWindowRect(m_parentHwnd, &parentRC);
     auto outerSize = m_appWindow.Size();
-    
+
     int32_t xCor = parentRC.left + (parentRC.right - parentRC.left - outerSize.Width) / 2;
     int32_t yCor = parentRC.top + (parentRC.bottom - parentRC.top - outerSize.Height) / 2;
-    
+
     m_appWindow.Move({xCor, yCor});
   };
 

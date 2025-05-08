@@ -335,8 +335,7 @@ class Modal extends React.Component<Props, State> {
         supportedOrientations={this.props.supportedOrientations}
         onOrientationChange={this.props.onOrientationChange}
         testID={this.props.testID}
-        title={this.props.title} 
-      >
+        title={this.props.title}>
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>
             <View
