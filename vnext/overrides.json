@@ -112,6 +112,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.h",
+      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.h",
+      "baseHash": "2e7b78e224f658c55105ccfc35d416d1743352e2",
+      "issue": 14654
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
       "baseHash": "b15afcf4971fd2c9c9a9859ffcb2113bec28fc35",
