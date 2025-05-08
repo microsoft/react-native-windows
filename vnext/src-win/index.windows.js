@@ -99,7 +99,6 @@ import typeof Platform from './Libraries/Utilities/Platform';
 import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
-import typeof YellowBox from './Libraries/YellowBox/YellowBoxDeprecated';
 import typeof DevMenu from './src/private/devmenu/DevMenu';
 
 const warnOnce = require('./Libraries/Utilities/warnOnce');
@@ -129,13 +128,13 @@ module.exports = {
       .default;
   },
   get FlatList(): FlatList {
-    return require('./Libraries/Lists/FlatList');
+    return require('./Libraries/Lists/FlatList').default;
   },
   get Image(): Image {
-    return require('./Libraries/Image/Image');
+    return require('./Libraries/Image/Image').default;
   },
   get ImageBackground(): ImageBackground {
-    return require('./Libraries/Image/ImageBackground');
+    return require('./Libraries/Image/ImageBackground').default;
   },
   get InputAccessoryView(): InputAccessoryView {
     return require('./Libraries/Components/TextInput/InputAccessoryView')
@@ -186,34 +185,37 @@ module.exports = {
     return require('./Libraries/Components/Switch/Switch').default;
   },
   get Text(): Text {
-    return require('./Libraries/Text/Text');
+    return require('./Libraries/Text/Text').default;
   },
   get TextInput(): TextInput {
-    return require('./Libraries/Components/TextInput/TextInput');
+    return require('./Libraries/Components/TextInput/TextInput').default;
   },
   get Touchable(): Touchable {
     return require('./Libraries/Components/Touchable/Touchable').default;
   },
   get TouchableHighlight(): TouchableHighlight {
-    return require('./Libraries/Components/Touchable/TouchableHighlight');
+    return require('./Libraries/Components/Touchable/TouchableHighlight')
+      .default;
   },
   get TouchableNativeFeedback(): TouchableNativeFeedback {
-    return require('./Libraries/Components/Touchable/TouchableNativeFeedback');
+    return require('./Libraries/Components/Touchable/TouchableNativeFeedback')
+      .default;
   },
   get TouchableOpacity(): TouchableOpacity {
-    return require('./Libraries/Components/Touchable/TouchableOpacity');
+    return require('./Libraries/Components/Touchable/TouchableOpacity').default;
   },
   get TouchableWithoutFeedback(): TouchableWithoutFeedback {
-    return require('./Libraries/Components/Touchable/TouchableWithoutFeedback');
+    return require('./Libraries/Components/Touchable/TouchableWithoutFeedback')
+      .default;
   },
   get View(): View {
-    return require('./Libraries/Components/View/View');
+    return require('./Libraries/Components/View/View').default;
   },
   get VirtualizedList(): VirtualizedList {
-    return require('./Libraries/Lists/VirtualizedList');
+    return require('./Libraries/Lists/VirtualizedList').default;
   },
   get VirtualizedSectionList(): VirtualizedSectionList {
-    return require('./Libraries/Lists/VirtualizedSectionList');
+    return require('./Libraries/Lists/VirtualizedSectionList').default;
   },
 
   // APIs
@@ -233,7 +235,7 @@ module.exports = {
     return require('./Libraries/Utilities/Appearance');
   },
   get AppRegistry(): AppRegistry {
-    return require('./Libraries/ReactNative/AppRegistry');
+    return require('./Libraries/ReactNative/AppRegistry').default;
   },
   get AppState(): AppState {
     return require('./Libraries/AppState/AppState').default;
@@ -269,19 +271,19 @@ module.exports = {
     return require('./Libraries/ReactNative/RendererProxy').findNodeHandle;
   },
   get I18nManager(): I18nManager {
-    return require('./Libraries/ReactNative/I18nManager');
+    return require('./Libraries/ReactNative/I18nManager').default;
   },
   get InteractionManager(): InteractionManager {
-    return require('./Libraries/Interaction/InteractionManager');
+    return require('./Libraries/Interaction/InteractionManager').default;
   },
   get Keyboard(): Keyboard {
     return require('./Libraries/Components/Keyboard/Keyboard').default;
   },
   get LayoutAnimation(): LayoutAnimation {
-    return require('./Libraries/LayoutAnimation/LayoutAnimation');
+    return require('./Libraries/LayoutAnimation/LayoutAnimation').default;
   },
   get Linking(): Linking {
-    return require('./Libraries/Linking/Linking');
+    return require('./Libraries/Linking/Linking').default;
   },
   get LogBox(): LogBox {
     return require('./Libraries/LogBox/LogBox').default;
@@ -315,10 +317,10 @@ module.exports = {
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS');
   },
   get Settings(): Settings {
-    return require('./Libraries/Settings/Settings');
+    return require('./Libraries/Settings/Settings').default;
   },
   get Share(): Share {
-    return require('./Libraries/Share/Share');
+    return require('./Libraries/Share/Share').default;
   },
   get StyleSheet(): StyleSheet {
     return require('./Libraries/StyleSheet/StyleSheet');
@@ -328,13 +330,13 @@ module.exports = {
   },
   // $FlowFixMe[value-as-type]
   get ToastAndroid(): ToastAndroid {
-    return require('./Libraries/Components/ToastAndroid/ToastAndroid');
+    return require('./Libraries/Components/ToastAndroid/ToastAndroid').default;
   },
   get TurboModuleRegistry(): TurboModuleRegistry {
     return require('./Libraries/TurboModule/TurboModuleRegistry');
   },
   get UIManager(): UIManager {
-    return require('./Libraries/ReactNative/UIManager');
+    return require('./Libraries/ReactNative/UIManager').default;
   },
   get unstable_batchedUpdates(): $PropertyType<
     ReactNative,
@@ -358,9 +360,6 @@ module.exports = {
   get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
   },
-  get YellowBox(): YellowBox {
-    return require('./Libraries/YellowBox/YellowBoxDeprecated').default;
-  },
 
   // Plugins
   get DeviceEventEmitter(): RCTDeviceEventEmitter {
@@ -371,7 +370,7 @@ module.exports = {
       .DynamicColorIOS;
   },
   get NativeAppEventEmitter(): RCTNativeAppEventEmitter {
-    return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter');
+    return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter').default;
   },
   get NativeModules(): NativeModules {
     return require('./Libraries/BatchedBridge/NativeModules').default;

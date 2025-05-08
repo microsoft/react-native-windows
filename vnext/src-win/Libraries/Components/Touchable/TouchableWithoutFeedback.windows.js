@@ -130,15 +130,7 @@ const PASSTHROUGH_PROPS = [
   'tooltip', // [Windows]
 ];
 
-// Modify the function to accept the ref prop and forward it
-// $FlowFixMe[prop-missing]
-const TouchableWithoutFeedback: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof Animated.View>,
-> = React.forwardRef(function TouchableWithoutFeedback(
-  props: Props,
-  ref,
-): React.Node {
+export default function TouchableWithoutFeedback(props: Props): React.Node {
   const {
     disabled,
     rejectResponderTermination,
@@ -269,7 +261,5 @@ const TouchableWithoutFeedback: React.AbstractComponent<
   }
 
   // $FlowFixMe[incompatible-call]
-  return React.cloneElement(element, {...elementProps, ref}, ...children);
-});
-
-module.exports = TouchableWithoutFeedback;
+  return React.cloneElement(element, elementProps, ...children);
+}
