@@ -616,7 +616,7 @@
       "type": "patch",
       "file": "src-win/src/private/specs/components/RCTModalHostViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/src/private/specs/components/RCTModalHostViewNativeComponent.js",
-      "baseHash": "a5e0c9fe3a0777f704e0685589019b4dd443d385",
+      "baseHash": "dbda84f2de3e0aa3504e38bd4bbb687b1ea671b2",
       "issue": 0
     },
     {
