@@ -19,7 +19,7 @@ import {
   supportKeyboard,
   ViewWindows,
 } from 'react-native-windows';
-import {Picker} from '@react-native-picker/picker';
+import Picker from '@react-native-picker/picker';
 
 // TextInput2 is used to verify supportKeyboard + focus
 const TextInput2 = supportKeyboard(TextInput);
