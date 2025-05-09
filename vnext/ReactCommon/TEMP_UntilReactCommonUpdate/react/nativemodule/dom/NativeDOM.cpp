@@ -330,7 +330,7 @@ void NativeDOM::setPointerCapture(
     jsi::Value nativeElementReference,
     double pointerId) {
   getPointerEventsProcessorFromRuntime(rt).setPointerCapture(
-      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, nativeElementReference).get());
+      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, nativeElementReference));
 }
 
 #pragma mark - Methods from the HTMLElement interface (for ReactNativeElement).

@@ -29,7 +29,6 @@ class Alert {
       title: title || '',
       message: message || '',
       cancelable: false,
-      rootTag: options && options.rootTag,
     };
 
     if (options && options.cancelable) {
