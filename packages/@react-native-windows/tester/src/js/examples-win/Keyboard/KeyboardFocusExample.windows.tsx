@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import View,
-{
+import {
+  View,
   StyleSheet,
   Text,
   TextInput,
