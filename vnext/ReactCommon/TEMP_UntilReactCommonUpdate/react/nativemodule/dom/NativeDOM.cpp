@@ -121,7 +121,7 @@ double NativeDOM::compareDocumentPosition(
       // Only the second is a document
       auto otherSurfaceId = otherNativeNodeReference.asNumber();
       shadowNode = shadowNodeFromValue(rt, nativeNodeReference);
-      otherShadowNode = getCurrentShadowTreeRevision(rt, otherSurfaceId);
+      otherShadowNode = getCurrentShadowTreeRevision(rt, static_cast<SurfaceId>(otherSurfaceId));
 
       if (isRootShadowNode(*shadowNode)) {
         // If this is a root node, we just need to check if the other is its
@@ -313,8 +313,7 @@ bool NativeDOM::hasPointerCapture(
     jsi::Value nativeElementReference,
     double pointerId) {
   bool isCapturing = getPointerEventsProcessorFromRuntime(rt).hasPointerCapture(
-      // [Windows] Cast to fix https://github.com/microsoft/react-native-windows/issues/14251
-      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, shadowNodeValue).get());
+      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, nativeElementReference).get());
   return isCapturing;
 }
 
@@ -323,8 +322,7 @@ void NativeDOM::releasePointerCapture(
     jsi::Value nativeElementReference,
     double pointerId) {
   getPointerEventsProcessorFromRuntime(rt).releasePointerCapture(
-      // [Windows] Cast to fix https://github.com/microsoft/react-native-windows/issues/14251
-      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, shadowNodeValue).get());
+      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, nativeElementReference).get());
 }
 
 void NativeDOM::setPointerCapture(
@@ -332,8 +330,7 @@ void NativeDOM::setPointerCapture(
     jsi::Value nativeElementReference,
     double pointerId) {
   getPointerEventsProcessorFromRuntime(rt).setPointerCapture(
-      // [Windows] Cast to fix https://github.com/microsoft/react-native-windows/issues/14251
-      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, shadowNodeValue));
+      static_cast<PointerIdentifier>(pointerId), shadowNodeFromValue(rt, nativeElementReference).get());
 }
 
 #pragma mark - Methods from the HTMLElement interface (for ReactNativeElement).
