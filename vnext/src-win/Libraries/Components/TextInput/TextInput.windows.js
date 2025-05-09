@@ -560,7 +560,7 @@ type TextInputWindowsProps = $ReadOnly<{|
 
 // Windows]
 
-export type Props = $ReadOnly<{
+export type TextInputProps = $ReadOnly<{
   ...$Diff<ViewProps, $ReadOnly<{style: ?ViewStyleProp}>>,
   ...TextInputIOSProps,
   ...TextInputAndroidProps,
