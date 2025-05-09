@@ -82,21 +82,30 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
     case PropertyType::BooleanArray: {
       com_array<bool> tmpArray;
       propValue.GetBooleanArray(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (bool b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::Char16Array: {
       com_array<char16_t> tmpArray;
       propValue.GetChar16Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (char16_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::DoubleArray: {
       com_array<double_t> tmpArray;
       propValue.GetDoubleArray(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (double_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
@@ -113,28 +122,40 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
     case PropertyType::Int16Array: {
       com_array<int16_t> tmpArray;
       propValue.GetInt16Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (int16_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::Int32Array: {
       com_array<int32_t> tmpArray;
       propValue.GetInt32Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (int32_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::Int64Array: {
       com_array<int64_t> tmpArray;
       propValue.GetInt64Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (int64_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::SingleArray: {
       com_array<float> tmpArray;
       propValue.GetSingleArray(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (float b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
@@ -151,28 +172,40 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
     case PropertyType::UInt8Array: {
       com_array<uint8_t> tmpArray;
       propValue.GetUInt8Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (uint8_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::UInt16Array: {
       com_array<uint16_t> tmpArray;
       propValue.GetUInt16Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (uint16_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::UInt32Array: {
       com_array<uint32_t> tmpArray;
       propValue.GetUInt32Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (uint32_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
     case PropertyType::UInt64Array: {
       com_array<uint64_t> tmpArray;
       propValue.GetUInt64Array(tmpArray);
-      folly::dynamic d(tmpArray.begin(), tmpArray.end());
+      folly::dynamic d = folly::dynamic::array();
+      for (uint64_t b : tmpArray) {
+        d.push_back(folly::dynamic(b));
+      }
       value = d;
       break;
     }
