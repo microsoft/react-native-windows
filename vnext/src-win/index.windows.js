@@ -447,7 +447,7 @@ module.exports = {
       .HandledEventPhase;
   },
   get ViewWindows(): any {
-    return require('./Libraries/Components/View/View');
+    return require('./Libraries/Components/View/View').default;
   },
   get AppTheme(): AppTheme {
     return require('./Libraries/AppTheme/AppTheme');
