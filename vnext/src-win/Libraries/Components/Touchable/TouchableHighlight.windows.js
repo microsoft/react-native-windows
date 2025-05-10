@@ -405,4 +405,4 @@ const Touchable: component(
 
 Touchable.displayName = 'TouchableHighlight';
 
-module.exports = Touchable;
+export default Touchable;

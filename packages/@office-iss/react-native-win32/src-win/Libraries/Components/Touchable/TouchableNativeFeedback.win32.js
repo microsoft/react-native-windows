@@ -96,4 +96,4 @@ class TouchableNativeFeedback extends React.Component<Props, {}> {
   }
 }
 
-module.exports = TouchableNativeFeedback;
+export default TouchableNativeFeedback;

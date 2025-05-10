@@ -24,7 +24,7 @@ import {NativeText, NativeVirtualText} from './TextNativeComponent';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
 
-const View = require('../Components/View/View'); // [Windows]
+const View = require('../Components/View/View').default; // [Windows]
 import {type ViewStyleProp} from '../StyleSheet/StyleSheet'; // [Windows]
 
 type TextForwardRef = React.ElementRef<
@@ -596,4 +596,4 @@ const verticalAlignToTextAlignVerticalMap = {
   middle: 'center',
 };
 
-module.exports = Text;
+export default Text;

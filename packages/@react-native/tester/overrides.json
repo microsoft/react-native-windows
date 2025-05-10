@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.79.0-nightly-20250123-d1028885e",
+  "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
   "overrides": [
     {
       "type": "copy",
@@ -26,7 +26,7 @@
       "type": "copy",
       "directory": "js/examples/ActionSheetIOS",
       "baseDirectory": "packages/rn-tester/js/examples/ActionSheetIOS",
-      "baseHash": "cad8a1db4b8142844520247088dfc5649debd52b",
+      "baseHash": "5b0d13a8c631c5d718965258d56d2030ba745274",
       "issue": 4054
     },
     {
@@ -152,14 +152,14 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "aa8051846d28b31155e940585b5c2250b5c5eb58",
+      "baseHash": "5313873ce66065760e374653c918524051a5d745",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "e869d06e86817126412e8de812f992daf2b8b628",
+      "baseHash": "8f7a24f22fd7374ef8ed324bb08adcffb2d00fe8",
       "issue": 4054
     },
     {
@@ -243,7 +243,7 @@
       "type": "copy",
       "directory": "js/examples/MutationObserver",
       "baseDirectory": "packages/rn-tester/js/examples/MutationObserver",
-      "baseHash": "c3f3eca5c49bf5b9511e63ad4399fde6169966d1",
+      "baseHash": "706616acc950782bdca8d442b7e964cc2bc033cb",
       "issue": 4054
     },
     {
@@ -292,7 +292,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "b024f27ad92d5a60ab9d7273643407d46a073321",
+      "baseHash": "92bfefb1a48b340fb9728044cd7647464e357997",
       "issue": 0
     },
     {
@@ -411,7 +411,7 @@
       "type": "copy",
       "directory": "js/examples/Snapshot",
       "baseDirectory": "packages/rn-tester/js/examples/Snapshot",
-      "baseHash": "b91c6cfaa07822120657e371138ae70c89a7e5da",
+      "baseHash": "2c3cc9d2ea4d276daa327925368efefd04d0b7e5",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "99f58c32641c62d0f9db0baae80bda04ae41d3bb",
+      "baseHash": "3448bb4b09f3ec11e2923f7fa2463c611ef85006",
       "issue": 4054
     },
     {
@@ -453,14 +453,14 @@
       "type": "copy",
       "file": "js/examples/TextInput/TextInputExample.android.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "fcd8e5e42372bb200be07d8339c644e76dfdb12e",
+      "baseHash": "8cc115a30795ee2fcf174e91f9cdbf56f4513a93",
       "issue": 14292
     },
     {
       "type": "copy",
       "file": "js/examples/TextInput/TextInputExample.ios.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.ios.js",
-      "baseHash": "5d789b27ca07a69358e6e123c08acda3de5f08e2",
+      "baseHash": "19cf9695662fde3f6eddcb3346db4a951573553b",
       "issue": 14292
     },
     {
@@ -523,7 +523,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "9dee4e2dbf17865f0e8e902e6838131d6ac07e50",
+      "baseHash": "3d725a4186985f9b3072c83d8f92160d49623ffe",
       "issue": 4054
     },
     {
@@ -621,7 +621,7 @@
       "type": "copy",
       "file": "js/utils/useJsStalls.js",
       "baseFile": "packages/rn-tester/js/utils/useJsStalls.js",
-      "baseHash": "4b8631d7c3e20ca834b81b754a233b82b7d658ca",
+      "baseHash": "249b933993f4fe9d91e6e443035c27dfcdd2d65c",
       "issue": 4054
     },
     {
@@ -656,7 +656,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "401e7b3eb6e7f23b08f0a00f2e2cc9d71e60aab1",
+      "baseHash": "465eafe4a4aa8296d839eb7f0e01b1966cc38044",
       "issue": 13228
     }
   ]
