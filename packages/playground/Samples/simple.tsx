@@ -4,28 +4,16 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry, Button, Modal, View} from 'react-native';
+import {AppRegistry, View} from 'react-native';
 
 export default class Bootstrap extends React.Component {
   render() {
     return (
       <View
-        accessible={true}>
-        <Button
-          title="Open Modal"
-          onPress={() => {
-            setModal1(!modal1);
-          }} />
-        <Modal visible={modal1}>
-          <View style={{width: 500, height: 50}}>
-            <Text>This is a simple Modal</Text>
-            <Button
-              title="Close Modal"
-              onPress={() => {
-                setModal1(!modal1);
-              }} />
-          </View>
-        </Modal>
+        accessible={true}
+        accessibilityValue={{now: 10, min: 0, max: 20}}
+        style={{borderRadius: 30, width: 60, height: 60, margin: 10}}>
+        <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
       </View>
     );
   }
