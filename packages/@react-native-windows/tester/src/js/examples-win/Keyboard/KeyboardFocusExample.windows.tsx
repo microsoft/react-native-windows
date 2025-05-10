@@ -17,7 +17,7 @@ import {
 import {
   IKeyboardEvent,
   supportKeyboard,
-  ViewWindows,
+  ViewWindows
 } from 'react-native-windows';
 import {Picker} from '@react-native-picker/picker';
 
