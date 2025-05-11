@@ -180,6 +180,16 @@ void UpdateUiaProperty(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
 }
 
+void UpdateUiaProperty(
+    winrt::IInspectable provider,
+    PROPERTYID propId,
+    const std::optional<std::string> &oldValue,
+    const std::optional<std::string> &newValue) noexcept {
+  std::string oldData = oldValue.value_or("");
+  std::string newData = newValue.value_or("");
+  UpdateUiaProperty(provider, propId, oldData, newData);
+}
+
 long GetLiveSetting(const std::string &liveRegion) noexcept {
   if (liveRegion == "polite") {
     return LiveSetting::Polite;
