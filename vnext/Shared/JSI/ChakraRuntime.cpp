@@ -278,6 +278,10 @@ bool ChakraRuntime::drainMicrotasks(int /*maxMicrotasksHint*/) {
   return true;
 }
 
+void ChakraRuntime::queueMicrotask(const facebook::jsi::Function &) {
+  throw facebook::jsi::JSINativeException("Not implemented");
+}
+
 facebook::jsi::Object ChakraRuntime::global() {
   return MakePointer<facebook::jsi::Object>(GetGlobalObject());
 }

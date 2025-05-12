@@ -65,7 +65,7 @@
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>JSI_VERSION=11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=19;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         To address the crash on the first call to std::mutex::lock.
         See: https://github.com/microsoft/STL/wiki/Changelog#vs-2022-1710

@@ -2,6 +2,90 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 May 2025 05:23:33 GMT",
+      "version": "0.0.0-canary.952",
+      "tag": "react-native-windows_v0.0.0-canary.952",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d8d0e2fa34da01e286faa3bba6a9e291835521b9",
+            "comment": "Properly hook up root uia provider to island"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "10017d2dc4e60b08d19530c2268924e82ac91947",
+            "comment": "initial commit"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.262",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.121",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.34",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.38",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.51",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.53",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 May 2025 05:27:07 GMT",
+      "version": "0.0.0-canary.951",
+      "tag": "react-native-windows_v0.0.0-canary.951",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4ba70cf9f197b2e46b7c07b92a72ccde0b3bc136",
+            "comment": "[Fabric] Implement selectTextOnFocus in Text Input"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f66ee05b5060a970fc0391afaddd917d84cebba4",
+            "comment": "Bump hermes version"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "aa48a7a281bfac19101c151949a252d77b953dee",
+            "comment": "[Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 03 May 2025 05:25:01 GMT",
       "version": "0.0.0-canary.950",
       "tag": "react-native-windows_v0.0.0-canary.950",
