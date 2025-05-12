@@ -470,6 +470,18 @@ void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext con
 
   m_context.Properties().Set(FabicUIManagerProperty(), shared_from_this());
 
+  auto destroyInstanceNotificationId {
+      winrt::Microsoft::ReactNative::ReactNotificationId<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs>{L"ReactNative.InstanceSettings", L"InstanceDestroyed"} };
+  reactContext.Notifications().Subscribe(
+    destroyInstanceNotificationId,
+    [reactContext](
+      winrt::Windows::Foundation::IInspectable const& /*sender*/,
+      winrt::Microsoft::ReactNative::ReactNotificationArgs<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const& args) noexcept
+  {
+    reactContext.Properties().Remove(FabicUIManagerProperty());
+    args.Subscription().Unsubscribe(); // Unsubscribe after we handle the notification.
+  });
+
   /*
   EventBeatManager eventBeatManager = new EventBeatManager(mReactApplicationContext);
   UIManagerModule nativeModule =

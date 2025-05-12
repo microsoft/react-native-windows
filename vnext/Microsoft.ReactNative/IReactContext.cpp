@@ -8,6 +8,8 @@
 #include "XamlUIService.h"
 #endif
 
+#include "CallInvoker.h"
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 //=============================================================================
@@ -98,6 +100,10 @@ IReactDispatcher ReactContext::UIDispatcher() noexcept {
 
 IReactDispatcher ReactContext::JSDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
+winrt::Microsoft::ReactNative::CallInvoker ReactContext::CallInvoker() noexcept {
+  return winrt::Microsoft::ReactNative::implementation::CallInvoker::FromProperties(ReactPropertyBag(Properties()));
 }
 
 winrt::Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {

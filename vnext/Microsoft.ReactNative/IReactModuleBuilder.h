@@ -12,6 +12,7 @@ struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBu
 
  public: // IReactModuleBuilder
   void AddInitializer(InitializerDelegate const &initializer) noexcept;
+  void AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept;
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
@@ -29,6 +30,7 @@ struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBu
  private:
   IReactContext m_reactContext;
   std::vector<InitializerDelegate> m_initializers;
+  std::vector<JsiInitializerDelegate> m_jsiinitializers;
   std::vector<ConstantProviderDelegate> m_constantProviders;
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
 };

@@ -24,7 +24,7 @@ struct BlobTurboModule {
   using ModuleSpec = ReactNativeSpecs::BlobModuleSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext, facebook::jsi::Runtime& runtime) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::BlobModuleSpec_Constants GetConstants() noexcept;

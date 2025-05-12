@@ -70,6 +70,7 @@ struct ReactModuleBuilderMock {
 
  public: // IReactModuleBuilder
   void AddInitializer(InitializerDelegate const &initializer) noexcept;
+  void AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept;
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
@@ -216,6 +217,7 @@ struct ReactModuleBuilderImpl : implements<ReactModuleBuilderImpl, IReactModuleB
 
  public: // IReactModuleBuilder
   void AddInitializer(InitializerDelegate const &initializer) noexcept;
+  void AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept;
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
@@ -337,6 +339,10 @@ inline ReactModuleBuilderImpl::ReactModuleBuilderImpl(ReactModuleBuilderMock &mo
 
 inline void ReactModuleBuilderImpl::AddInitializer(InitializerDelegate const &initializer) noexcept {
   m_mock.AddInitializer(initializer);
+}
+
+inline void ReactModuleBuilderImpl::AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept {
+  m_mock.AddJsiInitializer(initializer);
 }
 
 inline void ReactModuleBuilderImpl::AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {

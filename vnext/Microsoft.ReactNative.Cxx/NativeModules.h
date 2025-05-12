@@ -13,6 +13,7 @@
 #include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "ReactPromise.h"
+#include "JSI/JsiApiContext.h"
 
 #include <functional>
 #include <type_traits>
@@ -500,6 +501,7 @@ template <class TModule>
 struct ModuleInitMethodInfo<void (TModule::*)(ReactContext const &) noexcept> {
   using ModuleType = TModule;
   using MethodType = void (TModule::*)(ReactContext const &) noexcept;
+  using JsiMethodType = void (TModule::*)(ReactContext const &, facebook::jsi::Runtime&) noexcept;
 
   static InitializerDelegate GetInitializer(void *module, MethodType method) noexcept {
     return [module = static_cast<ModuleType *>(module), method](ReactContext const &reactContext) noexcept {
@@ -507,6 +509,24 @@ struct ModuleInitMethodInfo<void (TModule::*)(ReactContext const &) noexcept> {
     };
   }
 };
+
+template <class TMethod>
+struct ModuleJsiInitMethodInfo;
+
+template <class TModule>
+struct ModuleJsiInitMethodInfo<void (TModule::*)(ReactContext const&, facebook::jsi::Runtime&) noexcept>
+{
+  using ModuleType = TModule;
+  using MethodType = void (TModule::*)(ReactContext const&, facebook::jsi::Runtime&) noexcept;
+
+  static JsiInitializerDelegate GetJsiInitializer(void* module, MethodType method) noexcept
+  {
+    return [module = static_cast<ModuleType*>(module), method](ReactContext const& reactContext, winrt::Windows::Foundation::IInspectable const &runtimeHandle) noexcept
+    {
+      (module->*method)(reactContext, GetOrCreateContextRuntime(reactContext, runtimeHandle));
+    };
+  }
+  };
 
 // ==== MakeCallbackSignatures =================================================
 
@@ -1041,6 +1061,9 @@ struct ReactModuleBuilder {
     for (auto &initializer : m_initializers) {
       m_moduleBuilder.AddInitializer(initializer);
     }
+    for (auto &initializer : m_jsiinitializers) {
+      m_moduleBuilder.AddJsiInitializer(initializer);
+    }
   }
 
   template <class TMember, class TAttribute, int I>
@@ -1069,8 +1092,15 @@ struct ReactModuleBuilder {
 
   template <class TMethod>
   void RegisterInitMethod(TMethod method) noexcept {
-    auto initializer = ModuleInitMethodInfo<TMethod>::GetInitializer(m_module, method);
-    m_initializers.push_back(std::move(initializer));
+
+    if constexpr (ModuleMethodInfo<TMethod>::ArgCount == 1) {
+      auto initializer = ModuleInitMethodInfo<TMethod>::GetInitializer(m_module, method);
+      m_initializers.push_back(std::move(initializer));
+    } else {
+      static_assert(ModuleMethodInfo<TMethod>::ArgCount == 2);
+      auto jsiinitializer = ModuleJsiInitMethodInfo<TMethod>::GetJsiInitializer(m_module, method);
+      m_jsiinitializers.push_back(std::move(jsiinitializer));
+    }
   }
 
   template <class TMethod>
@@ -1129,6 +1159,7 @@ struct ReactModuleBuilder {
   std::wstring_view m_moduleName{L""};
   std::wstring_view m_eventEmitterName{L""};
   std::vector<InitializerDelegate> m_initializers;
+  std::vector<JsiInitializerDelegate> m_jsiinitializers;
 };
 
 struct VerificationResult {

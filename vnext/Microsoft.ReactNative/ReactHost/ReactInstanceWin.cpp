@@ -4,6 +4,7 @@
 #include "ReactInstanceWin.h"
 
 #include <AppModelHelpers.h>
+#include <CallInvoker.h>
 #include <CppRuntimeOptions.h>
 #include <CreateInstance.h>
 #include <CreateModules.h>
@@ -61,6 +62,7 @@
 #include <react/nativemodule/core/ReactCommon/TurboModuleBinding.h>
 #include <react/renderer/componentregistry/componentNameByReactViewName.h>
 #include <react/renderer/componentregistry/native/NativeComponentRegistryBinding.h>
+#include <react/threading/MessageQueueThreadImpl.h>
 #include <react/runtime/JSRuntimeFactory.h>
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
@@ -642,14 +644,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             // null moduleProvider since native modules are not supported in bridgeless
             LoadModules(devSettings, nullptr, m_options.TurboModuleProvider);
 
-            auto jsDispatchQueue =
-                Mso::DispatchQueue::MakeLooperQueue(CreateDispatchQueueSettings(m_reactContext->Notifications()));
-            auto jsDispatcher =
-                winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
-            m_jsMessageThread.Exchange(std::make_shared<Mso::React::MessageDispatchQueue>(
-                jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
-
-            m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+            auto jsMessageThread = std::make_shared<facebook::react::MessageQueueThreadImpl>();
+            m_jsMessageThread.Exchange(jsMessageThread);
 
             std::shared_ptr<facebook::react::CallInvoker> callInvoker;
 
@@ -674,11 +670,11 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               }
 
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), CreatePreparedScriptStore());
+                  devSettings, jsMessageThread, CreatePreparedScriptStore());
               auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
               jsRuntime->getRuntime();
               m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
-                  std::move(jsRuntime), m_jsMessageThread.Load(), timerManager, jsErrorHandlingFunc);
+                  std::move(jsRuntime), jsMessageThread, timerManager, jsErrorHandlingFunc);
 
               auto bufferedRuntimeExecutor = m_bridgelessReactInstance->getBufferedRuntimeExecutor();
               timerManager->setRuntimeExecutor(bufferedRuntimeExecutor);
@@ -689,6 +685,11 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
               callInvoker = std::make_shared<facebook::react::RuntimeSchedulerCallInvoker>(
                   m_bridgelessReactInstance->getRuntimeScheduler());
+
+              winrt::Microsoft::ReactNative::implementation::CallInvoker::SetProperties(
+                  ReactPropertyBag(m_options.Properties),
+                  winrt::make<winrt::Microsoft::ReactNative::implementation::CallInvoker>(
+                      *m_reactContext, std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
 
               m_options.Properties.Set(
                   ReactDispatcherHelper::JSDispatcherProperty(),
@@ -1095,7 +1096,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
 
 #ifdef USE_FABRIC
   if (m_bridgelessReactInstance) {
-    auto jsDispatchQueue = m_jsDispatchQueue.Exchange(nullptr);
+    auto jsDispatchQueue = m_jsDispatchQueue.Exchange(nullptr); // TODO should be null for bridgeless
     if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
       jsMessageThread->runOnQueueSync([&]() noexcept {
         {
@@ -1130,12 +1131,18 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 void ReactInstanceWin::InitJSMessageThread() noexcept {
   m_instance.Exchange(std::make_shared<facebook::react::Instance>());
 
+  auto callInvoker = m_instance.Load()->getJSCallInvoker();
   auto scheduler = Mso::MakeJSCallInvokerScheduler(
       CreateDispatchQueueSettings(m_reactContext->Notifications()),
-      m_instance.Load()->getJSCallInvoker(),
+    std::shared_ptr<facebook::react::CallInvoker>(callInvoker),
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));
   auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
+
+  winrt::Microsoft::ReactNative::implementation::CallInvoker::SetProperties(
+      ReactPropertyBag(m_options.Properties),
+      winrt::make<winrt::Microsoft::ReactNative::implementation::CallInvoker>(
+          *m_reactContext, std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
 
   auto jsDispatcher =
       winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
