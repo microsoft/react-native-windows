@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Implement Native ID",
+  "packageName": "react-native-windows",
+  "email": "54227869+anupriya13@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
