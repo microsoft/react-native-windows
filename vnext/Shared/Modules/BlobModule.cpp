@@ -35,7 +35,7 @@ namespace Microsoft::React {
 
 #pragma region BlobTurboModule
 
-void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext, facebook::jsi::Runtime& runtime) noexcept {
+void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext, facebook::jsi::Runtime &runtime) noexcept {
   m_resource = IBlobResource::Make(reactContext.Properties().Handle());
   m_resource->Callbacks().OnError = [&reactContext](string &&errorText) {
     Modules::SendEvent(reactContext, L"blobFailed", {errorText});
