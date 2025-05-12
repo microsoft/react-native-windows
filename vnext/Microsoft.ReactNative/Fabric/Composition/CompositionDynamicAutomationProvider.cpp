@@ -577,23 +577,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       break;
     }
     case UIA_AccessKeyPropertyId: {
-      if (props->accessibilityAccessKey.has_value() && props->accessibilityAccessKey.value().empty()) {
-        hr = E_FAIL;
-      } else {
-        pRetVal->vt = VT_BSTR;
-        auto accessKey = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAccessKey.value());
-        pRetVal->bstrVal = SysAllocString(accessKey.c_str());
-      }
+      pRetVal->vt = VT_BSTR;
+      auto accessKey = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAccessKey.value_or(""));
+      pRetVal->bstrVal = SysAllocString(accessKey.c_str());
       break;
     }
     case UIA_ItemTypePropertyId: {
-      if (props->accessibilityItemType.has_value() && props->accessibilityItemType.value().empty()) {
-        hr = E_FAIL;
-      } else {
-        pRetVal->vt = VT_BSTR;
-        auto itemtype = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityItemType.value());
-        pRetVal->bstrVal = SysAllocString(itemtype.c_str());
-      }
+      pRetVal->vt = VT_BSTR;
+      auto itemtype = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityItemType.value_or(""));
+      pRetVal->bstrVal = SysAllocString(itemtype.c_str());
       break;
     }
   }
