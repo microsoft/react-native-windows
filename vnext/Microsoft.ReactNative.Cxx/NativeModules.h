@@ -7,13 +7,13 @@
 #pragma once
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
+#include "JSI/JsiApiContext.h"
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleRegistration.h"
 #include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "ReactPromise.h"
-#include "JSI/JsiApiContext.h"
 
 #include <functional>
 #include <type_traits>
@@ -501,7 +501,7 @@ template <class TModule>
 struct ModuleInitMethodInfo<void (TModule::*)(ReactContext const &) noexcept> {
   using ModuleType = TModule;
   using MethodType = void (TModule::*)(ReactContext const &) noexcept;
-  using JsiMethodType = void (TModule::*)(ReactContext const &, facebook::jsi::Runtime&) noexcept;
+  using JsiMethodType = void (TModule::*)(ReactContext const &, facebook::jsi::Runtime &) noexcept;
 
   static InitializerDelegate GetInitializer(void *module, MethodType method) noexcept {
     return [module = static_cast<ModuleType *>(module), method](ReactContext const &reactContext) noexcept {
@@ -514,19 +514,18 @@ template <class TMethod>
 struct ModuleJsiInitMethodInfo;
 
 template <class TModule>
-struct ModuleJsiInitMethodInfo<void (TModule::*)(ReactContext const&, facebook::jsi::Runtime&) noexcept>
-{
+struct ModuleJsiInitMethodInfo<void (TModule::*)(ReactContext const &, facebook::jsi::Runtime &) noexcept> {
   using ModuleType = TModule;
-  using MethodType = void (TModule::*)(ReactContext const&, facebook::jsi::Runtime&) noexcept;
+  using MethodType = void (TModule::*)(ReactContext const &, facebook::jsi::Runtime &) noexcept;
 
-  static JsiInitializerDelegate GetJsiInitializer(void* module, MethodType method) noexcept
-  {
-    return [module = static_cast<ModuleType*>(module), method](ReactContext const& reactContext, winrt::Windows::Foundation::IInspectable const &runtimeHandle) noexcept
-    {
-      (module->*method)(reactContext, GetOrCreateContextRuntime(reactContext, runtimeHandle));
-    };
+  static JsiInitializerDelegate GetJsiInitializer(void *module, MethodType method) noexcept {
+    return
+        [module = static_cast<ModuleType *>(module), method](
+            ReactContext const &reactContext, winrt::Windows::Foundation::IInspectable const &runtimeHandle) noexcept {
+          (module->*method)(reactContext, GetOrCreateContextRuntime(reactContext, runtimeHandle));
+        };
   }
-  };
+};
 
 // ==== MakeCallbackSignatures =================================================
 
@@ -1092,7 +1091,6 @@ struct ReactModuleBuilder {
 
   template <class TMethod>
   void RegisterInitMethod(TMethod method) noexcept {
-
     if constexpr (ModuleMethodInfo<TMethod>::ArgCount == 1) {
       auto initializer = ModuleInitMethodInfo<TMethod>::GetInitializer(m_module, method);
       m_initializers.push_back(std::move(initializer));

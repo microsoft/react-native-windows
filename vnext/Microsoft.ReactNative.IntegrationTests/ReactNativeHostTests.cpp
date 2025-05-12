@@ -170,7 +170,7 @@ TEST_CLASS (ReactNativeHostTests) {
         std::move(options));
 
 #if USE_FABRIC
-    TestEventService::ObserveEvents({ TestEvent{"InstanceLoaded::Failed", nullptr} });
+    TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Failed", nullptr}});
 #else
     TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Canceled", nullptr}});
 #endif

@@ -4,9 +4,9 @@
 #include "pch.h"
 #include "JsiAbiApi.h"
 #include <utility>
+#include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "winrt/Windows.Foundation.Collections.h"
-#include "ReactContext.h"
 
 using namespace facebook::jsi;
 
@@ -16,14 +16,14 @@ using namespace facebook::jsi;
 namespace winrt::Microsoft::ReactNative {
 
 namespace Details {
-    // Try to get JSI Runtime for the ReactContext
-    // If it is not found, then create it based on context JSI runtime and store it in the context.Properties().
-    // The function returns nullptr if the current context does not have JSI runtime.
-    // It makes sure that the JSI runtime holder is removed when the instance is unloaded.
-    JsiAbiRuntime*TryGetOrCreateContextRuntime(
-        winrt::Microsoft::ReactNative::ReactContext const &context,
-        JsiRuntime const &runtimeHandle) noexcept;
-}
+// Try to get JSI Runtime for the ReactContext
+// If it is not found, then create it based on context JSI runtime and store it in the context.Properties().
+// The function returns nullptr if the current context does not have JSI runtime.
+// It makes sure that the JSI runtime holder is removed when the instance is unloaded.
+JsiAbiRuntime *TryGetOrCreateContextRuntime(
+    winrt::Microsoft::ReactNative::ReactContext const &context,
+    JsiRuntime const &runtimeHandle) noexcept;
+} // namespace Details
 
 // The macro to simplify recording JSI exceptions.
 // It looks strange to keep the normal structure of the try/catch in code.
@@ -143,14 +143,14 @@ std::shared_ptr<facebook::jsi::HostObject> const &JsiHostObjectWrapper::HostObje
   return m_hostObject;
 }
 
-
 //===========================================================================
 // JsiHostObjectGetOrCreateWrapper implementation
 //===========================================================================
 
-JsiHostObjectGetOrCreateWrapper::JsiHostObjectGetOrCreateWrapper(const winrt::Microsoft::ReactNative::IReactContext& context, std::shared_ptr<HostObject> &&hostObject) noexcept
-    : m_hostObject(std::move(hostObject))
-    , m_context(context) {}
+JsiHostObjectGetOrCreateWrapper::JsiHostObjectGetOrCreateWrapper(
+    const winrt::Microsoft::ReactNative::IReactContext &context,
+    std::shared_ptr<HostObject> &&hostObject) noexcept
+    : m_hostObject(std::move(hostObject)), m_context(context) {}
 
 JsiValueRef JsiHostObjectGetOrCreateWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
   JsiAbiRuntime *rt{Details::TryGetOrCreateContextRuntime(m_context, runtime)};
@@ -188,7 +188,6 @@ winrt::Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObject
 std::shared_ptr<facebook::jsi::HostObject> const &JsiHostObjectGetOrCreateWrapper::HostObjectSharedPtr() noexcept {
   return m_hostObject;
 }
-
 
 //===========================================================================
 // JsiHostFunctionWrapper implementation

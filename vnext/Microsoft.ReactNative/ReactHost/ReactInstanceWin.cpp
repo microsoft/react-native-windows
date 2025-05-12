@@ -62,10 +62,10 @@
 #include <react/nativemodule/core/ReactCommon/TurboModuleBinding.h>
 #include <react/renderer/componentregistry/componentNameByReactViewName.h>
 #include <react/renderer/componentregistry/native/NativeComponentRegistryBinding.h>
-#include <react/threading/MessageQueueThreadImpl.h>
 #include <react/runtime/JSRuntimeFactory.h>
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
+#include <react/threading/MessageQueueThreadImpl.h>
 #include "CallInvokerDispatcher.h"
 #endif
 
@@ -1134,7 +1134,7 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
   auto callInvoker = m_instance.Load()->getJSCallInvoker();
   auto scheduler = Mso::MakeJSCallInvokerScheduler(
       CreateDispatchQueueSettings(m_reactContext->Notifications()),
-    std::shared_ptr<facebook::react::CallInvoker>(callInvoker),
+      std::shared_ptr<facebook::react::CallInvoker>(callInvoker),
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));
   auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));

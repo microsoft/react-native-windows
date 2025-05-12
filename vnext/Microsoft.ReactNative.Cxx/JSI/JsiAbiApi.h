@@ -58,7 +58,9 @@ struct JsiHostObjectWrapper : implements<JsiHostObjectWrapper, IJsiHostObject> {
 // but uses GetOrCreate for the AbiRuntime to ensure its created on first use
 // This is important for use with TurboModules, which may not go through the ReactContext.CallInvoker
 struct JsiHostObjectGetOrCreateWrapper : implements<JsiHostObjectGetOrCreateWrapper, IJsiHostObject> {
-  JsiHostObjectGetOrCreateWrapper(const winrt::Microsoft::ReactNative::IReactContext& context, std::shared_ptr<facebook::jsi::HostObject> &&hostObject) noexcept;
+  JsiHostObjectGetOrCreateWrapper(
+      const winrt::Microsoft::ReactNative::IReactContext &context,
+      std::shared_ptr<facebook::jsi::HostObject> &&hostObject) noexcept;
 
   JsiValueRef GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name);
   void SetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name, JsiValueRef const &value);
@@ -70,7 +72,6 @@ struct JsiHostObjectGetOrCreateWrapper : implements<JsiHostObjectGetOrCreateWrap
   std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
   winrt::Microsoft::ReactNative::IReactContext m_context;
 };
-
 
 // The function object that wraps up the facebook::jsi::HostFunctionType
 struct JsiHostFunctionWrapper {

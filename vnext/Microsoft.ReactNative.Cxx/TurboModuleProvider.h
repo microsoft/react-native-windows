@@ -25,7 +25,8 @@ void AddTurboModuleProvider(IReactPackageBuilder const &packageBuilder, std::wst
           auto callInvoker = ReactContext{context}.CallInvoker();
           auto turboModule = std::make_shared<TTurboModule>(callInvoker);
           // TODO test back with JsiHostObjectWrapper and remove JsiHostObjectGetOrCreateWrapper if not needed
-          // Repalce above moduleBuilder.AddInitializer to moduleBuilder.AddJsiInitializer then we dont need JsiHostObjectGetOrCreateWrapper
+          // Repalce above moduleBuilder.AddInitializer to moduleBuilder.AddJsiInitializer then we dont need
+          // JsiHostObjectGetOrCreateWrapper
           abiTurboModule = winrt::make<JsiHostObjectGetOrCreateWrapper>(context, std::move(turboModule));
         });
         return abiTurboModule.as<winrt::Windows::Foundation::IInspectable>();

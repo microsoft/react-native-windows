@@ -47,7 +47,7 @@ TEST_CLASS (JsiSimpleTurboModuleTests) {
   TEST_METHOD(TestInstanceReload) {
     TestEventService::Initialize();
 
-    std::thread::id jsThreadId {};
+    std::thread::id jsThreadId{};
 
     auto reactNativeHost =
         TestReactNativeHostHolder(L"JsiSimpleTurboModuleTests", [&](ReactNativeHost const &host) noexcept {
@@ -81,7 +81,7 @@ TEST_CLASS (JsiSimpleTurboModuleTests) {
 #else
                 TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
 #endif
-          });
+              });
         });
 
     TestEventService::ObserveEvents({

@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version once we integrate that far
+// [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version
+// once we integrate that far
 
 #include "MessageQueueThreadImpl.h"
 
@@ -13,23 +14,21 @@
 
 namespace facebook::react {
 
-void MessageQueueThreadImpl::runOnQueue(std::function<void()>&& runnable) {
+void MessageQueueThreadImpl::runOnQueue(std::function<void()> &&runnable) {
   if (!taskDispatchThread_.isRunning()) {
     return;
   }
-  taskDispatchThread_.runAsync(
-      [runnable = std::move(runnable)]() noexcept { runnable(); });
+  taskDispatchThread_.runAsync([runnable = std::move(runnable)]() noexcept { runnable(); });
 }
 
-void MessageQueueThreadImpl::runOnQueueSync(std::function<void()>&& runnable) {
+void MessageQueueThreadImpl::runOnQueueSync(std::function<void()> &&runnable) {
   if (!taskDispatchThread_.isRunning()) {
     return;
   }
   if (taskDispatchThread_.isOnThread()) {
     runnable();
   } else {
-    taskDispatchThread_.runSync(
-        [runnable = std::move(runnable)]() noexcept { runnable(); });
+    taskDispatchThread_.runSync([runnable = std::move(runnable)]() noexcept { runnable(); });
   }
 }
 

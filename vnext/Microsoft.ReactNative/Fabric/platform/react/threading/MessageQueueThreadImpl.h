@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- // [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version once we integrate that far
- 
+// [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version
+// once we integrate that far
+
 #pragma once
 
 #include <cxxreact/MessageQueueThread.h>
@@ -15,8 +16,7 @@
 
 namespace facebook::react {
 
-using MessageQueueThreadFactory =
-    std::function<std::shared_ptr<MessageQueueThread>()>;
+using MessageQueueThreadFactory = std::function<std::shared_ptr<MessageQueueThread>()>;
 
 constexpr char MessageQueueThreadFactoryKey[] = "MessageQueueThreadFactoryKey";
 
@@ -27,20 +27,19 @@ constexpr char MessageQueueThreadFactoryKey[] = "MessageQueueThreadFactoryKey";
 class MessageQueueThreadImpl : public MessageQueueThread {
  public:
   MessageQueueThreadImpl() noexcept = default;
-  explicit MessageQueueThreadImpl(int priorityOffset) noexcept
-      : taskDispatchThread_("MessageQueue", priorityOffset) {}
+  explicit MessageQueueThreadImpl(int priorityOffset) noexcept : taskDispatchThread_("MessageQueue", priorityOffset) {}
 
   ~MessageQueueThreadImpl() noexcept override = default;
 
   /** Add a job to the queue asynchronously */
-  void runOnQueue(std::function<void()>&& runnable) override;
+  void runOnQueue(std::function<void()> &&runnable) override;
 
   /**
    * Add a job to the queue synchronously - call won't return until runnable
    * has completed.  Will run immediately if called from the looper thread.
    * Should only be used for initialization.
    */
-  void runOnQueueSync(std::function<void()>&& runnable) override;
+  void runOnQueueSync(std::function<void()> &&runnable) override;
 
   /**
    * Stop the message queue thread. Should only be used for cleanup - once it

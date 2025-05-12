@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- // [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version once we integrate that far
- 
+// [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version
+// once we integrate that far
+
 #include "TaskDispatchThread.h"
 
 #include <folly/portability/SysResource.h>
@@ -24,22 +25,16 @@
 
 namespace facebook::react {
 
-TaskDispatchThread::TaskDispatchThread(
-    std::string threadName,
-    int priorityOffset) noexcept
+TaskDispatchThread::TaskDispatchThread(std::string threadName, int priorityOffset) noexcept
     : threadName_(std::move(threadName)) {
 #ifdef ANDROID
   // Attaches the thread to JVM just in case anything calls out to Java
   thread_ = std::thread([&]() {
     facebook::jni::ThreadScope::WithClassLoader([&]() {
-      int result = setpriority(
-          PRIO_PROCESS,
-          static_cast<pid_t>(::syscall(SYS_gettid)),
-          priorityOffset);
+      int result = setpriority(PRIO_PROCESS, static_cast<pid_t>(::syscall(SYS_gettid)), priorityOffset);
 
       if (result != 0) {
-        LOG(INFO) << " setCurrentThreadPriority failed with pri errno: "
-                  << errno;
+        LOG(INFO) << " setCurrentThreadPriority failed with pri errno: " << errno;
       }
 
       loop();
@@ -63,9 +58,7 @@ bool TaskDispatchThread::isRunning() noexcept {
   return running_;
 }
 
-void TaskDispatchThread::runAsync(
-    TaskFn&& task,
-    std::chrono::milliseconds delayMs) noexcept {
+void TaskDispatchThread::runAsync(TaskFn &&task, std::chrono::milliseconds delayMs) noexcept {
   if (!running_) {
     return;
   }
@@ -75,7 +68,7 @@ void TaskDispatchThread::runAsync(
   loopCv_.notify_one();
 }
 
-void TaskDispatchThread::runSync(TaskFn&& task) noexcept {
+void TaskDispatchThread::runSync(TaskFn &&task) noexcept {
   std::promise<void> promise;
   runAsync([&]() {
     if (running_) {

@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- // [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version once we integrate that far
- 
+// [Windows] Brought forward from react-native - switch to using react-native/ReactCxxPlatform/react/threading version
+// once we integrate that far
+
 #pragma once
 
 #include <chrono>
@@ -27,9 +28,7 @@ class TaskDispatchThread {
   using TaskFn = std::function<void()>;
   using TimePoint = std::chrono::time_point<std::chrono::system_clock>;
 
-  TaskDispatchThread(
-      std::string threadName = "",
-      int priorityOffset = 0) noexcept;
+  TaskDispatchThread(std::string threadName = "", int priorityOffset = 0) noexcept;
 
   ~TaskDispatchThread() noexcept;
 
@@ -40,13 +39,10 @@ class TaskDispatchThread {
   bool isRunning() noexcept;
 
   /** Add task to the queue and return immediately. */
-  void runAsync(
-      TaskFn&& task,
-      std::chrono::milliseconds delayMs =
-          std::chrono::milliseconds::zero()) noexcept;
+  void runAsync(TaskFn &&task, std::chrono::milliseconds delayMs = std::chrono::milliseconds::zero()) noexcept;
 
   /** Add task to the queue and wait until it has completed. */
-  void runSync(TaskFn&& task) noexcept;
+  void runSync(TaskFn &&task) noexcept;
 
   /** Shut down and clean up the thread. */
   void quit() noexcept;
@@ -56,10 +52,9 @@ class TaskDispatchThread {
     TimePoint dispatchTime;
     TaskFn fn;
 
-    Task(TimePoint dispatchTime, TaskFn&& fn)
-        : dispatchTime(dispatchTime), fn(std::move(fn)) {}
+    Task(TimePoint dispatchTime, TaskFn &&fn) : dispatchTime(dispatchTime), fn(std::move(fn)) {}
 
-    bool operator<(const Task& other) const {
+    bool operator<(const Task &other) const {
       // Have the earliest tasks be at the front of the queue.
       return dispatchTime > other.dispatchTime;
     }

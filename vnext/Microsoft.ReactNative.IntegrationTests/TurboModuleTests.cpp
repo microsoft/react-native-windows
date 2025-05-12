@@ -650,7 +650,7 @@ TEST_CLASS (TurboModuleTests) {
     TestEventService::Initialize();
     TestNotificationService::Initialize();
 
-    CallInvoker callInvoker { nullptr };
+    CallInvoker callInvoker{nullptr};
 
     auto reactNativeHost = TestReactNativeHostHolder(L"TurboModuleTests", [&](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
@@ -660,10 +660,10 @@ TEST_CLASS (TurboModuleTests) {
           [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
             TestNotificationService::Set("Instance destroyed event");
           });
-      host.InstanceSettings().InstanceCreated([&](IInspectable const& /*sender*/, InstanceCreatedEventArgs const& args)
-      {
-        callInvoker = args.Context().CallInvoker();
-      });
+      host.InstanceSettings().InstanceCreated(
+          [&](IInspectable const & /*sender*/, InstanceCreatedEventArgs const &args) {
+            callInvoker = args.Context().CallInvoker();
+          });
     });
 
     TestEventService::ObserveEvents({
@@ -672,8 +672,6 @@ TEST_CLASS (TurboModuleTests) {
 
     reactNativeHost.Host().UnloadInstance();
     TestNotificationService::Wait("Instance destroyed event");
-
-
 
     // JSDispatcher must not process any callbacks
     auto jsDispatcher = reactNativeHost.Host()
@@ -689,10 +687,9 @@ TEST_CLASS (TurboModuleTests) {
     bool callbackIsCalled{false};
 
 #if USE_FABRIC
-    callInvoker.InvokeAsync([&callbackIsCalled, data = std::make_shared<CallbackData>()](const winrt::Windows::Foundation::IInspectable& /*runtimeHandle*/)
-    {
-      callbackIsCalled = true;
-    });
+    callInvoker.InvokeAsync(
+        [&callbackIsCalled, data = std::make_shared<CallbackData>()](
+            const winrt::Windows::Foundation::IInspectable & /*runtimeHandle*/) { callbackIsCalled = true; });
 #else
     jsDispatcher.Post([&callbackIsCalled, data = std::make_shared<CallbackData>()] { callbackIsCalled = true; });
 #endif

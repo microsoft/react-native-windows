@@ -98,9 +98,9 @@ struct TestExecuteJsiModule {
         [](ReactError const &error) noexcept {
           TestEventService::LogEvent("testExecuteJsiPromise promise failed", error.Message.c_str());
         });
-    m_reactContext.CallInvoker()->invokeAsync(
-        [callResult](Runtime &) { TestEventService::LogEvent("testExecuteJsiPromise completed", nullptr);
-          callResult.Resolve();
+    m_reactContext.CallInvoker()->invokeAsync([callResult](Runtime &) {
+      TestEventService::LogEvent("testExecuteJsiPromise completed", nullptr);
+      callResult.Resolve();
     });
   }
 
