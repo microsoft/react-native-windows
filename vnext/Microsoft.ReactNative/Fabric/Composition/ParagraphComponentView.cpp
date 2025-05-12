@@ -122,6 +122,7 @@ facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPo
 
 void ParagraphComponentView::updateTextAlignment(
     const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept {
+  m_textLayout = nullptr;
   if (!m_textLayout)
     return;
 
