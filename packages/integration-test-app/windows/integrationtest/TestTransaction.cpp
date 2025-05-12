@@ -6,7 +6,7 @@
 #include "ExceptionInfo.h"
 #include "TestCommandResponse.h"
 
-#include <Crash.h>;
+#include <Crash.h>
 
 using namespace winrt::Microsoft::ReactNative;
 using namespace winrt::Windows::Data::Json;

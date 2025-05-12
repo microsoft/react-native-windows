@@ -4,11 +4,12 @@ REM Creates a RNW lib using the new arch template
 REM
 REM Options:
 REM
-REM name            The name of the app to create (default: testlib)
+REM name            The name of the lib to create (default: testlib)
 REM /r [version]    Use react@version (default: latest)
 REM /rn [version]   Use react-native@version (default: latest)
 REM /rnw [version]  Use react-native-windows@version (default: latest)
-REM /lt [template]  Use create-react-native-library template (default: turbo-module)
+REM /t [template]   Use template (default: cpp-lib)
+REM /bt [template]  Use base create-react-native-library template (default: turbo-module)
 REM /linkrnw        Use your local RNW repo at RNW_ROOT
 REM /verdaccio      Configure new project to use verdaccio (used in CI)
 REM
@@ -16,6 +17,12 @@ REM Requirements:
 REM - You've set the RNW_ROOT environment variable with the path to your clone
 
 setlocal enableextensions enabledelayedexpansion
+
+call git rev-parse --is-inside-work-tree > NUL 2>&1
+if %ERRORLEVEL% equ 0 (
+  @echo creaternwlib.cmd: Unable to create a new project in an existing git repo
+  exit /b -1
+)
 
 if "%RNW_ROOT%"=="" (
   @echo creaternwlib.cmd: RNW_ROOT environment variable set to %~dp0..\..
@@ -51,7 +58,10 @@ if not "%part%"=="" (
   ) else if "%part%"=="/rnw" (
       set RNW_VERSION=%param%
       shift
-  ) else if "%part%"=="/lt" (
+  ) else if "%part%"=="/t" (
+      set RNW_TEMPLATE_TYPE=%param%
+      shift
+  ) else if "%part%"=="/bt" (
       set RN_TEMPLATE_TYPE=%param%
       shift
   ) else if "%part:~0,1%"=="/" (
@@ -106,8 +116,8 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 
 @echo creaternwlib.cmd Creating RNW lib "%LIB_NAME%" with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 
-@echo creaternwlib.cmd Creating base RN library project with: npx --yes create-react-native-library@latest --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
-call npx --yes create-react-native-library@latest --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
+@echo creaternwlib.cmd Creating base RN library project with: npx --yes create-react-native-library@0.48.9 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --local false --type %RN_TEMPLATE_TYPE% --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
+call npx --yes create-react-native-library@0.48.9 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --local false --type %RN_TEMPLATE_TYPE% --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwlib.cmd: Unable to create base RN library project
@@ -118,15 +128,13 @@ pushd "%LIB_NAME%"
 
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwlib.cmd Fixing react-native nightly issue
-  pwsh.exe -Command "(gc package.json) -replace '""nightly""', '""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli"": "".*""', '""@react-native-community/cli"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-android"": "".*""', '""@react-native-community/cli-platform-android"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-ios"": "".*""', '""@react-native-community/cli-platform-ios"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   pushd example
-  pwsh.exe -Command "(gc package.json) -replace '""nightly""', '""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli"": "".*""', '""@react-native-community/cli"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-android"": "".*""', '""@react-native-community/cli-platform-android"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-ios"": "".*""', '""@react-native-community/cli-platform-ios"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   popd
 )
 

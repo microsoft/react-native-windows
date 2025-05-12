@@ -73,7 +73,7 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
-        $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /lt ${{ parameters.template }} /verdaccio testcli
+        $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
       displayName: Init new app project with creaternwapp.cmd
       workingDirectory: $(Agent.BuildDirectory)
       env:
@@ -81,7 +81,7 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
-        $(Build.SourcesDirectory)\vnext\Scripts\creaternwlib.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /verdaccio testcli
+        $(Build.SourcesDirectory)\vnext\Scripts\creaternwlib.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
       displayName: Init new lib project with creaternwlib.cmd
       workingDirectory: $(Agent.BuildDirectory)
       env:

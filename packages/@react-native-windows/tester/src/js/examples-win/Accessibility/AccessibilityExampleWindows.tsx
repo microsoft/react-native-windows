@@ -22,14 +22,25 @@ class AccessibilityBaseExample extends React.Component {
         <Text>The following has accessibilityLabel and accessibilityHint:</Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'blue'}}
+          accessible={true}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
+          accessibilityLevel={1}
+          accessibilityAnnotation={{
+            typeID: 'Comment',
+            typeName: 'Check Comment',
+            author: 'Clint Westwood',
+            dateTime: '3/19/2025 1:03 PM',
+          }}
+          testID="accessibility-base-view-1"
         />
         <Text>The following has accessible and accessibilityLabel:</Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'red'}}
           accessible={true}
           accessibilityLabel="A hint for the red box."
+          accessibilityLevel={2}
+          testID="accessibility-base-view-2"
         />
         <Text>
           The following has accessibilitySetSize, accessibilityPosInSet and
@@ -37,13 +48,15 @@ class AccessibilityBaseExample extends React.Component {
         </Text>
         <View
           style={{width: 50, height: 50, backgroundColor: 'red'}}
+          testID="accessibility-base-view-3"
           accessible={true}
           accessibilityRole="listitem"
           accessibilityLabel="This label should not be used"
           aria-label="Aria label takes precedence"
           accessibilitySetSize={5}
           accessibilityPosInSet={2}
-          accessibilityLevel={4}
+          aria-level={9} //aria-level takes precedence over accessibilityLevel
+          accessibilityLevel={5}
         />
       </View>
     );

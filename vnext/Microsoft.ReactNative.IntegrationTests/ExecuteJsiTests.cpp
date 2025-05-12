@@ -109,7 +109,7 @@ struct TestExecuteJsiModule {
 
 struct TestPackageProvider : winrt::implements<TestPackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-    TryAddAttributedModule(packageBuilder, L"TestExecuteJsiModule");
+    TryAddAttributedModule(packageBuilder, L"TestExecuteJsiModule", true);
   }
 };
 

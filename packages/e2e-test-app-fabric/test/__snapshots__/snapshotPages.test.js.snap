@@ -8,8 +8,18 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
     The following has accessibilityLabel and accessibilityHint:
   </Text>
   <View
+    accessibilityAnnotation={
+      {
+        "author": "Clint Westwood",
+        "dateTime": "3/19/2025 1:03 PM",
+        "typeID": "Comment",
+        "typeName": "Check Comment",
+      }
+    }
     accessibilityHint="A hint for the blue box."
     accessibilityLabel="A blue box"
+    accessibilityLevel={1}
+    accessible={true}
     style={
       {
         "backgroundColor": "blue",
@@ -17,12 +27,14 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-1"
   />
   <Text>
     The following has accessible and accessibilityLabel:
   </Text>
   <View
     accessibilityLabel="A hint for the red box."
+    accessibilityLevel={2}
     accessible={true}
     style={
       {
@@ -31,18 +43,20 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-2"
   />
   <Text>
     The following has accessibilitySetSize, accessibilityPosInSet and accessibilityLabel:
   </Text>
   <View
     accessibilityLabel="This label should not be used"
-    accessibilityLevel={4}
+    accessibilityLevel={5}
     accessibilityPosInSet={2}
     accessibilityRole="listitem"
     accessibilitySetSize={5}
     accessible={true}
     aria-label="Aria label takes precedence"
+    aria-level={9}
     style={
       {
         "backgroundColor": "red",
@@ -50,6 +64,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-3"
   />
 </View>
 `;
@@ -1696,21 +1711,21 @@ exports[`snapshotAllPages Alerts 8`] = `
 <View>
   <Text
     style={
-      {
-        "marginBottom": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginBottom": 10,
+        },
+      ]
     }
   >
     <Text
       style={
-        [
-          {
-            "color": "#3c3c4399",
-          },
-          {
-            "fontWeight": "bold",
-          },
-        ]
+        {
+          "fontWeight": "bold",
+        }
       }
     >
       Prompt value:
@@ -40219,12 +40234,17 @@ exports[`snapshotAllPages RTLExample 1`] = `
   >
     <Text
       style={
-        {
-          "flex": 1,
-          "marginBottom": 5,
-          "marginTop": 5,
-          "textAlign": "center",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "flex": 1,
+            "marginBottom": 5,
+            "marginTop": 5,
+            "textAlign": "center",
+          },
+        ]
       }
     >
       forceRTL
@@ -40423,7 +40443,16 @@ exports[`snapshotAllPages RTLExample 2`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             Text Text Text
           </Text>
         </View>
@@ -40509,7 +40538,16 @@ exports[`snapshotAllPages RTLExample 2`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             Text Text Text
           </Text>
         </View>
@@ -40654,27 +40692,42 @@ exports[`snapshotAllPages RTLExample 3`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       Left-to-Right language without text alignment.
     </Text>
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       من اليمين إلى اليسار اللغة دون محاذاة النص
     </Text>
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       מימין לשמאל השפה בלי יישור טקסט
@@ -40789,11 +40842,16 @@ exports[`snapshotAllPages RTLExample 4`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "left",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "left",
+            },
+          ],
         ]
       }
     >
@@ -40803,11 +40861,16 @@ exports[`snapshotAllPages RTLExample 4`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "left",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "left",
+            },
+          ],
         ]
       }
     >
@@ -40817,11 +40880,16 @@ exports[`snapshotAllPages RTLExample 4`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "left",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "left",
+            },
+          ],
         ]
       }
     >
@@ -40937,11 +41005,16 @@ exports[`snapshotAllPages RTLExample 5`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "right",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -40951,11 +41024,16 @@ exports[`snapshotAllPages RTLExample 5`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "right",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -40965,11 +41043,16 @@ exports[`snapshotAllPages RTLExample 5`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "right",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -41085,8 +41168,13 @@ exports[`snapshotAllPages RTLExample 6`] = `
       style={
         [
           {
-            "textAlign": "right",
+            "color": "#000000ff",
           },
+          [
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -41229,9 +41317,14 @@ exports[`snapshotAllPages RTLExample 7`] = `
       />
       <Text
         style={
-          {
-            "fontSize": 8,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 8,
+            },
+          ]
         }
       >
         Without directional meaning
@@ -41270,9 +41363,14 @@ exports[`snapshotAllPages RTLExample 7`] = `
       />
       <Text
         style={
-          {
-            "fontSize": 8,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 8,
+            },
+          ]
         }
       >
         With directional meaning
@@ -41449,30 +41547,67 @@ exports[`snapshotAllPages RTLExample 9`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     paddingStart: 50,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     paddingEnd: 10
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The 
     teal
      is padding.
@@ -41603,30 +41738,67 @@ exports[`snapshotAllPages RTLExample 10`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     marginStart: 50,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     marginEnd: 10
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The green is margin.
   </Text>
   <View
@@ -41755,27 +41927,55 @@ exports[`snapshotAllPages RTLExample 11`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     start: 50
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The orange is position.
   </Text>
   <View
@@ -41895,27 +42095,55 @@ exports[`snapshotAllPages RTLExample 11`] = `
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     end: 50
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The orange is position.
   </Text>
   <View
@@ -42039,25 +42267,53 @@ exports[`snapshotAllPages RTLExample 12`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartWidth: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndWidth: 50
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42181,25 +42437,53 @@ exports[`snapshotAllPages RTLExample 13`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartColor: 'red',
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndColor: 'green',
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42326,31 +42610,77 @@ exports[`snapshotAllPages RTLExample 14`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopStartRadius: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopEndRadius: 20,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomStartRadius: 30,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomEndRadius: 40
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42478,31 +42808,77 @@ exports[`snapshotAllPages RTLExample 15`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartStartRadius: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartEndRadius: 20,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndStartRadius: 30,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndEndRadius: 40
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42630,43 +43006,125 @@ exports[`snapshotAllPages RTLExample 16`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartColor: 'red',
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndColor: 'green',
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartWidth: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndWidth: 50,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopStartRadius: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopEndRadius: 20,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomStartRadius: 30,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomEndRadius: 40
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -72813,6 +73271,181 @@ exports[`snapshotAllPages Text 46`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Text 47`] = `
+<View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
+  </Text>
+</View>
+`;
+
 exports[`snapshotAllPages TextInput 1`] = `
 <View>
   <TextInput
@@ -77834,6 +78467,64 @@ exports[`snapshotAllPages TextInput 22`] = `
 
 exports[`snapshotAllPages TextInput 23`] = `
 <View>
+  <Text>
+    Select text on focus:
+  </Text>
+  <TextInput
+    selectTextOnFocus={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="select-text-on-focus"
+  />
+  <Text>
+    Do not select text on focus if clear text on focus is enabled:
+  </Text>
+  <TextInput
+    clearTextOnFocus={true}
+    selectTextOnFocus={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="select-text-on-focus-while-clear-text-on-focus"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 24`] = `
+<View>
   <TextInput
     defaultValue="Default color text"
     style={
@@ -78092,7 +78783,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -78430,7 +79121,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View
   testID="style-fontFamily"
 >
@@ -78658,7 +79349,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -78686,7 +79377,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -78803,7 +79494,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -78862,7 +79553,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -78889,7 +79580,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -79005,7 +79696,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     editable={true}
@@ -79098,7 +79789,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View
   style={
     {
@@ -79197,7 +79888,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View
   style={
     {
@@ -79315,7 +80006,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -79429,7 +80120,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -79650,7 +80341,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -79727,7 +80418,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <TextInput
     style={
@@ -79757,9 +80448,11 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
-  <Text>
+  <Text
+    testID="textinput-state-display"
+  >
     PressIn/PressOut message
   </Text>
   <TextInput
@@ -79792,7 +80485,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -79928,7 +80621,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 [
   <View
     focusable={true}
@@ -79994,7 +80687,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -80043,7 +80736,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View>
   <Text>
     CaretHidden
@@ -80075,7 +80768,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View>
   <Text>
     Cursorcolor
@@ -80107,7 +80800,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 <View>
   <Text>
     Shadow
@@ -80145,7 +80838,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -80228,7 +80921,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -82606,6 +83299,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
     </View>
   </View>
   <View
+    accessible={true}
     style={
       {
         "borderColor": "#f0f0f0",
@@ -83072,12 +83766,14 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
+        "backgroundColor": "transparent",
         "flexDirection": "row",
         "justifyContent": "center",
         "opacity": 1,
         "padding": 10,
       }
     }
+    testID="disabled_touchable"
   >
     <Text
       style={

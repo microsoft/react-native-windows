@@ -1,8 +1,109 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Tue, 15 Apr 2025 05:24:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 08 May 2025 05:23:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.292
+
+Thu, 08 May 2025 05:23:32 GMT
+
+### Patches
+
+- initial commit (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.34
+- Bump @rnw-scripts/just-task to v2.3.51
+- Bump react-native-windows to v0.0.0-canary.952
+
+## 0.12.291
+
+Wed, 07 May 2025 05:27:07 GMT
+
+### Patches
+
+- Bump hermes version (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.951
+
+## 0.12.290
+
+Thu, 01 May 2025 05:24:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.950
+
+## 0.12.289
+
+Wed, 30 Apr 2025 05:27:56 GMT
+
+### Patches
+
+- Fix NuGet lock files and enforce them not changing accidentally (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.949
+
+## 0.12.288
+
+Mon, 28 Apr 2025 05:24:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.948
+
+## 0.12.287
+
+Sat, 26 Apr 2025 05:27:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.947
+
+## 0.12.286
+
+Thu, 24 Apr 2025 05:24:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.946
+
+## 0.12.285
+
+Wed, 23 Apr 2025 05:25:48 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.945
+
+## 0.12.284
+
+Tue, 22 Apr 2025 05:24:03 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.944
+
+## 0.12.283
+
+Sun, 20 Apr 2025 05:22:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.943
+
+## 0.12.282
+
+Fri, 18 Apr 2025 05:22:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.942
+
+## 0.12.281
+
+Wed, 16 Apr 2025 05:25:01 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.941
 
 ## 0.12.280
 

@@ -24,6 +24,198 @@ exports[`Text Tests Padding can be added to Text 1`] = `
 }
 `;
 
+exports[`Text Tests Text can adjust its fontsize according to its limitations, case 0 a 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-0-a",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-0-a",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-0-a",
+    "Offset": "0, 0, 0",
+    "Size": "500, 80",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Text Tests Text can adjust its fontsize according to its limitations, case 0 b 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-0-b",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-0-b",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-0-b",
+    "Offset": "0, 0, 0",
+    "Size": "500, 80",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Text Tests Text can adjust its fontsize according to its limitations, case 1 a 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-1-a",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-1-a",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-1-a",
+    "Offset": "0, 0, 0",
+    "Size": "475, 120",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Text Tests Text can adjust its fontsize according to its limitations, case 1 b 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-1-b",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-1-b",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-1-b",
+    "Offset": "0, 0, 0",
+    "Size": "475, 120",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Text Tests Text can adjust its fontsize according to its limitations, case 2 a 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-2-a",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-2-a",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-2-a",
+    "Offset": "0, 0, 0",
+    "Size": "450, 160",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Text Tests Text can adjust its fontsize according to its limitations, case 2 b 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-2-b",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-2-b",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-2-b",
+    "Offset": "0, 0, 0",
+    "Size": "450, 160",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Text Tests Text can adjust its fontsize according to its limitations, default a 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-default-a",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-default-a",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-default-a",
+    "Offset": "0, 0, 0",
+    "Size": "500, 100",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Text Tests Text can adjust its fontsize according to its limitations, default b 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "text-adjustfontsizetofit-default-b",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
+    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-adjustfontsizetofit-default-b",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-adjustfontsizetofit-default-b",
+    "Offset": "0, 0, 0",
+    "Size": "500, 100",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`Text Tests Text can be restricted to one line 1`] = `
 {
   "Automation Tree": {

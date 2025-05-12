@@ -31,7 +31,7 @@ import View from './View/View';
 import invariant from 'invariant';
 import * as React from 'react';
 
-type ButtonProps = $ReadOnly<{|
+type ButtonProps = $ReadOnly<{
   /**
     Text to display inside the button. On Android the given title will be
     converted to the uppercased form.
@@ -181,7 +181,7 @@ type ButtonProps = $ReadOnly<{|
    */
   tabIndex?: ?number,
   // Windows]
-|}>;
+}>;
 
 /**
   A basic button component that should render nicely on any platform. Supports a

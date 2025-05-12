@@ -34,13 +34,13 @@ const dataImageSvg =
 const IMAGE_PREFETCH_URL = `${IMAGE1}?r=1&t=${Date.now()}`;
 const prefetchTask = Image.prefetch(IMAGE_PREFETCH_URL);
 
-type ImageSource = $ReadOnly<{|
+type ImageSource = $ReadOnly<{
   uri: string,
-|}>;
+}>;
 
-type BlobImageProps = $ReadOnly<{|
+type BlobImageProps = $ReadOnly<{
   url: string,
-|}>;
+}>;
 
 const BlobImage = ({url}: BlobImageProps): React.Node => {
   const [objectURL, setObjectURL] = React.useState<?string>(null);
@@ -66,11 +66,11 @@ const BlobImage = ({url}: BlobImageProps): React.Node => {
   );
 };
 
-type BlobImageExampleState = {||};
+type BlobImageExampleState = {};
 
-type BlobImageExampleProps = $ReadOnly<{|
+type BlobImageExampleProps = $ReadOnly<{
   urls: string[],
-|}>;
+}>;
 
 class BlobImageExample extends React.Component<
   BlobImageExampleProps,
@@ -87,10 +87,10 @@ class BlobImageExample extends React.Component<
   }
 }
 
-type NetworkImageCallbackExampleProps = $ReadOnly<{|
+type NetworkImageCallbackExampleProps = $ReadOnly<{
   source: ImageSource,
   prefetchedSource: ImageSource,
-|}>;
+}>;
 
 const NetworkImageCallbackExample = ({
   source,
@@ -210,11 +210,11 @@ const NetworkImageCallbackExample = ({
   );
 };
 
-type NetworkImageExampleState = {|
+type NetworkImageExampleState = {
   error: ?string,
   loading: boolean,
   progress: $ReadOnlyArray<number>,
-|};
+};
 
 class NetworkImageExample extends React.Component<
   ImageProps,
@@ -260,14 +260,14 @@ class NetworkImageExample extends React.Component<
   }
 }
 
-type ImageSizeExampleState = {|
+type ImageSizeExampleState = {
   width: number,
   height: number,
-|};
+};
 
-type ImageSizeExampleProps = $ReadOnly<{|
+type ImageSizeExampleProps = $ReadOnly<{
   source: ImageSource,
-|}>;
+}>;
 
 class ImageSizeExample extends React.Component<
   ImageSizeExampleProps,
@@ -302,12 +302,12 @@ class ImageSizeExample extends React.Component<
   }
 }
 
-type MultipleSourcesExampleState = {|
+type MultipleSourcesExampleState = {
   width: number,
   height: number,
-|};
+};
 
-type MultipleSourcesExampleProps = $ReadOnly<{||}>;
+type MultipleSourcesExampleProps = $ReadOnly<{}>;
 
 class MultipleSourcesExample extends React.Component<
   MultipleSourcesExampleProps,
@@ -380,11 +380,11 @@ class MultipleSourcesExample extends React.Component<
   }
 }
 
-type LoadingIndicatorSourceExampleState = {|
+type LoadingIndicatorSourceExampleState = {
   imageHash: number,
-|};
+};
 
-type LoadingIndicatorSourceExampleProps = $ReadOnly<{||}>;
+type LoadingIndicatorSourceExampleProps = $ReadOnly<{}>;
 
 class LoadingIndicatorSourceExample extends React.Component<
   LoadingIndicatorSourceExampleProps,
@@ -430,11 +430,11 @@ class LoadingIndicatorSourceExample extends React.Component<
   }
 }
 
-type FadeDurationExampleState = {|
+type FadeDurationExampleState = {
   imageHash: number,
-|};
+};
 
-type FadeDurationExampleProps = $ReadOnly<{||}>;
+type FadeDurationExampleProps = $ReadOnly<{}>;
 
 class FadeDurationExample extends React.Component<
   FadeDurationExampleProps,
@@ -477,13 +477,13 @@ class FadeDurationExample extends React.Component<
   }
 }
 
-type OnLayoutExampleState = {|
+type OnLayoutExampleState = {
   width: number,
   height: number,
   layoutHandlerMessage: string,
-|};
+};
 
-type OnLayoutExampleProps = $ReadOnly<{||}>;
+type OnLayoutExampleProps = $ReadOnly<{}>;
 
 class OnLayoutExample extends React.Component<
   OnLayoutExampleProps,
@@ -574,11 +574,11 @@ class OnLayoutExample extends React.Component<
   }
 }
 
-type OnPartialLoadExampleState = {|
+type OnPartialLoadExampleState = {
   hasLoaded: boolean,
-|};
+};
 
-type OnPartialLoadExampleProps = $ReadOnly<{||}>;
+type OnPartialLoadExampleProps = $ReadOnly<{}>;
 
 class OnPartialLoadExample extends React.Component<
   OnPartialLoadExampleProps,
@@ -630,6 +630,107 @@ const VectorDrawableExample = () => {
           tintColor="red"
         />
       </View>
+    </View>
+  );
+};
+
+const AccessibilityActions = () => {
+  const [accessibilityLabel, setAccessibilityLabel] =
+    React.useState('Initial Label');
+  const handleActivate = () => {
+    console.log('Activate action triggered');
+    setAccessibilityLabel('Activated Label');
+  };
+
+  return (
+    <Image
+      source={fullImage}
+      style={styles.base}
+      accessibilityActions={[{name: 'activate', label: 'Activate'}]}
+      onAccessibilityAction={event => {
+        if (event.nativeEvent.actionName === 'activate') {
+          handleActivate();
+        }
+      }}
+      onAccessibilityTap={handleActivate}
+      testID="image-accessibility-actions"
+      accessibilityLabel={accessibilityLabel}
+      accessible
+    />
+  );
+};
+
+const ImageFunctionsExample = () => {
+  const [prefetchStatus, setPrefetchStatus] = React.useState<string | null>(
+    null,
+  );
+  const [resolvedSource, setResolvedSource] = React.useState<any | null>(null);
+  const [imageSize, setImageSize] = React.useState<{
+    width: number,
+    height: number,
+  } | null>(null);
+
+  React.useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        // Prefetch the image
+        const requestId = await Image.prefetch(fullImage.uri);
+        if (requestId) {
+          setPrefetchStatus('Image prefetched successfully.');
+        } else {
+          setPrefetchStatus('Image prefetch failed.');
+        }
+
+        // Get image size with headers
+        Image.getSizeWithHeaders(
+          fullImage.uri,
+          {}, // Pass any required headers here
+          (width, height) => {
+            setImageSize({width, height});
+            console.log('Image size:', {width, height});
+          },
+          error => {
+            setImageSize(null);
+          },
+        );
+
+        // Resolve the asset source
+        const resolved = Image.resolveAssetSource(fullImage);
+        setResolvedSource(resolved);
+        console.log('Resolved Source:', resolved);
+
+        // Abort the prefetch request
+        Image.abortPrefetch(requestId);
+        console.log('Prefetch aborted.');
+      } catch (error) {
+        setPrefetchStatus('Error occurred during operations.');
+      }
+    };
+
+    fetchImage();
+  }, []);
+
+  return (
+    <View>
+      {resolvedSource ? (
+        <View style={styles.spaceBetweenView}>
+          <Image
+            source={resolvedSource}
+            style={styles.base}
+            testID="image-asset-source"
+            accessible
+          />
+        </View>
+      ) : (
+        <Text style={{color: 'red'}}>Failed to resolve image source.</Text>
+      )}
+      {imageSize ? (
+        <Text style={{color: 'black'}}>
+          Image Size: {imageSize.width}x{imageSize.height}
+        </Text>
+      ) : (
+        <Text style={{color: 'red'}}>Failed to get image size.</Text>
+      )}
     </View>
   );
 };
@@ -2059,5 +2160,92 @@ exports.examples = [
       );
     },
     platform: 'android',
+  },
+  {
+    title: 'Accessibility Properties',
+    description:
+      'Demonstrates how to use accessibility properties such as accessibilityHint, accessibilityLabel, accessibilityRole, and accessibilityValue to make an image accessible to screen readers.',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Image
+            source={fullImage}
+            style={styles.base}
+            accessibilityHint="This is an accessibility hint"
+            accessibilityLabel="This is an accessibility label"
+            accessibilityRole="image"
+            accessibilityValue={{text: '50%'}}
+            importantForAccessibility="no-hide-descendants"
+            testID="image-accessibility-properties"
+            accessible
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Accessibility Actions',
+    description:
+      'Shows how to define and handle custom accessibility actions for an image, such as "activate".',
+    render: function (): React.Node {
+      return <AccessibilityActions />;
+    },
+  },
+  {
+    title: 'Style Properties',
+    description:
+      'Illustrates how to apply style properties such as backfaceVisibility to an image.',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Image
+            source={fullImage}
+            style={[styles.base, {backfaceVisibility: 'hidden'}]}
+            testID="image-style-properties"
+            accessible
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Interaction Properties',
+    description:
+      'Demonstrates various interaction properties for an image, including focusable, hitSlop, nativeID, and responder callbacks.',
+    render: function (): React.Node {
+      return (
+        <Image
+          source={fullImage}
+          style={styles.base}
+          focusable
+          hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
+          nativeID="image-native-id"
+          onMoveShouldSetResponder={() => true}
+          onMoveShouldSetResponderCapture={() => true}
+          onResponderGrant={() => console.log('Responder Grant')}
+          onResponderMove={() => console.log('Responder Move')}
+          onResponderReject={() => console.log('Responder Reject')}
+          onResponderRelease={() => console.log('Responder Release')}
+          onResponderTerminate={() => console.log('Responder Terminate')}
+          onResponderTerminationRequest={() => true}
+          onStartShouldSetResponder={() => true}
+          onStartShouldSetResponderCapture={() => true}
+          pointerEvents="box-none"
+          removeClippedSubviews
+          needsOffscreenAlphaCompositing
+          tooltip="This is a tooltip"
+          testID="image-interaction-properties"
+          accessible
+        />
+      );
+    },
+  },
+  {
+    title: 'Abort Prefetch and Resolve Asset Source',
+    description:
+      'Demonstrates how to use Image..getSizeWithHeaders, Image.abortPrefetch, and Image.resolveAssetSource methods to manage image loading and resolve asset sources.',
+    render: function (): React.Node {
+      return <ImageFunctionsExample />;
+    },
   },
 ] as Array<RNTesterModuleExample>;

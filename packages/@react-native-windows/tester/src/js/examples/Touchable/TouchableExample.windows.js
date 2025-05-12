@@ -181,6 +181,7 @@ class TouchableFeedbackEvents extends React.Component<{...}, $FlowFixMeState> {
         </View>
         <View
           testID="touchable_feedback_events_console"
+          accessible // Windows
           style={styles.eventLogBox}>
           {this.state.eventLog.map((e, ii) => (
             <RNTesterText key={ii}>{e}</RNTesterText>
@@ -315,7 +316,7 @@ class TouchableHitSlop extends React.Component<{...}, $FlowFixMeState> {
 
 function TouchableNativeMethodChecker<
   T: component(ref?: React.RefSetter<any>, ...any),
->(props: {|Component: T, name: string|}): React.Node {
+>(props: {Component: T, name: string}): React.Node {
   const [status, setStatus] = useState<?boolean>(null);
   const ref = useRef<any>(null);
 
@@ -356,10 +357,28 @@ function TouchableNativeMethods() {
 }
 
 class TouchableDisabled extends React.Component<{...}> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      disabledColor: 'transparent',
+    };
+  }
+
   render(): React.Node {
     return (
       <View>
-        <TouchableOpacity disabled={true} style={[styles.row, styles.block]}>
+        <TouchableOpacity
+          disabled={true}
+          style={[
+            styles.row,
+            styles.block,
+            {backgroundColor: this.state.disabledColor},
+          ]}
+          testID="disabled_touchable" // Windows
+          onPress={() => {
+            this.setState({disabledColor: 'blue'});
+          }} // Windows
+        >
           <RNTesterText style={styles.disabledButton}>
             Disabled TouchableOpacity
           </RNTesterText>

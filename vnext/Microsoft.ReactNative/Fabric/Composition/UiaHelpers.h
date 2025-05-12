@@ -33,6 +33,11 @@ void UpdateUiaProperty(
 
 long GetLiveSetting(const std::string &liveRegion) noexcept;
 
+long GetAnnotationTypeId(const std::string &annotationType) noexcept;
+
+bool accessibilityAnnotationHasValue(
+    const std::optional<facebook::react::AccessibilityAnnotation> &annotation) noexcept;
+
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept;
 
 ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept;

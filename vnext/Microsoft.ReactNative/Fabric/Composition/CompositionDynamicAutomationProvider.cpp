@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionAnnotationProvider.h>
 #include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
@@ -36,14 +37,18 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
                          strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
                          .try_as<ITextProvider2>();
   }
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
+    m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
+                               strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                               .try_as<IAnnotationProvider>();
+  }
 }
 
-#ifdef USE_EXPERIMENTAL_WINUI3
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
     const winrt::Microsoft::UI::Content::ChildSiteLink &childSiteLink) noexcept
     : m_view{componentView}, m_childSiteLink{childSiteLink} {}
-#endif // USE_EXPERIMENTAL_WINUI3
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
@@ -51,7 +56,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-#ifdef USE_EXPERIMENTAL_WINUI3
   if (m_childSiteLink) {
     if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
       auto fragment = m_childSiteLink.AutomationProvider().try_as<IRawElementProviderFragment>();
@@ -59,7 +63,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
       return S_OK;
     }
   }
-#endif // USE_EXPERIMENTAL_WINUI3
 
   return UiaNavigateHelper(m_view.view(), direction, *pRetVal);
 }
@@ -285,6 +288,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_TextPattern2Id &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  }
+  if (patternId == UIA_AnnotationPatternId &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>() &&
+      accessibilityAnnotationHasValue(props->accessibilityAnnotation)) {
+    m_annotationProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   return S_OK;
@@ -561,6 +569,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->bstrVal = (props->accessibilityState.has_value() && props->accessibilityState->busy)
           ? SysAllocString(L"Busy")
           : SysAllocString(L"");
+      break;
+    }
+    case UIA_LevelPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = props->accessibilityLevel;
       break;
     }
   }

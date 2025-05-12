@@ -21,6 +21,24 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
+const searchBox = async (input: string) => {
+  const searchBox = await app.findElementByTestID('example_search');
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(input);
+      if (input === '') {
+        return (await searchBox.getText()) === 'Search...';
+      }
+      return (await searchBox.getText()) === input;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
+};
+
 describe('Touchable Tests', () => {
   test('Touchables can contain a Text component', async () => {
     const component = await app.findElementByTestID(
@@ -47,12 +65,17 @@ describe('Touchable Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('Touchables can register feedback events', async () => {
+    await searchBox('fee');
     const component = await app.findElementByTestID(
       'touchable_feedback_events_button',
     );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('touchable_feedback_events_button');
     expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree('touchable_feedback_events_console');
+    expect(dump2).toMatchSnapshot();
+    await searchBox('');
   });
   test('Text components can be tappable', async () => {
     const component = await app.findElementByTestID('tappable_text');
@@ -81,5 +104,16 @@ describe('Touchable Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('touchable_set');
     expect(dump).toMatchSnapshot();
+  });
+  test('Touchables can be disabled', async () => {
+    await searchBox('dis');
+    const component = await app.findElementByTestID('disabled_touchable');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('disabled_touchable');
+    expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree('disabled_touchable');
+    expect(dump2).toMatchSnapshot();
+    await searchBox('');
   });
 });
