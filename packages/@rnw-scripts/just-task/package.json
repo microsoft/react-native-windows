@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "2.3.50",
+  "version": "2.3.51",
   "license": "MIT",
   "main": "just-task.js",
   "repository": {
@@ -25,7 +25,7 @@
     "just-scripts": "^1.3.3"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.33",
+    "@rnw-scripts/eslint-config": "1.2.34",
     "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1"

@@ -35,7 +35,7 @@ import type {Node} from 'react';
 export type ViewLayout = Layout;
 export type ViewLayoutEvent = LayoutEvent;
 
-type DirectEventProps = $ReadOnly<{|
+type DirectEventProps = $ReadOnly<{
   /**
    * When `accessible` is true, the system will try to invoke this function
    * when the user performs an accessibility custom action.
@@ -79,15 +79,15 @@ type DirectEventProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#onaccessibilityescape
    */
   onAccessibilityEscape?: ?() => mixed,
-|}>;
+}>;
 
-type MouseEventProps = $ReadOnly<{|
+type MouseEventProps = $ReadOnly<{
   onMouseEnter?: ?(event: MouseEvent) => void,
   onMouseLeave?: ?(event: MouseEvent) => void,
-|}>;
+}>;
 
 // Experimental/Work in Progress Pointer Event Callbacks (not yet ready for use)
-type PointerEventProps = $ReadOnly<{|
+type PointerEventProps = $ReadOnly<{
   onClick?: ?(event: PointerEvent) => void,
   onClickCapture?: ?(event: PointerEvent) => void,
   onPointerEnter?: ?(event: PointerEvent) => void,
@@ -110,16 +110,16 @@ type PointerEventProps = $ReadOnly<{|
   onGotPointerCaptureCapture?: ?(e: PointerEvent) => void,
   onLostPointerCapture?: ?(e: PointerEvent) => void,
   onLostPointerCaptureCapture?: ?(e: PointerEvent) => void,
-|}>;
+}>;
 
-type FocusEventProps = $ReadOnly<{|
+type FocusEventProps = $ReadOnly<{
   onBlur?: ?(event: BlurEvent) => void,
   onBlurCapture?: ?(event: BlurEvent) => void,
   onFocus?: ?(event: FocusEvent) => void,
   onFocusCapture?: ?(event: FocusEvent) => void,
-|}>;
+}>;
 
-type TouchEventProps = $ReadOnly<{|
+type TouchEventProps = $ReadOnly<{
   onTouchCancel?: ?(e: PressEvent) => void,
   onTouchCancelCapture?: ?(e: PressEvent) => void,
   onTouchEnd?: ?(e: PressEvent) => void,
@@ -128,14 +128,14 @@ type TouchEventProps = $ReadOnly<{|
   onTouchMoveCapture?: ?(e: PressEvent) => void,
   onTouchStart?: ?(e: PressEvent) => void,
   onTouchStartCapture?: ?(e: PressEvent) => void,
-|}>;
+}>;
 
 /**
  * For most touch interactions, you'll simply want to wrap your component in
  * `TouchableHighlight` or `TouchableOpacity`. Check out `Touchable.js`,
  * `ScrollResponder.js` and `ResponderEventPlugin.js` for more discussion.
  */
-type GestureResponderEventProps = $ReadOnly<{|
+type GestureResponderEventProps = $ReadOnly<{
   /**
    * Does this view want to "claim" touch responsiveness? This is called for
    * every touch move on the `View` when it is not the responder.
@@ -250,23 +250,23 @@ type GestureResponderEventProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#onstartshouldsetrespondercapture
    */
   onStartShouldSetResponderCapture?: ?(e: PressEvent) => boolean,
-|}>;
+}>;
 
-type AndroidDrawableThemeAttr = $ReadOnly<{|
+type AndroidDrawableThemeAttr = $ReadOnly<{
   type: 'ThemeAttrAndroid',
   attribute: string,
-|}>;
+}>;
 
-type AndroidDrawableRipple = $ReadOnly<{|
+type AndroidDrawableRipple = $ReadOnly<{
   type: 'RippleAndroid',
   color?: ?number,
   borderless?: ?boolean,
   rippleRadius?: ?number,
-|}>;
+}>;
 
 type AndroidDrawable = AndroidDrawableThemeAttr | AndroidDrawableRipple;
 
-type AndroidViewProps = $ReadOnly<{|
+type AndroidViewProps = $ReadOnly<{
   /**
    * Identifies the element that labels the element it is applied to. When the assistive technology focuses on the component with this props,
    * the text is read aloud. The value should should match the nativeID of the related element.
@@ -395,9 +395,9 @@ type AndroidViewProps = $ReadOnly<{|
    * @platform android
    */
   onClick?: ?(event: PressEvent) => mixed,
-|}>;
+}>;
 
-type IOSViewProps = $ReadOnly<{|
+type IOSViewProps = $ReadOnly<{
   /**
    * Prevents view from being inverted if set to true and color inversion is turned on.
    *
@@ -466,7 +466,7 @@ type IOSViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#shouldrasterizeios
    */
   shouldRasterizeIOS?: ?boolean,
-|}>;
+}>;
 
 // [Windows
 
@@ -527,7 +527,7 @@ type WindowsViewProps = $ReadOnly<{|
 |}>;
 // Windows]
 
-export type ViewProps = $ReadOnly<{|
+export type ViewProps = $ReadOnly<{
   ...DirectEventProps,
   ...GestureResponderEventProps,
   ...MouseEventProps,
@@ -728,4 +728,4 @@ export type ViewProps = $ReadOnly<{|
    * @platform win32
    */
   accessibilityControls?: ?string,
-|}>;
+}>;

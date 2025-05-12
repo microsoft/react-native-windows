@@ -16,6 +16,8 @@
   <PropertyGroup Label="ReactNativeWindowsProps">
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
     <RunAutolinkCheck>false</RunAutolinkCheck>
+    <!-- Ensure we have a valid packages.lock.json and not a packages.newarch.json. -->
+    <RnwNewArchOnly>true</RnwNewArchOnly>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -66,6 +68,8 @@
   </ImportGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.props')" />
+    <!-- Added since we build this project with/without UseExperimentalWinUI3. -->
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <ItemDefinitionGroup>
     <ClCompile>

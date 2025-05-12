@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Thu, 08 May 2025 05:23:32 GMT",
+      "version": "1.2.34",
+      "tag": "@rnw-scripts/eslint-config_v1.2.34",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "10017d2dc4e60b08d19530c2268924e82ac91947",
+            "comment": "initial commit"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Apr 2025 05:22:08 GMT",
       "version": "1.2.33",
       "tag": "@rnw-scripts/eslint-config_v1.2.33",
