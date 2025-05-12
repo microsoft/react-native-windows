@@ -8,6 +8,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
     The following has accessibilityLabel and accessibilityHint:
   </Text>
   <View
+    accessibilityAccessKey="accessKey"
     accessibilityAnnotation={
       {
         "author": "Clint Westwood",
@@ -17,6 +18,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
       }
     }
     accessibilityHint="A hint for the blue box."
+    accessibilityItemType="comment"
     accessibilityLabel="A blue box"
     accessibilityLevel={1}
     accessible={true}
