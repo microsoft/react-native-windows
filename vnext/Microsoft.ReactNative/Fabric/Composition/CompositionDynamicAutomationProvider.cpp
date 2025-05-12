@@ -486,8 +486,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_AutomationIdPropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto id = !props->nativeId.empty() ? ::Microsoft::Common::Unicode::Utf8ToUtf16(props->nativeId) : ::Microsoft::Common::Unicode::Utf8ToUtf16(props->testId);
-      pRetVal->bstrVal = SysAllocString(id.c_str());
+      auto wideId = !props->nativeId.empty() ? ::Microsoft::Common::Unicode::Utf8ToUtf16(props->nativeId)
+                                         : ::Microsoft::Common::Unicode::Utf8ToUtf16(props->testId);
+      pRetVal->bstrVal = SysAllocString(wideId.c_str());
       hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
     }

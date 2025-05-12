@@ -12,7 +12,9 @@ export default class Bootstrap extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text nativeID="nativeId_Test" style={styles.welcome}>Welcome to React Native!</Text>
+        <Text nativeID="nativeId_Test" style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
         <Text
           style={styles.welcome}
           tooltip=" tooltip message for the text"
