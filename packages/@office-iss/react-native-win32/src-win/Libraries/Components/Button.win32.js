@@ -362,9 +362,6 @@ const Button: component(
   const formattedTitle =
     Platform.OS === 'android' ? title.toUpperCase() : title;
 
-  const Touchable =
-    Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-
   // If `no` is specified for `importantForAccessibility`, it will be changed to `no-hide-descendants` because the text inside should not be focused.
   const _importantForAccessibility =
     importantForAccessibility === 'no'
