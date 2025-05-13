@@ -48,6 +48,14 @@ HostPlatformViewProps::HostPlatformViewProps(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilityLevel
               : convertRawProp(context, rawProps, "accessibilityLevel", sourceProps.accessibilityLevel, 0)),
+      accessibilityItemType(
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.accessibilityItemType
+              : convertRawProp(context, rawProps, "accessibilityItemType", sourceProps.accessibilityItemType, {})),
+      accessibilityAccessKey(
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.accessibilityAccessKey
+              : convertRawProp(context, rawProps, "accessibilityAccessKey", sourceProps.accessibilityAccessKey, {})),
       accessibilityLiveRegion(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.accessibilityLiveRegion
                                                                   : convertRawProp(
@@ -94,6 +102,8 @@ void HostPlatformViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityPosInSet);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilitySetSize);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLevel);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityItemType);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityAccessKey);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLiveRegion);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);
