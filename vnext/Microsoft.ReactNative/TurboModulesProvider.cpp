@@ -10,7 +10,7 @@
 #include <IReactContext.h>
 #include <ReactCommon/TurboModuleUtils.h>
 #include <react/bridging/EventEmitter.h>
-#include "JSDispatcherWriter.h"
+#include "CallInvokerWriter.h"
 #include "JSValueWriter.h"
 #include "JsiApi.h"
 #include "JsiReader.h"
@@ -215,7 +215,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 runtime,
                 propName,
                 0,
-                [jsDispatcher = m_reactContext.JSDispatcher(),
+                [jsInvoker = jsInvoker_,
                  method = methodInfo.Method,
                  longLivedObjectCollection = m_longLivedObjectCollection](
                     facebook::jsi::Runtime &rt,
@@ -227,7 +227,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                     auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 1),
-                        winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder),
+                        winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder),
                         MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 1]),
                         nullptr);
                   }
@@ -238,7 +238,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 runtime,
                 propName,
                 0,
-                [jsDispatcher = m_reactContext.JSDispatcher(),
+                [jsInvoker = jsInvoker_,
                  method = methodInfo.Method,
                  longLivedObjectCollection = m_longLivedObjectCollection](
                     facebook::jsi::Runtime &rt,
@@ -255,9 +255,9 @@ class TurboModuleImpl : public facebook::react::TurboModule {
 
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 2),
-                        winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder),
+                        winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder),
                         [weakCallback1, weakCallback2, jsiRuntimeHolder](const IJSValueWriter &writer) noexcept {
-                          writer.as<JSDispatcherWriter>()->WithResultArgs(
+                          writer.as<CallInvokerWriter>()->WithResultArgs(
                               [weakCallback1, weakCallback2, jsiRuntimeHolder](
                                   facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
                                 if (auto callback1 = weakCallback1.lock()) {
@@ -273,7 +273,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                               });
                         },
                         [weakCallback1, weakCallback2, jsiRuntimeHolder](const IJSValueWriter &writer) noexcept {
-                          writer.as<JSDispatcherWriter>()->WithResultArgs(
+                          writer.as<CallInvokerWriter>()->WithResultArgs(
                               [weakCallback1, weakCallback2, jsiRuntimeHolder](
                                   facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
                                 if (auto callback2 = weakCallback2.lock()) {
@@ -296,7 +296,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 runtime,
                 propName,
                 0,
-                [jsDispatcher = m_reactContext.JSDispatcher(),
+                [jsInvoker = jsInvoker_,
                  method = methodInfo.Method,
                  longLivedObjectCollection = m_longLivedObjectCollection](
                     facebook::jsi::Runtime &rt,
@@ -306,7 +306,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                   if (auto strongLongLivedObjectCollection = longLivedObjectCollection.lock()) {
                     auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
                     auto argReader = winrt::make<JsiReader>(rt, args, count);
-                    auto argWriter = winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder);
+                    auto argWriter = winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder);
                     return facebook::react::createPromiseAsJSIValue(
                         rt,
                         [method, argReader, argWriter, strongLongLivedObjectCollection, jsiRuntimeHolder](
@@ -319,7 +319,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                               argReader,
                               argWriter,
                               [weakResolve, weakReject, jsiRuntimeHolder](const IJSValueWriter &writer) {
-                                writer.as<JSDispatcherWriter>()->WithResultArgs(
+                                writer.as<CallInvokerWriter>()->WithResultArgs(
                                     [weakResolve, weakReject, jsiRuntimeHolder](
                                         facebook::jsi::Runtime &runtime,
                                         facebook::jsi::Value const *args,
@@ -338,7 +338,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                                     });
                               },
                               [weakResolve, weakReject, jsiRuntimeHolder](const IJSValueWriter &writer) {
-                                writer.as<JSDispatcherWriter>()->WithResultArgs(
+                                writer.as<CallInvokerWriter>()->WithResultArgs(
                                     [weakResolve, weakReject, jsiRuntimeHolder](
                                         facebook::jsi::Runtime &runtime,
                                         facebook::jsi::Value const *args,
@@ -451,7 +451,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
     auto weakCallback =
         LongLivedJsiFunction::CreateWeak(longLivedObjectCollection, rt, callback.getObject(rt).getFunction(rt));
     return [weakCallback = std::move(weakCallback)](const IJSValueWriter &writer) noexcept {
-      writer.as<JSDispatcherWriter>()->WithResultArgs(
+      writer.as<CallInvokerWriter>()->WithResultArgs(
           [weakCallback](facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
             if (auto callback = weakCallback.lock()) {
               callback->Value().call(rt, args, count);

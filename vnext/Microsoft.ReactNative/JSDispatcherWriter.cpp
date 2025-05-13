@@ -5,24 +5,9 @@
 #include "JSDispatcherWriter.h"
 #include <JSI/JSIDynamic.h>
 #include <crash/verifyElseCrash.h>
+#include "CallInvokerWriter.h"
 
 namespace winrt::Microsoft::ReactNative {
-
-// Special IJSValueWriter that does nothing.
-// We use it instead of JsiWriter when JSI runtime is not available anymore.
-struct JSNoopWriter : winrt::implements<JSNoopWriter, IJSValueWriter> {
- public: // IJSValueWriter
-  void WriteNull() noexcept;
-  void WriteBoolean(bool value) noexcept;
-  void WriteInt64(int64_t value) noexcept;
-  void WriteDouble(double value) noexcept;
-  void WriteString(const winrt::hstring &value) noexcept;
-  void WriteObjectBegin() noexcept;
-  void WritePropertyName(const winrt::hstring &name) noexcept;
-  void WriteObjectEnd() noexcept;
-  void WriteArrayBegin() noexcept;
-  void WriteArrayEnd() noexcept;
-};
 
 //===========================================================================
 // JSDispatcherWriter implementation
@@ -127,20 +112,5 @@ IJSValueWriter JSDispatcherWriter::GetWriter() noexcept {
   Debug(VerifyElseCrash(m_dynamicWriter != nullptr || m_jsDispatcher.HasThreadAccess()));
   return m_writer;
 }
-
-//===========================================================================
-// JSNoopWriter implementation
-//===========================================================================
-
-void JSNoopWriter::WriteNull() noexcept {}
-void JSNoopWriter::WriteBoolean(bool /*value*/) noexcept {}
-void JSNoopWriter::WriteInt64(int64_t /*value*/) noexcept {}
-void JSNoopWriter::WriteDouble(double /*value*/) noexcept {}
-void JSNoopWriter::WriteString(const winrt::hstring & /*value*/) noexcept {}
-void JSNoopWriter::WriteObjectBegin() noexcept {}
-void JSNoopWriter::WritePropertyName(const winrt::hstring & /*name*/) noexcept {}
-void JSNoopWriter::WriteObjectEnd() noexcept {}
-void JSNoopWriter::WriteArrayBegin() noexcept {}
-void JSNoopWriter::WriteArrayEnd() noexcept {}
 
 } // namespace winrt::Microsoft::ReactNative

@@ -18,6 +18,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
   class ReactModuleBuilderMock : IReactModuleBuilder
   {
     private readonly List<InitializerDelegate> m_initializers = new List<InitializerDelegate>();
+    private readonly List<JsiInitializerDelegate> m_jsiinitializers = new List<JsiInitializerDelegate>();
     private readonly Dictionary<string, Tuple<MethodReturnType, MethodDelegate>> m_methods =
         new Dictionary<string, Tuple<MethodReturnType, MethodDelegate>>();
     private readonly Dictionary<string, SyncMethodDelegate> m_syncMethods =
@@ -53,6 +54,11 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void AddInitializer(InitializerDelegate initializer)
     {
       m_initializers.Add(initializer);
+    }
+
+    public void AddJsiInitializer(JsiInitializerDelegate initializer)
+    {
+      m_jsiinitializers.Add(initializer);
     }
 
     public void AddConstantProvider(ConstantProviderDelegate constantProvider)
@@ -355,6 +361,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public IReactDispatcher UIDispatcher => Properties.Get(ReactDispatcherHelper.UIDispatcherProperty) as IReactDispatcher;
 
     public IReactDispatcher JSDispatcher => Properties.Get(ReactDispatcherHelper.JSDispatcherProperty) as IReactDispatcher;
+
+    public CallInvoker CallInvoker => throw new NotImplementedException();
 
     public Object JSRuntime => throw new NotImplementedException();
 
