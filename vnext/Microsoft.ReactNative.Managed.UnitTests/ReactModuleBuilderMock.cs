@@ -360,7 +360,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public IReactDispatcher UIDispatcher => Properties.Get(ReactDispatcherHelper.UIDispatcherProperty) as IReactDispatcher;
 
+#pragma warning disable 612, 618 // Deprecated
     public IReactDispatcher JSDispatcher => Properties.Get(ReactDispatcherHelper.JSDispatcherProperty) as IReactDispatcher;
+#pragma warning restore 612, 618
 
     public CallInvoker CallInvoker => throw new NotImplementedException();
 
