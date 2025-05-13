@@ -219,10 +219,8 @@ JsiValueRef JsiHostFunctionWrapper::operator()(
 // JsiAbiRuntime implementation
 //===========================================================================
 
-// The tls_jsiAbiRuntimeMap map allows us to associate JsiAbiRuntime with JsiRuntime.
-// The association is thread-specific and DLL-specific.
-// It is thread specific because we want to have the safe access only in JS thread. /// TODO - make no longer thread
-// specific It is DLL-specific because JsiAbiRuntime is not ABI-safe and each module DLL will have their own
+// The s_jsiAbiRuntimeMap map allows us to associate JsiAbiRuntime with JsiRuntime.
+// The association is DLL-specific because JsiAbiRuntime is not ABI-safe and each module DLL will have their own
 // JsiAbiRuntime instance.
 static std::map<void *, JsiAbiRuntime *> *s_jsiAbiRuntimeMap{nullptr};
 static std::recursive_mutex s_jsiRuntimeMapMutex;

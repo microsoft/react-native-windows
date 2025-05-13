@@ -66,7 +66,6 @@
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
 #include <react/threading/MessageQueueThreadImpl.h>
-#include "CallInvokerDispatcher.h"
 #endif
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -690,11 +689,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                   ReactPropertyBag(m_options.Properties),
                   winrt::make<winrt::Microsoft::ReactNative::implementation::CallInvoker>(
                       *m_reactContext, std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
-
-              m_options.Properties.Set(
-                  ReactDispatcherHelper::JSDispatcherProperty(),
-                  winrt::make<Microsoft::ReactNative::CallInvokerDispatcher>(
-                      std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
             });
 
             m_options.TurboModuleProvider->SetReactContext(
@@ -1096,7 +1090,6 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
 
 #ifdef USE_FABRIC
   if (m_bridgelessReactInstance) {
-    auto jsDispatchQueue = m_jsDispatchQueue.Exchange(nullptr); // TODO should be null for bridgeless
     if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
       jsMessageThread->runOnQueueSync([&]() noexcept {
         {
@@ -1108,9 +1101,6 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
         }
         this->m_bridgelessReactInstance = nullptr;
         jsMessageThread->quitSynchronous();
-        if (jsDispatchQueue) {
-          jsDispatchQueue.Shutdown(PendingTaskAction::Complete);
-        }
         m_whenDestroyed.SetValue();
       });
     }

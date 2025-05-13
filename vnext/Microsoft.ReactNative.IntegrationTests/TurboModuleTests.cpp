@@ -673,12 +673,6 @@ TEST_CLASS (TurboModuleTests) {
     reactNativeHost.Host().UnloadInstance();
     TestNotificationService::Wait("Instance destroyed event");
 
-    // JSDispatcher must not process any callbacks
-    auto jsDispatcher = reactNativeHost.Host()
-                            .InstanceSettings()
-                            .Properties()
-                            .Get(ReactDispatcherHelper::JSDispatcherProperty())
-                            .as<IReactDispatcher>();
     struct CallbackData {
       ~CallbackData() {
         TestNotificationService::Set("CallbackData destroyed");
@@ -686,13 +680,10 @@ TEST_CLASS (TurboModuleTests) {
     };
     bool callbackIsCalled{false};
 
-#if USE_FABRIC
+    // callInvoker must not process any callbacks
     callInvoker.InvokeAsync(
         [&callbackIsCalled, data = std::make_shared<CallbackData>()](
             const winrt::Windows::Foundation::IInspectable & /*runtimeHandle*/) { callbackIsCalled = true; });
-#else
-    jsDispatcher.Post([&callbackIsCalled, data = std::make_shared<CallbackData>()] { callbackIsCalled = true; });
-#endif
     TestNotificationService::Wait("CallbackData destroyed");
     TestCheck(!callbackIsCalled);
   }
