@@ -101,6 +101,7 @@ struct ReactModuleBuilderMock {
  private:
   IReactContext m_reactContext{nullptr};
   std::vector<InitializerDelegate> m_initializers;
+  std::vector<JsiInitializerDelegate> m_jsiinitializers;
   std::vector<ConstantProviderDelegate> m_constantProviders;
   std::map<std::wstring, std::tuple<MethodReturnType, MethodDelegate>> m_methods;
   std::map<std::wstring, SyncMethodDelegate> m_syncMethods;
@@ -130,6 +131,10 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   }
 
   IReactDispatcher JSDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  CallInvoker CallInvoker() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
