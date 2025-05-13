@@ -1,8 +1,34 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 May 2025 21:05:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.57
+
+Tue, 13 May 2025 21:05:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.93
+- Bump @react-native-windows/fs to v0.0.0-canary.64
+- Bump @react-native-windows/package-utils to v0.0.0-canary.90
+- Bump react-native-platform-override to v1.9.54
+- Bump @rnw-scripts/eslint-config to v1.2.35
+- Bump @rnw-scripts/just-task to v2.3.52
+
+## 1.4.56
+
+Thu, 08 May 2025 05:23:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.92
+- Bump @react-native-windows/fs to v0.0.0-canary.63
+- Bump @react-native-windows/package-utils to v0.0.0-canary.89
+- Bump react-native-platform-override to v1.9.53
+- Bump @rnw-scripts/eslint-config to v1.2.34
+- Bump @rnw-scripts/just-task to v2.3.51
 
 ## 1.4.55
 

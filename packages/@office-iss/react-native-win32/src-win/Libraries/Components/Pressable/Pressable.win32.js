@@ -39,11 +39,11 @@ import View from '../View/View';
 
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
 
-export type StateCallbackType = $ReadOnly<{|
+export type StateCallbackType = $ReadOnly<{
   pressed: boolean,
-|}>;
+}>;
 
-type Props = $ReadOnly<{|
+type Props = $ReadOnly<{
   /**
    * Accessibility.
    */
@@ -240,7 +240,7 @@ type Props = $ReadOnly<{|
    * https://github.com/facebook/react-native/issues/34424
    */
   'aria-label'?: ?string,
-|}>;
+}>;
 
 type Instance = React.ElementRef<typeof View>;
 

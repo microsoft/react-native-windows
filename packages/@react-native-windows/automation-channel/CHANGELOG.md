@@ -1,8 +1,47 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Wed, 30 Apr 2025 05:27:56 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 May 2025 21:05:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.293
+
+Tue, 13 May 2025 21:05:06 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.79.0-nightly-20250206-fb8a6a5bb (54227869+anupriya13@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.35
+- Bump @rnw-scripts/just-task to v2.3.52
+- Bump react-native-windows to v0.0.0-canary.953
+
+## 0.12.292
+
+Thu, 08 May 2025 05:23:32 GMT
+
+### Patches
+
+- initial commit (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.34
+- Bump @rnw-scripts/just-task to v2.3.51
+- Bump react-native-windows to v0.0.0-canary.952
+
+## 0.12.291
+
+Wed, 07 May 2025 05:27:07 GMT
+
+### Patches
+
+- Bump hermes version (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.951
+
+## 0.12.290
+
+Thu, 01 May 2025 05:24:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.950
 
 ## 0.12.289
 

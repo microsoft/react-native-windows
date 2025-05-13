@@ -22,13 +22,10 @@ protected:
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
   virtual bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) = 0;
-  virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool disableEventLoopOnBridgeless(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
-  virtual bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
   virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
@@ -37,6 +34,7 @@ public:
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
   virtual bool enableImagePrefetchingAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableJSRuntimeGCOnMemoryPressureOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
@@ -52,15 +50,13 @@ public:
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
-  virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
+  virtual bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
-  virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
+  virtual bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
-  virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
-  virtual bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useRawPropsJsiValue(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
@@ -112,22 +108,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlagWithoutNativeImplementation, jsInvoker_, instance_);
     }
-    bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::completeReactInstanceCreationOnBgThreadOnAndroid) == 1,
-          "Expected completeReactInstanceCreationOnBgThreadOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::completeReactInstanceCreationOnBgThreadOnAndroid, jsInvoker_, instance_);
-    }
-    bool disableEventLoopOnBridgeless(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::disableEventLoopOnBridgeless) == 1,
-          "Expected disableEventLoopOnBridgeless(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::disableEventLoopOnBridgeless, jsInvoker_, instance_);
-    }
     bool disableMountItemReorderingAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::disableMountItemReorderingAndroid) == 1,
@@ -159,14 +139,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableCppPropsIteratorSetter, jsInvoker_, instance_);
-    }
-    bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableDeletionOfUnmountedViews) == 1,
-          "Expected enableDeletionOfUnmountedViews(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableDeletionOfUnmountedViews, jsInvoker_, instance_);
     }
     bool enableEagerRootViewAttachment(jsi::Runtime &rt) override {
       static_assert(
@@ -231,6 +203,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableImagePrefetchingAndroid, jsInvoker_, instance_);
+    }
+    bool enableJSRuntimeGCOnMemoryPressureOnIOS(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableJSRuntimeGCOnMemoryPressureOnIOS) == 1,
+          "Expected enableJSRuntimeGCOnMemoryPressureOnIOS(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableJSRuntimeGCOnMemoryPressureOnIOS, jsInvoker_, instance_);
     }
     bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -352,13 +332,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fuseboxEnabledRelease, jsInvoker_, instance_);
     }
-    bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) override {
+    bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::initEagerTurboModulesOnNativeModulesQueueAndroid) == 1,
-          "Expected initEagerTurboModulesOnNativeModulesQueueAndroid(...) to have 1 parameters");
+          bridging::getParameterCount(&T::fuseboxNetworkInspectionEnabled) == 1,
+          "Expected fuseboxNetworkInspectionEnabled(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::initEagerTurboModulesOnNativeModulesQueueAndroid, jsInvoker_, instance_);
+          rt, &T::fuseboxNetworkInspectionEnabled, jsInvoker_, instance_);
     }
     bool lazyAnimationCallbacks(jsi::Runtime &rt) override {
       static_assert(
@@ -367,14 +347,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::lazyAnimationCallbacks, jsInvoker_, instance_);
-    }
-    bool loadVectorDrawablesOnImages(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::loadVectorDrawablesOnImages) == 1,
-          "Expected loadVectorDrawablesOnImages(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
     }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -392,6 +364,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useAlwaysAvailableJSErrorHandling, jsInvoker_, instance_);
     }
+    bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useEditTextStockAndroidFocusBehavior) == 1,
+          "Expected useEditTextStockAndroidFocusBehavior(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useEditTextStockAndroidFocusBehavior, jsInvoker_, instance_);
+    }
     bool useFabricInterop(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useFabricInterop) == 1,
@@ -400,14 +380,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useFabricInterop, jsInvoker_, instance_);
     }
-    bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useImmediateExecutorInAndroidBridgeless) == 1,
-          "Expected useImmediateExecutorInAndroidBridgeless(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useImmediateExecutorInAndroidBridgeless, jsInvoker_, instance_);
-    }
     bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useNativeViewConfigsInBridgelessMode) == 1,
@@ -415,14 +387,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
-    }
-    bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useOptimisedViewPreallocationOnAndroid) == 1,
-          "Expected useOptimisedViewPreallocationOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useOptimisedViewPreallocationOnAndroid, jsInvoker_, instance_);
     }
     bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -2613,69 +2577,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeCPUTimeCxxSpecJSI : public TurboModule {
-protected:
-  NativeCPUTimeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual double getCPUTimeNanos(jsi::Runtime &rt) = 0;
-  virtual bool hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeCPUTimeCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "CPUTimeCxx";
-
-protected:
-  NativeCPUTimeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeCPUTimeCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeCPUTimeCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeCPUTimeCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    double getCPUTimeNanos(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getCPUTimeNanos) == 1,
-          "Expected getCPUTimeNanos(...) to have 1 parameters");
-
-      return bridging::callFromJs<double>(
-          rt, &T::getCPUTimeNanos, jsInvoker_, instance_);
-    }
-    bool hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::hasAccurateCPUTimeNanosForBenchmarks) == 1,
-          "Expected hasAccurateCPUTimeNanosForBenchmarks(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::hasAccurateCPUTimeNanosForBenchmarks, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeCPUTimeCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativeDeviceEventManagerCxxSpecJSI : public TurboModule {
 protected:
   NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -3104,7 +3005,6 @@ protected:
 public:
   virtual void show(jsi::Runtime &rt) = 0;
   virtual void reload(jsi::Runtime &rt) = 0;
-  virtual void debugRemotely(jsi::Runtime &rt, bool enableDebug) = 0;
   virtual void setProfilingEnabled(jsi::Runtime &rt, bool enabled) = 0;
   virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) = 0;
 
@@ -3153,14 +3053,6 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::reload, jsInvoker_, instance_);
     }
-    void debugRemotely(jsi::Runtime &rt, bool enableDebug) override {
-      static_assert(
-          bridging::getParameterCount(&T::debugRemotely) == 2,
-          "Expected debugRemotely(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::debugRemotely, jsInvoker_, instance_, std::move(enableDebug));
-    }
     void setProfilingEnabled(jsi::Runtime &rt, bool enabled) override {
       static_assert(
           bridging::getParameterCount(&T::setProfilingEnabled) == 2,
@@ -3196,7 +3088,6 @@ public:
   virtual void reloadWithReason(jsi::Runtime &rt, jsi::String reason) = 0;
   virtual void onFastRefresh(jsi::Runtime &rt) = 0;
   virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool isHotLoadingEnabled) = 0;
-  virtual void setIsDebuggingRemotely(jsi::Runtime &rt, bool isDebuggingRemotelyEnabled) = 0;
   virtual void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) = 0;
   virtual void toggleElementInspector(jsi::Runtime &rt) = 0;
   virtual void addMenuItem(jsi::Runtime &rt, jsi::String title) = 0;
@@ -3265,14 +3156,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setHotLoadingEnabled, jsInvoker_, instance_, std::move(isHotLoadingEnabled));
-    }
-    void setIsDebuggingRemotely(jsi::Runtime &rt, bool isDebuggingRemotelyEnabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setIsDebuggingRemotely) == 2,
-          "Expected setIsDebuggingRemotely(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setIsDebuggingRemotely, jsInvoker_, instance_, std::move(isDebuggingRemotelyEnabled));
     }
     void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) override {
       static_assert(
@@ -3912,152 +3795,6 @@ private:
 
   private:
     friend class NativeExceptionsManagerCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  
-#pragma mark - NativeFantomRenderFormatOptions
-
-template <typename P0, typename P1>
-struct NativeFantomRenderFormatOptions {
-  P0 includeRoot;
-  P1 includeLayoutMetrics;
-  bool operator==(const NativeFantomRenderFormatOptions &other) const {
-    return includeRoot == other.includeRoot && includeLayoutMetrics == other.includeLayoutMetrics;
-  }
-};
-
-template <typename T>
-struct NativeFantomRenderFormatOptionsBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.includeRoot)>(rt, value.getProperty(rt, "includeRoot"), jsInvoker),
-      bridging::fromJs<decltype(types.includeLayoutMetrics)>(rt, value.getProperty(rt, "includeLayoutMetrics"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static bool includeRootToJs(jsi::Runtime &rt, decltype(types.includeRoot) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool includeLayoutMetricsToJs(jsi::Runtime &rt, decltype(types.includeLayoutMetrics) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "includeRoot", bridging::toJs(rt, value.includeRoot, jsInvoker));
-    result.setProperty(rt, "includeLayoutMetrics", bridging::toJs(rt, value.includeLayoutMetrics, jsInvoker));
-    return result;
-  }
-};
-
-class JSI_EXPORT NativeFantomCxxSpecJSI : public TurboModule {
-protected:
-  NativeFantomCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void startSurface(jsi::Runtime &rt, double surfaceId, double viewportWidth, double viewportHeight, double devicePixelRatio) = 0;
-  virtual void stopSurface(jsi::Runtime &rt, double surfaceId) = 0;
-  virtual jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) = 0;
-  virtual void flushMessageQueue(jsi::Runtime &rt) = 0;
-  virtual jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) = 0;
-  virtual void reportTestSuiteResultsJSON(jsi::Runtime &rt, jsi::String results) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeFantomCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "NativeFantomCxx";
-
-protected:
-  NativeFantomCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeFantomCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeFantomCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeFantomCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void startSurface(jsi::Runtime &rt, double surfaceId, double viewportWidth, double viewportHeight, double devicePixelRatio) override {
-      static_assert(
-          bridging::getParameterCount(&T::startSurface) == 5,
-          "Expected startSurface(...) to have 5 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startSurface, jsInvoker_, instance_, std::move(surfaceId), std::move(viewportWidth), std::move(viewportHeight), std::move(devicePixelRatio));
-    }
-    void stopSurface(jsi::Runtime &rt, double surfaceId) override {
-      static_assert(
-          bridging::getParameterCount(&T::stopSurface) == 2,
-          "Expected stopSurface(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::stopSurface, jsInvoker_, instance_, std::move(surfaceId));
-    }
-    jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) override {
-      static_assert(
-          bridging::getParameterCount(&T::getMountingManagerLogs) == 2,
-          "Expected getMountingManagerLogs(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getMountingManagerLogs, jsInvoker_, instance_, std::move(surfaceId));
-    }
-    void flushMessageQueue(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::flushMessageQueue) == 1,
-          "Expected flushMessageQueue(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::flushMessageQueue, jsInvoker_, instance_);
-    }
-    jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) override {
-      static_assert(
-          bridging::getParameterCount(&T::getRenderedOutput) == 3,
-          "Expected getRenderedOutput(...) to have 3 parameters");
-
-      return bridging::callFromJs<jsi::String>(
-          rt, &T::getRenderedOutput, jsInvoker_, instance_, std::move(surfaceId), std::move(config));
-    }
-    void reportTestSuiteResultsJSON(jsi::Runtime &rt, jsi::String results) override {
-      static_assert(
-          bridging::getParameterCount(&T::reportTestSuiteResultsJSON) == 2,
-          "Expected reportTestSuiteResultsJSON(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::reportTestSuiteResultsJSON, jsInvoker_, instance_, std::move(results));
-    }
-
-  private:
-    friend class NativeFantomCxxSpec;
     T *instance_;
   };
 
@@ -6096,6 +5833,68 @@ struct NativePlatformConstantsWindowsPlatformConstantsWindowsBridging {
     result.setProperty(rt, "reactNativeVersion", bridging::toJs(rt, value.reactNativeVersion, jsInvoker));
     result.setProperty(rt, "reactNativeWindowsVersion", bridging::toJs(rt, value.reactNativeWindowsVersion, jsInvoker));
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativePlatformConstantsWindowsReactNativeVersionAndroid
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativePlatformConstantsWindowsReactNativeVersionAndroid {
+  P0 major;
+  P1 minor;
+  P2 patch;
+  P3 prerelease;
+  bool operator==(const NativePlatformConstantsWindowsReactNativeVersionAndroid &other) const {
+    return major == other.major && minor == other.minor && patch == other.patch && prerelease == other.prerelease;
+  }
+};
+
+template <typename T>
+struct NativePlatformConstantsWindowsReactNativeVersionAndroidBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.major)>(rt, value.getProperty(rt, "major"), jsInvoker),
+      bridging::fromJs<decltype(types.minor)>(rt, value.getProperty(rt, "minor"), jsInvoker),
+      bridging::fromJs<decltype(types.patch)>(rt, value.getProperty(rt, "patch"), jsInvoker),
+      bridging::fromJs<decltype(types.prerelease)>(rt, value.getProperty(rt, "prerelease"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double majorToJs(jsi::Runtime &rt, decltype(types.major) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double minorToJs(jsi::Runtime &rt, decltype(types.minor) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double patchToJs(jsi::Runtime &rt, decltype(types.patch) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> prereleaseToJs(jsi::Runtime &rt, decltype(types.prerelease) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "major", bridging::toJs(rt, value.major, jsInvoker));
+    result.setProperty(rt, "minor", bridging::toJs(rt, value.minor, jsInvoker));
+    result.setProperty(rt, "patch", bridging::toJs(rt, value.patch, jsInvoker));
+    result.setProperty(rt, "prerelease", bridging::toJs(rt, value.prerelease, jsInvoker));
     return result;
   }
 };
@@ -9132,24 +8931,25 @@ protected:
   NativeDOMCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual jsi::Value getParentNode(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual jsi::Array getChildNodes(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual bool isConnected(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual double compareDocumentPosition(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Value otherShadowNode) = 0;
-  virtual jsi::String getTextContent(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual jsi::Array getBoundingClientRect(jsi::Runtime &rt, jsi::Value shadowNode, bool includeTransform) = 0;
-  virtual jsi::Array getOffset(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual jsi::Array getScrollPosition(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual jsi::Array getScrollSize(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual jsi::Array getInnerSize(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual jsi::Array getBorderWidth(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual jsi::String getTagName(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual bool hasPointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) = 0;
-  virtual void setPointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) = 0;
-  virtual void releasePointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) = 0;
-  virtual void measure(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) = 0;
-  virtual void measureInWindow(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) = 0;
-  virtual void measureLayout(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Value relativeNode, jsi::Function onFail, jsi::Function onSuccess) = 0;
+  virtual double compareDocumentPosition(jsi::Runtime &rt, jsi::Value nativeNodeReference, jsi::Value otherNativeNodeReference) = 0;
+  virtual jsi::Array getChildNodes(jsi::Runtime &rt, jsi::Value nativeNodeReference) = 0;
+  virtual jsi::Value getParentNode(jsi::Runtime &rt, jsi::Value nativeNodeReference) = 0;
+  virtual bool isConnected(jsi::Runtime &rt, jsi::Value nativeNodeReference) = 0;
+  virtual jsi::Array getBorderWidth(jsi::Runtime &rt, jsi::Value nativeElementReference) = 0;
+  virtual jsi::Array getBoundingClientRect(jsi::Runtime &rt, jsi::Value nativeElementReference, bool includeTransform) = 0;
+  virtual jsi::Array getInnerSize(jsi::Runtime &rt, jsi::Value nativeElementReference) = 0;
+  virtual jsi::Array getScrollPosition(jsi::Runtime &rt, jsi::Value nativeElementReference) = 0;
+  virtual jsi::Array getScrollSize(jsi::Runtime &rt, jsi::Value nativeElementReference) = 0;
+  virtual jsi::String getTagName(jsi::Runtime &rt, jsi::Value nativeElementReference) = 0;
+  virtual jsi::String getTextContent(jsi::Runtime &rt, jsi::Value nativeElementReference) = 0;
+  virtual bool hasPointerCapture(jsi::Runtime &rt, jsi::Value nativeElementReference, double pointerId) = 0;
+  virtual void releasePointerCapture(jsi::Runtime &rt, jsi::Value nativeElementReference, double pointerId) = 0;
+  virtual void setPointerCapture(jsi::Runtime &rt, jsi::Value nativeElementReference, double pointerId) = 0;
+  virtual jsi::Array getOffset(jsi::Runtime &rt, jsi::Value nativeElementReference) = 0;
+  virtual jsi::Value linkRootNode(jsi::Runtime &rt, double rootTag, jsi::Value instanceHandle) = 0;
+  virtual void measure(jsi::Runtime &rt, jsi::Value nativeElementReference, jsi::Function callback) = 0;
+  virtual void measureInWindow(jsi::Runtime &rt, jsi::Value nativeElementReference, jsi::Function callback) = 0;
+  virtual void measureLayout(jsi::Runtime &rt, jsi::Value nativeElementReference, jsi::Value relativeNode, jsi::Function onFail, jsi::Function onSuccess) = 0;
 
 };
 
@@ -9180,149 +8980,157 @@ private:
 
     }
 
-    jsi::Value getParentNode(jsi::Runtime &rt, jsi::Value shadowNode) override {
-      static_assert(
-          bridging::getParameterCount(&T::getParentNode) == 2,
-          "Expected getParentNode(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Value>(
-          rt, &T::getParentNode, jsInvoker_, instance_, std::move(shadowNode));
-    }
-    jsi::Array getChildNodes(jsi::Runtime &rt, jsi::Value shadowNode) override {
-      static_assert(
-          bridging::getParameterCount(&T::getChildNodes) == 2,
-          "Expected getChildNodes(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getChildNodes, jsInvoker_, instance_, std::move(shadowNode));
-    }
-    bool isConnected(jsi::Runtime &rt, jsi::Value shadowNode) override {
-      static_assert(
-          bridging::getParameterCount(&T::isConnected) == 2,
-          "Expected isConnected(...) to have 2 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::isConnected, jsInvoker_, instance_, std::move(shadowNode));
-    }
-    double compareDocumentPosition(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Value otherShadowNode) override {
+    double compareDocumentPosition(jsi::Runtime &rt, jsi::Value nativeNodeReference, jsi::Value otherNativeNodeReference) override {
       static_assert(
           bridging::getParameterCount(&T::compareDocumentPosition) == 3,
           "Expected compareDocumentPosition(...) to have 3 parameters");
 
       return bridging::callFromJs<double>(
-          rt, &T::compareDocumentPosition, jsInvoker_, instance_, std::move(shadowNode), std::move(otherShadowNode));
+          rt, &T::compareDocumentPosition, jsInvoker_, instance_, std::move(nativeNodeReference), std::move(otherNativeNodeReference));
     }
-    jsi::String getTextContent(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getChildNodes(jsi::Runtime &rt, jsi::Value nativeNodeReference) override {
       static_assert(
-          bridging::getParameterCount(&T::getTextContent) == 2,
-          "Expected getTextContent(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::String>(
-          rt, &T::getTextContent, jsInvoker_, instance_, std::move(shadowNode));
-    }
-    jsi::Array getBoundingClientRect(jsi::Runtime &rt, jsi::Value shadowNode, bool includeTransform) override {
-      static_assert(
-          bridging::getParameterCount(&T::getBoundingClientRect) == 3,
-          "Expected getBoundingClientRect(...) to have 3 parameters");
+          bridging::getParameterCount(&T::getChildNodes) == 2,
+          "Expected getChildNodes(...) to have 2 parameters");
 
       return bridging::callFromJs<jsi::Array>(
-          rt, &T::getBoundingClientRect, jsInvoker_, instance_, std::move(shadowNode), std::move(includeTransform));
+          rt, &T::getChildNodes, jsInvoker_, instance_, std::move(nativeNodeReference));
     }
-    jsi::Array getOffset(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Value getParentNode(jsi::Runtime &rt, jsi::Value nativeNodeReference) override {
       static_assert(
-          bridging::getParameterCount(&T::getOffset) == 2,
-          "Expected getOffset(...) to have 2 parameters");
+          bridging::getParameterCount(&T::getParentNode) == 2,
+          "Expected getParentNode(...) to have 2 parameters");
 
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getOffset, jsInvoker_, instance_, std::move(shadowNode));
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::getParentNode, jsInvoker_, instance_, std::move(nativeNodeReference));
     }
-    jsi::Array getScrollPosition(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    bool isConnected(jsi::Runtime &rt, jsi::Value nativeNodeReference) override {
       static_assert(
-          bridging::getParameterCount(&T::getScrollPosition) == 2,
-          "Expected getScrollPosition(...) to have 2 parameters");
+          bridging::getParameterCount(&T::isConnected) == 2,
+          "Expected isConnected(...) to have 2 parameters");
 
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getScrollPosition, jsInvoker_, instance_, std::move(shadowNode));
+      return bridging::callFromJs<bool>(
+          rt, &T::isConnected, jsInvoker_, instance_, std::move(nativeNodeReference));
     }
-    jsi::Array getScrollSize(jsi::Runtime &rt, jsi::Value shadowNode) override {
-      static_assert(
-          bridging::getParameterCount(&T::getScrollSize) == 2,
-          "Expected getScrollSize(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getScrollSize, jsInvoker_, instance_, std::move(shadowNode));
-    }
-    jsi::Array getInnerSize(jsi::Runtime &rt, jsi::Value shadowNode) override {
-      static_assert(
-          bridging::getParameterCount(&T::getInnerSize) == 2,
-          "Expected getInnerSize(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getInnerSize, jsInvoker_, instance_, std::move(shadowNode));
-    }
-    jsi::Array getBorderWidth(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getBorderWidth(jsi::Runtime &rt, jsi::Value nativeElementReference) override {
       static_assert(
           bridging::getParameterCount(&T::getBorderWidth) == 2,
           "Expected getBorderWidth(...) to have 2 parameters");
 
       return bridging::callFromJs<jsi::Array>(
-          rt, &T::getBorderWidth, jsInvoker_, instance_, std::move(shadowNode));
+          rt, &T::getBorderWidth, jsInvoker_, instance_, std::move(nativeElementReference));
     }
-    jsi::String getTagName(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getBoundingClientRect(jsi::Runtime &rt, jsi::Value nativeElementReference, bool includeTransform) override {
+      static_assert(
+          bridging::getParameterCount(&T::getBoundingClientRect) == 3,
+          "Expected getBoundingClientRect(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getBoundingClientRect, jsInvoker_, instance_, std::move(nativeElementReference), std::move(includeTransform));
+    }
+    jsi::Array getInnerSize(jsi::Runtime &rt, jsi::Value nativeElementReference) override {
+      static_assert(
+          bridging::getParameterCount(&T::getInnerSize) == 2,
+          "Expected getInnerSize(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getInnerSize, jsInvoker_, instance_, std::move(nativeElementReference));
+    }
+    jsi::Array getScrollPosition(jsi::Runtime &rt, jsi::Value nativeElementReference) override {
+      static_assert(
+          bridging::getParameterCount(&T::getScrollPosition) == 2,
+          "Expected getScrollPosition(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getScrollPosition, jsInvoker_, instance_, std::move(nativeElementReference));
+    }
+    jsi::Array getScrollSize(jsi::Runtime &rt, jsi::Value nativeElementReference) override {
+      static_assert(
+          bridging::getParameterCount(&T::getScrollSize) == 2,
+          "Expected getScrollSize(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getScrollSize, jsInvoker_, instance_, std::move(nativeElementReference));
+    }
+    jsi::String getTagName(jsi::Runtime &rt, jsi::Value nativeElementReference) override {
       static_assert(
           bridging::getParameterCount(&T::getTagName) == 2,
           "Expected getTagName(...) to have 2 parameters");
 
       return bridging::callFromJs<jsi::String>(
-          rt, &T::getTagName, jsInvoker_, instance_, std::move(shadowNode));
+          rt, &T::getTagName, jsInvoker_, instance_, std::move(nativeElementReference));
     }
-    bool hasPointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) override {
+    jsi::String getTextContent(jsi::Runtime &rt, jsi::Value nativeElementReference) override {
+      static_assert(
+          bridging::getParameterCount(&T::getTextContent) == 2,
+          "Expected getTextContent(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::String>(
+          rt, &T::getTextContent, jsInvoker_, instance_, std::move(nativeElementReference));
+    }
+    bool hasPointerCapture(jsi::Runtime &rt, jsi::Value nativeElementReference, double pointerId) override {
       static_assert(
           bridging::getParameterCount(&T::hasPointerCapture) == 3,
           "Expected hasPointerCapture(...) to have 3 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::hasPointerCapture, jsInvoker_, instance_, std::move(shadowNode), std::move(pointerId));
+          rt, &T::hasPointerCapture, jsInvoker_, instance_, std::move(nativeElementReference), std::move(pointerId));
     }
-    void setPointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) override {
-      static_assert(
-          bridging::getParameterCount(&T::setPointerCapture) == 3,
-          "Expected setPointerCapture(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setPointerCapture, jsInvoker_, instance_, std::move(shadowNode), std::move(pointerId));
-    }
-    void releasePointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) override {
+    void releasePointerCapture(jsi::Runtime &rt, jsi::Value nativeElementReference, double pointerId) override {
       static_assert(
           bridging::getParameterCount(&T::releasePointerCapture) == 3,
           "Expected releasePointerCapture(...) to have 3 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::releasePointerCapture, jsInvoker_, instance_, std::move(shadowNode), std::move(pointerId));
+          rt, &T::releasePointerCapture, jsInvoker_, instance_, std::move(nativeElementReference), std::move(pointerId));
     }
-    void measure(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) override {
+    void setPointerCapture(jsi::Runtime &rt, jsi::Value nativeElementReference, double pointerId) override {
+      static_assert(
+          bridging::getParameterCount(&T::setPointerCapture) == 3,
+          "Expected setPointerCapture(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setPointerCapture, jsInvoker_, instance_, std::move(nativeElementReference), std::move(pointerId));
+    }
+    jsi::Array getOffset(jsi::Runtime &rt, jsi::Value nativeElementReference) override {
+      static_assert(
+          bridging::getParameterCount(&T::getOffset) == 2,
+          "Expected getOffset(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getOffset, jsInvoker_, instance_, std::move(nativeElementReference));
+    }
+    jsi::Value linkRootNode(jsi::Runtime &rt, double rootTag, jsi::Value instanceHandle) override {
+      static_assert(
+          bridging::getParameterCount(&T::linkRootNode) == 3,
+          "Expected linkRootNode(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::linkRootNode, jsInvoker_, instance_, std::move(rootTag), std::move(instanceHandle));
+    }
+    void measure(jsi::Runtime &rt, jsi::Value nativeElementReference, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::measure) == 3,
           "Expected measure(...) to have 3 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::measure, jsInvoker_, instance_, std::move(shadowNode), std::move(callback));
+          rt, &T::measure, jsInvoker_, instance_, std::move(nativeElementReference), std::move(callback));
     }
-    void measureInWindow(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) override {
+    void measureInWindow(jsi::Runtime &rt, jsi::Value nativeElementReference, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::measureInWindow) == 3,
           "Expected measureInWindow(...) to have 3 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::measureInWindow, jsInvoker_, instance_, std::move(shadowNode), std::move(callback));
+          rt, &T::measureInWindow, jsInvoker_, instance_, std::move(nativeElementReference), std::move(callback));
     }
-    void measureLayout(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Value relativeNode, jsi::Function onFail, jsi::Function onSuccess) override {
+    void measureLayout(jsi::Runtime &rt, jsi::Value nativeElementReference, jsi::Value relativeNode, jsi::Function onFail, jsi::Function onSuccess) override {
       static_assert(
           bridging::getParameterCount(&T::measureLayout) == 5,
           "Expected measureLayout(...) to have 5 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::measureLayout, jsInvoker_, instance_, std::move(shadowNode), std::move(relativeNode), std::move(onFail), std::move(onSuccess));
+          rt, &T::measureLayout, jsInvoker_, instance_, std::move(nativeElementReference), std::move(relativeNode), std::move(onFail), std::move(onSuccess));
     }
 
   private:

@@ -41,7 +41,7 @@ struct TestHostModule {
 
 struct TestPackageProvider : winrt::implements<TestPackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-    TryAddAttributedModule(packageBuilder, L"TestHostModule");
+    TryAddAttributedModule(packageBuilder, L"TestHostModule", true);
   }
 };
 

@@ -32,9 +32,15 @@ exports[`Accessibility Tests Accessibility data for Label and Level 1`] = `
 exports[`Accessibility Tests Accessibility data for Label,Level and Hint 1`] = `
 {
   "Automation Tree": {
+    "AccessKey": "accessKey",
+    "AnnotationPattern.Author": "Clint Westwood",
+    "AnnotationPattern.DateTime": "3/19/2025 1:03 PM",
+    "AnnotationPattern.TypeId": 60003,
+    "AnnotationPattern.TypeName": "Check Comment",
     "AutomationId": "accessibility-base-view-1",
     "ControlType": 50026,
     "HelpText": "A hint for the blue box.",
+    "ItemType": "comment",
     "Level": 1,
     "LocalizedControlType": "group",
     "Name": "A blue box",

@@ -12,22 +12,17 @@ import type {TurboModule} from '../../../../Libraries/TurboModule/RCTExport';
 
 import * as TurboModuleRegistry from '../../../../Libraries/TurboModule/TurboModuleRegistry';
 
-export type ReactNativeVersionAndroid = {|
+export type ReactNativeVersionAndroid = {
   major: number,
   minor: number,
   patch: number,
   prerelease: ?string,
-|};
+};
 
 export type PlatformConstantsWindows = {|
   isTesting: boolean,
   isDisableAnimations?: boolean,
-  reactNativeVersion: {|
-    major: number,
-    minor: number,
-    patch: number,
-    prerelease: ?string,
-  |},
+  reactNativeVersion: ReactNativeVersionAndroid,
   reactNativeWindowsVersion: {|
     major: number,
     minor: number,

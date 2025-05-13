@@ -83,6 +83,19 @@ export default class Bootstrap extends React.Component<{}, any> {
             />
             <TextInput
               style={styles.input}
+              selectTextOnFocus={true}
+              placeholder={'Select text on focus'}
+            />
+            <TextInput
+              style={styles.input}
+              clearTextOnFocus={true}
+              selectTextOnFocus={true}
+              placeholder={
+                'Clear text on focus, even if selectTextOnFocus is true'
+              }
+            />
+            <TextInput
+              style={styles.input}
               placeholder={'SpellChecking Enabled Autocorrect Disabled'}
               spellCheck={true}
               autoCorrect={false}
