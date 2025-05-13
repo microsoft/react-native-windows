@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// [Windows #14654]
+
 #pragma once
 
 #include <string>
