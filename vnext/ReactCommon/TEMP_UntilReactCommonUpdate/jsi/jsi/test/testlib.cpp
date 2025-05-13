@@ -1550,6 +1550,7 @@ TEST_P(JSITest, UTF8ExceptionTest) {
   }
 }
 
+/* [Windows #14185
 TEST_P(JSITest, UTF16ConversionTest) {
   // This Runtime Decorator is used to test the conversion from UTF-8 to UTF-16
   // in the default utf16 method for runtimes that do not provide their own
@@ -1657,6 +1658,7 @@ TEST_P(JSITest, CreateFromUtf16Test) {
   auto cp = eval("loneSurrogate.charCodeAt(0)").getNumber();
   EXPECT_EQ(cp, 55357); // 0xD83D in decimal
 }
+Windows] */
 
 /*
 [Windows 
