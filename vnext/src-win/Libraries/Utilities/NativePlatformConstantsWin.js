@@ -6,6 +6,6 @@
  * @flow strict
  */
 
-export * from '../../src/private/specs/modules/NativePlatformConstantsWindows';
-import NativePlatformConstantsWin from '../../src/private/specs/modules/NativePlatformConstantsWindows';
+export * from '../../src/private/specs_DEPRECATED/modules/NativePlatformConstantsWindows';
+import NativePlatformConstantsWin from '../../src/private/specs_DEPRECATED/modules/NativePlatformConstantsWindows';
 export default NativePlatformConstantsWin;

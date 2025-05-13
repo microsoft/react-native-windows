@@ -21,9 +21,9 @@ import {VirtualizedListContextResetter} from '@react-native/virtualized-lists';
 import React from 'react';
 
 const ScrollView = require('../Components/ScrollView/ScrollView').default;
-const View = require('../Components/View/View');
-const AppContainer = require('../ReactNative/AppContainer');
-const I18nManager = require('../ReactNative/I18nManager');
+const View = require('../Components/View/View').default;
+const AppContainer = require('../ReactNative/AppContainer').default;
+const I18nManager = require('../ReactNative/I18nManager').default;
 const {RootTagContext} = require('../ReactNative/RootTag');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const Platform = require('../Utilities/Platform');
@@ -174,6 +174,11 @@ export type Props = $ReadOnly<{
    * Defaults to `white` if not provided and transparent is `false`. Ignored if `transparent` is `true`.
    */
   backdropColor?: ?string,
+
+  /**
+   * [Windows] The `title` prop sets the title of the modal window.
+   */
+  title?: ?string,
 }>;
 
 function confirmProps(props: Props) {
@@ -329,7 +334,8 @@ class Modal extends React.Component<Props, State> {
         onStartShouldSetResponder={this._shouldSetResponder}
         supportedOrientations={this.props.supportedOrientations}
         onOrientationChange={this.props.onOrientationChange}
-        testID={this.props.testID}>
+        testID={this.props.testID}
+        title={this.props.title}>
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>
             <View

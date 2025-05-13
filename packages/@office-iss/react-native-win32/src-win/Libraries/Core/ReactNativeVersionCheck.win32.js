@@ -21,7 +21,7 @@ const ReactNativeVersion = require('./ReactNativeVersion');
  * implementations for other platforms (ex: Windows) may override this module
  * and rely on its existence as a separate module.
  */
-const checkVersions = function checkVersions(): void {
+export function checkVersions(): void {
   const nativeVersion = Platform.constants.reactNativeVersion;
   if (
     ReactNativeVersion.version.major !== nativeVersion.major ||
@@ -39,7 +39,7 @@ const checkVersions = function checkVersions(): void {
         '`watchman watch-del-all && npx @react-native-community/cli start --reset-cache`.',
     );
   }
-};
+}
 
 function _formatVersion(
   version: (typeof Platform)['constants']['reactNativeVersion'],
@@ -50,5 +50,3 @@ function _formatVersion(
     (version.prerelease != undefined ? `-${version.prerelease}` : '')
   );
 }
-
-module.exports = {checkVersions};

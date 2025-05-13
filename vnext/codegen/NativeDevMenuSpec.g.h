@@ -19,9 +19,8 @@ struct DevMenuSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"show"},
       Method<void() noexcept>{1, L"reload"},
-      Method<void(bool) noexcept>{2, L"debugRemotely"},
-      Method<void(bool) noexcept>{3, L"setProfilingEnabled"},
-      Method<void(bool) noexcept>{4, L"setHotLoadingEnabled"},
+      Method<void(bool) noexcept>{2, L"setProfilingEnabled"},
+      Method<void(bool) noexcept>{3, L"setHotLoadingEnabled"},
   };
 
   template <class TModule>
@@ -40,16 +39,11 @@ struct DevMenuSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(reload) static void reload() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
-          "debugRemotely",
-          "    REACT_METHOD(debugRemotely) void debugRemotely(bool enableDebug) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(debugRemotely) static void debugRemotely(bool enableDebug) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          3,
           "setProfilingEnabled",
           "    REACT_METHOD(setProfilingEnabled) void setProfilingEnabled(bool enabled) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(setProfilingEnabled) static void setProfilingEnabled(bool enabled) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
+          3,
           "setHotLoadingEnabled",
           "    REACT_METHOD(setHotLoadingEnabled) void setHotLoadingEnabled(bool enabled) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(setHotLoadingEnabled) static void setHotLoadingEnabled(bool enabled) noexcept { /* implementation */ }\n");

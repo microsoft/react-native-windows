@@ -31,6 +31,12 @@ void UpdateUiaProperty(
     const std::string &oldValue,
     const std::string &newValue) noexcept;
 
+void UpdateUiaProperty(
+    winrt::IInspectable provider,
+    PROPERTYID propId,
+    const std::optional<std::string> &oldValue,
+    const std::optional<std::string> &newValue) noexcept;
+
 long GetLiveSetting(const std::string &liveRegion) noexcept;
 
 long GetAnnotationTypeId(const std::string &annotationType) noexcept;
