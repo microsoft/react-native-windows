@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate RN  0.79.0-nightly-20250220-41b597c73",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "54227869+anupriya13@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
