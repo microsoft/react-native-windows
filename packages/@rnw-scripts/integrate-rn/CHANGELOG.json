@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Tue, 13 May 2025 21:01:37 GMT",
+      "version": "1.4.57",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.57",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.93",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.64",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.90",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.9.54",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.35",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.52",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 May 2025 05:23:33 GMT",
       "version": "1.4.56",
       "tag": "@rnw-scripts/integrate-rn_v1.4.56",

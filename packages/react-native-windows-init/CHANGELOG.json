@@ -2,6 +2,45 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 13 May 2025 21:01:37 GMT",
+      "version": "1.4.67",
+      "tag": "react-native-windows-init_v1.4.67",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.64",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.119",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.263",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.35",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.52",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 May 2025 05:23:33 GMT",
       "version": "1.4.66",
       "tag": "react-native-windows-init_v1.4.66",

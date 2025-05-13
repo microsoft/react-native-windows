@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Tue, 13 May 2025 21:01:37 GMT",
+      "version": "1.2.35",
+      "tag": "@rnw-scripts/eslint-config_v1.2.35",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "5db40dec60c4c2962d672e68680315121135b3e5",
+            "comment": "Integrate RN Nightly Build 0.79.0-nightly-20250206-fb8a6a5bb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 May 2025 05:23:32 GMT",
       "version": "1.2.34",
       "tag": "@rnw-scripts/eslint-config_v1.2.34",
