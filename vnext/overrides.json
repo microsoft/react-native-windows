@@ -159,7 +159,7 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
       "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
       "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
@@ -167,7 +167,7 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.h",
       "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
       "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
       "baseHash": "36207ddf41b8d0b5b34866b1eda7c8f1fa1b079c",
