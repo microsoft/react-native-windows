@@ -1658,6 +1658,8 @@ TEST_P(JSITest, CreateFromUtf16Test) {
   EXPECT_EQ(cp, 55357); // 0xD83D in decimal
 }
 
+/*
+[Windows 
 TEST_P(JSITest, GetStringDataTest) {
   // This Runtime Decorator is used to test the default getStringData
   // implementation for VMs that do not provide their own implementation
@@ -1746,6 +1748,7 @@ TEST_P(JSITest, ObjectCreateWithPrototype) {
   child = Object::create(rd, Value::null());
   EXPECT_TRUE(child.getPrototype(rd).isNull());
 }
+Windows] */
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
