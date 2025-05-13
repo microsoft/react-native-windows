@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "JsiApiContext.h"
 
-#if RNW_NEW_ARCH
+#ifdef RNW_NEW_ARCH
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #endif
 
