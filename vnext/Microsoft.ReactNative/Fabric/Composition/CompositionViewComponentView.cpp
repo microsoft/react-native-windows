@@ -807,6 +807,18 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(), UIA_LevelPropertyId, oldViewProps.accessibilityLevel, newViewProps.accessibilityLevel);
 
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_AccessKeyPropertyId,
+      oldViewProps.accessibilityAccessKey,
+      newViewProps.accessibilityAccessKey);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_ItemTypePropertyId,
+      oldViewProps.accessibilityItemType,
+      newViewProps.accessibilityItemType);
+
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
     auto compProvider =
