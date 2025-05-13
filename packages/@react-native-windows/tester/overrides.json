@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.79.0-nightly-20250123-d1028885e",
+  "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
   "overrides": [
     {
       "type": "derived",
@@ -47,17 +47,17 @@
       "issue": 12869
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "552b83b0c8e7188471e709f2a6dac2621badcfe9",
+      "baseHash": "6c6878213062cccfe45a71bbfb3f77edc92bf7de",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-nested.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-nested.js",
-      "baseHash": "cf2755fd167ff54fa86d0bb9a7a236dabf37782f",
+      "baseHash": "f78128c8241a9f5d3090c88f5cc38adeaaa71f8c",
       "issue": 12869
     },
     {
@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "4084d994a59f9f46fc173b54a3619e7268b50fa6",
+      "baseHash": "e304cd86fcbfb36a13558aa7b1385682a0bea153",
       "issue": 12869
     },
     {
@@ -104,7 +104,7 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "fa8a3c8b4faacdeab85d418392009c4243e41158"
+      "baseHash": "57b504a530b7ecfe38ebfa4092aa2c8554726e74"
     },
     {
       "type": "derived",
@@ -116,7 +116,7 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "fcd8e5e42372bb200be07d8339c644e76dfdb12e",
+      "baseHash": "8cc115a30795ee2fcf174e91f9cdbf56f4513a93",
       "issue": 5688
     },
     {
@@ -129,7 +129,7 @@
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "5c878523dfe3052b6658d29f320f46383774af70",
+      "baseHash": "900ce95a3ee39c335f92d708b945674a0d1e2557",
       "issue": 0
     },
     {

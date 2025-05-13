@@ -272,4 +272,4 @@ const TouchableWithoutFeedback: React.AbstractComponent<
   return React.cloneElement(element, {...elementProps, ref}, ...children);
 });
 
-module.exports = TouchableWithoutFeedback;
+export default TouchableWithoutFeedback;
