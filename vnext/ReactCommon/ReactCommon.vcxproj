@@ -196,7 +196,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\TextInputState.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textlayoutmanager\TextLayoutManager.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx\react\renderer\imagemanager\ImageRequestParams.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />

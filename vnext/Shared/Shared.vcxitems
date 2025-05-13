@@ -672,6 +672,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jserrorhandler\JsErrorHandler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jserrorhandler\StackTraceParser.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\native\NativeComponentRegistryBinding.cpp" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\HttpSettings.idl" />
