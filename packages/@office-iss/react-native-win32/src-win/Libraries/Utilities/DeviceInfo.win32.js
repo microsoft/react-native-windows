@@ -16,4 +16,4 @@ const DeviceInfo: Spec = {
   getConstants: () => ({Dimensions: {}}),
 };
 
-module.exports = DeviceInfo;
+export default NativeDeviceInfo;

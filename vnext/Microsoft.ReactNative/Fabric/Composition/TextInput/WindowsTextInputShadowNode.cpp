@@ -98,17 +98,18 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   ensureUnsealed();
 
   auto reactTreeAttributedString = getAttributedString(layoutContext);
-  const auto &state = getStateData();
+  const auto &stateData = getStateData();
 
   // Tree is often out of sync with the value of the TextInput.
   // This is by design - don't change the value of the TextInput in the State,
   // and therefore in Java, unless the tree itself changes.
-  if (state.reactTreeAttributedString == reactTreeAttributedString) {
+  if (stateData.reactTreeAttributedString == reactTreeAttributedString) {
     return;
   }
 
   // If props event counter is less than what we already have in state, skip it
-  if (getConcreteProps().mostRecentEventCount < state.mostRecentEventCount) {
+  const auto &props = BaseShadowNode::getConcreteProps();
+  if (props.mostRecentEventCount < stateData.mostRecentEventCount) {
     return;
   }
 
@@ -121,7 +122,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   defaultTextAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
   defaultTextAttributes.apply(getConcreteProps().textAttributes);
 
-  auto newEventCount = state.reactTreeAttributedString.isContentEqual(reactTreeAttributedString)
+  auto newEventCount = stateData.reactTreeAttributedString.isContentEqual(reactTreeAttributedString)
       ? 0
       : getConcreteProps().mostRecentEventCount;
   auto newAttributedString = getMostRecentAttributedString(layoutContext);
