@@ -4,7 +4,9 @@
 #include "pch.h"
 #include "JsiApiContext.h"
 
+#if RNW_NEW_ARCH
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#endif
 
 // Use __ImageBase to get current DLL handle.
 // http://blogs.msdn.com/oldnewthing/archive/2004/10/25/247180.aspx
@@ -72,6 +74,7 @@ facebook::jsi::Runtime *TryGetOrCreateContextRuntime(
 // Note: deprecated in favor of TryGetOrCreateContextRuntime with Handle parameter
 facebook::jsi::Runtime *TryGetOrCreateContextRuntime(ReactContext const &context) noexcept {
 #ifdef DEBUG
+#ifdef RNW_NEW_ARCH
   // TODO move this check into ReactContext.JSRuntime().
   VerifyElseCrashSz(
       !context.Properties().Get(winrt::Microsoft::ReactNative::ReactPropertyId<
@@ -81,6 +84,7 @@ facebook::jsi::Runtime *TryGetOrCreateContextRuntime(ReactContext const &context
 
   ReactDispatcher jsDispatcher = context.JSDispatcher();
   VerifyElseCrashSz(jsDispatcher.HasThreadAccess(), "Must be in JS thread");
+#endif
 #endif
 
   if (auto runtimeHandle = context.Handle().JSRuntime()) {
