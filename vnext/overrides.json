@@ -628,8 +628,8 @@
     },
     {
       "type": "patch",
-      "file": "src-win/src/private/specs/components/RCTModalHostViewNativeComponent.js",
-      "baseFile": "packages/react-native/src/private/specs/components/RCTModalHostViewNativeComponent.js",
+      "file": "src-win/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
+      "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseHash": "dbda84f2de3e0aa3504e38bd4bbb687b1ea671b2",
       "issue": 0
     },
