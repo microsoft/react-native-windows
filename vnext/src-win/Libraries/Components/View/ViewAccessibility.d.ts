@@ -303,6 +303,18 @@ export interface AccessibilityPropsWindows {
    * Note: If typeID is 'Unknown', a typeName must be provided.
    */
   accessibilityAnnotation?: AccessibilityAnnotationInfo; //Windows
+
+  /**
+   * Identifies the ItemType property, which is a text string describing the type of the automation element.
+   * ItemType is used to obtain information about items in a list, tree view, or data grid. For example, an item in a file directory view might be a "Document File" or a "Folder".
+   */
+  accessibilityItemType?: string; //Windows
+
+  /**
+   * An access key to hook up to the UIA_AccessKey_Property.
+   * Access keys are used in keyboard navigation to allow quick navigation to UI in an application.
+   */
+  accessibilityAccessKey?: string; //Windows
 }
 
 export interface AccessibilityPropsAndroid {

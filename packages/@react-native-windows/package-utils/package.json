@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/package-utils",
-  "version": "0.0.0-canary.89",
+  "version": "0.0.0-canary.90",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,14 +16,14 @@
     "directory": "packages/@react-native-windows/package-utils"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.92",
-    "@react-native-windows/fs": "^0.0.0-canary.63",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.93",
+    "@react-native-windows/fs": "^0.0.0-canary.64",
     "get-monorepo-packages": "^1.2.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.34",
-    "@rnw-scripts/just-task": "2.3.51",
+    "@rnw-scripts/eslint-config": "1.2.35",
+    "@rnw-scripts/just-task": "2.3.52",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/lodash": "^4.14.168",
     "@types/node": "^18.0.0",
