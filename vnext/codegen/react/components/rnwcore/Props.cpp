@@ -122,7 +122,8 @@ ModalHostViewProps::ModalHostViewProps(
     visible(convertRawProp(context, rawProps, "visible", sourceProps.visible, {false})),
     animated(convertRawProp(context, rawProps, "animated", sourceProps.animated, {false})),
     supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", ModalHostViewSupportedOrientationsMaskWrapped{ .value = sourceProps.supportedOrientations }, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)}).value),
-    identifier(convertRawProp(context, rawProps, "identifier", sourceProps.identifier, {0}))
+    identifier(convertRawProp(context, rawProps, "identifier", sourceProps.identifier, {0})),
+    title(convertRawProp(context, rawProps, "title", sourceProps.title, {}))
       {}
 SafeAreaViewProps::SafeAreaViewProps(
     const PropsParserContext &context,

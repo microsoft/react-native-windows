@@ -6,6 +6,6 @@
  * @flow strict-local
  */
 
-export * from '../../src/private/specs/modules/NativeAppTheme';
-import NativeAppTheme from '../../src/private/specs/modules/NativeAppTheme';
+export * from '../../src/private/specs_DEPRECATED/modules/NativeAppTheme';
+import NativeAppTheme from '../../src/private/specs_DEPRECATED/modules/NativeAppTheme';
 export default NativeAppTheme;
