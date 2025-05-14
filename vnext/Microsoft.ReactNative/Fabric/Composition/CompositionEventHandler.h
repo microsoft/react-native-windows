@@ -14,7 +14,6 @@
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
-#include "Utils/BatchingEventEmitter.h"
 
 namespace winrt {
 using namespace Windows::UI;

@@ -19,6 +19,7 @@ struct InstanceCreatedEventArgs : InstanceCreatedEventArgsT<InstanceCreatedEvent
   InstanceCreatedEventArgs(Mso::CntPtr<Mso::React::IReactContext> &&context);
 
   winrt::Microsoft::ReactNative::IReactContext Context() noexcept;
+  winrt::Windows::Foundation::IInspectable RuntimeHandle() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::IReactContext m_context;
@@ -29,6 +30,7 @@ struct InstanceLoadedEventArgs : InstanceLoadedEventArgsT<InstanceLoadedEventArg
   InstanceLoadedEventArgs(Mso::CntPtr<Mso::React::IReactContext> &&context, bool failed);
 
   winrt::Microsoft::ReactNative::IReactContext Context() noexcept;
+  winrt::Windows::Foundation::IInspectable RuntimeHandle() noexcept;
   bool Failed() noexcept;
 
  private:

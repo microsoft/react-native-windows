@@ -44,7 +44,6 @@ void Alert::ProcessPendingAlertRequestsXaml() noexcept {
   const auto &pendingAlert = pendingAlerts.front();
   const auto &args = pendingAlert.args;
   const auto &result = pendingAlert.result;
-  auto jsDispatcher = m_context.JSDispatcher();
 
   xaml::Controls::ContentDialog dialog{};
   xaml::Controls::TextBlock titleTextBlock;
@@ -110,7 +109,7 @@ void Alert::ProcessPendingAlertRequestsXaml() noexcept {
     } else if (IsXamlIsland()) {
       // We cannot show a ContentDialog in a XAML Island unless it is assigned a
       // XamlRoot instance. In such cases, we just treat the alert as dismissed.
-      jsDispatcher.Post([result, this] { result(m_constants.dismissed, m_constants.buttonNeutral); });
+      result(m_constants.dismissed, m_constants.buttonNeutral);
       pendingAlerts.pop();
       ProcessPendingAlertRequests();
       return;
@@ -138,19 +137,17 @@ void Alert::ProcessPendingAlertRequestsXaml() noexcept {
   const auto hasCloseButton = dialog.CloseButtonText().size() > 0;
   auto asyncOp = dialog.ShowAsync();
   asyncOp.Completed(
-      [hasCloseButton, jsDispatcher, result, this](
+      [hasCloseButton, result, this](
           const winrt::IAsyncOperation<xaml::Controls::ContentDialogResult> &asyncOp, winrt::AsyncStatus status) {
         switch (asyncOp.GetResults()) {
           case xaml::Controls::ContentDialogResult::Primary:
-            jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonPositive); });
+            result(m_constants.buttonClicked, m_constants.buttonPositive);
             break;
           case xaml::Controls::ContentDialogResult::Secondary:
-            jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonNegative); });
+            result(m_constants.buttonClicked, m_constants.buttonNegative);
             break;
           case xaml::Controls::ContentDialogResult::None:
-            jsDispatcher.Post([hasCloseButton, result, this] {
-              result(hasCloseButton ? m_constants.buttonClicked : m_constants.dismissed, m_constants.buttonNeutral);
-            });
+            result(hasCloseButton ? m_constants.buttonClicked : m_constants.dismissed, m_constants.buttonNeutral);
             break;
           default:
             break;
@@ -164,7 +161,6 @@ void Alert::ProcessPendingAlertRequestsMessageDialog() noexcept {
   const auto &pendingAlert = pendingAlerts.front();
   const auto &args = pendingAlert.args;
   const auto &result = pendingAlert.result;
-  auto jsDispatcher = m_context.JSDispatcher();
 
   auto cancelable = args.cancelable.value_or(true);
   auto messageDialog = winrt::Windows::UI::Popups::MessageDialog(
@@ -208,11 +204,10 @@ void Alert::ProcessPendingAlertRequestsMessageDialog() noexcept {
 
   auto asyncOp = messageDialog.ShowAsync();
   asyncOp.Completed(
-      [jsDispatcher, result, this](
+      [result, this](
           const winrt::IAsyncOperation<winrt::Windows::UI::Popups::IUICommand> &asyncOp, winrt::AsyncStatus status) {
         auto uicommand = asyncOp.GetResults();
-        jsDispatcher.Post(
-            [id = uicommand.Id(), result, this] { result(m_constants.buttonClicked, winrt::unbox_value<int>(id)); });
+        result(m_constants.buttonClicked, winrt::unbox_value<int>(uicommand.Id()));
         pendingAlerts.pop();
         ProcessPendingAlertRequests();
       });

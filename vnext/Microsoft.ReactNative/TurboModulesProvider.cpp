@@ -7,6 +7,7 @@
 
 #include "pch.h"
 #include "TurboModulesProvider.h"
+#include <IReactContext.h>
 #include <ReactCommon/TurboModuleUtils.h>
 #include <react/bridging/EventEmitter.h>
 #include "CallInvokerWriter.h"
@@ -40,6 +41,14 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
  public: // IReactModuleBuilder
   void AddInitializer(InitializerDelegate const &initializer) noexcept {
     initializer(m_reactContext);
+  }
+
+  void AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept {
+    initializer(
+        m_reactContext,
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
+            ->GetInner()
+            .JsiRuntime());
   }
 
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
@@ -119,6 +128,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
         m_moduleBuilder(winrt::make_self<TurboModuleBuilder>(reactContext)),
         m_providedModule(reactModuleProvider(m_moduleBuilder.as<IReactModuleBuilder>())) {
     if (auto hostObject = m_providedModule.try_as<IJsiHostObject>()) {
+      // Force ABI runtime creation if it hasn't already been created
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
+          ->GetInner()
+          .JsiRuntime();
       m_hostObjectWrapper = std::make_shared<implementation::HostObjectWrapper>(hostObject);
     }
   }

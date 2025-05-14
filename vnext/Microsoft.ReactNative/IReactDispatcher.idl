@@ -48,6 +48,7 @@ namespace Microsoft.ReactNative
       "a specific React instance.")
     static IReactPropertyName UIDispatcherProperty { get; };
 
+    [deprecated("Use @IReactContext.CallInvoker instead", deprecate, 1)]
     DOC_STRING(
       "Gets name of the `JSDispatcher` property for the @IReactPropertyBag.\n"
       "Generally you can use @IReactContext.JSDispatcher to get the value of this property for "

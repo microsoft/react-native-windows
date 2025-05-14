@@ -11,12 +11,15 @@
 #if !defined(CORE_ABI) && !defined(__APPLE__)
 #include <CppWinRTIncludes.h>
 #endif
+#include <ReactCommon/CallInvoker.h>
 #include <string_view>
 #include "JSValueWriter.h"
 #include "ReactNotificationService.h"
 #include "ReactPropertyBag.h"
 
 namespace winrt::Microsoft::ReactNative {
+
+std::shared_ptr<facebook::react::CallInvoker> MakeAbiCallInvoker(IReactContext const &context) noexcept;
 
 // Represents a context of execution for the Native Module.
 // It wraps up the IReactContext and adds convenience methods for
@@ -48,6 +51,10 @@ struct ReactContext {
 
   ReactDispatcher JSDispatcher() const noexcept {
     return ReactDispatcher{m_handle.JSDispatcher()};
+  }
+
+  std::shared_ptr<facebook::react::CallInvoker> CallInvoker() const noexcept {
+    return MakeAbiCallInvoker(m_handle);
   }
 
   // Call methodName JS function of module with moduleName.

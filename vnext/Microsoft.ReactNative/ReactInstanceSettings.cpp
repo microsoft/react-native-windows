@@ -20,6 +20,12 @@ winrt::Microsoft::ReactNative::IReactContext InstanceCreatedEventArgs::Context()
   return m_context;
 }
 
+winrt::Windows::Foundation::IInspectable InstanceCreatedEventArgs::RuntimeHandle() noexcept {
+  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_context)
+      ->GetInner()
+      .JsiRuntime();
+}
+
 InstanceLoadedEventArgs::InstanceLoadedEventArgs(Mso::CntPtr<Mso::React::IReactContext> &&context, bool failed)
     : m_context(winrt::make<ReactContext>(std::move(context))), m_failed(failed) {}
 
@@ -29,6 +35,12 @@ bool InstanceLoadedEventArgs::Failed() noexcept {
 
 winrt::Microsoft::ReactNative::IReactContext InstanceLoadedEventArgs::Context() noexcept {
   return m_context;
+}
+
+winrt::Windows::Foundation::IInspectable InstanceLoadedEventArgs::RuntimeHandle() noexcept {
+  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_context)
+      ->GetInner()
+      .JsiRuntime();
 }
 
 InstanceDestroyedEventArgs::InstanceDestroyedEventArgs(Mso::CntPtr<Mso::React::IReactContext> &&context)
