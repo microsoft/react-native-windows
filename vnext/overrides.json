@@ -160,6 +160,13 @@
       "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSTokenizer.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSTokenizer.h",
+      "baseHash": "c1726985d8916b671f7239356e3c08c4693d3be8",
+      "issue": 14665
+    },
+    {
       "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
