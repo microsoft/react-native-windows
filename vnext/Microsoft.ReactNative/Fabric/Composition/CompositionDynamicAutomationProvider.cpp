@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionAnnotationProvider.h>
 #include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
@@ -35,6 +36,12 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     m_textProvider = winrt::make<CompositionTextProvider>(
                          strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
                          .try_as<ITextProvider2>();
+  }
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
+    m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
+                               strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                               .try_as<IAnnotationProvider>();
   }
 }
 
@@ -281,6 +288,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_TextPattern2Id &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  }
+  if (patternId == UIA_AnnotationPatternId &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>() &&
+      accessibilityAnnotationHasValue(props->accessibilityAnnotation)) {
+    m_annotationProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   return S_OK;
@@ -564,8 +576,19 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->lVal = props->accessibilityLevel;
       break;
     }
+    case UIA_AccessKeyPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto accessKey = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAccessKey.value_or(""));
+      pRetVal->bstrVal = SysAllocString(accessKey.c_str());
+      break;
+    }
+    case UIA_ItemTypePropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto itemtype = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityItemType.value_or(""));
+      pRetVal->bstrVal = SysAllocString(itemtype.c_str());
+      break;
+    }
   }
-
   return hr;
 }
 

@@ -31,7 +31,7 @@ import * as React from 'react';
 import {useMemo} from 'react';
 import Animated from '../../Animated/Animated'; // Windows
 
-type Props = $ReadOnly<{|
+type Props = $ReadOnly<{
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   accessibilityElementsHidden?: ?boolean,
   accessibilityHint?: ?Stringish,
@@ -95,7 +95,7 @@ type Props = $ReadOnly<{|
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
   hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>, // [Windows]
-|}>;
+}>;
 
 const PASSTHROUGH_PROPS = [
   'accessibilityActions',
@@ -272,4 +272,4 @@ const TouchableWithoutFeedback: React.AbstractComponent<
   return React.cloneElement(element, {...elementProps, ref}, ...children);
 });
 
-module.exports = TouchableWithoutFeedback;
+export default TouchableWithoutFeedback;

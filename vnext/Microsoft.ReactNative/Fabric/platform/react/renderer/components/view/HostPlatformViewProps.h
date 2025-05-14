@@ -5,6 +5,7 @@
 
 #include <react/renderer/components/view/BaseViewProps.h>
 #include <react/renderer/core/PropsParserContext.h>
+#include "CompositionAccessibilityProps.h"
 #include "KeyEvent.h"
 #include "WindowsViewEvents.h"
 
@@ -28,6 +29,9 @@ class HostPlatformViewProps : public BaseViewProps {
   int accessibilitySetSize{0};
   std::string accessibilityLiveRegion{"none"};
   int accessibilityLevel{0};
+  std::optional<AccessibilityAnnotation> accessibilityAnnotation{};
+  std::optional<std::string> accessibilityItemType{};
+  std::optional<std::string> accessibilityAccessKey{};
 
   // std::optional<std::string> overflowAnchor{};
   std::optional<std::string> tooltip{};

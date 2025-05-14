@@ -8,44 +8,22 @@
  * @flow
  */
 
+import type {AlertOptions, AlertType, Buttons} from './Alert.flow';
+
 // [Windows
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 // $FlowFixMe[underconstrained-implicit-instantiation]
 const PLYAlertManager = TurboModuleRegistry.getEnforcing('Alert');
 // Windows]
 
-export type AlertType =
-  | 'default'
-  | 'plain-text'
-  | 'secure-text'
-  | 'login-password';
-export type AlertButtonStyle = 'default' | 'cancel' | 'destructive';
-export type Buttons = Array<{
-  text?: string,
-  onPress?: ?Function,
-  isPreferred?: boolean,
-  style?: AlertButtonStyle,
-  ...
-}>;
+export type * from './Alert.flow';
 
-type Options = {
-  cancelable?: ?boolean,
-  userInterfaceStyle?: 'unspecified' | 'light' | 'dark',
-  onDismiss?: ?() => void,
-  ...
-};
-
-/**
- * Launches an alert dialog with the specified title and message.
- *
- * See https://reactnative.dev/docs/alert
- */
 class Alert {
   static alert(
     title: ?string,
     message?: ?string,
     buttons?: Buttons,
-    options?: Options,
+    options?: AlertOptions,
   ): void {
     // [Windows
     PLYAlertManager.showAlert(
@@ -83,7 +61,7 @@ class Alert {
     type?: ?AlertType = 'plain-text',
     defaultValue?: string,
     keyboardType?: string,
-    options?: Options,
+    options?: AlertOptions,
   ): void {
     // [Windows
     throw new Error(
@@ -93,4 +71,4 @@ class Alert {
   }
 }
 
-module.exports = Alert;
+export default Alert;

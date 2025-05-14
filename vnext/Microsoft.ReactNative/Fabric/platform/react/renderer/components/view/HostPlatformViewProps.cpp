@@ -20,6 +20,10 @@ HostPlatformViewProps::HostPlatformViewProps(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.windowsEvents
               : convertRawProp(context, rawProps, sourceProps.windowsEvents, {})),
+      accessibilityAnnotation(
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.accessibilityAnnotation
+              : convertRawProp(context, rawProps, "accessibilityAnnotation", sourceProps.accessibilityAnnotation, {})),
       enableFocusRing(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.enableFocusRing
@@ -44,6 +48,14 @@ HostPlatformViewProps::HostPlatformViewProps(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilityLevel
               : convertRawProp(context, rawProps, "accessibilityLevel", sourceProps.accessibilityLevel, 0)),
+      accessibilityItemType(
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.accessibilityItemType
+              : convertRawProp(context, rawProps, "accessibilityItemType", sourceProps.accessibilityItemType, {})),
+      accessibilityAccessKey(
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.accessibilityAccessKey
+              : convertRawProp(context, rawProps, "accessibilityAccessKey", sourceProps.accessibilityAccessKey, {})),
       accessibilityLiveRegion(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.accessibilityLiveRegion
                                                                   : convertRawProp(
@@ -85,10 +97,13 @@ void HostPlatformViewProps::setProp(
     WINDOWS_VIEW_EVENT_CASE(MouseEnter);
     WINDOWS_VIEW_EVENT_CASE(MouseLeave);
     RAW_SET_PROP_SWITCH_CASE_BASIC(enableFocusRing);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityAnnotation);
     RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityPosInSet);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilitySetSize);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLevel);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityItemType);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityAccessKey);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLiveRegion);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);

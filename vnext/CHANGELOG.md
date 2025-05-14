@@ -1,8 +1,48 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 01 May 2025 05:24:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 May 2025 21:05:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.953
+
+Tue, 13 May 2025 21:05:07 GMT
+
+### Changes
+
+- addded titlebar , title handling , X handling , resizable (abhijeetjha@microsoft.com)
+- Integrate RN Nightly Build 0.79.0-nightly-20250206-fb8a6a5bb (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.263
+- Bump @react-native-windows/codegen to v0.0.0-canary.122
+- Bump @rnw-scripts/eslint-config to v1.2.35
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.39
+- Bump @rnw-scripts/just-task to v2.3.52
+- Bump react-native-platform-override to v1.9.54
+
+## 0.0.0-canary.952
+
+Thu, 08 May 2025 05:23:33 GMT
+
+### Changes
+
+- Properly hook up root uia provider to island (30809111+acoates-ms@users.noreply.github.com)
+- initial commit (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.262
+- Bump @react-native-windows/codegen to v0.0.0-canary.121
+- Bump @rnw-scripts/eslint-config to v1.2.34
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.38
+- Bump @rnw-scripts/just-task to v2.3.51
+- Bump react-native-platform-override to v1.9.53
+
+## 0.0.0-canary.951
+
+Wed, 07 May 2025 05:27:07 GMT
+
+### Changes
+
+- [Fabric] Implement selectTextOnFocus in Text Input (54227869+anupriya13@users.noreply.github.com)
+- Bump hermes version (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.950
 

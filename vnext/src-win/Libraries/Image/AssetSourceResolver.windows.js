@@ -10,13 +10,13 @@
 
 'use strict';
 
-export type ResolvedAssetSource = {|
+export type ResolvedAssetSource = {
   +__packager_asset: boolean,
   +width: ?number,
   +height: ?number,
   +uri: string,
   +scale: number,
-|};
+};
 
 import type {
   AssetDestPathResolver,
@@ -232,4 +232,4 @@ class AssetSourceResolver {
     pickScale;
 }
 
-module.exports = AssetSourceResolver;
+export default AssetSourceResolver;
