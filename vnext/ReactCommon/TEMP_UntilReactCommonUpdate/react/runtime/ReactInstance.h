@@ -15,7 +15,7 @@
  #include <jsireact/JSIExecutor.h>
  #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
  #include <react/runtime/BufferedRuntimeExecutor.h>
- #include <jsitooling/react/runtime/JSRuntimeFactory.h> // [Windows]
+ #include <jsitooling/react/runtime/JSRuntimeFactory.h> // Windows
  #include <react/runtime/TimerManager.h>
  #include <vector>
  
@@ -50,8 +50,7 @@
    void loadScript(
        std::unique_ptr<const JSBigString> script,
        const std::string& sourceURL,
-       std::function<void(jsi::Runtime& runtime)>&& beforeLoad = nullptr,
-       std::function<void(jsi::Runtime& runtime)>&& afterLoad = nullptr);
+       std::function<void(jsi::Runtime& runtime)>&& completion = nullptr);
  
    void registerSegment(uint32_t segmentId, const std::string& segmentPath);
  
