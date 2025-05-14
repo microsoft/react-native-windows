@@ -243,9 +243,6 @@
     <ClInclude Include="..\Microsoft.ReactNative\JsiWriter.h">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="..\Microsoft.ReactNative\JSDispatchWriter.h">
-      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactInstanceSettings.h">
       <DependentUpon>..\Microsoft.ReactNative\ReactInstanceSettings.idl</DependentUpon>
     </ClInclude>

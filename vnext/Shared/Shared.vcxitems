@@ -405,9 +405,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\CallInvokerWriter.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JSDispatcherWriter.cpp">
-      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Timer.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Timer.idl</DependentUpon>
     </ClCompile>
