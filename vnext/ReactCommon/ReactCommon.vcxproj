@@ -73,6 +73,7 @@
         $(ReactNativeDir)\ReactCommon\react;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon;
         $(ReactNativeDir)\ReactCommon\jsi;
+        $(ReactNativeDir)\ReactCommon\jsitooling;
         $(FmtDir)\include;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
@@ -94,6 +95,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
+    <CIInclude Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.h"/>
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
@@ -141,6 +143,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorFlags.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\fusebox\FuseboxTracer.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
