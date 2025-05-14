@@ -88,9 +88,10 @@ void TextLayoutManager::GetTextLayout(
   if (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier)) {
     float maxFontSizeMultiplierText = cDefaultMaxFontSizeMultiplier;
-    // Uncomment below line when maxFontSizeMultiplier is available in TextAttributes
-    // maxFontSizeMultiplierText = (!std::isnan(outerFragment.textAttributes.maxFontSizeMultiplier) ?
-    // outerFragment.textAttributes.maxFontSizeMultiplier : cDefaultMaxFontSizeMultiplier);
+    maxFontSizeMultiplierText =
+        (!std::isnan(outerFragment.textAttributes.maxFontSizeMultiplier)
+             ? outerFragment.textAttributes.maxFontSizeMultiplier
+             : cDefaultMaxFontSizeMultiplier);
     fontSizeText *= (maxFontSizeMultiplierText >= 1.0f)
         ? std::min(maxFontSizeMultiplierText, outerFragment.textAttributes.fontSizeMultiplier)
         : outerFragment.textAttributes.fontSizeMultiplier;
@@ -220,9 +221,9 @@ void TextLayoutManager::GetTextLayout(
       winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
 
       float maxFontSizeMultiplier = cDefaultMaxFontSizeMultiplier;
-      // Uncomment below line when maxFontSizeMultiplier is available in TextAttributes
-      // maxFontSizeMultiplier = (!std::isnan(attributes.maxFontSizeMultiplier) ? attributes.maxFontSizeMultiplier :
-      // cDefaultMaxFontSizeMultiplier);
+      maxFontSizeMultiplier =
+          (!std::isnan(attributes.maxFontSizeMultiplier) ? attributes.maxFontSizeMultiplier
+                                                         : cDefaultMaxFontSizeMultiplier);
       float fontSize = attributes.fontSize;
       if (attributes.allowFontScaling.value_or(true) && (!std::isnan(attributes.fontSizeMultiplier))) {
         fontSize *= (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, attributes.fontSizeMultiplier)
