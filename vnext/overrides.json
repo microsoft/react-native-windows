@@ -49,6 +49,13 @@
     },
     {
       "type": "patch",
+      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Rect.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Rect.h",
+      "baseHash": "f5d7a82d05d3f9d108d37470160d7d1ab33e03bc",
+      "issue": 0
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
       "baseHash": "f6420ce2d56117dc241a9a9dd08b6184fb6b1447",
