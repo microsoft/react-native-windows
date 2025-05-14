@@ -148,6 +148,13 @@
       "issue": 14204
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewState.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewState.h",
+      "baseHash": "16b86b74a3545474047162f5b6d13ddeda15f6f9",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
@@ -158,6 +165,20 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/Touch.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/Touch.h",
+      "baseHash": "7561a991197e193bf980e36863f530a700a868ff",
+      "issue": 0
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewEventEmitter.h",
+      "baseHash": "8e38364711315fa70242bad8ba03902f9d9770f0",
+      "issue": 0
     },
     {
       "type": "patch",
