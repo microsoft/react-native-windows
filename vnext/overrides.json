@@ -188,6 +188,34 @@
       "issue": 0
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/RectangleEdges.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/RectangleEdges.h",
+      "baseHash": "284dd52243900f1ce5b97dca1aa19a15c1f7d16a",
+      "issue": 0
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Size.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Size.h",
+      "baseHash": "e3d9483619fc2325d93e757ab99d26aa09165120",
+      "issue": 0
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Transform.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Transform.h",
+      "baseHash": "4c08172438a5d5e864840cb15686ffd05fd76500",
+      "issue": 0
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Vector.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Vector.h",
+      "baseHash": "7f231a20e4c111f97b853ee2857e56e398c3e8c6",
+      "issue": 0
+    },
+    {
       "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
