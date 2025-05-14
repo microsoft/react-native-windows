@@ -161,6 +161,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSHexColor.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSHexColor.h",
+      "baseHash": "7ff0d621afc16dbee0b2959bb07c78418506b59c",
+      "issue": 14666
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSTokenizer.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSTokenizer.h",
       "baseHash": "c1726985d8916b671f7239356e3c08c4693d3be8",

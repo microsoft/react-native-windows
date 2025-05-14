@@ -139,7 +139,7 @@
      int32_t signPart = 1; // Windows
      if (peek() == '+' || peek() == '-') {
        if (peek() == '-') {
-         signPart = -1.0;
+         signPart = -1; // Windows
        }
        advance();
      }
@@ -169,7 +169,7 @@
        advance();
        if (peek() == '+' || peek() == '-') {
          if (peek() == '-') {
-           exponentSign = -1.0;
+           exponentSign = -1; // Windows
          }
          advance();
        }
