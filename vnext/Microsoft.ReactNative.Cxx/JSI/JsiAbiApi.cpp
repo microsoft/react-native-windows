@@ -242,7 +242,6 @@ JsiAbiRuntime::JsiAbiRuntime(JsiRuntime const &runtime) noexcept : m_runtime{run
 
 JsiAbiRuntime::~JsiAbiRuntime() {
   std::lock_guard<std::recursive_mutex> guard(s_jsiRuntimeMapMutex);
-  VerifyElseCrash(GetFromJsiRuntime(m_runtime) != nullptr);
   s_jsiAbiRuntimeMap->erase(get_abi(m_runtime));
   if (s_jsiAbiRuntimeMap->empty()) {
     delete s_jsiAbiRuntimeMap;
