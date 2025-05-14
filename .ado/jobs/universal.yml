@@ -170,7 +170,7 @@
 
                 - ${{ if eq(matrix.CreateApiDocs, true) }}:
                   - powershell: |
-                      $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
+                      $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.16/winmd2md.exe"
                       Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
                       & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.winmd
                     displayName: "Generate WinRT API docs"
