@@ -26,6 +26,14 @@ class AccessibilityBaseExample extends React.Component {
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
           accessibilityLevel={1}
+          accessibilityItemType="comment"
+          accessibilityAccessKey="accessKey"
+          accessibilityAnnotation={{
+            typeID: 'Comment',
+            typeName: 'Check Comment',
+            author: 'Clint Westwood',
+            dateTime: '3/19/2025 1:03 PM',
+          }}
           testID="accessibility-base-view-1"
         />
         <Text>The following has accessible and accessibilityLabel:</Text>

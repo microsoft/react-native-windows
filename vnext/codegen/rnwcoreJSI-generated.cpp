@@ -21,16 +21,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonT
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->completeReactInstanceCreationOnBgThreadOnAndroid(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableEventLoopOnBridgeless(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableEventLoopOnBridgeless(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableMountItemReorderingAndroid(
     rt
@@ -48,11 +38,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableB
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCppPropsIteratorSetter(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableCppPropsIteratorSetter(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableDeletionOfUnmountedViews(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableDeletionOfUnmountedViews(
     rt
   );
 }
@@ -93,6 +78,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableI
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImagePrefetchingAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableImagePrefetchingAndroid(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableJSRuntimeGCOnMemoryPressureOnIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableJSRuntimeGCOnMemoryPressureOnIOS(
     rt
   );
 }
@@ -171,18 +161,13 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fusebox
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->initEagerTurboModulesOnNativeModulesQueueAndroid(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxNetworkInspectionEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fuseboxNetworkInspectionEnabled(
     rt
   );
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->lazyAnimationCallbacks(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_loadVectorDrawablesOnImages(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->loadVectorDrawablesOnImages(
     rt
   );
 }
@@ -196,23 +181,18 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useAlwa
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useEditTextStockAndroidFocusBehavior(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useFabricInterop(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useFabricInterop(
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useImmediateExecutorInAndroidBridgeless(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useNativeViewConfigsInBridgelessMode(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useOptimisedViewPreallocationOnAndroid(
     rt
   );
 }
@@ -246,13 +226,10 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   : TurboModule("NativeReactNativeFeatureFlagsCxx", jsInvoker) {
   methodMap_["commonTestFlag"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlag};
   methodMap_["commonTestFlagWithoutNativeImplementation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlagWithoutNativeImplementation};
-  methodMap_["completeReactInstanceCreationOnBgThreadOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_completeReactInstanceCreationOnBgThreadOnAndroid};
-  methodMap_["disableEventLoopOnBridgeless"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableEventLoopOnBridgeless};
   methodMap_["disableMountItemReorderingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid};
   methodMap_["enableAccumulatedUpdatesInRawPropsAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccumulatedUpdatesInRawPropsAndroid};
   methodMap_["enableBridgelessArchitecture"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBridgelessArchitecture};
   methodMap_["enableCppPropsIteratorSetter"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCppPropsIteratorSetter};
-  methodMap_["enableDeletionOfUnmountedViews"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableDeletionOfUnmountedViews};
   methodMap_["enableEagerRootViewAttachment"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEagerRootViewAttachment};
   methodMap_["enableEventEmitterRetentionDuringGesturesOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEventEmitterRetentionDuringGesturesOnAndroid};
   methodMap_["enableFabricLogs"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFabricLogs};
@@ -261,6 +238,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableGranularShadowTreeStateReconciliation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableGranularShadowTreeStateReconciliation};
   methodMap_["enableIOSViewClipToPaddingBox"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableIOSViewClipToPaddingBox};
   methodMap_["enableImagePrefetchingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImagePrefetchingAndroid};
+  methodMap_["enableJSRuntimeGCOnMemoryPressureOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableJSRuntimeGCOnMemoryPressureOnIOS};
   methodMap_["enableLayoutAnimationsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLayoutAnimationsOnAndroid};
   methodMap_["enableLayoutAnimationsOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLayoutAnimationsOnIOS};
   methodMap_["enableLongTaskAPI"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLongTaskAPI};
@@ -276,15 +254,13 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["fixMappingOfEventPrioritiesBetweenFabricAndReact"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact};
   methodMap_["fixMountingCoordinatorReportedPendingTransactionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMountingCoordinatorReportedPendingTransactionsOnAndroid};
   methodMap_["fuseboxEnabledRelease"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledRelease};
-  methodMap_["initEagerTurboModulesOnNativeModulesQueueAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_initEagerTurboModulesOnNativeModulesQueueAndroid};
+  methodMap_["fuseboxNetworkInspectionEnabled"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxNetworkInspectionEnabled};
   methodMap_["lazyAnimationCallbacks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks};
-  methodMap_["loadVectorDrawablesOnImages"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_loadVectorDrawablesOnImages};
   methodMap_["traceTurboModulePromiseRejectionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_traceTurboModulePromiseRejectionsOnAndroid};
   methodMap_["useAlwaysAvailableJSErrorHandling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useAlwaysAvailableJSErrorHandling};
+  methodMap_["useEditTextStockAndroidFocusBehavior"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useEditTextStockAndroidFocusBehavior};
   methodMap_["useFabricInterop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useFabricInterop};
-  methodMap_["useImmediateExecutorInAndroidBridgeless"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useImmediateExecutorInAndroidBridgeless};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
-  methodMap_["useOptimisedViewPreallocationOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useOptimisedViewPreallocationOnAndroid};
   methodMap_["useOptimizedEventBatchingOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useOptimizedEventBatchingOnAndroid};
   methodMap_["useRawPropsJsiValue"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useRawPropsJsiValue};
   methodMap_["useRuntimeShadowNodeReferenceUpdate"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useRuntimeShadowNodeReferenceUpdate};
@@ -1147,22 +1123,6 @@ NativeClipboardCxxSpecJSI::NativeClipboardCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["getString"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getString};
   methodMap_["setString"] = MethodMetadata {1, __hostFunction_NativeClipboardCxxSpecJSI_setString};
 }
-static jsi::Value __hostFunction_NativeCPUTimeCxxSpecJSI_getCPUTimeNanos(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeCPUTimeCxxSpecJSI *>(&turboModule)->getCPUTimeNanos(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeCPUTimeCxxSpecJSI_hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeCPUTimeCxxSpecJSI *>(&turboModule)->hasAccurateCPUTimeNanosForBenchmarks(
-    rt
-  );
-}
-
-NativeCPUTimeCxxSpecJSI::NativeCPUTimeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("CPUTimeCxx", jsInvoker) {
-  methodMap_["getCPUTimeNanos"] = MethodMetadata {0, __hostFunction_NativeCPUTimeCxxSpecJSI_getCPUTimeNanos};
-  methodMap_["hasAccurateCPUTimeNanosForBenchmarks"] = MethodMetadata {0, __hostFunction_NativeCPUTimeCxxSpecJSI_hasAccurateCPUTimeNanosForBenchmarks};
-}
 static jsi::Value __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDeviceEventManagerCxxSpecJSI *>(&turboModule)->invokeDefaultBackPressHandler(
     rt
@@ -1217,13 +1177,6 @@ static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_reload(jsi::Runtime &rt
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_debugRemotely(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->debugRemotely(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
 static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setProfilingEnabled(
     rt,
@@ -1243,7 +1196,6 @@ NativeDevMenuCxxSpecJSI::NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> js
   : TurboModule("DevMenu", jsInvoker) {
   methodMap_["show"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_show};
   methodMap_["reload"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_reload};
-  methodMap_["debugRemotely"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_debugRemotely};
   methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled};
   methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled};
 }
@@ -1268,13 +1220,6 @@ static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_onFastRefresh(jsi::
 }
 static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setHotLoadingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setHotLoadingEnabled(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setIsDebuggingRemotely(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setIsDebuggingRemotely(
     rt,
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
   );
@@ -1334,7 +1279,6 @@ NativeDevSettingsCxxSpecJSI::NativeDevSettingsCxxSpecJSI(std::shared_ptr<CallInv
   methodMap_["reloadWithReason"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_reloadWithReason};
   methodMap_["onFastRefresh"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_onFastRefresh};
   methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setHotLoadingEnabled};
-  methodMap_["setIsDebuggingRemotely"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setIsDebuggingRemotely};
   methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setProfilingEnabled};
   methodMap_["toggleElementInspector"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_toggleElementInspector};
   methodMap_["addMenuItem"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addMenuItem};
@@ -1421,59 +1365,6 @@ NativeExceptionsManagerCxxSpecJSI::NativeExceptionsManagerCxxSpecJSI(std::shared
   methodMap_["reportSoftException"] = MethodMetadata {3, __hostFunction_NativeExceptionsManagerCxxSpecJSI_reportSoftException};
   methodMap_["reportException"] = MethodMetadata {1, __hostFunction_NativeExceptionsManagerCxxSpecJSI_reportException};
   methodMap_["dismissRedbox"] = MethodMetadata {0, __hostFunction_NativeExceptionsManagerCxxSpecJSI_dismissRedbox};
-}
-static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_startSurface(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->startSurface(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
-    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber(),
-    count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asNumber(),
-    count <= 3 ? throw jsi::JSError(rt, "Expected argument in position 3 to be passed") : args[3].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_stopSurface(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->stopSurface(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_getMountingManagerLogs(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->getMountingManagerLogs(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
-  );
-}
-static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_flushMessageQueue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->flushMessageQueue(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_getRenderedOutput(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->getRenderedOutput(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
-    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asObject(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_reportTestSuiteResultsJSON(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->reportTestSuiteResultsJSON(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeFantomCxxSpecJSI::NativeFantomCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("NativeFantomCxx", jsInvoker) {
-  methodMap_["startSurface"] = MethodMetadata {4, __hostFunction_NativeFantomCxxSpecJSI_startSurface};
-  methodMap_["stopSurface"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_stopSurface};
-  methodMap_["getMountingManagerLogs"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_getMountingManagerLogs};
-  methodMap_["flushMessageQueue"] = MethodMetadata {0, __hostFunction_NativeFantomCxxSpecJSI_flushMessageQueue};
-  methodMap_["getRenderedOutput"] = MethodMetadata {2, __hostFunction_NativeFantomCxxSpecJSI_getRenderedOutput};
-  methodMap_["reportTestSuiteResultsJSON"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_reportTestSuiteResultsJSON};
 }
 static jsi::Value __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsDataURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeFileReaderModuleCxxSpecJSI *>(&turboModule)->readAsDataURL(
@@ -3224,14 +3115,21 @@ NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInv
   methodMap_["takeRecords"] = MethodMetadata {2, __hostFunction_NativePerformanceCxxSpecJSI_takeRecords};
   methodMap_["getSupportedPerformanceEntryTypes"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getSupportedPerformanceEntryTypes};
 }
-static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getParentNode(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getParentNode(
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_compareDocumentPosition(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->compareDocumentPosition(
     rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0]),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : jsi::Value(rt, args[1])
   );
 }
 static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getChildNodes(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getChildNodes(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
+  );
+}
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getParentNode(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getParentNode(
     rt,
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
   );
@@ -3242,15 +3140,8 @@ static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_isConnected(jsi::Runtime &r
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
   );
 }
-static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_compareDocumentPosition(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->compareDocumentPosition(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0]),
-    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : jsi::Value(rt, args[1])
-  );
-}
-static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getTextContent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getTextContent(
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getBorderWidth(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getBorderWidth(
     rt,
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
   );
@@ -3262,8 +3153,8 @@ static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getBoundingClientRect(jsi::
     count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asBool()
   );
 }
-static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getOffset(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getOffset(
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getInnerSize(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getInnerSize(
     rt,
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
   );
@@ -3280,20 +3171,14 @@ static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getScrollSize(jsi::Runtime 
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
   );
 }
-static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getInnerSize(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getInnerSize(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
-  );
-}
-static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getBorderWidth(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getBorderWidth(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
-  );
-}
 static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getTagName(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getTagName(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
+  );
+}
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getTextContent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getTextContent(
     rt,
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
   );
@@ -3305,6 +3190,14 @@ static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_hasPointerCapture(jsi::Runt
     count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber()
   );
 }
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_releasePointerCapture(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->releasePointerCapture(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0]),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber()
+  );
+  return jsi::Value::undefined();
+}
 static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_setPointerCapture(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->setPointerCapture(
     rt,
@@ -3313,13 +3206,18 @@ static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_setPointerCapture(jsi::Runt
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_releasePointerCapture(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->releasePointerCapture(
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_getOffset(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->getOffset(
     rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0]),
-    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber()
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
   );
-  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_linkRootNode(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->linkRootNode(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : jsi::Value(rt, args[1])
+  );
 }
 static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_measure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDOMCxxSpecJSI *>(&turboModule)->measure(
@@ -3350,21 +3248,22 @@ static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_measureLayout(jsi::Runtime 
 
 NativeDOMCxxSpecJSI::NativeDOMCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativeDOMCxx", jsInvoker) {
-  methodMap_["getParentNode"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getParentNode};
-  methodMap_["getChildNodes"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getChildNodes};
-  methodMap_["isConnected"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_isConnected};
   methodMap_["compareDocumentPosition"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_compareDocumentPosition};
-  methodMap_["getTextContent"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getTextContent};
+  methodMap_["getChildNodes"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getChildNodes};
+  methodMap_["getParentNode"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getParentNode};
+  methodMap_["isConnected"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_isConnected};
+  methodMap_["getBorderWidth"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getBorderWidth};
   methodMap_["getBoundingClientRect"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_getBoundingClientRect};
-  methodMap_["getOffset"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getOffset};
+  methodMap_["getInnerSize"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getInnerSize};
   methodMap_["getScrollPosition"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getScrollPosition};
   methodMap_["getScrollSize"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getScrollSize};
-  methodMap_["getInnerSize"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getInnerSize};
-  methodMap_["getBorderWidth"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getBorderWidth};
   methodMap_["getTagName"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getTagName};
+  methodMap_["getTextContent"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getTextContent};
   methodMap_["hasPointerCapture"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_hasPointerCapture};
-  methodMap_["setPointerCapture"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_setPointerCapture};
   methodMap_["releasePointerCapture"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_releasePointerCapture};
+  methodMap_["setPointerCapture"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_setPointerCapture};
+  methodMap_["getOffset"] = MethodMetadata {1, __hostFunction_NativeDOMCxxSpecJSI_getOffset};
+  methodMap_["linkRootNode"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_linkRootNode};
   methodMap_["measure"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_measure};
   methodMap_["measureInWindow"] = MethodMetadata {2, __hostFunction_NativeDOMCxxSpecJSI_measureInWindow};
   methodMap_["measureLayout"] = MethodMetadata {4, __hostFunction_NativeDOMCxxSpecJSI_measureLayout};
