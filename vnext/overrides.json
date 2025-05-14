@@ -98,6 +98,22 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
+      "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
+      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
+      "issue": 13172
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.h",
+      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
+      "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
+      "baseHash": "36207ddf41b8d0b5b34866b1eda7c8f1fa1b079c",
+      "issue": 13172
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Bridging.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Bridging.h",
       "baseHash": "41cd230ece3cc4ab7bb939bf4dcfcd07918d1ab1",
@@ -159,26 +175,17 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
-      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
-      "baseHash": "36207ddf41b8d0b5b34866b1eda7c8f1fa1b079c",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
       "baseHash": "651098ef1888fbabab0a70d8e542f46c35d09d7a",
       "issue": 13172
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.h",
+      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.h",
+      "baseHash": "a14f5bd109ebae2141ec8347fef23bf467420621",
+      "issue": 14664
     },
     {
       "type": "copy",
@@ -612,16 +619,16 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/Utilities/Platform.windows.js",
+      "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
+      "baseHash": "8c3daf7b75af0445441def55571374bebed83726"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/Utilities/PlatformTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/PlatformTypes.js",
       "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
       "baseHash": "0a7fce66d820af1b612a861a564b6f035256843d"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Utilities/Platform.windows.js",
-      "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "8c3daf7b75af0445441def55571374bebed83726"
     },
     {
       "type": "copy",
