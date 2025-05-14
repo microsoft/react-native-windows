@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "addded titlebar , title handling , X handling , resizable",
-  "packageName": "react-native-windows",
-  "email": "abhijeetjha@microsoft.com",
-  "dependentChangeType": "patch"
-}
