@@ -175,6 +175,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Point.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Point.h",
+      "baseHash": "4f0c47f972491ce68fac27ed563a9757473be865",
+      "issue": 0
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Rect.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Rect.h",
       "baseHash": "f5d7a82d05d3f9d108d37470160d7d1ab33e03bc",
