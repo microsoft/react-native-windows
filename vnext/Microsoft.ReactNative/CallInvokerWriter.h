@@ -45,4 +45,20 @@ struct CallInvokerWriter : winrt::implements<CallInvokerWriter, IJSValueWriter> 
   IJSValueWriter m_writer;
 };
 
+// Special IJSValueWriter that does nothing.
+// We use it instead of JsiWriter when JSI runtime is not available anymore.
+struct JSNoopWriter : winrt::implements<JSNoopWriter, IJSValueWriter> {
+ public: // IJSValueWriter
+  void WriteNull() noexcept;
+  void WriteBoolean(bool value) noexcept;
+  void WriteInt64(int64_t value) noexcept;
+  void WriteDouble(double value) noexcept;
+  void WriteString(const winrt::hstring &value) noexcept;
+  void WriteObjectBegin() noexcept;
+  void WritePropertyName(const winrt::hstring &name) noexcept;
+  void WriteObjectEnd() noexcept;
+  void WriteArrayBegin() noexcept;
+  void WriteArrayEnd() noexcept;
+};
+
 } // namespace winrt::Microsoft::ReactNative

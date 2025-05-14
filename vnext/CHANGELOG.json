@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 May 2025 16:54:21 GMT",
+      "version": "0.0.0-canary.954",
+      "tag": "react-native-windows_v0.0.0-canary.954",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cc5b147997fed8bddb12e68a0b5bbfd1baf7f70",
+            "comment": "[Fabric] Implementation of accessibilityItemType"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cc5b147997fed8bddb12e68a0b5bbfd1baf7f70",
+            "comment": "[Fabric] Implementation of accessibilityAccessKey"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 May 2025 21:05:07 GMT",
       "version": "0.0.0-canary.953",
       "tag": "react-native-windows_v0.0.0-canary.953",

@@ -27,7 +27,7 @@ facebook::react::RuntimeExecutor &GetRuntimeExecutor(
 
 void SetRuntimeScheduler(
     winrt::Microsoft::ReactNative::ReactPropertyBag properties,
-    const std::shared_ptr<facebook::react::RuntimeScheduler> &runtimeScheduler) noexcept;
+    const std::weak_ptr<facebook::react::RuntimeScheduler> &runtimeScheduler) noexcept;
 
 std::shared_ptr<facebook::react::RuntimeScheduler> RuntimeSchedulerFromProperties(
     winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;

@@ -50,6 +50,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
+    <ClCompile Include="$(MSBuildThisFileDirectory)\ThreadNameStub.cpp" />
     <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" />
     <ClCompile Include="$(FollyDir)\folly\concurrency\CacheLocality.cpp" />
     <ClCompile Include="$(FollyDir)\folly\detail\Futex.cpp" />

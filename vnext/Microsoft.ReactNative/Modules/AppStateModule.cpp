@@ -96,13 +96,13 @@ void AppState::SetDeactivated(bool deactivated) noexcept {
   if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(
           m_context.Properties())) {
     m_deactivated = deactivated;
-    m_context.JSDispatcher().Post([this]() { AppStateDidChange({GetAppState()}); });
+    AppStateDidChange({GetAppState()});
   }
 }
 
 void AppState::SetEnteredBackground(bool enteredBackground) noexcept {
   m_enteredBackground = enteredBackground;
-  m_context.JSDispatcher().Post([this]() { AppStateDidChange({GetAppState()}); });
+  AppStateDidChange({GetAppState()});
 }
 
 std::string AppState::GetAppState() noexcept {

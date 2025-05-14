@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 13 May 2025 21:05:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 14 May 2025 16:54:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.954
+
+Wed, 14 May 2025 16:54:21 GMT
+
+### Changes
+
+- [Fabric] Implementation of accessibilityItemType (kvineeth@microsoft.com)
+- [Fabric] Implementation of accessibilityAccessKey (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.953
 

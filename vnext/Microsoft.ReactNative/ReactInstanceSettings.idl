@@ -45,6 +45,9 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("Gets the @IReactContext for the React instance that was just created.")
     IReactContext Context { get; };
+
+    DOC_STRING("Provides access to the jsi::Runtime for synchronous access using GetOrCreateContextRuntime")
+    Object RuntimeHandle { get; };
   }
 
   [webhosthidden]
@@ -57,6 +60,9 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("Returns `true` if the JavaScript bundle failed to load.")
     Boolean Failed { get; };
+
+    DOC_STRING("Provides access to the jsi::Runtime for synchronous access using GetOrCreateContextRuntime")
+    Object RuntimeHandle { get; };
   }
 
   [webhosthidden]
