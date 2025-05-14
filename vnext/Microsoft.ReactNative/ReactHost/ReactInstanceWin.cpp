@@ -162,9 +162,8 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
               instance->m_batchingUIThread->runOnQueue([wkInstance]() {
                 if (auto instance = wkInstance.GetStrongPtr()) {
                   auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-                  if (auto callback = propBag.Get(
-                          winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                              UIBatchCompleteCallbackProperty())) {
+                  if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                      UIBatchCompleteCallbackProperty())) {
                     (*callback)(instance->m_reactContext->Properties());
                   }
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -188,9 +187,8 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
           instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
             if (auto instance = wkInstance.GetStrongPtr()) {
               auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-              if (auto callback = propBag.Get(
-                      winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                          UIBatchCompleteCallbackProperty())) {
+              if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                  UIBatchCompleteCallbackProperty())) {
                 (*callback)(instance->m_reactContext->Properties());
               }
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -609,9 +607,8 @@ void SetJSThreadDescription() noexcept {
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
 
-  m_uiMessageThread.Exchange(
-      std::make_shared<MessageDispatchQueue2>(
-          *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
+  m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
+      *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
   ReactPropertyBag(m_reactContext->Properties())
       .Set(
@@ -649,9 +646,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             auto jsDispatcher =
                 winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
             m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
-            m_jsMessageThread.Exchange(
-                std::make_shared<Mso::React::MessageDispatchQueue>(
-                    jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
+            m_jsMessageThread.Exchange(std::make_shared<Mso::React::MessageDispatchQueue>(
+                jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
             m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
 
@@ -1153,9 +1149,8 @@ void ReactInstanceWin::InitUIQueue() noexcept {
 }
 
 void ReactInstanceWin::InitUIMessageThread() noexcept {
-  m_uiMessageThread.Exchange(
-      std::make_shared<MessageDispatchQueue2>(
-          *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
+  m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
+      *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
   auto batchingUIThread = Microsoft::ReactNative::MakeBatchingQueueThread(m_uiMessageThread.Load());
   m_batchingUIThread = batchingUIThread;
