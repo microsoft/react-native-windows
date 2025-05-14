@@ -168,6 +168,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\CullingContext.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\sliceChildShadowNodeViewPairs.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
@@ -199,6 +201,10 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\TextInputState.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textlayoutmanager\TextLayoutManager.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx\react\renderer\imagemanager\ImageRequestParams.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\CullingContext.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\sliceChildShadowNodeViewPairs.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\ShadowViewNodePair.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\TinyMap.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />
