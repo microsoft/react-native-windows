@@ -1051,20 +1051,13 @@ void WindowsTextInputComponentView::updateProps(
       oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
       !facebook::react::floatEquality(
           oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
-      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
+      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily ||
+      !facebook::react::floatEquality(
+          oldTextInputProps.textAttributes.maxFontSizeMultiplier,
+          newTextInputProps.textAttributes.maxFontSizeMultiplier)) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
-
-  // Uncomment below when this commit is merged in RNW:
-  // https://github.com/facebook/react-native/commit/97cf42f979e8303a3caeecb94cba1f5a82d1000c
-  // if (!facebook::react::floatEquality(
-  //        oldTextInputProps.textAttributes.maxFontSizeMultiplier,
-  //        newTextInputProps.textAttributes.maxFontSizeMultiplier)) {
-  //  m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
-  //  m_propBits |= TXTBIT_CHARFORMATCHANGE;
-  //  m_maxFontSizeMultiplier = newTextInputProps.textAttributes.maxFontSizeMultiplier;
-  //}
 
   if (oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
     m_propBitsMask |= TXTBIT_USEPASSWORD;
@@ -1366,8 +1359,9 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
                                                  : props.textAttributes.fontSize);
 
   // Apply maxFontSizeMultiplier if specified
-  fontSize *= (m_maxFontSizeMultiplier >= 1.0f) ? std::min(m_maxFontSizeMultiplier, m_fontSizeMultiplier)
-                                                : m_fontSizeMultiplier;
+  auto maxFontSizeMultiplier = windowsTextInputProps().textAttributes.maxFontSizeMultiplier;
+  fontSize *=
+      (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, m_fontSizeMultiplier) : m_fontSizeMultiplier;
 
   // TODO get fontSize from props.textAttributes, or defaultTextAttributes, or fragment?
   cfNew.dwMask |= CFM_SIZE;
