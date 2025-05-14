@@ -2,6 +2,45 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 13 May 2025 21:05:06 GMT",
+      "version": "0.0.0-canary.285",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.285",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "5db40dec60c4c2962d672e68680315121135b3e5",
+            "comment": "Integrate RN Nightly Build 0.79.0-nightly-20250206-fb8a6a5bb"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.35",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.39",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.52",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.54",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 May 2025 05:23:32 GMT",
       "version": "0.0.0-canary.284",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.284",
