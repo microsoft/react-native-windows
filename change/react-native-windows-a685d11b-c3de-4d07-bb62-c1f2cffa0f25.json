@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
