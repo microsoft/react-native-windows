@@ -243,7 +243,7 @@ struct WindowData {
                           winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
                       auto async = compositor.RequestCommitAsync();
                       async.Completed([hwnd, size = args.Size()](
-                                          auto asyncInfo, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
+                                          auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
                         RECT rcClient, rcWindow;
                         GetClientRect(hwnd, &rcClient);
                         GetWindowRect(hwnd, &rcWindow);
