@@ -7,8 +7,8 @@ on:
   pull_request:
     branches:
       - '**'
-    # tags:
-    #   - 'v*'
+    tags:
+      - 'test-v0.0*'
 
 jobs:
   release:
