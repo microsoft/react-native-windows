@@ -6,11 +6,11 @@ on:
       start_date:
         description: 'Start date (format: yyyy-mm-dd)'
         required: true
-        default: '2023-01-27'
+        default: '2025-01-27'
       end_date:
         description: 'End date (format: yyyy-mm-dd)'
         required: true
-        default: '2023-05-12'
+        default: '2025-05-12'
 
   push:
     branches:
@@ -49,8 +49,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
-          START_DATE: ${{ github.event.inputs.start_date || '2023-01-27' }}
-          END_DATE: ${{ github.event.inputs.end_date || '2023-05-12' }}
+          START_DATE: ${{ github.event.inputs.start_date || '2025-01-27' }}
+          END_DATE: ${{ github.event.inputs.end_date || '2025-05-12' }}
         run: |
           python .github/scripts/generate_release_notes.py > release_notes.md
           mkdir -p .github/release_notes

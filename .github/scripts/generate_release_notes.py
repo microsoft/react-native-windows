@@ -111,6 +111,8 @@ def categorize_commits(commits):
             categories["Breaking Changes"].append(entry)
         elif "arch" in msg_lower:
             categories["New Architecture-specific changes"].append(entry)
+        else:
+            categories["Other"].append(entry)
     return categories
 
 def generate_release_notes(commits, categories):
