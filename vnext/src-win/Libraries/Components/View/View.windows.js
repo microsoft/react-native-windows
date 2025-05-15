@@ -355,4 +355,4 @@ const View: component(
 
 View.displayName = 'View';
 
-module.exports = View;
+export default View;

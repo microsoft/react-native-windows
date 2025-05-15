@@ -2,6 +2,63 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Thu, 15 May 2025 05:23:40 GMT",
+      "version": "0.1.398",
+      "tag": "@react-native-windows/automation-commands_v0.1.398",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.295",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 May 2025 16:54:21 GMT",
+      "version": "0.1.397",
+      "tag": "@react-native-windows/automation-commands_v0.1.397",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.294",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 May 2025 21:05:07 GMT",
+      "version": "0.1.396",
+      "tag": "@react-native-windows/automation-commands_v0.1.396",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.293",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.35",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.52",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 May 2025 05:23:33 GMT",
       "version": "0.1.395",
       "tag": "@react-native-windows/automation-commands_v0.1.395",

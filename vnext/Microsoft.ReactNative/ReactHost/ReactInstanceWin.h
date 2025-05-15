@@ -187,7 +187,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   mutable std::mutex m_mutex;
 
   // !Bridgeless
-  const Mso::ActiveReadableField<Mso::DispatchQueue> m_jsDispatchQueue{Queue(), m_mutex};
+  const Mso::ActiveReadableField<Mso::DispatchQueue> m_jsDispatchQueue{nullptr, Queue(), m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_jsMessageThread{
       Queue(),
       m_mutex};

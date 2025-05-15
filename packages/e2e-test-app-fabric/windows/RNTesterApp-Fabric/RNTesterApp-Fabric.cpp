@@ -94,7 +94,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
 #endif
 
   host.InstanceSettings().InstanceLoaded(
-      [](auto sender, const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) {
+      [](auto /*sender*/, const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) {
         global_reactContext = args.Context();
       });
 
@@ -168,7 +168,7 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
         // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
         // state
         auto async = host.UnloadInstance();
-        async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+        async.Completed([host](auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
@@ -331,7 +331,7 @@ void InsertExpandCollapseStateValueIfNotDefault(
   }
 }
 
-winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
+winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue /*payload*/) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
   winrt::Windows::Data::Json::JsonArray jsonWarnings;
@@ -523,6 +523,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int level = 0;
   LiveSetting liveSetting = LiveSetting::Off;
   BSTR itemStatus;
+  BSTR itemType;
+  BSTR accessKey;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -532,6 +534,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentLocalizedControlType(&localizedControlType);
   pTarget->get_CurrentName(&name);
   pTarget->get_CurrentItemStatus(&itemStatus);
+  pTarget->get_CurrentItemType(&itemType);
+  pTarget->get_CurrentAccessKey(&accessKey);
   IUIAutomationElement4 *pTarget4;
   HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
   if (SUCCEEDED(hr) && pTarget4) {
@@ -554,6 +558,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertIntValueIfNotDefault(result, L"Level", level);
   InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
   InsertStringValueIfNotEmpty(result, L"ItemStatus", itemStatus);
+  InsertStringValueIfNotEmpty(result, L"ItemType", itemType);
+  InsertStringValueIfNotEmpty(result, L"AccessKey", accessKey);
   DumpUIAPatternInfo(pTarget, result);
 
   IUIAutomationElement *pChild;

@@ -24,8 +24,10 @@ namespace Microsoft.ReactNative.Managed
 
     public ReactDispatcher UIDispatcher => new ReactDispatcher(Handle.UIDispatcher);
 
+    #pragma warning disable 612, 618 // Deprecated
     public ReactDispatcher JSDispatcher => new ReactDispatcher(Handle.JSDispatcher);
-
+    #pragma warning restore 612, 618
+    
     public LoadingState LoadingState => Handle.LoadingState;
 
     public ReactSettingsSnapshot SettingsSnapshot => new ReactSettingsSnapshot(Handle.SettingsSnapshot);
