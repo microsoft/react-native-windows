@@ -16,6 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          repository: anupriya13/react-native-windows
           fetch-depth: 0
           # For push events, github.ref_name is the branch
           # For PR events, github.head_ref is the source branch of PR
