@@ -7,15 +7,14 @@
 
  #pragma once
 
- #include <react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h> // Windows
+ #include <limits>
  
  namespace facebook::react {
  
- struct Vector {
-   Float x{0};
-   Float y{0};
-   Float z{0};
-   Float w{0};
- };
+ /*
+  * Exact type of float numbers which ideally should match a type behing
+  * platform- and chip-architecture-specific float type.
+  */
+ using Float = float;
  
  } // namespace facebook::react

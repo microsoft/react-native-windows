@@ -148,13 +148,6 @@
       "issue": 14204
     },
     {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewState.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewState.h",
-      "baseHash": "16b86b74a3545474047162f5b6d13ddeda15f6f9",
-      "issue": 0
-    },
-    {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
@@ -165,20 +158,6 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/Touch.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/Touch.h",
-      "baseHash": "7561a991197e193bf980e36863f530a700a868ff",
-      "issue": 0
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewEventEmitter.h",
-      "baseHash": "8e38364711315fa70242bad8ba03902f9d9770f0",
-      "issue": 0
     },
     {
       "type": "patch",
@@ -193,48 +172,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSTokenizer.h",
       "baseHash": "c1726985d8916b671f7239356e3c08c4693d3be8",
       "issue": 14665
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Point.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Point.h",
-      "baseHash": "4f0c47f972491ce68fac27ed563a9757473be865",
-      "issue": 0
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Rect.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Rect.h",
-      "baseHash": "f5d7a82d05d3f9d108d37470160d7d1ab33e03bc",
-      "issue": 0
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/RectangleEdges.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/RectangleEdges.h",
-      "baseHash": "284dd52243900f1ce5b97dca1aa19a15c1f7d16a",
-      "issue": 0
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Size.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Size.h",
-      "baseHash": "e3d9483619fc2325d93e757ab99d26aa09165120",
-      "issue": 0
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Transform.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Transform.h",
-      "baseHash": "4c08172438a5d5e864840cb15686ffd05fd76500",
-      "issue": 0
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Vector.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Vector.h",
-      "baseHash": "7f231a20e4c111f97b853ee2857e56e398c3e8c6",
-      "issue": 0
     },
     {
       "type": "copy",
