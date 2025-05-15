@@ -189,6 +189,20 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/internal/CullingContext.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/CullingContext.cpp",
+      "baseHash": "a9687af594ded016b7f79f9fb7cd2d0ba649e56e",
+      "issue": 0
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
+      "baseHash": "e03ce8e5db0216f23389ff8b3e9ea450c8a031b7",
+      "issue": 0
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
       "baseHash": "0ccd2735e3cb04ce640fbd6af86b20ffcc5d9ab5",

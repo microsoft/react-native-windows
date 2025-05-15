@@ -10,7 +10,8 @@
  #include <cfloat> // Windows
  #include <limits>
  
- //
+// [[Windows
+//
 // float.h
 //
 //      Copyright (c) Microsoft Corporation. All rights reserved.
@@ -419,6 +420,7 @@ _CRT_END_C_HEADER
 _UCRT_RESTORE_CLANG_WARNINGS
 #pragma warning(pop) // _UCRT_DISABLED_WARNINGS
 #endif // _INC_FLOAT
+// Windows]]
 
  namespace facebook::react {
  
