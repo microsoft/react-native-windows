@@ -62,7 +62,6 @@ def categorize_commits(commits):
         sha = commit['sha']
         url = commit['html_url']
         entry = f"- {message.splitlines()[0]} [{sha[:7]}]({url})"
-        # Simple categorization based on keywords
         msg_lower = message.lower()
         if "fix" in msg_lower:
             categories["Reliability"].append(entry)
@@ -78,21 +77,31 @@ def categorize_commits(commits):
 
 def generate_release_notes(commits, categories):
     if commits:
-        dates = [commit['commit']['author']['date'] for commit in commits]
-        dates = sorted(dates)
-        start_date = datetime.fromisoformat(dates[0].replace("Z", "+00:00")).strftime("%m/%d/%Y")
-        end_date = datetime.fromisoformat(dates[-1].replace("Z", "+00:00")).strftime("%m/%d/%Y")
+        # Use input dates if provided, else fallback to commit dates
+        start_date = START_DATE_STR or datetime.fromisoformat(
+            commits[0]['commit']['author']['date'].replace("Z", "+00:00")).strftime("%Y-%m-%d")
+        end_date = END_DATE_STR or datetime.fromisoformat(
+            commits[-1]['commit']['author']['date'].replace("Z", "+00:00")).strftime("%Y-%m-%d")
+        # Format to mm/dd/yyyy for release notes
+        start_date_fmt = datetime.fromisoformat(start_date).strftime("%m/%d/%Y")
+        end_date_fmt = datetime.fromisoformat(end_date).strftime("%m/%d/%Y")
     else:
-        start_date = END_DATE_STR or "N/A"
-        end_date = END_DATE_STR or "N/A"
+        start_date_fmt = START_DATE_STR or "N/A"
+        end_date_fmt = END_DATE_STR or "N/A"
 
     notes = []
     notes.append(f"{RELEASE_TAG} Release Notes")
     notes.append("")
-    notes.append(f"We're excited to release React Native Windows {RELEASE_TAG} targeting React Native {RELEASE_TAG}! There have been many changes to both react-native-windows and react-native itself, and we would love your feedback on anything that doesn't work as expected. This release includes the commits to React Native Windows from {start_date} - {end_date}.")
+    notes.append(
+        f"We're excited to release React Native Windows {RELEASE_TAG} targeting React Native {RELEASE_TAG}! "
+        f"There have been many changes to both react-native-windows and react-native itself, and we would love your "
+        f"feedback on anything that doesn't work as expected. This release includes the commits to React Native Windows "
+        f"from {start_date_fmt} - {end_date_fmt}."
+    )
     notes.append("")
     notes.append("## How to upgrade")
-    notes.append("You can view the changes made to the default new React Native Windows applications for C++ and C# using React Native Upgrade Helper. See this [document](https://microsoft.github.io/react-native-windows/docs/upgrade-app) for more details.")
+    notes.append("You can view the changes made to the default new React Native Windows applications for C++ and C# "
+                 "using React Native Upgrade Helper. See this [document](https://microsoft.github.io/react-native-windows/docs/upgrade-app) for more details.")
     notes.append("")
     for category, entries in categories.items():
         if entries:

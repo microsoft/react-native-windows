@@ -49,8 +49,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
-          START_DATE: ${{ github.event.inputs.start_date || '' }}
-          END_DATE: ${{ github.event.inputs.end_date || '' }}
+          START_DATE: ${{ github.event.inputs.start_date || '2023-01-27' }}
+          END_DATE: ${{ github.event.inputs.end_date || '2023-05-12' }}
         run: |
           python .github/scripts/generate_release_notes.py > release_notes.md
           mkdir -p .github/release_notes
