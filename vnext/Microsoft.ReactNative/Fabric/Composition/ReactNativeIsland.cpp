@@ -520,13 +520,6 @@ void ReactNativeIsland::UpdateRootViewInternal() noexcept {
   }
 }
 
-struct AutoMRE {
-  ~AutoMRE() {
-    mre.Set();
-  }
-  Mso::ManualResetEvent mre;
-};
-
 void ReactNativeIsland::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
