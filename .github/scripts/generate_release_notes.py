@@ -94,25 +94,44 @@ def categorize_commits(commits):
         "Reliability": [],
         "New Features": [],
         "Breaking Changes": [],
-        "Other": [],
-        "New Architecture-specific changes": []
+        "New Architecture-specific changes": [],
+        "Other": []
     }
+    
+    # Keywords for each category (lowercase)
+    keywords = {
+        "Reliability": ["fix", "bug", "error", "issue", "crash", "fault", "defect", "patch"],
+        "New Features": ["feature", "add", "implement", "introduce", "support", "enable"],
+        "Breaking Changes": ["break", "remove", "deprecated", "incompatible", "remove support", "change api"],
+        "New Architecture-specific changes": ["fabric", "arch", "architecture", "refactor", "restructure", "modularize"]
+    }
+    
     for commit in commits:
         message = commit['commit']['message']
         sha = commit['sha']
         url = commit['html_url']
         entry = f"- {message.splitlines()[0]} [{sha[:7]}]({url})"
         msg_lower = message.lower()
-        if "fix" in msg_lower:
-            categories["Reliability"].append(entry)
-        elif "feature" in msg_lower or "add" in msg_lower:
-            categories["New Features"].append(entry)
-        elif "break" in msg_lower or "remove" in msg_lower:
+        
+        # Track which categories matched to avoid multiple assignments
+        matched_categories = []
+        
+        for category, keys in keywords.items():
+            if any(key in msg_lower for key in keys):
+                matched_categories.append(category)
+        
+        # Prioritize categories by order: Breaking > New Features > Reliability > Architecture > Other
+        if "Breaking Changes" in matched_categories:
             categories["Breaking Changes"].append(entry)
-        elif "arch" in msg_lower:
+        elif "New Features" in matched_categories:
+            categories["New Features"].append(entry)
+        elif "Reliability" in matched_categories:
+            categories["Reliability"].append(entry)
+        elif "New Architecture-specific changes" in matched_categories:
             categories["New Architecture-specific changes"].append(entry)
         else:
             categories["Other"].append(entry)
+    
     return categories
 
 def generate_release_notes(commits, categories):
