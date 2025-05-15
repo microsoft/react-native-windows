@@ -5,7 +5,7 @@ from collections import defaultdict
 
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 REPO = os.environ['GITHUB_REPOSITORY']
-RELEASE_TAG = os.environ['RELEASE_TAG']
+RELEASE_TAG = os.environ.get('RELEASE_TAG', 'Unreleased')
 API_URL = f"https://api.github.com/repos/{REPO}/commits"
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"}
 
