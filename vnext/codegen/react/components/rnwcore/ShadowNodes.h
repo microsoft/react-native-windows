@@ -95,4 +95,15 @@ using UnimplementedNativeViewShadowNode = ConcreteViewShadowNode<
     UnimplementedNativeViewEventEmitter,
     UnimplementedNativeViewState>;
 
+JSI_EXPORT extern const char XamlHostComponentName[];
+
+/*
+ * `ShadowNode` for <XamlHost> component.
+ */
+using XamlHostShadowNode = ConcreteViewShadowNode<
+    XamlHostComponentName,
+    XamlHostProps,
+    XamlHostEventEmitter,
+    XamlHostState>;
+
 } // namespace facebook::react
