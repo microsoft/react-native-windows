@@ -174,6 +174,13 @@
       "issue": 14665
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Float.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h",
+      "baseHash": "4a707c9cab0c6534094cd303e000265b664f05b4",
+      "issue": 0
+    },
+    {
       "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
