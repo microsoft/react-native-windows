@@ -1,6 +1,17 @@
 name: Generate Release Notes
 
 on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Start date (format: yyyy-mm-dd)'
+        required: true
+        default: '2023-01-27'
+      end_date:
+        description: 'End date (format: yyyy-mm-dd)'
+        required: true
+        default: '2023-05-12'
+
   push:
     branches:
       - '**'
@@ -38,6 +49,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
+          START_DATE: ${{ github.event.inputs.start_date || '' }}
+          END_DATE: ${{ github.event.inputs.end_date || '' }}
         run: |
           python .github/scripts/generate_release_notes.py > release_notes.md
           mkdir -p .github/release_notes
