@@ -2,6 +2,7 @@ import os
 import requests
 from datetime import datetime
 from collections import defaultdict
+from datetime import timezone
 
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 REPO = os.environ['GITHUB_REPOSITORY']
@@ -9,8 +10,16 @@ RELEASE_TAG = os.environ.get('RELEASE_TAG', 'Unreleased')
 START_DATE_STR = os.environ.get('START_DATE')  # expected format: yyyy-mm-dd
 END_DATE_STR = os.environ.get('END_DATE')      # expected format: yyyy-mm-dd
 
-START_DATE = datetime.fromisoformat(START_DATE_STR) if START_DATE_STR else None
-END_DATE = datetime.fromisoformat(END_DATE_STR) if END_DATE_STR else None
+def parse_date_aware(date_str):
+    # append UTC offset if missing and parse
+    if date_str and 'T' not in date_str:
+        date_str = date_str + "T00:00:00+00:00"
+    elif date_str and date_str.endswith('Z'):
+        date_str = date_str.replace('Z', '+00:00')
+    return datetime.fromisoformat(date_str) if date_str else None
+
+START_DATE = parse_date_aware(START_DATE_STR)
+END_DATE = parse_date_aware(END_DATE_STR)
 
 API_URL = f"https://api.github.com/repos/{REPO}/commits"
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"}
