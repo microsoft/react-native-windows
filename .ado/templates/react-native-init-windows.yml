@@ -63,7 +63,7 @@ steps:
 
   - ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
     - script: |
-        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type turbo-module --react-native-version $(reactNativeDevDependency) --example vanilla testcli
+        npx --yes create-react-native-library@0.48.9 --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type turbo-module --react-native-version $(reactNativeDevDependency) --example vanilla testcli
       displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)
 
