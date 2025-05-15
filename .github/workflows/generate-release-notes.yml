@@ -33,6 +33,10 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           RELEASE_TAG: ${{ github.ref_name }}
 
+      - name: Fix GitHub CLI apt repo codename for noble (Ubuntu 24.04)
+        run: |
+          sudo sed -i 's/noble/jammy/g' /etc/apt/sources.list.d/archive_uri-https_cli_github_com_packages-noble.list || true
+
       - name: Install GitHub CLI
         run: |
           sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
