@@ -339,7 +339,7 @@ function Pressable(
     accessibilityLiveRegion,
     accessibilityLabel,
     accessibilityState: _accessibilityState,
-    disabled: disabled == true,
+    disabled: disabled === true,
     focusable: focusable !== false,
     accessibilityValue,
     hitSlop,
