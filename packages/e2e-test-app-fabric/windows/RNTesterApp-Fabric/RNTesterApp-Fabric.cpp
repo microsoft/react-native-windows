@@ -331,7 +331,7 @@ void InsertExpandCollapseStateValueIfNotDefault(
   }
 }
 
-winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
+winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue /*payload*/) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
   winrt::Windows::Data::Json::JsonArray jsonWarnings;
