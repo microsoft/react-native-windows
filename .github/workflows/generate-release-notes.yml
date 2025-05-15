@@ -1,4 +1,4 @@
-name: Generate and Publish Release Notes
+name: Generate Release Notes
 
 on:
   push:
@@ -7,11 +7,9 @@ on:
   pull_request:
     branches:
       - '**'
-    tags:
-      - 'test-v0.0*'
 
 jobs:
-  release:
+  generate-release-notes:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,25 +24,18 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Generate release notes
-        run: python .github/scripts/generate_release_notes.py
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          RELEASE_TAG: ${{ github.ref_name }}
-
-      - name: Install GitHub CLI
+      - name: Generate release notes file
         run: |
-          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-          sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-          sudo apt update
-          sudo apt install -y gh
+          python .github/scripts/generate_release_notes.py > release_notes.md
+          mkdir -p .github/release_notes
+          mv release_notes.md .github/release_notes/release_notes.md
 
-      - name: Authenticate GitHub CLI
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
-      - name: Create GitHub Release
-        run: gh release create ${{ github.ref_name }} -F release_notes.md --repo ${{ github.repository }}
+      - name: Commit and push release notes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/release_notes/release_notes.md
+          git commit -m "Add generated release notes"
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
