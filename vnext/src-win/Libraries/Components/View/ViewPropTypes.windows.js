@@ -518,7 +518,7 @@ export type ViewProps = $ReadOnly<{
    * See https://reactnative.dev/docs/view#removeclippedsubviews
    */
   removeClippedSubviews?: ?boolean,
-  
+
   'aria-readonly'?: ?boolean, // Windows
 
   'aria-multiselectable'?: ?boolean, // Windows
