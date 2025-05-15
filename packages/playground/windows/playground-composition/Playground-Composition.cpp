@@ -53,7 +53,7 @@ void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder
  */
 struct EllipseImageHandler
     : winrt::implements<EllipseImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
-  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext, winrt::Windows::Foundation::Uri uri) {
+  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext /*context*/, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"ellipse";
   }
 
@@ -114,7 +114,6 @@ winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 constexpr auto WindowDataProperty = L"WindowData";
 
 int RunPlayground(int showCmd, bool useWebDebugger);
-winrt::Microsoft::ReactNative::IReactPackageProvider CreateStubDeviceInfoPackageProvider() noexcept;
 
 struct WindowData {
   static HINSTANCE s_instance;
