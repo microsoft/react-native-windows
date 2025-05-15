@@ -45,11 +45,35 @@ def fetch_commits():
         page += 1
     return commits
 
+def is_bot_commit(commit):
+    # Check if commit author or committer is a known bot
+    author = commit.get('author')
+    commit_author_name = commit['commit']['author']['name'].lower() if commit['commit']['author']['name'] else ''
+    # author may be None or dict with 'login' key
+    author_login = author.get('login', '').lower() if author else ''
+
+    bot_indicators = ['bot', 'dependabot', 'actions-user']
+
+    # Check login and commit author name for bot keywords
+    if any(bot_name in author_login for bot_name in bot_indicators):
+        return True
+    if any(bot_name in commit_author_name for bot_name in bot_indicators):
+        return True
+
+    return False
+
 def filter_commits_by_date(commits):
     if not START_DATE and not END_DATE:
-        return commits
+        filtered = []
+        for c in commits:
+            if not is_bot_commit(c):
+                filtered.append(c)
+        return filtered
+
     filtered = []
     for commit in commits:
+        if is_bot_commit(commit):
+            continue
         commit_date = datetime.fromisoformat(commit['commit']['author']['date'].replace("Z", "+00:00"))
         if START_DATE and commit_date < START_DATE:
             continue
