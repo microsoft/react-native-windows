@@ -18,8 +18,6 @@ jobs:
         with:
           repository: anupriya13/react-native-windows
           fetch-depth: 0
-          # For push events, github.ref_name is the branch
-          # For PR events, github.head_ref is the source branch of PR
           ref: ${{ github.head_ref != '' && github.head_ref || github.ref_name }}
 
       - name: Set up Python
@@ -31,6 +29,8 @@ jobs:
         run: pip install requests
 
       - name: Generate release notes file
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python .github/scripts/generate_release_notes.py > release_notes.md
           mkdir -p .github/release_notes
@@ -44,9 +44,11 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .github/release_notes/release_notes.md
           git diff --cached --quiet || git commit -m "Add generated release notes"
-          # Push only if on a branch (not on tags or detached head)
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git push origin HEAD:${{ github.head_ref }}
+          # Push only if on a branch ref (not tags or detached)
+          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" && -n "${GITHUB_HEAD_REF}" ]]; then
+            git push origin HEAD:${GITHUB_HEAD_REF}
+          elif [[ "${GITHUB_REF_NAME}" != "" ]]; then
+            git push origin HEAD:${GITHUB_REF_NAME}
           else
-            git push origin HEAD:${{ github.ref_name }}
+            echo "Not a branch ref, skipping push."
           fi
