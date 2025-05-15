@@ -60,17 +60,12 @@ def is_bot_commit(commit):
     # Also skip commits with messages indicating package bumps or updates
     message = commit['commit']['message'].lower()
 
-    # Regex pattern for package bump PR commits, e.g., "📦 bump package from x to y (#1234)"
-    bump_pattern = re.compile(r'📦 bump .* from .* to .* #\d+', re.IGNORECASE)
+    # List of keywords to detect in commit messages
+    keywords = ['bump', 'applying package updates', 'no_ci', 'no ci']
 
-    # Check message for bump pattern or "applying package updates"
-    if bump_pattern.search(message):
-        return True
-    if 'applying package updates' in message:
-        return True
-    if 'no_ci' in message or 'no ci' in message:
-        # if the commit says NO_CI, likely an auto-update
-        return True
+    for keyword in keywords:
+        if keyword in message:
+            return True
 
     return False
 
