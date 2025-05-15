@@ -482,8 +482,8 @@ facebook::jsi::JSError const &jsError) {                             \
   jsiRuntime->evaluateJavaScript(jsiPalBuffer, "Form_JSI_API_not_a_real_file");
   ReactNative::JsiRuntime abiJsiResult{make<JsiRuntime>(Mso::Copy(jsiRuntimeHolder), Mso::Copy(jsiRuntime))};
   std::scoped_lock lock{s_mutex};
-  s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(jsiRuntime.get()), abiJsiResult);
-  return abiJsiResult;
+  auto it = s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(jsiRuntime.get()), abiJsiResult);
+  return it.first->second.get();
 }
 
 ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {

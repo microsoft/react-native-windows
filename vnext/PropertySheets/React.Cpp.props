@@ -155,6 +155,7 @@
         $(ReactNativeDir)\ReactCommon\react\bridging;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
+        $(ReactNativeDir)\ReactCxxPlatform;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>
