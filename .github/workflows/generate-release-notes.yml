@@ -2,8 +2,13 @@ name: Generate and Publish Release Notes
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+    # tags:
+    #   - 'v*'
 
 jobs:
   release:
