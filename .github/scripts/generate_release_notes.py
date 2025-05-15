@@ -46,18 +46,29 @@ def fetch_commits():
     return commits
 
 def is_bot_commit(commit):
-    # Check if commit author or committer is a known bot
+    # Same as before, skip commits by known bots (dependabot, etc.)
     author = commit.get('author')
     commit_author_name = commit['commit']['author']['name'].lower() if commit['commit']['author']['name'] else ''
-    # author may be None or dict with 'login' key
     author_login = author.get('login', '').lower() if author else ''
-
     bot_indicators = ['bot', 'dependabot', 'actions-user']
-
-    # Check login and commit author name for bot keywords
     if any(bot_name in author_login for bot_name in bot_indicators):
         return True
     if any(bot_name in commit_author_name for bot_name in bot_indicators):
+        return True
+
+    # Also skip commits with messages indicating package bumps or updates
+    message = commit['commit']['message'].lower()
+
+    # Regex pattern for package bump PR commits, e.g., "📦 bump package from x to y (#1234)"
+    bump_pattern = re.compile(r'📦 bump .* from .* to .* #\d+', re.IGNORECASE)
+
+    # Check message for bump pattern or "applying package updates"
+    if bump_pattern.search(message):
+        return True
+    if 'applying package updates' in message:
+        return True
+    if 'no_ci' in message or 'no ci' in message:
+        # if the commit says NO_CI, likely an auto-update
         return True
 
     return False
