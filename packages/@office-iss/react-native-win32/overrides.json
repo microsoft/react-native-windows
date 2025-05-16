@@ -22,13 +22,6 @@
       "baseHash": "62b4752ea0e271645cc0fff8b54f2c1167284d43"
     },
     {
-      "type": "copy",
-      "file": "src-win/index.win32.js.flow",
-      "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "7bd30464d9ce3113ceafc4c96fa163edd1444c33",
-      "issue": 0
-    },
-    {
       "type": "platform",
       "file": "src-win/Libraries/__tests__/ButtonWin32-test.js"
     },
