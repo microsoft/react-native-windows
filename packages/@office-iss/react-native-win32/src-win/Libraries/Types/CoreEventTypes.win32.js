@@ -231,10 +231,16 @@ export interface NativePointerEvent extends NativeMouseEvent {
 export type PointerEvent = NativeSyntheticEvent<NativePointerEvent>;
 
 export type NativeTouchEvent = $ReadOnly<{
+  altKey: ?boolean, // TODO(macOS)
+
+  button: ?number, // TODO(macOS)
   /**
    * Array of all touch events that have changed since the last event
    */
   changedTouches: $ReadOnlyArray<NativeTouchEvent>,
+
+  ctrlKey: ?boolean, // TODO(macOS)
+
   /**
    * 3D Touch reported force
    * @platform ios
@@ -255,11 +261,16 @@ export type NativeTouchEvent = $ReadOnly<{
   /**
    * The X position of the touch, relative to the screen
    */
+
+  metaKey: ?boolean, // TODO(macOS)
+
   pageX: number,
   /**
    * The Y position of the touch, relative to the screen
    */
   pageY: number,
+
+  shiftKey: ?boolean, // TODO(macOS)
   /**
    * The node id of the element receiving the touch event
    */
@@ -353,7 +364,7 @@ export type MouseEvent = NativeSyntheticEvent<
 // Windows]
 
 // [Windows
-export type KeyEvent = SyntheticEvent<
+export type KeyEvent = NativeSyntheticEvent<
   $ReadOnly<{|
     altKey: boolean,
     ctrlKey: boolean,
