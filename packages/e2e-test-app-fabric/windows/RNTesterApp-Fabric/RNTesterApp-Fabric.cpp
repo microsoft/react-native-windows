@@ -94,7 +94,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
 #endif
 
   host.InstanceSettings().InstanceLoaded(
-      [](auto sender, const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) {
+      [](auto /*sender*/, const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) {
         global_reactContext = args.Context();
       });
 
@@ -167,7 +167,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
         // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
         // state
         auto async = host.UnloadInstance();
-        async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+        async.Completed([host](auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
@@ -329,7 +330,7 @@ void InsertExpandCollapseStateValueIfNotDefault(
   }
 }
 
-winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
+winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue /*payload*/) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
   winrt::Windows::Data::Json::JsonArray jsonWarnings;
