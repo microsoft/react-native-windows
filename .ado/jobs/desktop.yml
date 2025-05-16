@@ -98,7 +98,7 @@ jobs:
                 (FullyQualifiedName!=RNTesterIntegrationTests::Fetch)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
-                (FullyQualifiedName!=RNTesterIntegrationTests::Logging)
+                (FullyQualifiedName!=RNTesterIntegrationTests::Logging)&
                 (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
                 (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
