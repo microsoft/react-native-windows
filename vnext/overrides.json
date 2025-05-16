@@ -662,7 +662,6 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/PlatformTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/PlatformTypes.js",
-      "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
       "baseHash": "0a7fce66d820af1b612a861a564b6f035256843d"
     },
     {
