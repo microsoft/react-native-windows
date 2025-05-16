@@ -1,7 +1,7 @@
 {
   "type": "patch",
-  "comment": "Fix Folly Desktop build break",
+  "comment": "Fix calls to std::mutex::lock",
   "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
+  "email": "vmorozov@microsoft.com",
   "dependentChangeType": "patch"
 }
