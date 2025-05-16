@@ -1,15 +1,20 @@
 parameters:
-  - name: certificateName
+  - name: certificatePassword
     type: string
+    default: 'pwd'
 
 steps:
   - powershell: |
-      Write-Host "Using certificate named ${{ parameters.certificateName }}"
-      Write-Host "##vso[task.setvariable variable=EncodedKey]$(${{ parameters.certificateName }})"
-    displayName: Determining certificate
+      $certStoreRoot="cert:\CurrentUser\My"
+      $rootFolder="$(Build.SourcesDirectory)"
 
-  - powershell: |
-      $PfxBytes = [System.Convert]::FromBase64String("$(EncodedKey)")
-      $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx) )
-      [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
-    displayName: Write certificate
+      # the following two lines must match
+      [System.Security.SecureString] $password = ConvertTo-SecureString -String "${{ parameters.certificatePassword }}" -Force -AsPlainText
+
+      $cert = New-SelfSignedCertificate -KeyExportPolicy Exportable -CertStoreLocation $certStoreRoot -DnsName "Development Root CA" -NotAfter (Get-Date).AddYears(5) -Type CodeSigningCert -KeyUsage DigitalSignature
+      [String] $pfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $rootFolder -ChildPath EncodedKey.pfx) )
+      [String] $certPath = "$certStoreRoot\$($cert.Thumbprint)"
+
+      Export-PfxCertificate -Cert $certPath -FilePath $pfxPath -Password $password
+
+    displayName: Create self-signed certificate

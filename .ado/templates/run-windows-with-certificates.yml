@@ -5,8 +5,6 @@ parameters:
     values:
       - PullRequest
       - Continuous
-  - name: certificateName
-    type: string
   - name: buildConfiguration
     type: string
     values:
@@ -30,7 +28,10 @@ parameters:
   - name: moreMSBuildProps
     type: string
     default: ''
-
+  - name: certificatePassword
+    type: string
+    default: 'pwd'
+  
 steps:
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
     - script: >
@@ -60,7 +61,7 @@ steps:
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'Continuous')) }}:
     - template: ../templates/write-certificate.yml
       parameters:
-        certificateName: ${{ parameters.certificateName }}
+        certificatePassword: ${{ parameters.certificatePassword }}
 
     - script: >
         yarn windows
@@ -69,7 +70,7 @@ steps:
         --no-launch
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
-        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx${{ parameters.moreMSBuildProps }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx,PackageCertificatePassword=${{ parameters.certificatePassword }}${{ parameters.moreMSBuildProps }}
         ${{ parameters.deployOption }}
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
