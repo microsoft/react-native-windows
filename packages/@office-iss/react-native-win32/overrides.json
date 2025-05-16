@@ -16,6 +16,13 @@
       "baseHash": "bbd5e6a4e1714c0737ae334c59130213ff0ece37"
     },
     {
+      "type": "patch",
+      "file": "src-win/index.win32.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "7bd30464d9ce3113ceafc4c96fa163edd1444c33",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
@@ -471,16 +478,16 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/Utilities/Platform.win32.js",
+      "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
+      "baseHash": "8c3daf7b75af0445441def55571374bebed83726"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/Utilities/PlatformTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/PlatformTypes.js",
       "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
       "baseHash": "0a7fce66d820af1b612a861a564b6f035256843d"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Utilities/Platform.win32.js",
-      "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "8c3daf7b75af0445441def55571374bebed83726"
     },
     {
       "type": "copy",
