@@ -76,17 +76,18 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-  - stage: CLI
-    displayName: Cli 🖥
-    dependsOn: Setup
-    jobs:
-      - template: jobs/cli-init.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
-          buildNuGetOnly: false
+  # Disabling CLI Stage as branch is Unsupported, see https://microsoft.github.io/react-native-windows/support
+  # - stage: CLI
+  #   displayName: Cli 🖥
+  #   dependsOn: Setup
+  #   jobs:
+  #     - template: jobs/cli-init.yml
+  #       parameters:
+  #         buildEnvironment: ${{ parameters.buildEnvironment }}
+  #         AgentPool: ${{ parameters.AgentPool }}
+  #         buildNuGetOnly: false
       
-      - template: jobs/cli-init-windows.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
+  #     - template: jobs/cli-init-windows.yml
+  #       parameters:
+  #         buildEnvironment: ${{ parameters.buildEnvironment }}
+  #         AgentPool: ${{ parameters.AgentPool }}
