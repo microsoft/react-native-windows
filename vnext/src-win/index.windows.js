@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @format
- * @flow strict-local
+ * @flow
  */
 
 // flowlint unsafe-getters-setters:off
@@ -364,7 +364,7 @@ module.exports = {
   get ViewWindows(): any {
     return require('./Libraries/Components/View/View').default;
   },
-  get AppTheme(): AppTheme {
+  get AppTheme(): any {
     return require('./Libraries/AppTheme/AppTheme');
   },
   // #endregion
