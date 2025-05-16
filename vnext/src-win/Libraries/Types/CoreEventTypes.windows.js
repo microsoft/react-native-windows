@@ -353,7 +353,7 @@ export type MouseEvent = NativeSyntheticEvent<
 // Windows]
 
 // [Windows
-export type KeyEvent = SyntheticEvent<
+export type KeyEvent = NativeSyntheticEvent<
   $ReadOnly<{
     altKey: boolean,
     ctrlKey: boolean,
