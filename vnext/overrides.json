@@ -17,6 +17,13 @@
       "baseHash": "bbd5e6a4e1714c0737ae334c59130213ff0ece37"
     },
     {
+      "type": "patch",
+      "file": "src-win/index.windows.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "7bd30464d9ce3113ceafc4c96fa163edd1444c33",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
