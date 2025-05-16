@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 16 May 2025 05:27:54 GMT",
+      "version": "0.0.0-canary.956",
+      "tag": "react-native-windows_v0.0.0-canary.956",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be62db0d2e49d73cd930a3a44ee192f77b59240e",
+            "comment": "Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8edfb5c645780cdc380be973b994444c2ba4f900",
+            "comment": "merge in folly 2024.10.14.00"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "25bf56ed63b1697cece6593d1b600b27d91a8406",
+            "comment": "Fix documentation in IReactPackageBuilderFabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 May 2025 05:23:40 GMT",
       "version": "0.0.0-canary.955",
       "tag": "react-native-windows_v0.0.0-canary.955",
