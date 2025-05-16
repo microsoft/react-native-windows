@@ -82,7 +82,6 @@ jobs:
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
-                certificateName: reactUWPTestAppEncodedKey
                 buildConfiguration: Release
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
@@ -184,7 +183,6 @@ jobs:
               - template: ../templates/run-windows-with-certificates.yml
                 parameters:
                   buildEnvironment: ${{ parameters.BuildEnvironment }}
-                  certificateName: reactUWPTestAppEncodedKey
                   buildConfiguration: Release
                   buildPlatform: ${{ matrix.BuildPlatform }}
                   buildLogDirectory: $(BuildLogDirectory)
