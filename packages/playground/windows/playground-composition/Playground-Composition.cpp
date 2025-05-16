@@ -51,7 +51,7 @@ void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder
  */
 struct EllipseImageHandler
     : winrt::implements<EllipseImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
-  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
+  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext /*context*/, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"ellipse";
   }
 
@@ -115,7 +115,6 @@ winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 constexpr auto WindowDataProperty = L"WindowData";
 
 int RunPlayground(int showCmd, bool useWebDebugger);
-winrt::Microsoft::ReactNative::IReactPackageProvider CreateStubDeviceInfoPackageProvider() noexcept;
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -237,12 +236,12 @@ struct WindowData {
                 ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
                 m_compRootView.SizeChanged(
                     [hwnd, props = InstanceSettings().Properties()](
-                        auto sender, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                        auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
                       auto compositor =
                           winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
                       auto async = compositor.RequestCommitAsync();
                       async.Completed([hwnd, size = args.Size()](
-                                          auto asyncInfo, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
+                                          auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
                         RECT rcClient, rcWindow;
                         GetClientRect(hwnd, &rcClient);
                         GetWindowRect(hwnd, &rcWindow);
@@ -338,7 +337,7 @@ struct WindowData {
       case IDM_UNLOAD: {
         auto async = Host().UnloadInstance();
         async.Completed([&, uidispatch = InstanceSettings().UIDispatcher()](
-                            auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+                            auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           asyncStatus;
           OutputDebugStringA("Instance Unload completed\n");
 
@@ -572,7 +571,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
             L"ReactNative.Composition", L"CompositionContext"});
 
         auto async = data->m_host.UnloadInstance();
-        async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+        async.Completed([host = data->m_host](auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
