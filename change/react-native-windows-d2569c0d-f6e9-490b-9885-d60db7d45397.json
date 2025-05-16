@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Folly Desktop build break",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
