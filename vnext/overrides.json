@@ -17,13 +17,6 @@
       "baseHash": "bbd5e6a4e1714c0737ae334c59130213ff0ece37"
     },
     {
-      "type": "patch",
-      "file": "src-win/index.windows.js.flow",
-      "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "7bd30464d9ce3113ceafc4c96fa163edd1444c33",
-      "issue": 0
-    },
-    {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
@@ -241,6 +234,13 @@
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
       "baseHash": "62b4752ea0e271645cc0fff8b54f2c1167284d43"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/index.windows.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "7bd30464d9ce3113ceafc4c96fa163edd1444c33",
+      "issue": 0
     },
     {
       "type": "platform",
@@ -657,7 +657,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/Libraries/Utilities/NativePlatformConstantsIOS.js",
-    "baseHash": "092016d462d51606f0b9c32b3a8e3da19b0d7586"
+      "baseHash": "092016d462d51606f0b9c32b3a8e3da19b0d7586"
     },
     {
       "type": "derived",
@@ -667,9 +667,10 @@
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Utilities/PlatformTypes.windows.js",
+      "file": "src-win/Libraries/Utilities/PlatformTypes.js",
       "baseFile": "packages/react-native/Libraries/Utilities/PlatformTypes.js",
-      "baseHash": "0a7fce66d820af1b612a861a564b6f035256843d"
+      "baseHash": "0a7fce66d820af1b612a861a564b6f035256843d",
+      "issue": 14686
     },
     {
       "type": "copy",
