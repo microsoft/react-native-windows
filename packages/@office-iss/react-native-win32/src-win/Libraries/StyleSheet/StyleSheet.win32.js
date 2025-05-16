@@ -29,7 +29,7 @@ import flatten from './flattenStyle';
 const ReactNativeStyleAttributes =
   require('../Components/View/ReactNativeStyleAttributes').default;
 const PixelRatio = require('../Utilities/PixelRatio').default;
-const Platform = require('../Utilities/Platform'); // [Win32]
+const Platform = require('../Utilities/Platform').default; // [Win32]
 
 export type {NativeColorValue} from './StyleSheetTypes';
 
