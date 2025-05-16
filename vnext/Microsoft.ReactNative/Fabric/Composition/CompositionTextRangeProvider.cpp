@@ -98,13 +98,13 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
       textTransform = props->textAttributes.textTransform.value();
     }
     if (fontVariant == facebook::react::FontVariant::SmallCaps) {
-      return CapStyle_SmallCap;
+      pRetVal->lVal = CapStyle_SmallCap;
     } else if (textTransform == facebook::react::TextTransform::Capitalize) {
-      return CapStyle_Titling;
+      pRetVal->lVal = CapStyle_Titling;
     } else if (textTransform == facebook::react::TextTransform::Lowercase) {
-      return CapStyle_None;
+      pRetVal->lVal = CapStyle_None;
     } else if (textTransform == facebook::react::TextTransform::Uppercase) {
-      return CapStyle_AllCap;
+      pRetVal->lVal = CapStyle_AllCap;
     }
   } else if (attributeId == UIA_FontNameAttributeId) {
     pRetVal->vt = VT_BSTR;
