@@ -93,7 +93,6 @@ jobs:
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
-                certificateName: sampleAppCPPEncodedKey
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 deployOption:  ${{ matrix.DeployOption }}
