@@ -1,0 +1,63 @@
+name: Generate Release Notes
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Start date (format: yyyy-mm-dd)'
+        required: true
+        default: '2025-01-27'
+      end_date:
+        description: 'End date (format: yyyy-mm-dd)'
+        required: true
+        default: '2025-05-12'
+
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  generate-release-notes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: anupriya13/react-native-windows
+          fetch-depth: 0
+          ref: ${{ github.head_ref != '' && github.head_ref || github.ref_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.12
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          tag=$(git describe --tags --abbrev=0 || echo "Unreleased")
+          echo "tag=$tag" >> $GITHUB_OUTPUT
+
+      - name: Generate release notes file
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
+          START_DATE: ${{ github.event.inputs.start_date || '2025-01-27' }}
+          END_DATE: ${{ github.event.inputs.end_date || '2025-05-12' }}
+        run: |
+          python .github/scripts/generate_release_notes.py > release_notes.md
+          mkdir -p .github/release_notes
+          mv release_notes.md .github/release_notes/release_notes.md
+
+      - name: Upload release notes
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: .github/release_notes/release_notes.md
