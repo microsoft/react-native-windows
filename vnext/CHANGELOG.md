@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 16 May 2025 05:27:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 17 May 2025 05:25:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.957
+
+Sat, 17 May 2025 05:25:32 GMT
+
+### Changes
+
+- fix(vnext-templates): update gitignore for MS Build logs (fcalise@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.264
 
 ## 0.0.0-canary.956
 

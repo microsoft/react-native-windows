@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 May 2025 05:25:32 GMT",
+      "version": "0.0.0-canary.957",
+      "tag": "react-native-windows_v0.0.0-canary.957",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "fcalise@gmail.com",
+            "package": "react-native-windows",
+            "commit": "5005dc026932484504479a0f1e31adb81b36fca1",
+            "comment": "fix(vnext-templates): update gitignore for MS Build logs"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.264",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 May 2025 05:27:54 GMT",
       "version": "0.0.0-canary.956",
       "tag": "react-native-windows_v0.0.0-canary.956",
