@@ -74,6 +74,10 @@ void ReactModuleBuilder::AddInitializer(InitializerDelegate const &initializer) 
   m_initializers.push_back(initializer);
 }
 
+void ReactModuleBuilder::AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept {
+  m_jsiinitializers.push_back(initializer);
+}
+
 void ReactModuleBuilder::AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
   m_constantProviders.push_back(constantProvider);
 }

@@ -22,10 +22,9 @@ void AddTurboModuleProvider(IReactPackageBuilder const &packageBuilder, std::wst
         IJsiHostObject abiTurboModule{nullptr};
         // We expect the initializer to be called immediately for TurboModules
         moduleBuilder.AddInitializer([&abiTurboModule](IReactContext const &context) mutable {
-          TryGetOrCreateContextRuntime(ReactContext{context}); // Ensure the JSI runtime is created.
-          auto callInvoker = MakeAbiCallInvoker(context);
+          auto callInvoker = ReactContext{context}.CallInvoker();
           auto turboModule = std::make_shared<TTurboModule>(callInvoker);
-          abiTurboModule = winrt::make<JsiHostObjectWrapper>(std::move(turboModule));
+          abiTurboModule = winrt::make<JsiHostObjectGetOrCreateWrapper>(context, std::move(turboModule));
         });
         return abiTurboModule.as<winrt::Windows::Foundation::IInspectable>();
       });

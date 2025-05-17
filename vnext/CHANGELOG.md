@@ -1,8 +1,44 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 13 May 2025 21:05:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 17 May 2025 05:25:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.957
+
+Sat, 17 May 2025 05:25:32 GMT
+
+### Changes
+
+- fix(vnext-templates): update gitignore for MS Build logs (fcalise@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.264
+
+## 0.0.0-canary.956
+
+Fri, 16 May 2025 05:27:54 GMT
+
+### Changes
+
+- Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere (jthysell@microsoft.com)
+- merge in folly 2024.10.14.00 (tatianakapos@microsoft.com)
+- Fix documentation in IReactPackageBuilderFabric (jthysell@microsoft.com)
+
+## 0.0.0-canary.955
+
+Thu, 15 May 2025 05:23:40 GMT
+
+### Changes
+
+- Remove usage of JSDispatcher in various built-in modules (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.954
+
+Wed, 14 May 2025 16:54:21 GMT
+
+### Changes
+
+- [Fabric] Implementation of accessibilityItemType (kvineeth@microsoft.com)
+- [Fabric] Implementation of accessibilityAccessKey (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.953
 

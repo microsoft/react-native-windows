@@ -2,6 +2,90 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 May 2025 05:25:32 GMT",
+      "version": "0.0.0-canary.957",
+      "tag": "react-native-windows_v0.0.0-canary.957",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "fcalise@gmail.com",
+            "package": "react-native-windows",
+            "commit": "5005dc026932484504479a0f1e31adb81b36fca1",
+            "comment": "fix(vnext-templates): update gitignore for MS Build logs"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.264",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 16 May 2025 05:27:54 GMT",
+      "version": "0.0.0-canary.956",
+      "tag": "react-native-windows_v0.0.0-canary.956",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be62db0d2e49d73cd930a3a44ee192f77b59240e",
+            "comment": "Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8edfb5c645780cdc380be973b994444c2ba4f900",
+            "comment": "merge in folly 2024.10.14.00"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "25bf56ed63b1697cece6593d1b600b27d91a8406",
+            "comment": "Fix documentation in IReactPackageBuilderFabric"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 15 May 2025 05:23:40 GMT",
+      "version": "0.0.0-canary.955",
+      "tag": "react-native-windows_v0.0.0-canary.955",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "766da730bcb716715e27442bdbe8a2d023a505db",
+            "comment": "Remove usage of JSDispatcher in various built-in modules"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 May 2025 16:54:21 GMT",
+      "version": "0.0.0-canary.954",
+      "tag": "react-native-windows_v0.0.0-canary.954",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cc5b147997fed8bddb12e68a0b5bbfd1baf7f70",
+            "comment": "[Fabric] Implementation of accessibilityItemType"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cc5b147997fed8bddb12e68a0b5bbfd1baf7f70",
+            "comment": "[Fabric] Implementation of accessibilityAccessKey"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 May 2025 21:05:07 GMT",
       "version": "0.0.0-canary.953",
       "tag": "react-native-windows_v0.0.0-canary.953",
