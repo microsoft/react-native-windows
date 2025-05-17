@@ -13,70 +13,153 @@
 'use strict';
 'use client';
 
-// ----------------------------------------------------------------------------
-// Runtime entry point for react-native.
-//
-// This module is separate from index.js.flow as it provides a more lenient
-// `module.exports` API at runtime, for lazy module loading and backwards
-// compatibility.
-//
-// IMPORTANT: Keep this file in sync with index.js.flow. Test your changes
-// whenever updating React Native's public API.
-// ----------------------------------------------------------------------------
+// [[Windows
+// APIs
+import typeof ActionSheetIOS from './Libraries/ActionSheetIOS/ActionSheetIOS';
+import typeof Alert from './Libraries/Alert/Alert';
+import typeof Animated from './Libraries/Animated/Animated';
+import typeof * as AnimatedModule from './Libraries/Animated/Animated';
+import typeof Easing from './Libraries/Animated/Easing';
+import typeof useAnimatedValue from './Libraries/Animated/useAnimatedValue';
+import typeof AppState from './Libraries/AppState/AppState';
+import typeof NativeModules from './Libraries/BatchedBridge/NativeModules';
+// Components
+import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';
+import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/ActivityIndicator';
+// [Windows
+import typeof AppTheme from './Libraries/AppTheme/AppTheme';
+// Windows]
+import typeof Button from './Libraries/Components/Button';
+import typeof Clipboard from './Libraries/Components/Clipboard/Clipboard';
+import typeof DrawerLayoutAndroid from './Libraries/Components/DrawerAndroid/DrawerLayoutAndroid';
+import typeof Keyboard from './Libraries/Components/Keyboard/Keyboard';
+import typeof KeyboardAvoidingView from './Libraries/Components/Keyboard/KeyboardAvoidingView';
+import typeof LayoutConformance from './Libraries/Components/LayoutConformance/LayoutConformance';
+import typeof Pressable from './Libraries/Components/Pressable/Pressable';
+import typeof ProgressBarAndroid from './Libraries/Components/ProgressBarAndroid/ProgressBarAndroid';
+import typeof RefreshControl from './Libraries/Components/RefreshControl/RefreshControl';
+import typeof SafeAreaView from './Libraries/Components/SafeAreaView/SafeAreaView';
+import typeof ScrollView from './Libraries/Components/ScrollView/ScrollView';
+import typeof StatusBar from './Libraries/Components/StatusBar/StatusBar';
+import typeof Switch from './Libraries/Components/Switch/Switch';
+import typeof InputAccessoryView from './Libraries/Components/TextInput/InputAccessoryView';
+import typeof TextInput from './Libraries/Components/TextInput/TextInput';
+import typeof ToastAndroid from './Libraries/Components/ToastAndroid/ToastAndroid';
+import typeof Touchable from './Libraries/Components/Touchable/Touchable';
+import typeof TouchableHighlight from './Libraries/Components/Touchable/TouchableHighlight';
+import typeof TouchableNativeFeedback from './Libraries/Components/Touchable/TouchableNativeFeedback';
+import typeof TouchableOpacity from './Libraries/Components/Touchable/TouchableOpacity';
+import typeof TouchableWithoutFeedback from './Libraries/Components/Touchable/TouchableWithoutFeedback';
+import typeof View from './Libraries/Components/View/View';
+import typeof RegisterCallableModule from './Libraries/Core/registerCallableModule';
+import typeof NativeEventEmitter from './Libraries/EventEmitter/NativeEventEmitter';
+import typeof RCTDeviceEventEmitter from './Libraries/EventEmitter/RCTDeviceEventEmitter';
+import typeof RCTNativeAppEventEmitter from './Libraries/EventEmitter/RCTNativeAppEventEmitter';
+import typeof Image from './Libraries/Image/Image';
+import typeof ImageBackground from './Libraries/Image/ImageBackground';
+import typeof InteractionManager from './Libraries/Interaction/InteractionManager';
+import typeof PanResponder from './Libraries/Interaction/PanResponder';
+import typeof LayoutAnimation from './Libraries/LayoutAnimation/LayoutAnimation';
+import typeof Linking from './Libraries/Linking/Linking';
+import typeof FlatList from './Libraries/Lists/FlatList';
+import typeof SectionList from './Libraries/Lists/SectionList';
+import typeof VirtualizedList from './Libraries/Lists/VirtualizedList';
+import typeof VirtualizedSectionList from './Libraries/Lists/VirtualizedSectionList';
+import typeof LogBox from './Libraries/LogBox/LogBox';
+import typeof Modal from './Libraries/Modal/Modal';
+// $FlowFixMe[invalid-exported-annotation]
+import typeof NativeDialogManagerAndroid from './Libraries/NativeModules/specs/NativeDialogManagerAndroid';
+import typeof Networking from './Libraries/Network/RCTNetworking';
+import typeof * as Systrace from './Libraries/Performance/Systrace';
+import typeof PermissionsAndroid from './Libraries/PermissionsAndroid/PermissionsAndroid';
+import typeof PushNotificationIOS from './Libraries/PushNotificationIOS/PushNotificationIOS';
+import typeof AppRegistry from './Libraries/ReactNative/AppRegistry';
+import typeof I18nManager from './Libraries/ReactNative/I18nManager';
+import typeof {RootTagContext} from './Libraries/ReactNative/RootTag';
+import typeof UIManager from './Libraries/ReactNative/UIManager';
+import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
+import type {
+  HostComponent,
+  HostInstance,
+} from './Libraries/Renderer/shims/ReactNativeTypes';
+import typeof Settings from './Libraries/Settings/Settings';
+import typeof Share from './Libraries/Share/Share';
+import typeof {PlatformColor} from './Libraries/StyleSheet/PlatformColorValueTypes';
+// Plugins
+import typeof {DynamicColorIOS} from './Libraries/StyleSheet/PlatformColorValueTypesIOS';
+import typeof processColor from './Libraries/StyleSheet/processColor';
+import typeof StyleSheet from './Libraries/StyleSheet/StyleSheet';
+import typeof Text from './Libraries/Text/Text';
+import typeof * as TurboModuleRegistry from './Libraries/TurboModule/TurboModuleRegistry';
+import typeof UTFSequence from './Libraries/UTFSequence';
+import typeof * as Appearance from './Libraries/Utilities/Appearance';
+import typeof BackHandler from './Libraries/Utilities/BackHandler';
+import typeof DeviceInfo from './Libraries/Utilities/DeviceInfo';
+import typeof DevSettings from './Libraries/Utilities/DevSettings';
+import typeof Dimensions from './Libraries/Utilities/Dimensions';
+import typeof PixelRatio from './Libraries/Utilities/PixelRatio';
+import typeof Platform from './Libraries/Utilities/Platform';
+import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
+import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
+import typeof Vibration from './Libraries/Vibration/Vibration';
+import typeof DevMenu from './src/private/devmenu/DevMenu';
 
-import typeof * as ReactNativePublicAPI from './index.js.flow';
+export type {HostComponent, HostInstance};
+// Windows]]
 
 const warnOnce = require('./Libraries/Utilities/warnOnce').default;
 const invariant = require('invariant');
 
 module.exports = {
-  get registerCallableModule() {
+  get registerCallableModule(): RegisterCallableModule {
     return require('./Libraries/Core/registerCallableModule').default;
   },
-  // #region Components
-  get AccessibilityInfo() {
+  // Components
+  get AccessibilityInfo(): AccessibilityInfo {
     return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo')
       .default;
   },
-  get ActivityIndicator() {
+  get ActivityIndicator(): ActivityIndicator {
     return require('./Libraries/Components/ActivityIndicator/ActivityIndicator')
       .default;
   },
-  get Button() {
+  get Button(): Button {
     return require('./Libraries/Components/Button').default;
   },
-  get DrawerLayoutAndroid() {
+  // $FlowFixMe[value-as-type]
+  get DrawerLayoutAndroid(): DrawerLayoutAndroid {
     return require('./Libraries/Components/DrawerAndroid/DrawerLayoutAndroid')
       .default;
   },
-  get FlatList() {
+  get FlatList(): FlatList {
     return require('./Libraries/Lists/FlatList').default;
   },
-  get Image() {
+  get Image(): Image {
     return require('./Libraries/Image/Image').default;
   },
-  get ImageBackground() {
+  get ImageBackground(): ImageBackground {
     return require('./Libraries/Image/ImageBackground').default;
   },
-  get InputAccessoryView() {
+  get InputAccessoryView(): InputAccessoryView {
     return require('./Libraries/Components/TextInput/InputAccessoryView')
       .default;
   },
-  get experimental_LayoutConformance() {
+  get experimental_LayoutConformance(): LayoutConformance {
     return require('./Libraries/Components/LayoutConformance/LayoutConformance')
       .default;
   },
-  get KeyboardAvoidingView() {
+  get KeyboardAvoidingView(): KeyboardAvoidingView {
     return require('./Libraries/Components/Keyboard/KeyboardAvoidingView')
       .default;
   },
-  get Modal() {
+  get Modal(): Modal {
     return require('./Libraries/Modal/Modal').default;
   },
-  get Pressable() {
+  get Pressable(): Pressable {
     return require('./Libraries/Components/Pressable/Pressable').default;
   },
-  get ProgressBarAndroid() {
+  // $FlowFixMe[value-as-type]
+  get ProgressBarAndroid(): ProgressBarAndroid {
     warnOnce(
       'progress-bar-android-moved',
       'ProgressBarAndroid has been extracted from react-native core and will be removed in a future release. ' +
@@ -86,84 +169,84 @@ module.exports = {
     return require('./Libraries/Components/ProgressBarAndroid/ProgressBarAndroid')
       .default;
   },
-  get RefreshControl() {
+  get RefreshControl(): RefreshControl {
     return require('./Libraries/Components/RefreshControl/RefreshControl')
       .default;
   },
-  get SafeAreaView() {
+  get SafeAreaView(): SafeAreaView {
     return require('./Libraries/Components/SafeAreaView/SafeAreaView').default;
   },
-  get ScrollView() {
+  get ScrollView(): ScrollView {
     return require('./Libraries/Components/ScrollView/ScrollView').default;
   },
-  get SectionList() {
+  get SectionList(): SectionList {
     return require('./Libraries/Lists/SectionList').default;
   },
-  get StatusBar() {
+  get StatusBar(): StatusBar {
     return require('./Libraries/Components/StatusBar/StatusBar').default;
   },
-  get Switch() {
+  get Switch(): Switch {
     return require('./Libraries/Components/Switch/Switch').default;
   },
-  get Text() {
+  get Text(): Text {
     return require('./Libraries/Text/Text').default;
   },
-  get TextInput() {
+  get TextInput(): TextInput {
     return require('./Libraries/Components/TextInput/TextInput').default;
   },
-  get Touchable() {
+  get Touchable(): Touchable {
     return require('./Libraries/Components/Touchable/Touchable').default;
   },
-  get TouchableHighlight() {
+  get TouchableHighlight(): TouchableHighlight {
     return require('./Libraries/Components/Touchable/TouchableHighlight')
       .default;
   },
-  get TouchableNativeFeedback() {
+  get TouchableNativeFeedback(): TouchableNativeFeedback {
     return require('./Libraries/Components/Touchable/TouchableNativeFeedback')
       .default;
   },
-  get TouchableOpacity() {
+  get TouchableOpacity(): TouchableOpacity {
     return require('./Libraries/Components/Touchable/TouchableOpacity').default;
   },
-  get TouchableWithoutFeedback() {
+  get TouchableWithoutFeedback(): TouchableWithoutFeedback {
     return require('./Libraries/Components/Touchable/TouchableWithoutFeedback')
       .default;
   },
-  get View() {
+  get View(): View {
     return require('./Libraries/Components/View/View').default;
   },
-  get VirtualizedList() {
+  get VirtualizedList(): VirtualizedList {
     return require('./Libraries/Lists/VirtualizedList').default;
   },
-  get VirtualizedSectionList() {
+  get VirtualizedSectionList(): VirtualizedSectionList {
     return require('./Libraries/Lists/VirtualizedSectionList').default;
   },
-  // #endregion
-  // #region APIs
-  get ActionSheetIOS() {
+
+  // APIs
+  get ActionSheetIOS(): ActionSheetIOS {
     return require('./Libraries/ActionSheetIOS/ActionSheetIOS').default;
   },
-  get Alert() {
+  get Alert(): Alert {
     return require('./Libraries/Alert/Alert').default;
   },
   // Include any types exported in the Animated module together with its default export, so
   // you can references types such as Animated.Numeric
-  get Animated() {
+  get Animated(): Animated {
     return require('./Libraries/Animated/Animated').default;
   },
-  get Appearance() {
+  get Appearance(): Appearance {
     return require('./Libraries/Utilities/Appearance');
   },
-  get AppRegistry() {
+  get AppRegistry(): AppRegistry {
     return require('./Libraries/ReactNative/AppRegistry').default;
   },
-  get AppState() {
+  get AppState(): AppState {
     return require('./Libraries/AppState/AppState').default;
   },
-  get BackHandler() {
+  get BackHandler(): BackHandler {
     return require('./Libraries/Utilities/BackHandler').default;
   },
-  get Clipboard() {
+  get Clipboard(): Clipboard {
     warnOnce(
       'clipboard-moved',
       'Clipboard has been extracted from react-native core and will be removed in a future release. ' +
@@ -172,62 +255,62 @@ module.exports = {
     );
     return require('./Libraries/Components/Clipboard/Clipboard').default;
   },
-  get DeviceInfo() {
+  get DeviceInfo(): DeviceInfo {
     return require('./Libraries/Utilities/DeviceInfo').default;
   },
-  get DevMenu() {
+  get DevMenu(): DevMenu {
     return require('./src/private/devmenu/DevMenu').default;
   },
-  get DevSettings() {
+  get DevSettings(): DevSettings {
     return require('./Libraries/Utilities/DevSettings').default;
   },
-  get Dimensions() {
+  get Dimensions(): Dimensions {
     return require('./Libraries/Utilities/Dimensions').default;
   },
-  get Easing() {
+  get Easing(): Easing {
     return require('./Libraries/Animated/Easing').default;
   },
-  get findNodeHandle() {
+  get findNodeHandle(): $PropertyType<ReactNative, 'findNodeHandle'> {
     return require('./Libraries/ReactNative/RendererProxy').findNodeHandle;
   },
-  get I18nManager() {
+  get I18nManager(): I18nManager {
     return require('./Libraries/ReactNative/I18nManager').default;
   },
-  get InteractionManager() {
+  get InteractionManager(): InteractionManager {
     return require('./Libraries/Interaction/InteractionManager').default;
   },
-  get Keyboard() {
+  get Keyboard(): Keyboard {
     return require('./Libraries/Components/Keyboard/Keyboard').default;
   },
-  get LayoutAnimation() {
+  get LayoutAnimation(): LayoutAnimation {
     return require('./Libraries/LayoutAnimation/LayoutAnimation').default;
   },
-  get Linking() {
+  get Linking(): Linking {
     return require('./Libraries/Linking/Linking').default;
   },
-  get LogBox() {
+  get LogBox(): LogBox {
     return require('./Libraries/LogBox/LogBox').default;
   },
-  get NativeDialogManagerAndroid() {
+  get NativeDialogManagerAndroid(): NativeDialogManagerAndroid {
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')
       .default;
   },
-  get NativeEventEmitter() {
+  get NativeEventEmitter(): NativeEventEmitter {
     return require('./Libraries/EventEmitter/NativeEventEmitter').default;
   },
-  get Networking() {
+  get Networking(): Networking {
     return require('./Libraries/Network/RCTNetworking').default;
   },
-  get PanResponder() {
+  get PanResponder(): PanResponder {
     return require('./Libraries/Interaction/PanResponder').default;
   },
-  get PermissionsAndroid() {
+  get PermissionsAndroid(): PermissionsAndroid {
     return require('./Libraries/PermissionsAndroid/PermissionsAndroid').default;
   },
-  get PixelRatio() {
+  get PixelRatio(): PixelRatio {
     return require('./Libraries/Utilities/PixelRatio').default;
   },
-  get PushNotificationIOS() {
+  get PushNotificationIOS(): PushNotificationIOS {
     warnOnce(
       'pushNotificationIOS-moved',
       'PushNotificationIOS has been extracted from react-native core and will be removed in a future release. ' +
@@ -237,75 +320,81 @@ module.exports = {
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS')
       .default;
   },
-  get Settings() {
+  get Settings(): Settings {
     return require('./Libraries/Settings/Settings').default;
   },
-  get Share() {
+  get Share(): Share {
     return require('./Libraries/Share/Share').default;
   },
-  get StyleSheet() {
+  get StyleSheet(): StyleSheet {
     return require('./Libraries/StyleSheet/StyleSheet').default;
   },
-  get Systrace() {
+  get Systrace(): Systrace {
     return require('./Libraries/Performance/Systrace');
   },
-  get ToastAndroid() {
+  // $FlowFixMe[value-as-type]
+  get ToastAndroid(): ToastAndroid {
     return require('./Libraries/Components/ToastAndroid/ToastAndroid').default;
   },
-  get TurboModuleRegistry() {
+  get TurboModuleRegistry(): TurboModuleRegistry {
     return require('./Libraries/TurboModule/TurboModuleRegistry');
   },
-  get UIManager() {
+  get UIManager(): UIManager {
     return require('./Libraries/ReactNative/UIManager').default;
   },
-  get unstable_batchedUpdates() {
+  get unstable_batchedUpdates(): $PropertyType<
+    ReactNative,
+    'unstable_batchedUpdates',
+  > {
     return require('./Libraries/ReactNative/RendererProxy')
       .unstable_batchedUpdates;
   },
-  get useAnimatedValue() {
+  get useAnimatedValue(): useAnimatedValue {
     return require('./Libraries/Animated/useAnimatedValue').default;
   },
-  get useColorScheme() {
+  get useColorScheme(): useColorScheme {
     return require('./Libraries/Utilities/useColorScheme').default;
   },
-  get useWindowDimensions() {
+  get useWindowDimensions(): useWindowDimensions {
     return require('./Libraries/Utilities/useWindowDimensions').default;
   },
-  get UTFSequence() {
+  get UTFSequence(): UTFSequence {
     return require('./Libraries/UTFSequence').default;
   },
-  get Vibration() {
+  get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
   },
-  // #endregion
-  // #region Plugins
-  get DeviceEventEmitter() {
+
+  // Plugins
+  get DeviceEventEmitter(): RCTDeviceEventEmitter {
     return require('./Libraries/EventEmitter/RCTDeviceEventEmitter').default;
   },
-  get DynamicColorIOS() {
+  get DynamicColorIOS(): DynamicColorIOS {
     return require('./Libraries/StyleSheet/PlatformColorValueTypesIOS')
       .DynamicColorIOS;
   },
-  get NativeAppEventEmitter() {
+  get NativeAppEventEmitter(): RCTNativeAppEventEmitter {
     return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter').default;
   },
-  get NativeModules() {
+  get NativeModules(): NativeModules {
     return require('./Libraries/BatchedBridge/NativeModules').default;
   },
-  get Platform() {
+  get Platform(): Platform {
     return require('./Libraries/Utilities/Platform').default;
   },
-  get PlatformColor() {
+  get PlatformColor(): PlatformColor {
     return require('./Libraries/StyleSheet/PlatformColorValueTypes')
       .PlatformColor;
   },
-  get processColor() {
+  get processColor(): processColor {
     return require('./Libraries/StyleSheet/processColor').default;
   },
-  get requireNativeComponent() {
+  get requireNativeComponent(): <T: {...}>(
+    uiViewClassName: string,
+  ) => HostComponent<T> {
     return require('./Libraries/ReactNative/requireNativeComponent').default;
   },
-  get RootTagContext() {
+  get RootTagContext(): RootTagContext {
     return require('./Libraries/ReactNative/RootTag').RootTagContext;
   },
   get unstable_enableLogBox(): () => void {
@@ -364,11 +453,10 @@ module.exports = {
   get ViewWindows(): any {
     return require('./Libraries/Components/View/View').default;
   },
-  get AppTheme(): any {
+  get AppTheme(): AppTheme {
     return require('./Libraries/AppTheme/AppTheme');
   },
-  // #endregion
-} as ReactNativePublicAPI;
+};
 
 if (__DEV__) {
   /* $FlowFixMe[prop-missing] This is intentional: Flow will error when

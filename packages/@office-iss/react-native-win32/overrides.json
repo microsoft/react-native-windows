@@ -476,10 +476,11 @@
       "baseHash": "8c3daf7b75af0445441def55571374bebed83726"
     },
     {
-      "type": "derived",
-      "file": "src-win/Libraries/Utilities/PlatformTypes.win32.js",
+      "type": "patch",
+      "file": "src-win/Libraries/Utilities/PlatformTypes.js",
       "baseFile": "packages/react-native/Libraries/Utilities/PlatformTypes.js",
-      "baseHash": "0a7fce66d820af1b612a861a564b6f035256843d"
+      "baseHash": "0a7fce66d820af1b612a861a564b6f035256843d",
+      "issue": 14686
     },
     {
       "type": "copy",
