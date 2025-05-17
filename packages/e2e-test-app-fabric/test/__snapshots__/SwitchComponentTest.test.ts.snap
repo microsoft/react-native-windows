@@ -495,7 +495,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
     "LocalizedControlType": "group",
     "__Children": [
       {
-        "AutomationId": "",
+        "AutomationId": "accessibility-switch",
         "ControlType": 50000,
         "HelpText": "Switch",
         "IsKeyboardFocusable": true,
