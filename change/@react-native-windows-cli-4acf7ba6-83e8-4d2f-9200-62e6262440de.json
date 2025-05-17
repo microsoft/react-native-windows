@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix(cli): ignore msbuild binglog files",
-  "packageName": "@react-native-windows/cli",
-  "email": "fcalise@gmail.com",
-  "dependentChangeType": "patch"
-}
