@@ -25,18 +25,18 @@ class FocusManager {
           // $FlowIgnoreMe[incompatible-call]
           findNodeHandle(ref),
           UIManager.getViewManagerConfig('RCTView').Commands.aggressivefocus,
-          null,
+          [],
         );
       } else {
         UIManager.dispatchViewManagerCommand(
           // $FlowIgnoreMe[incompatible-call]
           findNodeHandle(ref),
           UIManager.getViewManagerConfig('RCTView').Commands.politefocus,
-          null,
+          [],
         );
       }
     }
   }
 }
 
-module.exports = FocusManager;
+export default FocusManager;

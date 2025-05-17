@@ -14,6 +14,7 @@ export type PlatformSelectSpec<T> = {
   ios?: T,
   android?: T,
   win32?: T,
+  windows?: T,
   ...
 };
 

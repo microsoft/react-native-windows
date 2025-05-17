@@ -10,6 +10,8 @@
 
 import type {PartialViewConfigWithoutName} from './PlatformBaseViewConfig';
 
+import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
+import NativeReactNativeFeatureFlags from '../../src/private/featureflags/specs/NativeReactNativeFeatureFlags';
 import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
 import {DynamicallyInjectedByGestureHandler} from './ViewConfigIgnore';
 
@@ -220,13 +222,13 @@ const validAttributesForNonEventProps = {
   backfaceVisibility: true,
   opacity: true,
   shadowColor: {process: require('../StyleSheet/processColor').default},
-  shadowOffset: {diff: require('../Utilities/differ/sizesDiffer')},
+  shadowOffset: {diff: require('../Utilities/differ/sizesDiffer').default},
   shadowOpacity: true,
   shadowRadius: true,
   needsOffscreenAlphaCompositing: true,
   overflow: true,
   shouldRasterizeIOS: true,
-  transform: {diff: require('../Utilities/differ/matricesDiffer')},
+  transform: {diff: require('../Utilities/differ/matricesDiffer').default},
   transformOrigin: true,
   accessibilityRole: true,
   accessibilityState: true,
@@ -239,15 +241,23 @@ const validAttributesForNonEventProps = {
   borderCurve: true,
   borderWidth: true,
   borderStyle: true,
-  hitSlop: {diff: require('../Utilities/differ/insetsDiffer')},
+  hitSlop: {diff: require('../Utilities/differ/insetsDiffer').default},
   collapsable: true,
   collapsableChildren: true,
-  experimental_filter: {
-    process: require('../StyleSheet/processFilter').default,
-  },
-  boxShadow: {
-    process: require('../StyleSheet/processBoxShadow').default,
-  },
+  experimental_filter:
+    NativeReactNativeFeatureFlags != null &&
+    ReactNativeFeatureFlags.enableNativeCSSParsing()
+      ? true
+      : {
+          process: require('../StyleSheet/processFilter').default,
+        },
+  boxShadow:
+    NativeReactNativeFeatureFlags != null &&
+    ReactNativeFeatureFlags.enableNativeCSSParsing()
+      ? true
+      : {
+          process: require('../StyleSheet/processBoxShadow').default,
+        },
   mixBlendMode: true,
   isolation: true,
 

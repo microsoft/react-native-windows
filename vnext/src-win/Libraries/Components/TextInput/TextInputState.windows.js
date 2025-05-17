@@ -24,7 +24,7 @@ import {Commands as iOSTextInputCommands} from '../../Components/TextInput/RCTSi
 import {Commands as WindowsTextInputCommands} from '../../Components/TextInput/WindowsTextInputNativeComponent';
 
 const {findNodeHandle} = require('../../ReactNative/RendererProxy');
-const Platform = require('../../Utilities/Platform');
+const Platform = require('../../Utilities/Platform').default;
 
 let currentlyFocusedInputRef: ?HostInstance = null;
 const inputs = new Set<{

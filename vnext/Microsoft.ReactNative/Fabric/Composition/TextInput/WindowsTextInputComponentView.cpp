@@ -692,7 +692,7 @@ void WindowsTextInputComponentView::OnPointerPressed(
     float neutralX = m_layoutMetrics.frame.origin.x;
     float neutralY = m_layoutMetrics.frame.origin.y;
 
-    facebook::react::PressEvent pressInArgs;
+    facebook::react::GestureResponderEvent pressInArgs;
     pressInArgs.target = m_tag;
     pressInArgs.pagePoint = {position.X, position.Y};
     pressInArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}

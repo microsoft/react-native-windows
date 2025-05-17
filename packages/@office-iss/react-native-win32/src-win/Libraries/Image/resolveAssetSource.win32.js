@@ -9,7 +9,7 @@
 'use strict';
 
 const resolveAssetSource = require('./resolveAssetSource.js'); // Get base impl
-const Platform = require('../Utilities/Platform');
+const Platform = require('../Utilities/Platform').default;
 const ensureShortPath = require('./assetPaths.js');
 
 type IPackagerAsset = {

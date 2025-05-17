@@ -9,7 +9,7 @@
 import type {
   Platform as PlatformType,
   PlatformSelectSpec,
-} from './Platform.flow';
+} from './PlatformTypes';
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
@@ -76,4 +76,4 @@ const Platform: PlatformType = {
           spec.default,
 };
 
-module.exports = Platform;
+export default Platform;
