@@ -159,12 +159,11 @@ steps:
     parameters:
       buildLogDirectory: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
 
-  # #13705 - Temporarily disable test:windows call until we get upstream fix
   # Only run the following on fabric apps
-  # - ${{ if and(endsWith(parameters.template, '-app')) }}:
-  #   - script: call yarn test:windows
-  #     displayName: Run jest tests with react-test-renderer
-  #     workingDirectory: $(Agent.BuildDirectory)\testcli
+  - ${{ if and(endsWith(parameters.template, '-app')) }}:
+    - script: call yarn test:windows
+      displayName: Run jest tests with react-test-renderer
+      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   # Only test bundling in debug since we already bundle as part of release builds
   - ${{ if and(endsWith(parameters.template, '-app'), eq(parameters.configuration, 'Debug')) }}:
