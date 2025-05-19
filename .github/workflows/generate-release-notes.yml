@@ -13,11 +13,8 @@ on:
         default: '2025-05-06'
 
   push:
-    branches:
-      - '**'
-  pull_request:
-    branches:
-      - '**'
+    tags:
+      - 'react_native_windows_v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   generate-release-notes:
@@ -27,9 +24,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: anupriya13/react-native-windows
           fetch-depth: 0
-          ref: ${{ github.head_ref != '' && github.head_ref || github.ref_name }}
+          ref: ${{ github.ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -43,15 +39,17 @@ jobs:
         id: get_tag
         run: |
           tag=$(git describe --tags --abbrev=0 || echo "Unreleased")
+          echo "tag=$tag"
           echo "tag=$tag" >> $GITHUB_OUTPUT
 
       - name: Generate release notes file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
-          START_DATE: ${{ github.event.inputs.start_date || '2025-01-27' }}
-          END_DATE: ${{ github.event.inputs.end_date || '2025-05-06' }}
+          START_DATE: ${{ inputs.start_date }}
+          END_DATE: ${{ inputs.end_date }}
         run: |
+          echo "Generating release notes for $RELEASE_TAG from $START_DATE to $END_DATE..."
           python .github/scripts/generate_release_notes.py > release_notes.md
           mkdir -p .github/release_notes
           mv release_notes.md .github/release_notes/release_notes.md
