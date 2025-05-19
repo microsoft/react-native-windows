@@ -199,11 +199,13 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                   VerifyElseCrash(argCount > 0);
                   if (auto strongLongLivedObjectCollection = longLivedObjectCollection.lock()) {
                     auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
+                    auto writer = winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder);
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 1),
-                        winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder),
+                        writer),
                         MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 1]),
                         nullptr);
+                    winrt::get_self<CallInvokerWriter>(writer)->ExitCurrentCallInvokeScope();
                   }
                   return facebook::jsi::Value::undefined();
                 });
@@ -227,9 +229,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                     auto weakCallback2 = LongLivedJsiFunction::CreateWeak(
                         strongLongLivedObjectCollection, rt, args[argCount - 1].getObject(rt).getFunction(rt));
 
+                    auto writer = winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder);
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 2),
-                        winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder),
+                        writer,
                         [weakCallback1, weakCallback2, jsiRuntimeHolder](const IJSValueWriter &writer) noexcept {
                           writer.as<CallInvokerWriter>()->WithResultArgs(
                               [weakCallback1, weakCallback2, jsiRuntimeHolder](
@@ -262,6 +265,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                                 }
                               });
                         });
+                    winrt::get_self<CallInvokerWriter>(writer)->ExitCurrentCallInvokeScope();
                   }
                   return facebook::jsi::Value::undefined();
                 });
@@ -343,6 +347,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                                       }
                                     });
                               });
+                          winrt::get_self<CallInvokerWriter>(argWriter)->ExitCurrentCallInvokeScope();
                         });
                   }
                   return facebook::jsi::Value::undefined();
