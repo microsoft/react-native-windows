@@ -521,13 +521,6 @@ void ReactNativeIsland::UpdateRootViewInternal() noexcept {
   }
 }
 
-struct AutoMRE {
-  ~AutoMRE() {
-    mre.Set();
-  }
-  Mso::ManualResetEvent mre;
-};
-
 void ReactNativeIsland::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
@@ -540,17 +533,6 @@ void ReactNativeIsland::UninitRootView() noexcept {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
-
-    // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
-    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead
-    // this method should return a Promise, which should be resolved when the JS logic is complete. The task will auto
-    // set the event on destruction to ensure that the event is set if the JS Queue has already been shutdown
-    Mso::ManualResetEvent mre;
-    m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
-    mre.Wait();
-
-    // Paper version gives the JS thread time to finish executing - Is this needed?
-    // m_jsMessageThread.Load()->runOnQueueSync([]() {});
   }
 
   m_rootTag = -1;
