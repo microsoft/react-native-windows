@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.76] Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
