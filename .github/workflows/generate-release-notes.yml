@@ -10,7 +10,7 @@ on:
       end_date:
         description: 'End date (format: yyyy-mm-dd)'
         required: true
-        default: '2025-05-12'
+        default: '2025-05-06'
 
   push:
     branches:
@@ -50,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
           START_DATE: ${{ github.event.inputs.start_date || '2025-01-27' }}
-          END_DATE: ${{ github.event.inputs.end_date || '2025-05-12' }}
+          END_DATE: ${{ github.event.inputs.end_date || '2025-05-06' }}
         run: |
           python .github/scripts/generate_release_notes.py > release_notes.md
           mkdir -p .github/release_notes
