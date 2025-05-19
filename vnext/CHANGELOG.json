@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 May 2025 15:25:54 GMT",
+      "version": "0.75.18",
+      "tag": "react-native-windows_v0.75.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "40684c4b29c337e4073c164fb264cc61de42ee18",
+            "comment": "Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 15:26:14 GMT",
       "version": "0.75.17",
       "tag": "react-native-windows_v0.75.17",

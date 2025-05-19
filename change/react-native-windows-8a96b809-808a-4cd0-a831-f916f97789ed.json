@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.75] Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 28 Apr 2025 15:26:14 GMT and should not be manually modified.
+This log was last generated on Mon, 19 May 2025 15:25:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.18
+
+Mon, 19 May 2025 15:25:54 GMT
+
+### Patches
+
+- Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere (jthysell@microsoft.com)
 
 ## 0.75.17
 
