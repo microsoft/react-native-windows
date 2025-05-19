@@ -14,7 +14,12 @@ on:
 
   push:
     tags:
+      - 'react_native_windows_v[0-9]+.[0-9]+'
       - 'react_native_windows_v[0-9]+.[0-9]+.[0-9]+'
+
+  pull_request:
+    branches:
+      - '*-stable'
 
 jobs:
   generate-release-notes:
