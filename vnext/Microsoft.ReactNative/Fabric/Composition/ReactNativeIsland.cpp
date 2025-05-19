@@ -43,6 +43,7 @@ constexpr float loadingActivitySize = 12.0f;
 constexpr float loadingActivityHorizontalOffset = 16.0f;
 constexpr float loadingBarHeight = 36.0f;
 constexpr float loadingBarFontSize = 20.0f;
+constexpr float loadingBarMinFontSize = 8.0f;
 constexpr float loadingTextHorizontalOffset = 48.0f;
 
 //! This class ensures that we access ReactRootView from UI thread.
@@ -611,6 +612,14 @@ facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
   return facebook::react::AttributedStringBox{attributedString};
 }
 
+facebook::react::ParagraphAttributes CreateLoadingParagraphAttributes() noexcept {
+  facebook::react::ParagraphAttributes pa;
+  pa.adjustsFontSizeToFit = true;
+  pa.minimumFontSize = loadingBarMinFontSize;
+  pa.maximumFontSize = loadingBarFontSize;
+  return pa;
+}
+
 facebook::react::Size ReactNativeIsland::MeasureLoading(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints) const noexcept {
   facebook::react::LayoutConstraints fbLayoutConstraints;
@@ -619,7 +628,7 @@ facebook::react::Size ReactNativeIsland::MeasureLoading(
   auto attributedStringBox = CreateLoadingAttributedString();
   winrt::com_ptr<::IDWriteTextLayout> textLayout;
   facebook::react::TextLayoutManager::GetTextLayout(
-      attributedStringBox, {} /*paragraphAttributes*/, fbLayoutConstraints, textLayout);
+      attributedStringBox, CreateLoadingParagraphAttributes(), fbLayoutConstraints, textLayout);
 
   DWRITE_TEXT_METRICS tm;
   winrt::check_hresult(textLayout->GetMetrics(&tm));
@@ -701,7 +710,7 @@ Composition::Experimental::IDrawingSurfaceBrush ReactNativeIsland::CreateLoading
 
       winrt::com_ptr<::IDWriteTextLayout> textLayout;
       facebook::react::TextLayoutManager::GetTextLayout(
-          attributedStringBox, {} /*paragraphAttributes*/, constraints, textLayout);
+          attributedStringBox, CreateLoadingParagraphAttributes(), constraints, textLayout);
 
       DWRITE_TEXT_METRICS tm;
       textLayout->GetMetrics(&tm);
