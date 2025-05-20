@@ -45,11 +45,13 @@ void CallInvokerWriter::WithResultArgs(
         [handler, dynValue = std::move(dynValue), weakJsiRuntimeHolder = m_jsiRuntimeHolder, self = get_strong()]() {
           std::vector<facebook::jsi::Value> args;
           args.reserve(dynValue.size());
-          auto &runtime = jsiRuntimeHolder->Runtime();
-          for (auto const &item : dynValue) {
-            args.emplace_back(facebook::jsi::valueFromDynamic(runtime, item));
+          if (auto jsiRuntimeHolder = weakJsiRuntimeHolder.lock()) {
+            auto &runtime = jsiRuntimeHolder->Runtime();
+            for (auto const &item : dynValue) {
+              args.emplace_back(facebook::jsi::valueFromDynamic(runtime, item));
+            }
+            handler(runtime, args.data(), args.size());
           }
-          handler(runtime, args.data(), args.size());
         });
   }
 }
