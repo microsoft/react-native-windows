@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 28 Apr 2025 15:24:30 GMT and should not be manually modified.
+This log was last generated on Tue, 20 May 2025 23:30:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.45
+
+Tue, 20 May 2025 23:30:04 GMT
+
+### Patches
+
+- Fix await on new arch - switching to CallInvoker for TM callbacks (acoates@microsoft.com)
 
 ## 0.74.44
 

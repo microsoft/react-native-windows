@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 May 2025 23:30:04 GMT",
+      "version": "0.74.45",
+      "tag": "react-native-windows_v0.74.45",
+      "comments": {
+        "patch": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2bdaa5c1f325505be2d0ee9c8f4347594b480d18",
+            "comment": "Fix await on new arch - switching to CallInvoker for TM callbacks"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 15:24:30 GMT",
       "version": "0.74.44",
       "tag": "react-native-windows_v0.74.44",
