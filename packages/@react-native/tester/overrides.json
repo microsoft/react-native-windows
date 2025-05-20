@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.76.6",
+  "baseVersion": "0.76.9",
   "overrides": [
     {
       "type": "copy",
@@ -390,14 +390,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "528bba6e7f5938ec8c81c54471962883047e68f3",
+      "baseHash": "eafda2ddc809145094056ad5f4ac96146f60061f",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "986ccca321c59084c52956bbaf32dbe72e844006",
+      "baseHash": "b96f575fa4290b7b0ce4873f5839702c279c3804",
       "issue": 4054
     },
     {
@@ -572,7 +572,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "7a5508a9edb058986ca34c4032d6e4feb6d1e841",
+      "baseHash": "41f392a7f733c301300e2baffb2d2a133a3a86c4",
       "issue": 13228
     }
   ]
