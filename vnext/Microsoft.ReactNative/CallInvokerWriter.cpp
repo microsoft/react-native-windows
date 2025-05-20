@@ -17,7 +17,7 @@ CallInvokerWriter::CallInvokerWriter(
     std::weak_ptr<LongLivedJsiRuntime> jsiRuntimeHolder) noexcept
     : m_callInvoker(jsInvoker),
       m_jsiRuntimeHolder(std::move(jsiRuntimeHolder)),
-      m_threadId(std::this_thread::get_id()){} {}
+      m_threadId(std::this_thread::get_id()) {}
 
 CallInvokerWriter::~CallInvokerWriter() {
   if (auto jsiRuntimeHolder = m_jsiRuntimeHolder.lock()) {
