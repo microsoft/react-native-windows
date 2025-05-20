@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.74] Fix await on new arch - switching to CallInvoker for TM callbacks",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch"
+}
