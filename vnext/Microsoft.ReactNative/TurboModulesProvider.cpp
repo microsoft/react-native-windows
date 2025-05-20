@@ -202,7 +202,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                     auto writer = winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder);
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 1),
-                        writer),
+                        writer,
                         MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 1]),
                         nullptr);
                     winrt::get_self<CallInvokerWriter>(writer)->ExitCurrentCallInvokeScope();

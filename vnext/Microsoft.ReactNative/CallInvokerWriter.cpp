@@ -42,10 +42,10 @@ void CallInvokerWriter::WithResultArgs(
     folly::dynamic dynValue = m_dynamicWriter->TakeValue();
     VerifyElseCrash(dynValue.isArray());
     m_callInvoker->invokeAsync(
-        [handler, dynValue = std::move(dynValue), weakJsiRuntimeHolder = m_jsiRuntimeHolder, self = get_strong()](
-            facebook::jsi::Runtime &runtime) {
+        [handler, dynValue = std::move(dynValue), weakJsiRuntimeHolder = m_jsiRuntimeHolder, self = get_strong()]() {
           std::vector<facebook::jsi::Value> args;
           args.reserve(dynValue.size());
+          auto &runtime = jsiRuntimeHolder->Runtime();
           for (auto const &item : dynValue) {
             args.emplace_back(facebook::jsi::valueFromDynamic(runtime, item));
           }
