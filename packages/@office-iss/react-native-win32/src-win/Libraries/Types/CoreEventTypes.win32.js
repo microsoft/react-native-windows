@@ -10,7 +10,7 @@
 
 import type {HostInstance} from '../Renderer/shims/ReactNativeTypes';
 
-export type SyntheticEvent<+T> = $ReadOnly<{
+export type NativeSyntheticEvent<+T> = $ReadOnly<{
   bubbles: ?boolean,
   cancelable: ?boolean,
   currentTarget: number | HostInstance,
@@ -32,7 +32,7 @@ export type SyntheticEvent<+T> = $ReadOnly<{
 }>;
 
 export type ResponderSyntheticEvent<T> = $ReadOnly<{
-  ...SyntheticEvent<T>,
+  ...NativeSyntheticEvent<T>,
   touchHistory: $ReadOnly<{
     indexOfSingleActiveTouch: number,
     mostRecentTimeStamp: number,
@@ -54,15 +54,15 @@ export type ResponderSyntheticEvent<T> = $ReadOnly<{
   }>,
 }>;
 
-export type Layout = $ReadOnly<{
+export type LayoutRectangle = $ReadOnly<{
   x: number,
   y: number,
   width: number,
   height: number,
 }>;
 
-export type TextLayout = $ReadOnly<{
-  ...Layout,
+export type TextLayoutLine = $ReadOnly<{
+  ...LayoutRectangle,
   ascender: number,
   capHeight: number,
   descender: number,
@@ -70,17 +70,17 @@ export type TextLayout = $ReadOnly<{
   xHeight: number,
 }>;
 
-export type LayoutEvent = SyntheticEvent<
+export type LayoutChangeEvent = NativeSyntheticEvent<
   $ReadOnly<{
-    layout: Layout,
+    layout: LayoutRectangle,
   }>,
 >;
 
-export type TextLayoutEvent = SyntheticEvent<
-  $ReadOnly<{
-    lines: Array<TextLayout>,
-  }>,
->;
+export type TextLayoutEventData = $ReadOnly<{
+  lines: Array<TextLayoutLine>,
+}>;
+
+export type TextLayoutEvent = NativeSyntheticEvent<TextLayoutEventData>;
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/UIEvent
@@ -228,80 +228,116 @@ export interface NativePointerEvent extends NativeMouseEvent {
   +isPrimary: boolean;
 }
 
-export type PointerEvent = SyntheticEvent<NativePointerEvent>;
+export type PointerEvent = NativeSyntheticEvent<NativePointerEvent>;
 
-export type PressEvent = ResponderSyntheticEvent<
-  $ReadOnly<{
-    altKey: ?boolean, // TODO(macOS)
-    button: ?number, // TODO(macOS)
-    changedTouches: $ReadOnlyArray<$PropertyType<PressEvent, 'nativeEvent'>>,
-    ctrlKey: ?boolean, // TODO(macOS)
-    force?: number,
-    identifier: number,
-    locationX: number,
-    locationY: number,
-    metaKey: ?boolean, // TODO(macOS)
-    pageX: number,
-    pageY: number,
-    shiftKey: ?boolean, // TODO(macOS)
-    target: ?number,
-    timestamp: number,
-    touches: $ReadOnlyArray<$PropertyType<PressEvent, 'nativeEvent'>>,
-  }>,
->;
+export type NativeTouchEvent = $ReadOnly<{
+  altKey: ?boolean, // TODO(macOS)
 
-export type ScrollEvent = SyntheticEvent<
-  $ReadOnly<{
-    contentInset: $ReadOnly<{
-      bottom: number,
-      left: number,
-      right: number,
-      top: number,
-    }>,
-    contentOffset: $ReadOnly<{
-      y: number,
-      x: number,
-    }>,
-    contentSize: $ReadOnly<{
-      height: number,
-      width: number,
-    }>,
-    layoutMeasurement: $ReadOnly<{
-      height: number,
-      width: number,
-    }>,
-    targetContentOffset?: $ReadOnly<{
-      y: number,
-      x: number,
-    }>,
-    velocity?: $ReadOnly<{
-      y: number,
-      x: number,
-    }>,
-    zoomScale?: number,
-    responderIgnoreScroll?: boolean,
-    key?: string, // TODO(macOS)
-  }>,
->;
+  button: ?number, // TODO(macOS)
+  /**
+   * Array of all touch events that have changed since the last event
+   */
+  changedTouches: $ReadOnlyArray<NativeTouchEvent>,
 
-export type BlurEvent = SyntheticEvent<
-  $ReadOnly<{
-    target: number,
-    ...
-  }>,
->;
+  ctrlKey: ?boolean, // TODO(macOS)
 
-export type FocusEvent = SyntheticEvent<
-  $ReadOnly<{
-    target: number,
-    ...
-  }>,
->;
+  /**
+   * 3D Touch reported force
+   * @platform ios
+   */
+  force?: number,
+  /**
+   * The ID of the touch
+   */
+  identifier: number,
+  /**
+   * The X position of the touch, relative to the element
+   */
+  locationX: number,
+  /**
+   * The Y position of the touch, relative to the element
+   */
+  locationY: number,
+  /**
+   * The X position of the touch, relative to the screen
+   */
+
+  metaKey: ?boolean, // TODO(macOS)
+
+  pageX: number,
+  /**
+   * The Y position of the touch, relative to the screen
+   */
+  pageY: number,
+
+  shiftKey: ?boolean, // TODO(macOS)
+  /**
+   * The node id of the element receiving the touch event
+   */
+  target: ?number,
+  /**
+   * A time identifier for the touch, useful for velocity calculation
+   */
+  timestamp: number,
+  /**
+   * Array of all current touches on the screen
+   */
+  touches: $ReadOnlyArray<NativeTouchEvent>,
+}>;
+
+export type GestureResponderEvent = ResponderSyntheticEvent<NativeTouchEvent>;
+
+export type NativeScrollRectangle = $ReadOnly<{
+  bottom: number,
+  left: number,
+  right: number,
+  top: number,
+}>;
+
+export type NativeScrollPoint = $ReadOnly<{
+  y: number,
+  x: number,
+}>;
+
+export type NativeScrollVelocity = $ReadOnly<{
+  y: number,
+  x: number,
+}>;
+
+export type NativeScrollSize = $ReadOnly<{
+  height: number,
+  width: number,
+}>;
+
+export type NativeScrollEvent = $ReadOnly<{
+  contentInset: NativeScrollRectangle,
+  contentOffset: NativeScrollPoint,
+  contentSize: NativeScrollSize,
+  layoutMeasurement: NativeScrollSize,
+  velocity?: NativeScrollVelocity,
+  zoomScale?: number,
+  responderIgnoreScroll?: boolean,
+  /**
+   * @platform ios
+   */
+  targetContentOffset?: NativeScrollPoint,
+}>;
+
+export type ScrollEvent = NativeSyntheticEvent<NativeScrollEvent>;
+
+export type TargetedEvent = $ReadOnly<{
+  target: number,
+  ...
+}>;
+
+export type BlurEvent = NativeSyntheticEvent<TargetedEvent>;
+
+export type FocusEvent = NativeSyntheticEvent<TargetedEvent>;
 
 // [Windows Mouse events on Windows don't match up with the version in core
 // introduced for react-native-web. Replace typings with our values to catch
 // anything dependent on react-native-web specific values
-export type MouseEvent = SyntheticEvent<
+export type MouseEvent = NativeSyntheticEvent<
   $ReadOnly<{
     target: number,
     identifier: number,
@@ -328,7 +364,7 @@ export type MouseEvent = SyntheticEvent<
 // Windows]
 
 // [Windows
-export type KeyEvent = SyntheticEvent<
+export type KeyEvent = NativeSyntheticEvent<
   $ReadOnly<{|
     altKey: boolean,
     ctrlKey: boolean,

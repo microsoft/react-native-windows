@@ -8,7 +8,7 @@
 #include <ReactPropertyBag.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <hermes/hermes_api.h>
-#include <react/runtime/JSRuntimeFactory.h>
+#include <jsitooling/react/runtime/JSRuntimeFactory.h>
 
 namespace Microsoft::ReactNative {
 
