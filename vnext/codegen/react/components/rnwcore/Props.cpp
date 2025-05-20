@@ -153,5 +153,12 @@ UnimplementedNativeViewProps::UnimplementedNativeViewProps(
 
     name(convertRawProp(context, rawProps, "name", sourceProps.name, {""}))
       {}
+XamlHostProps::XamlHostProps(
+    const PropsParserContext &context,
+    const XamlHostProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    label(convertRawProp(context, rawProps, "label", sourceProps.label, {}))
+      {}
 
 } // namespace facebook::react

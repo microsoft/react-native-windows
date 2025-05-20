@@ -395,4 +395,14 @@ class UnimplementedNativeViewProps final : public ViewProps {
   std::string name{""};
 };
 
+class XamlHostProps final : public ViewProps {
+ public:
+  XamlHostProps() = default;
+  XamlHostProps(const PropsParserContext& context, const XamlHostProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  std::string label{};
+};
+
 } // namespace facebook::react
