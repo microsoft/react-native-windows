@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Scale loading bar text when island is super small",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

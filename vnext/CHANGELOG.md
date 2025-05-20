@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 17 May 2025 05:25:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 20 May 2025 06:25:35 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.958
+
+Tue, 20 May 2025 06:25:35 GMT
+
+### Changes
+
+- Fix crash when reloading an instance with an active ReactNativeIsland (30809111+acoates-ms@users.noreply.github.com)
+- Reenable optimization in TMs to avoid going through a dynamic for callbacks/promises (30809111+acoates-ms@users.noreply.github.com)
+- Scale loading bar text when island is super small (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.957
 

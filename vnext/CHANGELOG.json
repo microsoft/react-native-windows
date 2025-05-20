@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 May 2025 06:25:35 GMT",
+      "version": "0.0.0-canary.958",
+      "tag": "react-native-windows_v0.0.0-canary.958",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "935e5a79844673db6c997cc074bae57f880e0588",
+            "comment": "Fix crash when reloading an instance with an active ReactNativeIsland"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "721dff3b65b0baf2117778818a3b596d5f0b4488",
+            "comment": "Reenable optimization in TMs to avoid going through a dynamic for callbacks/promises"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9a999fed88e0d4f15fa39e36b4473d4682d7f6c8",
+            "comment": "Scale loading bar text when island is super small"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 May 2025 05:25:32 GMT",
       "version": "0.0.0-canary.957",
       "tag": "react-native-windows_v0.0.0-canary.957",
