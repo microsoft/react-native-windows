@@ -244,7 +244,7 @@ async function postInstall(config = {}, options = {}) {
 module.exports = {
   name: 'React Native Windows Library (C++)',
   description:
-    "A RNW native/turbo module supporting both RN's old and new architecture.",
+    "A RNW (Turbo) Native Module supporting RN's New and Old Architectures built in C++.",
   preInstall,
   getFileMappings,
   postInstall,
