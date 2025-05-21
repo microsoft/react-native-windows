@@ -136,10 +136,10 @@ class CSSTokenizer {
   constexpr CSSToken consumeNumber() {
     // https://www.w3.org/TR/css-syntax-3/#consume-number
     // https://www.w3.org/TR/css-syntax-3/#convert-a-string-to-a-number
-    int32_t signPart = 1.0;
+    int32_t signPart = 1; // [Windows]
     if (peek() == '+' || peek() == '-') {
       if (peek() == '-') {
-        signPart = -1.0;
+        signPart = -1; // [Windows]
       }
       advance();
     }
@@ -161,7 +161,7 @@ class CSSTokenizer {
       }
     }
 
-    int32_t exponentSign = 1.0;
+    int32_t exponentSign = 1; // [Windows]
     double exponentPart = 0;
     if ((peek() == 'e' || peek() == 'E') &&
         (isDigit(peek(1)) ||
@@ -169,7 +169,7 @@ class CSSTokenizer {
       advance();
       if (peek() == '+' || peek() == '-') {
         if (peek() == '-') {
-          exponentSign = -1.0;
+          exponentSign = -1; // [Windows]
         }
         advance();
       }
