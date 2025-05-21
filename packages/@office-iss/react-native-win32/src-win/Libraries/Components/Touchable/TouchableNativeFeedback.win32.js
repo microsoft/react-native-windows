@@ -271,15 +271,6 @@ class TouchableNativeFeedback extends React.Component<
     }
   }
 
-class TouchableNativeFeedback extends React.Component<Props, {}> {
-  render(): React.Node {
-    return (
-      <RCTTouchableNativeFeedback {...this.props}>
-        {this.props.children}
-      </RCTTouchableNativeFeedback>
-    );
-  }
-
   componentDidUpdate(
     prevProps: TouchableNativeFeedbackProps,
     prevState: State,
@@ -295,5 +286,20 @@ class TouchableNativeFeedback extends React.Component<Props, {}> {
     this.state.pressability.reset();
   }
 }
+
+// const RCTTouchableNativeFeedback = requireNativeComponent<Props>(
+//   'RCTTouchableNativeFeedback',
+// );
+
+// class TouchableNativeFeedback extends React.Component<Props, {}> {
+//   render(): React.Node {
+//     return (
+//       <RCTTouchableNativeFeedback {...this.props}>
+//         {this.props.children}
+//       </RCTTouchableNativeFeedback>
+//     );
+//   }
+// }
+TouchableNativeFeedback.displayName = 'TouchableNativeFeedback';
 
 export default TouchableNativeFeedback;
