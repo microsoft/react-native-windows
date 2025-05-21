@@ -323,7 +323,7 @@ export type ViewPropsAndroid = $ReadOnly<{
    *
    * @platform android
    */
-  focusable?: boolean,
+  focusable?: ?boolean,
 
   /**
    * Indicates whether this `View` should be focusable with a non-touch input device, eg. receive focus with a hardware keyboard.
@@ -421,17 +421,7 @@ type ViewPropsWindows = $ReadOnly<{|
 |}>;
 // Windows]
 
-export type ViewProps = $ReadOnly<{
-  ...DirectEventProps,
-  ...GestureResponderHandlers,
-  ...MouseEventProps,
-  ...PointerEventProps,
-  ...FocusEventProps,
-  ...TouchEventProps,
-  ...ViewPropsAndroid,
-  ...ViewPropsIOS,
-  ...ViewPropsWindows, // [Windows]
-  ...AccessibilityProps,
+type ViewBaseProps = $ReadOnly<{
   children?: Node,
   style?: ?ViewStyleProp,
 
@@ -523,4 +513,18 @@ export type ViewProps = $ReadOnly<{
 
   'aria-multiselectable'?: ?boolean, // Windows
   'aria-required'?: ?boolean, // Windows
+}>;
+
+export type ViewProps = $ReadOnly<{
+  ...DirectEventProps,
+  ...GestureResponderHandlers,
+  ...MouseEventProps,
+  ...PointerEventProps,
+  ...FocusEventProps,
+  ...TouchEventProps,
+  ...ViewPropsAndroid,
+  ...ViewPropsIOS,
+  ...ViewPropsWindows, // [Windows]
+  ...AccessibilityProps,
+  ...ViewBaseProps,
 }>;
