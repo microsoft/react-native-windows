@@ -25,7 +25,7 @@ function makeGenerateWindowsWrapper(language = 'cpp', isDefault = false) {
     const generateOptions = {
       overwrite: !!options.overwrite,
       language,
-      projectType,
+      projectType: 'app',
       experimentalNuGetDependency:
         experimentalFeatures?.UseExperimentalNuget === 'true' ?? false,
       useWinUI3: experimentalFeatures?.UseWinUI3 === 'true' ?? false,
