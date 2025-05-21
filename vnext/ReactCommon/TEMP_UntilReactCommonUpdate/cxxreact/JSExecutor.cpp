@@ -11,6 +11,7 @@
 
 #include <folly/Conv.h>
 #include <jsinspector-modern/ReactCdp.h>
+#include <jsinspector-modern/tracing/InstanceTracingProfile.h>
 #include <react/timing/primitives.h>
 
 #include <chrono>
@@ -42,6 +43,19 @@ std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> JSExecutor::cap
     facebook::jsi::Runtime &runtime,
     size_t framesToSkip) {
   return std::make_unique<facebook::react::jsinspector_modern::StackTrace>();
+}
+
+void JSExecutor::enableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #addissuenumber]
+}
+
+void JSExecutor::disableSamplingProfiler()  {
+  return; // [Windows TODO: stubbed implementation #addissuenumber]
+}
+
+facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor::collectSamplingProfile() {
+  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
+      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #addissuenumber]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>

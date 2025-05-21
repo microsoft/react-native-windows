@@ -200,6 +200,8 @@
       <Filter>react\renderer\telemetry</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopTaskReporter.cpp" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\AbsoluteLayout.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\Baseline.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\Cache.cpp" />
@@ -344,6 +346,10 @@
       <Filter>react\bridging</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\InstanceTracingProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopTaskReporter.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />
