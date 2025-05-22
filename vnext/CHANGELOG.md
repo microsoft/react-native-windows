@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 20 May 2025 06:25:35 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 22 May 2025 05:24:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.959
+
+Thu, 22 May 2025 05:24:49 GMT
+
+### Changes
+
+- Integrate RN  0.79.0-nightly-20250220-41b597c73 (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement maxFontSizeMultiplier in Text (54227869+anupriya13@users.noreply.github.com)
+- Fix descriptions for new project templates (jthysell@microsoft.com)
 
 ## 0.0.0-canary.958
 

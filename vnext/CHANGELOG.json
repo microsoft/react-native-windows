@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 May 2025 05:24:49 GMT",
+      "version": "0.0.0-canary.959",
+      "tag": "react-native-windows_v0.0.0-canary.959",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d31d0a6d69d9db9a81e7b4423d09baa381b98367",
+            "comment": "Integrate RN  0.79.0-nightly-20250220-41b597c73"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "42dad9859819723bffcd72ae2f25f9416de41e52",
+            "comment": "[Fabric] Implement maxFontSizeMultiplier in Text"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "89d0a4b05d82f1de40bb2ea1cad7dd6b211ed1af",
+            "comment": "Fix descriptions for new project templates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 May 2025 06:25:35 GMT",
       "version": "0.0.0-canary.958",
       "tag": "react-native-windows_v0.0.0-canary.958",
