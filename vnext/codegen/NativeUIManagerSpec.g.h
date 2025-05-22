@@ -20,7 +20,7 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(double, std::string, double, ::React::JSValue) noexcept>{0, L"createView"},
       Method<void(double, std::string, ::React::JSValue) noexcept>{1, L"updateView"},
       Method<void(double, std::vector<double>, Callback<double, double, double, double, double>) noexcept>{2, L"findSubviewIn"},
-      Method<void(double, double, std::optional<::React::JSValueArray>) noexcept>{3, L"dispatchViewManagerCommand"},
+      Method<void(double, double, ::React::JSValueArray) noexcept>{3, L"dispatchViewManagerCommand"},
       Method<void(double, Callback<double, double, double, double, double, double>) noexcept>{4, L"measure"},
       Method<void(double, Callback<double, double, double, double>) noexcept>{5, L"measureInWindow"},
       Method<void(double, double, Callback<std::vector<bool>>) noexcept>{6, L"viewIsDescendantOf"},
@@ -62,8 +62,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "dispatchViewManagerCommand",
-          "    REACT_METHOD(dispatchViewManagerCommand) void dispatchViewManagerCommand(double reactTag, double commandID, std::optional<::React::JSValueArray> commandArgs) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(dispatchViewManagerCommand) static void dispatchViewManagerCommand(double reactTag, double commandID, std::optional<::React::JSValueArray> commandArgs) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(dispatchViewManagerCommand) void dispatchViewManagerCommand(double reactTag, double commandID, ::React::JSValueArray && commandArgs) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(dispatchViewManagerCommand) static void dispatchViewManagerCommand(double reactTag, double commandID, ::React::JSValueArray && commandArgs) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "measure",

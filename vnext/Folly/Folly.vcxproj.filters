@@ -48,16 +48,16 @@
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\dynamic.cpp">
+    <ClCompile Include="$(FollyDir)\folly\json\dynamic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\container\detail\F14Table.cpp">
       <Filter>Source Files\container\detail</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\json_pointer.cpp">
+    <ClCompile Include="$(FollyDir)\folly\json\json_pointer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\json.cpp">
+    <ClCompile Include="$(FollyDir)\folly\json\json.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Format.cpp">
@@ -151,6 +151,9 @@
     <ClInclude Include="$(FollyDir)\folly\ConcurrentSkipList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(FollyDir)\..\fast_float-6.1.4\include\fast_float\fast_float.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="$(FollyDir)\folly\portability\Constexpr.h">
       <Filter>Header Files\portability</Filter>
     </ClInclude>
@@ -184,7 +187,16 @@
     <ClInclude Include="$(FollyDir)\folly\dynamic-inl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+     <ClInclude Include="$(FollyDir)\folly\json\dynamic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(FollyDir)\folly\json\dynamic-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="$(FollyDir)\folly\DynamicConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(FollyDir)\folly\json\DynamicConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(FollyDir)\folly\portability\Event.h">
@@ -268,7 +280,7 @@
     <ClInclude Include="$(FollyDir)\folly\IPAddressV6.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(FollyDir)\folly\json.h">
+    <ClInclude Include="$(FollyDir)\folly\json\json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(FollyDir)\folly\Lazy.h">

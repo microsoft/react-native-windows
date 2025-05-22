@@ -8,7 +8,7 @@
 
 namespace facebook::react {
 
-struct PressEvent {
+struct GestureResponderEvent {
   Tag target;
   Point pagePoint;
   Point offsetPoint;
@@ -37,7 +37,7 @@ class HostPlatformViewEventEmitter : public BaseViewEventEmitter {
 
 #pragma mark - Touch Events
 
-  virtual void onPressIn(PressEvent event) const;
+  virtual void onPressIn(GestureResponderEvent event) const;
 };
 
 } // namespace facebook::react

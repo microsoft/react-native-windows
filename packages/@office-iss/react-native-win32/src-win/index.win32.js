@@ -8,9 +8,12 @@
  * @flow
  */
 
+// flowlint unsafe-getters-setters:off
+
 'use strict';
 'use client';
 
+// [[Windows
 // APIs
 import typeof ActionSheetIOS from './Libraries/ActionSheetIOS/ActionSheetIOS';
 import typeof Alert from './Libraries/Alert/Alert';
@@ -97,14 +100,14 @@ import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
 import typeof DevMenu from './src/private/devmenu/DevMenu';
+import typeof registerCallableModule from './Libraries/Core/registerCallableModule';
+// Windows]]
 
-const warnOnce = require('./Libraries/Utilities/warnOnce');
+const warnOnce = require('./Libraries/Utilities/warnOnce').default;
 const invariant = require('invariant');
 
 // Windows types
 import typeof {ColorGradientWin32} from './Libraries/StyleSheet/PlatformColorValueTypesWin32';
-
-export type {HostComponent, HostInstance};
 
 module.exports = {
   // Components
@@ -112,6 +115,10 @@ module.exports = {
     return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo')
       .default;
   },
+  get registerCallableModule(): registerCallableModule {
+    return require('./Libraries/Core/registerCallableModule').default;
+  },
+  // #region Components
   get ActivityIndicator(): ActivityIndicator {
     return require('./Libraries/Components/ActivityIndicator/ActivityIndicator')
       .default;
@@ -146,7 +153,7 @@ module.exports = {
       .default;
   },
   get Modal(): Modal {
-    return require('./Libraries/Modal/Modal');
+    return require('./Libraries/Modal/Modal').default;
   },
   get Pressable(): Pressable {
     return require('./Libraries/Components/Pressable/Pressable').default;
@@ -240,7 +247,7 @@ module.exports = {
     return require('./Libraries/AppState/AppState').default;
   },
   get BackHandler(): BackHandler {
-    return require('./Libraries/Utilities/BackHandler');
+    return require('./Libraries/Utilities/BackHandler').default;
   },
   get Clipboard(): Clipboard {
     warnOnce(
@@ -252,13 +259,13 @@ module.exports = {
     return require('./Libraries/Components/Clipboard/Clipboard').default;
   },
   get DeviceInfo(): DeviceInfo {
-    return require('./Libraries/Utilities/DeviceInfo');
+    return require('./Libraries/Utilities/DeviceInfo').default;
   },
   get DevMenu(): DevMenu {
-    return require('./src/private/devmenu/DevMenu');
+    return require('./src/private/devmenu/DevMenu').default;
   },
   get DevSettings(): DevSettings {
-    return require('./Libraries/Utilities/DevSettings');
+    return require('./Libraries/Utilities/DevSettings').default;
   },
   get Dimensions(): Dimensions {
     return require('./Libraries/Utilities/Dimensions').default;
@@ -270,7 +277,7 @@ module.exports = {
     return require('./Libraries/ReactNative/RendererProxy').findNodeHandle;
   },
   get FocusManager(): FocusManager {
-    return require('./Libraries/Utilities/FocusManager');
+    return require('./Libraries/Utilities/FocusManager').default;
   },
   get I18nManager(): I18nManager {
     return require('./Libraries/ReactNative/I18nManager').default;
@@ -304,7 +311,7 @@ module.exports = {
     return require('./Libraries/Interaction/PanResponder').default;
   },
   get PermissionsAndroid(): PermissionsAndroid {
-    return require('./Libraries/PermissionsAndroid/PermissionsAndroid');
+    return require('./Libraries/PermissionsAndroid/PermissionsAndroid').default;
   },
   get PixelRatio(): PixelRatio {
     return require('./Libraries/Utilities/PixelRatio').default;
@@ -316,7 +323,8 @@ module.exports = {
         "It can now be installed and imported from '@react-native-community/push-notification-ios' instead of 'react-native'. " +
         'See https://github.com/react-native-push-notification/ios',
     );
-    return require('./Libraries/PushNotificationIOS/PushNotificationIOS');
+    return require('./Libraries/PushNotificationIOS/PushNotificationIOS')
+      .default;
   },
   // $FlowFixMe[value-as-type]
   get Settings(): Settings {
@@ -326,7 +334,7 @@ module.exports = {
     return require('./Libraries/Share/Share').default;
   },
   get StyleSheet(): StyleSheet {
-    return require('./Libraries/StyleSheet/StyleSheet');
+    return require('./Libraries/StyleSheet/StyleSheet').default;
   },
   get Systrace(): Systrace {
     return require('./Libraries/Performance/Systrace');
@@ -379,7 +387,7 @@ module.exports = {
     return require('./Libraries/BatchedBridge/NativeModules').default;
   },
   get Platform(): Platform {
-    return require('./Libraries/Utilities/Platform');
+    return require('./Libraries/Utilities/Platform').default;
   },
   get PlatformColor(): PlatformColor {
     return require('./Libraries/StyleSheet/PlatformColorValueTypes')
