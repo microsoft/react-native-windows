@@ -12,6 +12,7 @@ import type {HostInstance} from '../../src/private/types/HostInstance';
 import type {
   BlurEvent,
   FocusEvent,
+  KeyEvent, // [Windows]
   GestureResponderEvent,
   MouseEvent,
 } from '../Types/CoreEventTypes';
