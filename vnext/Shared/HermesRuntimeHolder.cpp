@@ -434,7 +434,7 @@ void HermesJSRuntime::enableSamplingProfiler() {
   return; // [Windows TODO: stubbed implementation #addissuenumber]
 }
 
-void HermesJSRuntime::disableSamplingProfiler()  {
+void HermesJSRuntime::disableSamplingProfiler() {
   return; // [Windows TODO: stubbed implementation #addissuenumber]
 }
 
