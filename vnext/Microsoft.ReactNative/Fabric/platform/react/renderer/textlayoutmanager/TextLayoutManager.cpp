@@ -14,6 +14,8 @@
 
 #include <unicode.h>
 
+constexpr float cDefaultMaxFontSizeMultiplier = 0.0f;
+
 namespace facebook::react {
 
 // Creates an empty InlineObject since RN handles actually rendering the Inline object, this just reserves space for it.
@@ -81,6 +83,20 @@ void TextLayoutManager::GetTextLayout(
     style = DWRITE_FONT_STYLE_OBLIQUE;
 
   winrt::com_ptr<IDWriteTextFormat> spTextFormat;
+
+  float fontSizeText = outerFragment.textAttributes.fontSize;
+  if (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
+      !std::isnan(outerFragment.textAttributes.fontSizeMultiplier)) {
+    float maxFontSizeMultiplierText = cDefaultMaxFontSizeMultiplier;
+    maxFontSizeMultiplierText =
+        (!std::isnan(outerFragment.textAttributes.maxFontSizeMultiplier)
+             ? outerFragment.textAttributes.maxFontSizeMultiplier
+             : cDefaultMaxFontSizeMultiplier);
+    fontSizeText *= (maxFontSizeMultiplierText >= 1.0f)
+        ? std::min(maxFontSizeMultiplierText, outerFragment.textAttributes.fontSizeMultiplier)
+        : outerFragment.textAttributes.fontSizeMultiplier;
+  }
+
   winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
       outerFragment.textAttributes.fontFamily.empty()
           ? L"Segoe UI"
@@ -90,10 +106,7 @@ void TextLayoutManager::GetTextLayout(
           static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
       style,
       DWRITE_FONT_STRETCH_NORMAL,
-      (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
-       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier))
-          ? (outerFragment.textAttributes.fontSizeMultiplier * outerFragment.textAttributes.fontSize)
-          : outerFragment.textAttributes.fontSize,
+      fontSizeText,
       L"",
       spTextFormat.put()));
 
@@ -206,11 +219,18 @@ void TextLayoutManager::GetTextLayout(
               attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
           range));
       winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
-      winrt::check_hresult(spTextLayout->SetFontSize(
-          (attributes.allowFontScaling.value_or(true) && !std::isnan(attributes.fontSizeMultiplier))
-              ? (attributes.fontSizeMultiplier * attributes.fontSize)
-              : attributes.fontSize,
-          range));
+
+      float maxFontSizeMultiplier = cDefaultMaxFontSizeMultiplier;
+      maxFontSizeMultiplier =
+          (!std::isnan(attributes.maxFontSizeMultiplier) ? attributes.maxFontSizeMultiplier
+                                                         : cDefaultMaxFontSizeMultiplier);
+      float fontSize = attributes.fontSize;
+      if (attributes.allowFontScaling.value_or(true) && (!std::isnan(attributes.fontSizeMultiplier))) {
+        fontSize *= (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, attributes.fontSizeMultiplier)
+                                                    : attributes.fontSizeMultiplier;
+      }
+
+      winrt::check_hresult(spTextLayout->SetFontSize(fontSize, range));
 
       if (!isnan(attributes.letterSpacing)) {
         winrt::check_hresult(
