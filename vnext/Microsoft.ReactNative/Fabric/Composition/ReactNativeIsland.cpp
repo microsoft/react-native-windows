@@ -530,9 +530,9 @@ void ReactNativeIsland::UninitRootView() noexcept {
     if (m_context.Handle().LoadingState() == winrt::Microsoft::ReactNative::LoadingState::HasError)
       return;
 
-    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
-    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
+    if (auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties())))
+      uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
   }
 
   m_rootTag = -1;
