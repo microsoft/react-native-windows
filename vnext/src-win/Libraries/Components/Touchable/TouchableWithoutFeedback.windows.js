@@ -303,5 +303,5 @@ export default function TouchableWithoutFeedback(
   }
 
   // $FlowFixMe[incompatible-call]
-  return React.cloneElement(element, {...elementProps, ref}, ...children);
-}
+  return React.cloneElement(element, elementProps, ...children);
+} 
