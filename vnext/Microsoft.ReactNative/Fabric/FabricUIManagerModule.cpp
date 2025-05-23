@@ -48,7 +48,10 @@ FabicUIManagerProperty() noexcept {
 
 /*static*/ std::shared_ptr<FabricUIManager> FabricUIManager::FromProperties(
     const winrt::Microsoft::ReactNative::ReactPropertyBag &props) {
-  return props.Get(FabicUIManagerProperty()).Value();
+  auto p = props.Get(FabicUIManagerProperty());
+  if (p)
+    return p.Value();
+  return {};
 }
 
 FabricUIManager::FabricUIManager() {}
