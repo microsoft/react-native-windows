@@ -41,13 +41,6 @@
       "baseHash": "8ff58257e2af054b3c8367cad566abcaf36d7cba"
     },
     {
-      "type": "copy",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Float.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h",
-      "baseHash": "4a707c9cab0c6534094cd303e000265b664f05b4",
-      "issue": 7821
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
