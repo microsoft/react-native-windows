@@ -127,12 +127,10 @@
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
         "$(ReactNativeWindowsDir)Microsoft.ReactNative";
-        "$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
         "$(ReactNativeWindowsDir)codegen";
         "$(ReactNativeWindowsDir)codegen\react\components\rnwcore";
-        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj /await</AdditionalOptions>

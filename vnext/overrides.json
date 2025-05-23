@@ -173,20 +173,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Float.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h",
-      "baseHash": "4a707c9cab0c6534094cd303e000265b664f05b4",
-      "issue": 14674
-    },
-    {
-      "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
-      "baseHash": "2b7c528622a247f45f4fe01660583bd7cfa4db56",
-      "issue": 14216
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/internal/CullingContext.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/CullingContext.cpp",
       "baseHash": "a9687af594ded016b7f79f9fb7cd2d0ba649e56e",
@@ -198,13 +184,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
       "baseHash": "e03ce8e5db0216f23389ff8b3e9ea450c8a031b7",
       "issue": 14673
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
-      "baseHash": "0ccd2735e3cb04ce640fbd6af86b20ffcc5d9ab5",
-      "issue": 14131
     },
     {
       "type": "patch",

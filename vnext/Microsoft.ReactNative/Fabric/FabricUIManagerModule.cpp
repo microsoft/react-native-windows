@@ -22,11 +22,13 @@
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
+#include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <react/utils/ContextContainer.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
@@ -78,6 +80,10 @@ void FabricUIManager::installFabricUIManager() noexcept {
   } else {
     runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
   }
+
+  contextContainer->insert(
+      facebook::react::TextLayoutManagerKey,
+      std::make_shared<facebook::react::WindowsTextLayoutManager>(contextContainer));
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
       [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {

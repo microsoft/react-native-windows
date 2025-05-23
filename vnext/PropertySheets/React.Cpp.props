@@ -138,7 +138,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions) /await</AdditionalOptions>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SpectreMitigation>Spectre</SpectreMitigation>
 
@@ -155,7 +155,10 @@
         $(ReactNativeDir)\ReactCommon\react\bridging;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
-        $(ReactNativeDir)\ReactCxxPlatform;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform;
+        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\view\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>
