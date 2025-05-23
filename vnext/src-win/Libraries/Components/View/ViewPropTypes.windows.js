@@ -509,10 +509,10 @@ type ViewBaseProps = $ReadOnly<{
    */
   removeClippedSubviews?: ?boolean,
 
-  'aria-readonly'?: ?boolean, // Windows
+  'aria-readonly'?: ?boolean, // [Windows]
 
-  'aria-multiselectable'?: ?boolean, // Windows
-  'aria-required'?: ?boolean, // Windows
+  'aria-multiselectable'?: ?boolean, // [Windows]
+  'aria-required'?: ?boolean, // [Windows]
 }>;
 
 export type ViewProps = $ReadOnly<{

@@ -38,6 +38,19 @@ export type TouchableWithoutFeedbackPropsAndroid = {
   touchSoundDisabled?: ?boolean,
 };
 
+// [Windows
+export type TouchableWithoutFeedbackPropsWindows = {
+  accessibilityPosInSet?: ?number,
+  accessibilitySetSize?: ?number,
+  onAccessibilityTap?: ?() => void,
+  onMouseEnter?: ?(event: MouseEvent) => void,
+  onMouseLeave?: ?(event: MouseEvent) => void,
+  tabIndex?: ?number,
+  tooltip?: ?Stringish,
+  hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>,
+};
+// Windows]
+
 export type TouchableWithoutFeedbackProps = $ReadOnly<
   {
     children?: ?React.Node,
@@ -127,6 +140,7 @@ export type TouchableWithoutFeedbackProps = $ReadOnly<
     style?: ?ViewStyleProp,
   } & TouchableWithoutFeedbackPropsAndroid &
     TouchableWithoutFeedbackPropsIOS &
+    TouchableWithoutFeedbackPropsWindows & // [Windows]
     AccessibilityProps,
 >;
 

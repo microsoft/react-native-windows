@@ -13,6 +13,7 @@ export type PlatformOSType =
   | 'android'
   | 'macos'
   | 'windows'
+  | 'win32' // [Windows]
   | 'web'
   | 'native';
 
@@ -210,5 +211,6 @@ export type Platform =
   | IOSPlatform
   | AndroidPlatform
   | WindowsPlatform
+  | Win32Platform // [Windows]
   | MacOSPlatform
   | WebPlatform;

@@ -469,6 +469,64 @@ type ViewBaseProps = $ReadOnly<{
   accessibilityControls?: ?string,
 }>;
 
+// [Windows
+export type HandledKeyboardEvent = $ReadOnly<{|
+  altKey?: ?boolean,
+  ctrlKey?: ?boolean,
+  metaKey?: ?boolean,
+  shiftKey?: ?boolean,
+  code: string,
+  handledEventPhase?: number,
+|}>;
+
+type ViewPropsWindows = $ReadOnly<{|
+  /**
+   * Key up event
+   *
+   * @platform windows
+   */
+  onKeyUp?: ?(e: KeyEvent) => void,
+  onKeyUpCapture?: ?(e: KeyEvent) => void,
+  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+
+  onKeyDown?: ?(e: KeyEvent) => void,
+  onKeyDownCapture?: ?(e: KeyEvent) => void,
+  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  /**
+   * Specifies the Tooltip for the view
+   * @platform windows
+   */
+  tooltip?: ?string,
+
+  tabIndex?: ?number,
+
+  accessibilitySetSize?: ?number,
+  accessibilityControls?: ?Stringish,
+  accessibilityDescribedBy?: ?Stringish,
+  accessibilityDescription?: ?Stringish,
+  accessibilityLevel?: ?number,
+  accessibilityPositionInSet?: ?number,
+  'aria-posinset'?: ?number,
+  'aria-setsize'?: ?number,
+  'aria-description'?: ?Stringish,
+  'aria-level'?: ?number,
+  'aria-controls'?: ?Stringish,
+  'aria-describedby'?: ?Stringish,
+  'aria-multiselectable'?: ?boolean,
+  'aria-required'?: ?boolean,
+
+  /**
+   * Specifies if the control should show System focus visuals
+   */
+  enableFocusRing?: ?boolean,
+
+  onFocus?: ?(event: FocusEvent) => mixed,
+  onBlur?: ?(event: FocusEvent) => mixed,
+  onMouseLeave?: ?(event: MouseEvent) => mixed,
+  onMouseEnter?: ?(event: MouseEvent) => mixed,
+|}>;
+// Windows]
+
 export type ViewProps = $ReadOnly<{
   ...DirectEventProps,
   ...GestureResponderHandlers,
