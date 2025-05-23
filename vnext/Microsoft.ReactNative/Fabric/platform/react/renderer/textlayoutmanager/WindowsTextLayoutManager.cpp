@@ -66,14 +66,12 @@ class AttachmentInlineObject : public winrt::implements<AttachmentInlineObject, 
   float m_height;
 };
 
-TextLayoutManager::TextLayoutManager(
-    const ContextContainer::Shared& contextContainer)
+TextLayoutManager::TextLayoutManager(const ContextContainer::Shared &contextContainer)
     : contextContainer_(contextContainer),
       textMeasureCache_(kSimpleThreadSafeCacheSizeCap),
       lineMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
 
-WindowsTextLayoutManager::WindowsTextLayoutManager(
-    const ContextContainer::Shared& contextContainer)
+WindowsTextLayoutManager::WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer)
     : TextLayoutManager(contextContainer) {}
 
 void WindowsTextLayoutManager::GetTextLayout(
@@ -343,7 +341,7 @@ TextMeasurement TextLayoutManager::measure(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     const TextLayoutContext &layoutContext,
-    const LayoutConstraints& layoutConstraints) const {
+    const LayoutConstraints &layoutConstraints) const {
   TextMeasurement measurement{};
   auto &attributedString = attributedStringBox.getValue();
 
@@ -413,7 +411,7 @@ Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTra
 LinesMeasurements TextLayoutManager::measureLines(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
-    const Size& size) const {
+    const Size &size) const {
   LinesMeasurements lineMeasurements{};
 
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
@@ -484,9 +482,9 @@ LinesMeasurements TextLayoutManager::measureLines(
 }
 
 Float TextLayoutManager::baseline(
-    const AttributedStringBox& attributedStringBox,
-    const ParagraphAttributes& paragraphAttributes,
-    const Size& size) const {
+    const AttributedStringBox &attributedStringBox,
+    const ParagraphAttributes &paragraphAttributes,
+    const Size &size) const {
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
   TextMeasurement::Attachments attachments;
   WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);

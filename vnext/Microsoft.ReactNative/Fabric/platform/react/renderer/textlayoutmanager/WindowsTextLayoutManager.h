@@ -4,7 +4,7 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable:5028) // 'Node': Alignment specified in prior declaration (1) not specified in definition
+#pragma warning(disable : 5028) // 'Node': Alignment specified in prior declaration (1) not specified in definition
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 #pragma warning(pop)
 
@@ -18,22 +18,22 @@
 
 namespace facebook::react {
 
-class WindowsTextLayoutManager: public TextLayoutManager {
+class WindowsTextLayoutManager : public TextLayoutManager {
  public:
-  WindowsTextLayoutManager(const ContextContainer::Shared& contextContainer);
+  WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer);
   virtual ~WindowsTextLayoutManager() = default;
 
   /*
    * Not copyable.
    */
-  WindowsTextLayoutManager(const WindowsTextLayoutManager&) = delete;
-  WindowsTextLayoutManager& operator=(const WindowsTextLayoutManager&) = delete;
+  WindowsTextLayoutManager(const WindowsTextLayoutManager &) = delete;
+  WindowsTextLayoutManager &operator=(const WindowsTextLayoutManager &) = delete;
 
   /*
    * Not movable.
    */
-  WindowsTextLayoutManager(WindowsTextLayoutManager&&) = delete;
-  WindowsTextLayoutManager& operator=(WindowsTextLayoutManager&&) = delete;
+  WindowsTextLayoutManager(WindowsTextLayoutManager &&) = delete;
+  WindowsTextLayoutManager &operator=(WindowsTextLayoutManager &&) = delete;
 
   static void GetTextLayout(
       const AttributedStringBox &attributedStringBox,
