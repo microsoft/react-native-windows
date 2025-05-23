@@ -69,7 +69,6 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
-        $(ReactNativeDir)\ReactCommon\jsitooling;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
         %(AdditionalIncludeDirectories);

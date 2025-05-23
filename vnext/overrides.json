@@ -193,13 +193,6 @@
       "issue": 13172
     },
     {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.h",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.h",
-      "baseHash": "a14f5bd109ebae2141ec8347fef23bf467420621",
-      "issue": 14664
-    },
-    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",

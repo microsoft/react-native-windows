@@ -150,6 +150,7 @@
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)\ReactCommon\jsitooling;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
         $(ReactNativeDir)\ReactCommon\react\bridging;
