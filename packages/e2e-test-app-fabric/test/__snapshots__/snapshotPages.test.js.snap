@@ -7581,73 +7581,66 @@ exports[`snapshotAllPages AppState 1`] = `
       undefined,
     ]
   }
+  testID="initial-state"
 />
 `;
 
 exports[`snapshotAllPages AppState 2`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  />
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+  testID="current-state"
+/>
 `;
 
 exports[`snapshotAllPages AppState 3`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    []
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+  testID="previous-states"
+/>
 `;
 
 exports[`snapshotAllPages AppState 4`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    0
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+>
+  0
+</Text>
 `;
 
 exports[`snapshotAllPages AppState 5`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    []
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+>
+  []
+</Text>
 `;
 
 exports[`snapshotAllPages Border 1`] = `

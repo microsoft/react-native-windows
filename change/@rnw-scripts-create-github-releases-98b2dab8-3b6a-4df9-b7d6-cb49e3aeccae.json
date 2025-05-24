@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved",
+  "packageName": "@rnw-scripts/create-github-releases",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}

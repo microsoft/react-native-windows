@@ -364,9 +364,18 @@ export type AccessibilityPropsIOS = $ReadOnly<{
   accessibilityLanguage?: ?Stringish,
 }>;
 
+// [Windows
+export type AccessibilityPropsWindows = $ReadOnly<{
+  'aria-readonly'?: ?boolean,
+  'aria-multiselectable'?: ?boolean,
+  'aria-required'?: ?boolean,
+}>;
+// Windows]
+
 export type AccessibilityProps = $ReadOnly<{
   ...AccessibilityPropsAndroid,
   ...AccessibilityPropsIOS,
+  ...AccessibilityPropsWindows, // [Windows]
   /**
    * When `true`, indicates that the view is an accessibility element.
    * By default, all the touchable elements are accessible.

@@ -65,6 +65,21 @@ class HermesJSRuntime : public facebook::react::JSRuntime {
       facebook::jsi::Runtime &runtime,
       size_t framesToSkip = 0) override;
 
+  /**
+   * Start sampling profiler.
+   */
+  void enableSamplingProfiler() override;
+
+  /**
+   * Stop sampling profiler.
+   */
+  void disableSamplingProfiler() override;
+
+  /**
+   * Return recorded sampling profile for the previous sampling session.
+   */
+  facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile collectSamplingProfile() override;
+
   std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> createAgentDelegate(
       facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
       facebook::react::jsinspector_modern::SessionState &sessionState,
