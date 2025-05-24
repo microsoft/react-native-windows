@@ -46,16 +46,16 @@ std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> JSExecutor::cap
 }
 
 void JSExecutor::enableSamplingProfiler() {
-  return; // [Windows TODO: stubbed implementation #addissuenumber]
+  return; // [Windows TODO: stubbed implementation #14700]
 }
 
 void JSExecutor::disableSamplingProfiler()  {
-  return; // [Windows TODO: stubbed implementation #addissuenumber]
+  return; // [Windows TODO: stubbed implementation #14700]
 }
 
 facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor::collectSamplingProfile() {
   return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
-      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #addissuenumber]
+      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>

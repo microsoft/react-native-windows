@@ -431,16 +431,16 @@ std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> HermesJSRuntime
 }
 
 void HermesJSRuntime::enableSamplingProfiler() {
-  return; // [Windows TODO: stubbed implementation #addissuenumber]
+  return; // [Windows TODO: stubbed implementation #14700]
 }
 
 void HermesJSRuntime::disableSamplingProfiler() {
-  return; // [Windows TODO: stubbed implementation #addissuenumber]
+  return; // [Windows TODO: stubbed implementation #14700]
 }
 
 facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesJSRuntime::collectSamplingProfile() {
   return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
-      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #addissuenumber]
+      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(

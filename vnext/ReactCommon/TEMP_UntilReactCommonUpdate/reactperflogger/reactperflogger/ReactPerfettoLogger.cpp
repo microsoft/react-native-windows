@@ -43,8 +43,8 @@ int64_t getDeltaNanos(double jsTime) {
 #if defined(WITH_PERFETTO)
   return TRACE_EVENT_CATEGORY_ENABLED("react-native");
 #elif defined(WITH_FBSYSTRACE)
-  // return fbsystrace_is_tracing(TRACE_TAG_REACT_APPS); // [Windows #addissuenumber]
-  return false; // [Windows #addissuenumber]
+  // return fbsystrace_is_tracing(TRACE_TAG_REACT_APPS); // [Windows #14699]
+  return false; // [Windows #14699]
 #else
   return false;
 #endif
@@ -67,7 +67,7 @@ int64_t getDeltaNanos(double jsTime) {
         "react-native", track, performanceNowToPerfettoTraceTime(endTime));
   }
 #elif defined(WITH_FBSYSTRACE)
-  /* [Windows #addissuenumber
+  /* [Windows #14699
   static int cookie = 0;
   fbsystrace_begin_async_section_with_timedelta(
       TRACE_TAG_REACT_APPS, eventName.data(), cookie, getDeltaNanos(startTime));
