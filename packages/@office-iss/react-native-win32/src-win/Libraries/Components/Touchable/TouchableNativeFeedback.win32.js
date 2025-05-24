@@ -9,8 +9,16 @@
 
 import type {GestureResponderEvent} from '../../Types/CoreEventTypes';
 import type {TouchableWithoutFeedbackProps} from './TouchableWithoutFeedback';
+
+import Pressability, {
+  type PressabilityConfig,
+} from '../../Pressability/Pressability';
+import {findHostInstance_DEPRECATED} from '../../ReactNative/RendererProxy';
+import processColor from '../../StyleSheet/processColor';
+import Platform from '../../Utilities/Platform';
+import {Commands} from '../View/ViewNativeComponent';
+import invariant from 'invariant';
 import * as React from 'react';
-import requireNativeComponent from '../../ReactNative/requireNativeComponent';
 
 type TVProps = {
   /**
@@ -101,6 +109,10 @@ export type TouchableNativeFeedbackProps = $ReadOnly<{
   useForeground?: ?boolean,
 
   tooltip?: string, // Win32
+}>;
+
+type State = $ReadOnly<{
+  pressability: Pressability,
 }>;
 
 /**
