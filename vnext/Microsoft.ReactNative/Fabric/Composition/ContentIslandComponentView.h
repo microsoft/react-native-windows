@@ -40,7 +40,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 
   bool focusable() const noexcept override;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
+  winrt::Windows::Foundation::IInspectable EnsureUiaProvider() noexcept override;
 
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 

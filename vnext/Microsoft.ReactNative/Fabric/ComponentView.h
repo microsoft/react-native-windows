@@ -103,7 +103,8 @@ struct ComponentView
       const noexcept;
   virtual void parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept;
   virtual winrt::Microsoft::ReactNative::ComponentView Parent() const noexcept;
-  virtual winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> Children() const noexcept;
+  virtual winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::ComponentView> Children()
+      const noexcept;
   virtual void theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept;
   virtual winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme() const noexcept;
   virtual void onThemeChanged() noexcept;
@@ -206,7 +207,7 @@ struct ComponentView
   // If ignorePointerEvents = true, all Components are treated as valid targets
   virtual facebook::react::Tag
   hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents = false) const noexcept;
-  virtual winrt::IInspectable EnsureUiaProvider() noexcept;
+  virtual winrt::Windows::Foundation::IInspectable EnsureUiaProvider() noexcept;
   virtual std::optional<std::string> getAccessiblityValue() noexcept;
   virtual void setAcccessiblityValue(std::string &&value) noexcept;
   virtual bool getAcccessiblityIsReadOnly() noexcept;
@@ -223,8 +224,8 @@ struct ComponentView
   virtual const winrt::Microsoft::ReactNative::IComponentProps userProps(
       facebook::react::Props::Shared const &props) noexcept;
 
-  void UserData(const winrt::IInspectable &userData) noexcept;
-  winrt::IInspectable UserData() const noexcept;
+  void UserData(const winrt::Windows::Foundation::IInspectable &userData) noexcept;
+  winrt::Windows::Foundation::IInspectable UserData() const noexcept;
 
   virtual void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -256,7 +257,7 @@ struct ComponentView
   winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder> m_builder;
   bool m_mounted : 1 {false};
   const facebook::react::Tag m_tag;
-  winrt::IInspectable m_userData;
+  winrt::Windows::Foundation::IInspectable m_userData;
   mutable winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *m_rootView{nullptr};
   mutable winrt::Microsoft::ReactNative::Composition::implementation::Theme *m_theme{nullptr};
   const winrt::Microsoft::ReactNative::ReactContext m_reactContext;

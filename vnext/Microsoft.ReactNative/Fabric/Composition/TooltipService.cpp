@@ -4,11 +4,12 @@
 
 #include "TooltipService.h"
 
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
+
 #include <CompositionSwitcher.Experimental.interop.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/core/LayoutConstraints.h>
-#include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "TextDrawing.h"
@@ -255,7 +256,7 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
     layoutConstraints.minimumSize.height = 0;
     layoutConstraints.minimumSize.width = 0;
 
-    facebook::react::TextLayoutManager::GetTextLayout(
+    facebook::react::WindowsTextLayoutManager::GetTextLayout(
         tooltipData->attributedString, {} /*paragraphAttributes*/, layoutConstraints, tooltipData->textLayout);
 
     if (tooltipData->textLayout) {

@@ -41,13 +41,6 @@
       "baseHash": "8ff58257e2af054b3c8367cad566abcaf36d7cba"
     },
     {
-      "type": "copy",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Float.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h",
-      "baseHash": "4a707c9cab0c6534094cd303e000265b664f05b4",
-      "issue": 7821
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
@@ -173,20 +166,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Float.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h",
-      "baseHash": "4a707c9cab0c6534094cd303e000265b664f05b4",
-      "issue": 14674
-    },
-    {
-      "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
-      "baseHash": "2b7c528622a247f45f4fe01660583bd7cfa4db56",
-      "issue": 14216
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/internal/CullingContext.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/CullingContext.cpp",
       "baseHash": "a9687af594ded016b7f79f9fb7cd2d0ba649e56e",
@@ -201,24 +180,10 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
-      "baseHash": "0ccd2735e3cb04ce640fbd6af86b20ffcc5d9ab5",
-      "issue": 14131
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
       "baseHash": "651098ef1888fbabab0a70d8e542f46c35d09d7a",
       "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.h",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.h",
-      "baseHash": "a14f5bd109ebae2141ec8347fef23bf467420621",
-      "issue": 14664
     },
     {
       "type": "copy",

@@ -37,17 +37,17 @@ struct ShadowNode : ShadowNodeT<ShadowNode> {
   ShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept;
 
   void EnsureUnsealed() noexcept;
-  winrt::IInspectable Tag() const noexcept;
-  void Tag(winrt::IInspectable tag) noexcept;
+  winrt::Windows::Foundation::IInspectable Tag() const noexcept;
+  void Tag(winrt::Windows::Foundation::IInspectable tag) noexcept;
 
-  winrt::IInspectable StateData() const noexcept;
-  void StateData(winrt::IInspectable tag) noexcept;
+  winrt::Windows::Foundation::IInspectable StateData() const noexcept;
+  void StateData(winrt::Windows::Foundation::IInspectable tag) noexcept;
 
   winrt::Microsoft::ReactNative::EventEmitter EventEmitter() const noexcept;
 
  protected:
   facebook::react::ShadowNode::Weak m_shadowNode;
-  winrt::IInspectable m_tag;
+  winrt::Windows::Foundation::IInspectable m_tag;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
