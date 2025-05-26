@@ -9,7 +9,6 @@ import fs from '@react-native-windows/fs';
 import path from 'path';
 import child_process from 'child_process';
 import chalk from 'chalk';
-import os from 'os';
 import shell from 'shelljs';
 import Version from './version';
 import * as checkRequirements from './checkRequirements';
@@ -93,16 +92,16 @@ export default class MSBuildTools {
     newInfo(`Build platform: ${buildArch}`);
 
     const verbosityOption = verbose ? 'normal' : 'minimal';
+    const defaultLogDirectory = path.dirname(slnFile);
     const logPrefix = path.join(
-      buildLogDirectory || os.tmpdir(),
+      buildLogDirectory || defaultLogDirectory,
       `msbuild_${process.pid}_${target}`,
     );
 
     const errorLog = logPrefix + '.err';
     const warnLog = logPrefix + '.wrn';
 
-    const localBinLog = target === 'build' ? '' : ':deploy.binlog';
-    const binlog = buildLogDirectory ? `:${logPrefix}.binlog` : localBinLog;
+    const binlog = `:${logPrefix}.binlog`;
 
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,

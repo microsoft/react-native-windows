@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 17 May 2025 05:25:32 GMT",
+      "version": "0.0.0-canary.264",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.264",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "fcalise@gmail.com",
+            "package": "@react-native-windows/cli",
+            "commit": "5005dc026932484504479a0f1e31adb81b36fca1",
+            "comment": "fix(cli): ignore msbuild binglog files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 May 2025 21:05:07 GMT",
       "version": "0.0.0-canary.263",
       "tag": "@react-native-windows/cli_v0.0.0-canary.263",

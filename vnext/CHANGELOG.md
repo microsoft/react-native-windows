@@ -1,8 +1,55 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 15 May 2025 05:23:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 24 May 2025 05:22:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.960
+
+Sat, 24 May 2025 05:22:21 GMT
+
+### Changes
+
+- Clean up error messages (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.959
+
+Thu, 22 May 2025 05:24:49 GMT
+
+### Changes
+
+- Integrate RN  0.79.0-nightly-20250220-41b597c73 (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement maxFontSizeMultiplier in Text (54227869+anupriya13@users.noreply.github.com)
+- Fix descriptions for new project templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.958
+
+Tue, 20 May 2025 06:25:35 GMT
+
+### Changes
+
+- Fix crash when reloading an instance with an active ReactNativeIsland (30809111+acoates-ms@users.noreply.github.com)
+- Reenable optimization in TMs to avoid going through a dynamic for callbacks/promises (30809111+acoates-ms@users.noreply.github.com)
+- Scale loading bar text when island is super small (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.957
+
+Sat, 17 May 2025 05:25:32 GMT
+
+### Changes
+
+- fix(vnext-templates): update gitignore for MS Build logs (fcalise@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.264
+
+## 0.0.0-canary.956
+
+Fri, 16 May 2025 05:27:54 GMT
+
+### Changes
+
+- Fixing unreferenced parameter warnings as errors in Playground-Composition and elsewhere (jthysell@microsoft.com)
+- merge in folly 2024.10.14.00 (tatianakapos@microsoft.com)
+- Fix documentation in IReactPackageBuilderFabric (jthysell@microsoft.com)
 
 ## 0.0.0-canary.955
 

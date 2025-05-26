@@ -13,7 +13,7 @@
 const React = require('react');
 const ReactNative = require('react-native');
 import Platform from 'react-native/Libraries/Utilities/Platform'; // #6210
-const {DynamicColorIOS, PlatformColor, StyleSheet, Text, View} = ReactNative;
+const {PlatformColor, StyleSheet, Text, View} = ReactNative;
 
 function PlatformColorsExample() {
   function createTable() {

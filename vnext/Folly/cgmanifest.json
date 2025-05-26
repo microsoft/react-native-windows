@@ -6,7 +6,17 @@
                 "Type": "git",
                 "Git": {
                   "RepositoryUrl": "https://github.com/facebook/folly",
-                  "CommitHash": "234d39a36a43106747d10cc19efada72fd810dd3"
+                  "CommitHash": "ad90720829db5ba0c3d0e44994856dcce33d7940"
+                }
+            },
+            "DevelopmentDependency": false
+        },
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/fastfloat/fast_float",
+                  "CommitHash": "ad90720829db5ba0c3d0e44994856dcce33d7940"
                 }
             },
             "DevelopmentDependency": false

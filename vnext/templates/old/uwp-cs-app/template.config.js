@@ -12,4 +12,4 @@
 
 const {makeGenerateWindowsWrapper} = require('../generateWrapper');
 
-module.exports = makeGenerateWindowsWrapper('cs', 'app');
+module.exports = makeGenerateWindowsWrapper('cs');

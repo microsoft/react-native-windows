@@ -48,7 +48,7 @@ void HostPlatformViewEventEmitter::onMouseLeave(PointerEvent const &pointerEvent
 
 #pragma mark - Touch Events
 
-void HostPlatformViewEventEmitter::onPressIn(PressEvent event) const {
+void HostPlatformViewEventEmitter::onPressIn(GestureResponderEvent event) const {
   dispatchEvent("pressIn", [event](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     auto nativeEvent = jsi::Object(runtime);

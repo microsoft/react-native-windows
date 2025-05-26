@@ -13,9 +13,9 @@ import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet
 import type {
   KeyEvent, // Windows
   MouseEvent, // Windows
-  PressEvent,
+  GestureResponderEvent,
   ScrollEvent,
-  SyntheticEvent,
+  NativeSyntheticEvent,
 } from '../../Types/CoreEventTypes';
 import type {HandledKeyboardEvent, ViewProps} from '../View/ViewPropTypes';
 import type {TextInputType} from './TextInput.flow';
@@ -84,9 +84,10 @@ export type TextInputChangeEventData = $ReadOnly<{
   text: string,
 }>;
 
-export type TextInputChangeEvent = SyntheticEvent<TextInputChangeEventData>;
+export type TextInputChangeEvent =
+  NativeSyntheticEvent<TextInputChangeEventData>;
 
-export type TextInputEvent = SyntheticEvent<
+export type TextInputEvent = NativeSyntheticEvent<
   $ReadOnly<{
     eventCount: number,
     previousText: string,
@@ -108,7 +109,7 @@ export type TextInputContentSizeChangeEventData = $ReadOnly<{
 }>;
 
 export type TextInputContentSizeChangeEvent =
-  SyntheticEvent<TextInputContentSizeChangeEventData>;
+  NativeSyntheticEvent<TextInputContentSizeChangeEventData>;
 
 export type TargetEvent = $ReadOnly<{
   target: number,
@@ -116,8 +117,8 @@ export type TargetEvent = $ReadOnly<{
 
 export type TextInputFocusEventData = TargetEvent;
 
-export type TextInputBlurEvent = SyntheticEvent<TextInputFocusEventData>;
-export type TextInputFocusEvent = SyntheticEvent<TextInputFocusEventData>;
+export type TextInputBlurEvent = NativeSyntheticEvent<TextInputFocusEventData>;
+export type TextInputFocusEvent = NativeSyntheticEvent<TextInputFocusEventData>;
 
 type Selection = $ReadOnly<{
   start: number,
@@ -130,7 +131,7 @@ export type TextInputSelectionChangeEventData = $ReadOnly<{
 }>;
 
 export type TextInputSelectionChangeEvent =
-  SyntheticEvent<TextInputSelectionChangeEventData>;
+  NativeSyntheticEvent<TextInputSelectionChangeEventData>;
 
 type TextInputKeyPressEventData = $ReadOnly<{
   ...TargetEvent,
@@ -139,7 +140,8 @@ type TextInputKeyPressEventData = $ReadOnly<{
   eventCount?: ?number,
 }>;
 
-export type TextInputKeyPressEvent = SyntheticEvent<TextInputKeyPressEventData>;
+export type TextInputKeyPressEvent =
+  NativeSyntheticEvent<TextInputKeyPressEventData>;
 
 export type TextInputEndEditingEventData = $ReadOnly<{
   ...TargetEvent,
@@ -148,7 +150,7 @@ export type TextInputEndEditingEventData = $ReadOnly<{
 }>;
 
 export type TextInputEditingEvent =
-  SyntheticEvent<TextInputEndEditingEventData>;
+  NativeSyntheticEvent<TextInputEndEditingEventData>;
 
 type DataDetectorTypesType =
   | 'phoneNumber'
@@ -894,17 +896,17 @@ export type TextInputProps = $ReadOnly<{
   /**
    * Called when a single tap gesture is detected.
    */
-  onPress?: ?(event: PressEvent) => mixed,
+  onPress?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Called when a touch is engaged.
    */
-  onPressIn?: ?(event: PressEvent) => mixed,
+  onPressIn?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Called when a touch is released.
    */
-  onPressOut?: ?(event: PressEvent) => mixed,
+  onPressOut?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Callback that is called when the text input selection is changed.
@@ -1613,7 +1615,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const config = React.useMemo(
     () => ({
       hitSlop,
-      onPress: (event: PressEvent) => {
+      onPress: (event: GestureResponderEvent) => {
         onPress?.(event);
         if (editable !== false) {
           if (inputRef.current != null) {

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Tue, 13 May 2025 21:05:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 17 May 2025 05:25:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.68
+
+Sat, 17 May 2025 05:25:32 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.264
 
 ## 1.4.67
 

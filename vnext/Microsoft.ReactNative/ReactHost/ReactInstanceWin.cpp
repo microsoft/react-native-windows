@@ -59,10 +59,10 @@
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <SchedulerSettings.h>
 #include <jserrorhandler/JsErrorHandler.h>
+#include <jsitooling/react/runtime/JSRuntimeFactory.h>
 #include <react/nativemodule/core/ReactCommon/TurboModuleBinding.h>
 #include <react/renderer/componentregistry/componentNameByReactViewName.h>
 #include <react/renderer/componentregistry/native/NativeComponentRegistryBinding.h>
-#include <react/runtime/JSRuntimeFactory.h>
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
 #include <react/threading/MessageQueueThreadImpl.h>

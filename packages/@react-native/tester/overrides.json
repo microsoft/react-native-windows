@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.79.0-nightly-20250206-fb8a6a5bb",
+  "baseVersion": "0.79.0-nightly-20250220-41b597c73",
   "overrides": [
     {
       "type": "copy",
@@ -12,14 +12,14 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "710a8302baec488f526a3245cea48733b03d0d3b",
+      "baseHash": "117e82a127facc2e88e576cab7140219eb9e51b3",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "51101b249af24d70b7fad36d022c1454620b3ead",
+      "baseHash": "bb677ac75ceca365e1e107bd9bea79b4a74ac900",
       "issue": 4054
     },
     {
@@ -54,7 +54,7 @@
       "type": "copy",
       "directory": "js/examples/AnimatedGratuitousApp",
       "baseDirectory": "packages/rn-tester/js/examples/AnimatedGratuitousApp",
-      "baseHash": "f4039c0deee8ea06e7b59e10092bcec930782cc9",
+      "baseHash": "f375c7f8c4862110ff1d3507f50f741176783230",
       "issue": 4054
     },
     {
@@ -75,7 +75,7 @@
       "type": "copy",
       "directory": "js/examples/Border",
       "baseDirectory": "packages/rn-tester/js/examples/Border",
-      "baseHash": "5abfca6522407f53ee97231ae2c1e3f9014cd459",
+      "baseHash": "178f9214d1a072813784b0112b83997086db6e12",
       "issue": 4054
     },
     {
@@ -138,28 +138,28 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "12701c07e7e4a4bc18cc473ceca4b10ea91ec37a",
+      "baseHash": "2348987a7e168be7a066fd270d012bad04b95b24",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Filter",
       "baseDirectory": "packages/rn-tester/js/examples/Filter",
-      "baseHash": "a9379afe462199b7cbfa76f71ea441e82356349c",
+      "baseHash": "131051d070a95aae095d76b9a7fd67d01396097d",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "5313873ce66065760e374653c918524051a5d745",
+      "baseHash": "338f6c89435bd3080c752d70281d36cb0b735fe4",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "8f7a24f22fd7374ef8ed324bb08adcffb2d00fe8",
+      "baseHash": "9df3036794e251a8fadc4c153f6a17d076ff5bf0",
       "issue": 4054
     },
     {
@@ -236,7 +236,7 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "bec272a54741b3047be30e3401c61767622df600",
+      "baseHash": "47bd80a8fbdc88e70bca4e11ccea9e130d4dc45a",
       "issue": 4054
     },
     {
@@ -299,7 +299,7 @@
       "type": "copy",
       "directory": "js/examples/PermissionsAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/PermissionsAndroid",
-      "baseHash": "b934cb304a979eeb21878ccdc00bb0fd822b76aa",
+      "baseHash": "26cf38c650e6a5a123e66f16f0eaa2abcddb2c99",
       "issue": 4054
     },
     {
@@ -411,7 +411,7 @@
       "type": "copy",
       "directory": "js/examples/Snapshot",
       "baseDirectory": "packages/rn-tester/js/examples/Snapshot",
-      "baseHash": "2c3cc9d2ea4d276daa327925368efefd04d0b7e5",
+      "baseHash": "ff7219b5d29b096329d0f440219c3cdf3d4bb6de",
       "issue": 4054
     },
     {
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/SwipeableCardExample",
       "baseDirectory": "packages/rn-tester/js/examples/SwipeableCardExample",
-      "baseHash": "6fdea3ff7e2486b9e2eebc8ccb7c54ead7dd3de5",
+      "baseHash": "0d5b9bb8e9196c9655d149f11ed5128f6c92b59d",
       "issue": 4054
     },
     {
@@ -523,7 +523,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "3d725a4186985f9b3072c83d8f92160d49623ffe",
+      "baseHash": "ba8d337f59715ce8fbd05f6cbc79def6ea14334c",
       "issue": 4054
     },
     {
@@ -537,7 +537,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "b955bb00f215169b9ca33564df084e752bb55734",
+      "baseHash": "780c2954afdbc7b99f02b6f1ad462ce0dc9564c1",
       "issue": 4054
     },
     {
