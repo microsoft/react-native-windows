@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 22 May 2025 05:24:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 24 May 2025 05:22:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.960
+
+Sat, 24 May 2025 05:22:21 GMT
+
+### Changes
+
+- Clean up error messages (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.959
 
