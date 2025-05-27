@@ -492,6 +492,7 @@ test('Out-of-tree platform (Newer devDependencies)', () => {
 test('Out-of-tree platform (repo-config devDependencies)', () => {
   const outOfTreeDeps: LocalPackageDeps = {
     ...olderReactNative,
+    devDependencies: {},
     packageName: 'react-native-windows',
     outOfTreePlatform: true,
   };
@@ -509,6 +510,7 @@ test('Out-of-tree platform (repo-config devDependencies)', () => {
     ...outOfTreeDeps,
     dependencies: newerReactNative.dependencies,
     peerDependencies: newerReactNative.peerDependencies,
+    devDependencies: {},
   });
 
   expectSortedDeps(deps);
