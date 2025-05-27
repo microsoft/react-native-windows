@@ -76,7 +76,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
   auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties());
 
   if (runtimeScheduler) {
-    contextContainer->insert("RuntimeScheduler", runtimeScheduler);
+    contextContainer->insert(facebook::react::RuntimeSchedulerKey, runtimeScheduler);
     runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
       runtimeScheduler->scheduleWork(std::move(callback));
     };
@@ -84,9 +84,12 @@ void FabricUIManager::installFabricUIManager() noexcept {
     runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
   }
 
+  // Use an empty ContextContainer here, since using contextContainer would cause a ref cycle.  We are not currently
+  // using the ContextContainer within WindowsTextLayoutManager/TextLayoutManager anyway
   contextContainer->insert(
       facebook::react::TextLayoutManagerKey,
-      std::make_shared<facebook::react::WindowsTextLayoutManager>(contextContainer));
+      std::make_shared<facebook::react::WindowsTextLayoutManager>(
+          std::make_shared<facebook::react::ContextContainer>()));
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
       [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
