@@ -13,6 +13,8 @@
 namespace winrt::{{ namespaceCpp }}
 {
 
+// See https://microsoft.github.io/react-native-windows/docs/native-platform for help writing native modules
+
 REACT_MODULE({{ pascalName }})
 struct {{ pascalName }}
 {
