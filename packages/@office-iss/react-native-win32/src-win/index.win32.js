@@ -232,6 +232,7 @@ module.exports = {
   // Include any types exported in the Animated module together with its default export, so
   // you can references types such as Animated.Numeric
   get Animated(): {...$Diff<AnimatedModule, {default: any}>, ...Animated} {
+    // $FlowFixMe[incompatible-variance]: Ignoring variance issue with Color property
     // $FlowExpectedError[prop-missing]: we only return the default export, all other exports are types
     return require('./Libraries/Animated/Animated').default;
   },
