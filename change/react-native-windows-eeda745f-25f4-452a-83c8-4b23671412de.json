@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Cleanup a bunch of unneeded ReactCommon patching, and extra hostplatform overrides",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
