@@ -22,11 +22,13 @@
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
+#include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <react/utils/ContextContainer.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
@@ -74,13 +76,20 @@ void FabricUIManager::installFabricUIManager() noexcept {
   auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties());
 
   if (runtimeScheduler) {
-    contextContainer->insert("RuntimeScheduler", runtimeScheduler);
+    contextContainer->insert(facebook::react::RuntimeSchedulerKey, runtimeScheduler);
     runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
       runtimeScheduler->scheduleWork(std::move(callback));
     };
   } else {
     runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
   }
+
+  // Use an empty ContextContainer here, since using contextContainer would cause a ref cycle.  We are not currently
+  // using the ContextContainer within WindowsTextLayoutManager/TextLayoutManager anyway
+  contextContainer->insert(
+      facebook::react::TextLayoutManagerKey,
+      std::make_shared<facebook::react::WindowsTextLayoutManager>(
+          std::make_shared<facebook::react::ContextContainer>()));
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
       [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
