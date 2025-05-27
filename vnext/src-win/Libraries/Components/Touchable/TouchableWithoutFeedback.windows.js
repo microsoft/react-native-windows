@@ -184,8 +184,14 @@ const PASSTHROUGH_PROPS = [
  *
  * @see https://reactnative.dev/docs/touchablewithoutfeedback
  */
-export default function TouchableWithoutFeedback(
+// [Windows
+// $FlowFixMe[prop-missing]
+const TouchableWithoutFeedback: React.AbstractComponent<
+  TouchableWithoutFeedbackProps,
+  React.ElementRef<typeof Animated.View>,
+> = React.forwardRef(function TouchableWithoutFeedback(
   props: TouchableWithoutFeedbackProps,
+  ref,
 ): React.Node {
   const {
     disabled,
@@ -317,5 +323,8 @@ export default function TouchableWithoutFeedback(
   }
 
   // $FlowFixMe[incompatible-call]
-  return React.cloneElement(element, elementProps, ...children); // [Windows]
-}
+  return React.cloneElement(element, {...elementProps, ref}, ...children);
+});
+
+export default TouchableWithoutFeedback;
+// Windows]
