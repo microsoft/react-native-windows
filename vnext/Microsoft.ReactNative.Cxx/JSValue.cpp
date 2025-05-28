@@ -434,19 +434,19 @@ void JSValueArray::WriteTo(IJSValueWriter const &writer) const noexcept {
 /*static*/ JSValue const JSValue::EmptyArray{JSValueArray{}};
 /*static*/ JSValue const JSValue::EmptyString{std::string{}};
 
-JSValue &const JSValue::NullRef() noexcept {
+const JSValue &JSValue::NullRef() noexcept {
   return JSValue::Null;
 }
 
-JSValue &const JSValue::EmptyObjectRef() noexcept {
+const JSValue &JSValue::EmptyObjectRef() noexcept {
   return JSValue::EmptyObject;
 }
 
-JSValue &const JSValue::EmptyArrayRef() noexcept {
+const JSValue &JSValue::EmptyArrayRef() noexcept {
   return JSValue::EmptyArray;
 }
 
-JSValue &const JSValue::EmptyStringRef() noexcept {
+const JSValue &JSValue::EmptyStringRef() noexcept {
   return JSValue::EmptyString;
 }
 
