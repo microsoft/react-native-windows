@@ -63,6 +63,11 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+
+  // Reset m_textLayout when ellipsizeMode changes
+  if (oldViewProps.paragraphAttributes.ellipsizeMode != newViewProps.paragraphAttributes.ellipsizeMode) {
+    m_textLayout = nullptr; 
+  }
   if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
     m_requireRedraw = true;
   }
@@ -142,7 +147,6 @@ void ParagraphComponentView::updateTextAlignment(
       case facebook::react::TextAlignment::Right:
         alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
         break;
-      // TODO use LTR values
       case facebook::react::TextAlignment::Natural:
         alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
         break;
@@ -150,8 +154,9 @@ void ParagraphComponentView::updateTextAlignment(
         assert(false);
     }
   }
-  // TODO
-  // m_textFormat->SetTextAlignment(alignment);
+
+  // Apply the alignment to the text layout
+  winrt::check_hresult(m_textLayout->SetTextAlignment(alignment));
 }
 
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
@@ -277,6 +282,48 @@ void ParagraphComponentView::DrawText() noexcept {
                                        : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
 
       const auto &props = paragraphProps();
+
+      if (m_textLayout) {
+        DWRITE_TEXT_METRICS metrics;
+        winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
+
+        float maxWidth = m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left -
+                         m_layoutMetrics.contentInsets.right;
+
+        if (metrics.width > maxWidth) {
+          m_textLayout->SetMaxWidth(maxWidth);
+        }
+
+        // Ensure alignment is applied correctly
+        updateTextAlignment(props.textAttributes.alignment);
+
+        // Apply DWRITE_TRIMMING for ellipsizeMode
+        DWRITE_TRIMMING trimming = {};
+        winrt::com_ptr<IDWriteInlineObject> ellipsisSign;
+
+        switch (props.paragraphAttributes.ellipsizeMode) {
+          case facebook::react::EllipsizeMode::Tail:
+            trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
+            break;
+          case facebook::react::EllipsizeMode::Clip:
+            trimming.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
+            break;
+          default:
+            trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER; // Default to tail behavior
+            break;
+        }
+
+        // Use IDWriteFactory to create the ellipsis trimming sign
+        winrt::com_ptr<IDWriteFactory> dwriteFactory;
+        HRESULT hr = DWriteCreateFactory(
+            DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(dwriteFactory.put()));
+        if (SUCCEEDED(hr)) {
+          hr = dwriteFactory->CreateEllipsisTrimmingSign(m_textLayout.get(), ellipsisSign.put());
+          if (SUCCEEDED(hr)) {
+            m_textLayout->SetTrimming(&trimming, ellipsisSign.get());
+          }
+        }
+      }
 
       RenderText(
           *d2dDeviceContext,
