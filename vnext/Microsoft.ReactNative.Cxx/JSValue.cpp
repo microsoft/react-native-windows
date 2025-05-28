@@ -434,6 +434,22 @@ void JSValueArray::WriteTo(IJSValueWriter const &writer) const noexcept {
 /*static*/ JSValue const JSValue::EmptyArray{JSValueArray{}};
 /*static*/ JSValue const JSValue::EmptyString{std::string{}};
 
+JSValue &const JSValue::NullRef() noexcept {
+  return JSValue::Null;
+}
+
+JSValue &const JSValue::EmptyObjectRef() noexcept {
+  return JSValue::EmptyObject;
+}
+
+JSValue &const JSValue::EmptyArrayRef() noexcept {
+  return JSValue::EmptyArray;
+}
+
+JSValue &const JSValue::EmptyStringRef() noexcept {
+  return JSValue::EmptyString;
+}
+
 #pragma warning(push)
 #pragma warning(disable : 26495) // False positive for union member not initialized
 JSValue::JSValue(JSValue &&other) noexcept : m_type{other.m_type} {
