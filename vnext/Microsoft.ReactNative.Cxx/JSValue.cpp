@@ -278,7 +278,7 @@ JSValue const &JSValueObject::operator[](std::string_view propertyName) const no
     return it->second;
   }
 
-  return JSValue::Null;
+  return JSValue::NullRef();
 }
 
 bool JSValueObject::Equals(JSValueObject const &other) const noexcept {
@@ -739,7 +739,7 @@ JSValue const *JSValue::TryGetObjectProperty(std::string_view propertyName) cons
 
 JSValue const &JSValue::GetObjectProperty(std::string_view propertyName) const noexcept {
   auto result = TryGetObjectProperty(propertyName);
-  return result ? *result : Null;
+  return result ? *result : NullRef();
 }
 
 size_t JSValue::ItemCount() const noexcept {
@@ -752,7 +752,7 @@ JSValue const *JSValue::TryGetArrayItem(JSValueArray::size_type index) const noe
 
 JSValue const &JSValue::GetArrayItem(JSValueArray::size_type index) const noexcept {
   auto result = TryGetArrayItem(index);
-  return result ? *result : Null;
+  return result ? *result : NullRef();
 }
 
 bool JSValue::Equals(JSValue const &other) const noexcept {
