@@ -11,7 +11,7 @@
 'use strict';
 
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
-import type {HostComponent} from '../../../src/private/types/HostComponent';
+import type {HostComponent} from 'react-native';
 import type {DirectEventHandler} from 'react-native/Libraries/Types/CodegenTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 

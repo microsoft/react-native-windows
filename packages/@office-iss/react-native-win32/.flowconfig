@@ -29,6 +29,7 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/StyleSheet/PlatformColorValueTypes.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js

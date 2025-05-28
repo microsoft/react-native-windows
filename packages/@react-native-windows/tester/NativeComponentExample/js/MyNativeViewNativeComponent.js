@@ -10,7 +10,7 @@
 
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
-import type {HostComponent} from '../../../src/private/types/HostComponent';
+import type {HostComponent} from 'react-native';
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {Float} from 'react-native/Libraries/Types/CodegenTypes';
 import * as React from 'react';
