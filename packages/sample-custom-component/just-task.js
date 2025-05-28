@@ -27,6 +27,8 @@ task('codegenNativeComponents', () => {
     const code = fs.readFileSync(matchedPath).toString();
     const filename = path.resolve(process.cwd(), matchedPath);
 
+      console.log(`===> Processing ${filename}`);
+
     const res = babel.transformSync(code, {
       ast: false,
       filename,

@@ -35,6 +35,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\..\..\vnext\Mso\M
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "..\..\..\vnext\include\Include.vcxitems", "{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Xaml", "..\..\..\vnext\Microsoft.ReactNative.Xaml\Microsoft.ReactNative.Xaml.vcxproj", "{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XamlCalendarView", "..\..\..\node_modules\xaml-calendar-view\windows\XamlCalendarView\XamlCalendarView.vcxproj", "{3501592F-3196-4EE1-B4AA-FE4A5F29063B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
@@ -154,6 +158,31 @@ Global
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.ActiveCfg = Release|Win32
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Build.0 = Release|Win32
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Deploy.0 = Release|Win32
+
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x64.ActiveCfg = Debug|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x64.Build.0 = Debug|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x86.ActiveCfg = Debug|Win32
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x86.Build.0 = Debug|Win32
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|ARM64.Build.0 = Debug|ARM64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x64.ActiveCfg = Release|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x64.Build.0 = Release|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x86.ActiveCfg = Release|Win32
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x86.Build.0 = Release|Win32
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|ARM64.ActiveCfg = Release|ARM64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|ARM64.Build.0 = Release|ARM64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Debug|x64.ActiveCfg = Debug|x64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Debug|x64.Build.0 = Debug|x64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Debug|x86.ActiveCfg = Debug|Win32
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Debug|x86.Build.0 = Debug|Win32
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Debug|ARM64.Build.0 = Debug|ARM64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Release|x64.ActiveCfg = Release|x64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Release|x64.Build.0 = Release|x64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Release|x86.ActiveCfg = Release|Win32
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Release|x86.Build.0 = Release|Win32
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Release|ARM64.ActiveCfg = Release|ARM64
+		{3501592F-3196-4EE1-B4AA-FE4A5F29063B}.Release|ARM64.Build.0 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,15 @@
+namespace Microsoft.ReactNative.Xaml
+{
+  [webhosthidden]
+  [default_interface]
+  runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+  {
+    ReactPackageProvider();
+  };
+
+  [webhosthidden]
+  interface IXamlControl
+  {
+    Microsoft.UI.Xaml.UIElement GetXamlElement();
+  }
+}

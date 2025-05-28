@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Xaml", "Microsoft.ReactNative.Xaml\Microsoft.ReactNative.Xaml.vcxproj", "{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|ARM64.Build.0 = Debug|ARM64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x64.ActiveCfg = Debug|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x64.Build.0 = Debug|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x86.ActiveCfg = Debug|Win32
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Debug|x86.Build.0 = Debug|Win32
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|ARM64.ActiveCfg = Release|ARM64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|ARM64.Build.0 = Release|ARM64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x64.ActiveCfg = Release|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x64.Build.0 = Release|x64
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x86.ActiveCfg = Release|Win32
+		{E5D1B5D2-0E6A-4011-8BCD-08968256DCBD}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B36CAF0-BCD9-42C7-B311-05FDDCCEC9D4}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{e5d1b5d2-0e6a-4011-8bcd-08968256dcbd}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal

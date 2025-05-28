@@ -83,6 +83,17 @@
           "boost": "[1.83.0, )"
         }
       },
+      "microsoft.reactnative.xaml": {
+        "type": "Project",
+        "dependencies": {
+          "Common": "[1.0.0, )",
+          "Folly": "[1.0.0, )",
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.WindowsAppSDK": "[1.7.250401001, )",
+          "ReactCommon": "[1.0.0, )",
+          "boost": "[1.83.0, )"
+        }
+      },
       "reactcommon": {
         "type": "Project",
         "dependencies": {
@@ -95,6 +106,18 @@
         "dependencies": {
           "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.ReactNative.Xaml": "[1.0.0, )",
+          "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
+          "Microsoft.WindowsAppSDK": "[1.7.250401001, )",
+          "XamlCalendarView": "[1.0.0, )",
+          "boost": "[1.83.0, )"
+        }
+      },
+      "xamlcalendarview": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.ReactNative.Xaml": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[1.7.250401001, )",
           "boost": "[1.83.0, )"

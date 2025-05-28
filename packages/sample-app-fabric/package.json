@@ -17,7 +17,8 @@
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.0.0",
     "react-native": "0.79.0-nightly-20250123-d1028885e",
-    "react-native-windows": "^0.0.0-canary.952"
+    "react-native-windows": "^0.0.0-canary.952",
+    "xaml-calendar-view": ""
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

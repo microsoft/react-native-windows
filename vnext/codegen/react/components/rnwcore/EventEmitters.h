@@ -166,4 +166,11 @@ class UnimplementedNativeViewEventEmitter : public ViewEventEmitter {
   
   
 };
+class XamlHostEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  
+  
+};
 } // namespace facebook::react

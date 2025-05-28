@@ -9,6 +9,11 @@
     <UseFabric Condition="'$(UseFabric)' == ''">true</UseFabric>
     <UseWinUI3 Condition="'$(UseWinUI3)' == ''">true</UseWinUI3>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(SolutionName)'=='Microsoft.ReactNative.Xaml'">
+    <RnwNewArch Condition="'$(RnwNewArch)' == ''">true</RnwNewArch>
+    <UseFabric Condition="'$(UseFabric)' == ''">true</UseFabric>
+    <UseWinUI3 Condition="'$(UseWinUI3)' == ''">true</UseWinUI3>
+  </PropertyGroup>
   <!-- Declare the unconditional group last so it does not supersede solution-specific assignments -->
   <PropertyGroup>
     <RnwNewArch Condition="'$(RnwNewArch)' == ''">false</RnwNewArch>
