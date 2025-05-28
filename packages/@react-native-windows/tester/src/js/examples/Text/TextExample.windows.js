@@ -1971,6 +1971,7 @@ const examples = [
       return (
         <View>
           <RNTesterText
+            accessible
             style={{
               width: 500,
               height: 100,
@@ -1978,11 +1979,14 @@ const examples = [
               backgroundColor: 'lightcoral',
               padding: 10,
               marginBottom: 10,
+              fontWeight: 200,
+              fontVariant: 'small-caps',
             }}
             testID="text-adjustfontsizetofit-default-a">
             {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
           </RNTesterText>
           <RNTesterText
+            accessible
             adjustsFontSizeToFit
             style={{
               width: 500,
@@ -2002,6 +2006,7 @@ const examples = [
           ].map((item, index) => (
             <React.Fragment key={index}>
               <RNTesterText
+                accessible
                 testID={`text-adjustfontsizetofit-${index}-a`}
                 numberOfLines={item.lineCount}
                 adjustsFontSizeToFit
@@ -2016,6 +2021,7 @@ const examples = [
                 {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
               </RNTesterText>
               <RNTesterText
+                accessible
                 testID={`text-adjustfontsizetofit-${index}-b`}
                 numberOfLines={item.lineCount}
                 style={{
