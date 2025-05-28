@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 28 May 2025 05:24:00 GMT",
+      "version": "0.0.0-canary.961",
+      "tag": "react-native-windows_v0.0.0-canary.961",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a5ce4300e5a32b010d7c471818922242d5bee52f",
+            "comment": "Removed unused `react-shallow-renderer` dependency"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "75f5e7c1fb1ba13eb8333ab799e7191509f9eb78",
+            "comment": "Update native module doc links in cpp-lib template"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "05a6715f59f13cfb59d7a87c3820ddea3729df34",
+            "comment": "Cleanup a bunch of unneeded ReactCommon patching, and extra hostplatform overrides"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 May 2025 05:22:21 GMT",
       "version": "0.0.0-canary.960",
       "tag": "react-native-windows_v0.0.0-canary.960",

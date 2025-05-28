@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Wed, 28 May 2025 05:24:00 GMT",
+      "version": "1.4.57",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.57",
+      "comments": {
+        "none": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "a5ce4300e5a32b010d7c471818922242d5bee52f",
+            "comment": "Removed unused `react-shallow-renderer` dependency"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 May 2025 21:05:07 GMT",
       "version": "1.4.57",
       "tag": "@rnw-scripts/integrate-rn_v1.4.57",

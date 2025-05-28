@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update native module doc links in cpp-lib template",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
