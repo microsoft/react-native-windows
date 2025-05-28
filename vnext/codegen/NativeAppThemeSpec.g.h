@@ -7,6 +7,7 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
