@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix warning in glog stub",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 May 2025 05:23:11 GMT",
+      "version": "0.0.0-canary.962",
+      "tag": "react-native-windows_v0.0.0-canary.962",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bbfae0be30254a36c1609f0cf19c96036934a93c",
+            "comment": "Fix warning in glog stub"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "105c93dbbed06601ef938341b8add6ea014d6b78",
+            "comment": "JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ebfbdbe6dbd982204e1b36fa75465875129380ad",
+            "comment": "Update folly exports from rn-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 May 2025 05:24:00 GMT",
       "version": "0.0.0-canary.961",
       "tag": "react-native-windows_v0.0.0-canary.961",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
