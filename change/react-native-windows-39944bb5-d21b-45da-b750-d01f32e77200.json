@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "Fix: Text component pressRetentionOffset issue on Windows",
   "packageName": "react-native-windows",
   "email": "abhijeetjha@microsoft.com",

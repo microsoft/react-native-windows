@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "Added override Text.d.ts to src-win/Libraries/Text/ to add  tooltip prop to Text component",
   "packageName": "react-native-windows",
   "email": "email not defined",

@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix tooltips in high dpi",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",

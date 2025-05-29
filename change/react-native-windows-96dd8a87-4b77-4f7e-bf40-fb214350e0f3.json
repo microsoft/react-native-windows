@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Basic support for stitching the UIA tree for a ContentIslandComponentView's child",
   "packageName": "react-native-windows",
   "email": "email not defined",

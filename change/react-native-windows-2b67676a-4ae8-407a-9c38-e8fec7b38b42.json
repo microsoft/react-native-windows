@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Update WindowsAppSDK version to 1.7.250401001",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",

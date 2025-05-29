@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Allow text components to have children",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",

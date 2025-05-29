@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "Implemented OnPressIn event for textinput",
   "packageName": "react-native-windows",
   "email": "hmalothu@microsoft.com",

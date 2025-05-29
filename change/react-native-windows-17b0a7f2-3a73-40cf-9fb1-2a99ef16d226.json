@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Add ImageRequestParams",
   "packageName": "react-native-windows",
   "email": "54227869+anupriya13@users.noreply.github.com",
