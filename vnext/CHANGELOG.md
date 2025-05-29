@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 May 2025 23:30:04 GMT and should not be manually modified.
+This log was last generated on Thu, 29 May 2025 02:20:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.46
+
+Thu, 29 May 2025 02:20:43 GMT
+
+### Patches
+
+- JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.45
 

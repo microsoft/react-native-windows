@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 May 2025 02:20:43 GMT",
+      "version": "0.74.46",
+      "tag": "react-native-windows_v0.74.46",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "146c018d53245bc3292b3ff1def8a0f3c065ccf8",
+            "comment": "JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 May 2025 23:30:04 GMT",
       "version": "0.74.45",
       "tag": "react-native-windows_v0.74.45",
