@@ -179,7 +179,7 @@ export type Props = $ReadOnly<{|
    * [Windows] The `title` prop sets the title of the modal window.
    */
   title?: ?string,
-}>;
+|}>;
 
 function confirmProps(props: Props) {
   if (__DEV__) {
