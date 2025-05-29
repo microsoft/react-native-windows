@@ -299,19 +299,6 @@ class TouchableNativeFeedback extends React.Component<
   }
 }
 
-// const RCTTouchableNativeFeedback = requireNativeComponent<Props>(
-//   'RCTTouchableNativeFeedback',
-// );
-
-// class TouchableNativeFeedback extends React.Component<Props, {}> {
-//   render(): React.Node {
-//     return (
-//       <RCTTouchableNativeFeedback {...this.props}>
-//         {this.props.children}
-//       </RCTTouchableNativeFeedback>
-//     );
-//   }
-// }
 TouchableNativeFeedback.displayName = 'TouchableNativeFeedback';
 
 export default TouchableNativeFeedback;
