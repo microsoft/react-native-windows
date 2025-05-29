@@ -5,6 +5,12 @@
 ; **************************************************************************************************
 
 EXPORTS
+??0dynamic@folly@@QAE@$$QAU01@@Z
+?hash@dynamic@folly@@QBEIXZ
+?destroy@dynamic@folly@@AAEXXZ
+?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
+?makeConversionError@folly@@YG?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
+?str_to_bool@detail@folly@@YG?AV?$Expected@_NW4ConversionCode@folly@@@2@PAV?$Range@PBD@2@@Z
 ??8folly@@YG_NABUdynamic@0@0@Z
 ??Mfolly@@YG_NABUdynamic@0@0@Z
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z

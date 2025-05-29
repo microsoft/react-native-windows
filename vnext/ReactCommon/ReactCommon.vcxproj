@@ -69,15 +69,6 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
-        $(ReactNativeDir)\ReactCommon;
-        $(ReactNativeDir)\ReactCommon\react;
-        $(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon;
-        $(ReactNativeDir)\ReactCommon\react\renderer;
-        $(ReactNativeDir)\ReactCommon\react\renderer\components\view;
-        $(ReactNativeDir)\ReactCommon\react\renderer\graphics;
-        $(ReactNativeDir)\ReactCommon\jsi;
-        $(ReactNativeDir)\ReactCommon\jsitooling;
-        $(FmtDir)\include;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
         %(AdditionalIncludeDirectories);
@@ -224,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
   </ItemGroup>
   <PropertyGroup>
     <NodeApiJsiZipDir>$(NodeApiJsiDir)..\.node-api-jsi-zip</NodeApiJsiZipDir>

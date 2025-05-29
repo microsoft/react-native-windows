@@ -5,6 +5,7 @@
 #include "FocusNavigationRequest.g.cpp"
 #include "ReactNativeIsland.g.cpp"
 #include <RootViewSizeChangedEventArgs.g.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 
 #include <AutoDraw.h>
 #include <DynamicWriter.h>
@@ -609,7 +610,7 @@ facebook::react::Size ReactNativeIsland::MeasureLoading(
 
   auto attributedStringBox = CreateLoadingAttributedString();
   winrt::com_ptr<::IDWriteTextLayout> textLayout;
-  facebook::react::TextLayoutManager::GetTextLayout(
+  facebook::react::WindowsTextLayoutManager::GetTextLayout(
       attributedStringBox, CreateLoadingParagraphAttributes(), fbLayoutConstraints, textLayout);
 
   DWRITE_TEXT_METRICS tm;
@@ -691,7 +692,7 @@ Composition::Experimental::IDrawingSurfaceBrush ReactNativeIsland::CreateLoading
       textAttributes.foregroundColor = facebook::react::whiteColor();
 
       winrt::com_ptr<::IDWriteTextLayout> textLayout;
-      facebook::react::TextLayoutManager::GetTextLayout(
+      facebook::react::WindowsTextLayoutManager::GetTextLayout(
           attributedStringBox, CreateLoadingParagraphAttributes(), constraints, textLayout);
 
       DWRITE_TEXT_METRICS tm;

@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 24 May 2025 05:22:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 29 May 2025 05:23:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.962
+
+Thu, 29 May 2025 05:23:11 GMT
+
+### Changes
+
+- Fix warning in glog stub (30809111+acoates-ms@users.noreply.github.com)
+- JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries (30809111+acoates-ms@users.noreply.github.com)
+- Update folly exports from rn-win32 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.961
+
+Wed, 28 May 2025 05:24:00 GMT
+
+### Changes
+
+- Removed unused `react-shallow-renderer` dependency (4123478+tido64@users.noreply.github.com)
+- Update native module doc links in cpp-lib template (jthysell@microsoft.com)
+- Cleanup a bunch of unneeded ReactCommon patching, and extra hostplatform overrides (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.960
 

@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <CppWinRTIncludes.h>
 #include <d2d1_1.h>
 #include <react/renderer/graphics/ColorComponents.h>
 #include "PlatformColorUtils.h"

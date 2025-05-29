@@ -10,6 +10,7 @@
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -1482,7 +1483,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
   constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight);
 
-  facebook::react::TextLayoutManager::GetTextLayout(
+  facebook::react::WindowsTextLayoutManager::GetTextLayout(
       facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
 
   return textLayout;

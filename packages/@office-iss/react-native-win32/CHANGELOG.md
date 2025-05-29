@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 22 May 2025 05:24:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 28 May 2025 05:24:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.287
+
+Wed, 28 May 2025 05:24:00 GMT
+
+### Changes
+
+- Removed unused `react-shallow-renderer` dependency (4123478+tido64@users.noreply.github.com)
 
 ## 0.0.0-canary.286
 
