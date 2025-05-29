@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Properly hook up root uia provider to island",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
