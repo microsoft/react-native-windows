@@ -44,7 +44,9 @@ exports.copyTask = baseDir => {
       dest: base('IntegrationTests'),
     }),
     copyTask({
-      paths: reactNative('Libraries/**/*.+(d.ts|js|jsx|png|gif|jpg|html)'),
+      paths: reactNative(
+        'Libraries/**/*.+(d.ts|js|jsx|png|gif|jpg|html|js.flow)',
+      ),
       dest: base('Libraries'),
     }),
     copyTask({

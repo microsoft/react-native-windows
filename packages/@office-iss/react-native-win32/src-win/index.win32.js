@@ -75,10 +75,8 @@ import typeof I18nManager from './Libraries/ReactNative/I18nManager';
 import typeof {RootTagContext} from './Libraries/ReactNative/RootTag';
 import typeof UIManager from './Libraries/ReactNative/UIManager';
 import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
-import type {
-  HostComponent,
-  HostInstance,
-} from './Libraries/Renderer/shims/ReactNativeTypes';
+import type {HostComponent} from './src/private/types/HostComponent';
+import type {HostInstance} from './src/private/types/HostInstance';
 import typeof Settings from './Libraries/Settings/Settings';
 import typeof Share from './Libraries/Share/Share';
 import typeof {PlatformColor} from './Libraries/StyleSheet/PlatformColorValueTypes';
@@ -234,6 +232,7 @@ module.exports = {
   // Include any types exported in the Animated module together with its default export, so
   // you can references types such as Animated.Numeric
   get Animated(): {...$Diff<AnimatedModule, {default: any}>, ...Animated} {
+    // $FlowFixMe[incompatible-variance]: Ignoring variance issue with Color property
     // $FlowExpectedError[prop-missing]: we only return the default export, all other exports are types
     return require('./Libraries/Animated/Animated').default;
   },

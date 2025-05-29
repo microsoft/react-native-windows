@@ -8,13 +8,7 @@
  * @format
  */
 
-import type {
-  AccessibilityActionEvent,
-  AccessibilityActionInfo,
-  AccessibilityRole,
-  AccessibilityState,
-  AccessibilityValue,
-} from '../../Components/View/ViewAccessibility';
+import type {AccessibilityActionEvent} from '../../Components/View/ViewAccessibility';
 import type {EdgeInsetsOrSizeProp} from '../../StyleSheet/EdgeInsetsPropType';
 import type {
   BlurEvent,
@@ -25,77 +19,130 @@ import type {
 } from '../../Types/CoreEventTypes';
 
 import View from '../../Components/View/View';
+import {type AccessibilityProps} from '../../Components/View/ViewAccessibility';
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
+import {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import * as React from 'react';
 import {useMemo} from 'react';
 import Animated from '../../Animated/Animated'; // Windows
 
-type Props = $ReadOnly<{
-  accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
-  accessibilityElementsHidden?: ?boolean,
-  accessibilityHint?: ?Stringish,
-  accessibilityLanguage?: ?Stringish,
-  accessibilityIgnoresInvertColors?: ?boolean,
-  accessibilityLabel?: ?Stringish,
-  accessibilityLiveRegion?: ?('none' | 'polite' | 'assertive'),
-  accessibilityRole?: ?AccessibilityRole,
-  accessibilityState?: ?AccessibilityState,
-  accessibilityValue?: ?AccessibilityValue,
-  'aria-valuemax'?: AccessibilityValue['max'],
-  'aria-valuemin'?: AccessibilityValue['min'],
-  'aria-valuenow'?: AccessibilityValue['now'],
-  'aria-valuetext'?: AccessibilityValue['text'],
-  accessibilityViewIsModal?: ?boolean,
-  'aria-modal'?: ?boolean,
-  accessible?: ?boolean,
+export type TouchableWithoutFeedbackPropsIOS = {};
+
+export type TouchableWithoutFeedbackPropsAndroid = {
   /**
-   * alias for accessibilityState
+   * If true, doesn't play a system sound on touch.
    *
-   * see https://reactnative.dev/docs/accessibility#accessibilitystate
+   * @platform android
    */
-  'aria-busy'?: ?boolean,
-  'aria-checked'?: ?boolean | 'mixed',
-  'aria-disabled'?: ?boolean,
-  'aria-expanded'?: ?boolean,
-  'aria-selected'?: ?boolean,
-  'aria-readonly'?: ?boolean, // Windows
-  'aria-multiselectable'?: ?boolean, // Windows
-  'aria-required'?: ?boolean, // Windows
-  'aria-hidden'?: ?boolean,
-  'aria-live'?: ?('polite' | 'assertive' | 'off'),
-  'aria-label'?: ?Stringish,
-  children?: ?React.Node,
-  delayLongPress?: ?number,
-  delayPressIn?: ?number,
-  delayPressOut?: ?number,
-  disabled?: ?boolean,
-  focusable?: ?boolean,
-  hitSlop?: ?EdgeInsetsOrSizeProp,
-  id?: string,
-  importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
-  nativeID?: ?string,
-  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
-  onBlur?: ?(event: BlurEvent) => mixed,
-  onFocus?: ?(event: FocusEvent) => mixed,
-  onLayout?: ?(event: LayoutChangeEvent) => mixed,
-  onLongPress?: ?(event: GestureResponderEvent) => mixed,
-  onPress?: ?(event: GestureResponderEvent) => mixed,
-  onPressIn?: ?(event: GestureResponderEvent) => mixed,
-  onPressOut?: ?(event: GestureResponderEvent) => mixed,
-  pressRetentionOffset?: ?EdgeInsetsOrSizeProp,
-  rejectResponderTermination?: ?boolean,
-  testID?: ?string,
   touchSoundDisabled?: ?boolean,
-  accessibilityPosInSet?: ?number, // [Windows]
-  accessibilitySetSize?: ?number, // [Windows]
-  onAccessibilityTap?: ?() => void, // [Windows]
-  onMouseEnter?: ?(event: MouseEvent) => void, // [Windows]
-  onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
-  tabIndex?: ?number, // [Windows]
-  tooltip?: ?Stringish, // [Windows]
-  hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>, // [Windows]
-}>;
+};
+
+// [Windows
+export type TouchableWithoutFeedbackPropsWindows = {
+  accessibilityPosInSet?: ?number,
+  accessibilitySetSize?: ?number,
+  onAccessibilityTap?: ?() => void,
+  onMouseEnter?: ?(event: MouseEvent) => void,
+  onMouseLeave?: ?(event: MouseEvent) => void,
+  tabIndex?: ?number,
+  tooltip?: ?Stringish,
+  hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>,
+};
+// Windows]
+
+export type TouchableWithoutFeedbackProps = $ReadOnly<
+  {
+    children?: ?React.Node,
+    /**
+     * Delay in ms, from onPressIn, before onLongPress is called.
+     */
+    delayLongPress?: ?number,
+    /**
+     * Delay in ms, from the start of the touch, before onPressIn is called.
+     */
+    delayPressIn?: ?number,
+    /**
+     * Delay in ms, from the release of the touch, before onPressOut is called.
+     */
+    delayPressOut?: ?number,
+    /**
+     * If true, disable all interactions for this component.
+     */
+    disabled?: ?boolean,
+    /**
+     * Whether this View should be focusable with a non-touch input device,
+     * eg. receive focus with a hardware keyboard / TV remote.
+     */
+    focusable?: ?boolean,
+    /**
+     * This defines how far your touch can start away from the button.
+     * This is added to pressRetentionOffset when moving off of the button.
+     * NOTE The touch area never extends past the parent view bounds and
+     * the Z-index of sibling views always takes precedence if a touch hits
+     * two overlapping views.
+     */
+    hitSlop?: ?EdgeInsetsOrSizeProp,
+    /**
+     * Used to reference react managed views from native code.
+     */
+    id?: string,
+    importantForAccessibility?: ?(
+      | 'auto'
+      | 'yes'
+      | 'no'
+      | 'no-hide-descendants'
+    ),
+    nativeID?: ?string,
+    onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
+    /**
+     * When `accessible` is true (which is the default) this may be called when
+     * the OS-specific concept of "blur" occurs, meaning the element lost focus.
+     * Some platforms may not have the concept of blur.
+     */
+    onBlur?: ?(event: BlurEvent) => mixed,
+    /**
+     * When `accessible` is true (which is the default) this may be called when
+     * the OS-specific concept of "focus" occurs. Some platforms may not have
+     * the concept of focus.
+     */
+    onFocus?: ?(event: FocusEvent) => mixed,
+    /**
+     * Invoked on mount and layout changes with
+     * {nativeEvent: {layout: {x, y, width, height}}}
+     */
+    onLayout?: ?(event: LayoutChangeEvent) => mixed,
+    onLongPress?: ?(event: GestureResponderEvent) => mixed,
+    /**
+     * Called when the touch is released,
+     * but not if cancelled (e.g. by a scroll that steals the responder lock).
+     */
+    onPress?: ?(event: GestureResponderEvent) => mixed,
+    onPressIn?: ?(event: GestureResponderEvent) => mixed,
+    onPressOut?: ?(event: GestureResponderEvent) => mixed,
+    /**
+     * When the scroll view is disabled, this defines how far your
+     * touch may move off of the button, before deactivating the button.
+     * Once deactivated, try moving it back and you'll see that the button
+     * is once again reactivated! Move it back and forth several times
+     * while the scroll view is disabled. Ensure you pass in a constant
+     * to reduce memory allocations.
+     */
+    pressRetentionOffset?: ?EdgeInsetsOrSizeProp,
+    rejectResponderTermination?: ?boolean,
+    /**
+     * Used to locate this view in end-to-end tests.
+     */
+    testID?: ?string,
+    /**
+     * //FIXME: not in doc but available in examples
+     */
+    style?: ?ViewStyleProp,
+  } & TouchableWithoutFeedbackPropsAndroid &
+    TouchableWithoutFeedbackPropsIOS &
+    TouchableWithoutFeedbackPropsWindows & // [Windows]
+    AccessibilityProps,
+>;
 
 const PASSTHROUGH_PROPS = [
   'accessibilityActions',
@@ -130,13 +177,20 @@ const PASSTHROUGH_PROPS = [
   'tooltip', // [Windows]
 ];
 
-// Modify the function to accept the ref prop and forward it
+/**
+ * Do not use unless you have a very good reason.
+ * All the elements that respond to press should have a visual feedback when touched.
+ * This is one of the primary reason a "web" app doesn't feel "native".
+ *
+ * @see https://reactnative.dev/docs/touchablewithoutfeedback
+ */
+// [Windows
 // $FlowFixMe[prop-missing]
 const TouchableWithoutFeedback: React.AbstractComponent<
-  Props,
+  TouchableWithoutFeedbackProps,
   React.ElementRef<typeof Animated.View>,
 > = React.forwardRef(function TouchableWithoutFeedback(
-  props: Props,
+  props: TouchableWithoutFeedbackProps,
   ref,
 ): React.Node {
   const {
@@ -273,3 +327,4 @@ const TouchableWithoutFeedback: React.AbstractComponent<
 });
 
 export default TouchableWithoutFeedback;
+// Windows]

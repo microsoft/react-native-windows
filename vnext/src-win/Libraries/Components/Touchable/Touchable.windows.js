@@ -375,7 +375,7 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
  *
  * @lends Touchable.prototype
  */
-const TouchableMixin = {
+const TouchableMixinImpl = {
   componentDidMount: function () {
     if (!Platform.isTV) {
       return;
@@ -951,12 +951,12 @@ const {
   touchableHandleFocus,
   touchableHandleBlur,
   ...TouchableMixinWithoutDefaultFocusAndBlur
-} = TouchableMixin;
-TouchableMixin.withoutDefaultFocusAndBlur =
+} = TouchableMixinImpl;
+TouchableMixinImpl.withoutDefaultFocusAndBlur =
   TouchableMixinWithoutDefaultFocusAndBlur;
 
-const Touchable = {
-  Mixin: TouchableMixin,
+const TouchableImpl = {
+  Mixin: TouchableMixinImpl,
   /**
    * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).
    */
@@ -965,7 +965,7 @@ const Touchable = {
     hitSlop,
   }: {
     color: ColorValue,
-    hitSlop: EdgeInsetsProp,
+    hitSlop?: EdgeInsetsProp,
     ...
   }): null | React.Node => {
     if (__DEV__) {
@@ -975,4 +975,4 @@ const Touchable = {
   },
 };
 
-export default Touchable;
+export default TouchableImpl;
