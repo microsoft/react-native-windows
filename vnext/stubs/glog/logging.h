@@ -72,7 +72,7 @@ inline std::ostream &GetNullLog() noexcept {
 #define LOG_EVERY_N(severity, n) GlogStub::GetNullLog()
 
 typedef int LogSeverity;
-inline void FlushLogFiles(LogSeverity min_severity) {}
+inline void FlushLogFiles(LogSeverity) {}
 
 #define google GlogStub
 static const int GLOG_INFO = 1;
