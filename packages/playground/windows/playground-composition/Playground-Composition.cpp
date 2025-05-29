@@ -238,7 +238,7 @@ struct WindowData {
                 ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
                 m_compRootView.SizeChanged(
                     [hwnd, props = InstanceSettings().Properties()](
-                        auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs& args) {
+                        auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
                       auto compositor =
                           winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
                       auto async = compositor.RequestCommitAsync();
