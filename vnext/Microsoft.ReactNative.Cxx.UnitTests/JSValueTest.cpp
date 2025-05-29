@@ -188,13 +188,13 @@ TEST_CLASS (JSValueTest) {
   TEST_METHOD(TestObjectLiteral) {
     JSValue jsValue = JSValueObject{
         {"NullValue1", nullptr},
-        {"NullValue2", JSValue::Null.Copy()},
+        {"NullValue2", JSValue::NullRef().Copy()},
         {"ObjValue", JSValueObject{{"prop1", 2}}},
-        {"ObjValueEmpty", JSValue::EmptyObject.Copy()},
+        {"ObjValueEmpty", JSValue::EmptyObjectRef().Copy()},
         {"ArrayValue", JSValueArray{1, 2}},
-        {"ArrayValueEmpty", JSValue::EmptyArray.Copy()},
+        {"ArrayValueEmpty", JSValue::EmptyArrayRef().Copy()},
         {"StringValue1", "Hello"},
-        {"StringValue2", JSValue::EmptyString.Copy()},
+        {"StringValue2", JSValue::EmptyStringRef().Copy()},
         {"BoolValue", true},
         {"IntValue", 42},
         {"DoubleValue", 4.5}};
@@ -493,9 +493,9 @@ TEST_CLASS (JSValueTest) {
     auto AsObjectIsEmpty = [](JSValue const &value) { return value.AsObject().empty(); };
 
     TestCheck(!AsObjectIsEmpty(JSValueObject{{"prop1", 42}}));
-    TestCheck(AsObjectIsEmpty(JSValue::EmptyObject));
+    TestCheck(AsObjectIsEmpty(JSValue::EmptyObjectRef()));
     TestCheck(AsObjectIsEmpty(JSValueArray{42, 78}));
-    TestCheck(AsObjectIsEmpty(JSValue::EmptyArray));
+    TestCheck(AsObjectIsEmpty(JSValue::EmptyArrayRef()));
     TestCheck(AsObjectIsEmpty(""));
     TestCheck(AsObjectIsEmpty("Hello"));
     TestCheck(AsObjectIsEmpty(true));
@@ -509,7 +509,7 @@ TEST_CLASS (JSValueTest) {
     TestCheck(AsObjectIsEmpty(std::numeric_limits<double>::quiet_NaN()));
     TestCheck(AsObjectIsEmpty(std::numeric_limits<double>::infinity()));
     TestCheck(AsObjectIsEmpty(-std::numeric_limits<double>::infinity()));
-    TestCheck(AsObjectIsEmpty(JSValue::Null));
+    TestCheck(AsObjectIsEmpty(JSValue::NullRef()));
   }
 
   TEST_METHOD(TestAsArray) {
@@ -517,9 +517,9 @@ TEST_CLASS (JSValueTest) {
     auto AsArrayIsEmpty = [](JSValue const &value) { return value.AsArray().empty(); };
 
     TestCheck(AsArrayIsEmpty(JSValueObject{{"prop1", 42}}));
-    TestCheck(AsArrayIsEmpty(JSValue::EmptyObject));
+    TestCheck(AsArrayIsEmpty(JSValue::EmptyObjectRef()));
     TestCheck(!AsArrayIsEmpty(JSValueArray{42, 78}));
-    TestCheck(AsArrayIsEmpty(JSValue::EmptyArray));
+    TestCheck(AsArrayIsEmpty(JSValue::EmptyArrayRef()));
     TestCheck(AsArrayIsEmpty(""));
     TestCheck(AsArrayIsEmpty("Hello"));
     TestCheck(AsArrayIsEmpty(true));
@@ -533,7 +533,7 @@ TEST_CLASS (JSValueTest) {
     TestCheck(AsArrayIsEmpty(std::numeric_limits<double>::quiet_NaN()));
     TestCheck(AsArrayIsEmpty(std::numeric_limits<double>::infinity()));
     TestCheck(AsArrayIsEmpty(-std::numeric_limits<double>::infinity()));
-    TestCheck(AsArrayIsEmpty(JSValue::Null));
+    TestCheck(AsArrayIsEmpty(JSValue::NullRef()));
   }
 
   // Check AsString, AsBoolean, AsInt64, and AsDouble conversions.
@@ -570,9 +570,9 @@ TEST_CLASS (JSValueTest) {
 
   TEST_METHOD(TestAsConverters) {
     CheckAsConverter((JSValueObject{{"prop1", 42}}), "", true, 0, 0);
-    CheckAsConverter(JSValue::EmptyObject, "", false, 0, 0);
+    CheckAsConverter(JSValue::EmptyObjectRef(), "", false, 0, 0);
     CheckAsConverter((JSValueArray{42, 78}), "", true, 0, 0);
-    CheckAsConverter(JSValue::EmptyArray, "", false, 0, 0);
+    CheckAsConverter(JSValue::EmptyArrayRef(), "", false, 0, 0);
     CheckAsConverter("", "", false, 0, 0);
     CheckAsConverter("  ", "  ", false, 0, 0);
     CheckAsConverter("42", "42", false, 42, 42);
@@ -624,7 +624,7 @@ TEST_CLASS (JSValueTest) {
     CheckAsConverter(NAN, "NaN", false, 0, NAN);
     CheckAsConverter(INFINITY, "Infinity", true, 0, INFINITY);
     CheckAsConverter(-INFINITY, "-Infinity", true, 0, -INFINITY);
-    CheckAsConverter(JSValue::Null, "null", false, 0, 0);
+    CheckAsConverter(JSValue::NullRef(), "null", false, 0, 0);
   }
 
   TEST_METHOD(TestExplicitNumberConversion) {
