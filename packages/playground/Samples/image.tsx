@@ -4,7 +4,6 @@
  * @format
  */
 import React from 'react';
-import {Picker} from '@react-native-picker/picker';
 import {
   AppRegistry,
   Image,
@@ -14,7 +13,10 @@ import {
   StyleSheet,
   PlatformColor,
 } from 'react-native';
+import {TestPickerView} from './testPicker';
 
+const loadingImageUri =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
 
@@ -49,6 +51,10 @@ export default class Bootstrap extends React.Component<
     selectedSource: string;
     imageUri: string;
     tintColor: string;
+    modalVisible: boolean;
+    currentPicker: string | null;
+    defaultImageUri: string;
+    includedefaultSourceOnly: boolean;
   }
 > {
   state = {
@@ -57,14 +63,17 @@ export default class Bootstrap extends React.Component<
     includeBorder: false,
     tintColor: 'transparent',
     blurRadius: 0,
-    imageUri: 'https://facebook.github.io/react-native/img/header_logo.png',
+    imageUri: smallImageUri,
+    modalVisible: false,
+    currentPicker: '',
+    defaultImageUri: reactLogoUri,
+    includedefaultSourceOnly: false,
   };
 
   switchImageUri = (value: string) => {
     this.setState({selectedSource: value});
 
     let imageUri = '';
-
     if (value === 'small') {
       imageUri = smallImageUri;
     } else if (value === 'flower') {
@@ -75,8 +84,11 @@ export default class Bootstrap extends React.Component<
       imageUri = dataImageSvg;
     } else if (value === 'data') {
       imageUri = dataImageUri;
+    } else if (value === 'svg') {
+      imageUri = svgUri;
+    } else if (value === 'react-logo') {
+      imageUri = reactLogoUri;
     }
-
     this.setState({imageUri});
   };
 
@@ -169,55 +181,31 @@ export default class Bootstrap extends React.Component<
 
     return (
       <View style={styles.container}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>ResizeMode</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.selectedResizeMode}
-            onValueChange={value => this.setState({selectedResizeMode: value})}>
-            <Picker.Item label="cover" value="cover" />
-            <Picker.Item label="contain" value="contain" />
-            <Picker.Item label="stretch" value="stretch" />
-            <Picker.Item label="center" value="center" />
-            <Picker.Item label="repeat" value="repeat" />
-          </Picker>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>Image Source</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.selectedSource}
-            onValueChange={value => this.switchImageUri(value)}>
-            <Picker.Item label="small" value="small" />
-            <Picker.Item label="large" value="large" />
-            <Picker.Item label="data" value="data" />
-            <Picker.Item label="data-svg" value="data-svg" />
-            <Picker.Item label="svg" value="svg" />
-          </Picker>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>Blur Radius</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.blurRadius}
-            onValueChange={value => this.setState({blurRadius: value})}>
-            <Picker.Item label="0" value={0} />
-            <Picker.Item label="5" value={5} />
-            <Picker.Item label="10" value={10} />
-          </Picker>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.title}>Tint Color</Text>
-          <Picker
-            style={styles.picker}
-            selectedValue={this.state.tintColor}
-            onValueChange={value => this.setState({tintColor: value})}>
-            <Picker.Item label="None" value="transparent" />
-            <Picker.Item label="Purple" value="purple" />
-            <Picker.Item label="Green" value="green" />
-            <Picker.Item label="SystemAccentColor" value="platformcolor" />
-          </Picker>
-        </View>
+        <TestPickerView
+          options={resizeModes}
+          id="Resize Mode"
+          selectedLabel={this.state.selectedResizeMode}
+          onSelect={this.handleResizeModesSelect}
+        />
+        <TestPickerView
+          options={imageSources}
+          id="Image Source"
+          selectedLabel={this.state.selectedSource}
+          onSelect={this.handleImageSourcesSelect}
+        />
+        <TestPickerView
+          options={blurRadiusOptions}
+          id="Blur Radius"
+          selectedLabel={this.state.blurRadius}
+          onSelect={this.handleBlurRadiusSelect}
+        />
+        <TestPickerView
+          options={tintColors}
+          id="Tint Color"
+          selectedLabel={this.state.tintColor}
+          onSelect={this.handleTintColorSelect}
+        />
+
         <View style={styles.rowContainer}>
           <Text>No Border</Text>
           <Switch
@@ -229,22 +217,15 @@ export default class Bootstrap extends React.Component<
           />
           <Text>Round Border</Text>
         </View>
-        <View style={styles.imageContainer}>
-          <Image
-            style={[
-              styles.image,
-              this.state.includeBorder ? styles.imageWithBorder : {},
-              this.state.tintColor === 'platformcolor'
-                ? styles.imageWithPlatformColor
-                : {tintColor: this.state.tintColor},
-            ]}
-            source={
-              this.state.selectedSource === 'svg'
-                ? require('../Samples/images/Microsoft-Logo.svg')
-                : {uri: this.state.imageUri}
+
+        <View style={styles.rowContainer}>
+          <Text>defaultSource [Not Implemented Yet]</Text>
+          <Switch
+            style={{marginLeft: 10}}
+            value={this.state.includedefaultSourceOnly}
+            onValueChange={(value: boolean) =>
+              this.setState({includedefaultSourceOnly: value})
             }
-            resizeMode={this.state.selectedResizeMode}
-            blurRadius={this.state.blurRadius}
           />
           <Text>Include defaultSource Only</Text>
         </View>
@@ -316,6 +297,12 @@ const styles = StyleSheet.create({
     height: '50%',
     width: '75%',
   },
+  imageContainerDefault: {
+    marginTop: 5,
+    backgroundColor: 'skyblue',
+    height: '50%',
+    width: '75%',
+  },
   image: {
     height: '100%',
     width: '100%',
@@ -327,7 +314,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   imageWithPlatformColor: {
-    tintColor: PlatformColor('SystemAccentColor'),
+    tintColor: PlatformColor('AccentDark1'),
+  },
+  imageWithPlatformColorPrimary: {
+    tintColor: PlatformColor('TextFillColorPrimary'),
+  },
+  loading: {
+    height: '10%',
+    width: '10%',
   },
   title: {
     fontWeight: 'bold',
