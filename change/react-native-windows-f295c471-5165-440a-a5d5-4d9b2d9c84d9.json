@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rework modal implementation to use public APIs",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
