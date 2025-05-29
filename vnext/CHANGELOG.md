@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 28 May 2025 05:24:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 29 May 2025 05:23:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.962
+
+Thu, 29 May 2025 05:23:11 GMT
+
+### Changes
+
+- Fix warning in glog stub (30809111+acoates-ms@users.noreply.github.com)
+- JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries (30809111+acoates-ms@users.noreply.github.com)
+- Update folly exports from rn-win32 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.961
 
