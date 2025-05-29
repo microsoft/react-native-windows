@@ -1,8 +1,162 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Jan 2025 20:05:17 GMT and should not be manually modified.
+This log was last generated on Tue, 20 May 2025 23:30:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.45
+
+Tue, 20 May 2025 23:30:04 GMT
+
+### Patches
+
+- Fix await on new arch - switching to CallInvoker for TM callbacks (acoates@microsoft.com)
+
+## 0.74.44
+
+Mon, 28 Apr 2025 15:24:30 GMT
+
+### Patches
+
+- Integrate 0.74.7 (54227869+anupriya13@users.noreply.github.com)
+
+## 0.74.43
+
+Mon, 21 Apr 2025 21:34:28 GMT
+
+### Patches
+
+- Implement WebSocket resource task sequencer (#14577) (julio.rocha@microsoft.com)
+
+## 0.74.42
+
+Thu, 17 Apr 2025 23:41:10 GMT
+
+### Patches
+
+- Update WinAppSDK to 1.7.1 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.41
+
+Wed, 09 Apr 2025 00:43:28 GMT
+
+### Patches
+
+- Enforce SendPendingMessages in dispatch queue (#14487) (julio.rocha@microsoft.com)
+
+## 0.74.40
+
+Fri, 04 Apr 2025 00:22:00 GMT
+
+### Patches
+
+- Bump folly to v2024.01.01.00 (#14452) (yajurgrover24@gmail.com)
+
+## 0.74.39
+
+Thu, 27 Mar 2025 22:01:23 GMT
+
+### Patches
+
+- Implemented textAlign in TextInput for Fabric (14967941+danielayala94@users.noreply.github.com)
+- Allow TextInput to scroll (30809111+acoates-ms@users.noreply.github.com)
+- Button should pass onAccessibilityTap to native (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.74.38
+
+Wed, 12 Mar 2025 17:01:06 GMT
+
+### Patches
+
+- Add bridging files to Microsoft.ReactNative.Cxx (30809111+acoates-ms@users.noreply.github.com)
+- Add Support for Role Prop (34109996+chiaramooney@users.noreply.github.com)
+- Prevent race condition in ConnectSucceeds WS unit test (#14405) (julio.rocha@microsoft.com)
+- Components do not lost hover state if pointer leaves window before it leaves the component (30809111+acoates-ms@users.noreply.github.com)
+- Fix bool operator on transparent colors returning false (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.37
+
+Fri, 07 Mar 2025 20:21:59 GMT
+
+### Patches
+
+- Fix tooltips in high dpi (30809111+acoates-ms@users.noreply.github.com)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+- Refactor WebSocket resource class (#14377) (julio.rocha@microsoft.com)
+- Property updates switching between PlatformColors would no-op (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.11
+- Bump @react-native-windows/codegen to v0.74.8
+
+## 0.74.36
+
+Tue, 25 Feb 2025 22:07:38 GMT
+
+### Patches
+
+- Fix issue when calling arrange on an RN Island during load (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.35
+
+Wed, 12 Feb 2025 00:30:57 GMT
+
+### Patches
+
+- Bump to using WASK 1.7 experimental 3 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.34
+
+Mon, 03 Feb 2025 19:38:48 GMT
+
+### Patches
+
+- Round Focus visuals by default, fix nudge rendering (30809111+acoates-ms@users.noreply.github.com)
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when currently focused element gets marked as enableFocusRing=false (30809111+acoates-ms@users.noreply.github.com)
+- Basic support for stitching the UIA tree for a ContentIslandComponentView's child (email not defined)
+- TurboModule spec checking should accept hstring for string arguments (30809111+acoates-ms@users.noreply.github.com)
+- Allow portals to have independent layout constraints and scale factor (30809111+acoates-ms@users.noreply.github.com)
+- add modal implementation with PopupWindowSiteBridge (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.10
+- Bump @react-native-windows/codegen to v0.74.7
+
+## 0.74.33
+
+Thu, 30 Jan 2025 17:39:49 GMT
+
+### Patches
+
+- Re-enable code-signing of NuGet packages (jthysell@microsoft.com)
+
+## 0.74.32
+
+Fri, 24 Jan 2025 03:29:02 GMT
+
+### Patches
+
+- RNIsland UIA fragment root should report parents fragment root. (acoates@microsoft.com)
+- Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2 (50150435+JesseCol@users.noreply.github.com)
+
+## 0.74.31
+
+Wed, 15 Jan 2025 01:23:17 GMT
+
+### Patches
+
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.30
+
+Tue, 14 Jan 2025 23:37:20 GMT
+
+### Patches
+
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.29
 

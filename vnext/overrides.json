@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.5",
+  "baseVersion": "0.74.7",
   "overrides": [
     {
       "type": "derived",
@@ -231,6 +231,10 @@
     {
       "type": "platform",
       "file": "src-win/IntegrationTests/WebSocketBlobTest.js"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/IntegrationTests/WebSocketMultipleSendTest.js"
     },
     {
       "type": "platform",

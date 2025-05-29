@@ -771,7 +771,7 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
   facebook::react::LayoutConstraints constraints;
   ApplyConstraints(layoutConstraints, constraints);
 
-  if (m_isInitialized && m_rootTag != -1) {
+  if (m_isInitialized && m_rootTag != -1 && m_hasRenderedVisual) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
@@ -802,7 +802,7 @@ void ReactNativeIsland::Arrange(
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(layoutConstraints, fbLayoutConstraints);
 
-  if (m_isInitialized && m_rootTag != -1 && !m_isFragment) {
+  if (m_isInitialized && m_rootTag != -1 && !m_isFragment && m_hasRenderedVisual) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
@@ -893,34 +893,26 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (args.DidLayoutDirectionChange()) {
               pThis->Arrange(pThis->m_layoutConstraints, pThis->m_viewportOffset);
             }
-#ifndef USE_EXPERIMENTAL_WINUI3 // Use this in place of Connected/Disconnected events for now. -- Its not quite what we
-                                // want, but it will do for now.
-            if (args.DidSiteVisibleChange()) {
-              if (island.IsSiteVisible()) {
-                pThis->OnMounted();
-              } else {
-                pThis->OnUnmounted();
-              }
-            }
-#endif
           }
         });
 #ifdef USE_EXPERIMENTAL_WINUI3
-    m_islandConnectedToken = m_island.Connected(
-        [weakThis = get_weak()](
-            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
-          if (auto pThis = weakThis.get()) {
-            pThis->OnMounted();
-          }
-        });
+    if (!m_isFragment) {
+      m_islandConnectedToken = m_island.Connected(
+          [weakThis = get_weak()](
+              winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+            if (auto pThis = weakThis.get()) {
+              pThis->OnMounted();
+            }
+          });
 
-    m_islandDisconnectedToken = m_island.Disconnected(
-        [weakThis = get_weak()](
-            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
-          if (auto pThis = weakThis.get()) {
-            pThis->OnUnmounted();
-          }
-        });
+      m_islandDisconnectedToken = m_island.Disconnected(
+          [weakThis = get_weak()](
+              winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+            if (auto pThis = weakThis.get()) {
+              pThis->OnUnmounted();
+            }
+          });
+    }
 #endif
   }
   return m_island;
@@ -970,10 +962,10 @@ ReactNativeIsland::GetComponentView() noexcept {
 
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(
-        static_cast<facebook::react::SurfaceId>(m_rootTag));
-    return rootComponentViewDescriptor.view
-        .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    if (auto view = fabricuiManager->GetViewRegistry().findComponentViewWithTag(
+            static_cast<facebook::react::SurfaceId>(m_rootTag))) {
+      return view.as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    }
   }
   return nullptr;
 }

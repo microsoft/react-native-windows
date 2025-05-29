@@ -51,7 +51,7 @@ void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder
  */
 struct EllipseImageHandler
     : winrt::implements<EllipseImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
-  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
+  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext /*context*/, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"ellipse";
   }
 
@@ -115,7 +115,6 @@ winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 constexpr auto WindowDataProperty = L"WindowData";
 
 int RunPlayground(int showCmd, bool useWebDebugger);
-winrt::Microsoft::ReactNative::IReactPackageProvider CreateStubDeviceInfoPackageProvider() noexcept;
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -156,44 +155,6 @@ struct WindowData {
     }
 
     return m_instanceSettings;
-  }
-
-  winrt::Microsoft::UI::WindowId
-  CreateChildWindow(winrt::Microsoft::UI::WindowId parentWindowId, LPCWSTR title, int x, int y, int w, int h) {
-    LPCWSTR childWindowClassName = L"TestChildWindowClass";
-
-    // Register child window class
-    static std::once_flag onceFlag;
-    std::call_once(onceFlag, [&childWindowClassName]() {
-      WNDCLASSEX childWindowClass = {};
-
-      childWindowClass.cbSize = sizeof(WNDCLASSEX);
-      childWindowClass.style = CS_HREDRAW | CS_VREDRAW;
-      childWindowClass.lpfnWndProc = ::DefWindowProc;
-      childWindowClass.hInstance = GetModuleHandle(nullptr);
-      childWindowClass.lpszClassName = childWindowClassName;
-
-      RegisterClassEx(&childWindowClass);
-    });
-
-    HWND parentHwnd;
-    parentHwnd = winrt::Microsoft::UI::GetWindowFromWindowId(parentWindowId);
-
-    HWND childHwnd = ::CreateWindowEx(
-        0 /* dwExStyle */,
-        childWindowClassName,
-        title,
-        WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE,
-        x,
-        y,
-        w,
-        h,
-        parentHwnd /* hWndParent */,
-        nullptr /* hMenu */,
-        GetModuleHandle(nullptr),
-        nullptr /* lpParam */);
-
-    return winrt::Microsoft::UI::GetWindowIdFromWindow(childHwnd);
   }
 
   void ApplyConstraintsForContentSizedWindow(winrt::Microsoft::ReactNative::LayoutConstraints &constraints) {
@@ -274,21 +235,28 @@ struct WindowData {
                 // Disable user sizing of the hwnd
                 ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
                 m_compRootView.SizeChanged(
-                    [hwnd](auto sender, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
-                      RECT rcClient, rcWindow;
-                      GetClientRect(hwnd, &rcClient);
-                      GetWindowRect(hwnd, &rcWindow);
+                    [hwnd, props = InstanceSettings().Properties()](
+                        auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                      auto compositor =
+                          winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
+                      auto async = compositor.RequestCommitAsync();
+                      async.Completed([hwnd, size = args.Size()](
+                                          auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
+                        RECT rcClient, rcWindow;
+                        GetClientRect(hwnd, &rcClient);
+                        GetWindowRect(hwnd, &rcWindow);
 
-                      SetWindowPos(
-                          hwnd,
-                          nullptr,
-                          0,
-                          0,
-                          static_cast<int>(args.Size().Width) + rcClient.left - rcClient.right + rcWindow.right -
-                              rcWindow.left,
-                          static_cast<int>(args.Size().Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
-                              rcWindow.top,
-                          SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                        SetWindowPos(
+                            hwnd,
+                            nullptr,
+                            0,
+                            0,
+                            static_cast<int>(size.Width) + rcClient.left - rcClient.right + rcWindow.right -
+                                rcWindow.left,
+                            static_cast<int>(size.Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
+                                rcWindow.top,
+                            SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                      });
                     });
               }
               m_compRootView.Arrange(constraints, {0, 0});
@@ -369,7 +337,7 @@ struct WindowData {
       case IDM_UNLOAD: {
         auto async = Host().UnloadInstance();
         async.Completed([&, uidispatch = InstanceSettings().UIDispatcher()](
-                            auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+                            auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           asyncStatus;
           OutputDebugStringA("Instance Unload completed\n");
 
@@ -603,7 +571,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
             L"ReactNative.Composition", L"CompositionContext"});
 
         auto async = data->m_host.UnloadInstance();
-        async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+        async.Completed([host = data->m_host](auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
@@ -735,12 +704,10 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
   g_liftedCompositor = winrt::Microsoft::UI::Composition::Compositor();
 
-// We only want to init XAML if we are using XAML islands
-#ifdef USE_EXPERIMENTAL_WINUI3
+  // We only want to init XAML if we are using XAML islands
   // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
   // in Microsoft.ui.xaml.controls.dll.
   // auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
-#endif
 
   return RunPlayground(showCmd, false);
 }

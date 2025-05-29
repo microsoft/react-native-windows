@@ -116,25 +116,25 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the scroll bar
   BOOL TxShowScrollBar(INT fnBar, BOOL fShow) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Enable the scroll bar
   BOOL TxEnableScrollBar(INT fuSBFlags, INT fuArrowflags) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll range
   BOOL TxSetScrollRange(INT fnBar, LONG nMinPos, INT nMaxPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
   //@cmember Set the scroll position
   BOOL TxSetScrollPos(INT fnBar, INT nPos, BOOL fRedraw) override {
-    assert(false);
+    // assert(false);
     return {};
   }
 
@@ -377,8 +377,11 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the bits representing requested scroll bars for the window
   HRESULT TxGetScrollBars(DWORD *pdwScrollBar) override {
-    // TODO support scrolling
-    *pdwScrollBar = 0;
+    if (m_outer->m_multiline) {
+      *pdwScrollBar = WS_VSCROLL | WS_HSCROLL | ES_AUTOVSCROLL | ES_AUTOHSCROLL;
+    } else {
+      *pdwScrollBar = WS_HSCROLL | ES_AUTOHSCROLL;
+    }
     return S_OK;
   }
 
@@ -1042,6 +1045,12 @@ void WindowsTextInputComponentView::updateProps(
     autoCapitalizeOnUpdateProps(oldTextInputProps.autoCapitalize, newTextInputProps.autoCapitalize);
   }
 
+  if (oldTextInputProps.textAlign != newTextInputProps.textAlign) {
+    // Let UpdateParaFormat() to refresh the text field with the new text alignment.
+    m_propBitsMask |= TXTBIT_PARAFORMATCHANGE;
+    m_propBits |= TXTBIT_PARAFORMATCHANGE;
+  }
+
   UpdatePropertyBits();
 }
 
@@ -1305,7 +1314,15 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   m_pf.cbSize = sizeof(PARAFORMAT2);
   m_pf.dwMask = PFM_ALL;
 
-  m_pf.wAlignment = PFA_LEFT;
+  auto &textAlign = windowsTextInputProps().textAlign;
+
+  if (textAlign == facebook::react::TextAlignment::Center) {
+    m_pf.wAlignment = PFA_CENTER;
+  } else if (textAlign == facebook::react::TextAlignment::Right) {
+    m_pf.wAlignment = PFA_RIGHT;
+  } else {
+    m_pf.wAlignment = PFA_LEFT;
+  }
 
   m_pf.cTabCount = 1;
   m_pf.rgxTabs[0] = lDefaultTab;
@@ -1474,6 +1491,9 @@ WindowsTextInputComponentView::createVisual() noexcept {
   winrt::com_ptr<::IUnknown> spUnk;
   winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
   spUnk.as(m_textServices);
+
+  LRESULT res;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
 
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);

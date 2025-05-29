@@ -149,9 +149,6 @@
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
-    <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h">
-      <Filter>TurboModule</Filter>
-    </ClInclude>
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
@@ -171,6 +168,7 @@
     <ClInclude Include="$(NodeApiDir)js_native_api.h" />
     <ClInclude Include="$(NodeApiDir)js_native_api_types.h" />
     <ClInclude Include="$(NodeApiDir)js_runtime_api.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\LongLivedObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">

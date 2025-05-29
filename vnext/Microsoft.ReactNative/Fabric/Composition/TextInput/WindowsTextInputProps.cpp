@@ -47,7 +47,10 @@ WindowsTextInputProps::WindowsTextInputProps(
       autoCapitalize(convertRawProp(context, rawProps, "autoCapitalize", sourceProps.autoCapitalize, {})),
       clearTextOnSubmit(convertRawProp(context, rawProps, "clearTextOnSubmit", sourceProps.clearTextOnSubmit, {false})),
       submitKeyEvents(convertRawProp(context, rawProps, "submitKeyEvents", sourceProps.submitKeyEvents, {})),
-      autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})) {}
+      autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})),
+      textAlign(
+          convertRawProp(context, rawProps, "textAlign", sourceProps.textAlign, facebook::react::TextAlignment::Left)) {
+}
 
 void WindowsTextInputProps::setProp(
     const PropsParserContext &context,

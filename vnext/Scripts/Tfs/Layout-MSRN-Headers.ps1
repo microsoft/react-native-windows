@@ -77,11 +77,25 @@ Copy-Item -Force -Path $NodeApiJsiRoot\src\NodeApiJsiRuntime.h -Destination $Tar
 
 # Microsoft.ReactNative.CXX project TurboModule files
 New-Item -ItemType Directory -Path $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon -Force
+New-Item -ItemType Directory -Path $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\CallbackWrapper.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Array.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\AString.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Base.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Bool.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Bridging.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\CallbackWrapper.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Class.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Convert.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Error.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Function.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Number.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Object.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Promise.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Value.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\

@@ -2,6 +2,36 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 07 Mar 2025 20:21:59 GMT",
+      "version": "0.74.8",
+      "tag": "@react-native-windows/codegen_v0.74.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "4ad063f22757b42a70478b2c145520e621fd2bf5",
+            "comment": "Fix build issue building component codegen using clang"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 Feb 2025 19:38:49 GMT",
+      "version": "0.74.7",
+      "tag": "@react-native-windows/codegen_v0.74.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "1b4cbdc935779695138ea5dad63d902c8f12e8f5",
+            "comment": "Fix UpdateState on generated base class"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Dec 2024 04:12:33 GMT",
       "version": "0.74.6",
       "tag": "@react-native-windows/codegen_v0.74.6",

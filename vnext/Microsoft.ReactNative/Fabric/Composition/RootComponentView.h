@@ -27,10 +27,13 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   winrt::Microsoft::ReactNative::ComponentView GetFocusedComponent() noexcept;
-  void SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept;
+  void SetFocusedComponent(
+      const winrt::Microsoft::ReactNative::ComponentView &value,
+      winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept;
   bool TrySetFocusedComponent(
       const winrt::Microsoft::ReactNative::ComponentView &view,
-      winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept;
+      winrt::Microsoft::ReactNative::FocusNavigationDirection direction,
+      bool forceNoSelectionIfCannotMove = false) noexcept;
 
   bool NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 

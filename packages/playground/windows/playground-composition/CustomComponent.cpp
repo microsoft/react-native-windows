@@ -83,11 +83,9 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
       bool nativeLayout) {
     nativeLayout;
     islandView;
-#ifdef USE_EXPERIMENTAL_WINUI3
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_xamlIsland.Content(CreateXamlButtonContent(nativeLayout));
     islandView.Connect(m_xamlIsland.ContentIsland());
-#endif
   }
 
   void PropsChanged(
@@ -95,9 +93,7 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
       const winrt::Microsoft::ReactNative::IComponentProps &newProps,
       const winrt::Microsoft::ReactNative::IComponentProps & /*oldProps*/) {
     auto myProps = newProps.as<CustomXamlComponentProps>();
-#ifdef USE_EXPERIMENTAL_WINUI3
     m_buttonLabelTextBlock.Text(myProps->label);
-#endif
   }
 
   void FinalizeUpdates() noexcept {
@@ -168,13 +164,11 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
           userData->Initialize(islandView, nativeLayout);
           islandView.UserData(*userData);
 
-#ifdef USE_EXPERIMENTAL_WINUI3
           islandView.Destroying([](const winrt::IInspectable &sender, const winrt::IInspectable & /*args*/) {
             auto senderIslandView = sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
             auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
             userData->m_xamlIsland.Close();
           });
-#endif
         });
 
     builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &source,
@@ -232,9 +226,7 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
   winrt::Microsoft::UI::Xaml::Controls::TextBlock m_buttonLabelTextBlock{nullptr};
   winrt::Microsoft::ReactNative::IComponentState m_state;
   std::unique_ptr<CustomXamlComponentEventEmitter> m_eventEmitter{nullptr};
-#ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
-#endif
 };
 
 static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {

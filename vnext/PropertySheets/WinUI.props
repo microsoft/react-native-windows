@@ -4,15 +4,16 @@
 
     <!-- 
       Internal versions are located at: https://microsoft.visualstudio.com/DefaultCollection/ProjectReunion/_artifacts/feed/Project.Reunion.nuget.internal/NuGet/Microsoft.WindowsAppSDK/versions
-      For local testing of internal versions, modify the WinUI3Version, and comment out the addition nuget source in NuGet.Config
+      For local testing of internal versions, modify WinUI3ExperimentalVersion, and comment out the addition nuget source in NuGet.Config
     -->
-    <!-- This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
-    <WinUI3Version Condition="'$(WinUI3Version)'=='' AND '$(UseExperimentalWinUI3)'=='true'">1.6.240701003-experimental2</WinUI3Version>
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.5.240227000</WinUI3Version>
+    <WinUI3ExperimentalVersion Condition="'$(WinUI3ExperimentalVersion)'==''">1.7.250127003-experimental3</WinUI3ExperimentalVersion>
+    <!-- This value is also used by the CLI, see /packages/@react-native-windows/cli/.../autolinkWindows.ts -->
+    <WinUI3Version Condition="'$(WinUI3Version)'=='' AND '$(UseExperimentalWinUI3)'=='true'">$(WinUI3ExperimentalVersion)</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.7.250401001</WinUI3Version>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">
-		<!--This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
+		<!--This value is also used by the CLI, see /packages/@react-native-windows/cli/.../autolinkWindows.ts -->
     <WinUI2xVersion Condition="'$(WinUI2xVersion)'==''">2.8.0</WinUI2xVersion>
   </PropertyGroup>
 

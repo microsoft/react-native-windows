@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #include <Fabric/AbiComponentDescriptor.h>
-#include <Fabric/AbiViewComponentDescriptor.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/core/ReactPrimitives.h>
 #include "winrt/Microsoft.ReactNative.Composition.Experimental.h"

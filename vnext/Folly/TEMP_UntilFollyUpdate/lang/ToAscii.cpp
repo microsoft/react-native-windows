@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ struct to_ascii_array {
     return data.data[index];
   }
 };
-
 template <uint64_t Base, typename Alphabet>
 alignas(kIsMobile ? sizeof(size_t) : hardware_constructive_interference_size)
     typename to_ascii_array<Base, Alphabet>::data_type_ const
@@ -92,13 +91,13 @@ extern template to_ascii_table<10, to_ascii_alphabet_upper>::data_type_ const
 extern template to_ascii_table<16, to_ascii_alphabet_upper>::data_type_ const
     to_ascii_table<16, to_ascii_alphabet_upper>::data;
 
-template <uint64_t Base, typename I>
+template <uint64_t Base, typename Int>
 struct to_ascii_powers {
-  static constexpr size_t size_(I v) {
+  static constexpr size_t size_(Int v) {
     return 1 + (v < Base ? 0 : size_(v / Base));
   }
-  static constexpr size_t const size = size_(~I(0));
-  using data_type_ = c_array<I, size>;
+  static constexpr size_t const size = size_(~Int(0));
+  using data_type_ = c_array<Int, size>;
   static constexpr data_type_ data_() {
     data_type_ result{};
     for (size_t i = 0; i < size; ++i) {
@@ -109,12 +108,14 @@ struct to_ascii_powers {
   // @lint-ignore CLANGTIDY
   static data_type_ const data;
 };
-template <uint64_t Base, typename I>
-constexpr size_t const to_ascii_powers<Base, I>::size;
-template <uint64_t Base, typename I>
+#if FOLLY_CPLUSPLUS < 201703L
+template <uint64_t Base, typename Int>
+constexpr size_t const to_ascii_powers<Base, Int>::size;
+#endif
+template <uint64_t Base, typename Int>
 alignas(hardware_constructive_interference_size)
-    typename to_ascii_powers<Base, I>::data_type_ const
-    to_ascii_powers<Base, I>::data = to_ascii_powers<Base, I>::data_();
+    typename to_ascii_powers<Base, Int>::data_type_ const
+    to_ascii_powers<Base, Int>::data = to_ascii_powers<Base, Int>::data_();
 
 extern template to_ascii_powers<8, uint64_t>::data_type_ const
     to_ascii_powers<8, uint64_t>::data;
@@ -149,7 +150,7 @@ template <uint64_t Base>
 FOLLY_ALWAYS_INLINE size_t to_ascii_size_array(uint64_t v) {
   using powers = to_ascii_powers<Base, uint64_t>;
   for (size_t i = 0u; i < powers::size; ++i) {
-    if (FOLLY_LIKELY(v < powers::data.data[i])) {
+    if (FOLLY_UNLIKELY(v < powers::data.data[i])) {
       return i + size_t(i == 0);
     }
   }
@@ -270,6 +271,15 @@ FOLLY_ALWAYS_INLINE size_t to_ascii_with_table(char* out, uint64_t v) {
   return size;
 }
 
+// Assumes that size >= number of digits in v. If >, the result is left-padded
+// with 0s.
+template <uint64_t Base, typename Alphabet>
+FOLLY_ALWAYS_INLINE void to_ascii_with_route(
+    char* outb, size_t size, uint64_t v) {
+  kIsMobile //
+      ? to_ascii_with_array<Base, Alphabet>(outb, size, v)
+      : to_ascii_with_table<Base, Alphabet>(outb, size, v);
+}
 template <uint64_t Base, typename Alphabet>
 FOLLY_ALWAYS_INLINE size_t
 to_ascii_with_route(char* outb, char const* oute, uint64_t v) {
@@ -277,9 +287,7 @@ to_ascii_with_route(char* outb, char const* oute, uint64_t v) {
   if (FOLLY_UNLIKELY(oute < outb || size_t(oute - outb) < size)) {
     return 0;
   }
-  kIsMobile //
-      ? to_ascii_with_array<Base, Alphabet>(outb, size, v)
-      : to_ascii_with_table<Base, Alphabet>(outb, size, v);
+  to_ascii_with_route<Base, Alphabet>(outb, size, v);
   return size;
 }
 template <uint64_t Base, typename Alphabet, size_t N>

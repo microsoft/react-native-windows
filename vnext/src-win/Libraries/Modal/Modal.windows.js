@@ -274,8 +274,11 @@ class Modal extends React.Component<Props, State> {
       }
     }
 
+    // [Windows] - apply empty rootViewStyle to AppContainer to prevent modal from always expanding to fill available space
     const innerChildren = __DEV__ ? (
-      <AppContainer rootTag={this.context}>{this.props.children}</AppContainer>
+      <AppContainer rootTag={this.context} rootViewStyle={{}}>
+        {this.props.children}
+      </AppContainer>
     ) : (
       this.props.children
     );

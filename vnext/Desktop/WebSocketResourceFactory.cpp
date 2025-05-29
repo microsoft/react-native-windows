@@ -20,7 +20,12 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make() {
     certExceptions.emplace_back(ChainValidationResult::Untrusted);
     certExceptions.emplace_back(ChainValidationResult::InvalidName);
   }
-  return std::make_shared<WinRTWebSocketResource>(std::move(certExceptions));
+
+  if (GetRuntimeOptionBool("WebSocket.ResourceV2")) {
+    return std::make_shared<WinRTWebSocketResource2>(std::move(certExceptions));
+  } else {
+    return std::make_shared<WinRTWebSocketResource>(std::move(certExceptions));
+  }
 }
 
 #pragma endregion IWebSocketResource static members

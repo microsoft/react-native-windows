@@ -1,0 +1,112 @@
+name: RNW NuGet Release $(Date:yyyyMMdd).$(Rev:r)
+
+trigger: none
+
+resources:
+  pipelines:
+  - pipeline: 'Publish'
+    project: 'ReactNative'
+    source: 'Publish'
+    trigger:
+      branches:
+        include:
+        - -1espublish
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: Azure-Pipelines-1ESPT-ExDShared
+      image: windows-latest
+      os: windows
+    customBuildTags:
+    - ES365AIMigrationTooling-Release
+    stages:
+    - stage: PushToPrivateAdoStage
+      displayName: ADO - react-native
+      jobs:
+      - job: PushPackages
+        displayName: Push packages
+        condition: succeeded()
+        timeoutInMinutes: 0
+        templateContext:
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'ReactWindows-final-nuget'
+            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+        steps:
+        - checkout: none
+        - task: NuGetToolInstaller@1
+          displayName: 'Use NuGet '
+        - task: NuGetAuthenticate@1
+          displayName: NuGet Authenticate
+          inputs:
+            nuGetServiceConnections: ms/react-native ADO Feed
+        - task: CmdLine@2
+          displayName: NuGet push (react-native)
+          inputs:
+            script: nuget.exe push *.nupkg -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
+            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+    - stage: PushToPublicAdoStage
+      displayName: ADO - react-native-public
+      jobs:
+      - job: PushPackages
+        displayName: Push packages
+        condition: succeeded()
+        timeoutInMinutes: 0
+        templateContext:
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'ReactWindows-final-nuget'
+            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+        steps:
+        - checkout: none
+        - task: NuGetToolInstaller@1
+          displayName: 'Use NuGet '
+        - task: NuGetAuthenticate@1
+          displayName: NuGet Authenticate
+          inputs:
+            nuGetServiceConnections: ms/react-native-public ADO Feed
+        - task: CmdLine@2
+          displayName: NuGet push (react-native-public)
+          inputs:
+            script: nuget.exe push *.nupkg -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
+            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+    - stage: PushToNuGetStage
+      displayName: nuget.org - Push nuget packages
+      variables:
+      - group: RNW Secrets
+      jobs:
+      - job: PushPackages
+        displayName: Push packages
+        timeoutInMinutes: 0
+        templateContext:
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'ReactWindows-final-nuget'
+            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+        steps:
+        - checkout: none
+        - task: NuGetToolInstaller@1
+          displayName: 'Use NuGet '
+        - task: CmdLine@2
+          displayName: NuGet SetApiKey (nuget.org)
+          inputs:
+            script: nuget.exe SetApiKey $(nugetorg-apiKey-push)
+            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+        - task: PowerShell@2
+          displayName: NuGet push (nuget.org)
+          inputs:
+            targetType: inline
+            errorActionPreference: silentlyContinue
+            script: |
+              if (Get-ChildItem -Path .\ -Filter '*0.0.0-canary*' -ErrorAction SilentlyContinue) { Write-Output "Canary builds found, exiting."; return 0; }
+              nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
+            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget

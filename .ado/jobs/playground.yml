@@ -55,17 +55,17 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
+            UseExperimentalWinUI3: false
           - Name: X64DebugCompositionExperimentalWinUI3
             BuildConfiguration: Debug
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
+            UseExperimentalWinUI3: false
           - Name: X64ReleaseCompositionExperimentalWinUI3
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
+            UseExperimentalWinUI3: false
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X86DebugUniversal
@@ -93,16 +93,16 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
-          - Name: X86DebugCompositionExperimentalWinUI3
-            BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
-          - Name: X64ReleaseCompositionExperimentalWinUI3
-            BuildConfiguration: Release
-            BuildPlatform: x64
-            SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
+          # - Name: X86DebugCompositionExperimentalWinUI3
+          #   BuildConfiguration: Debug
+          #   BuildPlatform: x86
+          #   SolutionFile: Playground-Composition.sln
+          #   UseExperimentalWinUI3: true
+          # - Name: X64ReleaseCompositionExperimentalWinUI3
+          #   BuildConfiguration: Release
+          #   BuildPlatform: x64
+          #   SolutionFile: Playground-Composition.sln
+          #   UseExperimentalWinUI3: true
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86
