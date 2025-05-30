@@ -1,23 +1,12 @@
 name: Generate Release Notes
 
 on:
-  workflow_dispatch:
-    inputs:
-      start_date:
-        description: 'Start date (format: yyyy-mm-dd)'
-        required: true
-        default: '2025-05-06'
-      end_date:
-        description: 'End date (format: yyyy-mm-dd)'
-        required: true
-        default: '2025-05-30'
-
   push:
-    branches:
-      - '**'
+    paths:
+      - '.github/workflows/generate-release-notes.yml'
   pull_request:
-    branches:
-      - '**'
+    paths:
+      - '.github/workflows/generate-release-notes.yml'
 
 jobs:
   generate-release-notes:
@@ -27,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: anupriya13/react-native-windows
+          repository: microsoft/react-native-windows
           fetch-depth: 0
           ref: ${{ github.head_ref != '' && github.head_ref || github.ref_name }}
 
@@ -49,8 +38,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
-          START_DATE: ${{ github.event.inputs.start_date || '2025-05-06' }}
-          END_DATE: ${{ github.event.inputs.end_date || '2025-05-30' }}
+          START_DATE: '2025-05-06' # Adjust this date as needed
+          END_DATE: '2025-05-30' # Adjust this date as needed
         run: |
           python .github/scripts/generate_release_notes.py > release_notes.md
           mkdir -p .github/release_notes
