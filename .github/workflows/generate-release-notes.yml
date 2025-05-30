@@ -37,7 +37,7 @@ jobs:
       - name: Generate release notes file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ steps.get_tag.outputs.tag }}
+          RELEASE_TAG: '0.79.0' # Adjust this release as needed
           START_DATE: '2025-05-06' # Adjust this date as needed
           END_DATE: '2025-05-30' # Adjust this date as needed
         run: |
