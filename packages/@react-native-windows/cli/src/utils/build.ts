@@ -14,7 +14,7 @@ import {
   BuildConfig,
   BuildArch,
 } from '../commands/runWindows/runWindowsOptions';
-import {Config} from '@react-native-community/cli-types';
+import type {Config} from '@react-native-community/cli-types';
 import {CodedError} from '@react-native-windows/telemetry';
 
 export async function buildSolution(
