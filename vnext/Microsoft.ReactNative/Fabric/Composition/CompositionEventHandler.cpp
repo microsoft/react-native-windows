@@ -9,7 +9,6 @@
 #include <IReactContext.h>
 #include <React.h>
 #include <Views/DevMenu.h>
-#include <Views/ShadowNodeBase.h>
 #include <windows.h>
 #include <windowsx.h>
 #include <winrt/Windows.UI.Core.h>
@@ -637,17 +636,6 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
 
   auto eventPathViews = GetTouchableViewsInPathToRoot(targetView);
 
-  // Over
-  if (targetView != nullptr && previousTargetTag != targetView.Tag()) {
-    bool shouldEmitOverEvent =
-        IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerOver);
-    const auto eventEmitter = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetView)
-                                  ->eventEmitterAtPoint(event.offsetPoint);
-    if (shouldEmitOverEvent && eventEmitter != nullptr) {
-      eventEmitter->onPointerOver(event);
-    }
-  }
-
   // Entering
 
   // We only want to emit events to JS if there is a view that is currently listening to said event
@@ -664,7 +652,6 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     auto componentView = *itComponentView;
     bool shouldEmitEvent = componentView != nullptr &&
         (hasParentEnterListener ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseEnter));
 
     if (std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
@@ -674,16 +661,12 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
               m_context, componentView.Tag(), pointerPoint, keyModifiers);
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
           ->OnPointerEntered(args);
-
       if (shouldEmitEvent) {
         const auto eventEmitter =
             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
                 ->eventEmitter();
-        if (eventEmitter) {
-          eventEmitter->onPointerEnter(event);
-          if (IsMousePointerEvent(event)) {
-            eventEmitter->onMouseEnter(event);
-          }
+        if (eventEmitter && IsMousePointerEvent(event)) {
+          eventEmitter->onMouseEnter(event);
         }
       }
     }
@@ -696,26 +679,13 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   // Call the underlaying pointer handler
   handler(eventPathViews);
 
-  // Out
-  if (previousTargetTag != -1 && previousTargetTag != (targetView ? targetView.Tag() : -1)) {
-    bool shouldEmitOutEvent =
-        IsAnyViewInPathListeningToEvent(currentlyHoveredViews, facebook::react::ViewEvents::Offset::PointerOut);
-    const auto eventEmitter =
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(prevTargetView)->eventEmitter();
-    if (shouldEmitOutEvent && eventEmitter != nullptr) {
-      eventEmitter->onPointerOut(event);
-    }
-  }
-
   // Leaving
 
   // pointerleave events need to be emitted from the deepest target to the root but
   // we also need to efficiently keep track of if a view has a parent which is listening to the leave events,
   // so we first iterate from the root to the target, collecting the views which need events fired for, of which
   // we reverse iterate (now from target to root), actually emitting the events.
-  std::vector<winrt::Microsoft::ReactNative::ComponentView>
-      viewsToEmitJSLeaveEventsTo; // NSMutableOrderedSet<UIView *> *viewsToEmitLeaveEventsTo =
-                                  // [NSMutableOrderedSet orderedSet];
+  std::vector<winrt::Microsoft::ReactNative::ComponentView> viewsToEmitJSLeaveEventsTo;
 
   std::vector<winrt::Microsoft::ReactNative::ComponentView> viewsToEmitLeaveEventsTo;
 
@@ -723,14 +693,11 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
 
   bool hasParentLeaveListener = false;
   for (auto itComponentView = currentlyHoveredViews.rbegin(); itComponentView != currentlyHoveredViews.rend();
-       itComponentView++) { //  for (RCTReactTaggedView *taggedView in [currentlyHoveredViews
-                            //  reverseObjectEnumerator])
-                            //  {
+       itComponentView++) {
     auto componentView = *itComponentView;
 
     bool shouldEmitJSEvent = componentView != nullptr &&
         (hasParentLeaveListener ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseLeave));
 
     if (std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
@@ -755,17 +722,13 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   }
 
   for (auto itComponentView = viewsToEmitJSLeaveEventsTo.rbegin(); itComponentView != viewsToEmitJSLeaveEventsTo.rend();
-       itComponentView++) { //  for (UIView *componentView in [viewsToEmitJSLeaveEventsTo
-                            //  reverseObjectEnumerator]) {
+       itComponentView++) {
     auto componentView = *itComponentView;
 
     const auto eventEmitter =
         winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)->eventEmitter();
-    if (eventEmitter) {
-      eventEmitter->onPointerLeave(event);
-      if (IsMousePointerEvent(event)) {
-        eventEmitter->onMouseLeave(event);
-      }
+    if (eventEmitter && IsMousePointerEvent(event)) {
+      eventEmitter->onMouseLeave(event);
     }
   }
 
@@ -815,41 +778,39 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Pointer:
             type = winrt::Windows::UI::Core::CoreCursorType::Hand;
             break;
-            /* -- Additional cursors not added in core until later version
-              case facebook::react::Cursor::Help:
-                type = winrt::Windows::UI::Core::CoreCursorType::Help;
-                break;
-              case facebook::react::Cursor::NotAllowed:
-                type = winrt::Windows::UI::Core::CoreCursorType::UniversalNo;
-                break;
-              case facebook::react::Cursor::Wait:
-                type = winrt::Windows::UI::Core::CoreCursorType::Wait;
-                break;
-              case facebook::react::Cursor::Move:
-                type = winrt::Windows::UI::Core::CoreCursorType::SizeAll;
-                break;
-              case facebook::react::Cursor::NESWResize:
-                type = winrt::Windows::UI::Core::CoreCursorType::SizeNortheastSouthwest;
-                break;
-              case facebook::react::Cursor::NSResize:
-                type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthSouth;
-                break;
-              case facebook::react::Cursor::NWSEResize:
-                type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthwestSoutheast;
-                break;
-              case facebook::react::Cursor::EWResize:
-                type = winrt::Windows::UI::Core::CoreCursorType::SizeWestEast;
-                break;
-              case facebook::react::Cursor::Text:
-                type = winrt::Windows::UI::Core::CoreCursorType::IBeam;
-                break;
-              case facebook::react::Cursor::Progress:
-                type = winrt::Windows::UI::Core::CoreCursorType::Wait; // IDC_APPSTARTING not mapped to CoreCursor?
-                break;
-              case facebook::react::Cursor::Crosshair:
-                type = winrt::Windows::UI::Core::CoreCursorType::Cross;
-                break;
-                */
+          case facebook::react::Cursor::Help:
+            type = winrt::Windows::UI::Core::CoreCursorType::Help;
+            break;
+          case facebook::react::Cursor::NotAllowed:
+            type = winrt::Windows::UI::Core::CoreCursorType::UniversalNo;
+            break;
+          case facebook::react::Cursor::Wait:
+            type = winrt::Windows::UI::Core::CoreCursorType::Wait;
+            break;
+          case facebook::react::Cursor::Move:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeAll;
+            break;
+          case facebook::react::Cursor::NESWResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeNortheastSouthwest;
+            break;
+          case facebook::react::Cursor::NSResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthSouth;
+            break;
+          case facebook::react::Cursor::NWSEResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthwestSoutheast;
+            break;
+          case facebook::react::Cursor::EWResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeWestEast;
+            break;
+          case facebook::react::Cursor::Text:
+            type = winrt::Windows::UI::Core::CoreCursorType::IBeam;
+            break;
+          case facebook::react::Cursor::Progress:
+            type = winrt::Windows::UI::Core::CoreCursorType::Wait; // IDC_APPSTARTING not mapped to CoreCursor?
+            break;
+          case facebook::react::Cursor::Crosshair:
+            type = winrt::Windows::UI::Core::CoreCursorType::Cross;
+            break;
           default:
             break;
         }
@@ -880,7 +841,6 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Pointer:
             idc = IDC_HAND;
             break;
-            /* -- Additional cursors not added in core until later version
           case facebook::react::Cursor::Help:
             idc = IDC_HELP;
             break;
@@ -914,7 +874,6 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Crosshair:
             idc = IDC_CROSS;
             break;
-            */
           default:
             break;
         }
@@ -1064,21 +1023,48 @@ void CompositionEventHandler::onPointerMoved(
 
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
-    auto handler = [&targetView,
-                    &pointerEvent](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
+    // check if this pointer corresponds to active touch that has a responder
+    auto activeTouch = m_activeTouches.find(pointerId);
+    bool isActiveTouch = activeTouch != m_activeTouches.end() && activeTouch->second.eventEmitter != nullptr;
+
+    auto handler = [&, targetView, pointerEvent, isActiveTouch](
+                       std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
       const auto eventEmitter = targetView
           ? winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetView)
                 ->eventEmitterAtPoint(pointerEvent.offsetPoint)
-          : nullptr;
-      bool hasMoveEventListeners =
-          IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
-          IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
-      if (eventEmitter != nullptr && hasMoveEventListeners) {
+          : RootComponentView().eventEmitterAtPoint(pointerEvent.offsetPoint);
+
+      if (eventEmitter != nullptr) {
         eventEmitter->onPointerMove(pointerEvent);
+      } else {
+        ClearAllHoveredForPointer(pointerEvent);
       }
     };
 
     HandleIncomingPointerEvent(pointerEvent, targetView, pointerPoint, keyModifiers, handler);
+
+    if (isActiveTouch) {
+      // For active touches with responders, also dispatch through touch event system
+      UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
+      DispatchTouchEvent(TouchEventType::Move, pointerId, pointerPoint, keyModifiers);
+    }
+  }
+}
+
+void CompositionEventHandler::ClearAllHoveredForPointer(const facebook::react::PointerEvent &pointerEvent) noexcept {
+  // special case if we have no target
+  // PointerEventsProcessor requires move events to keep track of the hovered components in core.
+  // It also treats a onPointerLeave event as a special case that removes the hover state of all currently hovered
+  // events. If we get null for the targetView, that means that the mouse is no over any components, so we have no
+  // element to send the move event to. However we need to send something so that any previously hovered elements
+  // are no longer hovered.
+  auto children = RootComponentView().Children();
+  if (auto size = children.Size()) {
+    auto firstChild = children.GetAt(0);
+    if (auto childEventEmitter =
+            winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(firstChild)->eventEmitter()) {
+      childEventEmitter->onPointerLeave(pointerEvent);
+    }
   }
 }
 
@@ -1104,7 +1090,9 @@ void CompositionEventHandler::onPointerExited(
 
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
-    auto handler = [](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {};
+    auto handler = [&](std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
+      ClearAllHoveredForPointer(pointerEvent);
+    };
 
     HandleIncomingPointerEvent(pointerEvent, nullptr, pointerPoint, keyModifiers, handler);
   }
@@ -1392,12 +1380,7 @@ void CompositionEventHandler::DispatchTouchEvent(
           activeTouch.eventEmitter->onPointerDown(pointerEvent);
           break;
         case TouchEventType::Move: {
-          bool hasMoveEventListeners =
-              IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
-              IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
-          if (hasMoveEventListeners) {
-            activeTouch.eventEmitter->onPointerMove(pointerEvent);
-          }
+          activeTouch.eventEmitter->onPointerMove(pointerEvent);
           break;
         }
         case TouchEventType::End:
