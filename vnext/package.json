@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.963",
+  "version": "0.79.0-preview.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "15.0.0-alpha.2",
     "@react-native-community/cli-platform-android": "15.0.0-alpha.2",
     "@react-native-community/cli-platform-ios": "15.0.0-alpha.2",
-    "@react-native-windows/cli": "0.0.0-canary.265",
+    "@react-native-windows/cli": "0.79.0-preview.0",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.79.0-nightly-20250303-cee63397b",
     "@react-native/codegen": "0.79.0-nightly-20250303-cee63397b",
@@ -67,7 +67,7 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.123",
+    "@react-native-windows/codegen": "0.79.0-preview.0",
     "@react-native/metro-config": "0.79.0-nightly-20250303-cee63397b",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.36",
@@ -94,7 +94,7 @@
     "react-native": "0.79.0-nightly-20250303-cee63397b"
   },
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",
