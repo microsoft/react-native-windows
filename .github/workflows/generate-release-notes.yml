@@ -28,12 +28,6 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Get latest tag
-        id: get_tag
-        run: |
-          tag=$(git describe --tags --abbrev=0 || echo "Unreleased")
-          echo "tag=$tag" >> $GITHUB_OUTPUT
-
       - name: Generate release notes file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
