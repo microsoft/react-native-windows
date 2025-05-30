@@ -127,7 +127,7 @@ jobs:
                   buildPlatform: ${{ matrix.BuildPlatform }}
                   buildLogDirectory: $(BuildLogDirectory)
                   workingDirectory: packages/integration-test-app
-                  moreMSBuildProps: --no-packager --no-deploy --no-autolink
+                  moreRunWindowsArgs: --no-packager --no-deploy --no-autolink
                   errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
 
               - powershell: Start-Process npm.cmd -ArgumentList "run","start"
@@ -171,7 +171,7 @@ jobs:
                   buildPlatform: ${{ matrix.BuildPlatform }}
                   buildLogDirectory: $(BuildLogDirectory)
                   workingDirectory: packages/integration-test-app
-                  moreMSBuildProps: ${{ matrix.DeployOptions }} --no-packager --no-autolink
+                  moreRunWindowsArgs: ${{ matrix.DeployOptions }} --no-packager --no-autolink
                   errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
 
               - script: yarn windows --release --no-build ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging

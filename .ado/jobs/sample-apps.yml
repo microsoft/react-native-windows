@@ -96,7 +96,7 @@ jobs:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
-                deployOption:  ${{ matrix.DeployOption }}
+                moreRunWindowsArgs: ${{ matrix.DeployOption }}
                 buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-apps
                 errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
@@ -139,7 +139,7 @@ jobs:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
-                deployOption:  ${{ matrix.DeployOption }}
+                moreRunWindowsArgs: ${{ matrix.DeployOption }}
                 buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-app-fabric
 

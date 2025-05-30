@@ -125,7 +125,7 @@ jobs:
                   certificatePassword: ${{ parameters.certificatePassword }}
         
             - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
-              - template:  ../templates/enable-experimental-winui3.yml
+              - template: ../templates/enable-experimental-winui3.yml
                 parameters:
                   workingDir: packages\playground\windows
 
