@@ -1,12 +1,13 @@
 name: Generate Release Notes
 
-on:
-  push:
-    paths:
-      - '.github/workflows/generate-release-notes.yml'
-  pull_request:
-    paths:
-      - '.github/workflows/generate-release-notes.yml'
+# commenting out the trigger for now, find way to run this script in some 'yarn release-notes' command
+# on:
+#   push:
+#     paths:
+#       - '.github/workflows/generate-release-notes.yml'
+#   pull_request:
+#     paths:
+#       - '.github/workflows/generate-release-notes.yml'
 
 jobs:
   generate-release-notes:
