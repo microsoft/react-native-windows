@@ -101,9 +101,9 @@ def categorize_commits(commits):
     # Keywords for each category (lowercase)
     keywords = {
         "Reliability": ["fix", "bug", "error", "issue", "crash", "fault", "defect", "patch"],
-        "New Features": ["feature", "add", "implement", "introduce", "support", "enable"],
-        "Breaking Changes": ["break", "remove", "deprecated", "incompatible", "remove support", "change api"],
-        "New Architecture-specific changes": ["fabric", "arch", "architecture", "refactor", "restructure", "modularize"]
+        "New Features": ["feature", "add", "introduce", "support", "enable"],
+        "Breaking Changes": ["break", "remove", "deprecated", "incompatible", "remove support", "change api", "breaking"],
+        "New Architecture-specific changes": ["implement", "new", "fabric", "arch", "modal", "architecture", "refactor", "restructure", "modularize"]
     }
     
     for commit in commits:
