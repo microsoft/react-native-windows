@@ -568,8 +568,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.d.ts",
       "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
-      "baseHash": "21dab7f71254c429d592827ab313f77c18baeda1",
-      "issue": 0
+      "baseHash": "21dab7f71254c429d592827ab313f77c18baeda1"
     },
     {
       "type": "derived",
@@ -624,7 +623,7 @@
       "type": "patch",
       "file": "src-win/src/private/specs/components/RCTModalHostViewNativeComponent.js",
       "baseFile": "packages/react-native/src/private/specs/components/RCTModalHostViewNativeComponent.js",
-      "baseHash": "dbda84f2de3e0aa3504e38bd4bbb687b1ea671b2",
+      "baseHash": "a5e0c9fe3a0777f704e0685589019b4dd443d385",
       "issue": 0
     },
     {
