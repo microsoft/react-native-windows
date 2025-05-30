@@ -91,10 +91,10 @@ def filter_commits_by_date(commits):
 
 def categorize_commits(commits):
     categories = {
+        "New Architecture-specific changes": [],
         "Reliability": [],
         "New Features": [],
         "Breaking Changes": [],
-        "New Architecture-specific changes": [],
         "Other": []
     }
     
@@ -103,14 +103,14 @@ def categorize_commits(commits):
         "Reliability": ["fix", "bug", "error", "issue", "crash", "fault", "defect", "patch"],
         "New Features": ["feature", "add", "implement", "introduce", "support", "enable"],
         "Breaking Changes": ["break", "remove", "deprecated", "incompatible", "remove support", "change api"],
-        "New Architecture-specific changes": ["fabric", "arch", "architecture", "refactor", "restructure", "modularize"]
+        "New Architecture-specific changes": ["[fabric]","fabric", "arch", "architecture", "refactor", "restructure", "modularize"]
     }
     
     for commit in commits:
         message = commit['commit']['message']
         sha = commit['sha']
         url = commit['html_url']
-        entry = f"- {message.splitlines()[0]} [{sha[:7]}]({url})"
+        entry = f"- {message.splitlines()[0]} [{message.splitlines()[0]} · microsoft/react-native-windows@{sha[:7]} (github.com)]({url})"
         msg_lower = message.lower()
         
         # Track which categories matched to avoid multiple assignments
