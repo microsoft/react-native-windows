@@ -108,7 +108,7 @@ export const description = 'Usage of keyboard properties.';
 export const examples = [
   {
     title: 'Tabstops',
-    render: function (): JSX.Element {
+    render: function () {
       return <TabStopExample />;
     },
   },

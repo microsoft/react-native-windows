@@ -167,7 +167,7 @@ export const title = 'LegacyTextHitTestTest';
 export const description = 'Legacy e2e test for Text hit testing';
 export const examples = [
   {
-    render: function (): JSX.Element {
+    render: function () {
       return <PressableTextTests />;
     },
   },

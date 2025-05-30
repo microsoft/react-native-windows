@@ -594,31 +594,31 @@ export const description = 'Usage of accessibility properties.';
 export const examples = [
   {
     title: 'Label, Hint',
-    render: function (): JSX.Element {
+    render: function () {
       return <AccessibilityBaseExample />;
     },
   },
   {
     title: 'Touchables',
-    render: function (): JSX.Element {
+    render: function () {
       return <TouchableExamples />;
     },
   },
   {
     title: 'HighContrast',
-    render: function (): JSX.Element {
+    render: function () {
       return <HighContrastExample />;
     },
   },
   {
     title: 'States',
-    render: function (): JSX.Element {
+    render: function () {
       return <AccessibilityStateExamples />;
     },
   },
   {
     title: 'Lists',
-    render: function (): JSX.Element {
+    render: function () {
       return <AccessibilityListExamples />;
     },
   },
