@@ -103,6 +103,11 @@
         comsuppw.lib;
         Shlwapi.lib;
         Version.lib;
+        D3D11.lib;
+        D2d1.lib;
+        ShCore.lib;
+        Dwrite.lib;
+        Uiautomationcore.lib;
         Dwmapi.lib;
         WindowsApp_downlevel.lib;
         %(AdditionalDependencies)
