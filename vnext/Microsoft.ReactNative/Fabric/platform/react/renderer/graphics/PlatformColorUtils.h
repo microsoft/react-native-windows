@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <CppWinRTIncludes.h>
+#include <winrt/Windows.UI.h>
 
 namespace facebook::react {
 

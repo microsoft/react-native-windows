@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-<!-- This log was last generated on Tue, 13 May 2025 21:05:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:25:02 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.2.36
+
+Fri, 30 May 2025 05:25:02 GMT
+
+### Patches
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
 
 ## 1.2.35
 

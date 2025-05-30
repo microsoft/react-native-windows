@@ -115,6 +115,13 @@ async function downloadFlowTypes(overwrite = false) {
     destRootPath,
     overwrite,
   );
+
+  await downloadFilesFromReactNative(
+    reactNativeRef,
+    'flow-typed/environment',
+    destRootPath,
+    overwrite,
+  );
 }
 
 task('downloadFlowTypes', async () => await downloadFlowTypes(false));

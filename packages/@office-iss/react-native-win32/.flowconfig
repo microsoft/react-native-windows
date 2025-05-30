@@ -29,6 +29,7 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/StyleSheet/PlatformColorValueTypes.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
@@ -104,6 +105,8 @@
 interface.js
 flow/
 ../../../node_modules/.flow/flow-typed/
+../../../node_modules/react-native/src/types
+src/types/
 
 [options]
 enums=true
@@ -164,4 +167,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.259.1
+^0.262.0

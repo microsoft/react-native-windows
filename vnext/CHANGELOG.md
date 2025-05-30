@@ -1,8 +1,70 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 17 May 2025 05:25:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:24:58 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.963
+
+Fri, 30 May 2025 05:24:58 GMT
+
+### Changes
+
+- PointerEvent fixes (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.265
+- Bump @react-native-windows/codegen to v0.0.0-canary.123
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.40
+- Bump @rnw-scripts/just-task to v2.3.53
+- Bump react-native-platform-override to v1.9.55
+
+## 0.0.0-canary.962
+
+Thu, 29 May 2025 05:23:11 GMT
+
+### Changes
+
+- Fix warning in glog stub (30809111+acoates-ms@users.noreply.github.com)
+- JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries (30809111+acoates-ms@users.noreply.github.com)
+- Update folly exports from rn-win32 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.961
+
+Wed, 28 May 2025 05:24:00 GMT
+
+### Changes
+
+- Removed unused `react-shallow-renderer` dependency (4123478+tido64@users.noreply.github.com)
+- Update native module doc links in cpp-lib template (jthysell@microsoft.com)
+- Cleanup a bunch of unneeded ReactCommon patching, and extra hostplatform overrides (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.960
+
+Sat, 24 May 2025 05:22:21 GMT
+
+### Changes
+
+- Clean up error messages (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.959
+
+Thu, 22 May 2025 05:24:49 GMT
+
+### Changes
+
+- Integrate RN  0.79.0-nightly-20250220-41b597c73 (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement maxFontSizeMultiplier in Text (54227869+anupriya13@users.noreply.github.com)
+- Fix descriptions for new project templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.958
+
+Tue, 20 May 2025 06:25:35 GMT
+
+### Changes
+
+- Fix crash when reloading an instance with an active ReactNativeIsland (30809111+acoates-ms@users.noreply.github.com)
+- Reenable optimization in TMs to avoid going through a dynamic for callbacks/promises (30809111+acoates-ms@users.noreply.github.com)
+- Scale loading bar text when island is super small (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.957
 

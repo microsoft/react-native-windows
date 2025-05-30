@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 
+#include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 
 namespace facebook::react {
@@ -21,7 +22,7 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
  public:
   WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
       : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters),
-        textLayoutManager_(std::make_shared<TextLayoutManager>(contextContainer_)) {}
+        textLayoutManager_(getManagerByName<TextLayoutManager>(contextContainer_, TextLayoutManagerKey)) {}
 
   /*
 virtual State::Shared createInitialState(

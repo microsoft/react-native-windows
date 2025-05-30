@@ -91,7 +91,6 @@ const olderRepoConfig: PackageDeps = {
     mkdirp: '^0.5.1',
     prettier: '1.19.1',
     react: '16.13.1',
-    'react-shallow-renderer': '16.13.1',
     'react-test-renderer': '16.13.1',
     shelljs: '^0.7.8',
     signedsource: '^1.0.0',
@@ -110,7 +109,6 @@ const newerRepoConfig: PackageDeps = {
     mkdirp: '^0.5.1',
     prettier: '1.19.1',
     react: '16.13.1',
-    'react-shallow-renderer': '16.13.2',
     'react-test-renderer': '16.13.1',
     shelljs: '^0.7.8',
     signedsource: '^1.0.0',
@@ -494,9 +492,7 @@ test('Out-of-tree platform (Newer devDependencies)', () => {
 test('Out-of-tree platform (repo-config devDependencies)', () => {
   const outOfTreeDeps: LocalPackageDeps = {
     ...olderReactNative,
-    devDependencies: {
-      'react-shallow-renderer': '16.13.1',
-    },
+    devDependencies: {},
     packageName: 'react-native-windows',
     outOfTreePlatform: true,
   };
@@ -514,9 +510,7 @@ test('Out-of-tree platform (repo-config devDependencies)', () => {
     ...outOfTreeDeps,
     dependencies: newerReactNative.dependencies,
     peerDependencies: newerReactNative.peerDependencies,
-    devDependencies: {
-      'react-shallow-renderer': '16.13.2',
-    },
+    devDependencies: {},
   });
 
   expectSortedDeps(deps);

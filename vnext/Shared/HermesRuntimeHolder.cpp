@@ -12,6 +12,7 @@
 #include <cxxreact/TraceSection.h>
 #include <jsinspector-modern/ConsoleMessage.h>
 #include <jsinspector-modern/InspectorInterfaces.h>
+#include <jsinspector-modern/tracing/InstanceTracingProfile.h>
 #include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <mutex>
 #include "SafeLoadLibrary.h"
@@ -427,6 +428,19 @@ std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> HermesJSRuntime
     facebook::jsi::Runtime &runtime,
     size_t framesToSkip) {
   return std::make_unique<facebook::react::jsinspector_modern::StackTrace>();
+}
+
+void HermesJSRuntime::enableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+void HermesJSRuntime::disableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesJSRuntime::collectSamplingProfile() {
+  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
+      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(

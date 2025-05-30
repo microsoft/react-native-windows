@@ -11,7 +11,7 @@
 'use strict';
 
 import type {TextStyleProp, ViewStyleProp} from '../StyleSheet/StyleSheet';
-import type {PressEvent} from '../Types/CoreEventTypes';
+import type {GestureResponderEvent} from '../Types/CoreEventTypes';
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
@@ -28,7 +28,7 @@ import View from './View/View';
 import invariant from 'invariant';
 import * as React from 'react';
 
-type ButtonProps = $ReadOnly<{
+export type ButtonProps = $ReadOnly<{
   /**
     Text to display inside the button. On Android the given title will be
     converted to the uppercased form.
@@ -37,9 +37,9 @@ type ButtonProps = $ReadOnly<{
 
   /**
     Handler to be called when the user taps the button. The first function
-    argument is an event in form of [PressEvent](pressevent).
+    argument is an event in form of [GestureResponderEvent](pressevent).
    */
-  onPress: (event?: PressEvent) => mixed,
+  onPress: (event?: GestureResponderEvent) => mixed,
 
   /**
     If `true`, doesn't play system sound on touch.
@@ -289,7 +289,7 @@ const Touchable: typeof TouchableNativeFeedback | typeof TouchableOpacity =
 type ButtonRef = React.ElementRef<typeof Touchable>;
 
 const Button: component(
-  ref: React.RefSetter<ButtonRef>,
+  ref?: React.RefSetter<ButtonRef>,
   ...props: ButtonProps
 ) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
   // Win32
@@ -361,9 +361,6 @@ const Button: component(
   );
   const formattedTitle =
     Platform.OS === 'android' ? title.toUpperCase() : title;
-
-  const Touchable =
-    Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
 
   // If `no` is specified for `importantForAccessibility`, it will be changed to `no-hide-descendants` because the text inside should not be focused.
   const _importantForAccessibility =
