@@ -82,9 +82,7 @@ export default class IntegrationTestRunner {
                 }:${frame.column})`,
             )
             .join();
-        fail(err);
-        break;
-
+        throw err;
       case 'failed':
         failWithoutContext('TestModule.markTestPassed(false) was called');
         break;
@@ -136,7 +134,7 @@ export default class IntegrationTestRunner {
 function failWithoutContext(message: string) {
   const err = new Error(message);
   err.stack = '\n';
-  fail(err);
+  throw err;
 }
 
 // "Borrowed" from LogBoxInspectorStackFrame
