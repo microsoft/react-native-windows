@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 29 May 2025 05:23:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:24:58 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.963
+
+Fri, 30 May 2025 05:24:58 GMT
+
+### Changes
+
+- PointerEvent fixes (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.265
+- Bump @react-native-windows/codegen to v0.0.0-canary.123
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.40
+- Bump @rnw-scripts/just-task to v2.3.53
+- Bump react-native-platform-override to v1.9.55
 
 ## 0.0.0-canary.962
 

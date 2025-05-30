@@ -2,6 +2,45 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Fri, 30 May 2025 05:25:00 GMT",
+      "version": "0.3.385",
+      "tag": "@react-native-windows/automation_v0.3.385",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "02e7363a430b16c3e7437462be2e9c1558ab3ca6",
+            "comment": "integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.303",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.65",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.36",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.53",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 May 2025 05:23:12 GMT",
       "version": "0.3.384",
       "tag": "@react-native-windows/automation_v0.3.384",

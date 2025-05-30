@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Thu, 29 May 2025 05:23:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:24:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.1.406
+
+Fri, 30 May 2025 05:24:59 GMT
+
+### Patches
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.12.303
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
 
 ## 0.1.405
 

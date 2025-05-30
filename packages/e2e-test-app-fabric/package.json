@@ -14,14 +14,14 @@
     "bundle:debug": "npx @react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.12.302",
+    "@react-native-windows/automation-channel": "^0.12.303",
     "@react-native-windows/tester": "0.0.1",
     "@types/react": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.0.0",
     "react-native": "0.79.0-nightly-20250303-cee63397b",
-    "react-native-windows": "^0.0.0-canary.962"
+    "react-native-windows": "^0.0.0-canary.963"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -30,13 +30,13 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native-windows/automation": "^0.3.384",
-    "@react-native-windows/automation-commands": "^0.1.405",
+    "@react-native-windows/automation": "^0.3.385",
+    "@react-native-windows/automation-commands": "^0.1.406",
     "@react-native/metro-config": "0.79.0-nightly-20250303-cee63397b",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
-    "@rnw-scripts/eslint-config": "1.2.35",
-    "@rnw-scripts/just-task": "2.3.52",
+    "@rnw-scripts/eslint-config": "1.2.36",
+    "@rnw-scripts/just-task": "2.3.53",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.5",
     "@rnx-kit/cli": "^0.16.10",

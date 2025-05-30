@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

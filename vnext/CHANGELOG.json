@@ -2,6 +2,65 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 30 May 2025 05:24:58 GMT",
+      "version": "0.0.0-canary.963",
+      "tag": "react-native-windows_v0.0.0-canary.963",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6c66bde578e461febb9a717a76e76ce5e1f6c92c",
+            "comment": "PointerEvent fixes"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.265",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.123",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.36",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.40",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.53",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.55",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "02e7363a430b16c3e7437462be2e9c1558ab3ca6",
+            "comment": "integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 May 2025 05:23:11 GMT",
       "version": "0.0.0-canary.962",
       "tag": "react-native-windows_v0.0.0-canary.962",
