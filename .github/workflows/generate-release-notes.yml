@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: microsoft/react-native-windows
+          repository: anupriya13/react-native-windows
           fetch-depth: 0
           ref: ${{ github.head_ref != '' && github.head_ref || github.ref_name }}
 
