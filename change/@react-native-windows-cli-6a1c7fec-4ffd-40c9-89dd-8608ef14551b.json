@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove runtime dependency on @react-native-community/cli",
+  "packageName": "@react-native-windows/cli",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
