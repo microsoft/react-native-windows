@@ -19,7 +19,6 @@
 #include <JSI/jsi.h>
 #include <ReactCommon/RuntimeExecutor.h>
 #include <SchedulerSettings.h>
-#include <SynchronousEventBeat.h>
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
@@ -47,7 +46,10 @@ FabicUIManagerProperty() noexcept {
 
 /*static*/ std::shared_ptr<FabricUIManager> FabricUIManager::FromProperties(
     const winrt::Microsoft::ReactNative::ReactPropertyBag &props) {
-  return props.Get(FabicUIManagerProperty()).Value();
+  auto p = props.Get(FabicUIManagerProperty());
+  if (p)
+    return p.Value();
+  return {};
 }
 
 FabricUIManager::FabricUIManager() {}
@@ -107,7 +109,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
-  m_surfaceManager = std::make_shared<facebook::react::SurfaceManager>(*m_scheduler);
 }
 
 const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept {
@@ -135,17 +136,38 @@ void FabricUIManager::startSurface(
   layoutContext.pointScaleFactor = rootView.ScaleFactor();
   layoutContext.fontSizeMultiplier = rootView.FontSizeMultiplier();
 
-  m_surfaceManager->startSurface(
-      surfaceId,
-      moduleName,
-      initialProps,
-      layoutConstraints,
-      layoutContext // layout context
-  );
+  {
+    std::unique_lock lock(m_handlerMutex);
+    auto surfaceHandler = facebook::react::SurfaceHandler{moduleName, surfaceId};
+    surfaceHandler.setContextContainer(m_scheduler->getContextContainer());
+    m_handlerRegistry.emplace(surfaceId, std::move(surfaceHandler));
+  }
+
+  visit(surfaceId, [&](const facebook::react::SurfaceHandler &surfaceHandler) {
+    surfaceHandler.setProps(initialProps);
+    surfaceHandler.constraintLayout(layoutConstraints, layoutContext);
+    m_scheduler->registerSurface(surfaceHandler);
+    surfaceHandler.start();
+  });
+}
+
+void FabricUIManager::setProps(facebook::react::SurfaceId surfaceId, const folly::dynamic &props) const noexcept {
+  visit(surfaceId, [=](const facebook::react::SurfaceHandler &surfaceHandler) { surfaceHandler.setProps(props); });
 }
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
-  m_surfaceManager->stopSurface(surfaceId);
+  visit(surfaceId, [&](const facebook::react::SurfaceHandler &surfaceHandler) {
+    surfaceHandler.stop();
+    m_scheduler->unregisterSurface(surfaceHandler);
+  });
+
+  {
+    std::unique_lock lock(m_handlerMutex);
+
+    auto iterator = m_handlerRegistry.find(surfaceId);
+    m_handlerRegistry.erase(iterator);
+  }
+
   auto &rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
   rootDescriptor.view.as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>()->stop();
   m_registry.enqueueComponentViewWithComponentHandle(
@@ -156,14 +178,36 @@ facebook::react::Size FabricUIManager::measureSurface(
     facebook::react::SurfaceId surfaceId,
     const facebook::react::LayoutConstraints &layoutConstraints,
     const facebook::react::LayoutContext &layoutContext) const noexcept {
-  return m_surfaceManager->measureSurface(surfaceId, layoutConstraints, layoutContext);
+  auto size = facebook::react::Size{};
+
+  visit(surfaceId, [&](const facebook::react::SurfaceHandler &surfaceHandler) {
+    size = surfaceHandler.measure(layoutConstraints, layoutContext);
+  });
+
+  return size;
 }
 
 void FabricUIManager::constraintSurfaceLayout(
     facebook::react::SurfaceId surfaceId,
     const facebook::react::LayoutConstraints &layoutConstraints,
     const facebook::react::LayoutContext &layoutContext) const noexcept {
-  m_surfaceManager->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
+  visit(surfaceId, [=](const facebook::react::SurfaceHandler &surfaceHandler) {
+    surfaceHandler.constraintLayout(layoutConstraints, layoutContext);
+  });
+}
+
+void FabricUIManager::visit(
+    facebook::react::SurfaceId surfaceId,
+    const std::function<void(const facebook::react::SurfaceHandler &surfaceHandler)> &callback) const noexcept {
+  std::shared_lock lock(m_handlerMutex);
+
+  auto iterator = m_handlerRegistry.find(surfaceId);
+
+  if (iterator == m_handlerRegistry.end()) {
+    return;
+  }
+
+  callback(iterator->second);
 }
 
 winrt::Microsoft::ReactNative::ReactNotificationId<facebook::react::SurfaceId>
@@ -428,6 +472,19 @@ void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext con
   m_registry.Initialize(reactContext);
 
   m_context.Properties().Set(FabicUIManagerProperty(), shared_from_this());
+
+  auto destroyInstanceNotificationId{
+      winrt::Microsoft::ReactNative::ReactNotificationId<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs>{
+          L"ReactNative.InstanceSettings", L"InstanceDestroyed"}};
+  reactContext.Notifications().Subscribe(
+      destroyInstanceNotificationId,
+      [reactContext](
+          winrt::Windows::Foundation::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::ReactNotificationArgs<
+              winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const &args) noexcept {
+        reactContext.Properties().Remove(FabicUIManagerProperty());
+        args.Subscription().Unsubscribe(); // Unsubscribe after we handle the notification.
+      });
 
   /*
   EventBeatManager eventBeatManager = new EventBeatManager(mReactApplicationContext);

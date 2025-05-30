@@ -8,6 +8,7 @@
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionHelpers.h"
 #include "CompositionViewComponentView.h"
@@ -37,6 +38,12 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 
   void prepareForRecycle() noexcept override;
 
+  bool focusable() const noexcept override;
+
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
+
+  void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
+
   ContentIslandComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -54,9 +61,16 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::event_token m_mountedToken;
   winrt::event_token m_unmountedToken;
   std::vector<winrt::Microsoft::ReactNative::ComponentView::LayoutMetricsChanged_revoker> m_layoutMetricChangedRevokers;
-#ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
-#endif
+  winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
+  winrt::event_token m_navigationHostDepartFocusRequestedToken{};
+
+  // Automation
+  void ConfigureChildSiteLinkAutomation() noexcept;
+  winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};
+  winrt::event_token m_parentAutomationProviderRequestedToken{};
+  winrt::event_token m_nextSiblingAutomationProviderRequestedToken{};
+  winrt::event_token m_previousSiblingAutomationProviderRequestedToken{};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

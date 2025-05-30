@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "merge in folly 2024.10.14.00",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}

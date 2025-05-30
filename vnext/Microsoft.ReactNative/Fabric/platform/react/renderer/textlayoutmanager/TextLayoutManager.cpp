@@ -14,13 +14,64 @@
 
 #include <unicode.h>
 
+constexpr float cDefaultMaxFontSizeMultiplier = 0.0f;
+
 namespace facebook::react {
+
+// Creates an empty InlineObject since RN handles actually rendering the Inline object, this just reserves space for it.
+class AttachmentInlineObject : public winrt::implements<AttachmentInlineObject, IDWriteInlineObject> {
+ public:
+  AttachmentInlineObject(float width, float height) : m_width(width), m_height(height) {}
+
+  // IDWriteInlineObject methods
+  STDMETHOD(Draw)
+  (_In_opt_ void *clientDrawingContext,
+   _In_ IDWriteTextRenderer *renderer,
+   FLOAT originX,
+   FLOAT originY,
+   BOOL isSideways,
+   BOOL isRightToLeft,
+   _In_opt_ IUnknown *clientDrawingEffect) override {
+    // We don't need to draw anything here since the actual rendering is handled by React Native
+    return S_OK;
+  }
+
+  STDMETHOD(GetMetrics)(_Out_ DWRITE_INLINE_OBJECT_METRICS *metrics) override {
+    metrics->width = m_width;
+    metrics->height = m_height;
+    metrics->baseline =
+        m_height; // If the baseline is at the bottom, then baseline = height
+                  // (https://learn.microsoft.com/en-us/windows/win32/api/dwrite/ns-dwrite-dwrite_inline_object_metrics)
+    metrics->supportsSideways = true;
+    return S_OK;
+  }
+
+  STDMETHOD(GetOverhangMetrics)(_Out_ DWRITE_OVERHANG_METRICS *overhangs) override {
+    overhangs->left = 0;
+    overhangs->top = 0;
+    overhangs->right = 0;
+    overhangs->bottom = 0;
+    return S_OK;
+  }
+
+  STDMETHOD(GetBreakConditions)
+  (_Out_ DWRITE_BREAK_CONDITION *breakConditionBefore, _Out_ DWRITE_BREAK_CONDITION *breakConditionAfter) override {
+    *breakConditionBefore = DWRITE_BREAK_CONDITION_NEUTRAL;
+    *breakConditionAfter = DWRITE_BREAK_CONDITION_NEUTRAL;
+    return S_OK;
+  }
+
+ private:
+  float m_width;
+  float m_height;
+};
 
 void TextLayoutManager::GetTextLayout(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     Size size,
-    winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
+    winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
+    TextMeasurement::Attachments &attachments) noexcept {
   const auto &attributedString = attributedStringBox.getValue();
   auto fragments = attributedString.getFragments();
   auto outerFragment = fragments[0];
@@ -32,6 +83,20 @@ void TextLayoutManager::GetTextLayout(
     style = DWRITE_FONT_STYLE_OBLIQUE;
 
   winrt::com_ptr<IDWriteTextFormat> spTextFormat;
+
+  float fontSizeText = outerFragment.textAttributes.fontSize;
+  if (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
+      !std::isnan(outerFragment.textAttributes.fontSizeMultiplier)) {
+    float maxFontSizeMultiplierText = cDefaultMaxFontSizeMultiplier;
+    maxFontSizeMultiplierText =
+        (!std::isnan(outerFragment.textAttributes.maxFontSizeMultiplier)
+             ? outerFragment.textAttributes.maxFontSizeMultiplier
+             : cDefaultMaxFontSizeMultiplier);
+    fontSizeText *= (maxFontSizeMultiplierText >= 1.0f)
+        ? std::min(maxFontSizeMultiplierText, outerFragment.textAttributes.fontSizeMultiplier)
+        : outerFragment.textAttributes.fontSizeMultiplier;
+  }
+
   winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
       outerFragment.textAttributes.fontFamily.empty()
           ? L"Segoe UI"
@@ -41,10 +106,7 @@ void TextLayoutManager::GetTextLayout(
           static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
       style,
       DWRITE_FONT_STRETCH_NORMAL,
-      (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
-       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier))
-          ? (outerFragment.textAttributes.fontSizeMultiplier * outerFragment.textAttributes.fontSize)
-          : outerFragment.textAttributes.fontSize,
+      fontSizeText,
       L"",
       spTextFormat.put()));
 
@@ -62,6 +124,7 @@ void TextLayoutManager::GetTextLayout(
         outerFragment.textAttributes.lineHeight * 0.8f));
   }
 
+  // Set text alignment
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
   if (outerFragment.textAttributes.alignment) {
     switch (*outerFragment.textAttributes.alignment) {
@@ -87,6 +150,7 @@ void TextLayoutManager::GetTextLayout(
   }
   winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
 
+  // Get text with Object Replacement Characters for attachments
   auto str = GetTransformedText(attributedStringBox);
 
   winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
@@ -98,39 +162,82 @@ void TextLayoutManager::GetTextLayout(
       spTextLayout.put() // The IDWriteTextLayout interface pointer.
       ));
 
+  // Calculate positions for attachments and set inline objects
   unsigned int position = 0;
-  unsigned int length = 0;
   for (const auto &fragment : fragments) {
-    length = static_cast<UINT32>(fragment.string.length());
-    DWRITE_TEXT_RANGE range = {position, length};
-    TextAttributes attributes = fragment.textAttributes;
-    DWRITE_FONT_STYLE fragmentStyle = DWRITE_FONT_STYLE_NORMAL;
-    if (attributes.fontStyle == facebook::react::FontStyle::Italic)
-      fragmentStyle = DWRITE_FONT_STYLE_ITALIC;
-    else if (attributes.fontStyle == facebook::react::FontStyle::Oblique)
-      fragmentStyle = DWRITE_FONT_STYLE_OBLIQUE;
+    if (fragment.isAttachment()) {
+      float width = fragment.parentShadowView.layoutMetrics.frame.size.width;
+      float height = fragment.parentShadowView.layoutMetrics.frame.size.height;
 
-    winrt::check_hresult(spTextLayout->SetFontFamilyName(
-        attributes.fontFamily.empty() ? L"Segoe UI"
-                                      : Microsoft::Common::Unicode::Utf8ToUtf16(attributes.fontFamily).c_str(),
-        range));
-    winrt::check_hresult(spTextLayout->SetFontWeight(
-        static_cast<DWRITE_FONT_WEIGHT>(
-            attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
-        range));
-    winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
-    winrt::check_hresult(spTextLayout->SetFontSize(
-        (attributes.allowFontScaling.value_or(true) && !std::isnan(attributes.fontSizeMultiplier))
-            ? (attributes.fontSizeMultiplier * attributes.fontSize)
-            : attributes.fontSize,
-        range));
+      // Get current height to check if attachment needs to be clipped
+      DWRITE_TEXT_METRICS dtm{};
+      winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
 
-    if (!isnan(attributes.letterSpacing)) {
-      winrt::check_hresult(
-          spTextLayout.as<IDWriteTextLayout1>()->SetCharacterSpacing(0, attributes.letterSpacing, 0, range));
+      // Check if the attachment should be clipped
+      // TODO #14443: clipping works on the first-levels view, but any nested view won't be clipped
+      bool isClipped = height > dtm.height;
+      if (isClipped) {
+        height = dtm.height;
+      }
+
+      // Create an inline object (this just reserves space in RichEdit for ReactNative to render the actual attachment)
+      auto inlineObject = winrt::make<AttachmentInlineObject>(width, height);
+      winrt::check_hresult(spTextLayout->SetInlineObject(inlineObject.get(), {position, 1}));
+
+      // Get the position of the Object Replacement Character
+      DWRITE_HIT_TEST_METRICS hitTestMetrics;
+      float x, y;
+      winrt::check_hresult(spTextLayout->HitTestTextPosition(position, false, &x, &y, &hitTestMetrics));
+
+      // Store the attachment position for RN to render later
+      TextMeasurement::Attachment attachment;
+      attachment.frame = {
+          x, // left
+          y, // top
+          width, // width
+          height // height
+      };
+      attachment.isClipped = isClipped;
+      attachments.push_back(attachment);
+      position += 1;
+    } else {
+      unsigned int length = static_cast<UINT32>(fragment.string.length());
+      DWRITE_TEXT_RANGE range = {position, length};
+      TextAttributes attributes = fragment.textAttributes;
+      DWRITE_FONT_STYLE fragmentStyle = DWRITE_FONT_STYLE_NORMAL;
+      if (attributes.fontStyle == facebook::react::FontStyle::Italic)
+        fragmentStyle = DWRITE_FONT_STYLE_ITALIC;
+      else if (attributes.fontStyle == facebook::react::FontStyle::Oblique)
+        fragmentStyle = DWRITE_FONT_STYLE_OBLIQUE;
+
+      winrt::check_hresult(spTextLayout->SetFontFamilyName(
+          attributes.fontFamily.empty() ? L"Segoe UI"
+                                        : Microsoft::Common::Unicode::Utf8ToUtf16(attributes.fontFamily).c_str(),
+          range));
+      winrt::check_hresult(spTextLayout->SetFontWeight(
+          static_cast<DWRITE_FONT_WEIGHT>(
+              attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
+          range));
+      winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
+
+      float maxFontSizeMultiplier = cDefaultMaxFontSizeMultiplier;
+      maxFontSizeMultiplier =
+          (!std::isnan(attributes.maxFontSizeMultiplier) ? attributes.maxFontSizeMultiplier
+                                                         : cDefaultMaxFontSizeMultiplier);
+      float fontSize = attributes.fontSize;
+      if (attributes.allowFontScaling.value_or(true) && (!std::isnan(attributes.fontSizeMultiplier))) {
+        fontSize *= (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, attributes.fontSizeMultiplier)
+                                                    : attributes.fontSizeMultiplier;
+      }
+
+      winrt::check_hresult(spTextLayout->SetFontSize(fontSize, range));
+
+      if (!isnan(attributes.letterSpacing)) {
+        winrt::check_hresult(
+            spTextLayout.as<IDWriteTextLayout1>()->SetCharacterSpacing(0, attributes.letterSpacing, 0, range));
+      }
+      position += length;
     }
-
-    position += length;
   }
 }
 
@@ -142,9 +249,86 @@ void TextLayoutManager::GetTextLayout(
   if (attributedStringBox.getValue().isEmpty())
     return;
 
-  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout);
+  TextMeasurement::Attachments attachments;
+  if (paragraphAttributes.adjustsFontSizeToFit) {
+    auto minimumFontScale = 0.01f;
+    // Uncomment below part when minimumFontScale is available in ParagraphAttributes
+    // if (paragraphAttributes.minimumFontScale && paragraphAttributes.minimumFontScale >= 0.01f &&
+    //    paragraphAttributes.minimumFontScale <= 1.0f) {
+    //  minimumFontScale = paragraphAttributes.minimumFontScale;
+    //}
+    GetTextLayoutByAdjustingFontSizeToFit(
+        attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout, attachments, minimumFontScale);
+  } else {
+    GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+  }
 }
 
+void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
+    AttributedStringBox attributedStringBox,
+    const ParagraphAttributes &paragraphAttributes,
+    LayoutConstraints layoutConstraints,
+    winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
+    TextMeasurement::Attachments &attachments,
+    float minimumFontScale) noexcept {
+  /* This function constructs a text layout from the given parameters.
+  If the generated text layout doesn't fit within the given layout constraints,
+  it will reduce the font size and construct a new text layout. This process will
+  be repeated until the text layout meets the constraints.*/
+
+  DWRITE_TEXT_METRICS metrics;
+
+  // Better Approach should be implemented, this uses O(n)
+  constexpr auto fontReduceFactor = 1.0f;
+  auto attributedStringToResize = attributedStringBox.getValue();
+  auto fragmentsCopyToResize = attributedStringToResize.getFragments();
+  if (fragmentsCopyToResize.empty()) {
+    return; // No fragments to process
+  }
+
+  float initialFontSize = fragmentsCopyToResize[0].textAttributes.fontSize;
+  float currentFontSize = initialFontSize;
+
+  // Calculate the minimum font size as per Android/IOS
+  float minimumFontSize = std::max(minimumFontScale * initialFontSize, 4.0f);
+
+  // Initial measurement
+  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+  if (spTextLayout) {
+    winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
+  } else {
+    return;
+  }
+
+  // Loop until the font size is reduced to the minimum or the layout fits
+  while ((currentFontSize > minimumFontSize) &&
+         ((paragraphAttributes.maximumNumberOfLines != 0 &&
+           paragraphAttributes.maximumNumberOfLines < static_cast<int>(metrics.lineCount)) ||
+          metrics.height > metrics.layoutHeight || metrics.width > metrics.layoutWidth)) {
+    // Reduce the font size by 1 point (or a configurable factor)
+    currentFontSize = std::max(currentFontSize - fontReduceFactor, minimumFontSize);
+
+    // Adjust font size for all fragments proportionally
+    attributedStringToResize.getFragments().clear();
+    for (auto fragment : fragmentsCopyToResize) {
+      fragment.textAttributes.fontSize =
+          std::max(fragment.textAttributes.fontSize * (currentFontSize / initialFontSize), minimumFontSize);
+      attributedStringToResize.appendFragment(std::move(fragment));
+    }
+
+    attributedStringBox = facebook::react::AttributedStringBox(attributedStringToResize);
+
+    // Re-measure the text layout
+    GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+    if (spTextLayout) {
+      winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
+    } else {
+      return;
+    }
+  }
+}
+
+// measure entire text (inluding attachments)
 TextMeasurement TextLayoutManager::measure(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
@@ -152,6 +336,7 @@ TextMeasurement TextLayoutManager::measure(
     LayoutConstraints layoutConstraints) const {
   TextMeasurement measurement{};
   auto &attributedString = attributedStringBox.getValue();
+
   measurement = m_measureCache.get(
       {attributedString, paragraphAttributes, layoutConstraints}, [&](TextMeasureCacheKey const &key) {
         auto telemetry = TransactionTelemetry::threadLocalTelemetry();
@@ -161,7 +346,9 @@ TextMeasurement TextLayoutManager::measure(
 
         winrt::com_ptr<IDWriteTextLayout> spTextLayout;
 
-        GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout);
+        TextMeasurement::Attachments attachments;
+        GetTextLayout(
+            attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
 
         if (spTextLayout) {
           auto maxHeight = std::numeric_limits<float>().max();
@@ -182,6 +369,7 @@ TextMeasurement TextLayoutManager::measure(
           DWRITE_TEXT_METRICS dtm{};
           winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
           measurement.size = {dtm.width, std::min(dtm.height, maxHeight)};
+          measurement.attachments = attachments;
         }
 
         if (telemetry) {
@@ -190,7 +378,6 @@ TextMeasurement TextLayoutManager::measure(
 
         return measurement;
       });
-
   return measurement;
 }
 
@@ -232,8 +419,8 @@ LinesMeasurements TextLayoutManager::measureLines(
   LinesMeasurements lineMeasurements{};
 
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-
-  GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout);
+  TextMeasurement::Attachments attachments;
+  GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
 
   if (spTextLayout) {
     std::vector<DWRITE_LINE_METRICS> lineMetrics;
@@ -313,17 +500,32 @@ Float TextLayoutManager::baseline(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     Size size) const {
-  return 0;
+  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+  TextMeasurement::Attachments attachments;
+  GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
+  if (!spTextLayout) {
+    return 0;
+  }
+
+  DWRITE_TEXT_METRICS metrics;
+  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
+  return metrics.height *
+      0.8f; // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
 }
 
 winrt::hstring TextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {
   winrt::hstring result{};
   const auto &attributedString = attributedStringBox.getValue();
+
   for (const auto &fragment : attributedString.getFragments()) {
-    result = result +
-        Microsoft::ReactNative::TransformableText::TransformText(
-                 winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
-                 ConvertTextTransform(fragment.textAttributes.textTransform));
+    if (fragment.isAttachment()) {
+      result = result + L"\uFFFC"; // Unicode Object Replacement Character, will be replaced with an inline object
+    } else {
+      result = result +
+          Microsoft::ReactNative::TransformableText::TransformText(
+                   winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
+                   ConvertTextTransform(fragment.textAttributes.textTransform));
+    }
   }
   return result;
 }

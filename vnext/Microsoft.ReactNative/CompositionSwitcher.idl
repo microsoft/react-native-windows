@@ -109,11 +109,16 @@ namespace Microsoft.ReactNative.Composition.Experimental
     void Brush(IBrush brush);
     void ScrollEnabled(Boolean isScrollEnabled);
     event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollPositionChanged;
+    event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollBeginDrag;
+	  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollEndDrag;
     void ContentSize(Windows.Foundation.Numerics.Vector2 size);
     Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
     void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
     void TryUpdatePosition(Windows.Foundation.Numerics.Vector3 position, Boolean animate);
     void OnPointerPressed(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
+    void SetDecelerationRate(Windows.Foundation.Numerics.Vector3 decelerationRate);
+    void SetMaximumZoomScale(Single maximumZoomScale);
+    void SetMinimumZoomScale(Single minimumZoomScale);
     Boolean Horizontal;
   }
 
@@ -123,6 +128,8 @@ namespace Microsoft.ReactNative.Composition.Experimental
   {
     void Size(Single value);
     void Brush(IBrush brush);
+    void StartAnimation();
+    void StopAnimation();
   }
 
   [webhosthidden]

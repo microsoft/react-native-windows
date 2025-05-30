@@ -41,7 +41,7 @@ struct TestHostModule {
 
 struct TestPackageProvider : winrt::implements<TestPackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-    TryAddAttributedModule(packageBuilder, L"TestHostModule");
+    TryAddAttributedModule(packageBuilder, L"TestHostModule", true);
   }
 };
 
@@ -131,6 +131,29 @@ TEST_CLASS (ReactNativeHostTests) {
     TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Success", nullptr}});
   }
 
+  TEST_METHOD(LoadInstance_FiresInstanceCreatedHasJsiAccess) {
+    TestEventService::Initialize();
+
+    auto options = TestReactNativeHostHolder::Options{};
+    auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
+      host.InstanceSettings().InstanceCreated(
+          [](auto const &, winrt::Microsoft::ReactNative::IInstanceCreatedEventArgs args) noexcept {
+            facebook::jsi::Runtime &rt =
+                winrt::Microsoft::ReactNative::GetOrCreateContextRuntime(args.Context(), args.RuntimeHandle());
+
+            facebook::jsi::Object result(rt);
+            result.setProperty(rt, "const1", facebook::jsi::Value(true));
+            result.setProperty(rt, "const2", facebook::jsi::Value(375));
+            result.setProperty(rt, "const3", facebook::jsi::String::createFromUtf8(rt, "something"));
+            rt.global().setProperty(rt, "setFromInstanceCreated", result);
+
+            TestEventService::LogEvent("InstanceCreated", nullptr);
+          });
+    });
+
+    TestEventService::ObserveEvents({TestEvent{"InstanceCreated", nullptr}});
+  }
+
   TEST_METHOD(LoadBundleWithError_FiresInstanceLoaded_Failed) {
     TestEventService::Initialize();
 
@@ -169,7 +192,11 @@ TEST_CLASS (ReactNativeHostTests) {
         },
         std::move(options));
 
+#if USE_FABRIC
+    TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Failed", nullptr}});
+#else
     TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Canceled", nullptr}});
+#endif
   }
 };
 

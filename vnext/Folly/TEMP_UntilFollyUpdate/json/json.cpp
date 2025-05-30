@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <folly/json.h>
+#include <folly/json/json.h>
 
 #include <algorithm>
 #include <functional>
@@ -28,7 +28,6 @@
 #include <folly/Conv.h>
 #include <folly/Portability.h>
 #include <folly/Range.h>
-#include <folly/String.h>
 #include <folly/Unicode.h>
 #include <folly/Utility.h>
 #include <folly/lang/Bits.h>
@@ -104,7 +103,7 @@ struct Printer {
   }
   void operator()(dynamic const& v, const Context* context) const {
     switch (v.type()) {
-      case dynamic::DOUBLE:
+      case dynamic::DOUBLE: {
         if (!opts_.allow_nan_inf) {
           if (std::isnan(v.asDouble())) {
             throw json::print_error(
@@ -120,10 +119,11 @@ struct Printer {
         toAppend(
             v.asDouble(),
             &out_,
-            opts_.double_mode,
+            opts_.dtoa_mode,
             opts_.double_num_digits,
-            opts_.double_flags);
+            opts_.dtoa_flags);
         break;
+      }
       case dynamic::INT64: {
         auto intval = v.asInt();
         if (opts_.javascript_safe) {
@@ -409,8 +409,12 @@ struct Input {
     return range_.subpiece(0, 16 /* arbitrary */).toString();
   }
 
-  [[noreturn]] dynamic error(char const* what) const {
+  [[noreturn]] void error(char const* what) const {
     throw json::make_parse_error(lineNum_, context(), what);
+  }
+  template <typename R>
+  R error(char const* what) const {
+    error(what);
   }
 
   json::serialization_opts const& getOpts() { return opts_; }
@@ -620,7 +624,7 @@ void decodeUnicodeEscape(Input& in, std::string& out) {
         c >= '0' && c <= '9' ? c - '0' :
         c >= 'a' && c <= 'f' ? c - 'a' + 10 :
         c >= 'A' && c <= 'F' ? c - 'A' + 10 :
-        (in.error("invalid hex digit"), 0));
+        in.error<uint16_t>("invalid hex digit"));
     // clang-format on
   };
 
@@ -737,7 +741,7 @@ dynamic parseValue(Input& in, json::metadata_map* map) {
       in.consume("NaN") ?
         (in.getOpts().parse_numbers_as_strings ? (dynamic)"NaN" :
           (dynamic)std::numeric_limits<double>::quiet_NaN()) :
-      in.error("expected json value");
+      in.error<dynamic>("expected json value");
   // clang-format on
 }
 
@@ -796,7 +800,7 @@ size_t firstEscapableInWord(T s, const serialization_opts& opts) {
     // times. However, for the case where 0 or a handful of bits are set,
     // looping will be minimal through use of findFirstSet.
     for (size_t i = 0, e = opts.extra_ascii_to_escape_bitmap.size(); i < e;
-         ++i) {
+        ++i) {
       const auto offset = i * 64;
       // Clear first 32 characters if this is the first index, since those are
       // always escaped.

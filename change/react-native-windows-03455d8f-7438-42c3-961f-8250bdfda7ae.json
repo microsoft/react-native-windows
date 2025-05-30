@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[Fabric] Implementation of accessibilityItemType",
+  "packageName": "react-native-windows",
+  "email": "kvineeth@microsoft.com",
+  "dependentChangeType": "patch"
+}

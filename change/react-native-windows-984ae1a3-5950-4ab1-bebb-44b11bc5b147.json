@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix bool operator on transparent colors returning false",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

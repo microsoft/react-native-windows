@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix stale focus rects left in UI when last focusable component is removed",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

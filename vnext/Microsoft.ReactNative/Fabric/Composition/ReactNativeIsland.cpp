@@ -43,6 +43,7 @@ constexpr float loadingActivitySize = 12.0f;
 constexpr float loadingActivityHorizontalOffset = 16.0f;
 constexpr float loadingBarHeight = 36.0f;
 constexpr float loadingBarFontSize = 20.0f;
+constexpr float loadingBarMinFontSize = 8.0f;
 constexpr float loadingTextHorizontalOffset = 48.0f;
 
 //! This class ensures that we access ReactRootView from UI thread.
@@ -194,6 +195,8 @@ void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewH
   if (m_reactViewHost == value) {
     return;
   }
+
+  m_props = nullptr;
 
   if (m_reactViewHost) {
     UninitRootView();
@@ -374,11 +377,12 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider =
         winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
-    if (m_hwnd && !m_island) {
+    if (m_hwnd || m_island) {
       auto pRootProvider =
           static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
               m_uiaProvider.as<IRawElementProviderSimple>().get());
       if (pRootProvider != nullptr) {
+        pRootProvider->SetIsland(m_island);
         pRootProvider->SetHwnd(m_hwnd);
       }
     }
@@ -517,13 +521,6 @@ void ReactNativeIsland::UpdateRootViewInternal() noexcept {
   }
 }
 
-struct AutoMRE {
-  ~AutoMRE() {
-    mre.Set();
-  }
-  Mso::ManualResetEvent mre;
-};
-
 void ReactNativeIsland::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
@@ -533,20 +530,9 @@ void ReactNativeIsland::UninitRootView() noexcept {
     if (m_context.Handle().LoadingState() == winrt::Microsoft::ReactNative::LoadingState::HasError)
       return;
 
-    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
-    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
-
-    // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
-    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead
-    // this method should return a Promise, which should be resolved when the JS logic is complete. The task will auto
-    // set the event on destruction to ensure that the event is set if the JS Queue has already been shutdown
-    Mso::ManualResetEvent mre;
-    m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
-    mre.Wait();
-
-    // Paper version gives the JS thread time to finish executing - Is this needed?
-    // m_jsMessageThread.Load()->runOnQueueSync([]() {});
+    if (auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties())))
+      uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
   }
 
   m_rootTag = -1;
@@ -577,7 +563,9 @@ void ReactNativeIsland::ShowInstanceLoaded() noexcept {
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
 
     m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
-    auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+
+    auto initProps =
+        m_props.isNull() ? DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())) : m_props;
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
     }
@@ -606,6 +594,14 @@ facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
   return facebook::react::AttributedStringBox{attributedString};
 }
 
+facebook::react::ParagraphAttributes CreateLoadingParagraphAttributes() noexcept {
+  facebook::react::ParagraphAttributes pa;
+  pa.adjustsFontSizeToFit = true;
+  pa.minimumFontSize = loadingBarMinFontSize;
+  pa.maximumFontSize = loadingBarFontSize;
+  return pa;
+}
+
 facebook::react::Size ReactNativeIsland::MeasureLoading(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints) const noexcept {
   facebook::react::LayoutConstraints fbLayoutConstraints;
@@ -614,7 +610,7 @@ facebook::react::Size ReactNativeIsland::MeasureLoading(
   auto attributedStringBox = CreateLoadingAttributedString();
   winrt::com_ptr<::IDWriteTextLayout> textLayout;
   facebook::react::TextLayoutManager::GetTextLayout(
-      attributedStringBox, {} /*paragraphAttributes*/, fbLayoutConstraints, textLayout);
+      attributedStringBox, CreateLoadingParagraphAttributes(), fbLayoutConstraints, textLayout);
 
   DWRITE_TEXT_METRICS tm;
   winrt::check_hresult(textLayout->GetMetrics(&tm));
@@ -696,7 +692,7 @@ Composition::Experimental::IDrawingSurfaceBrush ReactNativeIsland::CreateLoading
 
       winrt::com_ptr<::IDWriteTextLayout> textLayout;
       facebook::react::TextLayoutManager::GetTextLayout(
-          attributedStringBox, {} /*paragraphAttributes*/, constraints, textLayout);
+          attributedStringBox, CreateLoadingParagraphAttributes(), constraints, textLayout);
 
       DWRITE_TEXT_METRICS tm;
       textLayout->GetMetrics(&tm);
@@ -778,7 +774,7 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
   facebook::react::LayoutConstraints constraints;
   ApplyConstraints(layoutConstraints, constraints);
 
-  if (m_isInitialized && m_rootTag != -1) {
+  if (m_isInitialized && m_rootTag != -1 && m_hasRenderedVisual) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
@@ -809,7 +805,7 @@ void ReactNativeIsland::Arrange(
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(layoutConstraints, fbLayoutConstraints);
 
-  if (m_isInitialized && m_rootTag != -1 && !m_isFragment) {
+  if (m_isInitialized && m_rootTag != -1 && !m_isFragment && m_hasRenderedVisual) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
@@ -871,14 +867,7 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             winrt::Microsoft::UI::Content::ContentIsland const &,
             winrt::Microsoft::UI::Content::ContentIslandAutomationProviderRequestedEventArgs const &args) {
           if (auto pThis = weakThis.get()) {
-            auto provider = pThis->GetUiaProvider();
-            auto pRootProvider =
-                static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
-                    provider.as<IRawElementProviderSimple>().get());
-            if (pRootProvider != nullptr) {
-              pRootProvider->SetIsland(pThis->m_island);
-            }
-            args.AutomationProvider(std::move(provider));
+            args.AutomationProvider(pThis->GetUiaProvider());
             args.Handled(true);
           }
         });
@@ -900,16 +889,6 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (args.DidLayoutDirectionChange()) {
               pThis->Arrange(pThis->m_layoutConstraints, pThis->m_viewportOffset);
             }
-#ifndef USE_EXPERIMENTAL_WINUI3 // Use this in place of Connected/Disconnected events for now. -- Its not quite what we
-                                // want, but it will do for now.
-            if (args.DidSiteVisibleChange()) {
-              if (island.IsSiteVisible()) {
-                pThis->OnMounted();
-              } else {
-                pThis->OnUnmounted();
-              }
-            }
-#endif
           }
         });
 #ifdef USE_EXPERIMENTAL_WINUI3
@@ -965,6 +944,24 @@ void ReactNativeIsland::OnUnmounted() noexcept {
   }
 }
 
+void ReactNativeIsland::SetProperties(winrt::Microsoft::ReactNative::JSValueArgWriter props) noexcept {
+  auto initProps = DynamicWriter::ToDynamic(props);
+  if (initProps.isNull()) {
+    initProps = folly::dynamic::object();
+  }
+
+  if (m_isJSViewAttached) {
+    if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
+      initProps["concurrentRoot"] = true;
+      fabricuiManager->setProps(static_cast<facebook::react::SurfaceId>(m_rootTag), initProps);
+      return;
+    }
+  }
+
+  m_props = initProps;
+}
+
 winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>
 ReactNativeIsland::GetComponentView() noexcept {
   if (auto portal = m_portal.get()) {
@@ -979,10 +976,10 @@ ReactNativeIsland::GetComponentView() noexcept {
 
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(
-        static_cast<facebook::react::SurfaceId>(m_rootTag));
-    return rootComponentViewDescriptor.view
-        .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    if (auto view = fabricuiManager->GetViewRegistry().findComponentViewWithTag(
+            static_cast<facebook::react::SurfaceId>(m_rootTag))) {
+      return view.as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    }
   }
   return nullptr;
 }

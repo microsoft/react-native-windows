@@ -11,10 +11,15 @@
 
 namespace winrt::Microsoft::ReactNative {
 
+facebook::jsi::Runtime &GetOrCreateContextRuntime(
+    ReactContext const &context,
+    winrt::Windows::Foundation::IInspectable const &runtimeHandle) noexcept;
+
 // Try to get JSI Runtime for the current JS dispatcher thread.
 // If it is not found, then create it based on context JSI runtime and store it in the context.Properties().
 // The function returns nullptr if the current context does not have JSI runtime.
 // It makes sure that the JSI runtime holder is removed when the instance is unloaded.
+// Deprecated -- will remove once we remove the JSRuntime property from ReactContext
 facebook::jsi::Runtime *TryGetOrCreateContextRuntime(ReactContext const &context) noexcept;
 
 // Calls TryGetOrCreateContextRuntime to get JSI runtime.
@@ -25,6 +30,7 @@ facebook::jsi::Runtime *TryGetOrCreateContextRuntime(ReactContext const &context
 // Call provided lambda with the facebook::jsi::Runtime& parameter.
 // For example: ExecuteJsi(context, [](facebook::jsi::Runtime& runtime){...})
 // The code is executed synchronously if it is already in JSDispatcher, or asynchronously otherwise.
+// New Arch should use ReactContext.CallInvoker instead
 template <class TCodeWithRuntime>
 void ExecuteJsi(ReactContext const &context, TCodeWithRuntime const &code, ReactPromise<void> *callStatus = nullptr) {
   ReactDispatcher jsDispatcher = context.JSDispatcher();

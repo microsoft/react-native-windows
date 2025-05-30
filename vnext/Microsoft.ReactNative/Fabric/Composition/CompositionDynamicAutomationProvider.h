@@ -26,6 +26,10 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
 
+  CompositionDynamicAutomationProvider(
+      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
+      const winrt::Microsoft::UI::Content::ChildSiteLink &childContentLink) noexcept;
+
   // inherited via IRawElementProviderFragment
   virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override;
   virtual HRESULT __stdcall GetRuntimeId(SAFEARRAY **pRetVal) override;
@@ -97,7 +101,10 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   winrt::com_ptr<ITextProvider2> m_textProvider;
+  winrt::com_ptr<IAnnotationProvider> m_annotationProvider;
   std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
+  // Non-null when this UIA node is the peer of a ContentIslandComponentView.
+  winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
