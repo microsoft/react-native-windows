@@ -72869,7 +72869,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 47`] = `
+exports[`snapshotAllPages Text 48`] = `
 <View>
   <Text
     style={
@@ -79487,6 +79487,118 @@ exports[`snapshotAllPages TextInput 33`] = `
 `;
 
 exports[`snapshotAllPages TextInput 34`] = `
+<View>
+  <Text>
+    By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
+  </Text>
+  <TextInput
+    allowFontScaling={false}
+    placeholder="allowFontScaling = false"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    allowFontScaling={true}
+    placeholder="allowFontScaling = false"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 35`] = `
+<View
+  testID="max-font-size-multiplier"
+>
+  <Text>
+    When allowFontScaling is enabled, you can use the maxFontSizeMultiplier prop to set an upper limit on how much the font size will be scaled.
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1}
+    placeholder="This text will not scale up (max 1x)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
+    }
+    testID="non-scalable-text-input"
+  />
+  <TextInput
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1.5}
+    placeholder="This text will scale up (max 1.5x)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
+    }
+    testID="scalable-text-input"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 36`] = `
 <View
   style={
     {
@@ -79604,7 +79716,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -79718,7 +79830,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -79939,7 +80051,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -80016,7 +80128,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <TextInput
     style={
@@ -80046,7 +80158,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <Text
     testID="textinput-state-display"
@@ -80083,7 +80195,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -80219,7 +80331,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 [
   <View
     focusable={true}
@@ -80285,7 +80397,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -80334,7 +80446,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 <View>
   <Text>
     CaretHidden
@@ -80366,7 +80478,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 <View>
   <Text>
     Cursorcolor
@@ -80398,7 +80510,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View>
   <Text>
     Shadow
@@ -80436,7 +80548,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -80519,7 +80631,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
