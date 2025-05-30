@@ -285,7 +285,7 @@ export const examples = [
   {
     title: 'focus() method example',
     description: 'Each of these black boxes moves focus to the ViewWin32 on the right',
-    render(): JSX.Element {
+    render() {
       return (
         <ViewWin32>
           <FocusMoverTestComponent />
@@ -298,35 +298,35 @@ export const examples = [
   {
     title: 'KeyboardEvents example',
     description: 'Native keyboarding has been prevented',
-    render(): JSX.Element {
+    render() {
       return <KeyboardTestComponent />;
     },
   },
   {
     title: 'Hover example',
     description: 'Hover a rainbow',
-    render(): JSX.Element {
+    render() {
       return <HoverExample />;
     },
   },
   {
     title: 'Tooltip example',
     description: 'Displays a tooltip on hover',
-    render(): JSX.Element {
+    render() {
       return <ToolTipExample />;
     },
   },
   {
     title: 'Cursor example',
     description: 'Each of these boxes should display a different cursor',
-    render(): JSX.Element {
+    render() {
       return <CursorExample />;
     },
   },
   {
     title: 'EnableFocusRing example',
     description: 'Displays focus visuals that are driven by native',
-    render(): JSX.Element {
+    render() {
       return <EnableFocusRingExample />;
     },
   },

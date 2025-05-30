@@ -343,7 +343,7 @@ export const description =
 export const examples = [
   {
     title: 'Flyout Anchor to text input',
-    render: function (): JSX.Element {
+    render: function () {
       return <FlyoutExample />;
     },
   },

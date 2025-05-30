@@ -58,7 +58,7 @@ export const description =
   'Style prop which will collapse the element in XAML tree.';
 export const examples = [
   {
-    render: function (): JSX.Element {
+    render: function () {
       return <DisplayNoneExample />;
     },
   },

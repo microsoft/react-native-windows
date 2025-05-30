@@ -76,7 +76,7 @@ class ViewWindowsKeyboardExample extends React.Component<
     };
   }
 
-  public render(): JSX.Element {
+  public render() {
     return (
       <ViewWindows>
         <ViewWindows
@@ -182,7 +182,7 @@ export const description = 'Demo of keyboard properties.';
 export const examples = [
   {
     title: 'Keyboard extension example',
-    render(): JSX.Element {
+    render() {
       return <ViewWindowsKeyboardExample />;
     },
   },

@@ -99,7 +99,7 @@ export const title = 'LegacyImageTest';
 export const description = 'Legacy e2e test for Image';
 export const examples = [
   {
-    render: function(): JSX.Element {
+    render: function() {
       return <ImageTestPage />;
     },
   },

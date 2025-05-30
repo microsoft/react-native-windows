@@ -82,7 +82,7 @@ class KeyboardFocusExample extends React.Component<
     };
   }
 
-  public render(): JSX.Element {
+  public render() {
     const pickerItems = [
       'View',
       'Picker',
@@ -248,7 +248,7 @@ export const description = 'Demo of keyboard focus.';
 export const examples = [
   {
     title: 'Keyboard Focus example',
-    render(): JSX.Element {
+    render() {
       return <KeyboardFocusExample />;
     },
   },

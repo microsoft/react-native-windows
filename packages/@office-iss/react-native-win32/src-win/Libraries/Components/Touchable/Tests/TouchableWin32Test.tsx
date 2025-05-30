@@ -481,21 +481,21 @@ export const examples = [
   {
     title: 'TouchableWithoutFeedback Example',
     description: 'A simple example implementation of without feedback behavior',
-    render(): JSX.Element {
+    render() {
       return <TouchableWithoutFeedbackExample />;
     },
   },
   {
     title: 'TouchableHighlight Example',
     description: 'A simple example implementation of highlight behavior',
-    render(): JSX.Element {
+    render() {
       return <TouchableHighlightExample />;
     },
   },
   {
     title: 'Imperative Focus on TouchableWin32 Example',
     description: 'A simple example implementation of imperative focus behavior',
-    render(): JSX.Element {
+    render() {
       return <TouchableFocusExample />;
     },
   }

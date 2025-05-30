@@ -114,49 +114,49 @@ export const examples = [
     {
       title: 'Autofocus Example',
       description: 'autoFocus in action',
-      render(): JSX.Element {
+      render() {
         return (<AutoFocusingTextInputTest />);
       },
     },
     {
       title: 'Placeholders Example',
       description: 'placeholder in action',
-      render(): JSX.Element {
+      render() {
         return (<PlaceholderTextInputTest />);
       },
     },
     {
       title: 'Controlled Example',
       description: 'Controlling inputs in action',
-      render(): JSX.Element {
+      render() {
         return (<ControllingTextInputTest />);
       },
     },
     {
       title: 'Focus and Blur Example',
       description: 'onFocus/onBlur in action',
-      render(): JSX.Element {
+      render() {
         return (<BlurringAndFocusingTextInputTest />);
       },
     },
     {
       title: 'ContentSizeChange Example',
       description: 'onContentSizeChange in action',
-      render(): JSX.Element {
+      render() {
         return (<LayoutListeningTextInputTest />);
       },
     },
     {
       title: 'Control via onKeyPress Example',
       description: 'onKeyPress in action',
-      render(): JSX.Element {
+      render() {
         return (<KeyPressListeningTextInputTest />);
       },
     },
     {
       title: 'Super Styling Example',
       description: 'Styling in action',
-      render(): JSX.Element {
+      render() {
         return (<StyleTextInputTest />);
       },
     },

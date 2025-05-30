@@ -102,7 +102,7 @@ export const title = 'LegacyLoginTest';
 export const description = 'Legacy e2e test for TextInput with password';
 export const examples = [
   {
-    render: function(): JSX.Element {
+    render: function() {
       return <LoginTestPage />;
     },
   },

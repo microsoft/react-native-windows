@@ -67,7 +67,7 @@ export const title = 'LegacySelectableTextTest';
 export const description = 'Legacy e2e test for selectable Text hit testing';
 export const examples = [
   {
-    render: function (): JSX.Element {
+    render: function () {
       return <SelectableTextTests />;
     },
   },

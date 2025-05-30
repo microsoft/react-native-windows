@@ -329,7 +329,7 @@ const getItemLayout = (data: ArrayLike<IListProps>, index: number) => ({ length:
 const keyExtractor = (item: IListProps) => item.label.toString();
 
 interface IFlatListProps {
-  renderItem: (item: ListRenderItemInfo<IListProps>) => JSX.Element;
+  renderItem: (item: ListRenderItemInfo<IListProps>) => React.JSX.Element;
   getItemLayout?: (
     data: ArrayLike<IListProps>,
     index: number

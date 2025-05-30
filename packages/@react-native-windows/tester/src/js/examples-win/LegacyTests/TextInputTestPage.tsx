@@ -84,7 +84,7 @@ export const title = 'LegacyTextInputTest';
 export const description = 'Legacy e2e test for TextInput';
 export const examples = [
   {
-    render: function (): JSX.Element {
+    render: function () {
       return <TextInputTestPage />;
     },
   },
