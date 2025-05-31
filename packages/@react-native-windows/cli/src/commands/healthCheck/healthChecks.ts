@@ -8,11 +8,7 @@ import path from 'path';
 
 import * as pathHelpers from '../../utils/pathHelpers';
 
-const rnDir = pathHelpers.resolveRnRoot(process.cwd());
-const cliDir = pathHelpers.resolveRnCliRoot(rnDir);
-
-const execaPath = require.resolve('execa', {paths: [cliDir]});
-const execa = require(execaPath);
+import execa from 'execa';
 
 import type {
   HealthCheckCategory,

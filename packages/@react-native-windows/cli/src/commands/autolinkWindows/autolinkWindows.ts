@@ -17,7 +17,7 @@ import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 
-import {
+import type {
   Command,
   Config,
   DependencyConfig,

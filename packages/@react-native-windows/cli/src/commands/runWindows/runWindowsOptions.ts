@@ -4,7 +4,7 @@
  * @format
  */
 
-import {CommandOption} from '@react-native-community/cli-types';
+import type {CommandOption} from '@react-native-community/cli-types';
 import {deviceArchitecture} from '@react-native-windows/telemetry';
 
 export type BuildArch = 'x86' | 'x64' | 'ARM64';

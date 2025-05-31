@@ -8,7 +8,7 @@ import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import {Telemetry, CodedError} from '@react-native-windows/telemetry';
-import {Command, Config} from '@react-native-community/cli-types';
+import type {Command, Config} from '@react-native-community/cli-types';
 
 import * as build from '../../utils/build';
 import chalk from 'chalk';

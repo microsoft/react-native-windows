@@ -4,7 +4,7 @@
  * @format
  */
 
-import {CommandOption} from '@react-native-community/cli-types';
+import type {CommandOption} from '@react-native-community/cli-types';
 
 export interface InitOptions {
   logging?: boolean;

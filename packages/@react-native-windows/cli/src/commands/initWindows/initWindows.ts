@@ -15,7 +15,7 @@ import util from 'util';
 
 const glob = util.promisify(globFunc);
 
-import {Command, Config} from '@react-native-community/cli-types';
+import type {Command, Config} from '@react-native-community/cli-types';
 import {CodedError, Telemetry} from '@react-native-windows/telemetry';
 
 import {
