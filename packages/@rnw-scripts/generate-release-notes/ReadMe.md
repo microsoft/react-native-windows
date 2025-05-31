@@ -1,8 +1,13 @@
 ### Type of Change
-Automate release notes creation by adding a new yarn script
+Automate release notes creation by adding a new yarn script. Automating the process of creating release notes so that we don't have to manually copy paste the commits. 
+
 
 ### Why
-To save us some time when generating release notes. Before created it as a github workflow but now moving it to a local script.
+To save us some time when generating release notes. Fetches commit from start and end date range, ignores bots and creates the release notes md file. It also categorizes the commits. Please cross-check the generated release-notes.md file and update it manually if required like regrouping commits or updating the Summary/Explanation for the PR commit.
+
+## Format
+
+`Explanation. [PRName (#11168) · microsoft/react-native-windows@aaaaaaa (github.com)](link)`
 
 ### Steps to follow
 
