@@ -15,6 +15,7 @@
 #pragma warning(pop)
 
 #include <windows.ui.composition.interop.h>
+#include <winrt/Windows.UI.ViewManagement.Core.h>
 
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
@@ -804,6 +805,10 @@ void ScrollViewComponentView::updateProps(
   if (oldViewProps.zoomScale != newViewProps.zoomScale) {
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
+
+  if (oldViewProps.keyboardDismissMode != newViewProps.keyboardDismissMode) {
+    m_keyboardDismissMode = newViewProps.keyboardDismissMode;
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -1275,7 +1280,13 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
         auto now = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_lastScrollEventTime).count();
-
+        // Dismiss keyboard if mode is "on-drag"
+        if (m_keyboardDismissMode == facebook::react::ScrollViewKeyboardDismissMode::OnDrag) {
+          auto coreInputView = winrt::Windows::UI::ViewManagement::Core::CoreInputView::GetForCurrentView();
+          if (coreInputView) {
+            coreInputView.TryHide();
+          }
+        }
         if (m_allowNextScrollNoMatterWhat ||
             (m_scrollEventThrottle < std::max(std::chrono::duration<double>(0.017).count(), elapsed))) {
           updateStateWithContentOffset();
