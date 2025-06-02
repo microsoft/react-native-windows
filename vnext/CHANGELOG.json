@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 31 May 2025 05:24:43 GMT",
+      "version": "0.0.0-canary.964",
+      "tag": "react-native-windows_v0.0.0-canary.964",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "99e1c7593fb72d595811c0dc125b8124a3960483",
+            "comment": "Fix blob module in paper"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 May 2025 05:24:58 GMT",
       "version": "0.0.0-canary.963",
       "tag": "react-native-windows_v0.0.0-canary.963",
