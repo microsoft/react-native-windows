@@ -109,15 +109,8 @@ const warnOnce = require('./Libraries/Utilities/warnOnce').default;
 const invariant = require('invariant');
 
 module.exports = {
-  get registerCallableModule(): RegisterCallableModule {
-    return require('./Libraries/Core/registerCallableModule').default;
-  },
-  // Components
-  get AccessibilityInfo(): AccessibilityInfo {
-    return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo')
-      .default;
-  },
-  get ActivityIndicator(): ActivityIndicator {
+  // #region Components
+  get ActivityIndicator() {
     return require('./Libraries/Components/ActivityIndicator/ActivityIndicator')
       .default;
   },
@@ -142,15 +135,15 @@ module.exports = {
     return require('./Libraries/Components/TextInput/InputAccessoryView')
       .default;
   },
-  get experimental_LayoutConformance(): LayoutConformance {
-    return require('./Libraries/Components/LayoutConformance/LayoutConformance')
-      .default;
-  },
-  get KeyboardAvoidingView(): KeyboardAvoidingView {
+  get KeyboardAvoidingView() {
     return require('./Libraries/Components/Keyboard/KeyboardAvoidingView')
       .default;
   },
-  get Modal(): Modal {
+  get experimental_LayoutConformance() {
+    return require('./Libraries/Components/LayoutConformance/LayoutConformance')
+      .default;
+  },
+  get Modal() {
     return require('./Libraries/Modal/Modal').default;
   },
   get Pressable(): Pressable {
@@ -219,9 +212,13 @@ module.exports = {
   get VirtualizedSectionList(): VirtualizedSectionList {
     return require('./Libraries/Lists/VirtualizedSectionList').default;
   },
-
-  // APIs
-  get ActionSheetIOS(): ActionSheetIOS {
+  // #endregion
+  // #region APIs
+  get AccessibilityInfo() {
+    return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo')
+      .default;
+  },
+  get ActionSheetIOS() {
     return require('./Libraries/ActionSheetIOS/ActionSheetIOS').default;
   },
   get Alert(): Alert {
@@ -253,7 +250,16 @@ module.exports = {
     );
     return require('./Libraries/Components/Clipboard/Clipboard').default;
   },
-  get DeviceInfo(): DeviceInfo {
+  get codegenNativeCommands() {
+    return require('./Libraries/Utilities/codegenNativeCommands').default;
+  },
+  get codegenNativeComponent() {
+    return require('./Libraries/Utilities/codegenNativeComponent').default;
+  },
+  get DeviceEventEmitter() {
+    return require('./Libraries/EventEmitter/RCTDeviceEventEmitter').default;
+  },
+  get DeviceInfo() {
     return require('./Libraries/Utilities/DeviceInfo').default;
   },
   get DevMenu(): DevMenu {
@@ -265,7 +271,11 @@ module.exports = {
   get Dimensions(): Dimensions {
     return require('./Libraries/Utilities/Dimensions').default;
   },
-  get Easing(): Easing {
+  get DynamicColorIOS() {
+    return require('./Libraries/StyleSheet/PlatformColorValueTypesIOS')
+      .DynamicColorIOS;
+  },
+  get Easing() {
     return require('./Libraries/Animated/Easing').default;
   },
   get findNodeHandle(): $PropertyType<ReactNative, 'findNodeHandle'> {
@@ -289,14 +299,20 @@ module.exports = {
   get LogBox(): LogBox {
     return require('./Libraries/LogBox/LogBox').default;
   },
-  get NativeDialogManagerAndroid(): NativeDialogManagerAndroid {
+  get NativeAppEventEmitter() {
+    return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter').default;
+  },
+  get NativeDialogManagerAndroid() {
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')
       .default;
   },
   get NativeEventEmitter(): NativeEventEmitter {
     return require('./Libraries/EventEmitter/NativeEventEmitter').default;
   },
-  get Networking(): Networking {
+  get NativeModules() {
+    return require('./Libraries/BatchedBridge/NativeModules').default;
+  },
+  get Networking() {
     return require('./Libraries/Network/RCTNetworking').default;
   },
   get PanResponder(): PanResponder {
@@ -308,7 +324,14 @@ module.exports = {
   get PixelRatio(): PixelRatio {
     return require('./Libraries/Utilities/PixelRatio').default;
   },
-  get PushNotificationIOS(): PushNotificationIOS {
+  get Platform() {
+    return require('./Libraries/Utilities/Platform').default;
+  },
+  get PlatformColor() {
+    return require('./Libraries/StyleSheet/PlatformColorValueTypes')
+      .PlatformColor;
+  },
+  get PushNotificationIOS() {
     warnOnce(
       'pushNotificationIOS-moved',
       'PushNotificationIOS has been extracted from react-native core and will be removed in a future release. ' +
@@ -318,7 +341,19 @@ module.exports = {
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS')
       .default;
   },
-  get Settings(): Settings {
+  get processColor() {
+    return require('./Libraries/StyleSheet/processColor').default;
+  },
+  get registerCallableModule() {
+    return require('./Libraries/Core/registerCallableModule').default;
+  },
+  get requireNativeComponent() {
+    return require('./Libraries/ReactNative/requireNativeComponent').default;
+  },
+  get RootTagContext() {
+    return require('./Libraries/ReactNative/RootTag').RootTagContext;
+  },
+  get Settings() {
     return require('./Libraries/Settings/Settings').default;
   },
   get Share(): Share {

@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.79.0-nightly-20250303-cee63397b",
+  "baseVersion": "0.80.0-nightly-20250317-fc7385c1e",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "23e4ec639f146691148b6736f4e84478ae2a5416"
+      "baseHash": "b8b53bf5315c0b91d0f69c3fe9274797a55b993f"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "62b4752ea0e271645cc0fff8b54f2c1167284d43"
+      "baseHash": "7a10369d15e8b09ef772d8f229cbfc712d074cbf"
     },
     {
       "type": "platform",
@@ -29,7 +29,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Alert/Alert.win32.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
-      "baseHash": "95ce9fad7e029b50ff6f1598e38aa420660913dc"
+      "baseHash": "bd8f474e454f2b703ca7fb55cb022f24046bc0f8"
     },
     {
       "type": "derived",
@@ -109,7 +109,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "eb047724db45395fe5d6487e269a00a198807eb8"
+      "baseHash": "f762096a46203b6bae385806087b7b7cb5744f16"
     },
     {
       "type": "patch",
@@ -402,7 +402,7 @@
       "type": "patch",
       "file": "src-win/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "packages/react-native/Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "6c83ae0478119480b693eeab590fa4ba5af98084"
+      "baseHash": "49fb1640b0942be2966d759057ca5923c5358c81"
     },
     {
       "type": "derived",
@@ -492,7 +492,7 @@
       "type": "patch",
       "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
-      "baseHash": "8c67d57575cccb7281b15ca2591e4edf5c5c36dd",
+      "baseHash": "c511868b72abd4e0e7d0b07e0453ea56687ffddb",
       "issue": 11041
     },
     {

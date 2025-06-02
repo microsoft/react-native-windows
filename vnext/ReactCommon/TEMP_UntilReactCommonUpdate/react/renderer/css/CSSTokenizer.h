@@ -10,6 +10,7 @@
 #include <cmath>
 #include <string_view>
 
+#include <fast_float/fast_float.h>
 #include <react/renderer/css/CSSToken.h>
 
 namespace facebook::react {
@@ -136,6 +137,11 @@ class CSSTokenizer {
   constexpr CSSToken consumeNumber() {
     // https://www.w3.org/TR/css-syntax-3/#consume-number
     // https://www.w3.org/TR/css-syntax-3/#convert-a-string-to-a-number
+<<<<<<< Upstream
+
+    auto* b = remainingCharacters_.data();
+    auto* e = b + remainingCharacters_.size();
+=======
     int32_t signPart = 1; // [Windows]
     if (peek() == '+' || peek() == '-') {
       if (peek() == '-') {
@@ -173,23 +179,20 @@ class CSSTokenizer {
         }
         advance();
       }
+>>>>>>> Override
 
-      while (isDigit(peek())) {
-        exponentPart = exponentPart * 10 + (peek() - '0');
-        advance();
-      }
-    }
     float value;
-    if (exponentPart == 0 && fractionalPart == 0) {
-      value = static_cast<float>(signPart * intPart);
-    } else {
-      value = static_cast<float>(
-          signPart *
-          (intPart + (fractionalPart * std::pow(10, -fractionDigits))) *
-          std::pow(10, exponentSign * exponentPart));
-    }
+    fast_float::parse_options options{
+        fast_float::chars_format::general |
+        fast_float::chars_format::allow_leading_plus};
+    auto [ptr, ec] = fast_float::from_chars_advanced(b, e, value, options);
 
+    // Do we need to handle any other errors?
+    // bool isOk = ec == std::errc();
+
+    position_ += ptr - b;
     consumeRunningValue();
+
     return {CSSTokenType::Number, value};
   }
 

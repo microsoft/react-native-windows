@@ -10,13 +10,13 @@
 
 'use strict';
 
+import typeof * as StyleSheetExports from './StyleSheetExports';
 import type {
   ____ColorValue_Internal,
   ____DangerouslyImpreciseStyle_Internal,
   ____DangerouslyImpreciseStyleProp_Internal,
   ____ImageStyle_Internal,
   ____ImageStyleProp_Internal,
-  ____Styles_Internal,
   ____TextStyle_Internal,
   ____TextStyleProp_Internal,
   ____ViewStyle_Internal,

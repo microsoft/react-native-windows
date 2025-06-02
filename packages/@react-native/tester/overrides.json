@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.79.0-nightly-20250303-cee63397b",
+  "baseVersion": "0.80.0-nightly-20250317-fc7385c1e",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "117e82a127facc2e88e576cab7140219eb9e51b3",
+      "baseHash": "55955c658c2583b3dd9a1ebd954ec6c8fb27be03",
       "issue": 4054
     },
     {
@@ -236,7 +236,7 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "47bd80a8fbdc88e70bca4e11ccea9e130d4dc45a",
+      "baseHash": "6f7b3e5f779970df44071279b741476f194e38d4",
       "issue": 4054
     },
     {
@@ -383,7 +383,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "3d1688893a2bf80a0dc4d8d5aa0eb87c52539c38",
+      "baseHash": "1dbe14827aa2ce436656ba7dbad7390302d2e9b2",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "3448bb4b09f3ec11e2923f7fa2463c611ef85006",
+      "baseHash": "9f90a3af870c1efe28bc29b30abf3cb874820978",
       "issue": 4054
     },
     {
@@ -481,7 +481,7 @@
       "type": "patch",
       "file": "js/examples/TextInput/TextInputSharedExamples.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
-      "baseHash": "c7f206359cb110517a643604f46c96e8a2e13f27",
+      "baseHash": "c6ff0d7ecf6b0db88ec76b4b4fc8dfe142337dd6",
       "issue": 14291
     },
     {
@@ -572,7 +572,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "8381b2c2e97bd18b48ac04c7a058a636d0b58a90",
+      "baseHash": "697f8ac4ce6f03a546df3ac60e8293bd862184d2",
       "issue": 4054
     },
     {
@@ -586,14 +586,14 @@
       "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "3cf41a5b5fe9269145523937f8cc190ad154e615",
+      "baseHash": "39dc13e5f5a3b5fb58b807788ee5021ff6b7889c",
       "issue": 13228
     },
     {
       "type": "patch",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "7a41161f07e9302f5c3091d0e4a8acb4f6ef01e0",
+      "baseHash": "7ca1b93dcc72ef3ff5e8856d6fa3ccd906a63e96",
       "issue": 13228
     },
     {
@@ -656,7 +656,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "465eafe4a4aa8296d839eb7f0e01b1966cc38044",
+      "baseHash": "e30b0f85845127e6de68e618be83e69bf210596f",
       "issue": 13228
     }
   ]
