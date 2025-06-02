@@ -91,7 +91,7 @@ export const title = 'LegacyControlStyleTest';
 export const description = 'Legacy e2e test for Control Styles';
 export const examples = [
   {
-    render: function(): JSX.Element {
+    render: function() {
       return <ControlStyleTestPage />;
     },
   },
