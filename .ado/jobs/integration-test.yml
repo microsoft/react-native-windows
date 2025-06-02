@@ -17,14 +17,15 @@ parameters:
             BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
-          - Name: X64WebDebug
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            DeployOptions:
-          - Name: X86WebDebug
-            BuildPlatform: x86
-            BuildConfiguration: Debug
-            DeployOptions:
+# The following tests are broken upstream
+#          - Name: X64WebDebug
+#            BuildPlatform: x64
+#            BuildConfiguration: Debug
+#            DeployOptions:
+#          - Name: X86WebDebug
+#            BuildPlatform: x86
+#            BuildConfiguration: Debug
+#            DeployOptions:
           - Name: X64Release
             BuildPlatform: x64
             BuildConfiguration: Release
@@ -50,14 +51,15 @@ parameters:
             BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
-          - Name: X64WebDebug
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            DeployOptions:
-          - Name: X86WebDebug
-            BuildPlatform: x86
-            BuildConfiguration: Debug
-            DeployOptions:
+# The following tests are broken upstream
+#          - Name: X64WebDebug
+#            BuildPlatform: x64
+#            BuildConfiguration: Debug
+#            DeployOptions:
+#          - Name: X86WebDebug
+#            BuildPlatform: x86
+#            BuildConfiguration: Debug
+#            DeployOptions:
           - Name: X64Release
             BuildPlatform: x64
             BuildConfiguration: Release
