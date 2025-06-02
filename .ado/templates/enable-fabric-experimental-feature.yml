@@ -1,15 +1,15 @@
 steps:
-  - template:  ../templates/set-experimental-feature.yml
+  - template: ../templates/set-experimental-feature.yml
     parameters:
       workingDir: vnext
       feature: RnwNewArch
       value: true
-  - template:  ../templates/set-experimental-feature.yml
+  - template: ../templates/set-experimental-feature.yml
     parameters:
       workingDir: vnext
       feature: UseFabric
       value: true
-  - template:  ../templates/set-experimental-feature.yml
+  - template: ../templates/set-experimental-feature.yml
     parameters:
       workingDir: vnext
       feature: UseWinUI3

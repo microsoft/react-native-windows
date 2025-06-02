@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 30 May 2025 05:24:58 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 31 May 2025 05:24:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.964
+
+Sat, 31 May 2025 05:24:43 GMT
+
+### Changes
+
+- Fix blob module in paper (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.963
 

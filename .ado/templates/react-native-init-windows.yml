@@ -88,7 +88,7 @@ steps:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - ${{ if eq(parameters.UseChakra, true) }}:
-    - template:  set-experimental-feature.yml
+    - template: set-experimental-feature.yml
       parameters:
         ${{ if endsWith(parameters.template, '-lib') }}:
           workingDir: $(Agent.BuildDirectory)\testcli\example\windows
@@ -98,7 +98,7 @@ steps:
         value: false
 
   - ${{ if eq(parameters.useExperimentalWinUI3, true) }}:
-    - template:  ../templates/enable-experimental-winui3.yml
+    - template: ../templates/enable-experimental-winui3.yml
       parameters:
         ${{ if endsWith(parameters.template, '-lib') }}:
           workingDir: $(Agent.BuildDirectory)\testcli\example\windows
@@ -146,7 +146,7 @@ steps:
       buildEnvironment: ${{ parameters.BuildEnvironment }}
       buildConfiguration: ${{ parameters.configuration }}
       buildPlatform: ${{ parameters.platform }}
-      deployOption: ${{ parameters.additionalRunArguments }}
+      moreRunWindowsArgs: ${{ parameters.additionalRunArguments }}
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
       ${{ if endsWith(parameters.template, '-lib') }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli\example
