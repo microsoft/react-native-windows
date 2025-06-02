@@ -8,7 +8,7 @@ import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import {Telemetry, CodedError} from '@react-native-windows/telemetry';
-import {Command, Config} from '@react-native-community/cli-types';
+import type {Command, Config} from '@react-native-community/cli-types';
 
 import * as build from '../../utils/build';
 import chalk from 'chalk';
@@ -27,9 +27,10 @@ import {
 import * as pathHelpers from '../../utils/pathHelpers';
 import * as info from '../../utils/info';
 import MSBuildTools from '../../utils/msbuildtools';
-import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
+import type {RunWindowsOptions} from './runWindowsOptions';
+import {runWindowsOptions} from './runWindowsOptions';
 import {autolinkWindowsInternal} from '../autolinkWindows/autolinkWindows';
-import {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
+import type {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
 
 /**
  * Sanitizes the given option for telemetry.
