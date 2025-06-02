@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add SetProperties method to ReactNativeIsland",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

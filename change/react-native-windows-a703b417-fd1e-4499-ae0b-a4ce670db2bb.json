@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider",
-  "packageName": "react-native-windows",
-  "email": "kvineeth@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Reenable optimization in TMs to avoid going through a dynamic for callbacks/promises",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

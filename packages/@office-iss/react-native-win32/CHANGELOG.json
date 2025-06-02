@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 02 Jun 2025 15:26:16 GMT",
+      "version": "0.78.3",
+      "tag": "@office-iss/react-native-win32_v0.78.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "00fb4d99de76a5b670cd9bb70c3c136886508e80",
+            "comment": "Removed unused `react-shallow-renderer` dependency"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Apr 2025 15:26:14 GMT",
       "version": "0.78.2",
       "tag": "@office-iss/react-native-win32_v0.78.2",
