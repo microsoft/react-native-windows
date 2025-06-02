@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix build issue building component codegen using clang",
-  "packageName": "@react-native-windows/codegen",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

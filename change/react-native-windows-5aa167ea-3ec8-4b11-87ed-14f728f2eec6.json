@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Implement accessibilityLevel for Fabric",
-  "packageName": "react-native-windows",
-  "email": "kvineeth@microsoft.com",
-  "dependentChangeType": "patch"
-}
