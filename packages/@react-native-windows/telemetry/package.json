@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.79.0-preview.0",
+  "version": "0.79.0-preview.1",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -21,7 +21,7 @@
     "@azure/core-auth": "1.5.0",
     "@microsoft/1ds-core-js": "^4.3.0",
     "@microsoft/1ds-post-js": "^4.3.0",
-    "@react-native-windows/fs": "0.79.0-preview.0",
+    "@react-native-windows/fs": "0.79.0-preview.1",
     "@xmldom/xmldom": "^0.7.7",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",

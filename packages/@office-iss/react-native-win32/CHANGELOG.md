@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Fri, 30 May 2025 05:24:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 03 Jun 2025 19:26:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.0-preview.1
+
+Tue, 03 Jun 2025 19:26:29 GMT
+
+### Changes
+
+- Promote 0.79 to preview (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.288
 
