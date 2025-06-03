@@ -11,7 +11,7 @@
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
-    "@react-native/tester": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/tester": "0.80.0-main",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "flow-enums-runtime": "^0.0.6"
