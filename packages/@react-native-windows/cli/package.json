@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.78.3",
+  "version": "0.78.4",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -25,6 +25,7 @@
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
+    "execa": "^5.0.0",
     "find-up": "^4.1.0",
     "glob": "^7.1.1",
     "lodash": "^4.17.15",
