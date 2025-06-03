@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate rn 0.79.0-rc4",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
