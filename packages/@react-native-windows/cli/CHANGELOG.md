@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 03 Jun 2025 19:26:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.0-preview.1
+
+Tue, 03 Jun 2025 19:26:30 GMT
+
+### Changes
+
+- Promote 0.79 to preview (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.79.0-preview.1
+- Bump @react-native-windows/fs to v0.79.0-preview.1
+- Bump @react-native-windows/package-utils to v0.79.0-preview.1
+- Bump @react-native-windows/telemetry to v0.79.0-preview.1
 
 ## 0.0.0-canary.265
 

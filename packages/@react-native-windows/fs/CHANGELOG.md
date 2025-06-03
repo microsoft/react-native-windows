@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 03 Jun 2025 19:26:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.0-preview.1
+
+Tue, 03 Jun 2025 19:26:30 GMT
+
+### Changes
+
+- Promote 0.79 to preview (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.65
 

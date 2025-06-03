@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Promote 0.79 to preview",
-  "packageName": "@react-native-windows/codegen",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

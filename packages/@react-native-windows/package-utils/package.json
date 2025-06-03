@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/package-utils",
-  "version": "0.79.0-preview.0",
+  "version": "0.79.0-preview.1",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,8 +16,8 @@
     "directory": "packages/@react-native-windows/package-utils"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "0.79.0-preview.0",
-    "@react-native-windows/fs": "0.79.0-preview.0",
+    "@react-native-windows/find-repo-root": "0.79.0-preview.1",
+    "@react-native-windows/fs": "0.79.0-preview.1",
     "get-monorepo-packages": "^1.2.0",
     "lodash": "^4.17.15"
   },
