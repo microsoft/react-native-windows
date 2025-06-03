@@ -25,10 +25,12 @@ class StringBuilder {
     return m_ss.str().length();
   }
 
-  void Finalize() {
+  char* Finalize() {
     std::string str = m_ss.str();
     memcpy(m_buffer, str.c_str(), str.length());
-  }
+    m_buffer[str.length()] = '\0';  // IMPORTANT: Add null terminator
+    return m_buffer;  // Returns char* that will convert to std::string
+}
 
   char *m_buffer;
   std::stringstream m_ss;
