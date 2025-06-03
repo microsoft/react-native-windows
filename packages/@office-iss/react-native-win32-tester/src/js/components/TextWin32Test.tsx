@@ -121,56 +121,56 @@ export const examples = [
     {
       title: 'Text Runs Example',
       description: 'text runs in action',
-      render(): JSX.Element {
+      render() {
         return (<TextRunsTest />);
       },
     },
     {
       title: 'Focusable Example',
       description: 'focusable in action',
-      render(): JSX.Element {
+      render() {
         return (<FocusableTextTest />);
       },
     },
     {
       title: 'Selectable Example',
       description: 'selectable in action',
-      render(): JSX.Element {
+      render() {
         return (<SelectableTextTest />);
       },
     },
     {
       title: 'TextStyle Example',
       description: 'TextStyles in action',
-      render(): JSX.Element {
+      render() {
         return (<TextStyleTest />);
       },
     },
     {
       title: 'Acessibility Example',
       description: 'Acessibility on Text in action',
-      render(): JSX.Element {
+      render() {
         return (<TextAcessibilityTest />);
       },
     },
     {
       title: 'Tooltip Example',
       description: 'tooltips in action',
-      render(): JSX.Element {
+      render() {
         return (<TooltipTextTest />);
       },
     },
     {
       title: 'TextPromotion Example',
       description: 'dynamic increases in focusability in action',
-      render(): JSX.Element {
+      render() {
         return (<TextPromotionTest />);
       },
     },
     {
       title: 'Focus and Blur Example',
       description: 'onFocus/onBlur in action',
-      render(): JSX.Element {
+      render() {
         return (<BlurringAndFocusingTextTest />);
       },
     },
