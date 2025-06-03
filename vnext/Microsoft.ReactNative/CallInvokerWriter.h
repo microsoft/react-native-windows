@@ -34,6 +34,10 @@ struct CallInvokerWriter : winrt::implements<CallInvokerWriter, IJSValueWriter> 
   void WriteArrayBegin() noexcept;
   void WriteArrayEnd() noexcept;
 
+  // This should be called before the code flow exits the scope of the CallInvoker,
+  // thus requiring the CallInokerWriter to call m_callInvoker->invokeAsync to call back into JS.
+  void ExitCurrentCallInvokeScope() noexcept;
+
  private:
   IJSValueWriter GetWriter() noexcept;
 
@@ -43,6 +47,28 @@ struct CallInvokerWriter : winrt::implements<CallInvokerWriter, IJSValueWriter> 
   winrt::com_ptr<DynamicWriter> m_dynamicWriter;
   winrt::com_ptr<JsiWriter> m_jsiWriter;
   IJSValueWriter m_writer;
+
+  // If a callback is invoked synchronously we can call the JS callback directly.
+  // However, if we post to another thread, or call the callback on the same thread but after we exit the current
+  // RuntimeExecutor callback, then we need to save the callback args in a dynamic and post it back to the CallInvoker
+  bool m_fastPath{true};
+  const std::thread::id m_threadId;
+};
+
+// Special IJSValueWriter that does nothing.
+// We use it instead of JsiWriter when JSI runtime is not available anymore.
+struct JSNoopWriter : winrt::implements<JSNoopWriter, IJSValueWriter> {
+ public: // IJSValueWriter
+  void WriteNull() noexcept;
+  void WriteBoolean(bool value) noexcept;
+  void WriteInt64(int64_t value) noexcept;
+  void WriteDouble(double value) noexcept;
+  void WriteString(const winrt::hstring &value) noexcept;
+  void WriteObjectBegin() noexcept;
+  void WritePropertyName(const winrt::hstring &name) noexcept;
+  void WriteObjectEnd() noexcept;
+  void WriteArrayBegin() noexcept;
+  void WriteArrayEnd() noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative

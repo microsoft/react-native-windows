@@ -8,6 +8,9 @@
 #include "XamlUIService.h"
 #endif
 
+#include "CallInvoker.h"
+#include "Utils/Helpers.h"
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 //=============================================================================
@@ -97,10 +100,24 @@ IReactDispatcher ReactContext::UIDispatcher() noexcept {
 }
 
 IReactDispatcher ReactContext::JSDispatcher() noexcept {
+#if defined(DEBUG) && defined(USE_FABRIC)
+  VerifyElseCrashSz(
+      !::Microsoft::ReactNative::IsFabricEnabled(Properties()),
+      "ReactContext.JSRuntime is not supported on new arch, use ReactContext.CallInvoker instead.");
+#endif
   return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
+winrt::Microsoft::ReactNative::CallInvoker ReactContext::CallInvoker() noexcept {
+  return winrt::Microsoft::ReactNative::implementation::CallInvoker::FromProperties(ReactPropertyBag(Properties()));
+}
+
 winrt::Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
+#if defined(DEBUG) && defined(USE_FABRIC)
+  VerifyElseCrashSz(
+      !::Microsoft::ReactNative::IsFabricEnabled(Properties()),
+      "ReactContext.JSRuntime is not supported on new arch, use ReactContext.CallInvoker instead.");
+#endif
   return m_context->JsiRuntime();
 }
 

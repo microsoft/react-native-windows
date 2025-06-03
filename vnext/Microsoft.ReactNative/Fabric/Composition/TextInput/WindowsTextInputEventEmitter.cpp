@@ -67,7 +67,7 @@ void WindowsTextInputEventEmitter::onContentSizeChange(OnContentSizeChange event
   });
 }
 
-void WindowsTextInputEventEmitter::onPressIn(PressEvent event) const {
+void WindowsTextInputEventEmitter::onPressIn(GestureResponderEvent event) const {
   dispatchEvent("textInputPressIn", [event = std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     auto nativeEvent = jsi::Object(runtime);

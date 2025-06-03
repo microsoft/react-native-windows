@@ -8,13 +8,18 @@
  * @format
  */
 
+export type PlatformOSType =
+  | 'ios'
+  | 'android'
+  | 'macos'
+  | 'windows'
+  | 'win32' // [Windows]
+  | 'web'
+  | 'native';
+
 export type PlatformSelectSpec<T> = {
   default?: T,
-  native?: T,
-  ios?: T,
-  android?: T,
-  win32?: T,
-  ...
+  [PlatformOSType]: T,
 };
 
 type IOSPlatform = {
@@ -89,6 +94,66 @@ type AndroidPlatform = {
   select: <T>(spec: PlatformSelectSpec<T>) => T,
 };
 
+type WindowsPlatform = {
+  __constants: null,
+  OS: 'windows',
+  // $FlowFixMe[unsafe-getters-setters]
+  get Version(): number,
+  // $FlowFixMe[unsafe-getters-setters]
+  get constants(): {
+  // [Windows]
+    isTesting: boolean,
+    isDisableAnimations?: boolean,
+    reactNativeVersion: {
+      major: number,
+      minor: number,
+      patch: number,
+      prerelease: ?string,
+    },
+    reactNativeWindowsVersion: {
+      major: number,
+      minor: number,
+      patch: number,
+    },
+    osVersion: number,
+  },
+  // $FlowFixMe[unsafe-getters-setters]
+  get isTesting(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isDisableAnimations(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isTV(): boolean,
+  select: <T>(spec: PlatformSelectSpec<T>) => T,
+};
+
+type MacOSPlatform = {
+  __constants: null,
+  OS: 'macos',
+  // $FlowFixMe[unsafe-getters-setters]
+  get Version(): string,
+  // $FlowFixMe[unsafe-getters-setters]
+  get constants(): {
+    isTesting: boolean,
+    osVersion: string,
+    reactNativeVersion: {
+      major: number,
+      minor: number,
+      patch: number,
+      prerelease: ?number,
+    },
+    systemName: string,
+  },
+  // $FlowFixMe[unsafe-getters-setters]
+  get isTV(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isVision(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isTesting(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isDisableAnimations(): boolean,
+  select: <T>(spec: PlatformSelectSpec<T>) => T,
+};
+
 type Win32Platform = {
   __constants: null,
   // $FlowFixMe[cannot-resolve-name]
@@ -122,4 +187,30 @@ type Win32Platform = {
   select: <T>(spec: PlatformSelectSpec<T>) => T,
 };
 
-export type Platform = IOSPlatform | AndroidPlatform | Win32Platform;
+type WebPlatform = {
+  OS: 'web',
+  // $FlowFixMe[unsafe-getters-setters]
+  get constants(): {
+    reactNativeVersion: {
+      major: number,
+      minor: number,
+      patch: number,
+      prerelease: ?string,
+    },
+  },
+  // $FlowFixMe[unsafe-getters-setters]
+  get isTV(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isTesting(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isDisableAnimations(): boolean,
+  select: <T>(spec: PlatformSelectSpec<T>) => T,
+};
+
+export type Platform =
+  | IOSPlatform
+  | AndroidPlatform
+  | WindowsPlatform
+  | Win32Platform // [Windows]
+  | MacOSPlatform
+  | WebPlatform;

@@ -7,6 +7,7 @@
 
 #include "pch.h"
 #include "TurboModulesProvider.h"
+#include <IReactContext.h>
 #include <ReactCommon/TurboModuleUtils.h>
 #include <react/bridging/EventEmitter.h>
 #include "CallInvokerWriter.h"
@@ -40,6 +41,14 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
  public: // IReactModuleBuilder
   void AddInitializer(InitializerDelegate const &initializer) noexcept {
     initializer(m_reactContext);
+  }
+
+  void AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept {
+    initializer(
+        m_reactContext,
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
+            ->GetInner()
+            .JsiRuntime());
   }
 
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
@@ -119,6 +128,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
         m_moduleBuilder(winrt::make_self<TurboModuleBuilder>(reactContext)),
         m_providedModule(reactModuleProvider(m_moduleBuilder.as<IReactModuleBuilder>())) {
     if (auto hostObject = m_providedModule.try_as<IJsiHostObject>()) {
+      // Force ABI runtime creation if it hasn't already been created
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
+          ->GetInner()
+          .JsiRuntime();
       m_hostObjectWrapper = std::make_shared<implementation::HostObjectWrapper>(hostObject);
     }
   }
@@ -212,11 +225,13 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                   VerifyElseCrash(argCount > 0);
                   if (auto strongLongLivedObjectCollection = longLivedObjectCollection.lock()) {
                     auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
+                    auto writer = winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder);
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 1),
-                        winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder),
+                        writer,
                         MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 1]),
                         nullptr);
+                    winrt::get_self<CallInvokerWriter>(writer)->ExitCurrentCallInvokeScope();
                   }
                   return facebook::jsi::Value::undefined();
                 });
@@ -240,9 +255,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                     auto weakCallback2 = LongLivedJsiFunction::CreateWeak(
                         strongLongLivedObjectCollection, rt, args[argCount - 1].getObject(rt).getFunction(rt));
 
+                    auto writer = winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder);
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 2),
-                        winrt::make<CallInvokerWriter>(jsInvoker, jsiRuntimeHolder),
+                        writer,
                         [weakCallback1, weakCallback2, jsiRuntimeHolder](const IJSValueWriter &writer) noexcept {
                           writer.as<CallInvokerWriter>()->WithResultArgs(
                               [weakCallback1, weakCallback2, jsiRuntimeHolder](
@@ -275,6 +291,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                                 }
                               });
                         });
+                    winrt::get_self<CallInvokerWriter>(writer)->ExitCurrentCallInvokeScope();
                   }
                   return facebook::jsi::Value::undefined();
                 });
@@ -356,6 +373,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                                       }
                                     });
                               });
+                          winrt::get_self<CallInvokerWriter>(argWriter)->ExitCurrentCallInvokeScope();
                         });
                   }
                   return facebook::jsi::Value::undefined();

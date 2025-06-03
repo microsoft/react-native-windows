@@ -15,6 +15,12 @@ namespace Microsoft.ReactNative
     "Experimental code uses it to initialize TurboModule `CallInvoker`.")
   delegate void InitializerDelegate(IReactContext reactContext);
 
+  DOC_STRING(
+    "A delegate that sets `reactContext` for a module.\n"
+    "We use it for a stand-alone initialize method, strongly typed JS events and functions.\n"
+    "Experimental code uses it to initialize TurboModule `CallInvoker`.")
+  delegate void JsiInitializerDelegate(IReactContext reactContext, Object runtimeHandle);
+
   DOC_STRING("Native method return type.")
   enum MethodReturnType
   {
@@ -58,6 +64,8 @@ namespace Microsoft.ReactNative
       "See @InitializerDelegate.\n"
       "There can be multiple initializer methods which are called in the order they were registered.")
     void AddInitializer(InitializerDelegate initializer);
+
+    void AddJsiInitializer(JsiInitializerDelegate initializer);
 
     DOC_STRING(
       "Adds a constant provider method to define constants for the native module. See @ConstantProviderDelegate.")

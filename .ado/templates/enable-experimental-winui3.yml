@@ -6,7 +6,7 @@ parameters:
   default: false # If WinUI3ExperimentalVersion in WinUI.props is only available on the ProjectReuinion feed, set to true, else if is on nuget.org, set to false
 
 steps:
-  - template:  ../templates/set-experimental-feature.yml
+  - template: ../templates/set-experimental-feature.yml
     parameters:
       workingDir: ${{ parameters.workingDir }}
       feature: UseExperimentalWinUI3

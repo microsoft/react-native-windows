@@ -5,6 +5,8 @@
 
 #include "ParagraphComponentView.h"
 
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
+
 #include <AutoDraw.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
@@ -174,7 +176,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     constraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    facebook::react::TextLayoutManager::GetTextLayout(
+    facebook::react::WindowsTextLayoutManager::GetTextLayout(
         m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout);
 
     requireNewBrush = true;

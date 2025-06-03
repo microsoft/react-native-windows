@@ -114,6 +114,9 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp">
       <Filter>jsiexecutor\jsireact</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp">
+      <Filter>jsitooling\react\runtime</Filter>
+    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp">
       <Filter>jsiexecutor\jsireact</Filter>
     </ClCompile>
@@ -197,6 +200,8 @@
       <Filter>react\renderer\telemetry</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopTaskReporter.cpp" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\AbsoluteLayout.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\Baseline.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\Cache.cpp" />
@@ -294,6 +299,9 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.h">
+      <Filter>jsitooling\react\runtime</Filter>
+    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
@@ -338,6 +346,10 @@
       <Filter>react\bridging</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\InstanceTracingProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopTaskReporter.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />

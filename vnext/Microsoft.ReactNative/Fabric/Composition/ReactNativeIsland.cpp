@@ -5,6 +5,7 @@
 #include "FocusNavigationRequest.g.cpp"
 #include "ReactNativeIsland.g.cpp"
 #include <RootViewSizeChangedEventArgs.g.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 
 #include <AutoDraw.h>
 #include <DynamicWriter.h>
@@ -43,6 +44,7 @@ constexpr float loadingActivitySize = 12.0f;
 constexpr float loadingActivityHorizontalOffset = 16.0f;
 constexpr float loadingBarHeight = 36.0f;
 constexpr float loadingBarFontSize = 20.0f;
+constexpr float loadingBarMinFontSize = 8.0f;
 constexpr float loadingTextHorizontalOffset = 48.0f;
 
 //! This class ensures that we access ReactRootView from UI thread.
@@ -520,13 +522,6 @@ void ReactNativeIsland::UpdateRootViewInternal() noexcept {
   }
 }
 
-struct AutoMRE {
-  ~AutoMRE() {
-    mre.Set();
-  }
-  Mso::ManualResetEvent mre;
-};
-
 void ReactNativeIsland::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
@@ -536,20 +531,9 @@ void ReactNativeIsland::UninitRootView() noexcept {
     if (m_context.Handle().LoadingState() == winrt::Microsoft::ReactNative::LoadingState::HasError)
       return;
 
-    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
-    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
-
-    // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
-    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead
-    // this method should return a Promise, which should be resolved when the JS logic is complete. The task will auto
-    // set the event on destruction to ensure that the event is set if the JS Queue has already been shutdown
-    Mso::ManualResetEvent mre;
-    m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
-    mre.Wait();
-
-    // Paper version gives the JS thread time to finish executing - Is this needed?
-    // m_jsMessageThread.Load()->runOnQueueSync([]() {});
+    if (auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties())))
+      uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
   }
 
   m_rootTag = -1;
@@ -611,6 +595,14 @@ facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
   return facebook::react::AttributedStringBox{attributedString};
 }
 
+facebook::react::ParagraphAttributes CreateLoadingParagraphAttributes() noexcept {
+  facebook::react::ParagraphAttributes pa;
+  pa.adjustsFontSizeToFit = true;
+  pa.minimumFontSize = loadingBarMinFontSize;
+  pa.maximumFontSize = loadingBarFontSize;
+  return pa;
+}
+
 facebook::react::Size ReactNativeIsland::MeasureLoading(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints) const noexcept {
   facebook::react::LayoutConstraints fbLayoutConstraints;
@@ -618,8 +610,8 @@ facebook::react::Size ReactNativeIsland::MeasureLoading(
 
   auto attributedStringBox = CreateLoadingAttributedString();
   winrt::com_ptr<::IDWriteTextLayout> textLayout;
-  facebook::react::TextLayoutManager::GetTextLayout(
-      attributedStringBox, {} /*paragraphAttributes*/, fbLayoutConstraints, textLayout);
+  facebook::react::WindowsTextLayoutManager::GetTextLayout(
+      attributedStringBox, CreateLoadingParagraphAttributes(), fbLayoutConstraints, textLayout);
 
   DWRITE_TEXT_METRICS tm;
   winrt::check_hresult(textLayout->GetMetrics(&tm));
@@ -700,8 +692,8 @@ Composition::Experimental::IDrawingSurfaceBrush ReactNativeIsland::CreateLoading
       textAttributes.foregroundColor = facebook::react::whiteColor();
 
       winrt::com_ptr<::IDWriteTextLayout> textLayout;
-      facebook::react::TextLayoutManager::GetTextLayout(
-          attributedStringBox, {} /*paragraphAttributes*/, constraints, textLayout);
+      facebook::react::WindowsTextLayoutManager::GetTextLayout(
+          attributedStringBox, CreateLoadingParagraphAttributes(), constraints, textLayout);
 
       DWRITE_TEXT_METRICS tm;
       textLayout->GetMetrics(&tm);

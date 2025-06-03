@@ -15,7 +15,7 @@ import util from 'util';
 
 const glob = util.promisify(globFunc);
 
-import {Command, Config} from '@react-native-community/cli-types';
+import type {Command, Config} from '@react-native-community/cli-types';
 import {CodedError, Telemetry} from '@react-native-windows/telemetry';
 
 import {
@@ -30,7 +30,8 @@ import {
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
 import * as nameHelpers from '../../utils/nameHelpers';
-import {InitOptions, initOptions} from './initWindowsOptions';
+import type {InitOptions} from './initWindowsOptions';
+import {initOptions} from './initWindowsOptions';
 
 export interface TemplateFileMapping {
   from: string;

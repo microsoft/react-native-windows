@@ -22,8 +22,8 @@
   "dependencies": {
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
-    "react-native": "0.79.0-nightly-20250206-fb8a6a5bb",
-    "react-native-windows": "^0.0.0-canary.953"
+    "react-native": "0.79.0-nightly-20250303-cee63397b",
+    "react-native-windows": "^0.0.0-canary.964"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -32,11 +32,11 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native/metro-config": "0.79.0-nightly-20250206-fb8a6a5bb",
+    "@react-native/metro-config": "0.79.0-nightly-20250303-cee63397b",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
-    "@rnw-scripts/eslint-config": "1.2.35",
-    "@rnw-scripts/just-task": "2.3.52",
+    "@rnw-scripts/eslint-config": "1.2.36",
+    "@rnw-scripts/just-task": "2.3.53",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.5",
     "@rnx-kit/jest-preset": "^0.1.16",

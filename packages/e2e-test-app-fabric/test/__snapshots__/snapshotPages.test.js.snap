@@ -7581,73 +7581,66 @@ exports[`snapshotAllPages AppState 1`] = `
       undefined,
     ]
   }
+  testID="initial-state"
 />
 `;
 
 exports[`snapshotAllPages AppState 2`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  />
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+  testID="current-state"
+/>
 `;
 
 exports[`snapshotAllPages AppState 3`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    []
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+  testID="previous-states"
+/>
 `;
 
 exports[`snapshotAllPages AppState 4`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    0
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+>
+  0
+</Text>
 `;
 
 exports[`snapshotAllPages AppState 5`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    []
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+>
+  []
+</Text>
 `;
 
 exports[`snapshotAllPages Border 1`] = `
@@ -8396,6 +8389,30 @@ exports[`snapshotAllPages Border 23`] = `
     />
   </View>
 </View>
+`;
+
+exports[`snapshotAllPages Border 24`] = `
+<View
+  style={
+    [
+      {
+        "height": 50,
+        "width": 50,
+      },
+      {
+        "backgroundColor": "red",
+        "borderLeftWidth": 10,
+        "borderRadius": 10,
+        "transform": [
+          {
+            "scale": 1.2,
+          },
+        ],
+      },
+    ]
+  }
+  testID="border-test-scaling-transforms"
+/>
 `;
 
 exports[`snapshotAllPages Button 1`] = `
@@ -12155,15 +12172,21 @@ exports[`snapshotAllPages Fast Path Texts 7`] = `
 `;
 
 exports[`snapshotAllPages Filter 1`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-brightness"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-brightness"
   >
     <View
       style={
@@ -12206,13 +12229,47 @@ exports[`snapshotAllPages Filter 1`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "brightness": 1.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12238,15 +12295,6 @@ exports[`snapshotAllPages Filter 1`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12256,13 +12304,7 @@ exports[`snapshotAllPages Filter 1`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "brightness": 1.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12270,30 +12312,22 @@ exports[`snapshotAllPages Filter 1`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 2`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12339,13 +12373,47 @@ exports[`snapshotAllPages Filter 2`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "opacity": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12371,15 +12439,6 @@ exports[`snapshotAllPages Filter 2`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12389,13 +12448,7 @@ exports[`snapshotAllPages Filter 2`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "opacity": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12403,30 +12456,22 @@ exports[`snapshotAllPages Filter 2`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 3`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12472,13 +12517,47 @@ exports[`snapshotAllPages Filter 3`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "contrast": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12504,15 +12583,6 @@ exports[`snapshotAllPages Filter 3`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12522,13 +12592,7 @@ exports[`snapshotAllPages Filter 3`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "contrast": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12536,30 +12600,22 @@ exports[`snapshotAllPages Filter 3`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 4`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12605,13 +12661,47 @@ exports[`snapshotAllPages Filter 4`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "sepia": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12637,15 +12727,6 @@ exports[`snapshotAllPages Filter 4`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12655,13 +12736,7 @@ exports[`snapshotAllPages Filter 4`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "sepia": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12669,30 +12744,22 @@ exports[`snapshotAllPages Filter 4`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 5`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12738,13 +12805,47 @@ exports[`snapshotAllPages Filter 5`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "grayscale": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12770,15 +12871,6 @@ exports[`snapshotAllPages Filter 5`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12788,13 +12880,7 @@ exports[`snapshotAllPages Filter 5`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "grayscale": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12802,30 +12888,22 @@ exports[`snapshotAllPages Filter 5`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 6`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12871,13 +12949,47 @@ exports[`snapshotAllPages Filter 6`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "saturate": 4,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12903,15 +13015,6 @@ exports[`snapshotAllPages Filter 6`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12921,13 +13024,7 @@ exports[`snapshotAllPages Filter 6`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "saturate": 4,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12935,30 +13032,22 @@ exports[`snapshotAllPages Filter 6`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 7`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -13004,13 +13093,47 @@ exports[`snapshotAllPages Filter 7`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "hueRotate": "-90deg",
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13036,15 +13159,6 @@ exports[`snapshotAllPages Filter 7`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13054,13 +13168,7 @@ exports[`snapshotAllPages Filter 7`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "hueRotate": "-90deg",
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13068,30 +13176,22 @@ exports[`snapshotAllPages Filter 7`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 8`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -13137,13 +13237,47 @@ exports[`snapshotAllPages Filter 8`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "invert": 0.7,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13169,15 +13303,6 @@ exports[`snapshotAllPages Filter 8`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13187,13 +13312,7 @@ exports[`snapshotAllPages Filter 8`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "invert": 0.7,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13201,34 +13320,26 @@ exports[`snapshotAllPages Filter 8`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 9`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-blur"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-blur"
   >
     <View
       style={
@@ -13271,13 +13382,47 @@ exports[`snapshotAllPages Filter 9`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "blur": 10,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13303,15 +13448,6 @@ exports[`snapshotAllPages Filter 9`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13321,13 +13457,7 @@ exports[`snapshotAllPages Filter 9`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "blur": 10,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13335,34 +13465,26 @@ exports[`snapshotAllPages Filter 9`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 10`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-drop-shadow"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-drop-shadow"
   >
     <View
       style={
@@ -13405,13 +13527,47 @@ exports[`snapshotAllPages Filter 10`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "dropShadow": "30px 10px 4px #4444dd",
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13437,15 +13593,6 @@ exports[`snapshotAllPages Filter 10`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13455,13 +13602,7 @@ exports[`snapshotAllPages Filter 10`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "dropShadow": "30px 10px 4px #4444dd",
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13469,50 +13610,40 @@ exports[`snapshotAllPages Filter 10`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 11`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-chain"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-chain"
   >
     <View
       style={
         [
-          [
-            {
-              "filter": [
-                {
-                  "brightness": 1.5,
-                },
-                {
-                  "opacity": 0.5,
-                },
-              ],
-            },
-          ],
+          {
+            "filter": [
+              {
+                "brightness": 1.5,
+              },
+              {
+                "opacity": 0.5,
+              },
+            ],
+          },
           {
             "backgroundColor": "#275752",
             "height": 150,
@@ -13544,13 +13675,50 @@ exports[`snapshotAllPages Filter 11`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "brightness": 1.5,
+              },
+              {
+                "opacity": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13576,15 +13744,6 @@ exports[`snapshotAllPages Filter 11`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13594,18 +13753,7 @@ exports[`snapshotAllPages Filter 11`] = `
       }
       style={
         [
-          [
-            {
-              "filter": [
-                {
-                  "brightness": 1.5,
-                },
-                {
-                  "opacity": 0.5,
-                },
-              ],
-            },
-          ],
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13613,30 +13761,22 @@ exports[`snapshotAllPages Filter 11`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 12`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -13684,47 +13824,6 @@ exports[`snapshotAllPages Filter 12`] = `
         </Text>
       </View>
     </View>
-    <View
-      style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "backgroundColor": "#8d2b8f",
-            "height": 75,
-            "width": 75,
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "#32a840",
-              "height": 38.5,
-              "width": 38.5,
-            }
-          }
-        />
-        <Text>
-          Hello world!
-        </Text>
-      </View>
-    </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13750,6 +13849,49 @@ exports[`snapshotAllPages Filter 12`] = `
         ]
       }
     />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View
+      style={
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#8d2b8f",
+            "height": 75,
+            "width": 75,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#32a840",
+              "height": 38.5,
+              "width": 38.5,
+            }
+          }
+        />
+        <Text>
+          Hello world!
+        </Text>
+      </View>
+    </View>
     <Image
       resizeMode="contain"
       source={
@@ -13758,14 +13900,103 @@ exports[`snapshotAllPages Filter 12`] = `
         }
       }
       style={
+        [
+          undefined,
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Filter 13`] = `
+<View
+  style={
+    {
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-transforms"
+>
+  <View
+    style={
+      [
+        {
+          "filter": [
+            {
+              "brightness": 1.5,
+            },
+          ],
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
+        {
+          "backgroundColor": "#275752",
+          "height": 150,
+          "width": 150,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#8d2b8f",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#32a840",
+            "height": 38.5,
+            "width": 38.5,
+          }
+        }
+      />
+      <Text>
+        Hello world!
+      </Text>
+    </View>
+  </View>
+  <Image
+    resizeMode="contain"
+    source={
+      {
+        "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+      }
+    }
+    style={
+      [
+        {
+          "filter": [
+            {
+              "brightness": 1.5,
+            },
+          ],
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
         {
           "height": 90,
           "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+        },
+      ]
+    }
+  />
+</View>
 `;
 
 exports[`snapshotAllPages FlatList 1`] = `
@@ -86981,7 +87212,10 @@ exports[`snapshotAllPages View 19`] = `
 <View
   style={
     {
-      "gap": 20,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 30,
+      "padding": 20,
     }
   }
   testID="view-test-box-shadow"
@@ -86989,153 +87223,150 @@ exports[`snapshotAllPages View 19`] = `
   <View
     style={
       {
-        "flexDirection": "row",
-        "gap": 15,
+        "borderColor": "red",
+        "borderRadius": 10,
+        "borderWidth": 5,
+        "boxShadow": "0 0 10px 0 black",
+        "height": 50,
+        "width": 50,
       }
     }
-  >
-    <View
-      style={
-        {
-          "borderColor": "red",
-          "borderRadius": 10,
-          "borderWidth": 5,
-          "boxShadow": "0 0 10px 0 black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderColor": "red",
-          "borderRadius": 30,
-          "borderWidth": 5,
-          "boxShadow": "inset 0 0 10px 0 black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderColor": "red",
-          "borderRadius": 30,
-          "borderWidth": 5,
-          "boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    />
-  </View>
+  />
   <View
     style={
       {
-        "flexDirection": "row",
-        "gap": 15,
+        "borderColor": "red",
+        "borderRadius": 30,
+        "borderWidth": 5,
+        "boxShadow": "inset 0 0 10px 0 black",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderColor": "red",
+        "borderRadius": 30,
+        "borderWidth": 5,
+        "boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "boxShadow": "0px 0px 5px 5px black",
+        "height": 50,
+        "width": 50,
       }
     }
   >
-    <View
-      style={
-        {
-          "boxShadow": "0px 0px 5px 5px black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "backgroundColor": "cyan",
-            "height": 25,
-            "left": -10,
-            "width": 25,
-          }
-        }
-      />
-    </View>
     <View
       style={
         {
           "backgroundColor": "red",
           "boxShadow": "inset 0px 0px 5px 5px black",
-          "height": 75,
-          "width": 75,
+          "height": 50,
+          "width": 50,
         }
       }
     />
     <View
       style={
         {
-          "flexDirection": "row",
-          "height": 75,
-          "width": 75,
+          "boxShadow": " 0px 0px 20px 5px black",
+          "height": 50,
+          "width": 50,
         }
       }
-    >
-      <View
-        style={
-          {
-            "backgroundColor": "cyan",
-            "height": 25,
-            "width": 25,
-          }
-        }
-      />
-      <View
-        style={
-          {
-            "boxShadow": " 0px 0px 20px 5px black",
-            "height": 75,
-            "width": 75,
-          }
-        }
-      />
-      <View
-        style={
-          {
-            "backgroundColor": "cyan",
-            "height": 25,
-            "width": 25,
-          }
-        }
-      />
-    </View>
+    />
   </View>
   <View
     style={
       {
-        "flexDirection": "row",
-        "gap": 15,
+        "backgroundColor": "green",
+        "boxShadow": "0px 10px",
+        "height": 50,
+        "width": 50,
       }
     }
-  >
-    <View
-      style={
-        {
-          "backgroundColor": "green",
-          "boxShadow": "0px 10px",
-          "height": 75,
-          "width": 75,
-        }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "orange",
+        "boxShadow": "5px 5px 5px 0px rgba(0, 0, 0, 0)",
+        "height": 50,
+        "width": 50,
       }
-    />
-    <View
-      style={
+    }
+  />
+  <View
+    style={
+      [
         {
-          "backgroundColor": "orange",
-          "boxShadow": "5px 5px 5px 0px rgba(0, 0, 0, 0)",
-          "height": 75,
-          "width": 75,
-        }
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "brown",
+          "boxShadow": "5px 5px 5px 0px rgba(0, 0, 255, 1) inset",
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "hotpink",
+        "boxShadow": [
+          {
+            "blurRadius": 5,
+            "color": "green",
+            "offsetX": 5,
+            "offsetY": "5px",
+            "spreadDistance": "1px",
+          },
+          {
+            "blurRadius": "5px",
+            "color": "orange",
+            "offsetX": "-5px",
+            "offsetY": "0",
+            "spreadDistance": 2,
+          },
+        ],
+        "height": 50,
+        "width": 50,
       }
-    />
-  </View>
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "hotpink",
+        "boxShadow": [
+          {
+            "blurRadius": 5,
+            "color": "green",
+            "offsetX": "-5px",
+            "offsetY": "",
+            "spreadDistance": "1px",
+          },
+        ],
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
 </View>
 `;
 

@@ -35,15 +35,15 @@ void ShadowNode::EnsureUnsealed() noexcept {
   }
 }
 
-winrt::IInspectable ShadowNode::Tag() const noexcept {
+winrt::Windows::Foundation::IInspectable ShadowNode::Tag() const noexcept {
   return m_tag;
 }
 
-void ShadowNode::Tag(winrt::IInspectable tag) noexcept {
+void ShadowNode::Tag(winrt::Windows::Foundation::IInspectable tag) noexcept {
   m_tag = tag;
 }
 
-winrt::IInspectable ShadowNode::StateData() const noexcept {
+winrt::Windows::Foundation::IInspectable ShadowNode::StateData() const noexcept {
   if (auto shadowNode = m_shadowNode.lock()) {
     auto state = shadowNode->getState();
     react_native_assert(state && "State must not be `nullptr`.");
@@ -55,7 +55,7 @@ winrt::IInspectable ShadowNode::StateData() const noexcept {
   return nullptr;
 }
 
-void ShadowNode::StateData(winrt::IInspectable tag) noexcept {
+void ShadowNode::StateData(winrt::Windows::Foundation::IInspectable tag) noexcept {
   if (auto shadowNode = m_shadowNode.lock()) {
     shadowNode->ensureUnsealed();
 

@@ -8,22 +8,6 @@
 
 namespace winrt::Microsoft::ReactNative {
 
-// Special IJSValueWriter that does nothing.
-// We use it instead of JsiWriter when JSI runtime is not available anymore.
-struct JSNoopWriter : winrt::implements<JSNoopWriter, IJSValueWriter> {
- public: // IJSValueWriter
-  void WriteNull() noexcept;
-  void WriteBoolean(bool value) noexcept;
-  void WriteInt64(int64_t value) noexcept;
-  void WriteDouble(double value) noexcept;
-  void WriteString(const winrt::hstring &value) noexcept;
-  void WriteObjectBegin() noexcept;
-  void WritePropertyName(const winrt::hstring &name) noexcept;
-  void WriteObjectEnd() noexcept;
-  void WriteArrayBegin() noexcept;
-  void WriteArrayEnd() noexcept;
-};
-
 //===========================================================================
 // CallInvokerWriter implementation
 //===========================================================================
@@ -31,7 +15,9 @@ struct JSNoopWriter : winrt::implements<JSNoopWriter, IJSValueWriter> {
 CallInvokerWriter::CallInvokerWriter(
     const std::shared_ptr<facebook::react::CallInvoker> &jsInvoker,
     std::weak_ptr<LongLivedJsiRuntime> jsiRuntimeHolder) noexcept
-    : m_callInvoker(jsInvoker), m_jsiRuntimeHolder(std::move(jsiRuntimeHolder)) {}
+    : m_callInvoker(jsInvoker),
+      m_jsiRuntimeHolder(std::move(jsiRuntimeHolder)),
+      m_threadId(std::this_thread::get_id()) {}
 
 CallInvokerWriter::~CallInvokerWriter() {
   if (auto jsiRuntimeHolder = m_jsiRuntimeHolder.lock()) {
@@ -42,32 +28,30 @@ CallInvokerWriter::~CallInvokerWriter() {
 void CallInvokerWriter::WithResultArgs(
     Mso::Functor<void(facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t argCount)>
         handler) noexcept {
-  /*
-    if (m_jsDispatcher.HasThreadAccess()) {
-      VerifyElseCrash(!m_dynamicWriter);
-      if (auto jsiRuntimeHolder = m_jsiRuntimeHolder.lock()) {
-        const facebook::jsi::Value *args{nullptr};
-        size_t argCount{0};
-        m_jsiWriter->AccessResultAsArgs(args, argCount);
-        handler(jsiRuntimeHolder->Runtime(), args, argCount);
-        m_jsiWriter = nullptr;
-      }
-    } else {
-  */
-  VerifyElseCrash(!m_jsiWriter);
-  folly::dynamic dynValue = m_dynamicWriter->TakeValue();
-  VerifyElseCrash(dynValue.isArray());
-  m_callInvoker->invokeAsync(
-      [handler, dynValue = std::move(dynValue), weakJsiRuntimeHolder = m_jsiRuntimeHolder, self = get_strong()](
-          facebook::jsi::Runtime &runtime) {
-        std::vector<facebook::jsi::Value> args;
-        args.reserve(dynValue.size());
-        for (auto const &item : dynValue) {
-          args.emplace_back(facebook::jsi::valueFromDynamic(runtime, item));
-        }
-        handler(runtime, args.data(), args.size());
-      });
-  //}
+  if (m_threadId == std::this_thread::get_id() && m_fastPath) {
+    VerifyElseCrash(!m_dynamicWriter);
+    if (auto jsiRuntimeHolder = m_jsiRuntimeHolder.lock()) {
+      const facebook::jsi::Value *args{nullptr};
+      size_t argCount{0};
+      m_jsiWriter->AccessResultAsArgs(args, argCount);
+      handler(jsiRuntimeHolder->Runtime(), args, argCount);
+      m_jsiWriter = nullptr;
+    }
+  } else {
+    VerifyElseCrash(!m_jsiWriter);
+    folly::dynamic dynValue = m_dynamicWriter->TakeValue();
+    VerifyElseCrash(dynValue.isArray());
+    m_callInvoker->invokeAsync(
+        [handler, dynValue = std::move(dynValue), weakJsiRuntimeHolder = m_jsiRuntimeHolder, self = get_strong()](
+            facebook::jsi::Runtime &runtime) {
+          std::vector<facebook::jsi::Value> args;
+          args.reserve(dynValue.size());
+          for (auto const &item : dynValue) {
+            args.emplace_back(facebook::jsi::valueFromDynamic(runtime, item));
+          }
+          handler(runtime, args.data(), args.size());
+        });
+  }
 }
 
 void CallInvokerWriter::WriteNull() noexcept {
@@ -112,22 +96,24 @@ void CallInvokerWriter::WriteArrayEnd() noexcept {
 
 IJSValueWriter CallInvokerWriter::GetWriter() noexcept {
   if (!m_writer) {
-    /*
-        if (m_jsDispatcher.HasThreadAccess()) {
-          if (auto jsiRuntimeHolder = m_jsiRuntimeHolder.lock()) {
-            m_jsiWriter = winrt::make_self<JsiWriter>(jsiRuntimeHolder->Runtime());
-            m_writer = m_jsiWriter.as<IJSValueWriter>();
-          } else {
-            m_writer = winrt::make<JSNoopWriter>();
-          }
-        } else {
-         */
-    m_dynamicWriter = winrt::make_self<DynamicWriter>();
-    m_writer = m_dynamicWriter.as<IJSValueWriter>();
-    //}
+    if (m_threadId == std::this_thread::get_id() && m_fastPath) {
+      if (auto jsiRuntimeHolder = m_jsiRuntimeHolder.lock()) {
+        m_jsiWriter = winrt::make_self<JsiWriter>(jsiRuntimeHolder->Runtime());
+        m_writer = m_jsiWriter.as<IJSValueWriter>();
+      } else {
+        m_writer = winrt::make<JSNoopWriter>();
+      }
+    } else {
+      m_dynamicWriter = winrt::make_self<DynamicWriter>();
+      m_writer = m_dynamicWriter.as<IJSValueWriter>();
+    }
   }
-  Debug(VerifyElseCrash(m_dynamicWriter != nullptr /* || m_jsDispatcher.HasThreadAccess()*/));
+  Debug(VerifyElseCrash(m_dynamicWriter != nullptr || (m_threadId == std::this_thread::get_id() && m_fastPath)));
   return m_writer;
+}
+
+void CallInvokerWriter::ExitCurrentCallInvokeScope() noexcept {
+  m_fastPath = false;
 }
 
 //===========================================================================

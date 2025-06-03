@@ -1,8 +1,30 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 13 May 2025 21:05:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:25:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.265
+
+Fri, 30 May 2025 05:25:00 GMT
+
+### Changes
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.123
+- Bump @react-native-windows/fs to v0.0.0-canary.65
+- Bump @react-native-windows/package-utils to v0.0.0-canary.91
+- Bump @react-native-windows/telemetry to v0.0.0-canary.120
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
+
+## 0.0.0-canary.264
+
+Sat, 17 May 2025 05:25:32 GMT
+
+### Changes
+
+- fix(cli): ignore msbuild binglog files (fcalise@gmail.com)
 
 ## 0.0.0-canary.263
 

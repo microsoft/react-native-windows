@@ -62,21 +62,21 @@ using to_ascii_alphabet_upper = to_ascii_alphabet<true>;
 //  and u8 at most 3.
 /*
 template <uint64_t Base, typename Int>
-FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max =
-    detail::to_ascii_powers<Base, Int>::size;
+inline  constexpr size_t to_ascii_size_max =
+  detail::to_ascii_powers<Base, Int>::size;
 */
 //  to_ascii_size_max_decimal
 //
 //  An alias to to_ascii_size_max<10>.
 template <typename Int>
-FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max_decimal;
+inline  constexpr size_t to_ascii_size_max_decimal;
 
 template <>
-FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max_decimal<uint16_t> = 5;
+inline  constexpr size_t to_ascii_size_max_decimal<uint16_t> = 5;
 template <>
-FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max_decimal<uint32_t> = 10;
+inline  constexpr size_t to_ascii_size_max_decimal<uint32_t> = 10;
 template <>
-FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max_decimal<uint64_t> = 20;
+inline  constexpr size_t to_ascii_size_max_decimal<uint64_t> = 20;
 
 
 namespace detail {

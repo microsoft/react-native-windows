@@ -47,25 +47,37 @@ TEST_CLASS (JsiSimpleTurboModuleTests) {
   TEST_METHOD(TestInstanceReload) {
     TestEventService::Initialize();
 
+    std::thread::id jsThreadId{};
+
     auto reactNativeHost =
         TestReactNativeHostHolder(L"JsiSimpleTurboModuleTests", [&](ReactNativeHost const &host) noexcept {
           host.PackageProviders().Append(winrt::make<MyTrivialTurboModulePackageProvider>());
 
           // See that all events are raised in JSDispatcher thread.
           host.InstanceSettings().InstanceCreated(
-              [](IInspectable const & /*sender*/, InstanceCreatedEventArgs const &args) {
+              [&](IInspectable const & /*sender*/, InstanceCreatedEventArgs const &args) {
                 TestEventService::LogEvent("Instance created event", nullptr);
+                // Save this thread as the js thread
+                jsThreadId = std::this_thread::get_id();
+#if !USE_FABRIC
                 TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
+#endif
               });
           host.InstanceSettings().InstanceLoaded(
-              [](IInspectable const & /*sender*/, InstanceLoadedEventArgs const &args) {
+              [&](IInspectable const & /*sender*/, InstanceLoadedEventArgs const &args) {
                 TestEventService::LogEvent("Instance loaded event", nullptr);
+                TestCheck(jsThreadId == std::this_thread::get_id());
+#if !USE_FABRIC
                 TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
+#endif
               });
           host.InstanceSettings().InstanceDestroyed(
               [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const &args) {
                 TestEventService::LogEvent("Instance destroyed event", nullptr);
+                TestCheck(jsThreadId == std::this_thread::get_id());
+#if !USE_FABRIC
                 TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
+#endif
               });
         });
 

@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Fri, 30 May 2025 05:25:03 GMT",
+      "version": "2.3.53",
+      "tag": "@rnw-scripts/just-task_v2.3.53",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "02e7363a430b16c3e7437462be2e9c1558ab3ca6",
+            "comment": "integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.36",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 May 2025 21:05:07 GMT",
       "version": "2.3.52",
       "tag": "@rnw-scripts/just-task_v2.3.52",

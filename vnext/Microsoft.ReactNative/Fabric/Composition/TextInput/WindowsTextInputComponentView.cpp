@@ -10,6 +10,7 @@
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -692,7 +693,7 @@ void WindowsTextInputComponentView::OnPointerPressed(
     float neutralX = m_layoutMetrics.frame.origin.x;
     float neutralY = m_layoutMetrics.frame.origin.y;
 
-    facebook::react::PressEvent pressInArgs;
+    facebook::react::GestureResponderEvent pressInArgs;
     pressInArgs.target = m_tag;
     pressInArgs.pagePoint = {position.X, position.Y};
     pressInArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}
@@ -1482,7 +1483,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
   constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight);
 
-  facebook::react::TextLayoutManager::GetTextLayout(
+  facebook::react::WindowsTextLayoutManager::GetTextLayout(
       facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
 
   return textLayout;

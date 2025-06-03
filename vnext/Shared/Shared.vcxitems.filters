@@ -236,9 +236,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
       <Filter>Source Files\Fabric</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp">
-      <Filter>Source Files\Fabric\platform\react\renderer\textlayoutmanager</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\PortalComponentView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\RootComponentView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UnimplementedNativeViewComponentView.cpp" />
@@ -342,6 +339,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequestParams.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\CallInvoker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatPosix.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatWindows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\WindowsTextLayoutManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
