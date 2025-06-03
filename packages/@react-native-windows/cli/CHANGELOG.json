@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 03 Jun 2025 15:22:28 GMT",
+      "version": "0.78.4",
+      "tag": "@react-native-windows/cli_v0.78.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "eaac996f76d8cd7e32e679eddd3b34be035a5b7f",
+            "comment": "Remove rnw/cli dependency on rnc/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Jun 2025 15:26:28 GMT",
       "version": "0.78.3",
       "tag": "@react-native-windows/cli_v0.78.3",

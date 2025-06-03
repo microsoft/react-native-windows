@@ -23,7 +23,7 @@
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
     "react-native": "0.78.0",
-    "react-native-windows": "0.78.6"
+    "react-native-windows": "0.78.7"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
