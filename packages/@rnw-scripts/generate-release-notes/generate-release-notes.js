@@ -106,15 +106,18 @@ function filterCommitsByDate(commits) {
 }
 
 function categorizeCommits(commits) {
+// TODO: Update logic for commits categorisation, refer 'All Commits' section for all the commits.
   const categories = {
+    'All Commits': [],
     'Breaking Changes': [],
     'New Features': [],
-    Reliability: [],
+    'Reliability': [],
     'New Architecture-specific changes': [],
     Other: [],
   };
 
   const keywords = {
+    'All Commits': [],
     'Breaking Changes': [
       'break',
       'remove',
@@ -125,7 +128,7 @@ function categorizeCommits(commits) {
       'breaking',
     ],
     'New Features': ['feature', 'add', 'introduce', 'support', 'enable'],
-    Reliability: ['fix', 'bug', 'error', 'issue', 'crash', 'fault', 'defect', 'patch'],
+    'Reliability': ['fix', 'bug', 'error', 'issue', 'crash', 'fault', 'defect', 'patch'],
     'New Architecture-specific changes': [
       'implement',
       'new',
@@ -159,6 +162,7 @@ function categorizeCommits(commits) {
       ? 'New Architecture-specific changes'
       : 'Other';
 
+    categories['All Commits'].push(entry);
     categories[category].push(entry);
   }
 
