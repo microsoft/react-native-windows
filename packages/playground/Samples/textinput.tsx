@@ -75,6 +75,9 @@ export default class Bootstrap extends React.Component<{}, any> {
               style={styles.input}
               placeholder={'MultiLine'}
               multiline={true}
+              aria-level={1}
+              aria-posinset={1}
+              aria-setsize={30}
             />
             <TextInput
               style={styles.input}
