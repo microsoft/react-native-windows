@@ -33,7 +33,7 @@
     "prettier": "2.8.8",
     "react": "19.0.0",
     "react-native": "0.80.0-nightly-20250317-fc7385c1e",
-    "react-native-windows": "^0.0.0-canary.963",
+    "react-native-windows": "^0.0.0-canary.964",
     "typescript": "5.0.4"
   },
   "files": [

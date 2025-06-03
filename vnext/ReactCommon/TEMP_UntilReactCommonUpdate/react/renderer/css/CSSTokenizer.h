@@ -137,11 +137,6 @@ class CSSTokenizer {
   constexpr CSSToken consumeNumber() {
     // https://www.w3.org/TR/css-syntax-3/#consume-number
     // https://www.w3.org/TR/css-syntax-3/#convert-a-string-to-a-number
-<<<<<<< Upstream
-
-    auto* b = remainingCharacters_.data();
-    auto* e = b + remainingCharacters_.size();
-=======
     int32_t signPart = 1; // [Windows]
     if (peek() == '+' || peek() == '-') {
       if (peek() == '-') {
@@ -179,7 +174,6 @@ class CSSTokenizer {
         }
         advance();
       }
->>>>>>> Override
 
     float value;
     fast_float::parse_options options{
