@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Mon, 02 Jun 2025 15:26:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 03 Jun 2025 21:29:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.4
+
+Tue, 03 Jun 2025 21:29:03 GMT
+
+### Patches
+
+- Integrate 0.78.2 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.78.3
 
