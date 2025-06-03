@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove rnw/cli dependency on rnc/cli",
+  "packageName": "@react-native-windows/cli",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

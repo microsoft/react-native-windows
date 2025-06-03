@@ -17,14 +17,15 @@ import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 
-import {
+import type {
   Command,
   Config,
   DependencyConfig,
   ProjectConfig,
 } from '@react-native-community/cli-types';
 import {Telemetry, CodedError} from '@react-native-windows/telemetry';
-import {AutoLinkOptions, autolinkOptions} from './autolinkWindowsOptions';
+import type {AutoLinkOptions} from './autolinkWindowsOptions';
+import {autolinkOptions} from './autolinkWindowsOptions';
 
 import {
   newSpinner,
@@ -39,11 +40,11 @@ import {
   startTelemetrySession,
   endTelemetrySession,
 } from '../../utils/telemetryHelpers';
-import {
+import type {
   WindowsDependencyConfig,
   ProjectDependency,
 } from '../config/dependencyConfig';
-import {Project, WindowsProjectConfig} from '../config/projectConfig';
+import type {Project, WindowsProjectConfig} from '../config/projectConfig';
 
 export class AutoLinkWindows {
   private changesNecessary: boolean;
