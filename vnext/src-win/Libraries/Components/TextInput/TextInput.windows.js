@@ -549,7 +549,6 @@ export type TextInputAndroidProps = $ReadOnly<{
   underlineColorAndroid?: ?ColorValue,
 }>;
 
-type TextInputBaseProps = $ReadOnly<{
 // [Windows
 
 type SubmitKeyEvent = $ReadOnly<{|
@@ -609,6 +608,7 @@ type TextInputWindowsProps = $ReadOnly<{|
 
 // Windows]
 
+type TextInputBaseProps = $ReadOnly<{
   /**
    * Can tell `TextInput` to automatically capitalize certain characters.
    *
