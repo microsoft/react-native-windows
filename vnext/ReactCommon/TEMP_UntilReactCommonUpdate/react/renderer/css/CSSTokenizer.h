@@ -10,7 +10,6 @@
 #include <cmath>
 #include <string_view>
 
-#include <fast_float/fast_float.h>
 #include <react/renderer/css/CSSToken.h>
 
 namespace facebook::react {
