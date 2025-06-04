@@ -71,7 +71,6 @@
       <AdditionalIncludeDirectories>
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
-        $(FollyDir)\..\..\fast_float-6.1.4\include;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
