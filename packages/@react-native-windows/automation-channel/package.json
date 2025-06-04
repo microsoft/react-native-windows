@@ -22,7 +22,7 @@
     "jsonrpc-lite": "^2.2.0"
   },
   "devDependencies": {
-    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native-community/cli": "17.0.0",
     "@rnw-scripts/eslint-config": "1.2.36",
     "@rnw-scripts/just-task": "2.3.53",
     "@rnw-scripts/ts-config": "2.0.5",

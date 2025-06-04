@@ -26,17 +26,17 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^29.7.0",
-    "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-android": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-ios": "15.0.0-alpha.2",
+    "@react-native-community/cli": "17.0.0",
+    "@react-native-community/cli-platform-android": "17.0.0",
+    "@react-native-community/cli-platform-ios": "17.0.0",
     "@react-native/assets": "1.0.0",
-    "@react-native/assets-registry": "0.79.0-nightly-20250303-cee63397b",
-    "@react-native/codegen": "0.79.0-nightly-20250303-cee63397b",
-    "@react-native/community-cli-plugin": "0.79.0-nightly-20250303-cee63397b",
-    "@react-native/gradle-plugin": "0.79.0-nightly-20250303-cee63397b",
-    "@react-native/js-polyfills": "0.79.0-nightly-20250303-cee63397b",
-    "@react-native/normalize-colors": "0.79.0-nightly-20250303-cee63397b",
-    "@react-native/virtualized-lists": "0.79.0-nightly-20250303-cee63397b",
+    "@react-native/assets-registry": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/codegen": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/community-cli-plugin": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/gradle-plugin": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/js-polyfills": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/normalize-colors": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/virtualized-lists": "0.80.0-nightly-20250317-fc7385c1e",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "ansi-regex": "^5.0.0",
@@ -72,7 +72,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
-    "@react-native/metro-config": "0.79.0-nightly-20250303-cee63397b",
+    "@react-native/metro-config": "0.80.0-nightly-20250317-fc7385c1e",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.36",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.40",
@@ -95,7 +95,7 @@
   "peerDependencies": {
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
-    "react-native": "0.79.0-nightly-20250303-cee63397b"
+    "react-native": "0.80.0-nightly-20250317-fc7385c1e"
   },
   "beachball": {
     "defaultNpmTag": "canary",
