@@ -145,12 +145,7 @@ class CSSTokenizer {
         fast_float::chars_format::general};
     auto [ptr, ec] = fast_float::from_chars_advanced(b, e, value, options);
 
-    // Do we need to handle any other errors?
-    // bool isOk = ec == std::errc();
-
-    position_ += ptr - b;
     consumeRunningValue();
-
     return {CSSTokenType::Number, value};
   }
 
