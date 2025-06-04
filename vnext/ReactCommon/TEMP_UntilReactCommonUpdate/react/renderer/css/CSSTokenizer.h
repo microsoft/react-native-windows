@@ -174,18 +174,22 @@ class CSSTokenizer {
         advance();
       }
 
+      while (isDigit(peek())) {
+        exponentPart = exponentPart * 10 + (peek() - '0');
+        advance();
+      }
+    }
     float value;
-    fast_float::parse_options options{
-        fast_float::chars_format::general |
-        fast_float::chars_format::allow_leading_plus};
-    auto [ptr, ec] = fast_float::from_chars_advanced(b, e, value, options);
+    if (exponentPart == 0 && fractionalPart == 0) {
+      value = static_cast<float>(signPart * intPart);
+    } else {
+      value = static_cast<float>(
+          signPart *
+          (intPart + (fractionalPart * std::pow(10, -fractionDigits))) *
+          std::pow(10, exponentSign * exponentPart));
+    }
 
-    // Do we need to handle any other errors?
-    // bool isOk = ec == std::errc();
-
-    position_ += ptr - b;
     consumeRunningValue();
-
     return {CSSTokenType::Number, value};
   }
 
