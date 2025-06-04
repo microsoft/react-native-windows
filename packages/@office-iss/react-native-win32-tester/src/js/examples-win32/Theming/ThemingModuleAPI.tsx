@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 const Theming = NativeModules.Theming;
 
-const ifModuleAvailable = (wrappedComponent: JSX.Element) => {
+const ifModuleAvailable = (wrappedComponent: React.JSX.Element) => {
   return Theming ? wrappedComponent : <Text>Theming Native Module not available</Text>;
 };
 
