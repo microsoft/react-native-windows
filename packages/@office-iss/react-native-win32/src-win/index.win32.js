@@ -356,7 +356,9 @@ module.exports = {
   get registerCallableModule(): RegisterCallableModule {
     return require('./Libraries/Core/registerCallableModule').default;
   },
-  get requireNativeComponent(): <T: {...}> {
+  get requireNativeComponent(): <T: {...}>(
+    uiViewClassName: string,
+  ) => HostComponent<T> {
     return require('./Libraries/ReactNative/requireNativeComponent').default;
   },
   get RootTagContext(): RootTagContext {
