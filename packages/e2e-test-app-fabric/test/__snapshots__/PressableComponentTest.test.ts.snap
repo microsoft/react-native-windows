@@ -693,6 +693,13 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
+        "Name": "hover out",
+        "TextRangePattern.GetText": "hover out",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
         "Name": "hover in",
         "TextRangePattern.GetText": "hover in",
       },
@@ -704,6 +711,10 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
       "TestId": "pressable_feedback_events_console",
     },
     "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
       {
         "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
         "_Props": {},
@@ -768,6 +779,18 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 29, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
