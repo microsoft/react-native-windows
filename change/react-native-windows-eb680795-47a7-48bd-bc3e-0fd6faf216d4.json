@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "rc1",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
