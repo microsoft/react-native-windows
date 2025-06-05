@@ -548,7 +548,6 @@ export type TextInputAndroidProps = $ReadOnly<{
   underlineColorAndroid?: ?ColorValue,
 }>;
 
-type TextInputBaseProps = $ReadOnly<{
 // [Windows
 
 type SubmitKeyEvent = $ReadOnly<{|
@@ -574,6 +573,15 @@ type TextInputWindowsProps = $ReadOnly<{|
 |}>;
 
 // Windows]
+
+type TextInputBaseProps = $ReadOnly<{
+  /**
+   * String to be read by screenreaders to indicate an error state. The acceptable parameters
+   * of accessibilityErrorMessage is a string. Setting accessibilityInvalid to true activates
+   * the error message. Setting accessibilityInvalid to false removes the error message.
+   */
+  accessibilityErrorMessage?: ?Stringish,
+  accessibilityInvalid?: ?boolean,
 
   /**
    * Can tell `TextInput` to automatically capitalize certain characters.
