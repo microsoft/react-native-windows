@@ -2096,10 +2096,10 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
-"@react-native-community/template@0.78.0-nightly-2025110-200ade2":
-  version "0.78.0-nightly-2025110-200ade2"
-  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.78.0-nightly-2025110-200ade2.tgz#cd1a2a8a43018b57af180bdd1c8abe7d0af5e47b"
-  integrity sha512-fJLD2X5NPSosyn1cD52D0LgfSxqrHWyEmJep837YbSbcJsur6R6PSlv8ia/Z+3e7KN3LAaegzBaZ1gyZUzVb2w==
+"@react-native-community/template@0.79.0-rc.4-c199d1d":
+  version "0.79.0-rc.4-c199d1d"
+  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.79.0-rc.4-c199d1d.tgz#8d2d39ccb56cb43e430995cc7356ccc2f686d404"
+  integrity sha512-7aiFiEH7WndyRfh0dxCje0n4/O9m96GPjcN4DjCZvF7/0Vr3qSpKwaLJhKQdD/ByEMKXDpbqf4M7I9Xl5dn55Q==
 
 "@react-native-picker/picker@^2.5.1":
   version "2.11.0"
@@ -2222,14 +2222,14 @@
     serve-static "^1.16.2"
     ws "^6.2.3"
 
-"@react-native/eslint-config@0.79.0-nightly-20250123-d1028885e":
-  version "0.79.0-nightly-20250123-d1028885e"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.79.0-nightly-20250123-d1028885e.tgz#a4c538e720e9474a7cabdca8d93a266006f53de0"
-  integrity sha512-iVAyq5j7FfxY0fhQnAnpA6rjjLW0gG33cS58Qf6vAl0Vfh9XIC9vM9eoUgBZyUHzdvF6BQztgcmpg/DCOS4vdA==
+"@react-native/eslint-config@0.79.0-rc.4":
+  version "0.79.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.79.0-rc.4.tgz#de30e8e809c66afd84a363c8ad883df2acf3821c"
+  integrity sha512-G0GNpgGeR0tKQ2DF0W5a4vPcGqPrVJzJ25XBNGH+bPqCbSEr/xnu65tS+13yUUqIxouIqL+GToKtvo7xKz79+A==
   dependencies:
     "@babel/core" "^7.25.2"
     "@babel/eslint-parser" "^7.25.1"
-    "@react-native/eslint-plugin" "0.79.0-nightly-20250123-d1028885e"
+    "@react-native/eslint-plugin" "0.79.0-rc.4"
     "@typescript-eslint/eslint-plugin" "^7.1.1"
     "@typescript-eslint/parser" "^7.1.1"
     eslint-config-prettier "^8.5.0"
@@ -2240,10 +2240,10 @@
     eslint-plugin-react-hooks "^4.6.0"
     eslint-plugin-react-native "^4.0.0"
 
-"@react-native/eslint-plugin@0.79.0-nightly-20250123-d1028885e":
-  version "0.79.0-nightly-20250123-d1028885e"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.79.0-nightly-20250123-d1028885e.tgz#7983608a83b724ab2f31d2e84e67fb5f9a7ad3b1"
-  integrity sha512-vYrjxRh3wvL9MmmmsO52keyONK8O7CqayB1gvgSf/EeptcnnCpd0YdJ06NU54aB3zh6p+k4vkxHliNFqpBTFBg==
+"@react-native/eslint-plugin@0.79.0-rc.4":
+  version "0.79.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.79.0-rc.4.tgz#190276be2c44223e6a28b5b081984c451a9421be"
+  integrity sha512-pfJgJpy/A8/8P1tWGHn7IyDFjvTjs46Ev7H2JTZl/wS8njaM1f2mWPfaCf7xpa0d9UUOiWkbP+n2QPtFffpIYw==
 
 "@react-native/gradle-plugin@0.79.0-rc.4":
   version "0.79.0-rc.4"
