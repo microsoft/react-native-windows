@@ -279,47 +279,8 @@ void ParagraphComponentView::DrawText() noexcept {
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(
           viewProps()->backgroundColor ? theme()->D2DColor(*viewProps()->backgroundColor)
-                                       : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-
-      const auto &props = paragraphProps();
+                                       : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));      const auto &props = paragraphProps();
       if (m_textLayout) {
-        DWRITE_TEXT_METRICS metrics;
-        winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
-
-        float maxWidth =
-            m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left - m_layoutMetrics.contentInsets.right;
-
-        if (metrics.width > maxWidth) {
-          m_textLayout->SetMaxWidth(maxWidth);
-        }
-
-        // Apply DWRITE_TRIMMING for ellipsizeMode
-        DWRITE_TRIMMING trimming = {};
-        winrt::com_ptr<IDWriteInlineObject> ellipsisSign;
-
-        switch (props.paragraphAttributes.ellipsizeMode) {
-          case facebook::react::EllipsizeMode::Tail:
-            trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
-            break;
-          case facebook::react::EllipsizeMode::Clip:
-            trimming.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
-            break;
-          default:
-            trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER; // Default to tail behavior
-            break;
-        }
-
-        // Use IDWriteFactory to create the ellipsis trimming sign
-        winrt::com_ptr<IDWriteFactory> dwriteFactory;
-        HRESULT hr = DWriteCreateFactory(
-            DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(dwriteFactory.put()));
-        if (SUCCEEDED(hr)) {
-          hr = dwriteFactory->CreateEllipsisTrimmingSign(m_textLayout.get(), ellipsisSign.put());
-          if (SUCCEEDED(hr)) {
-            m_textLayout->SetTrimming(&trimming, ellipsisSign.get());
-          }
-        }
-
         RenderText(
             *d2dDeviceContext,
             *m_textLayout,
