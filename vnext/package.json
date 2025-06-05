@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "@react-native-windows/codegen": "0.79.0-preview.1",
-    "@react-native/metro-config": "0.79.0-rc.1",
+    "@react-native/metro-config": "0.79.0-rc.0",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.36",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.40",
