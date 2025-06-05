@@ -265,10 +265,6 @@ module.exports = {
   get Dimensions(): Dimensions {
     return require('./Libraries/Utilities/Dimensions').default;
   },
-  get DynamicColorIOS() {
-    return require('./Libraries/StyleSheet/PlatformColorValueTypesIOS')
-      .DynamicColorIOS;
-  },
   get Easing() {
     return require('./Libraries/Animated/Easing').default;
   },
@@ -296,18 +292,12 @@ module.exports = {
   get LogBox(): LogBox {
     return require('./Libraries/LogBox/LogBox').default;
   },
-  get NativeAppEventEmitter() {
-    return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter').default;
-  },
   get NativeDialogManagerAndroid() {
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')
       .default;
   },
   get NativeEventEmitter(): NativeEventEmitter {
     return require('./Libraries/EventEmitter/NativeEventEmitter').default;
-  },
-  get NativeModules() {
-    return require('./Libraries/BatchedBridge/NativeModules').default;
   },
   get Networking() {
     return require('./Libraries/Network/RCTNetworking').default;
@@ -321,13 +311,6 @@ module.exports = {
   get PixelRatio(): PixelRatio {
     return require('./Libraries/Utilities/PixelRatio').default;
   },
-  get Platform() {
-    return require('./Libraries/Utilities/Platform').default;
-  },
-  get PlatformColor() {
-    return require('./Libraries/StyleSheet/PlatformColorValueTypes')
-      .PlatformColor;
-  },
   get PushNotificationIOS() {
     warnOnce(
       'pushNotificationIOS-moved',
@@ -338,17 +321,8 @@ module.exports = {
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS')
       .default;
   },
-  get processColor() {
-    return require('./Libraries/StyleSheet/processColor').default;
-  },
   get registerCallableModule() {
     return require('./Libraries/Core/registerCallableModule').default;
-  },
-  get requireNativeComponent() {
-    return require('./Libraries/ReactNative/requireNativeComponent').default;
-  },
-  get RootTagContext() {
-    return require('./Libraries/ReactNative/RootTag').RootTagContext;
   },
   get Settings() {
     return require('./Libraries/Settings/Settings').default;
