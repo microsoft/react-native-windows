@@ -102,9 +102,7 @@ import typeof Platform from './Libraries/Utilities/Platform';
 import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
-import typeof DevMenuimportimport { codegenNativeComponent } from '../types';
- { codegenNativeCommands } from '../types';
- from './src/private/devmenu/DevMenu';
+import typeof DevMenu from './src/private/devmenu/DevMenu';
 
 export type {HostComponent, HostInstance};
 // Windows]]

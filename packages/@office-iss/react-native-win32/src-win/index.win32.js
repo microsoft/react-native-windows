@@ -286,6 +286,9 @@ module.exports = {
   get findNodeHandle(): $PropertyType<ReactNative, 'findNodeHandle'> {
     return require('./Libraries/ReactNative/RendererProxy').findNodeHandle;
   },
+  get FocusManager(): FocusManager {
+    return require('./Libraries/Utilities/FocusManager').default;
+  },
   get I18nManager(): I18nManager {
     return require('./Libraries/ReactNative/I18nManager').default;
   },
@@ -346,6 +349,7 @@ module.exports = {
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS')
       .default;
   },
+  // $FlowFixMe[value-as-type]
   get processColor(): processColor {
     return require('./Libraries/StyleSheet/processColor').default;
   },
