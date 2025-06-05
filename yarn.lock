@@ -2344,16 +2344,6 @@
     hermes-parser "0.25.1"
     nullthrows "^1.1.1"
 
-"@react-native/metro-babel-transformer@0.79.0-rc.1":
-  version "0.79.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@react-native/metro-babel-transformer/-/metro-babel-transformer-0.79.0-rc.1.tgz#a3b67d4baa9e21a90ea2a2233f43dea331075e98"
-  integrity sha512-M8i+48S4u08kvr1gAEKkTeLqBIBa/RqXlIVUPZ/QUKos8mocPYrMNPxTmSNf9klGKePkh8qr3x7c8kRD0yqOfw==
-  dependencies:
-    "@babel/core" "^7.25.2"
-    "@react-native/babel-preset" "0.79.0-rc.1"
-    hermes-parser "0.25.1"
-    nullthrows "^1.1.1"
-
 "@react-native/metro-config@0.79.0-rc.0":
   version "0.79.0-rc.0"
   resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.79.0-rc.0.tgz#0f9e73876896246737ffacdf3a6a676bc1803542"
