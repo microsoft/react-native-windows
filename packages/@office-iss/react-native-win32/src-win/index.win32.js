@@ -255,10 +255,10 @@ module.exports = {
     );
     return require('./Libraries/Components/Clipboard/Clipboard').default;
   },
-  get codegenNativeCommands(): codegenNativeCommands {
+  get codegenNativeCommands(): codegenNativeCommands<any> {
     return require('./Libraries/Utilities/codegenNativeCommands').default;
   },
-  get codegenNativeComponent(): codegenNativeComponent {
+  get codegenNativeComponent(): codegenNativeComponent<any> {
     return require('./Libraries/Utilities/codegenNativeComponent').default;
   },
   get DeviceEventEmitter(): RCTDeviceEventEmitter {
@@ -353,7 +353,7 @@ module.exports = {
   get processColor(): processColor {
     return require('./Libraries/StyleSheet/processColor').default;
   },
-  get registerCallableModule(): RegisterCallableModule {
+  get registerCallableModule(): registerCallableModule {
     return require('./Libraries/Core/registerCallableModule').default;
   },
   get requireNativeComponent(): <T: {...}>(

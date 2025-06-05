@@ -23,13 +23,10 @@ import type {
   ____ViewStyleProp_Internal,
 } from './StyleSheetTypes';
 
-import composeStyles from '../../src/private/styles/composeStyles';
-import flatten from './flattenStyle';
-
-const ReactNativeStyleAttributes =
-  require('../Components/View/ReactNativeStyleAttributes').default;
-const PixelRatio = require('../Utilities/PixelRatio').default;
 const Platform = require('../Utilities/Platform').default; // [Win32]
+const StyleSheet: StyleSheetExports = (
+  require('./StyleSheetExports') as $FlowFixMe
+).default;
 
 export type {NativeColorValue} from './StyleSheetTypes';
 
