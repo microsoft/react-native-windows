@@ -279,7 +279,8 @@ void ParagraphComponentView::DrawText() noexcept {
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(
           viewProps()->backgroundColor ? theme()->D2DColor(*viewProps()->backgroundColor)
-                                       : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));      const auto &props = paragraphProps();
+                                       : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+      const auto &props = paragraphProps();
       if (m_textLayout) {
         RenderText(
             *d2dDeviceContext,

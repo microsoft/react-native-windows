@@ -172,7 +172,7 @@ void WindowsTextLayoutManager::GetTextLayout(
   // Apply max width constraint and ellipsis trimming to ensure consistency with rendering
   DWRITE_TEXT_METRICS metrics;
   winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-  
+
   if (metrics.width > size.width) {
     spTextLayout->SetMaxWidth(size.width);
   }
