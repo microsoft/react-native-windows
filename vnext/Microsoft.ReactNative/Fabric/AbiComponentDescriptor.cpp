@@ -89,12 +89,6 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
     return ShadowNodeT::defaultSharedProps();
   }
 
-  if constexpr (std::is_base_of_v<facebook::react::YogaLayoutableShadowNode, ShadowNodeT>) {
-    if (facebook::react::ReactNativeFeatureFlags::excludeYogaFromRawProps()) {
-      rawProps.filterYogaStylePropsInDynamicConversion();
-    }
-  }
-
   rawProps.parse(rawPropsParser_);
 
   // Call old-style constructor

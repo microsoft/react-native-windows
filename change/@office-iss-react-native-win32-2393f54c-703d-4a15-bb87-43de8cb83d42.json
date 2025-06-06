@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": ":Solved override issues for Integration 0.80.0-nightly-20250317-fc7385c1e",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "none"
+}

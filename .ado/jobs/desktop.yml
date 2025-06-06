@@ -305,6 +305,7 @@ jobs:
 
                     # Bundler
                     Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
+                continueOnError: true
 
               - task: VSTest@2
                 displayName: Run Desktop Integration Tests

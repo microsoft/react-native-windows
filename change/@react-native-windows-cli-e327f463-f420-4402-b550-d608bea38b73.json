@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 3/17",
+  "packageName": "@react-native-windows/cli",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
