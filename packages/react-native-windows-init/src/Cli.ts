@@ -303,7 +303,7 @@ function installReactNativeWindows(
     const newSteps =
       'Please see https://microsoft.github.io/react-native-windows/docs/getting-started for the latest method for adding RNW to your project.';
     if (
-      parsedVersion.minor > 75 ||
+      parsedVersion.minor > 79 ||
       (parsedVersion.minor === 0 &&
         parsedVersion.prerelease.length > 1 &&
         parsedVersion.prerelease[0] === 'canary' &&
@@ -313,13 +313,13 @@ function installReactNativeWindows(
       // Full-stop, you can't use the command anymore.
       throw new CodedError(
         'UnsupportedReactNativeVersion',
-        `react-native-windows-init only supports react-native-windows <= 0.75. ${newSteps}`,
+        `react-native-windows-init only supports react-native-windows <= 0.79. ${newSteps}`,
       );
-    } else if (parsedVersion.minor === 75) {
+    } else if (parsedVersion.minor === 79) {
       // You can use the command for now, but it will be deprecated soon.
       console.warn(
         chalk.yellow(
-          `Warning: react-native-windows-init will be deprecated for RNW > 0.75. ${newSteps}`,
+          `Warning: react-native-windows-init will be deprecated for RNW > 0.79. ${newSteps}`,
         ),
       );
     }
