@@ -66,7 +66,7 @@ void ParagraphComponentView::updateProps(
   if (oldViewProps.paragraphAttributes.ellipsizeMode != newViewProps.paragraphAttributes.ellipsizeMode) {
     m_textLayout = nullptr;
   }
-  
+
   if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
     m_requireRedraw = true;
   }
