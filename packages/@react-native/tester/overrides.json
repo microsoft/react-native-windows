@@ -658,6 +658,20 @@
       "baseFile": "packages/rn-tester/package.json",
       "baseHash": "e30b0f85845127e6de68e618be83e69bf210596f",
       "issue": 13228
+    },
+    {
+      "type": "copy",
+      "file": "ReportFullyDrawnView/ReportFullyDrawnView.js",
+      "baseFile": "packages/rn-tester/ReportFullyDrawnView/ReportFullyDrawnView.js",
+      "baseHash": "2f2b868b9b4870303f8665e55293cce4ed6b8d3f",
+      "issue": 0
+    },
+    {
+      "type": "copy",
+      "file": "ReportFullyDrawnView/ReportFullyDrawnViewNativeComponent.js",
+      "baseFile": "packages/rn-tester/ReportFullyDrawnView/ReportFullyDrawnViewNativeComponent.js",
+      "baseHash": "6bf9a8a646111c9613a511281686d8cec6c964ca",
+      "issue": 0
     }
   ]
 }
