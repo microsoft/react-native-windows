@@ -319,7 +319,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
         if (m_outer->windowsTextInputProps().textAttributes.foregroundColor)
           return (*m_outer->windowsTextInputProps().textAttributes.foregroundColor).AsColorRefNoAlpha();
         // cr = 0x000000FF;
-        break;      case COLOR_WINDOW:
+        break;
+      case COLOR_WINDOW:
         if (m_outer->viewProps()->backgroundColor)
           return (*m_outer->viewProps()->backgroundColor).AsColorRefNoAlpha();
         break;
