@@ -99,6 +99,39 @@ void TextLayoutManager::GetTextLayout(
       layoutConstraints.maximumSize.height, // The height of the layout box.
       spTextLayout.put() // The IDWriteTextLayout interface pointer.
       ));
+      
+  // Apply max width constraint and ellipsis trimming to ensure consistency with rendering
+  DWRITE_TEXT_METRICS metrics;
+  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
+
+  if (metrics.width > size.width) {
+    spTextLayout->SetMaxWidth(size.width);
+  }
+
+  // Apply DWRITE_TRIMMING for ellipsizeMode
+  DWRITE_TRIMMING trimming = {};
+  winrt::com_ptr<IDWriteInlineObject> ellipsisSign;
+
+  switch (paragraphAttributes.ellipsizeMode) {
+    case facebook::react::EllipsizeMode::Tail:
+      trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
+      break;
+    case facebook::react::EllipsizeMode::Clip:
+      trimming.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
+      break;
+    default:
+      trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER; // Default to tail behavior
+      break;
+  }
+
+  // Use DWriteFactory to create the ellipsis trimming sign
+  if (trimming.granularity != DWRITE_TRIMMING_GRANULARITY_NONE) {
+    auto dwriteFactory = Microsoft::ReactNative::DWriteFactory();
+    HRESULT hr = dwriteFactory->CreateEllipsisTrimmingSign(spTextLayout.get(), ellipsisSign.put());
+    if (SUCCEEDED(hr)) {
+      spTextLayout->SetTrimming(&trimming, ellipsisSign.get());
+    }
+  }
 
   unsigned int position = 0;
   unsigned int length = 0;
