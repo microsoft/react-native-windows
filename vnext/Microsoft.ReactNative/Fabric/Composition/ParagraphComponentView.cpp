@@ -281,17 +281,15 @@ void ParagraphComponentView::DrawText() noexcept {
           viewProps()->backgroundColor ? theme()->D2DColor(*viewProps()->backgroundColor)
                                        : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
       const auto &props = paragraphProps();
-      if (m_textLayout) {
-        RenderText(
-            *d2dDeviceContext,
-            *m_textLayout,
-            m_attributedStringBox.getValue(),
-            props.textAttributes,
-            {static_cast<float>(offset.x) + m_layoutMetrics.contentInsets.left,
-             static_cast<float>(offset.y) + m_layoutMetrics.contentInsets.top},
-            m_layoutMetrics.pointScaleFactor,
-            *theme());
-      }
+      RenderText(
+          *d2dDeviceContext,
+          *m_textLayout,
+          m_attributedStringBox.getValue(),
+          props.textAttributes,
+          {static_cast<float>(offset.x) + m_layoutMetrics.contentInsets.left,
+           static_cast<float>(offset.y) + m_layoutMetrics.contentInsets.top},
+          m_layoutMetrics.pointScaleFactor,
+          *theme());
 
       if (!isnan(props.opacity)) {
         Visual().Opacity(props.opacity);
