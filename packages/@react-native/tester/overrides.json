@@ -528,6 +528,13 @@
     },
     {
       "type": "copy",
+      "file": "js/examples/Urls/UrlExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Urls/UrlExample.js",
+      "baseHash": "2dc9c4108dc6983696bd0fcdf619d653f99545e6",
+      "issue": 0
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/Vibration",
       "baseDirectory": "packages/rn-tester/js/examples/Vibration",
       "baseHash": "5c89e2a3bd6ea56a5220e26aa2bf8e8efc70af69",
