@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 03 Jun 2025 19:26:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 06 Jun 2025 20:46:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.0-preview.2
+
+Fri, 06 Jun 2025 20:46:48 GMT
+
+### Changes
+
+- integrate rn 0.79.0-rc4 (tatianakapos@microsoft.com)
+- Fix blob module in paper (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.79.0-preview.1
 

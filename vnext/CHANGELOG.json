@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 06 Jun 2025 20:46:48 GMT",
+      "version": "0.79.0-preview.2",
+      "tag": "react-native-windows_v0.79.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6975f8a65ef8b440fde45e43e9bead6c16fd347a",
+            "comment": "integrate rn 0.79.0-rc4"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "790495ef2834251238da978ab3b4a120d4eed7ca",
+            "comment": "Fix blob module in paper"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Jun 2025 19:26:31 GMT",
       "version": "0.79.0-preview.1",
       "tag": "react-native-windows_v0.79.0-preview.1",

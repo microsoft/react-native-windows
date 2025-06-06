@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix blob module in paper",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
