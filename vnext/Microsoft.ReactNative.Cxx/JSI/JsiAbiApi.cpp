@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "JsiAbiApi.h"
 #include <utility>
+#include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "winrt/Windows.Foundation.Collections.h"
 
@@ -13,6 +14,16 @@ using namespace facebook::jsi;
 #pragma warning(disable : 4702) // `RethrowJsiError(); throw;` triggers 'unreachable code' warnings in Release builds
 
 namespace winrt::Microsoft::ReactNative {
+
+namespace Details {
+// Try to get JSI Runtime for the ReactContext
+// If it is not found, then create it based on context JSI runtime and store it in the context.Properties().
+// The function returns nullptr if the current context does not have JSI runtime.
+// It makes sure that the JSI runtime holder is removed when the instance is unloaded.
+JsiAbiRuntime *TryGetOrCreateContextRuntime(
+    winrt::Microsoft::ReactNative::ReactContext const &context,
+    JsiRuntime const &runtimeHandle) noexcept;
+} // namespace Details
 
 // The macro to simplify recording JSI exceptions.
 // It looks strange to keep the normal structure of the try/catch in code.
@@ -133,6 +144,52 @@ std::shared_ptr<facebook::jsi::HostObject> const &JsiHostObjectWrapper::HostObje
 }
 
 //===========================================================================
+// JsiHostObjectGetOrCreateWrapper implementation
+//===========================================================================
+
+JsiHostObjectGetOrCreateWrapper::JsiHostObjectGetOrCreateWrapper(
+    const winrt::Microsoft::ReactNative::IReactContext &context,
+    std::shared_ptr<HostObject> &&hostObject) noexcept
+    : m_hostObject(std::move(hostObject)), m_context(context) {}
+
+JsiValueRef JsiHostObjectGetOrCreateWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
+  JsiAbiRuntime *rt{Details::TryGetOrCreateContextRuntime(m_context, runtime)};
+  JsiAbiRuntime::PropNameIDRef nameRef{name};
+  return JsiAbiRuntime::DetachJsiValueRef(m_hostObject->get(*rt, nameRef));
+} catch (JSI_RUNTIME_SET_ERROR(runtime)) {
+  throw;
+}
+
+void JsiHostObjectGetOrCreateWrapper::SetProperty(
+    JsiRuntime const &runtime,
+    JsiPropertyIdRef const &name,
+    JsiValueRef const &value) try {
+  JsiAbiRuntime *rt{Details::TryGetOrCreateContextRuntime(m_context, runtime)};
+  m_hostObject->set(*rt, JsiAbiRuntime::PropNameIDRef{name}, JsiAbiRuntime::ValueRef(value));
+} catch (JSI_RUNTIME_SET_ERROR(runtime)) {
+  throw;
+}
+
+winrt::Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectGetOrCreateWrapper::GetPropertyIds(
+    JsiRuntime const &runtime) try {
+  JsiAbiRuntime *rt{Details::TryGetOrCreateContextRuntime(m_context, runtime)};
+  auto names = m_hostObject->getPropertyNames(*rt);
+  std::vector<JsiPropertyIdRef> result;
+  result.reserve(names.size());
+  for (auto &name : names) {
+    result.push_back(JsiAbiRuntime::DetachJsiPropertyIdRef(std::move(name)));
+  }
+
+  return winrt::single_threaded_vector<JsiPropertyIdRef>(std::move(result));
+} catch (JSI_RUNTIME_SET_ERROR(runtime)) {
+  throw;
+}
+
+std::shared_ptr<facebook::jsi::HostObject> const &JsiHostObjectGetOrCreateWrapper::HostObjectSharedPtr() noexcept {
+  return m_hostObject;
+}
+
+//===========================================================================
 // JsiHostFunctionWrapper implementation
 //===========================================================================
 
@@ -162,38 +219,41 @@ JsiValueRef JsiHostFunctionWrapper::operator()(
 // JsiAbiRuntime implementation
 //===========================================================================
 
-// The tls_jsiAbiRuntimeMap map allows us to associate JsiAbiRuntime with JsiRuntime.
-// The association is thread-specific and DLL-specific.
-// It is thread specific because we want to have the safe access only in JS thread.
-// It is DLL-specific because JsiAbiRuntime is not ABI-safe and each module DLL will
-// have their own JsiAbiRuntime instance.
-static thread_local std::map<void *, JsiAbiRuntime *> *tls_jsiAbiRuntimeMap{nullptr};
+// The s_jsiAbiRuntimeMap map allows us to associate JsiAbiRuntime with JsiRuntime.
+// The association is DLL-specific because JsiAbiRuntime is not ABI-safe and each module DLL will have their own
+// JsiAbiRuntime instance.
+static std::map<void *, JsiAbiRuntime *> *s_jsiAbiRuntimeMap{nullptr};
+static std::recursive_mutex s_jsiRuntimeMapMutex;
 
 JsiAbiRuntime::JsiAbiRuntime(JsiRuntime const &runtime) noexcept : m_runtime{runtime} {
   VerifyElseCrashSz(runtime, "JSI runtime is null");
-  VerifyElseCrashSz(
-      GetFromJsiRuntime(runtime) == nullptr,
-      "We can have only one instance of JsiAbiRuntime for JsiRuntime in the thread.");
-  if (!tls_jsiAbiRuntimeMap) {
-    tls_jsiAbiRuntimeMap = new std::map<void *, JsiAbiRuntime *>();
+
+  {
+    std::lock_guard<std::recursive_mutex> guard(s_jsiRuntimeMapMutex);
+    VerifyElseCrashSz(
+        GetFromJsiRuntime(runtime) == nullptr, "We can have only one instance of JsiAbiRuntime for a JsiRuntime.");
+
+    if (!s_jsiAbiRuntimeMap) {
+      s_jsiAbiRuntimeMap = new std::map<void *, JsiAbiRuntime *>();
+    }
+    s_jsiAbiRuntimeMap->try_emplace(get_abi(runtime), this);
   }
-  tls_jsiAbiRuntimeMap->try_emplace(get_abi(runtime), this);
 }
 
 JsiAbiRuntime::~JsiAbiRuntime() {
-  VerifyElseCrashSz(
-      GetFromJsiRuntime(m_runtime) != nullptr, "JsiAbiRuntime must be called in the same thread where it was created.");
-  tls_jsiAbiRuntimeMap->erase(get_abi(m_runtime));
-  if (tls_jsiAbiRuntimeMap->empty()) {
-    delete tls_jsiAbiRuntimeMap;
-    tls_jsiAbiRuntimeMap = nullptr;
+  std::lock_guard<std::recursive_mutex> guard(s_jsiRuntimeMapMutex);
+  s_jsiAbiRuntimeMap->erase(get_abi(m_runtime));
+  if (s_jsiAbiRuntimeMap->empty()) {
+    delete s_jsiAbiRuntimeMap;
+    s_jsiAbiRuntimeMap = nullptr;
   }
 }
 
 /*static*/ JsiAbiRuntime *JsiAbiRuntime::GetFromJsiRuntime(JsiRuntime const &runtime) noexcept {
-  if (tls_jsiAbiRuntimeMap && runtime) {
-    auto it = tls_jsiAbiRuntimeMap->find(get_abi(runtime));
-    if (it != tls_jsiAbiRuntimeMap->end()) {
+  std::lock_guard<std::recursive_mutex> guard(s_jsiRuntimeMapMutex);
+  if (s_jsiAbiRuntimeMap && runtime) {
+    auto it = s_jsiAbiRuntimeMap->find(get_abi(runtime));
+    if (it != s_jsiAbiRuntimeMap->end()) {
       return it->second;
     }
   }
@@ -228,6 +288,13 @@ Value JsiAbiRuntime::evaluatePreparedJavaScript(const std::shared_ptr<const Prep
 
 bool JsiAbiRuntime::drainMicrotasks(int maxMicrotasksHint) try {
   return m_runtime.DrainMicrotasks(maxMicrotasksHint);
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+void JsiAbiRuntime::queueMicrotask(const facebook::jsi::Function &callback) try {
+  return m_runtime.QueueMicrotask(AsJsiObjectRef(callback));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -956,7 +1023,7 @@ JsiAbiRuntime::DataPointerValue::DataPointerValue(winrt::weak_ref<JsiRuntime> &&
 
 JsiAbiRuntime::DataPointerValue::DataPointerValue(uint64_t data) noexcept : m_data{data} {}
 
-void JsiAbiRuntime::DataPointerValue::invalidate() {}
+void JsiAbiRuntime::DataPointerValue::invalidate() noexcept {}
 
 //===========================================================================
 // JsiAbiRuntime::SymbolPointerValue implementation
@@ -967,7 +1034,7 @@ JsiAbiRuntime::SymbolPointerValue::SymbolPointerValue(
     JsiSymbolRef &&symbol) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(symbol.Data, 0)} {}
 
-void JsiAbiRuntime::SymbolPointerValue::invalidate() {
+void JsiAbiRuntime::SymbolPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -993,7 +1060,7 @@ JsiAbiRuntime::BigIntPointerValue::BigIntPointerValue(
     JsiBigIntRef &&bigInt) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(bigInt.Data, 0)} {}
 
-void JsiAbiRuntime::BigIntPointerValue::invalidate() {
+void JsiAbiRuntime::BigIntPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -1019,7 +1086,7 @@ JsiAbiRuntime::StringPointerValue::StringPointerValue(
     JsiStringRef &&str) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(str.Data, 0)} {}
 
-void JsiAbiRuntime::StringPointerValue::invalidate() {
+void JsiAbiRuntime::StringPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -1047,7 +1114,7 @@ JsiAbiRuntime::ObjectPointerValue::ObjectPointerValue(
     JsiObjectRef &&obj) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(obj.Data, 0)} {}
 
-void JsiAbiRuntime::ObjectPointerValue::invalidate() {
+void JsiAbiRuntime::ObjectPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;
@@ -1075,7 +1142,7 @@ JsiAbiRuntime::PropNameIDPointerValue::PropNameIDPointerValue(
     JsiPropertyIdRef &&propertyId) noexcept
     : DataPointerValue{std::move(weakRuntime), std::exchange(propertyId.Data, 0)} {}
 
-void JsiAbiRuntime::PropNameIDPointerValue::invalidate() {
+void JsiAbiRuntime::PropNameIDPointerValue::invalidate() noexcept {
   if (m_data) {
     if (auto runtime = m_weakRuntime.get()) {
       m_weakRuntime = nullptr;

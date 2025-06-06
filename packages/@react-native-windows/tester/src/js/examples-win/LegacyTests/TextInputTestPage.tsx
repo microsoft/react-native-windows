@@ -62,6 +62,8 @@ export class TextInputTestPage extends React.Component<
           style={{height: 80}}
           placeholder="MultiLine"
           multiline={true}
+          spellCheck={false}
+          autoCorrect={false}
         />
         <TextInput
           testID="auto-caps-textinput-field"
@@ -82,7 +84,7 @@ export const title = 'LegacyTextInputTest';
 export const description = 'Legacy e2e test for TextInput';
 export const examples = [
   {
-    render: function (): JSX.Element {
+    render: function () {
       return <TextInputTestPage />;
     },
   },

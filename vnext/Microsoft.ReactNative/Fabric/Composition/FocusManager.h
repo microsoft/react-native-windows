@@ -21,11 +21,19 @@ struct LostFocusEventArgs
 
 struct GotFocusEventArgs
     : winrt::implements<GotFocusEventArgs, winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> {
-  GotFocusEventArgs(const winrt::Microsoft::ReactNative::ComponentView &originalSource);
+  GotFocusEventArgs(
+      const winrt::Microsoft::ReactNative::ComponentView &originalSource,
+      winrt::Microsoft::ReactNative::FocusNavigationDirection direction);
   int32_t OriginalSource() noexcept;
+
+  winrt::Microsoft::ReactNative::FocusNavigationDirection Direction() const noexcept {
+    return m_direction;
+  }
 
  private:
   const int32_t m_originalSource;
+  winrt::Microsoft::ReactNative::FocusNavigationDirection m_direction{
+      winrt::Microsoft::ReactNative::FocusNavigationDirection::None};
 };
 
 struct LosingFocusEventArgs

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "IReactModuleBuilder.h"
+#include <IReactContext.h>
 #include <strsafe.h>
 #include "DynamicWriter.h"
 #include "ReactHost/MsoUtils.h"
@@ -72,6 +73,10 @@ ReactModuleBuilder::ReactModuleBuilder(IReactContext const &reactContext) noexce
 
 void ReactModuleBuilder::AddInitializer(InitializerDelegate const &initializer) noexcept {
   m_initializers.push_back(initializer);
+}
+
+void ReactModuleBuilder::AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept {
+  m_jsiinitializers.push_back(initializer);
 }
 
 void ReactModuleBuilder::AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
@@ -154,6 +159,13 @@ std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
     IInspectable const &nativeModule) noexcept {
   for (auto &initializer : m_initializers) {
     initializer(m_reactContext);
+  }
+  for (auto &initializer : m_jsiinitializers) {
+    initializer(
+        m_reactContext,
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
+            ->GetInner()
+            .JsiRuntime());
   }
   return std::make_unique<ABICxxModule>(
       nativeModule, Mso::Copy(name), Mso::Copy(m_constantProviders), Mso::Copy(m_methods));

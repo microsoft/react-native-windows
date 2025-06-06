@@ -14,7 +14,6 @@
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
-#include "Utils/BatchingEventEmitter.h"
 
 namespace winrt {
 using namespace Windows::UI;
@@ -57,6 +56,9 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   void onPointerMoved(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerExited(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onPointerWheelChanged(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
@@ -96,6 +98,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers,
       std::function<void(std::vector<winrt::Microsoft::ReactNative::ComponentView> &)> handler);
+  void ClearAllHoveredForPointer(const facebook::react::PointerEvent &pointerEvent) noexcept;
 
   struct ActiveTouch {
     facebook::react::Touch touch;
@@ -169,6 +172,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   winrt::event_token m_pointerMovedToken;
   winrt::event_token m_pointerWheelChangedToken;
   winrt::event_token m_pointerCaptureLostToken;
+  winrt::event_token m_pointerExitedToken;
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;
   winrt::event_token m_characterReceivedToken;

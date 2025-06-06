@@ -33,16 +33,16 @@ parameters:
             BuildPlatform: x86
             BuildConfiguration: Release
             DeployOptions:
-          - Name: X64ReleaseChakra
-            BuildPlatform: x64
-            BuildConfiguration: Release
-            DeployOptions:
-            UseChakra: true
-          - Name: X86ReleaseChakra
-            BuildPlatform: x86
-            BuildConfiguration: Release
-            DeployOptions:
-            UseChakra: true
+          # - Name: X64ReleaseChakra
+          #   BuildPlatform: x64
+          #   BuildConfiguration: Release
+          #   DeployOptions:
+          #   UseChakra: true
+          # - Name: X86ReleaseChakra
+          #   BuildPlatform: x86
+          #   BuildConfiguration: Release
+          #   DeployOptions:
+          #   UseChakra: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug

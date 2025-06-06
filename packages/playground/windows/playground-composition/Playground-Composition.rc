@@ -59,6 +59,7 @@ BEGIN
         MENUITEM "&Refresh\tF5",                IDM_REFRESH
         MENUITEM "&Unload",                     IDM_UNLOAD
         MENUITEM "Toggle Layout &Direction",    IDM_TOGGLE_LAYOUT_DIRECTION
+        MENUITEM "Set Props to running Island", IDM_SETPROPS
         MENUITEM SEPARATOR
         MENUITEM "&Settings...\tAlt+S",         IDM_SETTINGS
         MENUITEM SEPARATOR

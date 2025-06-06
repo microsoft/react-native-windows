@@ -21,6 +21,21 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
+const searchBox = async (input: string) => {
+  const searchBox = await app.findElementByTestID('example_search');
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(input);
+      return (await searchBox.getText()) === input;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
+};
+
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
@@ -179,6 +194,34 @@ describe('TextInput Tests', () => {
       },
     );
   });
+  test('TextInput triggers onPressIn and updates state text', async () => {
+    // Scroll the example into view
+    await searchBox('onPressIn');
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-press');
+    expect(dump).toMatchSnapshot();
+
+    // Trigger onPressIn (click only)
+    await component.click();
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Holding down the click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'State text not updated after onPressIn.',
+      },
+    );
+    //  Assertion
+    expect(await stateText.getText()).toBe('Holding down the click/touch');
+    //  This step helps avoid UI lock by unfocusing the input
+    const search = await app.findElementByTestID('example_search');
+    await search.setValue('');
+  });
   test('TextInputs can have attributed text', async () => {
     const component = await app.findElementByTestID('text-input');
     await component.waitForDisplayed({timeout: 5000});
@@ -236,7 +279,6 @@ describe('TextInput Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('style-fontFamily');
     expect(dump).toMatchSnapshot();
-    // Behavior not implemented yet
   });
   test('TextInputs can have a font size', async () => {
     const component = await app.findElementByTestID('style-fontSize');
@@ -461,6 +503,59 @@ describe('TextInput Tests', () => {
 
     // Verify the textInput contents are cleared after regaining focus
     expect(await componentFocusTrue.getText()).toBe('');
+  });
+  test('TextInputs can select text on focus', async () => {
+    const component = await app.findElementByTestID('select-text-on-focus');
+    await component.waitForDisplayed({timeout: 5000});
+
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+
+    // Check if the text is selected on focus.
+    await component.click();
+
+    const dump = await dumpVisualTree('select-text-on-focus');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can clear text on focus even if selectTextOnFocus == true', async () => {
+    const targetComponent = await app.findElementByTestID(
+      'select-text-on-focus-while-clear-text-on-focus',
+    );
+    await targetComponent.waitForDisplayed({timeout: 5000});
+
+    await app.waitUntil(
+      async () => {
+        await targetComponent.setValue('Hello World');
+        return (await targetComponent.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+
+    // Click on the previous textInput to move focus away from this TextInput
+    const anotherTextInput = await app.findElementByTestID(
+      'select-text-on-focus',
+    );
+    await anotherTextInput.waitForDisplayed({timeout: 5000});
+    await anotherTextInput.click();
+
+    // Now click on the tested component, make sure the text is cleared.
+    await targetComponent.click();
+
+    // Verify the textInput contents are cleared after regaining focus
+    expect(await targetComponent.getText()).toBe('');
   });
   test('TextInputs can have inline images', async () => {
     const component = await app.findElementByTestID('textinput-inline-images');

@@ -53,7 +53,7 @@ export const description = 'Usage of Glyph control.';
 export const examples = [
   {
     title: 'Glyph examples',
-    render: function (): JSX.Element {
+    render: function () {
       return <GlyphExamples />;
     },
   },

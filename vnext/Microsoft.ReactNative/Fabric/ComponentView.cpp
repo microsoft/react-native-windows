@@ -279,7 +279,10 @@ void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &p
     m_parent = parent;
     if (!parent) {
       if (oldRootView && oldRootView->GetFocusedComponent() == *this) {
-        oldRootView->TrySetFocusedComponent(oldParent, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+        oldRootView->TrySetFocusedComponent(
+            oldParent,
+            winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+            true /*forceNoSelectionIfCannotMove*/);
       }
     }
     if (parent) {

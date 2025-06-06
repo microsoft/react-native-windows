@@ -1,8 +1,95 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 28 Apr 2025 15:26:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 03 Jun 2025 21:29:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.8
+
+Tue, 03 Jun 2025 21:29:03 GMT
+
+### Patches
+
+- Integrate 0.78.2 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.78.7
+
+Tue, 03 Jun 2025 15:22:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.78.4
+
+## 0.78.6
+
+Mon, 02 Jun 2025 15:26:15 GMT
+
+### Patches
+
+- [Fabric] Implement hidesWhenStopped in ActivityIndicator (54227869+anupriya13@users.noreply.github.com)
+- Implement onProgress for Image (54227869+anupriya13@users.noreply.github.com)
+- Implement body in Image Source (54227869+anupriya13@users.noreply.github.com)
+- implemented on onEndEditing (email not defined)
+- Fix react devtools hitting an assert on launch (tatianakapos@microsoft.com)
+- Scale loading bar text when island is super small (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement selectTextOnFocus in Text Input (54227869+anupriya13@users.noreply.github.com)
+- Allow text components to have children (tatianakapos@microsoft.com)
+- [Fabric] Implementation of accessibilityItemType (kvineeth@microsoft.com)
+- Bump hermes version (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement minimumFontScale in Text (54227869+anupriya13@users.noreply.github.com)
+- Add ImageRequestParams (54227869+anupriya13@users.noreply.github.com)
+- Added override Text.d.ts to src-win/Libraries/Text/ to add  tooltip prop to Text component (email not defined)
+- Add SetProperties method to ReactNativeIsland (30809111+acoates-ms@users.noreply.github.com)
+- PointerEvent fixes (30809111+acoates-ms@users.noreply.github.com)
+- Implementation of adjustFontSizeToFit for Text in Fabric (kvineeth@microsoft.com)
+- Properly hook up root uia provider to island (30809111+acoates-ms@users.noreply.github.com)
+- Update WindowsAppSDK version to 1.7.250401001 (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when reloading an instance with an active ReactNativeIsland (30809111+acoates-ms@users.noreply.github.com)
+- Implement scrollEventThrottle for ScrollView in Fabric (54227869+anupriya13@users.noreply.github.com)
+- Fix: Text component pressRetentionOffset issue on Windows (abhijeetjha@microsoft.com)
+- Clean up error messages (30809111+acoates-ms@users.noreply.github.com)
+- merge in folly 2024.10.14.00 (tatianakapos@microsoft.com)
+- Fix tooltips in high dpi (30809111+acoates-ms@users.noreply.github.com)
+- added check for double click on textInput component view connecting it to WM_LBUTTONDBLCLK (email not defined)
+- Implement decelerationRate in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Add Custom Font Family support in TextInput (54227869+anupriya13@users.noreply.github.com)
+- Allow portals to have independent layout constraints and scale factor (30809111+acoates-ms@users.noreply.github.com)
+- Fix warning in glog stub (30809111+acoates-ms@users.noreply.github.com)
+- addded titlebar , title handling , X handling , resizable (abhijeetjha@microsoft.com)
+- Implement accessibilityLevel for Fabric (kvineeth@microsoft.com)
+- Components do not lost hover state if pointer leaves window before it leaves the component (30809111+acoates-ms@users.noreply.github.com)
+- Fix Narrator Bug (34109996+chiaramooney@users.noreply.github.com)
+- Fix InitialProps (30809111+acoates-ms@users.noreply.github.com)
+- Removed unused `react-shallow-renderer` dependency (4123478+tido64@users.noreply.github.com)
+- Implemented OnPressIn event for textinput (hmalothu@microsoft.com)
+- TurboModule spec checking should accept hstring for string arguments (30809111+acoates-ms@users.noreply.github.com)
+- Implement zoomScale, maximumZoomScale and minimumZoomScale in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- Implement onScrollEndDrag prop (10109130+sharath2727@users.noreply.github.com)
+- solved access read violation due to incorrect view access to obtain contentIsland (abhijeetjha@microsoft.com)
+- [Fabric] Implementation of accessibilityAccessKey (kvineeth@microsoft.com)
+- Remove usage of JSDispatcher in various built-in modules (30809111+acoates-ms@users.noreply.github.com)
+- Basic support for stitching the UIA tree for a ContentIslandComponentView's child (email not defined)
+- Fix build issue building component codegen using clang (30809111+acoates-ms@users.noreply.github.com)
+- Fix bool operator on transparent colors returning false (30809111+acoates-ms@users.noreply.github.com)
+- Implement SpellCheck and AutoCorrect for TextInput (54227869+anupriya13@users.noreply.github.com)
+- Fix platform color (30809111+acoates-ms@users.noreply.github.com)
+- Reenable optimization in TMs to avoid going through a dynamic for callbacks/promises (30809111+acoates-ms@users.noreply.github.com)
+- JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries (30809111+acoates-ms@users.noreply.github.com)
+- Implement letterSpacing for TextInput (54227869+anupriya13@users.noreply.github.com)
+- Update folly exports from rn-win32 (30809111+acoates-ms@users.noreply.github.com)
+- Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement maxFontSizeMultiplier in Text (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider (kvineeth@microsoft.com)
+- Fix issue when calling arrange on an RN Island during load (30809111+acoates-ms@users.noreply.github.com)
+- Implement OnScrollBeginDrag Event (54227869+anupriya13@users.noreply.github.com)
+- Implemented textAlign in TextInput for Fabric (14967941+danielayala94@users.noreply.github.com)
+- Fix Number.h not copied from react-native core (hampus.sjoberg@protonmail.com)
+- Allow TextInput to scroll (30809111+acoates-ms@users.noreply.github.com)
+- Fix stale focus rects left in UI when last focusable component is removed (30809111+acoates-ms@users.noreply.github.com)
+- Property updates switching between PlatformColors would no-op (30809111+acoates-ms@users.noreply.github.com)
+- Round Focus visuals by default, fix nudge rendering (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.78.3
+- Bump @react-native-windows/codegen to v0.78.2
 
 ## 0.78.5
 

@@ -80,16 +80,17 @@ class PressInOutEvents extends React.Component<
     super(props);
     this.state = {text: 'PressIn/PressOut message'};
   }
+
   render() {
     return (
       <View>
-        <Text>{this.state.text}</Text>
+        <Text testID="textinput-state-display">{this.state.text}</Text>
         <ExampleTextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
-          onPressIn={() =>
-            this.setState({text: 'Holding down the click/touch'})
-          }
+          onPressIn={() => {
+            this.setState({text: 'Holding down the click/touch'});
+          }}
           onPressOut={() => this.setState({text: 'Released click/touch'})}
           testID="textinput-press"
         />
@@ -209,6 +210,30 @@ const examples: Array<RNTesterModuleExample> = [
     },
   },
   {
+    title: 'Select text on focus',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Select text on focus:</Text>
+          <ExampleTextInput
+            selectTextOnFocus={true}
+            style={styles.singleLine}
+            testID="select-text-on-focus"
+          />
+          <Text>
+            Do not select text on focus if clear text on focus is enabled:
+          </Text>
+          <ExampleTextInput
+            selectTextOnFocus={true}
+            clearTextOnFocus={true}
+            style={styles.singleLine}
+            testID="select-text-on-focus-while-clear-text-on-focus"
+          />
+        </View>
+      );
+    },
+  },
+  {
     title: 'Colors and text inputs',
     render: function (): React.Node {
       return (
@@ -304,6 +329,36 @@ const examples: Array<RNTesterModuleExample> = [
               key={fontWeight}
               style={[styles.singleLine, {fontWeight}]}
               testID={'textinput-weight-' + fontWeight}
+            />
+          ))}
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Font Family',
+    render: function (): React.Node {
+      return (
+        <View testID="style-fontFamily">
+          <ExampleTextInput
+            defaultValue="Font Family (default)"
+            style={[styles.singleLine]}
+            testID="textinput-family-default"
+          />
+          {[
+            'normal',
+            'Times New Roman',
+            'Courier New',
+            'Arial',
+            'Comic Sans MS',
+            'Georgia',
+            'Verdana',
+          ].map(fontFamily => (
+            <ExampleTextInput
+              defaultValue={`Font Family (${fontFamily})`}
+              key={fontFamily}
+              style={[styles.singleLine, {fontFamily}]}
+              testID={'textinput-family-' + fontFamily}
             />
           ))}
         </View>

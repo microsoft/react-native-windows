@@ -5,8 +5,14 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.78.0",
+  "baseVersion": "0.78.2",
   "overrides": [
+    {
+      "type": "derived",
+      "file": "src/js/components/TextInlineView.windows.js",
+      "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
+      "baseHash": "e644fe80f0d405382d180ec7a822794454943ff1"
+    },
     {
       "type": "derived",
       "file": "src/js/examples-win/Button/ButtonExample.windows.js",
@@ -65,6 +71,12 @@
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
       "baseHash": "c961b126e104e991abe99c58178b6344d6ea0f4f"
+    },
+    {
+      "type": "derived",
+      "file": "src/js/examples/Text/TextInlineViewsExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Text/TextInlineViewsExample.js",
+      "baseHash": "63088038921558214c480b323dd2099698911f3f"
     },
     {
       "type": "patch",

@@ -7,6 +7,7 @@
 #pragma once
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
+#include "JSI/JsiApiContext.h"
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleRegistration.h"
@@ -411,6 +412,26 @@ constexpr bool MatchInputArg<std::string, std::wstring>() noexcept {
   return true;
 }
 
+template <>
+constexpr bool MatchInputArg<std::string, winrt::hstring>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<winrt::hstring, std::string>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<std::wstring, winrt::hstring>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<winrt::hstring, std::wstring>() noexcept {
+  return true;
+}
+
 template <class TResult, class TInputArgs, class TOutputCallbacks, class TOutputPromises>
 struct MethodSignature {
   using Result = TResult;
@@ -480,11 +501,29 @@ template <class TModule>
 struct ModuleInitMethodInfo<void (TModule::*)(ReactContext const &) noexcept> {
   using ModuleType = TModule;
   using MethodType = void (TModule::*)(ReactContext const &) noexcept;
+  using JsiMethodType = void (TModule::*)(ReactContext const &, facebook::jsi::Runtime &) noexcept;
 
   static InitializerDelegate GetInitializer(void *module, MethodType method) noexcept {
     return [module = static_cast<ModuleType *>(module), method](ReactContext const &reactContext) noexcept {
       (module->*method)(reactContext);
     };
+  }
+};
+
+template <class TMethod>
+struct ModuleJsiInitMethodInfo;
+
+template <class TModule>
+struct ModuleJsiInitMethodInfo<void (TModule::*)(ReactContext const &, facebook::jsi::Runtime &) noexcept> {
+  using ModuleType = TModule;
+  using MethodType = void (TModule::*)(ReactContext const &, facebook::jsi::Runtime &) noexcept;
+
+  static JsiInitializerDelegate GetJsiInitializer(void *module, MethodType method) noexcept {
+    return
+        [module = static_cast<ModuleType *>(module), method](
+            ReactContext const &reactContext, winrt::Windows::Foundation::IInspectable const &runtimeHandle) noexcept {
+          (module->*method)(reactContext, GetOrCreateContextRuntime(reactContext, runtimeHandle));
+        };
   }
 };
 
@@ -1021,6 +1060,9 @@ struct ReactModuleBuilder {
     for (auto &initializer : m_initializers) {
       m_moduleBuilder.AddInitializer(initializer);
     }
+    for (auto &initializer : m_jsiinitializers) {
+      m_moduleBuilder.AddJsiInitializer(initializer);
+    }
   }
 
   template <class TMember, class TAttribute, int I>
@@ -1049,8 +1091,14 @@ struct ReactModuleBuilder {
 
   template <class TMethod>
   void RegisterInitMethod(TMethod method) noexcept {
-    auto initializer = ModuleInitMethodInfo<TMethod>::GetInitializer(m_module, method);
-    m_initializers.push_back(std::move(initializer));
+    if constexpr (ModuleMethodInfo<TMethod>::ArgCount == 1) {
+      auto initializer = ModuleInitMethodInfo<TMethod>::GetInitializer(m_module, method);
+      m_initializers.push_back(std::move(initializer));
+    } else {
+      static_assert(ModuleMethodInfo<TMethod>::ArgCount == 2);
+      auto jsiinitializer = ModuleJsiInitMethodInfo<TMethod>::GetJsiInitializer(m_module, method);
+      m_jsiinitializers.push_back(std::move(jsiinitializer));
+    }
   }
 
   template <class TMethod>
@@ -1109,6 +1157,7 @@ struct ReactModuleBuilder {
   std::wstring_view m_moduleName{L""};
   std::wstring_view m_eventEmitterName{L""};
   std::vector<InitializerDelegate> m_initializers;
+  std::vector<JsiInitializerDelegate> m_jsiinitializers;
 };
 
 struct VerificationResult {
@@ -1456,6 +1505,15 @@ inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
       "TModule::ModuleSpec must exist and it specifies the specification for this module.");
   return MakeModuleProvider<TModule>();
 }
+
+// Clang does not allow a virtual function address to be a constexpr statement
+#if !defined(CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS)
+#if defined(__clang__)
+#define CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS
+#else
+#define CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS constexpr
+#endif
+#endif
 
 } // namespace winrt::Microsoft::ReactNative
 

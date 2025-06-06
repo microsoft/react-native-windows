@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed unused `react-shallow-renderer` dependency",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "4123478+tido64@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

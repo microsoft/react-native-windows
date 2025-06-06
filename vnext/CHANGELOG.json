@@ -2,6 +2,429 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 03 Jun 2025 21:29:03 GMT",
+      "version": "0.78.8",
+      "tag": "react-native-windows_v0.78.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "07ae9d59e0e7e03d7134666d3daff30c6abb00b7",
+            "comment": "Integrate 0.78.2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Jun 2025 15:22:28 GMT",
+      "version": "0.78.7",
+      "tag": "react-native-windows_v0.78.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 02 Jun 2025 15:26:15 GMT",
+      "version": "0.78.6",
+      "tag": "react-native-windows_v0.78.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "[Fabric] Implement hidesWhenStopped in ActivityIndicator"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement onProgress for Image"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement body in Image Source"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "implemented on onEndEditing"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix react devtools hitting an assert on launch"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Scale loading bar text when island is super small"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "[Fabric] Implement selectTextOnFocus in Text Input"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Allow text components to have children"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "[Fabric] Implementation of accessibilityItemType"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Bump hermes version"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "[Fabric] Implement minimumFontScale in Text"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Add ImageRequestParams"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Added override Text.d.ts to src-win/Libraries/Text/ to add  tooltip prop to Text component"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Add SetProperties method to ReactNativeIsland"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "PointerEvent fixes"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implementation of adjustFontSizeToFit for Text in Fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Properly hook up root uia provider to island"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Update WindowsAppSDK version to 1.7.250401001"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix crash when reloading an instance with an active ReactNativeIsland"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement scrollEventThrottle for ScrollView in Fabric"
+          },
+          {
+            "author": "abhijeetjha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix: Text component pressRetentionOffset issue on Windows"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Clean up error messages"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "merge in folly 2024.10.14.00"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix tooltips in high dpi"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "added check for double click on textInput component view connecting it to WM_LBUTTONDBLCLK"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement decelerationRate in ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Add Custom Font Family support in TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Allow portals to have independent layout constraints and scale factor"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix warning in glog stub"
+          },
+          {
+            "author": "abhijeetjha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "addded titlebar , title handling , X handling , resizable"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement accessibilityLevel for Fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Components do not lost hover state if pointer leaves window before it leaves the component"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix Narrator Bug"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix InitialProps"
+          },
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "00fb4d99de76a5b670cd9bb70c3c136886508e80",
+            "comment": "Removed unused `react-shallow-renderer` dependency"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implemented OnPressIn event for textinput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "TurboModule spec checking should accept hstring for string arguments"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement zoomScale, maximumZoomScale and minimumZoomScale in ScrollView"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement onScrollEndDrag prop"
+          },
+          {
+            "author": "abhijeetjha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "solved access read violation due to incorrect view access to obtain contentIsland"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "[Fabric] Implementation of accessibilityAccessKey"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Remove usage of JSDispatcher in various built-in modules"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Basic support for stitching the UIA tree for a ContentIslandComponentView's child"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix build issue building component codegen using clang"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix bool operator on transparent colors returning false"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement SpellCheck and AutoCorrect for TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix platform color"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Reenable optimization in TMs to avoid going through a dynamic for callbacks/promises"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement letterSpacing for TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Update folly exports from rn-win32"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement showsVerticalScrollIndicatorValue and showsVerticalScrollIndicatorValue for ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "[Fabric] Implement maxFontSizeMultiplier in Text"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "[Fabric] Implementation of accessibiltyAnnotation and adding support for IAnnotationProvider"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix issue when calling arrange on an RN Island during load"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implement OnScrollBeginDrag Event"
+          },
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Implemented textAlign in TextInput for Fabric"
+          },
+          {
+            "author": "hampus.sjoberg@protonmail.com",
+            "package": "react-native-windows",
+            "commit": "afc464158856a3a1f85cf96d16808b766de495fd",
+            "comment": "Fix Number.h not copied from react-native core"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Allow TextInput to scroll"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Fix stale focus rects left in UI when last focusable component is removed"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Property updates switching between PlatformColors would no-op"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e74aaadf4cf0b3c12e7561e8ea3349fa9d6998a4",
+            "comment": "Round Focus visuals by default, fix nudge rendering"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.78.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 15:26:42 GMT",
       "version": "0.78.5",
       "tag": "react-native-windows_v0.78.5",

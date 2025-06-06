@@ -78,8 +78,23 @@ class TextLayoutManager {
   static void GetTextLayout(
       const AttributedStringBox &attributedStringBox,
       const ParagraphAttributes &paragraphAttributes,
+      Size size,
+      winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
+      TextMeasurement::Attachments &attachments) noexcept;
+
+  static void GetTextLayout(
+      const AttributedStringBox &attributedStringBox,
+      const ParagraphAttributes &paragraphAttributes,
       LayoutConstraints layoutConstraints,
       winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
+
+  static void GetTextLayoutByAdjustingFontSizeToFit(
+      AttributedStringBox attributedStringBox,
+      const ParagraphAttributes &paragraphAttributes,
+      LayoutConstraints layoutConstraints,
+      winrt::com_ptr<IDWriteTextLayout> &spTextLayout,
+      TextMeasurement::Attachments &attachments,
+      float minimumFontScale) noexcept;
 
 #pragma endregion
 

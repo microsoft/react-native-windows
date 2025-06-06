@@ -16,27 +16,25 @@ void Clipboard::Initialize(winrt::Microsoft::ReactNative::ReactContext const &re
 }
 
 void Clipboard::getString(React::ReactPromise<std::string> result) noexcept {
-  auto jsDispatcher = m_reactContext.JSDispatcher();
-  m_reactContext.UIDispatcher().Post([jsDispatcher, result] {
+  m_reactContext.UIDispatcher().Post([result] {
     auto data = DataTransfer::Clipboard::GetContent();
     auto asyncOp = data.GetTextAsync();
     // unfortunately, lambda captures doesn't work well with winrt::fire_and_forget and co_await here
     // call asyncOp.Completed explicitly
-    asyncOp.Completed([jsDispatcher, result](const IAsyncOperation<winrt::hstring> &asyncOp, AsyncStatus status) {
+    asyncOp.Completed([result](const IAsyncOperation<winrt::hstring> &asyncOp, AsyncStatus status) {
       switch (status) {
         case AsyncStatus::Completed: {
           auto text = std::wstring(asyncOp.GetResults());
-          jsDispatcher.Post(
-              [result, text] { result.Resolve(std::string{Microsoft::Common::Unicode::Utf16ToUtf8(text)}); });
+          result.Resolve(std::string{Microsoft::Common::Unicode::Utf16ToUtf8(text)});
           break;
         }
         case AsyncStatus::Canceled: {
-          jsDispatcher.Post([result] { result.Reject(React::ReactError()); });
+          result.Reject(React::ReactError());
           break;
         }
         case AsyncStatus::Error: {
           auto message = std::wstring(winrt::hresult_error(asyncOp.ErrorCode()).message());
-          jsDispatcher.Post([result, message] { result.Reject(message.c_str()); });
+          result.Reject(message.c_str());
           break;
         }
         case AsyncStatus::Started: {
@@ -48,7 +46,7 @@ void Clipboard::getString(React::ReactPromise<std::string> result) noexcept {
   );
 }
 
-void Clipboard::setString(std::wstring content) noexcept {
+void Clipboard::setString(winrt::hstring content) noexcept {
   m_reactContext.UIDispatcher().Post([=] {
     DataTransfer::DataPackage data;
     data.SetText(content);

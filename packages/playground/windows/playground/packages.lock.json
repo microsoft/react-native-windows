@@ -4,9 +4,9 @@
     "native,Version=v0.0": {
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
-        "requested": "[2.0.210312.4, 2.0.210312.4]",
-        "resolved": "2.0.210312.4",
-        "contentHash": "uRxz7Z8Scm7A2JjaaxCzQWTMrQC9RvXYhb7RU8pSqGo/0i0aPJszUeA3N6EhcJU5+FsDr2xzk2iln0x2Lwa6AA=="
+        "requested": "[0.0.0-2505.2001-0e4bc3b9, )",
+        "resolved": "0.0.0-2505.2001-0e4bc3b9",
+        "contentHash": "VNSUBgaGzJ/KkK3Br0b9FORkCgKqke54hi48vG42xRACIlxN+uLFMz0hRo+KHogz+Fsn+ltXicGwQsDVpmaCMg=="
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
@@ -20,11 +20,132 @@
         "resolved": "3.0.0-preview4.210210.4",
         "contentHash": "fMo1Llbprv3+7nVyUvBxc/lQtMmwBFCGHdeH7sTPIeFKPneNOs0qW2XqnYBorGRRitbPUxxmLKgxOM8zR5dAgA=="
       },
-      "Microsoft.JavaScript.Hermes": {
-        "type": "Direct",
-        "requested": "[0.1.15, 0.1.15]",
-        "resolved": "0.1.15",
-        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+      "boost": {
+        "type": "Transitive",
+        "resolved": "1.83.0",
+        "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
+      },
+      "Microsoft.Build.Tasks.Git": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
+      },
+      "Microsoft.SourceLink.Common": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg=="
+      },
+      "Microsoft.SourceLink.GitHub": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "IaJGnOv/M7UQjRJks7B6p7pbPnOwisYGOIzqCz5ilGFTApZ3ktOR+6zJ12ZRPInulBmdAf1SrGdDG2MU8g6XTw==",
+        "dependencies": {
+          "Microsoft.Build.Tasks.Git": "1.1.1",
+          "Microsoft.SourceLink.Common": "1.1.1"
+        }
+      },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      },
+      "common": {
+        "type": "Project",
+        "dependencies": {
+          "boost": "[1.83.0, )"
+        }
+      },
+      "fmt": {
+        "type": "Project"
+      },
+      "folly": {
+        "type": "Project",
+        "dependencies": {
+          "boost": "[1.83.0, )",
+          "fmt": "[1.0.0, )"
+        }
+      },
+      "microsoft.reactnative": {
+        "type": "Project",
+        "dependencies": {
+          "Common": "[1.0.0, )",
+          "Folly": "[1.0.0, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
+          "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+          "Microsoft.UI.Xaml": "[2.8.0, )",
+          "ReactCommon": "[1.0.0, )",
+          "boost": "[1.83.0, )"
+        }
+      },
+      "playgroundnativemodules": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.UI.Xaml": "[2.8.0, )"
+        }
+      },
+      "reactcommon": {
+        "type": "Project",
+        "dependencies": {
+          "Folly": "[1.0.0, )",
+          "boost": "[1.83.0, )"
+        }
+      },
+      "reactnativepicker": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.UI.Xaml": "[2.8.0, )"
+        }
+      }
+    },
+    "native,Version=v0.0/win10-arm": {
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      }
+    },
+    "native,Version=v0.0/win10-arm-aot": {
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      }
+    },
+    "native,Version=v0.0/win10-arm64-aot": {
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      }
+    },
+    "native,Version=v0.0/win10-x64": {
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      }
+    },
+    "native,Version=v0.0/win10-x64-aot": {
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      }
+    },
+    "native,Version=v0.0/win10-x86": {
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      }
+    },
+    "native,Version=v0.0/win10-x86-aot": {
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
       }
     }
   }

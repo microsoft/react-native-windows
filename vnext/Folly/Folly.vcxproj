@@ -50,6 +50,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
+    <ClCompile Include="$(MSBuildThisFileDirectory)\ThreadNameStub.cpp" />
     <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" />
     <ClCompile Include="$(FollyDir)\folly\concurrency\CacheLocality.cpp" />
     <ClCompile Include="$(FollyDir)\folly\detail\Futex.cpp" />
@@ -63,7 +64,7 @@
     <ClCompile Include="$(FollyDir)\folly\system\ThreadId.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\ToAscii.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\json_pointer.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\json\json_pointer.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Format.cpp" />
     <ClCompile Include="$(FollyDir)\folly\String.cpp" />
     <ClCompile Include="$(FollyDir)\folly\container\detail\F14Table.cpp" />
@@ -72,8 +73,8 @@
       <ObjectFileName>$(IntDir)\portabilityString.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\dynamic.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\json.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\json\dynamic.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\json\json.cpp" />
     <ClCompile Include="$(FollyDir)\folly\hash\SpookyHashV2.cpp" />
     <ClCompile Include="$(FollyDir)\folly\ScopeGuard.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp" />
@@ -105,7 +106,7 @@
     <ClInclude Include="$(FollyDir)\folly\Demangle.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\AtomicHashUtils.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\AtomicUnorderedMapUtils.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\CacheLocality.h" />
+    <ClInclude Include="$(FollyDir)\folly\concurrency\CacheLocality.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\DiscriminatedPtrDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\FileUtilDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\FingerprintPolynomial.h" />
@@ -126,6 +127,9 @@
     <ClInclude Include="$(FollyDir)\folly\dynamic-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\dynamic.h" />
     <ClInclude Include="$(FollyDir)\folly\DynamicConverter.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\dynamic-inl.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\dynamic.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\DynamicConverter.h" />
     <ClInclude Include="$(FollyDir)\folly\Exception.h" />
     <ClInclude Include="$(FollyDir)\folly\ExceptionString.h" />
     <ClInclude Include="$(FollyDir)\folly\ExceptionWrapper.h" />
@@ -150,7 +154,7 @@
     <ClInclude Include="$(FollyDir)\folly\IPAddressException.h" />
     <ClInclude Include="$(FollyDir)\folly\IPAddressV4.h" />
     <ClInclude Include="$(FollyDir)\folly\IPAddressV6.h" />
-    <ClInclude Include="$(FollyDir)\folly\json.h" />
+    <ClInclude Include="$(FollyDir)\folly\json\json.h" />
     <ClInclude Include="$(FollyDir)\folly\lang\ToAscii.h" />
     <ClInclude Include="$(FollyDir)\folly\Lazy.h" />
     <ClInclude Include="$(FollyDir)\folly\Likely.h" />
@@ -219,6 +223,10 @@
     <ClInclude Include="$(FollyDir)\folly\SpinLock.h" />
     <ClInclude Include="$(FollyDir)\folly\stop_watch.h" />
     <ClInclude Include="$(FollyDir)\folly\String-inl.h" />
+    <ClInclude Include="$(FollyDir)\hash\MurmurHash.h" />
+    <ClInclude Include="$(FollyDir)\hash\SpookyHashV1.h" />
+    <ClInclude Include="$(FollyDir)\hash\SpookyHashV2.h" />
+    <ClInclude Include="$(FollyDir)\functional\ApplyTuple.h" />
     <ClInclude Include="$(FollyDir)\folly\String.h" />
     <ClInclude Include="$(FollyDir)\folly\Subprocess.h" />
     <ClInclude Include="$(FollyDir)\folly\Synchronized.h" />
@@ -233,7 +241,9 @@
     <ClInclude Include="$(FollyDir)\folly\Unit.h" />
     <ClInclude Include="$(FollyDir)\folly\Uri-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\Uri.h" />
+    <ClInclude Include="$(FollyDir)\folly\Utility.h" />
     <ClInclude Include="$(FollyDir)\folly\Varint.h" />
+    <ClInclude Include="$(FollyDir)\..\fast_float-6.1.4\include\fast_float\fast_float.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -261,7 +271,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);$(FmtDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);$(FollyDir)\..\fast_float-6.1.4\include;$(FmtDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4251;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -281,6 +291,10 @@
     <FollyZipFile>$(FollyZipDir)\folly-$(FollyVersion).zip</FollyZipFile>
     <CGManifestFile>$(MSBuildThisFileDirectory)cgmanifest.json</CGManifestFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <FastFloatZipDir>$(FollyDir)..\.fastfloatzip</FastFloatZipDir>
+    <FastFloatZipFile>$(FollyDir)..\.fastfloatzip\fastfloat.zip</FastFloatZipFile>
+  </PropertyGroup>
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild" Inputs="$(FollyZipFile)" Outputs="$(FollyZipFile)">
     <Message Importance="High" Text="Downloading folly..." />
     <DownloadFile
@@ -289,11 +303,27 @@
       DestinationFolder="$(FollyZipDir)"
       Retries="10" />
   </Target>
+  <Target Name="DownloadFastFloat" BeforeTargets="PrepareForBuild" Inputs="$(FastFloatZipFile)" Outputs="$(FastFloatZipFile)">
+    <Message Importance="High" Text="Downloading FastFloat (folly dependency)..." />
+    <DownloadFile
+      SourceUrl="https://github.com/fastfloat/fast_float/archive/refs/tags/v$(FastFloatVersion).zip"
+      DestinationFileName="$(FastFloatZipFile)"
+      DestinationFolder="$(FastFloatZipDir)"
+      Retries="10" />
+  </Target>
   <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
     <Message Condition="!Exists('$(FollyDir)folly\dynamic.h')" Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." />
     <Unzip
       Condition="!Exists('$(FollyDir)folly\dynamic.h')"
       SourceFiles="$(FollyZipFile)"
+      DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))"
+      OverwriteReadOnlyFiles="true" />
+  </Target>
+  <Target Name="UnzipFastFloat" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFastFloat">
+    <Message Condition="!Exists('$(FastFloatZipDir)\include\fast_float.h')" Importance="High" Text="Unzipping FastFloat to $([MSBuild]::NormalizePath($(FastFloatZipDir)..))." />
+    <Unzip
+      Condition="!Exists('$(FastFloatZipDir)\include\fast_float.h')"
+      SourceFiles="$(FastFloatZipFile)"
       DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))"
       OverwriteReadOnlyFiles="true" />
   </Target>
@@ -308,6 +338,16 @@
                 "Git": {
                   "RepositoryUrl": "https://github.com/facebook/folly",
                   "CommitHash": "$(FollyCommitHash)"
+                }
+            },
+            "DevelopmentDependency": false
+        },
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/fastfloat/fast_float",
+                  "CommitHash": "$(FastFloatCommitHash)"
                 }
             },
             "DevelopmentDependency": false

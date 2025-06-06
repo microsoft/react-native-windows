@@ -54,6 +54,25 @@ struct JsiHostObjectWrapper : implements<JsiHostObjectWrapper, IJsiHostObject> {
   std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
 };
 
+// An ABI-safe wrapper for facebook::jsi::HostObject, similar to JsiHostObjectWrapper,
+// but uses GetOrCreate for the AbiRuntime to ensure its created on first use
+// This is important for use with TurboModules, which may not go through the ReactContext.CallInvoker
+struct JsiHostObjectGetOrCreateWrapper : implements<JsiHostObjectGetOrCreateWrapper, IJsiHostObject> {
+  JsiHostObjectGetOrCreateWrapper(
+      const winrt::Microsoft::ReactNative::IReactContext &context,
+      std::shared_ptr<facebook::jsi::HostObject> &&hostObject) noexcept;
+
+  JsiValueRef GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name);
+  void SetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name, JsiValueRef const &value);
+  winrt::Windows::Foundation::Collections::IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime const &runtime);
+
+  std::shared_ptr<facebook::jsi::HostObject> const &HostObjectSharedPtr() noexcept;
+
+ private:
+  std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
+  winrt::Microsoft::ReactNative::IReactContext m_context;
+};
+
 // The function object that wraps up the facebook::jsi::HostFunctionType
 struct JsiHostFunctionWrapper {
   // We only support new and move constructors.
@@ -85,6 +104,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Value evaluatePreparedJavaScript(
       const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
   bool drainMicrotasks(int maxMicrotasksHint = -1) override;
+  void queueMicrotask(const facebook::jsi::Function &callback) override;
   facebook::jsi::Object global() override;
   std::string description() override;
   bool isInspectable() override;
@@ -225,6 +245,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   // Allow access to the helper function
   friend struct JsiByteBufferWrapper;
   friend struct JsiHostObjectWrapper;
+  friend struct JsiHostObjectGetOrCreateWrapper;
   friend struct JsiHostFunctionWrapper;
   friend struct AbiJSError;
   friend struct AbiJSINativeException;
@@ -233,7 +254,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   struct DataPointerValue : PointerValue {
     DataPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, uint64_t data) noexcept;
     DataPointerValue(uint64_t data) noexcept;
-    void invalidate() override;
+    void invalidate() noexcept override;
 
     uint64_t m_data;
     winrt::weak_ref<JsiRuntime> m_weakRuntime;
@@ -241,35 +262,35 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
 
   struct SymbolPointerValue : DataPointerValue {
     SymbolPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiSymbolRef &&symbol) noexcept;
-    void invalidate() override;
+    void invalidate() noexcept override;
     static JsiSymbolRef const &GetData(PointerValue const *pv) noexcept;
     static JsiSymbolRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct BigIntPointerValue : DataPointerValue {
     BigIntPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiBigIntRef &&bigInt) noexcept;
-    void invalidate() override;
+    void invalidate() noexcept override;
     static JsiBigIntRef const &GetData(PointerValue const *pv) noexcept;
     static JsiBigIntRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct StringPointerValue : DataPointerValue {
     StringPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiStringRef &&str) noexcept;
-    void invalidate() override;
+    void invalidate() noexcept override;
     static JsiStringRef const &GetData(PointerValue const *pv) noexcept;
     static JsiStringRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct ObjectPointerValue : DataPointerValue {
     ObjectPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiObjectRef &&obj) noexcept;
-    void invalidate() override;
+    void invalidate() noexcept override;
     static JsiObjectRef const &GetData(PointerValue const *pv) noexcept;
     static JsiObjectRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct PropNameIDPointerValue : DataPointerValue {
     PropNameIDPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiPropertyIdRef &&propertyId) noexcept;
-    void invalidate() override;
+    void invalidate() noexcept override;
     static JsiPropertyIdRef const &GetData(PointerValue const *pv) noexcept;
     static JsiPropertyIdRef Detach(PointerValue const *pv) noexcept;
   };

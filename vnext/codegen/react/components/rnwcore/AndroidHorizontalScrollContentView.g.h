@@ -141,7 +141,7 @@ void RegisterAndroidHorizontalScrollContentViewNativeComponent(
           userData->UpdateEventEmitter(std::make_shared<AndroidHorizontalScrollContentViewEventEmitter>(eventEmitter));
         });
 
-        if constexpr (&TUserData::FinalizeUpdate != &BaseAndroidHorizontalScrollContentView<TUserData>::FinalizeUpdate) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseAndroidHorizontalScrollContentView<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -149,7 +149,7 @@ void RegisterAndroidHorizontalScrollContentViewNativeComponent(
           });
         } 
 
-        if constexpr (&TUserData::UpdateState != &BaseAndroidHorizontalScrollContentView<TUserData>::UpdateState) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseAndroidHorizontalScrollContentView<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -157,7 +157,7 @@ void RegisterAndroidHorizontalScrollContentViewNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::MountChildComponentView != &BaseAndroidHorizontalScrollContentView<TUserData>::MountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseAndroidHorizontalScrollContentView<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -165,7 +165,7 @@ void RegisterAndroidHorizontalScrollContentViewNativeComponent(
           });
         }
 
-        if constexpr (&TUserData::UnmountChildComponentView != &BaseAndroidHorizontalScrollContentView<TUserData>::UnmountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseAndroidHorizontalScrollContentView<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -175,13 +175,13 @@ void RegisterAndroidHorizontalScrollContentViewNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if constexpr (&TUserData::Initialize != &BaseAndroidHorizontalScrollContentView<TUserData>::Initialize) {
+          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseAndroidHorizontalScrollContentView<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if constexpr (&TUserData::CreateVisual != &BaseAndroidHorizontalScrollContentView<TUserData>::CreateVisual) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseAndroidHorizontalScrollContentView<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);

@@ -5,8 +5,17 @@
 
 #include <react/renderer/components/view/BaseViewEventEmitter.h>
 #include "KeyEvent.h"
+#include "MouseEvent.h"
 
 namespace facebook::react {
+
+struct PressEvent {
+  Tag target;
+  Point pagePoint;
+  Point offsetPoint;
+  double timestamp;
+  int identifier;
+};
 
 class HostPlatformViewEventEmitter : public BaseViewEventEmitter {
  public:
@@ -24,8 +33,12 @@ class HostPlatformViewEventEmitter : public BaseViewEventEmitter {
 
 #pragma mark - Mouse Events
 
-  void onMouseEnter(PointerEvent const &pointerEvent) const;
-  void onMouseLeave(PointerEvent const &pointerEvent) const;
+  void onMouseEnter(MouseEvent const &pointerEvent) const;
+  void onMouseLeave(MouseEvent const &pointerEvent) const;
+
+#pragma mark - Touch Events
+
+  virtual void onPressIn(PressEvent event) const;
 };
 
 } // namespace facebook::react
