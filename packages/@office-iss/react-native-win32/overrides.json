@@ -399,6 +399,13 @@
       "file": "src-win/Libraries/StyleSheet/PlatformColorValueTypesWin32.js"
     },
     {
+      "type": "copy",
+      "file": "src-win/Libraries/StyleSheet/StyleSheet.js",
+      "baseFile": "packages/react-native/Libraries/StyleSheet/StyleSheet.js",
+      "baseHash": "49fb1640b0942be2966d759057ca5923c5358c81",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.d.ts",
       "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
