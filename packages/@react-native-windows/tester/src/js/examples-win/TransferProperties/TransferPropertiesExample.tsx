@@ -143,13 +143,13 @@ export const description =
 export const examples = [
   {
     title: 'Flow Direction Change',
-    render: function (): JSX.Element {
+    render: function () {
       return <FlowDirectionChange />;
     },
   },
   {
     title: 'zIndex Change',
-    render: function (): JSX.Element {
+    render: function () {
       return <ZIndexChange />;
     },
   },

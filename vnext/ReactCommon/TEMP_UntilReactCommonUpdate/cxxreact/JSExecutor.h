@@ -163,6 +163,22 @@ class RN_EXPORT JSExecutor : public jsinspector_modern::RuntimeTargetDelegate {
       jsi::Runtime& runtime,
       size_t framesToSkip = 0) override;
 
+
+  /**
+   * Start sampling profiler.
+   */
+  virtual void enableSamplingProfiler() override;
+
+  /**
+   * Stop sampling profiler.
+   */
+  virtual void disableSamplingProfiler() override;
+
+  /**
+   * Return recorded sampling profile for the previous sampling session.
+   */
+  virtual facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile collectSamplingProfile() override;
+
   /**
    * Create a RuntimeAgentDelegate that can be used to debug the JS VM instance.
    */

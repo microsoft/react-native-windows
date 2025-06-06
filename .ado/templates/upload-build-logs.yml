@@ -9,14 +9,14 @@ steps:
   - ${{ if not(parameters.oneESMode) }}:
     - task: PublishBuildArtifacts@1
       displayName: Upload build logs
-      condition:  and(succeededOrFailed(), ${{ parameters.uploadBuildLogs }},  not(parameters.oneESMode))
+      condition: and(succeededOrFailed(), ${{ parameters.uploadBuildLogs }},  not(parameters.oneESMode))
       inputs:
         pathtoPublish: '${{ parameters.buildLogDirectory }}'
         artifactName: 'Build logs - ${{ parameters.artifactName }}'
 
   - task: PowerShell@2
     displayName: Cleanup ProcDump
-    condition:  succeededOrFailed()
+    condition: succeededOrFailed()
     inputs:
       targetType: inline # filePath | inline
       script: |
@@ -36,7 +36,7 @@ steps:
   
   - task: PowerShell@2
     displayName: List crash dumps
-    condition:  and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }})
+    condition: and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }})
     inputs:
       targetType: inline # filePath | inline
       script: |

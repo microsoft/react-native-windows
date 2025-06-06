@@ -38,17 +38,17 @@ void HostPlatformViewEventEmitter::onBlur() const {
 
 #pragma mark - Mouse Events
 
-void HostPlatformViewEventEmitter::onMouseEnter(PointerEvent const &pointerEvent) const {
-  dispatchEvent("mouseEnter", std::make_shared<PointerEvent>(pointerEvent), RawEvent::Category::ContinuousStart);
+void HostPlatformViewEventEmitter::onMouseEnter(MouseEvent const &pointerEvent) const {
+  dispatchEvent("mouseEnter", std::make_shared<MouseEvent>(pointerEvent), RawEvent::Category::ContinuousStart);
 }
 
-void HostPlatformViewEventEmitter::onMouseLeave(PointerEvent const &pointerEvent) const {
-  dispatchEvent("mouseLeave", std::make_shared<PointerEvent>(pointerEvent), RawEvent::Category::ContinuousStart);
+void HostPlatformViewEventEmitter::onMouseLeave(MouseEvent const &pointerEvent) const {
+  dispatchEvent("mouseLeave", std::make_shared<MouseEvent>(pointerEvent), RawEvent::Category::ContinuousStart);
 }
 
 #pragma mark - Touch Events
 
-void HostPlatformViewEventEmitter::onPressIn(PressEvent event) const {
+void HostPlatformViewEventEmitter::onPressIn(GestureResponderEvent event) const {
   dispatchEvent("pressIn", [event](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     auto nativeEvent = jsi::Object(runtime);

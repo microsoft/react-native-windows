@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
+
 #include <Fabric/Composition/ReactCompositionViewComponentBuilder.h>
 #include <ReactPropertyBag.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>

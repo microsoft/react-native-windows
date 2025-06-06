@@ -8,17 +8,17 @@
  * @format
  */
 
-import type {HostInstance} from '../../Renderer/shims/ReactNativeTypes';
+import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
   KeyEvent, // Windows
   MouseEvent, // Windows
-  PressEvent,
+  GestureResponderEvent,
+  NativeSyntheticEvent,
   ScrollEvent,
-  SyntheticEvent,
 } from '../../Types/CoreEventTypes';
+import type {TextInputInstance, TextInputType} from './TextInput.flow';
 import type {HandledKeyboardEvent, ViewProps} from '../View/ViewPropTypes';
-import type {TextInputType} from './TextInput.flow';
 
 import * as ReactNativeFeatureFlags from '../../../src/private/featureflags/ReactNativeFeatureFlags';
 import usePressability from '../../Pressability/usePressability';
@@ -37,14 +37,6 @@ import invariant from 'invariant';
 import nullthrows from 'nullthrows';
 import * as React from 'react';
 import {useCallback, useLayoutEffect, useRef, useState} from 'react';
-
-type ReactRefSetter<T> = {current: null | T, ...} | ((ref: null | T) => mixed);
-type TextInputInstance = HostInstance & {
-  +clear: () => void,
-  +isFocused: () => boolean,
-  +getNativeRef: () => ?HostInstance,
-  +setSelection: (start: number, end: number) => void,
-};
 
 let AndroidTextInput;
 let AndroidTextInputCommands;
@@ -84,9 +76,10 @@ export type TextInputChangeEventData = $ReadOnly<{
   text: string,
 }>;
 
-export type TextInputChangeEvent = SyntheticEvent<TextInputChangeEventData>;
+export type TextInputChangeEvent =
+  NativeSyntheticEvent<TextInputChangeEventData>;
 
-export type TextInputEvent = SyntheticEvent<
+export type TextInputEvent = NativeSyntheticEvent<
   $ReadOnly<{
     eventCount: number,
     previousText: string,
@@ -108,7 +101,7 @@ export type TextInputContentSizeChangeEventData = $ReadOnly<{
 }>;
 
 export type TextInputContentSizeChangeEvent =
-  SyntheticEvent<TextInputContentSizeChangeEventData>;
+  NativeSyntheticEvent<TextInputContentSizeChangeEventData>;
 
 export type TargetEvent = $ReadOnly<{
   target: number,
@@ -116,8 +109,8 @@ export type TargetEvent = $ReadOnly<{
 
 export type TextInputFocusEventData = TargetEvent;
 
-export type TextInputBlurEvent = SyntheticEvent<TextInputFocusEventData>;
-export type TextInputFocusEvent = SyntheticEvent<TextInputFocusEventData>;
+export type TextInputBlurEvent = NativeSyntheticEvent<TextInputFocusEventData>;
+export type TextInputFocusEvent = NativeSyntheticEvent<TextInputFocusEventData>;
 
 type Selection = $ReadOnly<{
   start: number,
@@ -130,7 +123,7 @@ export type TextInputSelectionChangeEventData = $ReadOnly<{
 }>;
 
 export type TextInputSelectionChangeEvent =
-  SyntheticEvent<TextInputSelectionChangeEventData>;
+  NativeSyntheticEvent<TextInputSelectionChangeEventData>;
 
 type TextInputKeyPressEventData = $ReadOnly<{
   ...TargetEvent,
@@ -139,7 +132,8 @@ type TextInputKeyPressEventData = $ReadOnly<{
   eventCount?: ?number,
 }>;
 
-export type TextInputKeyPressEvent = SyntheticEvent<TextInputKeyPressEventData>;
+export type TextInputKeyPressEvent =
+  NativeSyntheticEvent<TextInputKeyPressEventData>;
 
 export type TextInputEndEditingEventData = $ReadOnly<{
   ...TargetEvent,
@@ -148,7 +142,7 @@ export type TextInputEndEditingEventData = $ReadOnly<{
 }>;
 
 export type TextInputEditingEvent =
-  SyntheticEvent<TextInputEndEditingEventData>;
+  NativeSyntheticEvent<TextInputEndEditingEventData>;
 
 type DataDetectorTypesType =
   | 'phoneNumber'
@@ -760,7 +754,7 @@ export type TextInputProps = $ReadOnly<{
    */
   editable?: ?boolean,
 
-  forwardedRef?: ?ReactRefSetter<TextInputInstance>,
+  forwardedRef?: ?React.RefSetter<TextInputInstance>,
 
   /**
    * `enterKeyHint` defines what action label (or icon) to present for the enter key on virtual keyboards.
@@ -894,17 +888,17 @@ export type TextInputProps = $ReadOnly<{
   /**
    * Called when a single tap gesture is detected.
    */
-  onPress?: ?(event: PressEvent) => mixed,
+  onPress?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Called when a touch is engaged.
    */
-  onPressIn?: ?(event: PressEvent) => mixed,
+  onPressIn?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Called when a touch is released.
    */
-  onPressOut?: ?(event: PressEvent) => mixed,
+  onPressOut?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Callback that is called when the text input selection is changed.
@@ -1102,8 +1096,8 @@ function useTextInputStateSynchronization_STATE({
   props: TextInputProps,
   mostRecentEventCount: number,
   selection: ?Selection,
-  inputRef: React.RefObject<null | HostInstance>,
-  text: string,
+  inputRef: React.RefObject<null | TextInputInstance>,
+  text?: string,
   viewCommands: ViewCommands,
 }): {
   setLastNativeText: string => void,
@@ -1183,8 +1177,8 @@ function useTextInputStateSynchronization_REFS({
   props: TextInputProps,
   mostRecentEventCount: number,
   selection: ?Selection,
-  inputRef: React.RefObject<null | HostInstance>,
-  text: string,
+  inputRef: React.RefObject<null | TextInputInstance>,
+  text?: string,
   viewCommands: ViewCommands,
 }): {
   setLastNativeText: string => void,
@@ -1376,6 +1370,12 @@ function InternalTextInput(props: TextInputProps): React.Node {
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
+    accessibilityLevel, // Windows
+    accessibilityPosInSet, // Windows
+    accessibilitySetSize, // Windows
     accessibilityState,
     id,
     tabIndex,
@@ -1386,7 +1386,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     ...otherProps
   } = props;
 
-  const inputRef = useRef<null | HostInstance>(null);
+  const inputRef = useRef<null | TextInputInstance>(null);
 
   const selection: ?Selection =
     propsSelection == null
@@ -1401,7 +1401,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
       ? props.value
       : typeof props.defaultValue === 'string'
         ? props.defaultValue
-        : '';
+        : undefined;
 
   const viewCommands =
     WindowsTextInputCommands || // [Windows]
@@ -1443,7 +1443,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
   }, []);
 
   const setLocalRef = useCallback(
-    (instance: TextInputInstance | null) => {
+    (instance: HostInstance | null) => {
+      // $FlowExpectedError[incompatible-type]
       inputRef.current = instance;
 
       /*
@@ -1469,7 +1470,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         before we can get to the long term breaking change.
       */
       if (instance != null) {
-        // $FlowFixMe[incompatible-use] - See the explanation above.
+        // $FlowFixMe[prop-missing] - See the explanation above.
         Object.assign(instance, {
           clear(): void {
             if (inputRef.current != null) {
@@ -1490,7 +1491,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
               currentlyFocusedInput === inputRef.current
             );
           },
-          getNativeRef(): ?HostInstance {
+          getNativeRef(): ?TextInputInstance {
             return inputRef.current;
           },
           setSelection(start: number, end: number): void {
@@ -1510,7 +1511,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
     [mostRecentEventCount, viewCommands],
   );
 
-  const ref = useMergeRefs<TextInputInstance>(setLocalRef, props.forwardedRef);
+  // $FlowExpectedError[incompatible-call]
+  const ref = useMergeRefs<HostInstance>(setLocalRef, props.forwardedRef);
 
   const _onChange = (event: TextInputChangeEvent) => {
     const currentText = event.nativeEvent.text;
@@ -1613,7 +1615,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const config = React.useMemo(
     () => ({
       hitSlop,
-      onPress: (event: PressEvent) => {
+      onPress: (event: GestureResponderEvent) => {
         onPress?.(event);
         if (editable !== false) {
           if (inputRef.current != null) {
@@ -1697,6 +1699,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
+  const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
+  const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
+  const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
+
   let _accessibilityState;
   if (
     accessibilityState != null ||
@@ -1762,8 +1768,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
     textInput = (
       <RCTTextInputView
-        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
-        ref={ref}
+        // Figure out imperative + forward refs.
+        ref={(ref: $FlowFixMe)}
         {...otherProps}
         {...eventHandlers}
         accessibilityErrorMessage={accessibilityErrorMessage}
@@ -1775,6 +1781,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         focusable={tabIndex !== undefined ? !tabIndex : focusable}
         mostRecentEventCount={mostRecentEventCount}
         nativeID={id ?? props.nativeID}
+        numberOfLines={props.rows ?? props.numberOfLines}
         onBlur={_onBlur}
         onChange={_onChange}
         onContentSizeChange={props.onContentSizeChange}
@@ -1824,8 +1831,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
        * match up exactly with the props for TextInput. This will need to get
        * fixed */
       <AndroidTextInput
-        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
-        ref={ref}
+        // Figure out imperative + forward refs.
+        ref={(ref: $FlowFixMe)}
         {...otherProps}
         {...colorProps}
         {...eventHandlers}
@@ -1880,6 +1887,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
         mostRecentEventCount={mostRecentEventCount}
         onBlur={_onBlur}
         onChange={_onChange}
+        accessibilityState={_accessibilityState}
+        accessibilityLevel={_accessibilityLevel}
+        accessibilityPosInSet={_accessibilityPosInSet}
+        accessibilitySetSize={_accessibilitySetSize}
         /* $FlowFixMe[incompatible-type] the types for WindowsTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */
@@ -2005,7 +2016,6 @@ const autoCompleteWebToTextContentTypeMap = {
 const ExportedForwardRef: component(
   ref: React.RefSetter<TextInputInstance>,
   ...props: React.ElementConfig<typeof InternalTextInput>
-  // $FlowFixMe[incompatible-call]
 ) = React.forwardRef(function TextInput(
   {
     allowFontScaling = true,
@@ -2022,7 +2032,7 @@ const ExportedForwardRef: component(
     keyboardType,
     ...restProps
   },
-  forwardedRef: ReactRefSetter<TextInputInstance>,
+  forwardedRef: React.RefSetter<TextInputInstance>,
 ) {
   return (
     <InternalTextInput

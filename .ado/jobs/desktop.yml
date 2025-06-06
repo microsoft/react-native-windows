@@ -169,7 +169,7 @@ jobs:
                 displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
             - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
-              - template:  ../templates/enable-experimental-winui3.yml
+              - template: ../templates/enable-experimental-winui3.yml
                 parameters:
                   workingDir: vnext
 

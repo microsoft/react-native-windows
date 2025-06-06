@@ -181,17 +181,25 @@ bool operator!=(JSValueArray const &left, JSValueArray const &right) noexcept;
 //! For copy operations the explicit Copy() method must be used.
 //! Note that the move operations are not thread safe.
 struct JSValue {
-  //! JSValue with JSValueType::Null.
+  //! JSValue with JSValueType::Null. - Maybe removed in future version - replaced with NullRef
   static JSValue const Null;
+  //! JSValue with JSValueType::Null.
+  static const JSValue &NullRef() noexcept;
 
-  //! JSValue with empty object.
+  //! JSValue with empty object. - Maybe removed in future version - replaced with EmptyObjectRef
   static JSValue const EmptyObject;
+  //! JSValue with empty object.
+  static const JSValue &EmptyObjectRef() noexcept;
 
-  //! JSValue with empty array.
+  //! JSValue with empty array. - Maybe removed in future version - replaced with EmptyArrayRef
   static JSValue const EmptyArray;
+  //! JSValue with empty array.
+  static const JSValue &EmptyArrayRef() noexcept;
 
-  //! JSValue with empty string.
+  //! JSValue with empty string. - Maybe removed in future version - replaced with EmptyStringRef
   static JSValue const EmptyString;
+  //! JSValue with empty string.
+  static const JSValue &EmptyStringRef() noexcept;
 
   //! Create a Null JSValue.
   JSValue() noexcept;
@@ -654,11 +662,11 @@ inline double const *JSValue::TryGetDouble() const noexcept {
 }
 
 inline JSValueObject const &JSValue::AsObject() const noexcept {
-  return (m_type == JSValueType::Object) ? m_object : EmptyObject.m_object;
+  return (m_type == JSValueType::Object) ? m_object : EmptyObjectRef().m_object;
 }
 
 inline JSValueArray const &JSValue::AsArray() const noexcept {
-  return (m_type == JSValueType::Array) ? m_array : EmptyArray.m_array;
+  return (m_type == JSValueType::Array) ? m_array : EmptyArrayRef().m_array;
 }
 
 inline int8_t JSValue::AsInt8() const noexcept {
@@ -860,7 +868,7 @@ inline const JSValueArray &JSValue::Array() const noexcept {
 }
 
 inline const std::string &JSValue::String() const noexcept {
-  return (m_type == JSValueType::String) ? m_string : EmptyString.m_string;
+  return (m_type == JSValueType::String) ? m_string : EmptyStringRef().m_string;
 }
 
 inline bool JSValue::Boolean() const noexcept {

@@ -12,7 +12,7 @@
 
 import type {ResolvedAssetSource} from './AssetSourceResolver';
 import typeof AssetSourceResolverT from './AssetSourceResolver';
-const Platform = require('../Utilities/Platform');
+const Platform = require('../Utilities/Platform').default;
 import type {ImageSource} from './ImageSource';
 
 import SourceCode from '../NativeModules/specs/NativeSourceCode';
