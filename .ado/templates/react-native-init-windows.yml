@@ -160,10 +160,13 @@ steps:
       buildLogDirectory: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
 
   # Only run the following on fabric apps
-  - ${{ if endsWith(parameters.template, '-app') }}:
+  - ${{ if not(startsWith(parameters.template, 'old/')) }}:
     - script: call yarn test:windows
       displayName: Run jest tests with react-test-renderer
-      workingDirectory: $(Agent.BuildDirectory)\testcli
+      ${{ if endsWith(parameters.template, '-lib') }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli\example
+      ${{ else }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli
 
   # Only test bundling in debug since we already bundle as part of release builds
   - ${{ if and(endsWith(parameters.template, '-app'), eq(parameters.configuration, 'Debug')) }}:
