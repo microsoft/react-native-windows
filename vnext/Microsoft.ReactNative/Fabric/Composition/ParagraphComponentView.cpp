@@ -63,10 +63,10 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
-  // Reset m_textLayout when ellipsizeMode changes
   if (oldViewProps.paragraphAttributes.ellipsizeMode != newViewProps.paragraphAttributes.ellipsizeMode) {
     m_textLayout = nullptr;
   }
+  
   if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
     m_requireRedraw = true;
   }
