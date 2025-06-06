@@ -6,13 +6,22 @@ body:
   - type: markdown
     attributes:
       value: |
+        This form is for reporting bugs found in React Native for Windows.
+        
+        If the issue is that an existing React Native API that is simply missing in React Native for Windows, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=missing-api.yaml) instead.
+
+        If you just have a question, please post on [Discussions](https://github.com/microsoft/react-native-windows/discussions) instead.
+
         Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
   - type: textarea
     validations:
       required: true
     attributes:
       label: Problem Description
-      description: Please enter a description of the issue. If you just have a question, please post on [Discussions](https://github.com/microsoft/react-native-windows/discussions).
+      description: |
+        Please enter a description of the issue and any output and/or error logging.
+        
+        If you're seeing a failure when using a RNW CLI command (i.e. `run-windows`, `autolink-windows`, `codegen-windows`) please try again with `--logging` and provide the output.
     id: description
   - type: textarea
     validations:
@@ -35,8 +44,8 @@ body:
     attributes:
       label: CLI version
       description: |
-        Run the command `npx @react-native-community/cli --version` in your terminal and copy the results here
-      value: "npx @react-native-community/cli -v"
+        Run the command `npx @react-native-community/cli -v` in your terminal and copy the result here.
+      placeholder: "npx @react-native-community/cli -v"
     id: cli
   - type: textarea
     validations:
@@ -44,8 +53,8 @@ body:
     attributes:
       label: Environment
       description: |
-        Run the command `npx @react-native-community/cli info` in your terminal and copy the results here
-      value: "npx @react-native-community/cli info"
+        Run the command `npx @react-native-community/cli info` in your terminal and copy the result here.
+      placeholder: "npx @react-native-community/cli info"
       render: markdown
     id: env
   - type: textarea
@@ -54,35 +63,36 @@ body:
       description: Describe what you community modules you have added to your project. Not sure? Look at your app's `package.json` and share what's in the "dependencies" section.
     id: modules
   - type: dropdown
+    validations:
+      required: true
     attributes:
-      label: Target Platform Version
-      description: What SDK version are you building for?
-      options:
-        - "10.0.15063"
-        - "10.0.16299"
-        - "10.0.19041"
-        - "10.0.22000"
-        - "10.0.22321"
-        - "10.0.22621"
-    id: sdk
-  - type: dropdown
-    attributes:
-      label: Target Device(s)
-      description: What device(s) are you targeting?
+      label: Target React Native Architecture
+      description: Which React Native architecture are you using?
       multiple: true
       options:
-        - "Desktop"
-        - "Xbox"
-        - "HoloLens"
-    id: device
+        - "New Architecture"
+        - "Old Architecture"
+  - type: dropdown
+    attributes:
+      label: Target Platform Version
+      description: What Windows SDK version are you building for?
+      options:
+        - "<= 10.0.17763"
+        - "10.0.17763"
+        - "10.0.18362"
+        - "10.0.19041"
+        - "10.0.22000"
+        - "10.0.22621"
+        - "10.0.26100"
+        - ">= 10.0.26100"
+    id: sdk
   - type: dropdown
     attributes:
       label: Visual Studio Version
       description: Which version of Visual Studio are you using?
       options:
-        - "Visual Studio 2017"
-        - "Visual Studio 2019"
         - "Visual Studio 2022"
+        - "Visual Studio 2022 Preview"
     id: vs
   - type: dropdown
     attributes:
@@ -94,18 +104,13 @@ body:
         - "Release"
         - "ReleaseBundle"
     id: config
-  - type: markdown
-    attributes:
-      value: |
-        **Troubleshooting**
-        If you see build failure on `npx @react-native-community/cli run-windows`, please try again with `npx @react-native-community/cli run-windows --logging` and provide the output.
-    id: troubleshoot
   - type: textarea
     attributes:
       label: Snack, code example, screenshot, or link to a repository
       description: |
         Please provide a [Snack](https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem.
+
         You may provide a screenshot of the application if you think it is relevant to your bug report.
+
         [Here are some tips for providing a minimal example](https://stackoverflow.com/help/mcve).
     id: code
-
