@@ -6,7 +6,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        This is a template for new feature or API proposals for React Native for Windows. Use this to submit new API/component requests or behavior updates that are specific to Windows. For feature requests to React Native, go [here](https://github.com/react-native-community/discussions-and-proposals) instead. 
+        This form is for new feature or API (modules or components, methods or properties, etc.) proposals for React Native for Windows. Use this to submit new API requests or behavior updates that are *specific* to Windows.
+        
+        If the feature is an existing React Native API that is simply missing in React Native for Windows, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=missing-api.yaml) instead.
+
+        For feature requests to React Native, go [here](https://github.com/react-native-community/discussions-and-proposals) instead.
         
         Read more about React Native for Windows proposal process [here](https://github.com/microsoft/react-native-windows/tree/main/vnext/proposals).
         
@@ -24,7 +28,10 @@ body:
       label: Motivation
       description: |
         Why are we doing this? What use cases does it support? What is the expected outcome? Why should this be done for Windows?
-        Please focus on explaining the motivation so that if this proposal is not accepted, the motivation could be used to develop alternative solutions. In other words, enumerate the constraints you are trying to solve without coupling them too closely to the solution you have in mind.
+
+        Please focus on explaining the motivation so that if this proposal is not accepted, the motivation could be used to develop alternative solutions.
+        
+        In other words, enumerate the constraints you are trying to solve without coupling them too closely to the solution you have in mind.
   - type: textarea
     attributes:
       label: Basic Example
@@ -34,5 +41,6 @@ body:
     attributes:
       label: Open Questions
       description: |
-        Please list any open issues that you think still need to be addressed.
-        These could include areas you think would benefit from community or the react-native-windows team input
+        Please list any open questions or issues that you think still need to be addressed before this suggestion can be implemented.
+
+        These could include areas you think would benefit from the community or the RNW team's input.

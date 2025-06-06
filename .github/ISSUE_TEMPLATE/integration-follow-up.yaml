@@ -5,38 +5,40 @@ body:
   - type: markdown
     attributes:
       value: |
+        This form is for reporting issues arising from integrating upstream `react-native` code that were worked around but will need some follow-up after the integration.
+
         Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
   - type: textarea
     validations:
       required: true
     attributes:
       label: Problem Description
-      description: This form is for reporting errors arising from Meta integrations. Please provide a detailed description of the issue and any relevant information that may assist in debugging.
+      description: Please provide a detailed description of the issue and any relevant information that may assist in debugging.
     id: description
-  - type: textarea
+  - type: input
     validations:
       required: true
     attributes:
-      label: Link to the integration where the error originated
+      label: Link to the integration PR where the error originated
     id: integration
   - type: textarea
     validations:
       required: true
     attributes:
-      label: Link to commit
+      label: Link to `react-native` commit
       description: Please link the specific commit from upstream that introduced the issue. If the exact commit is unknown, provide the range of commits brought in from the integration.
     id: commit
   - type: textarea
     attributes:
       label: Forked files
-      description: If any files were forked from upstream, list them below and ensure that any Windows-specific changes in those files are enclosed in [Windows] comments."
+      description: If any files were forked from upstream, list them below and ensure that any Windows-specific changes in those files are enclosed in [Windows] comments.
       placeholder: |
         1.
         2.
     id: files
   - type: textarea
     attributes:
-      label: Upstream PR
+      label: Upstream PR in `react-native`
       description: If an upstream PR has already been made, please link it and add the date the fork can be removed.
     id: upstream
   - type: dropdown
