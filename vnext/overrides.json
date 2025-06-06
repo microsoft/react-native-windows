@@ -570,6 +570,13 @@
     },
     {
       "type": "patch",
+      "file": "src-win/Libraries/ReactNative/getNativeComponentAttributes.windows.js",
+      "baseFile": "packages/react-native/Libraries/ReactNative/getNativeComponentAttributes.js",
+      "baseHash": "b6a30163636ad82b1e52ac6bac613e45837c354c",
+      "issue": 14744
+    },
+    {
+      "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
       "baseHash": "7a14c3d42ba7442848bd90329f6d31bda323c6d4"
