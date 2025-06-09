@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.78 to legacy",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
