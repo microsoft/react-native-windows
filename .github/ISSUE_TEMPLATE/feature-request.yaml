@@ -2,6 +2,7 @@ name: Feature request
 description: Suggest a new feature or idea
 title: Your feature request
 labels: [enhancement]
+type: 'Task'
 body:
   - type: markdown
     attributes:
