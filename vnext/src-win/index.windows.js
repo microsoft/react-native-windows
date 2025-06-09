@@ -53,7 +53,7 @@ import typeof TouchableNativeFeedback from './Libraries/Components/Touchable/Tou
 import typeof TouchableOpacity from './Libraries/Components/Touchable/TouchableOpacity';
 import typeof TouchableWithoutFeedback from './Libraries/Components/Touchable/TouchableWithoutFeedback';
 import typeof View from './Libraries/Components/View/View';
-import typeof RegisterCallableModule from './Libraries/Core/registerCallableModule';
+import typeof registerCallableModule from './Libraries/Core/registerCallableModule';
 import typeof NativeEventEmitter from './Libraries/EventEmitter/NativeEventEmitter';
 import typeof RCTDeviceEventEmitter from './Libraries/EventEmitter/RCTDeviceEventEmitter';
 import typeof RCTNativeAppEventEmitter from './Libraries/EventEmitter/RCTNativeAppEventEmitter';
