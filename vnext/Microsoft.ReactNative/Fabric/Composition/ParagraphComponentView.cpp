@@ -63,6 +63,10 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  if (oldViewProps.paragraphAttributes.ellipsizeMode != newViewProps.paragraphAttributes.ellipsizeMode) {
+    m_textLayout = nullptr;
+  }
+
   if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
     m_requireRedraw = true;
   }
@@ -100,7 +104,7 @@ void ParagraphComponentView::FinalizeUpdates(
 
 facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPoint(
     facebook::react::Point pt) noexcept {
-  if (m_attributedStringBox.getValue().getFragments().size()) {
+  if (m_attributedStringBox.getValue().getFragments().size() && m_textLayout) {
     BOOL isTrailingHit = false;
     BOOL isInside = false;
     DWRITE_HIT_TEST_METRICS metrics;
@@ -123,35 +127,8 @@ facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPo
 
 void ParagraphComponentView::updateTextAlignment(
     const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept {
+  // Reset text layout to force recreation with new alignment
   m_textLayout = nullptr;
-  if (!m_textLayout)
-    return;
-
-  DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-  if (fbAlignment) {
-    switch (*fbAlignment) {
-      case facebook::react::TextAlignment::Center:
-        alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
-        break;
-      case facebook::react::TextAlignment::Justified:
-        alignment = DWRITE_TEXT_ALIGNMENT_JUSTIFIED;
-        break;
-      case facebook::react::TextAlignment::Left:
-        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-        break;
-      case facebook::react::TextAlignment::Right:
-        alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
-        break;
-      // TODO use LTR values
-      case facebook::react::TextAlignment::Natural:
-        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-        break;
-      default:
-        assert(false);
-    }
-  }
-  // TODO
-  // m_textFormat->SetTextAlignment(alignment);
 }
 
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
@@ -163,7 +140,6 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
 
   // TODO
   // updateTextAlignment(paragraphProps.textAttributes.alignment);
-
   if (!m_textLayout) {
     facebook::react::LayoutConstraints constraints;
     constraints.maximumSize.width =
@@ -173,6 +149,35 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
 
     facebook::react::WindowsTextLayoutManager::GetTextLayout(
         m_attributedStringBox, m_paragraphAttributes, constraints, m_textLayout);
+
+    // Apply text alignment after creating the text layout
+    if (m_textLayout) {
+      const auto &props = paragraphProps();
+      DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+      if (props.textAttributes.alignment) {
+        switch (*props.textAttributes.alignment) {
+          case facebook::react::TextAlignment::Center:
+            alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+            break;
+          case facebook::react::TextAlignment::Justified:
+            alignment = DWRITE_TEXT_ALIGNMENT_JUSTIFIED;
+            break;
+          case facebook::react::TextAlignment::Left:
+            alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+            break;
+          case facebook::react::TextAlignment::Right:
+            alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
+            break;
+          case facebook::react::TextAlignment::Natural:
+            alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+            break;
+          default:
+            alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+            break;
+        }
+      }
+      winrt::check_hresult(m_textLayout->SetTextAlignment(alignment));
+    }
 
     requireNewBrush = true;
   }
@@ -275,9 +280,7 @@ void ParagraphComponentView::DrawText() noexcept {
       d2dDeviceContext->Clear(
           viewProps()->backgroundColor ? theme()->D2DColor(*viewProps()->backgroundColor)
                                        : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-
       const auto &props = paragraphProps();
-
       RenderText(
           *d2dDeviceContext,
           *m_textLayout,

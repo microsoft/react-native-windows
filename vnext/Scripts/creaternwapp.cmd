@@ -111,8 +111,14 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 
 @echo creaternwapp.cmd Creating RNW app "%APP_NAME%" with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 
-@echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true
-call npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true
+set RNCLI_TEMPLATE=
+if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
+  @echo creaternwapp.cmd Override @react-native-community/template version
+  set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0"
+)
+
+@echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
+call npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwapp.cmd: Unable to create base RN app project
@@ -134,7 +140,7 @@ call yarn install
 @echo creaternwapp.cmd: Creating commit to save current state
 if not exist ".git\" call git init .
 call git add .
-call git commit -m "npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true"
+call git commit -m "npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true"
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting yarn to use verdaccio at http://localhost:4873

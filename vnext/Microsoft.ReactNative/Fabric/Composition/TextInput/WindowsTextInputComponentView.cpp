@@ -320,20 +320,30 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
           return (*m_outer->windowsTextInputProps().textAttributes.foregroundColor).AsColorRefNoAlpha();
         // cr = 0x000000FF;
         break;
-
       case COLOR_WINDOW:
         if (m_outer->viewProps()->backgroundColor)
           return (*m_outer->viewProps()->backgroundColor).AsColorRefNoAlpha();
         break;
-        // case COLOR_HIGHLIGHT:
-        // cr = RGB(0, 0, 255);
-        // cr = 0x0000ffFF;
-        //          break;
 
-        // case COLOR_HIGHLIGHTTEXT:
-        // cr = RGB(255, 0, 0);
-        // cr = 0xFFFFFFFF;
-        //          break;
+      case COLOR_HIGHLIGHT:
+        if (m_outer->windowsTextInputProps().selectionColor)
+          return (*m_outer->windowsTextInputProps().selectionColor).AsColorRefNoAlpha();
+        break;
+
+      case COLOR_HIGHLIGHTTEXT:
+        // For selected text color, we use the same color as the selection background
+        // or the text color if selection color is not specified
+        if (m_outer->windowsTextInputProps().selectionColor) {
+          // Calculate appropriate text color based on selection background
+          auto selectionColor = (*m_outer->windowsTextInputProps().selectionColor).AsColorRefNoAlpha();
+          // Use white text for dark selection, black text for light selection
+          int r = GetRValue(selectionColor);
+          int g = GetGValue(selectionColor);
+          int b = GetBValue(selectionColor);
+          int brightness = (r * 299 + g * 587 + b * 114) / 1000;
+          return brightness > 125 ? RGB(0, 0, 0) : RGB(255, 255, 255);
+        }
+        break;
 
         // case COLOR_GRAYTEXT:
         // cr = RGB(128, 128, 128);
@@ -1126,9 +1136,12 @@ void WindowsTextInputComponentView::updateProps(
     bool effectiveSpellCheck = newTextInputProps.spellCheck || newTextInputProps.autoCorrect;
     updateSpellCheck(effectiveSpellCheck);
   }
-
   if (!oldProps || oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect) {
     updateAutoCorrect(newTextInputProps.autoCorrect);
+  }
+
+  if (oldTextInputProps.selectionColor != newTextInputProps.selectionColor) {
+    m_needsRedraw = true;
   }
 
   UpdatePropertyBits();
