@@ -1,6 +1,7 @@
 name: Integration Follow-up Report
 description: File an integration follow-up issue
 labels: [Integration Follow-up]
+type: 'Task'
 body:
   - type: markdown
     attributes:
