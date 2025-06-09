@@ -8,7 +8,7 @@ body:
       value: |
         This form is for new feature or API (modules or components, methods or properties, etc.) proposals for React Native for Windows. Use this to submit new API requests or behavior updates that are *specific* to Windows.
         
-        If the feature is an existing React Native API that is simply missing in React Native for Windows, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=missing-api.yaml) instead.
+        If your request is for is an existing React Native API that is simply missing in React Native for Windows, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=missing-api.yaml) instead.
 
         For feature requests to React Native, go [here](https://github.com/react-native-community/discussions-and-proposals) instead.
         

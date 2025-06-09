@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        This form is for reporting issues arising from integrating upstream `react-native` code that were worked around but will need some follow-up after the integration.
+        This form is for reporting issues in React Native for Windows arising from integrating upstream `react-native` code, where the issues were worked-around or fixed locally to unblock the integration, but will need some follow-up afterward.
 
         Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
   - type: textarea

@@ -2,6 +2,7 @@ name: Missing React Native API on Windows
 description: Report that a React Native API is missing on Windows
 title: Implement <missing API name> for <architecture>
 labels: ['enhancement', 'API: Completion']
+type: 'Task'
 body:
   - type: markdown
     attributes:

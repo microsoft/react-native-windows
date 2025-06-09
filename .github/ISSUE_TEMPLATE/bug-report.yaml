@@ -8,7 +8,7 @@ body:
       value: |
         This form is for reporting bugs found in React Native for Windows.
         
-        If the issue is that an existing React Native API that is simply missing in React Native for Windows, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=missing-api.yaml) instead.
+        If the issue is that an existing React Native API is simply missing in React Native for Windows, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=missing-api.yaml) instead.
 
         If you just have a question, please post on [Discussions](https://github.com/microsoft/react-native-windows/discussions) instead.
 
@@ -21,7 +21,7 @@ body:
       description: |
         Please enter a description of the issue and any output and/or error logging.
         
-        If you're seeing a failure when using a RNW CLI command (i.e. `run-windows`, `autolink-windows`, `codegen-windows`) please try again with `--logging` and provide the output.
+        If you're seeing a failure when using a RNW CLI command (i.e. `run-windows`, `autolink-windows`, `codegen-windows`) please try again with `--logging` and provide that output.
     id: description
   - type: textarea
     validations:
@@ -60,18 +60,26 @@ body:
   - type: textarea
     attributes:
       label: Community Modules
-      description: Describe what you community modules you have added to your project. Not sure? Look at your app's `package.json` and share what's in the "dependencies" section.
+      description: |
+        Describe what you community modules you have added to your project.
+        
+        Not sure? Look at your app's `package.json` and share what's in the "dependencies" section.
     id: modules
   - type: dropdown
     validations:
       required: true
     attributes:
       label: Target React Native Architecture
-      description: Which React Native architecture are you using?
+      description: |
+        Which React Native architecture(s) are you using?
+        
+        Not sure? Which template did you use when creating your project? For RNW <= 0.79.0, the default for new app projects is "Old Architecture".
+        
+        See [New vs. Old Architecture](https://microsoft.github.io/react-native-windows/docs/new-architecture) for more details.
       multiple: true
       options:
-        - "New Architecture"
-        - "Old Architecture"
+        - "New Architecture (WinAppSDK)"
+        - "Old Architecture (UWP)"
   - type: dropdown
     attributes:
       label: Target Platform Version
