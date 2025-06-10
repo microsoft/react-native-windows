@@ -167,6 +167,8 @@ x86/
 bld/
 [Ll]og/
 *.binlog
+*.err
+*.wrn
 
 # Certificates
 *.pfx
