@@ -15,7 +15,6 @@
 
 import type {RNTesterModule} from '../../types/RNTesterTypes';
 
-import hotdog from '../../assets/hotdog.jpg';
 import RNTesterText from '../../components/RNTesterText';
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
@@ -23,7 +22,6 @@ import TextInlineViewsExample from './TextInlineViewsExample';
 const TextInlineView = require('../../components/TextInlineView');
 const React = require('react');
 const {
-  Image,
   LayoutAnimation,
   StyleSheet,
   Text,
@@ -551,7 +549,6 @@ function NumberOfLinesExample(props: {}): React.Node {
         should be truncated. The hotdog should be truncated. The hotdog should
         be truncated. The hotdog should be truncated. The hotdog should be
         truncated. The hotdog should be truncated.
-        <Image source={hotdog} style={{height: 12}} />
       </RNTesterText>
       <RNTesterText style={[{marginTop: 20}, styles.wrappedText]}>
         No maximum lines specified no matter now much I write here. If I keep
