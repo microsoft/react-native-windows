@@ -636,6 +636,13 @@
     },
     {
       "type": "patch",
+      "file": "src-win/src/private/featureflags/ReactNativeFeatureFlagsBase.js",
+      "baseFile": "packages/react-native/src/private/featureflags/ReactNativeFeatureFlagsBase.js",
+      "baseHash": "32823af7188e2935b7fbf1cb368ab9ad94b38d4f",
+      "issue": 0
+    },
+    {
+      "type": "patch",
       "file": "src-win/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseHash": "b68cd3eb3257f988de7a238ebd5e6424769531a7",
