@@ -67,20 +67,18 @@ body:
         Not sure? Look at your app's `package.json` and share what's in the "dependencies" section.
     id: modules
   - type: dropdown
-    validations:
-      required: true
     attributes:
       label: Target React Native Architecture
       description: |
-        Which React Native architecture(s) are you using?
+        For which React Native architecture(s) did this issue repro for you?
         
         Not sure? Which template did you use when creating your project? For RNW <= 0.79.0, the default for new app projects is "Old Architecture".
         
         See [New vs. Old Architecture](https://microsoft.github.io/react-native-windows/docs/new-architecture) for more details.
-      multiple: true
       options:
-        - "New Architecture (WinAppSDK)"
-        - "Old Architecture (UWP)"
+        - "Both Architectures"
+        - "New Architecture (WinAppSDK) Only"
+        - "Old Architecture (UWP) Only"
   - type: dropdown
     attributes:
       label: Target Platform Version
