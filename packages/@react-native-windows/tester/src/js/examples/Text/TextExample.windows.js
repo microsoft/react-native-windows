@@ -526,7 +526,10 @@ function MaxFontSizeMultiplierExample(props: {}): React.Node {
 function NumberOfLinesExample(props: {}): React.Node {
   return (
     <View testID="number-of-lines">
-      <RNTesterText numberOfLines={1} style={styles.wrappedText}>
+      <RNTesterText
+        numberOfLines={1}
+        style={styles.wrappedText}
+        testID={'text-one-line'}>
         Maximum of one line no matter now much I write here. If I keep writing
         it{"'"}ll just truncate after one line
       </RNTesterText>
