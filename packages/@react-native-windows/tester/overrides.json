@@ -129,8 +129,7 @@
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "5cfdbaaa81a57c5611955cce6f484eca7ad7a355",
-      "issue": 0
+      "baseHash": "5cfdbaaa81a57c5611955cce6f484eca7ad7a355"
     },
     {
       "type": "patch",

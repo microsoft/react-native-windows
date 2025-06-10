@@ -292,8 +292,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "92bfefb1a48b340fb9728044cd7647464e357997",
-      "issue": 0
+      "baseHash": "92bfefb1a48b340fb9728044cd7647464e357997"
     },
     {
       "type": "copy",
@@ -530,8 +529,7 @@
       "type": "copy",
       "file": "js/examples/Urls/UrlExample.js",
       "baseFile": "packages/rn-tester/js/examples/Urls/UrlExample.js",
-      "baseHash": "2dc9c4108dc6983696bd0fcdf619d653f99545e6",
-      "issue": 0
+      "baseHash": "2dc9c4108dc6983696bd0fcdf619d653f99545e6"
     },
     {
       "type": "copy",
@@ -670,15 +668,13 @@
       "type": "copy",
       "file": "ReportFullyDrawnView/ReportFullyDrawnView.js",
       "baseFile": "packages/rn-tester/ReportFullyDrawnView/ReportFullyDrawnView.js",
-      "baseHash": "2f2b868b9b4870303f8665e55293cce4ed6b8d3f",
-      "issue": 0
+      "baseHash": "2f2b868b9b4870303f8665e55293cce4ed6b8d3f"
     },
     {
       "type": "copy",
       "file": "ReportFullyDrawnView/ReportFullyDrawnViewNativeComponent.js",
       "baseFile": "packages/rn-tester/ReportFullyDrawnView/ReportFullyDrawnViewNativeComponent.js",
-      "baseHash": "6bf9a8a646111c9613a511281686d8cec6c964ca",
-      "issue": 0
+      "baseHash": "6bf9a8a646111c9613a511281686d8cec6c964ca"
     }
   ]
 }

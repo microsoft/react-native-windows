@@ -92,8 +92,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
-      "baseHash": "454f8b04bd6203c70b48aa6ec26e1c05dee42124",
-      "issue": 0
+      "baseHash": "454f8b04bd6203c70b48aa6ec26e1c05dee42124"
     },
     {
       "type": "copy",
@@ -136,8 +135,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "5e13ce3ef1cfeb38a1a9695c3013617527c21175",
-      "issue": 0
+      "baseHash": "5e13ce3ef1cfeb38a1a9695c3013617527c21175"
     },
     {
       "type": "derived",
@@ -402,8 +400,7 @@
       "type": "copy",
       "file": "src-win/Libraries/StyleSheet/StyleSheet.js",
       "baseFile": "packages/react-native/Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "49fb1640b0942be2966d759057ca5923c5358c81",
-      "issue": 0
+      "baseHash": "49fb1640b0942be2966d759057ca5923c5358c81"
     },
     {
       "type": "derived",
