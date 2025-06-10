@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": " ",
+  "comment": "Implement onPressOut event emission in TextInput fabric component",
   "packageName": "react-native-windows",
   "email": "198982749+Copilot@users.noreply.github.com",
   "dependentChangeType": "patch"
