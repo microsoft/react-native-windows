@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 10 Jun 2025 18:35:18 GMT",
+      "version": "0.79.0",
+      "tag": "@react-native-windows/codegen_v0.79.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "94f97f4e9f173382c89474ac8ff2b42dbec69b71",
+            "comment": "Promote 0.79 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.79.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Jun 2025 19:26:30 GMT",
       "version": "0.79.0-preview.1",
       "tag": "@react-native-windows/codegen_v0.79.0-preview.1",

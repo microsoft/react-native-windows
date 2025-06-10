@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Promote 0.79 to latest",
-  "packageName": "@react-native-windows/fs",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
