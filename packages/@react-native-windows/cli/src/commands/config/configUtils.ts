@@ -540,10 +540,16 @@ export function getRnwConfig(
 
   const config: Record<string, any> = pkgJson['react-native-windows'] ?? {};
 
+  const info = getRawTemplateInfo(projectFile);
+
+  // inject raw templateInfo for later command use
+  config.projectArch = info.projectArch;
+  config.projectLang = info.projectLang;
+  config.projectType = info.projectType;
+
   // if init-windows is missing (most existing projects), try to auto-calculate it
   config['init-windows'] ??= {};
   if (!config['init-windows'].template) {
-    const info = getRawTemplateInfo(projectFile);
     if (info.projectArch && info.projectLang && info.projectType) {
       config['init-windows'].template = `${
         info.projectArch === 'old' ? 'old/uwp-' : ''
