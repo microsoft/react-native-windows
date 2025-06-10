@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Force all in-repo projects to build locally with RestoreForceEvaluate",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
