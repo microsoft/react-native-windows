@@ -700,8 +700,6 @@ void WindowsTextInputComponentView::OnPointerPressed(
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     float offsetX = position.X - m_layoutMetrics.frame.origin.x;
     float offsetY = position.Y - m_layoutMetrics.frame.origin.y;
-    float neutralX = m_layoutMetrics.frame.origin.x;
-    float neutralY = m_layoutMetrics.frame.origin.y;
 
     facebook::react::GestureResponderEvent pressInArgs;
     pressInArgs.target = m_tag;
