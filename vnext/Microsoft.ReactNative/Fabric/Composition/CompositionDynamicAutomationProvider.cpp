@@ -31,8 +31,6 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
   }
-
-
 }
 
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
