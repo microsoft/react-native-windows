@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove deprecated autolink functionality to copy useWinUI3 flags from react-native.config.js into ExperimentalFeatures.props",
+  "packageName": "@react-native-windows/cli",
+  "email": "copilot@github.com",
+  "dependentChangeType": "prerelease"
+}
