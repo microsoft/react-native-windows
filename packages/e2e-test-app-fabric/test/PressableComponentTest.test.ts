@@ -113,10 +113,10 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('pressable_feedback_events_button');
     expect(dump).toMatchSnapshot();
     await component.moveTo();
-    const console = await app.findElementByTestID(
+    const consoleElement = await app.findElementByTestID(
       'pressable_feedback_events_console',
     );
-    await console.moveTo();
+    await consoleElement.moveTo();
     const dump2 = await dumpVisualTree('pressable_feedback_events_console');
     expect(dump2).toMatchSnapshot();
     await app.waitUntil(
@@ -282,17 +282,17 @@ describe('Pressable Tests', () => {
       'pressable_feedback_events_button',
     );
     await component.waitForDisplayed({timeout: 20000});
-    
+
     // Test that long press functionality is available by capturing events
     await component.click();
     await app.pause(1000); // Allow time for events to be processed
-    
-    const console = await app.findElementByTestID(
+
+    const consoleElement = await app.findElementByTestID(
       'pressable_feedback_events_console',
     );
     const dump = await dumpVisualTree('pressable_feedback_events_console');
     expect(dump).toMatchSnapshot();
-    
+
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
@@ -322,17 +322,17 @@ describe('Pressable Tests', () => {
       'pressable_delay_events_button',
     );
     await component.waitForDisplayed({timeout: 20000});
-    
+
     // Test delayLongPress behavior by capturing delayed event responses
     await component.click();
     await app.pause(1000); // Allow time for delayed events to be processed
-    
-    const console = await app.findElementByTestID(
+
+    const consoleElement = await app.findElementByTestID(
       'pressable_delay_events_console',
     );
     const dump = await dumpVisualTree('pressable_delay_events_console');
     expect(dump).toMatchSnapshot();
-    
+
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
@@ -362,13 +362,13 @@ describe('Pressable Tests', () => {
       'pressable_hit_slop_button',
     );
     await component.waitForDisplayed({timeout: 20000});
-    
+
     // Click on the component to test hitSlop interaction
     await component.click();
-    
+
     const dump = await dumpVisualTree('pressable_hit_slop');
     expect(dump).toMatchSnapshot();
-    
+
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
@@ -394,19 +394,23 @@ describe('Pressable Tests', () => {
         timeoutMsg: `Unable to enter correct search text into test searchbox.`,
       },
     );
-    
+
     // Test disabled=true styling
-    const disabledComponent = await app.findElementByTestID('pressable_disabled_true');
+    const disabledComponent = await app.findElementByTestID(
+      'pressable_disabled_true',
+    );
     await disabledComponent.waitForDisplayed({timeout: 20000});
     const disabledDump = await dumpVisualTree('pressable_disabled_true');
     expect(disabledDump).toMatchSnapshot();
-    
+
     // Test disabled=false styling with press state
-    const enabledComponent = await app.findElementByTestID('pressable_disabled_false');
+    const enabledComponent = await app.findElementByTestID(
+      'pressable_disabled_false',
+    );
     await enabledComponent.waitForDisplayed({timeout: 20000});
     const enabledDump = await dumpVisualTree('pressable_disabled_false');
     expect(enabledDump).toMatchSnapshot();
-    
+
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
@@ -432,13 +436,13 @@ describe('Pressable Tests', () => {
         timeoutMsg: `Unable to enter correct search text into test searchbox.`,
       },
     );
-    
+
     // Test pressable with different content based on press state
     const component = await app.findElementByTestID('one_press_me_button');
     await component.waitForDisplayed({timeout: 20000});
     const initialDump = await dumpVisualTree('one_press_me_button');
     expect(initialDump).toMatchSnapshot();
-    
+
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
@@ -454,7 +458,7 @@ describe('Pressable Tests', () => {
   // TODO: Add fast refresh tests once test components are available
   // These tests would require components with buttons/toggles to change properties at runtime:
   // - Pressable should update border styling upon fast refresh
-  // - Pressable should update children upon fast refresh  
+  // - Pressable should update children upon fast refresh
   // - Pressable should update disabled styling upon fast refresh
   test('Pressables can have advanced borders', async () => {
     const component = await app.findElementByTestID(
