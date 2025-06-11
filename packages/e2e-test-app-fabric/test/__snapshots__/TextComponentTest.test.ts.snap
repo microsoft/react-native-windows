@@ -18,7 +18,7 @@ exports[`Text Tests Padding can be added to Text 1`] = `
   "Visual Tree": {
     "Comment": "text-padding",
     "Offset": "0, 0, 0",
-    "Size": "916, 39",
+    "Size": "916, 40",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -234,7 +234,7 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
   "Visual Tree": {
     "Comment": "text-one-line",
     "Offset": "0, 0, 0",
-    "Size": "300, 19",
+    "Size": "300, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -258,7 +258,7 @@ exports[`Text Tests Text can be selectable 1`] = `
   "Visual Tree": {
     "Comment": "text-selectable",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "916, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -282,7 +282,7 @@ exports[`Text Tests Text can have a color 1`] = `
   "Visual Tree": {
     "Comment": "text-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "916, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -306,7 +306,7 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
   "Visual Tree": {
     "Comment": "text-selection-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 19",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -330,7 +330,7 @@ exports[`Text Tests Text can have a size 1`] = `
   "Visual Tree": {
     "Comment": "text-size",
     "Offset": "0, 0, 0",
-    "Size": "916, 31",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -482,12 +482,12 @@ exports[`Text Tests Text can have advanced borders 1`] = `
       },
       {
         "Offset": "0, 38, 0",
-        "Size": "916, 39",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 39",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -523,7 +523,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "-10, 20, 0",
-                "Size": "10, 13",
+                "Size": "10, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -559,7 +559,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 22, 0",
-                "Size": "20, 9",
+                "Size": "20, 10",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -568,12 +568,12 @@ exports[`Text Tests Text can have advanced borders 1`] = `
       },
       {
         "Offset": "0, 77, 0",
-        "Size": "916, 22",
+        "Size": "916, 21",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 22",
+            "Size": "916, 21",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -609,7 +609,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "-1, 4, 0",
-                "Size": "1, 14",
+                "Size": "1, 13",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -645,7 +645,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "0, 4, 0",
-                "Size": "1, 14",
+                "Size": "1, 13",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -799,12 +799,12 @@ exports[`Text Tests Text can have borders 1`] = `
       },
       {
         "Offset": "100, 127, 0",
-        "Size": "716, 138",
+        "Size": "716, 139",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "716, 138",
+            "Size": "716, 139",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -886,7 +886,7 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
   "Visual Tree": {
     "Comment": "text-decoration-solid-linethru",
     "Offset": "0, 0, 0",
-    "Size": "916, 19",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1042,24 +1042,24 @@ exports[`Text Tests Text can have nested views 1`] = `
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
         "Offset": "0, 18, 0",
-        "Size": "916, 24",
+        "Size": "916, 23",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 24",
+            "Size": "916, 23",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1105,7 +1105,7 @@ exports[`Text Tests Text can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "text-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 27",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1129,7 +1129,7 @@ exports[`Text Tests Text can wrap 1`] = `
   "Visual Tree": {
     "Comment": "text-wrap",
     "Offset": "0, 0, 0",
-    "Size": "300, 38",
+    "Size": "300, 39",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1228,12 +1228,12 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1286,12 +1286,12 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
       },
       {
         "Offset": "0, 103, 0",
-        "Size": "916, 20",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
