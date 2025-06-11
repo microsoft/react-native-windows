@@ -381,8 +381,8 @@ export class Telemetry {
       common: {
         device: {
           architecture: Telemetry.commonProperties.deviceArchitecture,
-          numCPUs: Telemetry.commonProperties.numCPUs,
-          totalMemory: Telemetry.commonProperties.totalMemory,
+          numCPUs: Telemetry.commonProperties.deviceNumCPUs,
+          totalMemory: Telemetry.commonProperties.deviceTotalMemory,
           diskFreeSpace: Telemetry.commonProperties.deviceDiskFreeSpace,
         },
         nodePlatform: Telemetry.commonProperties.nodePlatform,
@@ -392,7 +392,7 @@ export class Telemetry {
         isMsftInternal: Telemetry.commonProperties.isMsftInternal,
         isCliTest: Telemetry.commonProperties.isTest,
         sessionId: Telemetry.commonProperties.sessionId,
-        commandName: Telemetry.commonProperties.commandName,
+        commandName: Telemetry.commonProperties.commandName ?? 'Unknown',
       },
       // Set project and versions props, belonging to Part B.
       project: Telemetry.projectProp,
@@ -415,7 +415,7 @@ export class Telemetry {
       durationInSecs:
         (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) /
         1000,
-      resultCode: Telemetry.commandInfo.endInfo?.resultCode,
+      resultCode: Telemetry.commandInfo.endInfo?.resultCode ?? 'Unknown',
     };
 
     telemetryItem.data = {
