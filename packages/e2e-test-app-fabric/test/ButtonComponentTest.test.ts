@@ -138,4 +138,93 @@ describe('Button Tests', () => {
     const dump3 = await dumpVisualTree('accessible_focusable_false_button');
     expect(dump3).toMatchSnapshot();
   });
+
+  // Functional tests for dynamic button behaviors
+  test('Button text should update on fast refresh', async () => {
+    await searchBox('dynamic text');
+    const component = await app.findElementByTestID('dynamic_text_button');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Get initial state
+    const initialDump = await dumpVisualTree('dynamic_text_button');
+    expect(initialDump).toMatchSnapshot('initial-text');
+    
+    // Click to change text
+    await component.click();
+    
+    // Verify text updated
+    const updatedDump = await dumpVisualTree('dynamic_text_button');
+    expect(updatedDump).toMatchSnapshot('updated-text');
+    expect(updatedDump.Text).toContain('Pressed 1 times');
+  });
+
+  test('Button color should update on fast refresh', async () => {
+    await searchBox('dynamic color');
+    const component = await app.findElementByTestID('dynamic_color_button');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Get initial state
+    const initialDump = await dumpVisualTree('dynamic_color_button');
+    expect(initialDump).toMatchSnapshot('initial-color');
+    
+    // Click to change color
+    await component.click();
+    
+    // Verify color updated (visual tree should show different styling)
+    const updatedDump = await dumpVisualTree('dynamic_color_button');
+    expect(updatedDump).toMatchSnapshot('updated-color');
+  });
+
+  test('Button disabled status should update on fast refresh', async () => {
+    await searchBox('dynamic disabled');
+    const component = await app.findElementByTestID('dynamic_disabled_button');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Get initial state (should be enabled)
+    const initialDump = await dumpVisualTree('dynamic_disabled_button');
+    expect(initialDump).toMatchSnapshot('initial-enabled');
+    
+    // Click to disable
+    await component.click();
+    
+    // Verify button is now disabled
+    const disabledDump = await dumpVisualTree('dynamic_disabled_button');
+    expect(disabledDump).toMatchSnapshot('disabled-state');
+    expect(disabledDump.Text).toContain('Disabled');
+    
+    // Wait for auto re-enable (2 seconds)
+    await app.waitUntil(
+      async () => {
+        const dump = await dumpVisualTree('dynamic_disabled_button');
+        return dump.Text.includes('Disable Me');
+      },
+      {
+        timeout: 3000,
+        interval: 500,
+        timeoutMsg: 'Button should auto re-enable after 2 seconds',
+      }
+    );
+    
+    // Verify button is enabled again
+    const reEnabledDump = await dumpVisualTree('dynamic_disabled_button');
+    expect(reEnabledDump).toMatchSnapshot('re-enabled-state');
+  });
+
+  test('Button should update relevant styling upon press', async () => {
+    await searchBox('dynamic styling');
+    const component = await app.findElementByTestID('dynamic_style_button');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Get initial state
+    const initialDump = await dumpVisualTree('dynamic_style_button');
+    expect(initialDump).toMatchSnapshot('initial-styling');
+    
+    // Click to change styling
+    await component.click();
+    
+    // Verify styling updated (should show press count and temporary color change)
+    const updatedDump = await dumpVisualTree('dynamic_style_button');
+    expect(updatedDump).toMatchSnapshot('updated-styling');
+    expect(updatedDump.Text).toContain('Style Button (1)');
+  });
 });

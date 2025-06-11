@@ -221,11 +221,146 @@ exports.examples = [
       );
     },
   },
+  {
+    title: 'Button with dynamic text',
+    description: 'Button text updates when pressed',
+    render: function (): React.Node {
+      return <DynamicTextButton />;
+    },
+  },
+  {
+    title: 'Button with dynamic color',
+    description: 'Button color updates when pressed',
+    render: function (): React.Node {
+      return <DynamicColorButton />;
+    },
+  },
+  {
+    title: 'Button with dynamic disabled state',
+    description: 'Button disabled state toggles when pressed',
+    render: function (): React.Node {
+      return <DynamicDisabledButton />;
+    },
+  },
+  {
+    title: 'Button with dynamic styling on press',
+    description: 'Button updates styling when pressed',
+    render: function (): React.Node {
+      return <DynamicStyleButton />;
+    },
+  },
 ];
+
+// Dynamic Button Components for fast refresh testing
+function DynamicTextButton(): React.Node {
+  const [buttonText, setButtonText] = React.useState('Initial Text');
+  const [pressCount, setPressCount] = React.useState(0);
+
+  const onPress = () => {
+    const newCount = pressCount + 1;
+    setPressCount(newCount);
+    setButtonText(`Pressed ${newCount} times`);
+  };
+
+  return (
+    <Button
+      onPress={onPress}
+      testID="dynamic_text_button"
+      title={buttonText}
+      accessibilityLabel="Press to change button text"
+    />
+  );
+}
+
+function DynamicColorButton(): React.Node {
+  const [colorIndex, setColorIndex] = React.useState(0);
+  const colors = ['#007AFF', '#FF3B30', '#34C759', '#FF9500', '#5856D6'];
+  
+  const onPress = () => {
+    setColorIndex((prev) => (prev + 1) % colors.length);
+  };
+
+  return (
+    <RNTesterThemeContext.Consumer>
+      {theme => (
+        <Button
+          onPress={onPress}
+          testID="dynamic_color_button"
+          color={colors[colorIndex]}
+          title="Change Color"
+          accessibilityLabel="Press to change button color"
+        />
+      )}
+    </RNTesterThemeContext.Consumer>
+  );
+}
+
+function DynamicDisabledButton(): React.Node {
+  const [isDisabled, setIsDisabled] = React.useState(false);
+  const [toggleText, setToggleText] = React.useState('Disable Me');
+
+  const onPress = () => {
+    if (!isDisabled) {
+      setIsDisabled(true);
+      setToggleText('Disabled');
+      // Re-enable after 2 seconds for testing
+      setTimeout(() => {
+        setIsDisabled(false);
+        setToggleText('Disable Me');
+      }, 2000);
+    }
+  };
+
+  return (
+    <Button
+      disabled={isDisabled}
+      onPress={onPress}
+      testID="dynamic_disabled_button"
+      title={toggleText}
+      accessibilityLabel="Press to toggle disabled state"
+    />
+  );
+}
+
+function DynamicStyleButton(): React.Node {
+  const [isPressed, setIsPressed] = React.useState(false);
+  const [pressCount, setPressCount] = React.useState(0);
+
+  const onPress = () => {
+    setIsPressed(true);
+    setPressCount(prev => prev + 1);
+    // Reset pressed state after visual feedback
+    setTimeout(() => setIsPressed(false), 300);
+  };
+
+  return (
+    <RNTesterThemeContext.Consumer>
+      {theme => (
+        <View style={[styles.dynamicContainer, isPressed && styles.pressedContainer]}>
+          <Button
+            onPress={onPress}
+            testID="dynamic_style_button"
+            color={isPressed ? theme.SystemRedColor : theme.LinkColor}
+            title={`Style Button (${pressCount})`}
+            accessibilityLabel="Press to update styling"
+          />
+        </View>
+      )}
+    </RNTesterThemeContext.Consumer>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  dynamicContainer: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: 'transparent',
+  },
+  pressedContainer: {
+    backgroundColor: '#f0f0f0',
   },
 });
