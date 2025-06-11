@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add beachball change file for telemetry fix",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
