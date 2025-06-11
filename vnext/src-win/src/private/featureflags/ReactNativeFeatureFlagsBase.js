@@ -104,7 +104,7 @@ function maybeLogUnavailableNativeModuleError(configName: string): void {
   if (
     !NativeReactNativeFeatureFlags &&
     // Don't log more than once per config
-    !reportedConfigNames.has(configName) &&
+    !reportedConfigNames.has(configName)
     // Don't log in the legacy architecture.
     // hasTurboModules [Windows]
   ) {
