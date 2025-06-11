@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "[Fabric] Fix TextInput caret visibility on white backgrounds in dark mode",
   "packageName": "react-native-windows",
   "email": "198982749+Copilot@users.noreply.github.com",
