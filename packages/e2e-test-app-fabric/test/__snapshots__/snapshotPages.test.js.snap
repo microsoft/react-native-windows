@@ -72043,18 +72043,6 @@ exports[`snapshotAllPages Text 27`] = `
     }
   >
     The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated.
-    <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 12,
-        }
-      }
-    />
   </Text>
   <Text
     style={

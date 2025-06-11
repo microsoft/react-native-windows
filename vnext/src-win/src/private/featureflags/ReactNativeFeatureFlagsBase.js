@@ -96,9 +96,10 @@ export function setOverrides(
 }
 
 const reportedConfigNames: Set<string> = new Set();
-// [Windows]
-// const hasTurboModules =
-//   global.RN$Bridgeless === true || global.__turboModuleProxy != null;
+const hasTurboModules =
+  global.RN$Bridgeless === true || global.__turboModuleProxy != null;
+
+const isFabric = global.nativeFabricUIManager; // [Windows]
 
 function maybeLogUnavailableNativeModuleError(configName: string): void {
   if (
@@ -106,10 +107,10 @@ function maybeLogUnavailableNativeModuleError(configName: string): void {
     // Don't log more than once per config
     !reportedConfigNames.has(configName) &&
     // Don't log in the legacy architecture.
-    // hasTurboModules [Windows]
+    hasTurboModules &&
+    isFabric // [Windows]
   ) {
     reportedConfigNames.add(configName);
-    Window - Temp Disable to Test Pipeline issue
     console.error(
       `Could not access feature flag '${configName}' because native module method was not available`,
     );
