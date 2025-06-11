@@ -40,23 +40,29 @@ export default class Bootstrap extends React.Component {
             aliquip ex ea commodo consequat.
           </Text>
         </View>
-        
+
         {/* Writing Direction Examples */}
         <View style={styles.writingDirectionContainer}>
           <Text style={styles.sectionTitle}>Writing Direction Examples</Text>
-          
+
           <Text style={styles.directionLabel}>Left-to-Right (LTR):</Text>
-          <Text style={styles.directionExample} writingDirection="ltr">
+          <Text
+            style={styles.directionExample}
+            {...({writingDirection: 'ltr'} as any)}>
             This text flows from left to right. Numbers: 123 456 789
           </Text>
-          
+
           <Text style={styles.directionLabel}>Right-to-Left (RTL):</Text>
-          <Text style={styles.directionExample} writingDirection="rtl">
+          <Text
+            style={styles.directionExample}
+            {...({writingDirection: 'rtl'} as any)}>
             This text flows from right to left. Numbers: 123 456 789
           </Text>
-          
+
           <Text style={styles.directionLabel}>Auto/Natural:</Text>
-          <Text style={styles.directionExample} writingDirection="auto">
+          <Text
+            style={styles.directionExample}
+            {...({writingDirection: 'auto'} as any)}>
             This text uses natural direction (defaults to LTR)
           </Text>
         </View>
