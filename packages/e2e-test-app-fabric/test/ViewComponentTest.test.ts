@@ -199,4 +199,32 @@ describe('View Tests', () => {
     const dump = await dumpVisualTree('nativeid');
     expect(dump).toMatchSnapshot();
   });
+  test('Views should update style upon fast refresh', async () => {
+    await searchBox('fas');
+    const componentsTab = await app.findElementByTestID('view-test-fast-refresh');
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    
+    // Take initial snapshot
+    const initialDump = await dumpVisualTree('view-test-fast-refresh');
+    expect(initialDump).toMatchSnapshot('initial-state');
+    
+    // Click to change style (simulating fast refresh behavior)
+    await componentsTab.click();
+    
+    // Wait a moment for the style change to apply
+    await app.waitUntil(
+      async () => {
+        const currentDump = await dumpVisualTree('view-test-fast-refresh');
+        return currentDump !== initialDump;
+      },
+      {
+        timeout: 3000,
+        timeoutMsg: 'View style did not update after interaction',
+      }
+    );
+    
+    // Take snapshot after style change
+    const updatedDump = await dumpVisualTree('view-test-fast-refresh');
+    expect(updatedDump).toMatchSnapshot('updated-state');
+  });
 });

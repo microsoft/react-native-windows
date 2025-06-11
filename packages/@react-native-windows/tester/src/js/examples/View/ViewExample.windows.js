@@ -671,6 +671,45 @@ function BoxSizingExample(): React.Node {
   );
 }
 
+class FastRefreshStyleExample extends React.Component<
+  $ReadOnly<{||}>,
+  {|currentStyle: number|},
+> {
+  state: {currentStyle: number} = {
+    currentStyle: 0,
+  };
+
+  styles = [
+    {backgroundColor: '#ff6b6b', padding: 20, borderRadius: 5},
+    {backgroundColor: '#4ecdc4', padding: 15, borderRadius: 10},
+    {backgroundColor: '#45b7d1', padding: 25, borderRadius: 15},
+    {backgroundColor: '#96ceb4', padding: 10, borderRadius: 20},
+  ];
+
+  render(): React.Node {
+    return (
+      <View testID="view-test-fast-refresh" accessible accessibilityLabel="Fast Refresh Example">
+        <Pressable onPress={this._handlePress}>
+          <View style={this.styles[this.state.currentStyle]}>
+            <RNTesterText style={{color: 'white', fontSize: 14, textAlign: 'center'}}>
+              Tap to change style (simulates fast refresh)
+            </RNTesterText>
+            <RNTesterText style={{color: 'white', fontSize: 12, textAlign: 'center', marginTop: 5}}>
+              Style: {this.state.currentStyle + 1} of {this.styles.length}
+            </RNTesterText>
+          </View>
+        </Pressable>
+      </View>
+    );
+  }
+
+  _handlePress = () => {
+    this.setState({
+      currentStyle: (this.state.currentStyle + 1) % this.styles.length,
+    });
+  };
+}
+
 export default ({
   title: 'View',
   documentationURL: 'https://reactnative.dev/docs/view',
@@ -1402,6 +1441,13 @@ export default ({
       title: 'HitSlop',
       render(): React.Node {
         return <HitSlopExample />;
+      },
+    },
+    {
+      title: 'Fast Refresh Style Updates',
+      name: 'fast-refresh',
+      render(): React.Node {
+        return <FastRefreshStyleExample />;
       },
     },
     {
