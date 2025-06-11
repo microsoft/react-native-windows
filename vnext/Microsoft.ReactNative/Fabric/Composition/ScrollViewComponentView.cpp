@@ -1278,8 +1278,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
         auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_lastScrollEventTime).count();
 
         // Dismiss keyboard if mode is "on-drag"
-        auto keyboardDismissMode = std::static_pointer_cast<const facebook::react::ScrollViewProps>(
-            winrt::get_self<ScrollViewComponentView>(this)->viewProps())->keyboardDismissMode;
+        auto keyboardDismissMode =
+            std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->keyboardDismissMode;
         if (keyboardDismissMode == facebook::react::ScrollViewKeyboardDismissMode::OnDrag) {
           auto coreInputView = winrt::Windows::UI::ViewManagement::Core::CoreInputView::GetForCurrentView();
           if (coreInputView) {
