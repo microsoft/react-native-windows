@@ -176,10 +176,16 @@ const Switch: component(
     thumbColor,
     trackColor,
     value,
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
     ...restProps
   } = props;
   const trackColorForFalse = trackColor?.false;
   const trackColorForTrue = trackColor?.true;
+  const _accessibilityLevel = ariaLevel ?? props.accessibilityLevel; // Windows
+  const _accessibilityPosInSet = ariaPosinset ?? props.accessibilityPosInSet; // Windows
+  const _accessibilitySetSize = ariaSetsize ?? props.accessibilitySetSize; // Windows
 
   const nativeSwitchRef = React.useRef<React.ElementRef<
     typeof SwitchNativeComponent | typeof AndroidSwitchNativeComponent,
@@ -278,6 +284,9 @@ const Switch: component(
         focusable={focusable === undefined ? true : focusable} // [Windows]
         accessible={accessible === undefined ? true : accessible} // [Windows]
         accessibilityRole={props.accessibilityRole ?? 'switch'}
+        accessibilityLevel={_accessibilityLevel} // [Windows]
+        accessibilityPosInSet={_accessibilityPosInSet} // [Windows]
+        accessibilitySetSize={_accessibilitySetSize} // [Windows]
         onChange={handleChange}
         onResponderTerminationRequest={returnsFalse}
         onStartShouldSetResponder={returnsTrue}

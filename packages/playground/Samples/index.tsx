@@ -81,6 +81,9 @@ class PopupButton extends React.Component<
         <Switch
           value={this.state.isLightDismissEnabled}
           onValueChange={value => this.setState({isLightDismissEnabled: value})}
+          aria-level={1}
+          aria-posinset={1}
+          aria-setsize={30}
         />
         <Button
           onPress={this._onPress}

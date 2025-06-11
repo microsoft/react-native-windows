@@ -1370,6 +1370,12 @@ function InternalTextInput(props: TextInputProps): React.Node {
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
+    accessibilityLevel, // Windows
+    accessibilityPosInSet, // Windows
+    accessibilitySetSize, // Windows
     accessibilityState,
     id,
     tabIndex,
@@ -1693,6 +1699,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
+  const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
+  const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
+  const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
+
   let _accessibilityState;
   if (
     accessibilityState != null ||
@@ -1877,6 +1887,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
         mostRecentEventCount={mostRecentEventCount}
         onBlur={_onBlur}
         onChange={_onChange}
+        accessibilityState={_accessibilityState}
+        accessibilityLevel={_accessibilityLevel}
+        accessibilityPosInSet={_accessibilityPosInSet}
+        accessibilitySetSize={_accessibilitySetSize}
         /* $FlowFixMe[incompatible-type] the types for WindowsTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */

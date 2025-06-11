@@ -268,6 +268,9 @@ export default class Bootstrap extends React.Component<
               onLoadStart={() => console.log('onLoadStart')}
               onLoadEnd={() => console.log('onLoadEnd')}
               onProgress={this.handleOnProgress}
+              aria-level={1}
+              aria-posinset={10}
+              aria-setsize={100}
             />
           )}
         </View>
