@@ -31,7 +31,10 @@ constexpr float c_scrollerLineDelta = 16.0f;
 // Helper function to get the Windows system setting for wheel scroll lines
 static int GetSystemWheelScrollLines() noexcept {
   UINT scrollLines = 3; // Default fallback value
-  SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &scrollLines, 0);
+  if (!SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &scrollLines, 0)) {
+    // If the system call fails, use the default value
+    scrollLines = 3;
+  }
   return static_cast<int>(scrollLines);
 }
 
