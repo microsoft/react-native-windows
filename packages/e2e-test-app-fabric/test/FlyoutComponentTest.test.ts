@@ -21,6 +21,9 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
+// Note: Flyout is currently excluded from visitAllPages.test.ts which may indicate
+// compatibility issues with the Fabric app. These tests may need adjustments
+// based on actual Flyout availability and functionality in the e2e-test-app-fabric.
 describe('Flyout Tests', () => {
   test('A Flyout container is displayed with default state', async () => {
     const component = await app.findElementByTestID('flyout');
@@ -31,6 +34,7 @@ describe('Flyout Tests', () => {
 
   test('A Flyout can be opened with a target', async () => {
     // Click the "Open Flyout" button to show the flyout
+    // Note: Using XPath to find button by Name since it lacks explicit testID
     const openButton = await app.findElementByXPath(
       '//Button[@Name="Open Flyout"]',
     );
@@ -38,6 +42,7 @@ describe('Flyout Tests', () => {
     await openButton.click();
 
     // Wait for flyout to appear and capture its state
+    // Note: testID 'flyout-accessibility' should be set in FlyoutExample
     const flyout = await app.findElementByTestID('flyout-accessibility');
     await flyout.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('flyout-accessibility');
