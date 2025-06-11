@@ -8,8 +8,8 @@
 #include <AutoDraw.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
-#include <Utils/ValueUtils.h>
 #include <Utils/ThemeUtils.h>
+#include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
@@ -1054,7 +1054,7 @@ void WindowsTextInputComponentView::updateCursorColor(
         // Light background: use dark caret
         m_caretVisual.Brush(theme()->Brush(facebook::react::blackColor()));
       } else {
-        // Dark background: use light caret  
+        // Dark background: use light caret
         m_caretVisual.Brush(theme()->Brush(facebook::react::whiteColor()));
       }
     } else {
