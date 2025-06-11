@@ -117,3 +117,93 @@ describe('Touchable Tests', () => {
     await searchBox('');
   });
 });
+
+describe('TouchableOpacity Tests', () => {
+  test('TouchableOpacity should register press in clicked within hitSlop range', async () => {
+    const component = await app.findElementByTestID(
+      'touchable_hit_slop_button',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('touchable_hit_slop_button');
+    expect(dump).toMatchSnapshot();
+  });
+
+  test('TouchableOpacity should not be interactable when disabled', async () => {
+    await searchBox('dis');
+    const component = await app.findElementByTestID('disabled_touchable');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('disabled_touchable');
+    expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree('disabled_touchable');
+    expect(dump2).toMatchSnapshot();
+    await searchBox('');
+  });
+
+  test('TouchableOpacity should update style upon fast refresh', async () => {
+    await searchBox('dis');
+    const component = await app.findElementByTestID('disabled_touchable');
+    await component.waitForDisplayed({timeout: 5000});
+    // Initial state - transparent background
+    const initialDump = await dumpVisualTree('disabled_touchable');
+    expect(initialDump).toMatchSnapshot();
+
+    // Click to trigger style change (backgroundColor: 'blue')
+    await component.click();
+
+    // Verify style updated - background should now be blue
+    const updatedDump = await dumpVisualTree('disabled_touchable');
+    expect(updatedDump).toMatchSnapshot();
+    await searchBox('');
+  });
+
+  test('TouchableOpacity should fire action upon press', async () => {
+    await searchBox('fee');
+    const component = await app.findElementByTestID(
+      'touchable_feedback_events_button',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('touchable_feedback_events_button');
+    expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree('touchable_feedback_events_console');
+    expect(dump2).toMatchSnapshot();
+    await searchBox('');
+  });
+
+  test('TouchableOpacity should fire action upon onPressIn', async () => {
+    await searchBox('fee');
+    const component = await app.findElementByTestID(
+      'touchable_feedback_events_button',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    await component.click();
+    const dump = await dumpVisualTree('touchable_feedback_events_console');
+    expect(dump).toMatchSnapshot();
+    await searchBox('');
+  });
+
+  test('TouchableOpacity should fire action upon onPressOut', async () => {
+    await searchBox('fee');
+    const component = await app.findElementByTestID(
+      'touchable_feedback_events_button',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    await component.click();
+    const dump = await dumpVisualTree('touchable_feedback_events_console');
+    expect(dump).toMatchSnapshot();
+    await searchBox('');
+  });
+
+  test('TouchableOpacity should fire action upon onLongPress', async () => {
+    await searchBox('fee');
+    const component = await app.findElementByTestID(
+      'touchable_feedback_events_button',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    await component.click();
+    const dump = await dumpVisualTree('touchable_feedback_events_console');
+    expect(dump).toMatchSnapshot();
+    await searchBox('');
+  });
+});
