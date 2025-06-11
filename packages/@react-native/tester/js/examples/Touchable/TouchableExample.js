@@ -312,6 +312,107 @@ class TouchableHitSlop extends React.Component<{...}, $FlowFixMeState> {
   }
 }
 
+class TouchableWithoutFeedbackHitSlop extends React.Component<
+  {...},
+  $FlowFixMeState,
+> {
+  state: any | {timesPressed: number} = {
+    timesPressed: 0,
+  };
+
+  onPress = () => {
+    this.setState({
+      timesPressed: this.state.timesPressed + 1,
+    });
+  };
+
+  render(): React.Node {
+    let log = '';
+    if (this.state.timesPressed > 1) {
+      log = this.state.timesPressed + 'x onPress';
+    } else if (this.state.timesPressed > 0) {
+      log = 'onPress';
+    }
+
+    return (
+      <View testID="touchable_without_feedback_hit_slop">
+        <View style={[styles.row, styles.centered]}>
+          <TouchableWithoutFeedback
+            onPress={this.onPress}
+            hitSlop={{top: 30, bottom: 30, left: 60, right: 60}}
+            testID="touchable_without_feedback_hit_slop_button">
+            <View style={styles.hitSlopWrapper}>
+              <RNTesterText style={styles.hitSlopButton}>
+                Press Outside This View
+              </RNTesterText>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.logBox}>
+          <RNTesterText testID="touchable_without_feedback_hit_slop_console">
+            {log}
+          </RNTesterText>
+        </View>
+      </View>
+    );
+  }
+}
+
+class TouchableWithoutFeedbackStyleUpdate extends React.Component<
+  {...},
+  $FlowFixMeState,
+> {
+  state: any | {dynamicColor: string, timesPressed: number} = {
+    dynamicColor: '#007AFF',
+    timesPressed: 0,
+  };
+
+  onPress = () => {
+    const colors = ['#007AFF', '#FF6B35', '#4ECDC4', '#45B7D1', '#96CEB4'];
+    const nextColor = colors[(this.state.timesPressed + 1) % colors.length];
+    this.setState({
+      dynamicColor: nextColor,
+      timesPressed: this.state.timesPressed + 1,
+    });
+  };
+
+  render(): React.Node {
+    const dynamicStyle = {
+      backgroundColor: this.state.dynamicColor,
+      padding: 10,
+      borderRadius: 8,
+    };
+
+    let log = '';
+    if (this.state.timesPressed > 1) {
+      log = this.state.timesPressed + 'x style updated';
+    } else if (this.state.timesPressed > 0) {
+      log = 'style updated';
+    }
+
+    return (
+      <View testID="touchable_without_feedback_style_update">
+        <View style={[styles.row, styles.centered]}>
+          <TouchableWithoutFeedback
+            onPress={this.onPress}
+            testID="touchable_without_feedback_style_update_button">
+            <View style={[styles.wrapperCustom, dynamicStyle]}>
+              <RNTesterText style={[styles.text, {color: 'white'}]}>
+                Press to Update Style!
+              </RNTesterText>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={styles.logBox}>
+          <RNTesterText testID="touchable_without_feedback_style_update_console">
+            {log}
+          </RNTesterText>
+        </View>
+      </View>
+    );
+  }
+}
+
 function TouchableNativeMethodChecker<
   T: component(ref?: React.RefSetter<any>, ...any),
 >(props: {Component: T, name: string}): React.Node {
@@ -774,6 +875,23 @@ exports.examples = [
         'without changing the view bounds.': string),
     render(): React.MixedElement {
       return <TouchableHitSlop />;
+    },
+  },
+  {
+    title: 'TouchableWithoutFeedback Hit Slop',
+    description:
+      ('TouchableWithoutFeedback accepts hitSlop prop which extends the touch area ' +
+        'without changing the view bounds.': string),
+    render(): React.MixedElement {
+      return <TouchableWithoutFeedbackHitSlop />;
+    },
+  },
+  {
+    title: 'TouchableWithoutFeedback Style Update',
+    description:
+      ('TouchableWithoutFeedback can update styles dynamically and should support fast refresh.': string),
+    render(): React.MixedElement {
+      return <TouchableWithoutFeedbackStyleUpdate />;
     },
   },
   {
