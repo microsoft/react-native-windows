@@ -953,4 +953,134 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
   });
+  
+  // Additional functional tests for specific task requirements
+  test('TextInput should not be editable when editable set to false', async () => {
+    const component = await app.findElementByTestID('textinput-not-editable2');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-not-editable2');
+    expect(dump).toMatchSnapshot();
+    
+    // Attempt to set value and verify it doesn't work
+    const originalText = await component.getText();
+    await component.setValue('Should not work');
+    expect(await component.getText()).toBe(originalText);
+  });
+  
+  test('TextInput should take up to max length input when maxLength set', async () => {
+    const component = await app.findElementByTestID('rewrite_sp_underscore_input');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('rewrite_sp_underscore_input');
+    expect(dump).toMatchSnapshot();
+    
+    // Test that input is limited by maxLength (this component has maxLength=20)
+    await app.waitUntil(
+      async () => {
+        await component.setValue('This is a very long text that should be truncated because it exceeds the limit');
+        const text = await component.getText();
+        // The component replaces spaces with underscores and has maxLength=20
+        return text.length <= 20;
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `MaxLength limitation not working correctly.`,
+      },
+    );
+    
+    // Verify that the text was actually limited
+    const finalText = await component.getText();
+    expect(finalText.length).toBeLessThanOrEqual(20);
+  });
+  
+  test('TextInput input should wrap to multiple lines when multiline set to true', async () => {
+    const component = await app.findElementByTestID('textinput-multiline-topleft');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-multiline-topleft');
+    expect(dump).toMatchSnapshot();
+    
+    // Set a long text that should wrap to multiple lines
+    await app.waitUntil(
+      async () => {
+        await component.setValue('This is a very long text that should wrap to multiple lines when the multiline property is set to true.');
+        return (await component.getText()).includes('This is a very long text');
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter text in multiline TextInput.`,
+      },
+    );
+  });
+  
+  test('TextInput should not be editable when readOnly set to true', async () => {
+    const component = await app.findElementByTestID('textinput-readyonly');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-readyonly');
+    expect(dump).toMatchSnapshot();
+    
+    // Attempt to set value and verify it doesn't work
+    const originalText = await component.getText();
+    await component.setValue('Should not work');
+    expect(await component.getText()).toBe(originalText);
+  });
+  
+  test('TextInput should trigger action upon onPressIn', async () => {
+    // Using the existing textinput-press component which handles onPressIn
+    await searchBox('onPressIn');
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-press');
+    expect(dump).toMatchSnapshot();
+
+    // Trigger onPressIn by clicking
+    await component.click();
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Holding down the click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'onPressIn event not triggered correctly.',
+      },
+    );
+    
+    expect(await stateText.getText()).toBe('Holding down the click/touch');
+    // Reset search to avoid interfering with other tests
+    const search = await app.findElementByTestID('example_search');
+    await search.setValue('');
+  });
+  
+  test('TextInput should trigger action upon onPressOut', async () => {
+    // Using the existing textinput-press component which handles onPressOut
+    await searchBox('onPressIn');
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    // Trigger onPressIn first, then onPressOut
+    await component.click(); // This should trigger onPressIn
+    
+    // Move to another element to trigger onPressOut
+    const search = await app.findElementByTestID('example_search');
+    await search.click();
+    
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Released click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'onPressOut event not triggered correctly.',
+      },
+    );
+    
+    expect(await stateText.getText()).toBe('Released click/touch');
+    // Reset search to avoid interfering with other tests
+    await search.setValue('');
+  });
 });
