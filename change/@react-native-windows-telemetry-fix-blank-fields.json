@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add beachball change file for telemetry fix",
+  "comment": "Fix telemetry blank fields by correcting property mismatches and adding fallbacks",
   "packageName": "@react-native-windows/telemetry",
   "email": "198982749+Copilot@users.noreply.github.com",
   "dependentChangeType": "patch"
