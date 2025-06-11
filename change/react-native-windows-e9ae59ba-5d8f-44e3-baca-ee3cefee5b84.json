@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add functional tests for Button component fast refresh scenarios",
+  "packageName": "react-native-windows",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
