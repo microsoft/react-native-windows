@@ -15,6 +15,7 @@
 #pragma warning(pop)
 
 #include <windows.ui.composition.interop.h>
+#include <windows.h>
 
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
@@ -26,6 +27,13 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 constexpr float c_scrollerLineDelta = 16.0f;
+
+// Helper function to get the Windows system setting for wheel scroll lines
+static int GetSystemWheelScrollLines() noexcept {
+  UINT scrollLines = 3; // Default fallback value
+  SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &scrollLines, 0);
+  return static_cast<int>(scrollLines);
+}
 
 enum class ScrollbarHitRegion : int {
   Unknown = -1,
@@ -913,23 +921,32 @@ void ScrollViewComponentView::OnPointerWheelChanged(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   auto ppp = args.GetCurrentPoint(-1).Properties();
   auto delta = static_cast<float>(ppp.MouseWheelDelta());
+  
+  // Get the system setting for lines per wheel notch
+  const int systemLinesPerNotch = GetSystemWheelScrollLines();
+  
+  // Calculate the number of lines to scroll based on wheel delta and system settings
+  // Standard Windows wheel delta is 120 per notch
+  const float notches = delta / 120.0f;
+  const float linesToScroll = notches * systemLinesPerNotch * c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor;
+  
   if (ppp.IsHorizontalMouseWheel()) {
     if (delta > 0) {
-      if (scrollLeft(delta * m_layoutMetrics.pointScaleFactor, true)) {
+      if (scrollLeft(linesToScroll, true)) {
         args.Handled(true);
       }
     } else if (delta < 0) {
-      if (scrollRight(-delta * m_layoutMetrics.pointScaleFactor, true)) {
+      if (scrollRight(-linesToScroll, true)) {
         args.Handled(true);
       }
     }
   } else {
     if (delta > 0) {
-      if (scrollUp(delta * m_layoutMetrics.pointScaleFactor, true)) {
+      if (scrollUp(linesToScroll, true)) {
         args.Handled(true);
       }
     } else if (delta < 0) {
-      if (scrollDown(-delta * m_layoutMetrics.pointScaleFactor, true)) {
+      if (scrollDown(-linesToScroll, true)) {
         args.Handled(true);
       }
     }
