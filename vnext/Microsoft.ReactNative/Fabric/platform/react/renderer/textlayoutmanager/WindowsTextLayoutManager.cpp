@@ -159,25 +159,9 @@ void WindowsTextLayoutManager::GetTextLayout(
   winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
 
   // Set reading direction based on baseWritingDirection
-  if (outerFragment.textAttributes.baseWritingDirection) {
-    DWRITE_READING_DIRECTION readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
-    switch (*outerFragment.textAttributes.baseWritingDirection) {
-      case facebook::react::WritingDirection::LeftToRight:
-        readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
-        break;
-      case facebook::react::WritingDirection::RightToLeft:
-        readingDirection = DWRITE_READING_DIRECTION_RIGHT_TO_LEFT;
-        break;
-      case facebook::react::WritingDirection::Natural:
-        // For Natural, default to left-to-right. In a more complete implementation,
-        // this could be determined based on the script/locale context.
-        readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
-        break;
-      default:
-        readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
-        break;
-    }
-    winrt::check_hresult(spTextFormat->SetReadingDirection(readingDirection));
+  if (outerFragment.textAttributes.baseWritingDirection &&
+      *outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
+    winrt::check_hresult(spTextFormat->SetReadingDirection(DWRITE_READING_DIRECTION_RIGHT_TO_LEFT));
   }
 
   // Get text with Object Replacement Characters for attachments
