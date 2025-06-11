@@ -9,6 +9,7 @@
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
+#include <Utils/ThemeUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
@@ -1043,7 +1044,23 @@ void WindowsTextInputComponentView::updateCursorColor(
   } else if (foregroundColor) {
     m_caretVisual.Brush(theme()->Brush(*foregroundColor));
   } else {
-    m_caretVisual.Brush(theme()->PlatformBrush("TextControlForeground"));
+    // Choose caret color based on background contrast to ensure visibility
+    const auto &backgroundColor = viewProps()->backgroundColor;
+    if (backgroundColor && facebook::react::isColorMeaningful(*backgroundColor)) {
+      // Convert React color to Windows UI color for brightness calculation
+      auto bgColor = theme()->Color(*backgroundColor);
+      // Use the same brightness calculation as used for selection text
+      if (Microsoft::ReactNative::IsColorLight(bgColor)) {
+        // Light background: use dark caret
+        m_caretVisual.Brush(theme()->Brush(facebook::react::blackColor()));
+      } else {
+        // Dark background: use light caret  
+        m_caretVisual.Brush(theme()->Brush(facebook::react::whiteColor()));
+      }
+    } else {
+      // No background color specified, fall back to default behavior
+      m_caretVisual.Brush(theme()->PlatformBrush("TextControlForeground"));
+    }
   }
 }
 
