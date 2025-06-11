@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Add comprehensive functional tests for TextInput component in E2E test app (Fabric)",
   "packageName": "react-native-windows",
   "email": "copilot@github.com",
