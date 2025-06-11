@@ -72,7 +72,7 @@ exports.examples = [
         <RNTesterThemeContext.Consumer>
           {theme => {
             return (
-              <View style={styles.container}>
+              <View style={styles.container} testID="two_button_container">
                 <Button
                   onPress={() => onButtonPress('cancelled')}
                   testID="two_cancel_button"
@@ -101,7 +101,7 @@ exports.examples = [
         <RNTesterThemeContext.Consumer>
           {theme => {
             return (
-              <View style={styles.container}>
+              <View style={styles.container} testID="three_button_container">
                 <Button
                   onPress={() => onButtonPress('cancelled')}
                   testID="three_cancel_button"
@@ -336,7 +336,7 @@ function DynamicStyleButton(): React.Node {
   return (
     <RNTesterThemeContext.Consumer>
       {theme => (
-        <View style={[styles.dynamicContainer, isPressed && styles.pressedContainer]}>
+        <View style={[styles.dynamicContainer, isPressed && styles.pressedContainer]} testID="dynamic_style_container">
           <Button
             onPress={onPress}
             testID="dynamic_style_button"

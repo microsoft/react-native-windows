@@ -215,9 +215,11 @@ describe('Button Tests', () => {
     const component = await app.findElementByTestID('dynamic_style_button');
     await component.waitForDisplayed({timeout: 5000});
     
-    // Get initial state
+    // Get initial state of both button and container
     const initialDump = await dumpVisualTree('dynamic_style_button');
     expect(initialDump).toMatchSnapshot('initial-styling');
+    const initialContainerDump = await dumpVisualTree('dynamic_style_container');
+    expect(initialContainerDump).toMatchSnapshot('initial-container-styling');
     
     // Click to change styling
     await component.click();
@@ -226,5 +228,9 @@ describe('Button Tests', () => {
     const updatedDump = await dumpVisualTree('dynamic_style_button');
     expect(updatedDump).toMatchSnapshot('updated-styling');
     expect(updatedDump.Text).toContain('Style Button (1)');
+    
+    // Also verify container styling changed
+    const updatedContainerDump = await dumpVisualTree('dynamic_style_container');
+    expect(updatedContainerDump).toMatchSnapshot('updated-container-styling');
   });
 });
