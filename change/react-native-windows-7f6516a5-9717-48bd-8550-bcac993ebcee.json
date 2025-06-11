@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Add functional tests for Pressable component onLongPress, delayLongPress, hitSlop, disabled styling, and children configurations",
   "packageName": "react-native-windows",
   "email": "198982749+Copilot@users.noreply.github.com",
