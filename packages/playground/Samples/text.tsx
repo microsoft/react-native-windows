@@ -40,6 +40,26 @@ export default class Bootstrap extends React.Component {
             aliquip ex ea commodo consequat.
           </Text>
         </View>
+        
+        {/* Writing Direction Examples */}
+        <View style={styles.writingDirectionContainer}>
+          <Text style={styles.sectionTitle}>Writing Direction Examples</Text>
+          
+          <Text style={styles.directionLabel}>Left-to-Right (LTR):</Text>
+          <Text style={styles.directionExample} writingDirection="ltr">
+            This text flows from left to right. Numbers: 123 456 789
+          </Text>
+          
+          <Text style={styles.directionLabel}>Right-to-Left (RTL):</Text>
+          <Text style={styles.directionExample} writingDirection="rtl">
+            This text flows from right to left. Numbers: 123 456 789
+          </Text>
+          
+          <Text style={styles.directionLabel}>Auto/Natural:</Text>
+          <Text style={styles.directionExample} writingDirection="auto">
+            This text uses natural direction (defaults to LTR)
+          </Text>
+        </View>
       </View>
     );
   }
@@ -63,6 +83,36 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  writingDirectionContainer: {
+    backgroundColor: '#E8F4FD',
+    padding: 15,
+    margin: 10,
+    borderRadius: 8,
+    width: 400,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: 'center',
+    color: '#2C3E50',
+  },
+  directionLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginTop: 10,
+    marginBottom: 5,
+    color: '#34495E',
+  },
+  directionExample: {
+    fontSize: 16,
+    padding: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#BDC3C7',
+    marginBottom: 8,
   },
 });
 
