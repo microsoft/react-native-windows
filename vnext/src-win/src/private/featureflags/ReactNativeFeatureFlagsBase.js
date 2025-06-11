@@ -104,9 +104,11 @@ const isFabric = global.nativeFabricUIManager; // [Windows]
 function maybeLogUnavailableNativeModuleError(configName: string): void {
   if (
     !NativeReactNativeFeatureFlags &&
+    // Don't log more than once per config
     !reportedConfigNames.has(configName) &&
+    // Don't log in the legacy architecture.
     hasTurboModules &&
-    isFabric // [Windows]
+    isFabric // [Windows] - condition still yields true for legacy apps on Windows, must add UIManager check
   ) {
     reportedConfigNames.add(configName);
     console.error(

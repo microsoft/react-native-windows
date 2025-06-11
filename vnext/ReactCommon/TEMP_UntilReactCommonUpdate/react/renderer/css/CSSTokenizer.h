@@ -10,7 +10,7 @@
 #include <cmath>
 #include <string_view>
 
-#include <folly/../../fast_float-6.1.4/include/fast_float/fast_float.h>
+#include <folly/../../fast_float-6.1.4/include/fast_float/fast_float.h> // [Windows] - Full relative path needed to find file
 #include <react/renderer/css/CSSToken.h>
 
 namespace facebook::react {
