@@ -672,8 +672,8 @@ function BoxSizingExample(): React.Node {
 }
 
 class FastRefreshStyleExample extends React.Component<
-  $ReadOnly<{||}>,
-  {|currentStyle: number|},
+  $ReadOnly<{}>,
+  {currentStyle: number},
 > {
   state: {currentStyle: number} = {
     currentStyle: 0,
