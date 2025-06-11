@@ -14,8 +14,8 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
-#include <windows.ui.composition.interop.h>
 #include <windows.h>
+#include <windows.ui.composition.interop.h>
 
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
@@ -924,15 +924,15 @@ void ScrollViewComponentView::OnPointerWheelChanged(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   auto ppp = args.GetCurrentPoint(-1).Properties();
   auto delta = static_cast<float>(ppp.MouseWheelDelta());
-  
+
   // Get the system setting for lines per wheel notch
   const int systemLinesPerNotch = GetSystemWheelScrollLines();
-  
+
   // Calculate the number of lines to scroll based on wheel delta and system settings
   // Standard Windows wheel delta is 120 per notch
   const float notches = delta / 120.0f;
   const float linesToScroll = notches * systemLinesPerNotch * c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor;
-  
+
   if (ppp.IsHorizontalMouseWheel()) {
     if (delta > 0) {
       if (scrollLeft(linesToScroll, true)) {
