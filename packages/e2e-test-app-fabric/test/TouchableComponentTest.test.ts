@@ -157,6 +157,11 @@ describe('TouchableOpacity Tests', () => {
     await searchBox('');
   });
 
+  // Note: TouchableOpacity activeOpacity testing would require a test component
+  // with dynamic activeOpacity property changes, which is not currently available
+  // in the existing examples. Such testing would need a new TouchableOpacity
+  // example that updates its activeOpacity value based on state changes.
+
   test('TouchableOpacity should fire action upon press', async () => {
     await searchBox('fee');
     const component = await app.findElementByTestID(
