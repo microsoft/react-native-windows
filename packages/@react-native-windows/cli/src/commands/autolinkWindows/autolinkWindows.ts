@@ -712,7 +712,6 @@ export class AutoLinkWindows {
 
   public async ensureXAMLDialect() {
     let changesNeeded = false;
-    const useWinUI3FromConfig = this.getWindowsConfig().useWinUI3;
     const experimentalFeatures = this.getExperimentalFeaturesPropsXml();
     if (experimentalFeatures) {
       const useWinUI3FromExperimentalFeatures =
@@ -729,30 +728,12 @@ export class AutoLinkWindows {
         experimentalFeatures.content,
         'WinUI3Version',
       );
-      // Use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
+      // Use the UseWinUI3 value from ExperimentalFeatures.props
       changesNeeded = await this.updatePackagesConfigXAMLDialect(
-        useWinUI3FromConfig !== undefined
-          ? useWinUI3FromConfig
-          : useWinUI3FromExperimentalFeatures,
+        useWinUI3FromExperimentalFeatures,
         targetWinUI2xVersion,
         targetWinUI3xVersion,
       );
-      if (useWinUI3FromConfig !== undefined) {
-        // Make sure ExperimentalFeatures.props matches the value that comes from react-native.config.js
-        const node =
-          experimentalFeatures.content.getElementsByTagName('UseWinUI3');
-        const newValue = useWinUI3FromConfig ? 'true' : 'false';
-        changesNeeded = node.item(0)?.textContent !== newValue || changesNeeded;
-        if (!this.options.check && changesNeeded) {
-          node.item(0)!.textContent = newValue;
-          const experimentalFeaturesOutput =
-            new XMLSerializer().serializeToString(experimentalFeatures.content);
-          await this.updateFile(
-            experimentalFeatures.path,
-            experimentalFeaturesOutput,
-          );
-        }
-      }
     }
     return changesNeeded;
   }
