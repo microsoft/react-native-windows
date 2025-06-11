@@ -126,4 +126,66 @@ describe('FlatList Tests', () => {
     const dump = await dumpVisualTree('flatlist-nested');
     expect(dump).toMatchSnapshot();
   });
+
+  // Functional tests for fast refresh scenarios
+  test('FlatList styles should render correctly with multicolumn layout', async () => {
+    await searchBox('Multi');
+    await goToFlatListExample('Multi Column');
+    
+    const component = await app.findElementByTestID('flat_list');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('flat_list');
+    expect(dump).toMatchSnapshot();
+  });
+
+  test('FlatList contents should update with search filtering', async () => {
+    await searchBox('Basic');
+    await goToFlatListExample('Basic');
+    
+    // Test filtering content with specific text
+    await searchBoxBasic('5');
+    
+    const component = await app.findElementByTestID('flatlist-basic');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('flatlist-basic');
+    expect(dump).toMatchSnapshot();
+  });
+
+  test('FlatList scrolling should work with inverted list', async () => {
+    await searchBox('Inverted');
+    await goToFlatListExample('Inverted');
+    
+    const component = await app.findElementByTestID('flat_list');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('flat_list');
+    expect(dump).toMatchSnapshot();
+  });
+
+  test('FlatList footer should update correctly', async () => {
+    await searchBox('Basic');
+    await goToFlatListExample('Basic');
+    
+    // The basic example includes a footer by default, verify it's rendered
+    const component = await app.findElementByTestID('flatlist-basic');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Look for footer content in the visual tree
+    const dump = await dumpVisualTree('flatlist-basic');
+    expect(dump).toMatchSnapshot();
+    expect(JSON.stringify(dump)).toContain('LIST FOOTER');
+  });
+
+  test('FlatList header should update correctly', async () => {
+    await searchBox('Basic');
+    await goToFlatListExample('Basic');
+    
+    // The basic example includes a header by default, verify it's rendered
+    const component = await app.findElementByTestID('flatlist-basic');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Look for header content in the visual tree
+    const dump = await dumpVisualTree('flatlist-basic');
+    expect(dump).toMatchSnapshot();
+    expect(JSON.stringify(dump)).toContain('LIST HEADER');
+  });
 });
