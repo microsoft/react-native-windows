@@ -156,8 +156,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double m_scrollEventThrottle{0.0};
   bool m_allowNextScrollNoMatterWhat{false};
   std::chrono::steady_clock::time_point m_lastScrollEventTime{};
-  facebook::react::ScrollViewKeyboardDismissMode m_keyboardDismissMode =
-      facebook::react::ScrollViewKeyboardDismissMode::None;
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 };
 
