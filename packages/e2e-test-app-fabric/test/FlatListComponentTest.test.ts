@@ -127,7 +127,6 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
 
-  // Functional tests for fast refresh scenarios
   test('FlatList styles should render correctly with multicolumn layout', async () => {
     await searchBox('Multi');
     await goToFlatListExample('Multi Column');
