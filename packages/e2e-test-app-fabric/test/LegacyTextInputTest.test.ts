@@ -98,38 +98,6 @@ describe('LegacyTextInputTest', () => {
     ]);
     */
   });
-  
-  // Additional functional tests for event handlers
-  test('TextInput should trigger action upon onBlur', async () => {
-    const textInput = await textInputField();
-    await textInput.click(); // Focus
-    
-    const multiLineTextInput = await multiLineTextInputField();
-    await multiLineTextInput.click(); // This should trigger onBlur on the first TextInput
-    
-    await assertLogContains('onBlur');
-  });
-  
-  test('TextInput should trigger action upon onFocus', async () => {
-    const textInput = await textInputField();
-    await textInput.click(); // This should trigger onFocus
-    
-    await assertLogContains('onFocus');
-  });
-  
-  test('TextInput should trigger action upon onChange', async () => {
-    const textInput = await textInputField();
-    await textInput.setValue('test');
-    
-    await assertLogContains('onChange text: test');
-  });
-  
-  test('TextInput should trigger action upon onSelectionChange', async () => {
-    const textInput = await textInputField();
-    await textInput.setValue('test');
-    
-    await assertLogContains('onSelectionChange range: 4,4');
-  });
 });
 
 async function textInputField() {

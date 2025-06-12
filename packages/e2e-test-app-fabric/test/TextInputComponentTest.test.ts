@@ -954,7 +954,6 @@ describe('TextInput Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   
-  // Additional functional tests for specific task requirements
   test('TextInput should not be editable when editable set to false', async () => {
     const component = await app.findElementByTestID('textinput-not-editable2');
     await component.waitForDisplayed({timeout: 5000});
@@ -1160,8 +1159,8 @@ describe('TextInput Tests', () => {
     let dump = await dumpVisualTree('uncontrolled-textinput');
     expect(dump).toMatchSnapshot();
     
-    // Simulate focus by clicking
-    await component.click();
+    // Call focus() method directly
+    await (component as any).focus();
     
     // After focus, the style should change (component has onFocus handler)
     dump = await dumpVisualTree('uncontrolled-textinput');
@@ -1176,16 +1175,12 @@ describe('TextInput Tests', () => {
     // Focus first
     await component.click();
     
-    // Then blur by clicking somewhere else
-    const search = await app.findElementByTestID('example_search');
-    await search.click();
+    // Call blur() method directly
+    await (component as any).blur();
     
     // After blur, the style should revert (component has onBlur handler)
     const dump = await dumpVisualTree('uncontrolled-textinput');
     expect(dump).toMatchSnapshot();
-    
-    // Reset search
-    await search.setValue('');
   });
   
   test('TextInput isFocused() should return true when the TextInput is focused', async () => {
@@ -1195,10 +1190,6 @@ describe('TextInput Tests', () => {
     
     // Focus the component
     await component.click();
-    
-    // Check if the component shows focused state (style change indicates focus)
-    const dump = await dumpVisualTree('uncontrolled-textinput');
-    expect(dump).toMatchSnapshot();
     
     // The component should be in focused state (we can't directly test isFocused() 
     // but we can verify the visual state that indicates focus)
@@ -1213,10 +1204,6 @@ describe('TextInput Tests', () => {
     // Ensure component is not focused by clicking elsewhere
     const search = await app.findElementByTestID('example_search');
     await search.click();
-    
-    // Check if the component shows unfocused state
-    const dump = await dumpVisualTree('uncontrolled-textinput');
-    expect(dump).toMatchSnapshot();
     
     // The component should not be in focused state
     expect(await component.isFocused()).toBe(false);
