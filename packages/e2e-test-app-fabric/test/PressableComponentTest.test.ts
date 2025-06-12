@@ -455,11 +455,7 @@ describe('Pressable Tests', () => {
       },
     );
   });
-  // TODO: Add fast refresh tests once test components are available
-  // These tests would require components with buttons/toggles to change properties at runtime:
-  // - Pressable should update border styling upon fast refresh
-  // - Pressable should update children upon fast refresh
-  // - Pressable should update disabled styling upon fast refresh
+
   test('Pressables can have advanced borders', async () => {
     const component = await app.findElementByTestID(
       'advanced_borders_pressable',
