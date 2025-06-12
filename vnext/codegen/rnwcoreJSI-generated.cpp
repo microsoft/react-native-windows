@@ -952,41 +952,6 @@ NativeAnimatedTurboModuleCxxSpecJSI::NativeAnimatedTurboModuleCxxSpecJSI(std::sh
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeAnimatedTurboModuleCxxSpecJSI_removeListeners};
   methodMap_["queueAndExecuteBatchedOperations"] = MethodMetadata {1, __hostFunction_NativeAnimatedTurboModuleCxxSpecJSI_queueAndExecuteBatchedOperations};
 }
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  auto result = static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->getColorScheme(
-    rt
-  );
-  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
-}
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->setColorScheme(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->addListener(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->removeListeners(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeAppearanceCxxSpecJSI::NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("Appearance", jsInvoker) {
-  methodMap_["getColorScheme"] = MethodMetadata {0, __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme};
-  methodMap_["setColorScheme"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme};
-  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_addListener};
-  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners};
-}
 static jsi::Value __hostFunction_NativeAppStateCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeAppStateCxxSpecJSI *>(&turboModule)->getConstants(
     rt
@@ -1031,6 +996,41 @@ static jsi::Value __hostFunction_NativeAppThemeCxxSpecJSI_getConstants(jsi::Runt
 NativeAppThemeCxxSpecJSI::NativeAppThemeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("AppTheme", jsInvoker) {
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeAppThemeCxxSpecJSI_getConstants};
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->getColorScheme(
+    rt
+  );
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->setColorScheme(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->addListener(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->removeListeners(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeAppearanceCxxSpecJSI::NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("Appearance", jsInvoker) {
+  methodMap_["getColorScheme"] = MethodMetadata {0, __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme};
+  methodMap_["setColorScheme"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme};
+  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_addListener};
+  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners};
 }
 static jsi::Value __hostFunction_NativeBlobModuleCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeBlobModuleCxxSpecJSI *>(&turboModule)->getConstants(
@@ -1134,27 +1134,6 @@ NativeClipboardCxxSpecJSI::NativeClipboardCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getConstants};
   methodMap_["getString"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getString};
   methodMap_["setString"] = MethodMetadata {1, __hostFunction_NativeClipboardCxxSpecJSI_setString};
-}
-static jsi::Value __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDeviceEventManagerCxxSpecJSI *>(&turboModule)->invokeDefaultBackPressHandler(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDeviceEventManagerCxxSpecJSI::NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DeviceEventManager", jsInvoker) {
-  methodMap_["invokeDefaultBackPressHandler"] = MethodMetadata {0, __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler};
-}
-static jsi::Value __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDeviceInfoCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-
-NativeDeviceInfoCxxSpecJSI::NativeDeviceInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DeviceInfo", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants};
 }
 static jsi::Value __hostFunction_NativeDevLoadingViewCxxSpecJSI_showMessage(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDevLoadingViewCxxSpecJSI *>(&turboModule)->showMessage(
@@ -1298,6 +1277,27 @@ NativeDevSettingsCxxSpecJSI::NativeDevSettingsCxxSpecJSI(std::shared_ptr<CallInv
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_removeListeners};
   methodMap_["setIsShakeToShowDevMenuEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setIsShakeToShowDevMenuEnabled};
+}
+static jsi::Value __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDeviceEventManagerCxxSpecJSI *>(&turboModule)->invokeDefaultBackPressHandler(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDeviceEventManagerCxxSpecJSI::NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DeviceEventManager", jsInvoker) {
+  methodMap_["invokeDefaultBackPressHandler"] = MethodMetadata {0, __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler};
+}
+static jsi::Value __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDeviceInfoCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+
+NativeDeviceInfoCxxSpecJSI::NativeDeviceInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DeviceInfo", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants};
 }
 static jsi::Value __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeDialogManagerAndroidCxxSpecJSI *>(&turboModule)->getConstants(
