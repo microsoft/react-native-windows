@@ -7,7 +7,7 @@
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
-    "windows": "npx @react-native-community/cli run-windows",
+    "windows": "npx @react-native-community/cli run-windows --msbuildprops RestoreForceEvaluate=true",
     "e2etest": "jest",
     "e2etest:updateSnapshots": "jest -u",
     "e2etest:debug": "jest --config ./jest.debug.config.js"
