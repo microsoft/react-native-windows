@@ -1011,6 +1011,10 @@ describe('TextInput Tests', () => {
         timeoutMsg: `Unable to enter text in multiline TextInput.`,
       },
     );
+    
+    // Capture visual tree after text has been set to validate wrapping
+    const dumpAfterText = await dumpVisualTree('textinput-multiline-topleft');
+    expect(dumpAfterText).toMatchSnapshot();
   });
   
   test('TextInput should not be editable when readOnly set to true', async () => {
