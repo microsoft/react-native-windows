@@ -208,22 +208,22 @@ describe('View Tests', () => {
     const initialDump = await dumpVisualTree('view-test-fast-refresh');
     expect(initialDump).toMatchSnapshot('initial-state');
     
-    // Click to change style (simulating fast refresh behavior)
+    // Click to start auto-refresh (simulating fast refresh activation)
     await componentsTab.click();
     
-    // Wait a moment for the style change to apply
+    // Wait for automatic style changes to occur (simulating fast refresh)
     await app.waitUntil(
       async () => {
         const currentDump = await dumpVisualTree('view-test-fast-refresh');
         return currentDump !== initialDump;
       },
       {
-        timeout: 3000,
-        timeoutMsg: 'View style did not update after interaction',
+        timeout: 5000,
+        timeoutMsg: 'View style did not auto-update during fast refresh simulation',
       }
     );
     
-    // Take snapshot after style change
+    // Take snapshot after automatic style change
     const updatedDump = await dumpVisualTree('view-test-fast-refresh');
     expect(updatedDump).toMatchSnapshot('updated-state');
   });

@@ -673,10 +673,11 @@ function BoxSizingExample(): React.Node {
 
 class FastRefreshStyleExample extends React.Component<
   $ReadOnly<{}>,
-  {currentStyle: number},
+  {currentStyle: number, isAutoRefreshing: boolean},
 > {
-  state: {currentStyle: number} = {
+  state: {currentStyle: number, isAutoRefreshing: boolean} = {
     currentStyle: 0,
+    isAutoRefreshing: false,
   };
 
   styles = [
@@ -686,13 +687,32 @@ class FastRefreshStyleExample extends React.Component<
     {backgroundColor: '#96ceb4', padding: 10, borderRadius: 20},
   ];
 
+  intervalId: ?IntervalID = null;
+
+  componentDidMount() {
+    // Start auto-refresh after a short delay to simulate fast refresh behavior
+    this.intervalId = setInterval(() => {
+      if (this.state.isAutoRefreshing) {
+        this.setState({
+          currentStyle: (this.state.currentStyle + 1) % this.styles.length,
+        });
+      }
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
   render(): React.Node {
     return (
       <View testID="view-test-fast-refresh" accessible accessibilityLabel="Fast Refresh Example">
         <Pressable onPress={this._handlePress}>
           <View style={this.styles[this.state.currentStyle]}>
             <RNTesterText style={{color: 'white', fontSize: 14, textAlign: 'center'}}>
-              Tap to change style (simulates fast refresh)
+              {this.state.isAutoRefreshing ? 'Auto-refreshing styles...' : 'Tap to start fast refresh simulation'}
             </RNTesterText>
             <RNTesterText style={{color: 'white', fontSize: 12, textAlign: 'center', marginTop: 5}}>
               Style: {this.state.currentStyle + 1} of {this.styles.length}
@@ -705,7 +725,7 @@ class FastRefreshStyleExample extends React.Component<
 
   _handlePress = () => {
     this.setState({
-      currentStyle: (this.state.currentStyle + 1) % this.styles.length,
+      isAutoRefreshing: !this.state.isAutoRefreshing,
     });
   };
 }
