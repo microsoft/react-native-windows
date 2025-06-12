@@ -1871,87 +1871,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeAppearanceCxxSpecJSI : public TurboModule {
-protected:
-  NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) = 0;
-  virtual void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) = 0;
-  virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
-  virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeAppearanceCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "Appearance";
-
-protected:
-  NativeAppearanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeAppearanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeAppearanceCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeAppearanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getColorScheme) == 1,
-          "Expected getColorScheme(...) to have 1 parameters");
-
-      return bridging::callFromJs<std::optional<jsi::String>>(
-          rt, &T::getColorScheme, jsInvoker_, instance_);
-    }
-    void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) override {
-      static_assert(
-          bridging::getParameterCount(&T::setColorScheme) == 2,
-          "Expected setColorScheme(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setColorScheme, jsInvoker_, instance_, std::move(colorScheme));
-    }
-    void addListener(jsi::Runtime &rt, jsi::String eventName) override {
-      static_assert(
-          bridging::getParameterCount(&T::addListener) == 2,
-          "Expected addListener(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::addListener, jsInvoker_, instance_, std::move(eventName));
-    }
-    void removeListeners(jsi::Runtime &rt, double count) override {
-      static_assert(
-          bridging::getParameterCount(&T::removeListeners) == 2,
-          "Expected removeListeners(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
-    }
-
-  private:
-    friend class NativeAppearanceCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   
 #pragma mark - NativeAppStateAppState
 
@@ -2305,6 +2224,87 @@ private:
 };
 
 
+  class JSI_EXPORT NativeAppearanceCxxSpecJSI : public TurboModule {
+protected:
+  NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) = 0;
+  virtual void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) = 0;
+  virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
+  virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeAppearanceCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "Appearance";
+
+protected:
+  NativeAppearanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeAppearanceCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeAppearanceCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeAppearanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getColorScheme) == 1,
+          "Expected getColorScheme(...) to have 1 parameters");
+
+      return bridging::callFromJs<std::optional<jsi::String>>(
+          rt, &T::getColorScheme, jsInvoker_, instance_);
+    }
+    void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) override {
+      static_assert(
+          bridging::getParameterCount(&T::setColorScheme) == 2,
+          "Expected setColorScheme(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setColorScheme, jsInvoker_, instance_, std::move(colorScheme));
+    }
+    void addListener(jsi::Runtime &rt, jsi::String eventName) override {
+      static_assert(
+          bridging::getParameterCount(&T::addListener) == 2,
+          "Expected addListener(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::addListener, jsInvoker_, instance_, std::move(eventName));
+    }
+    void removeListeners(jsi::Runtime &rt, double count) override {
+      static_assert(
+          bridging::getParameterCount(&T::removeListeners) == 2,
+          "Expected removeListeners(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
+    }
+
+  private:
+    friend class NativeAppearanceCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   
 #pragma mark - NativeBlobModuleConstants
 
@@ -2588,6 +2588,294 @@ private:
 
   private:
     friend class NativeClipboardCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  class JSI_EXPORT NativeDevLoadingViewCxxSpecJSI : public TurboModule {
+protected:
+  NativeDevLoadingViewCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void showMessage(jsi::Runtime &rt, jsi::String message, std::optional<double> withColor, std::optional<double> withBackgroundColor) = 0;
+  virtual void hide(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDevLoadingViewCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "DevLoadingView";
+
+protected:
+  NativeDevLoadingViewCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeDevLoadingViewCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeDevLoadingViewCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDevLoadingViewCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void showMessage(jsi::Runtime &rt, jsi::String message, std::optional<double> withColor, std::optional<double> withBackgroundColor) override {
+      static_assert(
+          bridging::getParameterCount(&T::showMessage) == 4,
+          "Expected showMessage(...) to have 4 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::showMessage, jsInvoker_, instance_, std::move(message), std::move(withColor), std::move(withBackgroundColor));
+    }
+    void hide(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::hide) == 1,
+          "Expected hide(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::hide, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeDevLoadingViewCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  class JSI_EXPORT NativeDevMenuCxxSpecJSI : public TurboModule {
+protected:
+  NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void show(jsi::Runtime &rt) = 0;
+  virtual void reload(jsi::Runtime &rt) = 0;
+  virtual void setProfilingEnabled(jsi::Runtime &rt, bool enabled) = 0;
+  virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDevMenuCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "DevMenu";
+
+protected:
+  NativeDevMenuCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeDevMenuCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeDevMenuCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDevMenuCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void show(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::show) == 1,
+          "Expected show(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::show, jsInvoker_, instance_);
+    }
+    void reload(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::reload) == 1,
+          "Expected reload(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::reload, jsInvoker_, instance_);
+    }
+    void setProfilingEnabled(jsi::Runtime &rt, bool enabled) override {
+      static_assert(
+          bridging::getParameterCount(&T::setProfilingEnabled) == 2,
+          "Expected setProfilingEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setProfilingEnabled, jsInvoker_, instance_, std::move(enabled));
+    }
+    void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) override {
+      static_assert(
+          bridging::getParameterCount(&T::setHotLoadingEnabled) == 2,
+          "Expected setHotLoadingEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setHotLoadingEnabled, jsInvoker_, instance_, std::move(enabled));
+    }
+
+  private:
+    friend class NativeDevMenuCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  class JSI_EXPORT NativeDevSettingsCxxSpecJSI : public TurboModule {
+protected:
+  NativeDevSettingsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void reload(jsi::Runtime &rt) = 0;
+  virtual void reloadWithReason(jsi::Runtime &rt, jsi::String reason) = 0;
+  virtual void onFastRefresh(jsi::Runtime &rt) = 0;
+  virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool isHotLoadingEnabled) = 0;
+  virtual void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) = 0;
+  virtual void toggleElementInspector(jsi::Runtime &rt) = 0;
+  virtual void addMenuItem(jsi::Runtime &rt, jsi::String title) = 0;
+  virtual void openDebugger(jsi::Runtime &rt) = 0;
+  virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
+  virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
+  virtual void setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, bool enabled) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDevSettingsCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "DevSettings";
+
+protected:
+  NativeDevSettingsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeDevSettingsCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeDevSettingsCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDevSettingsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void reload(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::reload) == 1,
+          "Expected reload(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::reload, jsInvoker_, instance_);
+    }
+    void reloadWithReason(jsi::Runtime &rt, jsi::String reason) override {
+      static_assert(
+          bridging::getParameterCount(&T::reloadWithReason) == 2,
+          "Expected reloadWithReason(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::reloadWithReason, jsInvoker_, instance_, std::move(reason));
+    }
+    void onFastRefresh(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::onFastRefresh) == 1,
+          "Expected onFastRefresh(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::onFastRefresh, jsInvoker_, instance_);
+    }
+    void setHotLoadingEnabled(jsi::Runtime &rt, bool isHotLoadingEnabled) override {
+      static_assert(
+          bridging::getParameterCount(&T::setHotLoadingEnabled) == 2,
+          "Expected setHotLoadingEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setHotLoadingEnabled, jsInvoker_, instance_, std::move(isHotLoadingEnabled));
+    }
+    void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) override {
+      static_assert(
+          bridging::getParameterCount(&T::setProfilingEnabled) == 2,
+          "Expected setProfilingEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setProfilingEnabled, jsInvoker_, instance_, std::move(isProfilingEnabled));
+    }
+    void toggleElementInspector(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::toggleElementInspector) == 1,
+          "Expected toggleElementInspector(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::toggleElementInspector, jsInvoker_, instance_);
+    }
+    void addMenuItem(jsi::Runtime &rt, jsi::String title) override {
+      static_assert(
+          bridging::getParameterCount(&T::addMenuItem) == 2,
+          "Expected addMenuItem(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::addMenuItem, jsInvoker_, instance_, std::move(title));
+    }
+    void openDebugger(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::openDebugger) == 1,
+          "Expected openDebugger(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::openDebugger, jsInvoker_, instance_);
+    }
+    void addListener(jsi::Runtime &rt, jsi::String eventName) override {
+      static_assert(
+          bridging::getParameterCount(&T::addListener) == 2,
+          "Expected addListener(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::addListener, jsInvoker_, instance_, std::move(eventName));
+    }
+    void removeListeners(jsi::Runtime &rt, double count) override {
+      static_assert(
+          bridging::getParameterCount(&T::removeListeners) == 2,
+          "Expected removeListeners(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
+    }
+    void setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, bool enabled) override {
+      static_assert(
+          bridging::getParameterCount(&T::setIsShakeToShowDevMenuEnabled) == 2,
+          "Expected setIsShakeToShowDevMenuEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setIsShakeToShowDevMenuEnabled, jsInvoker_, instance_, std::move(enabled));
+    }
+
+  private:
+    friend class NativeDevSettingsCxxSpec;
     T *instance_;
   };
 
@@ -2946,294 +3234,6 @@ private:
 
   private:
     friend class NativeDeviceInfoCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeDevLoadingViewCxxSpecJSI : public TurboModule {
-protected:
-  NativeDevLoadingViewCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void showMessage(jsi::Runtime &rt, jsi::String message, std::optional<double> withColor, std::optional<double> withBackgroundColor) = 0;
-  virtual void hide(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDevLoadingViewCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "DevLoadingView";
-
-protected:
-  NativeDevLoadingViewCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDevLoadingViewCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeDevLoadingViewCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDevLoadingViewCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void showMessage(jsi::Runtime &rt, jsi::String message, std::optional<double> withColor, std::optional<double> withBackgroundColor) override {
-      static_assert(
-          bridging::getParameterCount(&T::showMessage) == 4,
-          "Expected showMessage(...) to have 4 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::showMessage, jsInvoker_, instance_, std::move(message), std::move(withColor), std::move(withBackgroundColor));
-    }
-    void hide(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::hide) == 1,
-          "Expected hide(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::hide, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeDevLoadingViewCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeDevMenuCxxSpecJSI : public TurboModule {
-protected:
-  NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void show(jsi::Runtime &rt) = 0;
-  virtual void reload(jsi::Runtime &rt) = 0;
-  virtual void setProfilingEnabled(jsi::Runtime &rt, bool enabled) = 0;
-  virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDevMenuCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "DevMenu";
-
-protected:
-  NativeDevMenuCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDevMenuCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeDevMenuCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDevMenuCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void show(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::show) == 1,
-          "Expected show(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::show, jsInvoker_, instance_);
-    }
-    void reload(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::reload) == 1,
-          "Expected reload(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::reload, jsInvoker_, instance_);
-    }
-    void setProfilingEnabled(jsi::Runtime &rt, bool enabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setProfilingEnabled) == 2,
-          "Expected setProfilingEnabled(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setProfilingEnabled, jsInvoker_, instance_, std::move(enabled));
-    }
-    void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setHotLoadingEnabled) == 2,
-          "Expected setHotLoadingEnabled(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setHotLoadingEnabled, jsInvoker_, instance_, std::move(enabled));
-    }
-
-  private:
-    friend class NativeDevMenuCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeDevSettingsCxxSpecJSI : public TurboModule {
-protected:
-  NativeDevSettingsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void reload(jsi::Runtime &rt) = 0;
-  virtual void reloadWithReason(jsi::Runtime &rt, jsi::String reason) = 0;
-  virtual void onFastRefresh(jsi::Runtime &rt) = 0;
-  virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool isHotLoadingEnabled) = 0;
-  virtual void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) = 0;
-  virtual void toggleElementInspector(jsi::Runtime &rt) = 0;
-  virtual void addMenuItem(jsi::Runtime &rt, jsi::String title) = 0;
-  virtual void openDebugger(jsi::Runtime &rt) = 0;
-  virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
-  virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
-  virtual void setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, bool enabled) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDevSettingsCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "DevSettings";
-
-protected:
-  NativeDevSettingsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDevSettingsCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeDevSettingsCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDevSettingsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void reload(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::reload) == 1,
-          "Expected reload(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::reload, jsInvoker_, instance_);
-    }
-    void reloadWithReason(jsi::Runtime &rt, jsi::String reason) override {
-      static_assert(
-          bridging::getParameterCount(&T::reloadWithReason) == 2,
-          "Expected reloadWithReason(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::reloadWithReason, jsInvoker_, instance_, std::move(reason));
-    }
-    void onFastRefresh(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::onFastRefresh) == 1,
-          "Expected onFastRefresh(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::onFastRefresh, jsInvoker_, instance_);
-    }
-    void setHotLoadingEnabled(jsi::Runtime &rt, bool isHotLoadingEnabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setHotLoadingEnabled) == 2,
-          "Expected setHotLoadingEnabled(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setHotLoadingEnabled, jsInvoker_, instance_, std::move(isHotLoadingEnabled));
-    }
-    void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setProfilingEnabled) == 2,
-          "Expected setProfilingEnabled(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setProfilingEnabled, jsInvoker_, instance_, std::move(isProfilingEnabled));
-    }
-    void toggleElementInspector(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::toggleElementInspector) == 1,
-          "Expected toggleElementInspector(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::toggleElementInspector, jsInvoker_, instance_);
-    }
-    void addMenuItem(jsi::Runtime &rt, jsi::String title) override {
-      static_assert(
-          bridging::getParameterCount(&T::addMenuItem) == 2,
-          "Expected addMenuItem(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::addMenuItem, jsInvoker_, instance_, std::move(title));
-    }
-    void openDebugger(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::openDebugger) == 1,
-          "Expected openDebugger(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::openDebugger, jsInvoker_, instance_);
-    }
-    void addListener(jsi::Runtime &rt, jsi::String eventName) override {
-      static_assert(
-          bridging::getParameterCount(&T::addListener) == 2,
-          "Expected addListener(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::addListener, jsInvoker_, instance_, std::move(eventName));
-    }
-    void removeListeners(jsi::Runtime &rt, double count) override {
-      static_assert(
-          bridging::getParameterCount(&T::removeListeners) == 2,
-          "Expected removeListeners(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
-    }
-    void setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, bool enabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setIsShakeToShowDevMenuEnabled) == 2,
-          "Expected setIsShakeToShowDevMenuEnabled(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setIsShakeToShowDevMenuEnabled, jsInvoker_, instance_, std::move(enabled));
-    }
-
-  private:
-    friend class NativeDevSettingsCxxSpec;
     T *instance_;
   };
 
