@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update generated codegen files after yarn install",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
