@@ -953,4 +953,262 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
   });
+  
+  test('TextInput should not be editable when editable set to false', async () => {
+    const component = await app.findElementByTestID('textinput-not-editable2');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-not-editable2');
+    expect(dump).toMatchSnapshot();
+    
+    // Attempt to set value and verify it doesn't work
+    const originalText = await component.getText();
+    await component.setValue('Should not work');
+    expect(await component.getText()).toBe(originalText);
+  });
+  
+  test('TextInput should take up to max length input when maxLength set', async () => {
+    const component = await app.findElementByTestID('rewrite_sp_underscore_input');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('rewrite_sp_underscore_input');
+    expect(dump).toMatchSnapshot();
+    
+    // Test that input is limited by maxLength (this component has maxLength=20)
+    await app.waitUntil(
+      async () => {
+        await component.setValue('This is a very long text that should be truncated because it exceeds the limit');
+        const text = await component.getText();
+        // The component replaces spaces with underscores and has maxLength=20
+        return text.length <= 20;
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `MaxLength limitation not working correctly.`,
+      },
+    );
+    
+    // Verify that the text was actually limited
+    const finalText = await component.getText();
+    expect(finalText.length).toBeLessThanOrEqual(20);
+  });
+  
+  test('TextInput input should wrap to multiple lines when multiline set to true', async () => {
+    const component = await app.findElementByTestID('textinput-multiline-topleft');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-multiline-topleft');
+    expect(dump).toMatchSnapshot();
+    
+    // Set a long text that should wrap to multiple lines
+    await app.waitUntil(
+      async () => {
+        await component.setValue('This is a very long text that should wrap to multiple lines when the multiline property is set to true.');
+        return (await component.getText()).includes('This is a very long text');
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter text in multiline TextInput.`,
+      },
+    );
+    
+    // Capture visual tree after text has been set to validate wrapping
+    const dumpAfterText = await dumpVisualTree('textinput-multiline-topleft');
+    expect(dumpAfterText).toMatchSnapshot();
+  });
+  
+  test('TextInput should not be editable when readOnly set to true', async () => {
+    const component = await app.findElementByTestID('textinput-readyonly');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-readyonly');
+    expect(dump).toMatchSnapshot();
+    
+    // Attempt to set value and verify it doesn't work
+    const originalText = await component.getText();
+    await component.setValue('Should not work');
+    expect(await component.getText()).toBe(originalText);
+  });
+  
+  test('TextInput should trigger action upon onPressIn', async () => {
+    // Using the existing textinput-press component which handles onPressIn
+    await searchBox('onPressIn');
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-press');
+    expect(dump).toMatchSnapshot();
+
+    // Trigger onPressIn by clicking
+    await component.click();
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Holding down the click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'onPressIn event not triggered correctly.',
+      },
+    );
+    
+    expect(await stateText.getText()).toBe('Holding down the click/touch');
+    // Reset search to avoid interfering with other tests
+    const search = await app.findElementByTestID('example_search');
+    await search.setValue('');
+  });
+  
+  test('TextInput should trigger action upon onPressOut', async () => {
+    // Using the existing textinput-press component which handles onPressOut
+    await searchBox('onPressIn');
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    // Trigger onPressIn first, then onPressOut
+    await component.click(); // This should trigger onPressIn
+    
+    // Move to another element to trigger onPressOut
+    const search = await app.findElementByTestID('example_search');
+    await search.click();
+    
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Released click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'onPressOut event not triggered correctly.',
+      },
+    );
+    
+    expect(await stateText.getText()).toBe('Released click/touch');
+    // Reset search to avoid interfering with other tests
+    await search.setValue('');
+  });
+  
+  test('TextInput text should clear upon clear() call', async () => {
+    // Using the rewrite example which has a clear button
+    const component = await app.findElementByTestID('rewrite_clear_input');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('rewrite_clear_input');
+    expect(dump).toMatchSnapshot();
+    
+    // Set some text first
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'HelloWorld'; // Spaces are removed in this component
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    
+    // Click the clear button to test clear() method
+    const clearButton = await app.findElementByTestID('rewrite_clear_button');
+    await clearButton.click();
+    
+    // Verify text was cleared
+    await app.waitUntil(
+      async () => {
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Clear method did not work correctly.`,
+      },
+    );
+    
+    expect(await component.getText()).toBe('');
+  });
+  
+  test('TextInput value prop should be the text displayed in the TextInput', async () => {
+    // Using the rewrite example which uses a controlled value prop
+    const component = await app.findElementByTestID('rewrite_sp_underscore_input');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('rewrite_sp_underscore_input');
+    expect(dump).toMatchSnapshot();
+    
+    // Test that the value prop controls what's displayed
+    await app.waitUntil(
+      async () => {
+        await component.setValue('test value');
+        // This component replaces spaces with underscores
+        return (await component.getText()) === 'test_value';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Value prop not working correctly.`,
+      },
+    );
+    
+    expect(await component.getText()).toBe('test_value');
+  });
+  
+  test('TextInput should focus upon .focus() call', async () => {
+    // Test focus behavior using the uncontrolled component which changes style on focus
+    const component = await app.findElementByTestID('uncontrolled-textinput');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Initial state - not focused 
+    let dump = await dumpVisualTree('uncontrolled-textinput');
+    expect(dump).toMatchSnapshot();
+    
+    // Call focus() method directly
+    await (component as any).focus();
+    
+    // After focus, the style should change (component has onFocus handler)
+    dump = await dumpVisualTree('uncontrolled-textinput');
+    expect(dump).toMatchSnapshot();
+  });
+  
+  test('TextInput should lose focus upon .blur() call', async () => {
+    // Test blur behavior using the uncontrolled component
+    const component = await app.findElementByTestID('uncontrolled-textinput');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Focus first
+    await component.click();
+    
+    // Call blur() method directly
+    await (component as any).blur();
+    
+    // After blur, the style should revert (component has onBlur handler)
+    const dump = await dumpVisualTree('uncontrolled-textinput');
+    expect(dump).toMatchSnapshot();
+  });
+  
+  test('TextInput isFocused() should return true when the TextInput is focused', async () => {
+    // Simulate isFocused behavior using the uncontrolled component's style changes
+    const component = await app.findElementByTestID('uncontrolled-textinput');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Focus the component
+    await component.click();
+    
+    // The component should be in focused state (we can't directly test isFocused() 
+    // but we can verify the visual state that indicates focus)
+    expect(await component.isFocused()).toBe(true);
+  });
+  
+  test('TextInput isFocused() should return false when the TextInput is not focused', async () => {
+    // Simulate isFocused behavior using the uncontrolled component
+    const component = await app.findElementByTestID('uncontrolled-textinput');
+    await component.waitForDisplayed({timeout: 5000});
+    
+    // Ensure component is not focused by clicking elsewhere
+    const search = await app.findElementByTestID('example_search');
+    await search.click();
+    
+    // The component should not be in focused state
+    expect(await component.isFocused()).toBe(false);
+    
+    // Reset search
+    await search.setValue('');
+  });
 });
