@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 06 Jun 2025 20:46:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 10 Jun 2025 18:35:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.0
+
+Tue, 10 Jun 2025 18:35:19 GMT
+
+### Patches
+
+- Promote 0.79 to latest (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.79.0
+- Bump @react-native-windows/codegen to v0.79.0
 
 ## 0.79.0-preview.2
 

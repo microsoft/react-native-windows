@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Tue, 03 Jun 2025 19:26:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 10 Jun 2025 18:35:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.0
+
+Tue, 10 Jun 2025 18:35:18 GMT
+
+### Patches
+
+- Promote 0.79 to latest (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.79.0
 
 ## 0.79.0-preview.1
 
