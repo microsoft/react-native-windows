@@ -22,11 +22,6 @@ steps:
       contents: ${{parameters.contents}}
 
   - ${{ if not(parameters.oneESMode) }}:
-    - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-      displayName: "📒 Generate Manifest: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}"
-      inputs:
-        BuildDropPath: $(Build.StagingDirectory)/NuGet/${{ parameters.artifactName }}/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-
     - task: PublishPipelineArtifact@1
       displayName: "Publish Artifact: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}"
       # Do nothing if the artifact was already published. E.g. after rerunning a past successful job attempt
