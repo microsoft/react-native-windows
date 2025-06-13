@@ -158,6 +158,12 @@ void WindowsTextLayoutManager::GetTextLayout(
   }
   winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
 
+  // Set reading direction based on baseWritingDirection
+  if (outerFragment.textAttributes.baseWritingDirection &&
+      *outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
+    winrt::check_hresult(spTextFormat->SetReadingDirection(DWRITE_READING_DIRECTION_RIGHT_TO_LEFT));
+  }
+
   // Get text with Object Replacement Characters for attachments
   auto str = GetTransformedText(attributedStringBox);
   winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
