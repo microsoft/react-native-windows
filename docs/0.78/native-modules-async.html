@@ -1,0 +1,371 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Using Asynchronous Windows APIs · React Native for Windows + macOS</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&gt;**This documentation and the underlying platform code is a work in progress.**"/><meta name="docsearch:version" content="0.78"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Using Asynchronous Windows APIs · React Native for Windows + macOS"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="&gt;**This documentation and the underlying platform code is a work in progress.**"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="stylesheet" href="/react-native-windows/css/code-block-buttons.css"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/react-native-windows/js/code-block-buttons.js"></script><script type="text/javascript" src="/react-native-windows/js/nav-buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows + macOS"/><h2 class="headerTitleWithLogo">React Native for Windows + macOS</h2></a><a href="/react-native-windows/versions"><h3>0.78</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/react-native-windows/docs/0.78/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/0.78/flyout-component" target="_self">APIs</a></li><li class=""><a href="https://devblogs.microsoft.com/react-native/" target="_self">Blog</a></li><li class=""><a href="/react-native-windows/resources" target="_self">Resources</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_self">Samples</a></li><li class=""><a href="/react-native-windows/support" target="_self">Support</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Native Development (Windows)</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/getting-started">Get Started with Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/rnw-dependencies">System Requirements</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/react-native-windows-cli">React Native Windows CLI</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/parity-status">API Parity</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/config">React Native Config Schema</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/windowsbrush-and-theme">Using PlatformColor and Responding to Themes</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/releases">Release Strategy</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/platform">Platform Detection</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/upgrade-app">Upgrading App to Latest Version of React Native Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/setup-ci">Setup Continuous Integration Pipeline for an RNW App</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/app-publishing">Publishing a React Native Windows App to the Microsoft Store</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">CLI Commands (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/autolink-windows-cli">react-native autolink-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/codegen-windows-cli">react-native codegen-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/init-windows-cli">react-native init-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/run-windows-cli">react-native run-windows</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Modules (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/view-managers">Native UI Components</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-setup">Native Module Setup</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-vs-turbo-modules">Native Modules vs Turbo Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-using">Using Community Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-autolinking">Autolinking Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-advanced">Native Modules (Advanced)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/supported-community-modules">Supported Community Modules</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Development (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-code">Working with native code on Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-code-language-choice">Choosing C++ or C# for native code</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-marshalling-data">Marshaling Data</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-async">Using Asynchronous Windows APIs</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-jsvalue">Using JSValue</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-csharp-codegen">Compile time code generation for C#</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/win10-vm">Developing Windows apps on a non-Windows PC</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/customizing-SDK-versions">Customizing SDK versions</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/managing-cpp-deps">Managing C++ dependencies</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics (MacOS)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/rnm-getting-started">Get Started with macOS</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/rnm-dependencies">System Requirements</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Troubleshooting<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/debugging-javascript">JavaScript Debugging</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/native-modules-troubleshooting">Troubleshooting Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/metro-config-out-tree-platforms">Metro config for out of tree platforms</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Experimental<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/new-architecture">New vs. Old Architecture</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/hermes">Hermes on Windows + macOS</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.78/NuGet">Using Microsoft.ReactNative NuGet packages</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/main/docs/native-modules-async.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Using Asynchronous Windows APIs</h1></header><article><div><span><blockquote>
+<p><strong>This documentation and the underlying platform code is a work in progress.</strong></p>
+</blockquote>
+<p>A common scenario for <a href="/react-native-windows/docs/0.78/native-modules">Native Modules</a> is to call one or more native asynchronous methods from a JS asynchronous method. However it may not be immediately obvious how to properly bridge both asynchronous worlds, which can lead to unstable, difficult to debug code.</p>
+<p>This document proposes some best patterns to follow when bridging asynchronous methods from JS to native code for React Native Windows. It assumes you've already familiar with the basics of setting up and writing <a href="/react-native-windows/docs/0.78/native-modules">Native Modules</a>.</p>
+<blockquote>
+<p>The complete source for the examples below are provided within the <a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples-old/NativeModuleSample">Native Module Sample in <code>microsoft/react-native-windows-samples</code></a>.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="writing-native-modules-that-call-asynchronous-windows-apis"></a><a href="#writing-native-modules-that-call-asynchronous-windows-apis" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Writing Native Modules that call Asynchronous Windows APIs</h2>
+<p>Let's write a native module which uses asynchronous Windows APIs to perform a simple HTTP request. We'll call it <code>SimpleHttpModule</code> and it needs a single, promise-based method named <code>GetHttpResponse</code> that takes a URI string as a parameter and on success returns an object with both the HTTP status code and text content.</p>
+<p>In the end, we'll want to call the method from JS as follows:</p>
+<pre><code class="hljs css language-js">NativeModules<span class="token punctuation">.</span>SimpleHttpModule<span class="token punctuation">.</span><span class="token function">GetHttpResponse</span><span class="token punctuation">(</span><span class="token string">'https://microsoft.github.io/react-native-windows/'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">result</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">error</span> <span class="token operator">=></span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="simplehttpmodule-in-c"></a><a href="#simplehttpmodule-in-c" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>SimpleHttpModule</code> in C#</h3>
+<p>The native module support for C# supports the common asynchronous programming patterns established in C# using <code>async</code>, <code>await</code> and <code>Task&lt;T&gt;</code>.</p>
+<p>To expose the module to JavaScript you need to declare a C# class. To indicate it should be exposed to JavaScript, you annotate with a <code>[ReactModule]</code>  <a href="https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/attributes">attribute</a> like:</p>
+<pre><code class="hljs css language-c#"><span class="hljs-keyword">namespace</span> <span class="hljs-title">NativeModuleSample</span>
+{
+  [<span class="hljs-meta">ReactModule</span>]
+  <span class="hljs-keyword">class</span> <span class="hljs-title">SimpleHttpModule</span>
+  {
+    <span class="hljs-comment">// Methods go here.</span>
+  }
+}
+</code></pre>
+<p>This makes an object available to JavaScript via the expression <code>NativeModules.SimpleHttpModule</code>. By default the JavaScript name will match the C# class name. If you don't want the name of the class to match the name in JavaScript, i.e. you want to access the module via the expression <code>NativeModules.CustomModule</code>. you can pass a custom name like:</p>
+<pre><code class="hljs css language-c#">  [<span class="hljs-meta">ReactModule(<span class="hljs-meta-string">"CustomModule"</span>)</span>]
+  <span class="hljs-keyword">class</span> <span class="hljs-title">SimpleHttpModule</span>
+  { 
+    ...
+  }
+</code></pre>
+<p>Now we want to expose the method that performs the HTTP request. It is recommended, and it is the default, to write these functions asynchronously. Writing asynchronous code in C# is pretty straight-forward and intuitive with the <code>async</code> and <code>await</code> keywords and the <code>Task&lt;T&gt;</code> types.</p>
+<blockquote>
+<p>If you're not familiar with writing asynchronous C# code, see <a href="https://docs.microsoft.com/en-us/windows/uwp/threading-async/call-asynchronous-apis-in-csharp-or-visual-basic">Call asynchronous APIs in C# or Visual Basic</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/async">Asynchronous programming</a> that will teach you the concepts if you are not familiar yet.</p>
+</blockquote>
+<p>The function signature for a typical web request, annotated with the <code>[ReactMethod]</code> attribute will look like:</p>
+<pre><code class="hljs css language-cs">    [<span class="hljs-meta">ReactMethod</span>]
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;<span class="hljs-keyword">string</span>&gt; <span class="hljs-title">GetHttpResponseAsync</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> uri</span>)</span> {
+      ...
+    }
+</code></pre>
+<p>You are now free to fill in the logic like:</p>
+<pre><code class="hljs css language-cs">      <span class="hljs-comment">// Create an HttpClient object</span>
+      <span class="hljs-keyword">var</span> httpClient = <span class="hljs-keyword">new</span> HttpClient();
+
+      <span class="hljs-comment">// Send the GET request asynchronously</span>
+      <span class="hljs-keyword">var</span> httpResponseMessage = <span class="hljs-keyword">await</span> httpClient.GetAsync(<span class="hljs-keyword">new</span> Uri(uri));
+
+      <span class="hljs-keyword">var</span> content = <span class="hljs-keyword">await</span> httpResponseMessage.Content.ReadAsStringAsync();
+      
+      <span class="hljs-keyword">return</span> content;
+</code></pre>
+<p>The code takes the following steps:</p>
+<ol>
+<li>Creates a <code>HttpClient</code>.</li>
+<li>Asynchronously calls the <code>GetAsync</code> method to make an HTTP request for the URI.</li>
+<li>Parses the status code out of the returned <code>HttpResponseMessage</code> object.</li>
+<li>Asynchronously parses the content out of the returned <code>HttpResponseMessage</code> object.</li>
+<li>returns the content</li>
+</ol>
+<p>This code only returns a string. You might want to return a more complex object that contains both the content and the status code.
+For that you can simply declare a C# <code>struct</code> that will be marshaled to JavaScript like:</p>
+<pre><code class="hljs css language-cs">  <span class="hljs-keyword">internal</span> <span class="hljs-keyword">struct</span> Result {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> statusCode { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> content { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+  }
+</code></pre>
+<p>It is recommended to follow JavaScript naming conventions here as of now there is no auto-mapping of names between the common style guides of C# and JS</p>
+<p>To return the value you'll of course have to update the signature of the method from returning a <code>string</code> to the <code>Result</code>:</p>
+<pre><code class="hljs css language-cs">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;Result&gt; <span class="hljs-title">GetHttpResponseAsync</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> uri</span>)</span> {
+</code></pre>
+<p>as well as store the status code and update the return statement from <code>return content;</code> to:</p>
+<pre><code class="hljs css language-cs">      <span class="hljs-keyword">var</span> statusCode = httpResponseMessage.StatusCode;
+
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Result()
+      {
+        statusCode = (<span class="hljs-keyword">int</span>)statusCode,
+        content = content,
+      };
+</code></pre>
+<p>But wait, we've only discussed the success path, what happens if <code>GetHttpResponse</code> doesn't succeed? We don't handle any exceptions in this example. If an exception is thrown, how do we marshal an error back to JavaScript? That is actually taken care of for you by the framework: any exception in the task will be marshaled to the JavaScript side as a JavaScript exception.</p>
+<p>That's it! If you want to see the complete <code>SimpleHttpModule</code>, see <a href="https://github.com/microsoft/react-native-windows-samples/blob/main/samples-old/NativeModuleSample/csharp/windows/NativeModuleSample/AsyncMethodExamples.cs"><code>AsyncMethodExamples.cs</code></a>.</p>
+<h3><a class="anchor" aria-hidden="true" id="simplehttpmodule-in-cwinrt"></a><a href="#simplehttpmodule-in-cwinrt" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>SimpleHttpModule</code> in C++/WinRT</h3>
+<p>Let's start with the asynchronous native method which performs the HTTP request:</p>
+<pre><code class="hljs css language-cpp"><span class="token keyword">static</span> winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Foundation<span class="token double-colon punctuation">::</span>IAsyncAction <span class="token function">GetHttpResponseAsync</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>wstring uri<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+<span class="token punctuation">{</span>
+  <span class="token comment">// Create an HttpClient object</span>
+  <span class="token keyword">auto</span> httpClient <span class="token operator">=</span> winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Web<span class="token double-colon punctuation">::</span><span class="token class-name">Http</span><span class="token double-colon punctuation">::</span><span class="token function">HttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Send the GET request asynchronously</span>
+  <span class="token keyword">auto</span> httpResponseMessage <span class="token operator">=</span> <span class="token keyword">co_await</span> httpClient<span class="token punctuation">.</span><span class="token function">GetAsync</span><span class="token punctuation">(</span>winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span><span class="token class-name">Foundation</span><span class="token double-colon punctuation">::</span><span class="token function">Uri</span><span class="token punctuation">(</span>uri<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Parse response</span>
+  <span class="token keyword">auto</span> statusCode <span class="token operator">=</span> httpResponseMessage<span class="token punctuation">.</span><span class="token function">StatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">auto</span> content <span class="token operator">=</span> <span class="token keyword">co_await</span> httpResponseMessage<span class="token punctuation">.</span><span class="token function">Content</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ReadAsStringAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// TODO: How to return the result?</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>The <code>GetHttpResponseAsync</code> method is pretty straight-forward at this point, it takes a <code>wstring</code> URI and &quot;returns&quot; an <code>IAsyncAction</code> (which is to say, the method is asynchronous and doesn't actually return a value when it's done).</p>
+<blockquote>
+<p>If you're not familiar with writing asynchronous C++/WinRT code, see <a href="https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/concurrency">Concurrency and asynchronous operations with C++/WinRT</a>.</p>
+</blockquote>
+<p>Inside <code>GetHttpResponseAsync</code>, we see it:</p>
+<ol>
+<li>Creates a <code>HttpClient</code>.</li>
+<li>Asynchronous calls the <code>GetAsync</code> method to make an HTTP request for the URI.</li>
+<li>Parses the status code out of the returned <code>HttpResponseMessage</code> object.</li>
+<li>Asynchronously parses the content out of the returned <code>HttpResponseMessage</code> object.</li>
+</ol>
+<p>Now we have <code>statusCode</code> and <code>content</code>, but what do we do with it? How do we call this method from JS, and how do we get the result back to the JS?</p>
+<p>Let's pause this and start building our native module:</p>
+<pre><code class="hljs css language-cpp"><span class="token keyword">namespace</span> NativeModuleSample
+<span class="token punctuation">{</span>
+  <span class="token function">REACT_MODULE</span><span class="token punctuation">(</span>SimpleHttpModule<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">SimpleHttpModule</span>
+  <span class="token punctuation">{</span>
+    <span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>GetHttpResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">GetHttpResponse</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>wstring uri<span class="token punctuation">,</span>
+        winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>ReactPromise<span class="token operator">&lt;</span>winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>JSValueObject<span class="token operator">></span> promise<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Here we simply define <code>SimpleHttpModule</code> with an empty <code>GetHttpResponse</code> method.</p>
+<p>Notice the method itself is <code>void</code> and that the last parameter in the signature is of type <code>ReactPromise&lt;JSValueObject&gt;</code>. This indicates to React Native Windows that we want a promise-based method in JS, and that the expected return value of a success is of type <code>JSValueObject</code>.</p>
+<p>All method parameters before this final promise are the input parameters we expect to be marshaled in from the JS. In this case, we want a single string for the URI to request.</p>
+<p>The <code>promise</code> object is our interface for handling the promise and marshaling a result to the JS. To do so we simply call <code>promise.Resolve()</code> with the result object (if the operation was a success) or <code>promise.Reject()</code> with an error (if the operation failed).</p>
+<p>Now that we know how to return results, let's prep <code>GetHttpResponseAsync</code> to take in a <code>ReactPromise&lt;JSValueObject&gt;</code> parameter and use it:</p>
+<pre><code class="hljs css language-cpp"><span class="token keyword">static</span> winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Foundation<span class="token double-colon punctuation">::</span>IAsyncAction <span class="token function">GetHttpResponseAsync</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>wstring uri<span class="token punctuation">,</span>
+  winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>ReactPromise<span class="token operator">&lt;</span>winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>JSValueObject<span class="token operator">></span> promise<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">auto</span> capturedPromise <span class="token operator">=</span> promise<span class="token punctuation">;</span>
+  
+  <span class="token comment">// Create an HttpClient object</span>
+  <span class="token keyword">auto</span> httpClient <span class="token operator">=</span> winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Web<span class="token double-colon punctuation">::</span><span class="token class-name">Http</span><span class="token double-colon punctuation">::</span><span class="token function">HttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Send the GET request asynchronously</span>
+  <span class="token keyword">auto</span> httpResponseMessage <span class="token operator">=</span> <span class="token keyword">co_await</span> httpClient<span class="token punctuation">.</span><span class="token function">GetAsync</span><span class="token punctuation">(</span>winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span><span class="token class-name">Foundation</span><span class="token double-colon punctuation">::</span><span class="token function">Uri</span><span class="token punctuation">(</span>uri<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Parse response</span>
+  <span class="token keyword">auto</span> statusCode <span class="token operator">=</span> httpResponseMessage<span class="token punctuation">.</span><span class="token function">StatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">auto</span> content <span class="token operator">=</span> <span class="token keyword">co_await</span> httpResponseMessage<span class="token punctuation">.</span><span class="token function">Content</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ReadAsStringAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Build result object</span>
+  <span class="token keyword">auto</span> resultObject <span class="token operator">=</span> winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span><span class="token class-name">ReactNative</span><span class="token double-colon punctuation">::</span><span class="token function">JSValueObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  resultObject<span class="token punctuation">[</span><span class="token string">"statusCode"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>statusCode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  resultObject<span class="token punctuation">[</span><span class="token string">"content"</span><span class="token punctuation">]</span> <span class="token operator">=</span> winrt<span class="token double-colon punctuation">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  capturedPromise<span class="token punctuation">.</span><span class="token function">Resolve</span><span class="token punctuation">(</span>resultObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>What have we done here? First off, we've &quot;captured&quot; the <code>promise</code> locally within the asynchronous method by copying it into <code>capturedPromise</code>. We do this because this is an asynchronous method calling other asynchronous methods, and otherwise we risk the <code>ReactPromise</code> object getting deleted prematurely by React Native Windows.</p>
+<blockquote>
+<p><strong>Important:</strong> Our only input parameter in this example is a <code>wstring</code>, but if your method uses <code>JSValue</code>, <code>JSValueArray</code>, or <code>JSValueObject</code> parameter types, you'll need to &quot;capture&quot; those with a copy too. Example:</p>
+<pre><code class="hljs css language-cpp"><span class="token keyword">static</span> winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Foundation<span class="token double-colon punctuation">::</span>IAsyncAction <span class="token function">MethodAsync</span><span class="token punctuation">(</span>winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>JSValueObject options<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">auto</span> captureOptions <span class="token operator">=</span> options<span class="token punctuation">.</span><span class="token function">Copy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</blockquote>
+<p>At the bottom of the method, we simply build the result object to be returned to JS, and pass it to <code>capturedPromise.Resolve()</code>. That's it for <code>GetHttpResponseAsync</code> - if the method execution gets to the end without any problems, it will resolve the promise, which marshals the result back to the JS.</p>
+<p>Now that <code>GetHttpResponseAsync</code> is taken care of, let's bridge the gap between it and our new <code>GetHttpResponse</code> native module method.</p>
+<pre><code class="hljs css language-cpp"><span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>GetHttpResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">GetHttpResponse</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>wstring uri<span class="token punctuation">,</span>
+    winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>ReactPromise<span class="token operator">&lt;</span>winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>JSValueObject<span class="token operator">></span> promise<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">auto</span> asyncOp <span class="token operator">=</span> <span class="token function">GetHttpResponseAsync</span><span class="token punctuation">(</span>uri<span class="token punctuation">,</span> promise<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Looks simple enough, right? We call <code>GetHttpResponseAsync</code> with the <code>uri</code> and <code>promise</code> parameters, and get back an <code>IAsyncAction</code> object which we store in <code>asyncOp</code>. When this executes, <code>GetHttpResponseAsync</code> will return control when it hits its first <code>co_await</code>, which in turn will return control for the JS code to continue running. When everything in <code>GetHttpResponseAsync</code> succeeds, it itself is responsible for resolving the promise with the result.</p>
+<p>But wait, what happens if <code>GetHttpResponseAsync</code> doesn't succeed? We don't handle any exceptions in this example, so if an exception is thrown, how do we marshal an error back to the JS? We have one more thing to do, and that's to check for unhandled exceptions:</p>
+<pre><code class="hljs css language-cpp"><span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>GetHttpResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">GetHttpResponse</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>wstring uri<span class="token punctuation">,</span>
+    winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>ReactPromise<span class="token operator">&lt;</span>winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>JSValueObject<span class="token operator">></span> promise<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">auto</span> asyncOp <span class="token operator">=</span> <span class="token function">GetHttpResponseAsync</span><span class="token punctuation">(</span>uri<span class="token punctuation">,</span> promise<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  asyncOp<span class="token punctuation">.</span><span class="token function">Completed</span><span class="token punctuation">(</span><span class="token punctuation">[</span>promise<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">auto</span> action<span class="token punctuation">,</span> <span class="token keyword">auto</span> status<span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>status <span class="token operator">==</span> winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Foundation<span class="token double-colon punctuation">::</span>AsyncStatus<span class="token double-colon punctuation">::</span>Error<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      std<span class="token double-colon punctuation">::</span>stringstream errorCode<span class="token punctuation">;</span>
+      errorCode <span class="token operator">&lt;&lt;</span> <span class="token string">"0x"</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>hex <span class="token operator">&lt;&lt;</span> action<span class="token punctuation">.</span><span class="token function">ErrorCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+
+      <span class="token keyword">auto</span> error <span class="token operator">=</span> winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span><span class="token class-name">ReactNative</span><span class="token double-colon punctuation">::</span><span class="token function">ReactError</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      error<span class="token punctuation">.</span>Message <span class="token operator">=</span> <span class="token string">"HRESULT "</span> <span class="token operator">+</span> errorCode<span class="token punctuation">.</span><span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">": "</span> <span class="token operator">+</span> std<span class="token double-colon punctuation">::</span><span class="token function">system_category</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">message</span><span class="token punctuation">(</span>action<span class="token punctuation">.</span><span class="token function">ErrorCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      promise<span class="token punctuation">.</span><span class="token function">Reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>We've defined an <code>AsyncActionCompletedHandler</code> lambda and set it to be run when <code>asyncOp</code> completes. Here we check if the action failed (i.e. <code>status == AsyncStatus::Error</code>) and if so, we build a <code>ReactError</code> object where the message contains both the error code (a Windows <code>HRESULT</code>) and the error message for that code. Then we pass that error to <code>promise.Reject()</code>, thereby marshaling the error back to the JS.</p>
+<blockquote>
+<p><strong>Important:</strong> This example shows the minimum case, where you don't handle any errors within <code>GetHttpResponseAsync</code>, but you're not limited to this. You're free to detect error conditions within your code and call <code>capturedPromise.Reject()</code> yourself with (more useful) error messages at any time. However you should <em>always</em> include this final handler, to catch any unexpected and unhandled exceptions that may occur, especially when calling Windows APIs. Just be sure that you only call <code>Reject()</code> once and that nothing executes afterwards.</p>
+</blockquote>
+<p>That's it! If you want to see the complete <code>SimpleHttpModule</code>, see <a href="https://github.com/microsoft/react-native-windows-samples/blob/main/samples-old/NativeModuleSample/cppwinrt/windows/NativeModuleSample/AsyncMethodExamples.h"><code>AsyncMethodExamples.h</code></a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="executing-calls-to-api-on-the-ui-thread"></a><a href="#executing-calls-to-api-on-the-ui-thread" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Executing calls to API on the UI thread</h2>
+<p>Since version 0.64, calls to native modules no longer run on the UI thread. This means that each call to the APIs that must be executed on the UI thread now needs to be explicitly dispatched.</p>
+<p>To do that the <a href="https://microsoft.github.io/react-native-windows/docs/IReactDispatcher"><code>UIDispatcher</code></a> should be used.</p>
+<p>This section will cover the basic usage scenario of the <code>UIDispatcher</code> and its <code>Post()</code> method with the WinRT <code>FileOpenPicker</code> (for a description of opening files and folder with a picker on UWP please see the <a href="https://docs.microsoft.com/en-us/windows/uwp/files/quickstart-using-file-and-folder-pickers">Open files and folders with a picker</a>).</p>
+<h3><a class="anchor" aria-hidden="true" id="using-uidispatcher-with-c"></a><a href="#using-uidispatcher-with-c" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using <code>UIDispatcher</code> with C#</h3>
+<p>Let's suppose we have a native module which opens a file using the <code>FileOpenPicker</code>.<br>
+Following the official example the native module's method launching the picker would look like this:</p>
+<pre><code class="hljs css language-cs">  [<span class="hljs-meta">ReactMethod(<span class="hljs-meta-string">"openFile"</span>)</span>]
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OpenFile</span>(<span class="hljs-params"></span>)</span>
+  {
+    <span class="hljs-keyword">var</span> picker = <span class="hljs-keyword">new</span> Windows.Storage.Pickers.FileOpenPicker();
+    <span class="hljs-comment">// Other initialization code</span>
+    Windows.Storage.StorageFile file = <span class="hljs-keyword">await</span> picker.PickSingleFileAsync();
+
+    <span class="hljs-keyword">if</span> (file != <span class="hljs-literal">null</span>)
+    {
+      <span class="hljs-comment">// File opened successfully</span>
+    }
+    <span class="hljs-keyword">else</span>
+    {
+      <span class="hljs-comment">// Error while opening the file</span>
+    }
+  }
+</code></pre>
+<p>However, starting with react-native-windows 0.64, this method would end up with <code>System.Exception: Invalid window handle</code>.
+Since the <code>FileOpenPicker</code> API requires running on the UI thread, we need to wrap this call with the <code>UIDispatcher.Post</code> method.</p>
+<pre><code class="hljs css language-cs">  [<span class="hljs-meta">ReactMethod(<span class="hljs-meta-string">"openFile"</span>)</span>]
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OpenFile</span>(<span class="hljs-params"></span>)</span>
+  {
+    context.Handle.UIDispatcher.Post(<span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">var</span> picker = <span class="hljs-keyword">new</span> Windows.Storage.Pickers.FileOpenPicker();
+      <span class="hljs-comment">// Other initialization code</span>
+      Windows.Storage.StorageFile file = <span class="hljs-keyword">await</span> picker.PickSingleFileAsync();
+
+      <span class="hljs-keyword">if</span> (file != <span class="hljs-literal">null</span>)
+      {
+        <span class="hljs-comment">// File opened successfully</span>
+      }
+      <span class="hljs-keyword">else</span>
+      {
+        <span class="hljs-comment">// Error while opening the file</span>
+      }
+    });
+  }
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> <code>UIDispatcher</code> is available via the <code>ReactContext</code>, which we can inject through a method marked as <a href="/react-native-windows/docs/0.78/native-modules-advanced#c-native-modules-with-initializer-and-as-a-way-to-access-reactcontext"><code>ReactInitializer</code></a></p>
+<pre><code class="hljs css language-cs"> [<span class="hljs-meta">ReactInitializer</span>]
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Initialize</span>(<span class="hljs-params">ReactContext reactContext</span>)</span>
+ {
+   context = reactContext;
+ }
+</code></pre>
+</blockquote>
+<p>Now if we call the <code>openFile</code> method in our JS code the file picker's window will open.</p>
+<h3><a class="anchor" aria-hidden="true" id="using-uidispatcher-with-cwinrt"></a><a href="#using-uidispatcher-with-cwinrt" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using <code>UIDispatcher</code> with C++/WinRT</h3>
+<p>Let's suppose we have the native module which opens and loads the file using the <code>FileOpenPicker</code>.<br>
+Following the official example the native module's method launching the picker would look like this:</p>
+<pre><code class="hljs css language-cpp">  <span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>OpenFile<span class="token punctuation">,</span> L<span class="token string">"openFile"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  winrt<span class="token double-colon punctuation">::</span>fire_and_forget <span class="token function">OpenFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+  <span class="token punctuation">{</span>
+    winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Storage<span class="token double-colon punctuation">::</span>Pickers<span class="token double-colon punctuation">::</span>FileOpenPicker openPicker<span class="token punctuation">;</span>
+    <span class="token comment">// Other initialization code</span>
+    winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Storage<span class="token double-colon punctuation">::</span>StorageFile file <span class="token operator">=</span> <span class="token keyword">co_await</span> openPicker<span class="token punctuation">.</span><span class="token function">PickSingleFileAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>file <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token comment">// File opened successfully</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+      <span class="token comment">// Error while opening the file</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>However, starting with react-native-windows 0.64, this method would end up with <code>ERROR_INVALID_WINDOW_HANDLE</code>.
+Since the <code>FileOpenPicker</code> API requires running on the UI thread, we need to wrap this call with the <code>UIDispatcher.Post</code> method.</p>
+<pre><code class="hljs css language-cpp">  <span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>OpenFile<span class="token punctuation">,</span> L<span class="token string">"openFile"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token function">OpenFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+  <span class="token punctuation">{</span>
+    context<span class="token punctuation">.</span><span class="token function">UIDispatcher</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Post</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>winrt<span class="token double-colon punctuation">::</span>fire_and_forget <span class="token punctuation">{</span>
+      winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Storage<span class="token double-colon punctuation">::</span>Pickers<span class="token double-colon punctuation">::</span>FileOpenPicker openPicker<span class="token punctuation">;</span>
+      <span class="token comment">// Other initialization code</span>
+      winrt<span class="token double-colon punctuation">::</span>Windows<span class="token double-colon punctuation">::</span>Storage<span class="token double-colon punctuation">::</span>StorageFile file <span class="token operator">=</span> <span class="token keyword">co_await</span> openPicker<span class="token punctuation">.</span><span class="token function">PickSingleFileAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>file <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+      <span class="token punctuation">{</span>
+        <span class="token comment">// File opened successfully</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">else</span>
+      <span class="token punctuation">{</span>
+        <span class="token comment">// Error while opening the file</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> <code>UIDispatcher</code> is available via the <code>ReactContext</code>, which we can inject through a method marked as <a href="/react-native-windows/docs/0.78/native-modules-advanced#c-native-modules-with-initializer-and-as-a-way-to-access-reactcontext"><code>REACT_INIT</code></a></p>
+<pre><code class="hljs css language-cpp"> <span class="token function">REACT_INIT</span><span class="token punctuation">(</span>Initialize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">void</span> <span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token keyword">const</span> winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>ReactContext<span class="token operator">&amp;</span> reactContext<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+ <span class="token punctuation">{</span>
+   context <span class="token operator">=</span> reactContext<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+</code></pre>
+</blockquote>
+<p>Now if we call the <code>openFile</code> method in our JS code the file picker's window will open.</p>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 6/13/2025</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/0.78/native-modules-marshalling-data"><span class="arrow-prev">← </span><span>Marshaling Data</span></a><a class="docs-next button" href="/react-native-windows/docs/0.78/native-modules-jsvalue"><span>Using JSValue</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#writing-native-modules-that-call-asynchronous-windows-apis">Writing Native Modules that call Asynchronous Windows APIs</a><ul class="toc-headings"><li><a href="#simplehttpmodule-in-c"><code>SimpleHttpModule</code> in C#</a></li><li><a href="#simplehttpmodule-in-cwinrt"><code>SimpleHttpModule</code> in C++/WinRT</a></li></ul></li><li><a href="#executing-calls-to-api-on-the-ui-thread">Executing calls to API on the UI thread</a><ul class="toc-headings"><li><a href="#using-uidispatcher-with-c">Using <code>UIDispatcher</code> with C#</a></li><li><a href="#using-uidispatcher-with-cwinrt">Using <code>UIDispatcher</code> with C++/WinRT</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows + macOS Docs</h5><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/getting-started">Get Started with Windows</a></div><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/rnm-getting-started"> Get Started with macOS</a></div><a href="/react-native-windows/docs/parity-status">React Native Windows Components and APIs</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a></div><div><h5>Connect With Us On</h5><a href="https://devblogs.microsoft.com/react-native/">Blog</a><a href="https://twitter.com/ReactNativeMSFT" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

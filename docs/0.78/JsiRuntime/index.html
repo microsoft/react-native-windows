@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>JsiRuntime · React Native for Windows + macOS</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Kind: `class`"/><meta name="docsearch:version" content="0.78"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="JsiRuntime · React Native for Windows + macOS"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="Kind: `class`"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="stylesheet" href="/react-native-windows/css/code-block-buttons.css"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/react-native-windows/js/code-block-buttons.js"></script><script type="text/javascript" src="/react-native-windows/js/nav-buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows + macOS"/><h2 class="headerTitleWithLogo">React Native for Windows + macOS</h2></a><a href="/react-native-windows/versions"><h3>0.78</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-native-windows/docs/0.78/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/0.78/flyout-component" target="_self">APIs</a></li><li class=""><a href="https://devblogs.microsoft.com/react-native/" target="_self">Blog</a></li><li class=""><a href="/react-native-windows/resources" target="_self">Resources</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_self">Samples</a></li><li class=""><a href="/react-native-windows/support" target="_self">Support</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/main/docs/JsiRuntime-api-windows.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">JsiRuntime</h1></header><article><div><span><p>Kind: <code>class</code></p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<p>An experimental API. Do not use it directly. It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.
+See the <code>ExecuteJsi</code> method in <code>JsiApiContext.h</code> of the <code>Microsoft.ReactNative.Cxx</code> shared project, or the examples of the JSI-based TurboModules in the <code>Microsoft.ReactNative.IntegrationTests</code> project.
+Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.</p>
+<h2><a class="anchor" aria-hidden="true" id="properties"></a><a href="#properties" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties</h2>
+<h3><a class="anchor" aria-hidden="true" id="description"></a><a href="#description" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Description</h3>
+<p><code>readonly</code>  string <code>Description</code></p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="global"></a><a href="#global" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Global</h3>
+<p><code>readonly</code>  <a href="JsiObjectRef"><code>JsiObjectRef</code></a> <code>Global</code></p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="isinspectable"></a><a href="#isinspectable" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IsInspectable</h3>
+<p><code>readonly</code>  bool <code>IsInspectable</code></p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="methods"></a><a href="#methods" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
+<h3><a class="anchor" aria-hidden="true" id="call"></a><a href="#call" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Call</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>Call</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> func, <a href="JsiValueRef"><code>JsiValueRef</code></a> thisArg, <a href="JsiValueRef"><code>JsiValueRef</code></a> args)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="callasconstructor"></a><a href="#callasconstructor" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CallAsConstructor</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>CallAsConstructor</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> func, <a href="JsiValueRef"><code>JsiValueRef</code></a> args)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="cloneobject"></a><a href="#cloneobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CloneObject</h3>
+<p><a href="JsiObjectRef"><code>JsiObjectRef</code></a> <strong><code>CloneObject</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="clonepropertyid"></a><a href="#clonepropertyid" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ClonePropertyId</h3>
+<p><a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> <strong><code>ClonePropertyId</code></strong>(<a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> propertyId)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="clonestring"></a><a href="#clonestring" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CloneString</h3>
+<p><a href="JsiStringRef"><code>JsiStringRef</code></a> <strong><code>CloneString</code></strong>(<a href="JsiStringRef"><code>JsiStringRef</code></a> str)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="clonesymbol"></a><a href="#clonesymbol" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CloneSymbol</h3>
+<p><a href="JsiSymbolRef"><code>JsiSymbolRef</code></a> <strong><code>CloneSymbol</code></strong>(<a href="JsiSymbolRef"><code>JsiSymbolRef</code></a> symbol)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createarray"></a><a href="#createarray" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateArray</h3>
+<p><a href="JsiObjectRef"><code>JsiObjectRef</code></a> <strong><code>CreateArray</code></strong>(uint32_t size)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createfunctionfromhostfunction"></a><a href="#createfunctionfromhostfunction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateFunctionFromHostFunction</h3>
+<p><a href="JsiObjectRef"><code>JsiObjectRef</code></a> <strong><code>CreateFunctionFromHostFunction</code></strong>(<a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> funcName, uint32_t paramCount, <a href="JsiHostFunction"><code>JsiHostFunction</code></a> hostFunc)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createobject"></a><a href="#createobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateObject</h3>
+<p><a href="JsiObjectRef"><code>JsiObjectRef</code></a> <strong><code>CreateObject</code></strong>()</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createobjectwithhostobject"></a><a href="#createobjectwithhostobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateObjectWithHostObject</h3>
+<p><a href="JsiObjectRef"><code>JsiObjectRef</code></a> <strong><code>CreateObjectWithHostObject</code></strong>(<a href="IJsiHostObject"><code>IJsiHostObject</code></a> hostObject)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createpropertyid"></a><a href="#createpropertyid" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreatePropertyId</h3>
+<p><a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> <strong><code>CreatePropertyId</code></strong>(string name)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createpropertyidfromascii"></a><a href="#createpropertyidfromascii" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreatePropertyIdFromAscii</h3>
+<p><a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> <strong><code>CreatePropertyIdFromAscii</code></strong>(uint8_t ascii)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createpropertyidfromstring"></a><a href="#createpropertyidfromstring" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreatePropertyIdFromString</h3>
+<p><a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> <strong><code>CreatePropertyIdFromString</code></strong>(<a href="JsiStringRef"><code>JsiStringRef</code></a> str)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createpropertyidfromutf8"></a><a href="#createpropertyidfromutf8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreatePropertyIdFromUtf8</h3>
+<p><a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> <strong><code>CreatePropertyIdFromUtf8</code></strong>(uint8_t utf8)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createstring"></a><a href="#createstring" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateString</h3>
+<p><a href="JsiStringRef"><code>JsiStringRef</code></a> <strong><code>CreateString</code></strong>(string value)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createstringfromascii"></a><a href="#createstringfromascii" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateStringFromAscii</h3>
+<p><a href="JsiStringRef"><code>JsiStringRef</code></a> <strong><code>CreateStringFromAscii</code></strong>(uint8_t ascii)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createstringfromutf8"></a><a href="#createstringfromutf8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateStringFromUtf8</h3>
+<p><a href="JsiStringRef"><code>JsiStringRef</code></a> <strong><code>CreateStringFromUtf8</code></strong>(uint8_t utf8)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createvaluefromjson"></a><a href="#createvaluefromjson" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateValueFromJson</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>CreateValueFromJson</code></strong>(string json)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createvaluefromjsonutf8"></a><a href="#createvaluefromjsonutf8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateValueFromJsonUtf8</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>CreateValueFromJsonUtf8</code></strong>(uint8_t json)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="createweakobject"></a><a href="#createweakobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CreateWeakObject</h3>
+<p><a href="JsiWeakObjectRef"><code>JsiWeakObjectRef</code></a> <strong><code>CreateWeakObject</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="drainmicrotasks"></a><a href="#drainmicrotasks" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>DrainMicrotasks</h3>
+<p>bool <strong><code>DrainMicrotasks</code></strong>(int maxMicrotasksHint)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="evaluatejavascript"></a><a href="#evaluatejavascript" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>EvaluateJavaScript</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>EvaluateJavaScript</code></strong>(<a href="IJsiByteBuffer"><code>IJsiByteBuffer</code></a> buffer, string sourceUrl)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="evaluatepreparedjavascript"></a><a href="#evaluatepreparedjavascript" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>EvaluatePreparedJavaScript</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>EvaluatePreparedJavaScript</code></strong>(<a href="JsiPreparedJavaScript"><code>JsiPreparedJavaScript</code></a> js)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="getandclearerror"></a><a href="#getandclearerror" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetAndClearError</h3>
+<p><a href="JsiError"><code>JsiError</code></a> <strong><code>GetAndClearError</code></strong>()</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="getarraybufferdata"></a><a href="#getarraybufferdata" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetArrayBufferData</h3>
+<p>void <strong><code>GetArrayBufferData</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> arrayBuffer, <a href="JsiByteArrayUser"><code>JsiByteArrayUser</code></a> useArrayBytes)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="getarraybuffersize"></a><a href="#getarraybuffersize" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetArrayBufferSize</h3>
+<p>uint32_t <strong><code>GetArrayBufferSize</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> arrayBuffer)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="getarraysize"></a><a href="#getarraysize" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetArraySize</h3>
+<p>uint32_t <strong><code>GetArraySize</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> arr)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="gethostfunction"></a><a href="#gethostfunction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetHostFunction</h3>
+<p><a href="JsiHostFunction"><code>JsiHostFunction</code></a> <strong><code>GetHostFunction</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> func)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="gethostobject"></a><a href="#gethostobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetHostObject</h3>
+<p><a href="IJsiHostObject"><code>IJsiHostObject</code></a> <strong><code>GetHostObject</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="getproperty"></a><a href="#getproperty" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetProperty</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>GetProperty</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj, <a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> propertyId)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="getpropertyidarray"></a><a href="#getpropertyidarray" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetPropertyIdArray</h3>
+<p><a href="JsiObjectRef"><code>JsiObjectRef</code></a> <strong><code>GetPropertyIdArray</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="getvalueatindex"></a><a href="#getvalueatindex" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetValueAtIndex</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>GetValueAtIndex</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> arr, uint32_t index)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="hasproperty"></a><a href="#hasproperty" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>HasProperty</h3>
+<p>bool <strong><code>HasProperty</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj, <a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> propertyId)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="instanceof"></a><a href="#instanceof" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>InstanceOf</h3>
+<p>bool <strong><code>InstanceOf</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj, <a href="JsiObjectRef"><code>JsiObjectRef</code></a> constructor)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="isarray"></a><a href="#isarray" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IsArray</h3>
+<p>bool <strong><code>IsArray</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="isarraybuffer"></a><a href="#isarraybuffer" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IsArrayBuffer</h3>
+<p>bool <strong><code>IsArrayBuffer</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="isfunction"></a><a href="#isfunction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IsFunction</h3>
+<p>bool <strong><code>IsFunction</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="ishostfunction"></a><a href="#ishostfunction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IsHostFunction</h3>
+<p>bool <strong><code>IsHostFunction</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="ishostobject"></a><a href="#ishostobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>IsHostObject</h3>
+<p>bool <strong><code>IsHostObject</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="lockweakobject"></a><a href="#lockweakobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>LockWeakObject</h3>
+<p><a href="JsiValueRef"><code>JsiValueRef</code></a> <strong><code>LockWeakObject</code></strong>(<a href="JsiWeakObjectRef"><code>JsiWeakObjectRef</code></a> weakObject)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="makechakraruntime"></a><a href="#makechakraruntime" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>MakeChakraRuntime</h3>
+<p><code>static</code> <a href="JsiRuntime"><code>JsiRuntime</code></a> <strong><code>MakeChakraRuntime</code></strong>()</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="objectstrictequals"></a><a href="#objectstrictequals" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ObjectStrictEquals</h3>
+<p>bool <strong><code>ObjectStrictEquals</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> left, <a href="JsiObjectRef"><code>JsiObjectRef</code></a> right)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="popscope"></a><a href="#popscope" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PopScope</h3>
+<p>void <strong><code>PopScope</code></strong>(<a href="JsiScopeState"><code>JsiScopeState</code></a> scopeState)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="preparejavascript"></a><a href="#preparejavascript" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PrepareJavaScript</h3>
+<p><a href="JsiPreparedJavaScript"><code>JsiPreparedJavaScript</code></a> <strong><code>PrepareJavaScript</code></strong>(<a href="IJsiByteBuffer"><code>IJsiByteBuffer</code></a> buffer, string sourceUrl)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="propertyidequals"></a><a href="#propertyidequals" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PropertyIdEquals</h3>
+<p>bool <strong><code>PropertyIdEquals</code></strong>(<a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> left, <a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> right)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="propertyidtostring"></a><a href="#propertyidtostring" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PropertyIdToString</h3>
+<p>string <strong><code>PropertyIdToString</code></strong>(<a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> propertyId)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="propertyidtoutf8"></a><a href="#propertyidtoutf8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PropertyIdToUtf8</h3>
+<p>void <strong><code>PropertyIdToUtf8</code></strong>(<a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> propertyId, <a href="JsiByteArrayUser"><code>JsiByteArrayUser</code></a> useUtf8String)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="pushscope"></a><a href="#pushscope" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PushScope</h3>
+<p><a href="JsiScopeState"><code>JsiScopeState</code></a> <strong><code>PushScope</code></strong>()</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="releaseobject"></a><a href="#releaseobject" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ReleaseObject</h3>
+<p>void <strong><code>ReleaseObject</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="releasepropertyid"></a><a href="#releasepropertyid" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ReleasePropertyId</h3>
+<p>void <strong><code>ReleasePropertyId</code></strong>(<a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> propertyId)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="releasestring"></a><a href="#releasestring" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ReleaseString</h3>
+<p>void <strong><code>ReleaseString</code></strong>(<a href="JsiStringRef"><code>JsiStringRef</code></a> str)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="releasesymbol"></a><a href="#releasesymbol" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ReleaseSymbol</h3>
+<p>void <strong><code>ReleaseSymbol</code></strong>(<a href="JsiSymbolRef"><code>JsiSymbolRef</code></a> symbol)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="seterror"></a><a href="#seterror" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>SetError</h3>
+<p>void <strong><code>SetError</code></strong>(<a href="JsiErrorType"><code>JsiErrorType</code></a> errorType, string errorDetails, <a href="JsiValueRef"><code>JsiValueRef</code></a> value)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="setproperty"></a><a href="#setproperty" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>SetProperty</h3>
+<p>void <strong><code>SetProperty</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> obj, <a href="JsiPropertyIdRef"><code>JsiPropertyIdRef</code></a> propertyId, <a href="JsiValueRef"><code>JsiValueRef</code></a> value)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="setvalueatindex"></a><a href="#setvalueatindex" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>SetValueAtIndex</h3>
+<p>void <strong><code>SetValueAtIndex</code></strong>(<a href="JsiObjectRef"><code>JsiObjectRef</code></a> arr, uint32_t index, <a href="JsiValueRef"><code>JsiValueRef</code></a> value)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="stringstrictequals"></a><a href="#stringstrictequals" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>StringStrictEquals</h3>
+<p>bool <strong><code>StringStrictEquals</code></strong>(<a href="JsiStringRef"><code>JsiStringRef</code></a> left, <a href="JsiStringRef"><code>JsiStringRef</code></a> right)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="stringtostring"></a><a href="#stringtostring" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>StringToString</h3>
+<p>string <strong><code>StringToString</code></strong>(<a href="JsiStringRef"><code>JsiStringRef</code></a> str)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="stringtoutf8"></a><a href="#stringtoutf8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>StringToUtf8</h3>
+<p>void <strong><code>StringToUtf8</code></strong>(<a href="JsiStringRef"><code>JsiStringRef</code></a> str, <a href="JsiByteArrayUser"><code>JsiByteArrayUser</code></a> useUtf8String)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="symbolstrictequals"></a><a href="#symbolstrictequals" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>SymbolStrictEquals</h3>
+<p>bool <strong><code>SymbolStrictEquals</code></strong>(<a href="JsiSymbolRef"><code>JsiSymbolRef</code></a> left, <a href="JsiSymbolRef"><code>JsiSymbolRef</code></a> right)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="symboltostring"></a><a href="#symboltostring" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>SymbolToString</h3>
+<p>string <strong><code>SymbolToString</code></strong>(<a href="JsiSymbolRef"><code>JsiSymbolRef</code></a> symbol)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="symboltoutf8"></a><a href="#symboltoutf8" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>SymbolToUtf8</h3>
+<p>void <strong><code>SymbolToUtf8</code></strong>(<a href="JsiSymbolRef"><code>JsiSymbolRef</code></a> symbol, <a href="JsiByteArrayUser"><code>JsiByteArrayUser</code></a> useUtf8String)</p>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="referenced-by"></a><a href="#referenced-by" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Referenced by</h2>
+<ul>
+<li><a href="IJsiHostObject"><code>IJsiHostObject</code></a></li>
+<li><a href="JsiHostFunction"><code>JsiHostFunction</code></a></li>
+</ul>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 6/13/2025</em></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#properties">Properties</a><ul class="toc-headings"><li><a href="#description">Description</a></li><li><a href="#global">Global</a></li><li><a href="#isinspectable">IsInspectable</a></li></ul></li><li><a href="#methods">Methods</a><ul class="toc-headings"><li><a href="#call">Call</a></li><li><a href="#callasconstructor">CallAsConstructor</a></li><li><a href="#cloneobject">CloneObject</a></li><li><a href="#clonepropertyid">ClonePropertyId</a></li><li><a href="#clonestring">CloneString</a></li><li><a href="#clonesymbol">CloneSymbol</a></li><li><a href="#createarray">CreateArray</a></li><li><a href="#createfunctionfromhostfunction">CreateFunctionFromHostFunction</a></li><li><a href="#createobject">CreateObject</a></li><li><a href="#createobjectwithhostobject">CreateObjectWithHostObject</a></li><li><a href="#createpropertyid">CreatePropertyId</a></li><li><a href="#createpropertyidfromascii">CreatePropertyIdFromAscii</a></li><li><a href="#createpropertyidfromstring">CreatePropertyIdFromString</a></li><li><a href="#createpropertyidfromutf8">CreatePropertyIdFromUtf8</a></li><li><a href="#createstring">CreateString</a></li><li><a href="#createstringfromascii">CreateStringFromAscii</a></li><li><a href="#createstringfromutf8">CreateStringFromUtf8</a></li><li><a href="#createvaluefromjson">CreateValueFromJson</a></li><li><a href="#createvaluefromjsonutf8">CreateValueFromJsonUtf8</a></li><li><a href="#createweakobject">CreateWeakObject</a></li><li><a href="#drainmicrotasks">DrainMicrotasks</a></li><li><a href="#evaluatejavascript">EvaluateJavaScript</a></li><li><a href="#evaluatepreparedjavascript">EvaluatePreparedJavaScript</a></li><li><a href="#getandclearerror">GetAndClearError</a></li><li><a href="#getarraybufferdata">GetArrayBufferData</a></li><li><a href="#getarraybuffersize">GetArrayBufferSize</a></li><li><a href="#getarraysize">GetArraySize</a></li><li><a href="#gethostfunction">GetHostFunction</a></li><li><a href="#gethostobject">GetHostObject</a></li><li><a href="#getproperty">GetProperty</a></li><li><a href="#getpropertyidarray">GetPropertyIdArray</a></li><li><a href="#getvalueatindex">GetValueAtIndex</a></li><li><a href="#hasproperty">HasProperty</a></li><li><a href="#instanceof">InstanceOf</a></li><li><a href="#isarray">IsArray</a></li><li><a href="#isarraybuffer">IsArrayBuffer</a></li><li><a href="#isfunction">IsFunction</a></li><li><a href="#ishostfunction">IsHostFunction</a></li><li><a href="#ishostobject">IsHostObject</a></li><li><a href="#lockweakobject">LockWeakObject</a></li><li><a href="#makechakraruntime">MakeChakraRuntime</a></li><li><a href="#objectstrictequals">ObjectStrictEquals</a></li><li><a href="#popscope">PopScope</a></li><li><a href="#preparejavascript">PrepareJavaScript</a></li><li><a href="#propertyidequals">PropertyIdEquals</a></li><li><a href="#propertyidtostring">PropertyIdToString</a></li><li><a href="#propertyidtoutf8">PropertyIdToUtf8</a></li><li><a href="#pushscope">PushScope</a></li><li><a href="#releaseobject">ReleaseObject</a></li><li><a href="#releasepropertyid">ReleasePropertyId</a></li><li><a href="#releasestring">ReleaseString</a></li><li><a href="#releasesymbol">ReleaseSymbol</a></li><li><a href="#seterror">SetError</a></li><li><a href="#setproperty">SetProperty</a></li><li><a href="#setvalueatindex">SetValueAtIndex</a></li><li><a href="#stringstrictequals">StringStrictEquals</a></li><li><a href="#stringtostring">StringToString</a></li><li><a href="#stringtoutf8">StringToUtf8</a></li><li><a href="#symbolstrictequals">SymbolStrictEquals</a></li><li><a href="#symboltostring">SymbolToString</a></li><li><a href="#symboltoutf8">SymbolToUtf8</a></li></ul></li><li><a href="#referenced-by">Referenced by</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows + macOS Docs</h5><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/getting-started">Get Started with Windows</a></div><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/rnm-getting-started"> Get Started with macOS</a></div><a href="/react-native-windows/docs/parity-status">React Native Windows Components and APIs</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a></div><div><h5>Connect With Us On</h5><a href="https://devblogs.microsoft.com/react-native/">Blog</a><a href="https://twitter.com/ReactNativeMSFT" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
