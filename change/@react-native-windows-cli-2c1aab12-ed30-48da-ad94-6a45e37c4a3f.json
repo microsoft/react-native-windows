@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.78] Fix `init-windows` template default not set for telemetry purposes",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
