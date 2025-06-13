@@ -51681,6 +51681,113 @@ exports[`snapshotAllPages ScrollView 22`] = `
 </RCTScrollView>
 `;
 
+exports[`snapshotAllPages ScrollView 23`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "backgroundColor": "red",
+    }
+  }
+  horizontal={true}
+  nestedScrollEnabled={true}
+  style={
+    [
+      {
+        "backgroundColor": "#eeeeee",
+        "height": 300,
+      },
+      {
+        "height": 200,
+        "width": "100%",
+      },
+    ]
+  }
+  testID="touchable_overflowing_container_horizontal"
+>
+  <View>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "minHeight": 45,
+          "minWidth": "100%",
+        }
+      }
+    >
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_1"
+      >
+        <Text>
+          Item 
+          1
+        </Text>
+      </View>
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_2"
+      >
+        <Text>
+          Item 
+          2
+        </Text>
+      </View>
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_3"
+      >
+        <Text>
+          Item 
+          3
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
 exports[`snapshotAllPages ScrollViewAnimated 1`] = `
 <View
   style={
@@ -71857,7 +71964,9 @@ exports[`snapshotAllPages Text 26`] = `
 `;
 
 exports[`snapshotAllPages Text 27`] = `
-[
+<View
+  testID="number-of-lines"
+>
   <Text
     numberOfLines={1}
     style={
@@ -71875,7 +71984,7 @@ exports[`snapshotAllPages Text 27`] = `
     Maximum of one line no matter now much I write here. If I keep writing it
     '
     ll just truncate after one line
-  </Text>,
+  </Text>
   <Text
     numberOfLines={1}
     style={
@@ -71897,7 +72006,7 @@ exports[`snapshotAllPages Text 27`] = `
     Maximum of one line no matter now much I write here. If I keep writing it
     '
     ll just truncate after one line
-  </Text>,
+  </Text>
   <Text
     numberOfLines={2}
     style={
@@ -71919,7 +72028,22 @@ exports[`snapshotAllPages Text 27`] = `
     RNTesterText of two lines no matter now much I write here. If I keep writing it
     '
     ll just truncate after two lines
-  </Text>,
+  </Text>
+  <Text
+    numberOfLines={1}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginTop": 20,
+        },
+      ]
+    }
+  >
+    The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated.
+  </Text>
   <Text
     style={
       [
@@ -71940,8 +72064,8 @@ exports[`snapshotAllPages Text 27`] = `
     No maximum lines specified no matter now much I write here. If I keep writing it
     '
     ll just keep going and going
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 28`] = `
@@ -78433,6 +78557,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         "fontSize": 16,
       }
     }
+    testID="dynamic-width-uncontrolled-textinput"
   />
   <Text
     style={
@@ -78456,6 +78581,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         "fontSize": 16,
       }
     }
+    testID="dynamic-width-controlled-textinput"
     value=""
   />
   <View
@@ -85110,6 +85236,518 @@ exports[`snapshotAllPages TransparentHitTestExample 1`] = `
       }
     }
   />
+</View>
+`;
+
+exports[`snapshotAllPages URL 1`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://username:password@reactnative.dev:8080/docs/path?query=testQuery&key=value#fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: #fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev:8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: password
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: username
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: ?query=testQuery&key=value
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 2`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://reactnative.dev/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: 
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 3`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://reactnative.dev/docs/path?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: ?query=testQuery&key=value
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 4`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://username:password@reactnative.dev:8080/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev:8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: password
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: username
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: 
+  </Text>
 </View>
 `;
 

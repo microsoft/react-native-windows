@@ -8,6 +8,7 @@
  * @flow strict-local
  */
 
+import type {HostInstance} from '../../src/private/types/HostInstance';
 import type {ViewProps} from '../Components/View/ViewPropTypes';
 import type {RootTag} from '../ReactNative/RootTag';
 import type {DirectEventHandler} from '../Types/CodegenTypes';
@@ -15,7 +16,6 @@ import type {DirectEventHandler} from '../Types/CodegenTypes';
 import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
 import {type ColorValue} from '../StyleSheet/StyleSheet';
 import {type EventSubscription} from '../vendor/emitter/EventEmitter';
-import ModalInjection from './ModalInjection';
 import NativeModalManager from './NativeModalManager';
 import RCTModalHostView from './RCTModalHostViewNativeComponent';
 import VirtualizedLists from '@react-native/virtualized-lists';
@@ -35,6 +35,8 @@ const VirtualizedListContextResetter =
 type ModalEventDefinitions = {
   modalDismissed: [{modalID: number}],
 };
+
+export type PublicModalInstance = HostInstance;
 
 const ModalEventEmitter =
   (Platform.OS === 'ios' || Platform.OS === 'windows') && // [Windows]
@@ -104,6 +106,11 @@ export type ModalBaseProps = {
    * Defaults to `white` if not provided and transparent is `false`. Ignored if `transparent` is `true`.
    */
   backdropColor?: ColorValue,
+
+  /**
+   * A ref to the native Modal component.
+   */
+  modalRef?: React.RefSetter<PublicModalInstance>,
 };
 
 export type ModalPropsIOS = {
@@ -321,6 +328,7 @@ class Modal extends React.Component<ModalProps, State> {
         onRequestClose={this.props.onRequestClose}
         onShow={this.props.onShow}
         onDismiss={onDismiss}
+        ref={this.props.modalRef}
         visible={this.props.visible}
         statusBarTranslucent={this.props.statusBarTranslucent}
         navigationBarTranslucent={this.props.navigationBarTranslucent}
@@ -368,10 +376,25 @@ const styles = StyleSheet.create({
   },
 });
 
-// $FlowFixMe[prop-missing]
-const ExportedModal: React.AbstractComponent<
-  React.ElementConfig<typeof Modal>,
-  // $FlowFixMe[incompatible-type-arg]
-> = ModalInjection.unstable_Modal ?? Modal;
+type ModalRefProps = $ReadOnly<{
+  ref?: React.RefSetter<PublicModalInstance>,
+}>;
 
-export default ExportedModal;
+// NOTE: This wrapper component is necessary because `Modal` is a class
+// component and we need to map `ref` to a differently named prop. This can be
+// removed when `Modal` is a functional component.
+function Wrapper({
+  ref,
+  ...props
+}: {
+  ...ModalRefProps,
+  ...ModalProps,
+}): React.Node {
+  return <Modal {...props} modalRef={ref} />;
+}
+
+Wrapper.displayName = 'Modal';
+// $FlowExpectedError[prop-missing]
+Wrapper.Context = VirtualizedListContextResetter;
+
+export default Wrapper;
