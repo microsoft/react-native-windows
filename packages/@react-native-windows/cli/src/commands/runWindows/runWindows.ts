@@ -4,6 +4,8 @@
  * @format
  */
 
+/* eslint-disable complexity */
+
 import fs from '@react-native-windows/fs';
 import path from 'path';
 
@@ -38,7 +40,6 @@ import type {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-// eslint-disable-next-line complexity
 function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
   // Do not add a default case here.
   // Strings risking PII should just return true if present, false otherwise.
@@ -203,6 +204,13 @@ async function runWindowsInternal(
 
   if (verbose) {
     newInfo('Verbose: ON');
+  }
+
+  // Warn about old architecture projects
+  if (config.project.windows?.rnwConfig?.projectArch === 'old') {
+    newWarn(
+      'This project is using the React Native (for Windows) Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.',
+    );
   }
 
   // Get the solution file

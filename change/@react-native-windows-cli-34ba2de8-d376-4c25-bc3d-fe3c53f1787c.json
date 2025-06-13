@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add warning to CLI commands about using the old architecture",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
