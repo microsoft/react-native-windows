@@ -83,6 +83,22 @@ void WindowsTextInputEventEmitter::onPressIn(GestureResponderEvent event) const 
   });
 }
 
+void WindowsTextInputEventEmitter::onPressOut(GestureResponderEvent event) const {
+  dispatchEvent("textInputPressOut", [event = std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    auto nativeEvent = jsi::Object(runtime);
+    nativeEvent.setProperty(runtime, "target", static_cast<double>(event.target));
+    nativeEvent.setProperty(runtime, "pageX", event.pagePoint.x);
+    nativeEvent.setProperty(runtime, "pageY", event.pagePoint.y);
+    nativeEvent.setProperty(runtime, "locationX", event.offsetPoint.x);
+    nativeEvent.setProperty(runtime, "locationY", event.offsetPoint.y);
+    nativeEvent.setProperty(runtime, "timestamp", event.timestamp);
+    nativeEvent.setProperty(runtime, "identifier", static_cast<double>(event.identifier));
+    payload.setProperty(runtime, "nativeEvent", nativeEvent);
+    return payload;
+  });
+}
+
 void WindowsTextInputEventEmitter::onEndEditing(OnEndEditing event) const {
   dispatchEvent("textInputEndEditing", [event = std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
