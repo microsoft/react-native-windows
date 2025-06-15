@@ -8,17 +8,16 @@
  * @format
  */
 
-import type {HostInstance} from '../../Renderer/shims/ReactNativeTypes';
+import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
   GestureResponderEvent,
-  ScrollEvent,
   NativeSyntheticEvent,
+  ScrollEvent,
 } from '../../Types/CoreEventTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
-import type {TextInputType} from './TextInput.flow';
+import type {TextInputInstance, TextInputType} from './TextInput.flow';
 
-import * as ReactNativeFeatureFlags from '../../../src/private/featureflags/ReactNativeFeatureFlags';
 import usePressability from '../../Pressability/usePressability';
 import flattenStyle from '../../StyleSheet/flattenStyle';
 import StyleSheet, {
@@ -35,14 +34,6 @@ import invariant from 'invariant';
 import nullthrows from 'nullthrows';
 import * as React from 'react';
 import {useCallback, useLayoutEffect, useRef, useState} from 'react';
-
-type ReactRefSetter<T> = {current: null | T, ...} | ((ref: null | T) => mixed);
-type TextInputInstance = HostInstance & {
-  +clear: () => void,
-  +isFocused: () => boolean,
-  +getNativeRef: () => ?HostInstance,
-  +setSelection: (start: number, end: number) => void,
-};
 
 let AndroidTextInput;
 let AndroidTextInputCommands;
@@ -77,6 +68,9 @@ else if (Platform.OS === 'win32') {
 }
 // Windows]
 
+/**
+ * @see TextInputProps.onChange
+ */
 export type TextInputChangeEventData = $ReadOnly<{
   eventCount: number,
   target: number,
@@ -99,6 +93,9 @@ export type TextInputEvent = NativeSyntheticEvent<
   }>,
 >;
 
+/**
+ * @see TextInputProps.onContentSizeChange
+ */
 export type TextInputContentSizeChangeEventData = $ReadOnly<{
   target: number,
   contentSize: $ReadOnly<{
@@ -114,16 +111,29 @@ export type TargetEvent = $ReadOnly<{
   target: number,
 }>;
 
+/**
+ * @see TextInputProps.onFocus
+ */
 export type TextInputFocusEventData = TargetEvent;
 
 export type TextInputBlurEvent = NativeSyntheticEvent<TextInputFocusEventData>;
 export type TextInputFocusEvent = NativeSyntheticEvent<TextInputFocusEventData>;
+
+/**
+ * @see TextInputProps.onScroll
+ */
+export type TextInputScrollEventData = {
+  contentOffset: {x: number, y: number},
+};
 
 type Selection = $ReadOnly<{
   start: number,
   end: number,
 }>;
 
+/**
+ * @see TextInputProps.onSelectionChange
+ */
 export type TextInputSelectionChangeEventData = $ReadOnly<{
   ...TargetEvent,
   selection: Selection,
@@ -132,7 +142,10 @@ export type TextInputSelectionChangeEventData = $ReadOnly<{
 export type TextInputSelectionChangeEvent =
   NativeSyntheticEvent<TextInputSelectionChangeEventData>;
 
-type TextInputKeyPressEventData = $ReadOnly<{
+/**
+ * @see TextInputProps.onKeyPress
+ */
+export type TextInputKeyPressEventData = $ReadOnly<{
   ...TargetEvent,
   key: string,
   target?: ?number,
@@ -142,11 +155,29 @@ type TextInputKeyPressEventData = $ReadOnly<{
 export type TextInputKeyPressEvent =
   NativeSyntheticEvent<TextInputKeyPressEventData>;
 
+/**
+ * @see TextInputProps.onEndEditing
+ */
 export type TextInputEndEditingEventData = $ReadOnly<{
   ...TargetEvent,
   eventCount: number,
   text: string,
 }>;
+
+export type TextInputEndEditingEvent =
+  NativeSyntheticEvent<TextInputEndEditingEventData>;
+
+/**
+ * @see TextInputProps.onSubmitEditing
+ */
+export type TextInputSubmitEditingEventData = $ReadOnly<{
+  ...TargetEvent,
+  eventCount: number,
+  text: string,
+}>;
+
+export type TextInputSubmitEditingEvent =
+  NativeSyntheticEvent<TextInputSubmitEditingEventData>;
 
 export type TextInputEditingEvent =
   NativeSyntheticEvent<TextInputEndEditingEventData>;
@@ -435,6 +466,21 @@ export type TextInputAndroidProps = $ReadOnly<{
    */
   disableFullscreenUI?: ?boolean,
 
+  /**
+   * Determines whether the individual fields in your app should be included in a
+   * view structure for autofill purposes on Android API Level 26+. Defaults to auto.
+   * To disable auto complete, use `off`.
+   *
+   * *Android Only*
+   *
+   * The following values work on Android only:
+   *
+   * - `auto` - let Android decide
+   * - `no` - not important for autofill
+   * - `noExcludeDescendants` - this view and its children aren't important for autofill
+   * - `yes` - is important for autofill
+   * - `yesExcludeDescendants` - this view is important for autofill but its children aren't
+   */
   importantForAutofill?: ?(
     | 'auto'
     | 'no'
@@ -528,12 +574,7 @@ type TextInputWindowsProps = $ReadOnly<{|
 
 // Windows]
 
-export type TextInputProps = $ReadOnly<{
-  ...$Diff<ViewProps, $ReadOnly<{style: ?ViewStyleProp}>>,
-  ...TextInputIOSProps,
-  ...TextInputAndroidProps,
-  ...TextInputWindowsProps, // [Windows]
-
+type TextInputBaseProps = $ReadOnly<{
   /**
    * String to be read by screenreaders to indicate an error state. The acceptable parameters
    * of accessibilityErrorMessage is a string. Setting accessibilityInvalid to true activates
@@ -728,7 +769,7 @@ export type TextInputProps = $ReadOnly<{
    */
   editable?: ?boolean,
 
-  forwardedRef?: ?ReactRefSetter<TextInputInstance>,
+  forwardedRef?: ?React.RefSetter<TextInputInstance>,
 
   /**
    * `enterKeyHint` defines what action label (or icon) to present for the enter key on virtual keyboards.
@@ -843,7 +884,7 @@ export type TextInputProps = $ReadOnly<{
   /**
    * Callback that is called when text input ends.
    */
-  onEndEditing?: ?(e: TextInputEditingEvent) => mixed,
+  onEndEditing?: ?(e: TextInputEndEditingEvent) => mixed,
 
   /**
    * Callback that is called when the text input is focused.
@@ -885,7 +926,7 @@ export type TextInputProps = $ReadOnly<{
    * Callback that is called when the text input's submit button is pressed.
    * Invalid if `multiline={true}` is specified.
    */
-  onSubmitEditing?: ?(e: TextInputEditingEvent) => mixed,
+  onSubmitEditing?: ?(e: TextInputSubmitEditingEvent) => mixed,
 
   /**
    * Invoked on content scroll with `{ nativeEvent: { contentOffset: { x, y } } }`.
@@ -966,7 +1007,9 @@ export type TextInputProps = $ReadOnly<{
   selectionColor?: ?ColorValue,
 
   /**
-   * The text selection handle color.
+   * When provided it will set the color of the selection handles when highlighting text.
+   * Unlike the behavior of `selectionColor` the handle color will be set independently
+   * from the color of the text selection box.
    * @platform android
    */
   selectionHandleColor?: ?ColorValue,
@@ -1041,6 +1084,43 @@ export type TextInputProps = $ReadOnly<{
   value?: ?Stringish,
 }>;
 
+export type TextInputProps = $ReadOnly<{
+  ...$Diff<ViewProps, $ReadOnly<{style: ?ViewStyleProp}>>,
+  ...TextInputIOSProps,
+  ...TextInputAndroidProps,
+  ...TextInputBaseProps,
+  ...TextInputWindowsProps, // [Windows]
+}>;
+
+type TextInputStateType = $ReadOnly<{
+  /**
+   * @deprecated Use currentlyFocusedInput
+   * Returns the ID of the currently focused text field, if one exists
+   * If no text field is focused it returns null
+   */
+  currentlyFocusedField: () => ?number,
+
+  /**
+   * Returns the ref of the currently focused text field, if one exists
+   * If no text field is focused it returns null
+   */
+  currentlyFocusedInput: () => ?HostInstance,
+
+  /**
+   * @param textField ref of the text field to focus
+   * Focuses the specified text field
+   * noop if the text field was already focused
+   */
+  focusTextInput: (textField: ?HostInstance) => void,
+
+  /**
+   * @param textField ref of the text field to focus
+   * Unfocuses the specified text field
+   * noop if it wasn't focused
+   */
+  blurTextInput: (textField: ?HostInstance) => void,
+}>;
+
 type ViewCommands = $NonMaybeType<
   | typeof AndroidTextInputCommands
   | typeof RCTMultilineTextInputNativeCommands
@@ -1059,7 +1139,7 @@ const emptyFunctionThatReturnsTrue = () => true;
  * in native and in JavaScript. This is necessary due to the asynchronous nature
  * of text input events.
  */
-function useTextInputStateSynchronization_STATE({
+function useTextInputStateSynchronization({
   props,
   mostRecentEventCount,
   selection,
@@ -1070,8 +1150,8 @@ function useTextInputStateSynchronization_STATE({
   props: TextInputProps,
   mostRecentEventCount: number,
   selection: ?Selection,
-  inputRef: React.RefObject<null | HostInstance>,
-  text: string,
+  inputRef: React.RefObject<null | TextInputInstance>,
+  text?: string,
   viewCommands: ViewCommands,
 }): {
   setLastNativeText: string => void,
@@ -1133,94 +1213,6 @@ function useTextInputStateSynchronization_STATE({
   ]);
 
   return {setLastNativeText, setLastNativeSelection};
-}
-
-/**
- * This hook handles the synchronization between the state of the text input
- * in native and in JavaScript. This is necessary due to the asynchronous nature
- * of text input events.
- */
-function useTextInputStateSynchronization_REFS({
-  props,
-  mostRecentEventCount,
-  selection,
-  inputRef,
-  text,
-  viewCommands,
-}: {
-  props: TextInputProps,
-  mostRecentEventCount: number,
-  selection: ?Selection,
-  inputRef: React.RefObject<null | HostInstance>,
-  text: string,
-  viewCommands: ViewCommands,
-}): {
-  setLastNativeText: string => void,
-  setLastNativeSelection: LastNativeSelection => void,
-} {
-  const lastNativeTextRef = useRef<?Stringish>(props.value);
-  const lastNativeSelectionRef = useRef<LastNativeSelection>({
-    selection: {start: -1, end: -1},
-    mostRecentEventCount: mostRecentEventCount,
-  });
-
-  // This is necessary in case native updates the text and JS decides
-  // that the update should be ignored and we should stick with the value
-  // that we have in JS.
-  useLayoutEffect(() => {
-    const nativeUpdate: {text?: string, selection?: Selection} = {};
-
-    const lastNativeSelection = lastNativeSelectionRef.current.selection;
-
-    if (
-      lastNativeTextRef.current !== props.value &&
-      typeof props.value === 'string'
-    ) {
-      nativeUpdate.text = props.value;
-      lastNativeTextRef.current = props.value;
-    }
-
-    if (
-      selection &&
-      lastNativeSelection &&
-      (lastNativeSelection.start !== selection.start ||
-        lastNativeSelection.end !== selection.end)
-    ) {
-      nativeUpdate.selection = selection;
-      lastNativeSelectionRef.current = {selection, mostRecentEventCount};
-    }
-
-    if (Object.keys(nativeUpdate).length === 0) {
-      return;
-    }
-
-    if (inputRef.current != null) {
-      viewCommands.setTextAndSelection(
-        inputRef.current,
-        mostRecentEventCount,
-        text,
-        selection?.start ?? -1,
-        selection?.end ?? -1,
-      );
-    }
-  }, [
-    mostRecentEventCount,
-    inputRef,
-    props.value,
-    props.defaultValue,
-    selection,
-    text,
-    viewCommands,
-  ]);
-
-  return {
-    setLastNativeText: lastNativeText => {
-      lastNativeTextRef.current = lastNativeText;
-    },
-    setLastNativeSelection: lastNativeSelection => {
-      lastNativeSelectionRef.current = lastNativeSelection;
-    },
-  };
 }
 
 /**
@@ -1353,7 +1345,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     ...otherProps
   } = props;
 
-  const inputRef = useRef<null | HostInstance>(null);
+  const inputRef = useRef<null | TextInputInstance>(null);
 
   const selection: ?Selection =
     propsSelection == null
@@ -1368,7 +1360,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
       ? props.value
       : typeof props.defaultValue === 'string'
         ? props.defaultValue
-        : '';
+        : undefined;
 
   const viewCommands =
     WindowsTextInputCommands || // [Windows]
@@ -1378,10 +1370,6 @@ function InternalTextInput(props: TextInputProps): React.Node {
       : RCTSinglelineTextInputNativeCommands);
 
   const [mostRecentEventCount, setMostRecentEventCount] = useState<number>(0);
-  const useTextInputStateSynchronization =
-    ReactNativeFeatureFlags.useRefsForTextInputState()
-      ? useTextInputStateSynchronization_REFS
-      : useTextInputStateSynchronization_STATE;
   const {setLastNativeText, setLastNativeSelection} =
     useTextInputStateSynchronization({
       props,
@@ -1410,7 +1398,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
   }, []);
 
   const setLocalRef = useCallback(
-    (instance: TextInputInstance | null) => {
+    (instance: HostInstance | null) => {
+      // $FlowExpectedError[incompatible-type]
       inputRef.current = instance;
 
       /*
@@ -1436,7 +1425,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         before we can get to the long term breaking change.
       */
       if (instance != null) {
-        // $FlowFixMe[incompatible-use] - See the explanation above.
+        // $FlowFixMe[prop-missing] - See the explanation above.
         Object.assign(instance, {
           clear(): void {
             if (inputRef.current != null) {
@@ -1457,7 +1446,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
               currentlyFocusedInput === inputRef.current
             );
           },
-          getNativeRef(): ?HostInstance {
+          getNativeRef(): ?TextInputInstance {
             return inputRef.current;
           },
           setSelection(start: number, end: number): void {
@@ -1477,7 +1466,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
     [mostRecentEventCount, viewCommands],
   );
 
-  const ref = useMergeRefs<TextInputInstance>(setLocalRef, props.forwardedRef);
+  // $FlowExpectedError[incompatible-call]
+  const ref = useMergeRefs<HostInstance>(setLocalRef, props.forwardedRef);
 
   const _onChange = (event: TextInputChangeEvent) => {
     const currentText = event.nativeEvent.text;
@@ -1727,8 +1717,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
     textInput = (
       <RCTTextInputView
-        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
-        ref={ref}
+        // Figure out imperative + forward refs.
+        ref={(ref: $FlowFixMe)}
         {...otherProps}
         {...eventHandlers}
         accessibilityErrorMessage={accessibilityErrorMessage}
@@ -1740,6 +1730,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         focusable={tabIndex !== undefined ? !tabIndex : focusable}
         mostRecentEventCount={mostRecentEventCount}
         nativeID={id ?? props.nativeID}
+        numberOfLines={props.rows ?? props.numberOfLines}
         onBlur={_onBlur}
         onChange={_onChange}
         onContentSizeChange={props.onContentSizeChange}
@@ -1789,8 +1780,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
        * match up exactly with the props for TextInput. This will need to get
        * fixed */
       <AndroidTextInput
-        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
-        ref={ref}
+        // Figure out imperative + forward refs.
+        ref={(ref: $FlowFixMe)}
         {...otherProps}
         {...colorProps}
         {...eventHandlers}
@@ -1952,9 +1943,8 @@ const autoCompleteWebToTextContentTypeMap = {
 };
 
 const ExportedForwardRef: component(
-  ref: React.RefSetter<TextInputInstance>,
+  ref?: React.RefSetter<TextInputInstance>,
   ...props: React.ElementConfig<typeof InternalTextInput>
-  // $FlowFixMe[incompatible-call]
 ) = React.forwardRef(function TextInput(
   {
     allowFontScaling = true,
@@ -1971,7 +1961,7 @@ const ExportedForwardRef: component(
     keyboardType,
     ...restProps
   },
-  forwardedRef: ReactRefSetter<TextInputInstance>,
+  forwardedRef: React.RefSetter<TextInputInstance>,
 ) {
   return (
     <InternalTextInput
@@ -2024,12 +2014,7 @@ ExportedForwardRef.State = {
 };
 
 export type TextInputComponentStatics = $ReadOnly<{
-  State: $ReadOnly<{
-    currentlyFocusedInput: typeof TextInputState.currentlyFocusedInput,
-    currentlyFocusedField: typeof TextInputState.currentlyFocusedField,
-    focusTextInput: typeof TextInputState.focusTextInput,
-    blurTextInput: typeof TextInputState.blurTextInput,
-  }>,
+  State: TextInputStateType,
 }>;
 
 const styles = StyleSheet.create({

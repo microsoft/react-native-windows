@@ -22,12 +22,12 @@ protected:
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
   virtual bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) = 0;
+  virtual bool animatedShouldSignalBatch(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
-  virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRenderer(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
@@ -38,7 +38,6 @@ public:
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
   virtual bool enableNativeCSSParsing(jsi::Runtime &rt) = 0;
   virtual bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) = 0;
-  virtual bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableReportEventPaintTime(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
@@ -47,13 +46,14 @@ public:
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecyclingForText(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecyclingForView(jsi::Runtime &rt) = 0;
-  virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
   virtual bool fixDifferentiatorEmittingUpdatesWithWrongParentTag(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
+  virtual bool removeTurboModuleManagerDelegateMutex(jsi::Runtime &rt) = 0;
+  virtual bool throwExceptionInsteadOfDeadlockOnTurboModuleSetupDuringSyncRenderIOS(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
   virtual bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) = 0;
@@ -109,6 +109,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlagWithoutNativeImplementation, jsInvoker_, instance_);
     }
+    bool animatedShouldSignalBatch(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::animatedShouldSignalBatch) == 1,
+          "Expected animatedShouldSignalBatch(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::animatedShouldSignalBatch, jsInvoker_, instance_);
+    }
     bool disableMountItemReorderingAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::disableMountItemReorderingAndroid) == 1,
@@ -148,14 +156,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableEagerRootViewAttachment, jsInvoker_, instance_);
-    }
-    bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableEventEmitterRetentionDuringGesturesOnAndroid) == 1,
-          "Expected enableEventEmitterRetentionDuringGesturesOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableEventEmitterRetentionDuringGesturesOnAndroid, jsInvoker_, instance_);
     }
     bool enableFabricLogs(jsi::Runtime &rt) override {
       static_assert(
@@ -237,14 +237,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableNewBackgroundAndBorderDrawables, jsInvoker_, instance_);
     }
-    bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enablePreciseSchedulingForPremountItemsOnAndroid) == 1,
-          "Expected enablePreciseSchedulingForPremountItemsOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enablePreciseSchedulingForPremountItemsOnAndroid, jsInvoker_, instance_);
-    }
     bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enablePropsUpdateReconciliationAndroid) == 1,
@@ -309,14 +301,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableViewRecyclingForView, jsInvoker_, instance_);
     }
-    bool excludeYogaFromRawProps(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::excludeYogaFromRawProps) == 1,
-          "Expected excludeYogaFromRawProps(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::excludeYogaFromRawProps, jsInvoker_, instance_);
-    }
     bool fixDifferentiatorEmittingUpdatesWithWrongParentTag(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::fixDifferentiatorEmittingUpdatesWithWrongParentTag) == 1,
@@ -364,6 +348,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::lazyAnimationCallbacks, jsInvoker_, instance_);
+    }
+    bool removeTurboModuleManagerDelegateMutex(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::removeTurboModuleManagerDelegateMutex) == 1,
+          "Expected removeTurboModuleManagerDelegateMutex(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::removeTurboModuleManagerDelegateMutex, jsInvoker_, instance_);
+    }
+    bool throwExceptionInsteadOfDeadlockOnTurboModuleSetupDuringSyncRenderIOS(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::throwExceptionInsteadOfDeadlockOnTurboModuleSetupDuringSyncRenderIOS) == 1,
+          "Expected throwExceptionInsteadOfDeadlockOnTurboModuleSetupDuringSyncRenderIOS(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::throwExceptionInsteadOfDeadlockOnTurboModuleSetupDuringSyncRenderIOS, jsInvoker_, instance_);
     }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(

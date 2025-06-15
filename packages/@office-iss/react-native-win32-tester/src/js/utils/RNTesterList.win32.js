@@ -197,6 +197,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/AppState/AppStateExample'),
   },
   {
+    key: 'URLExample',
+    category: 'Basic',
+    module: require('../examples/Urls/UrlExample'),
+  },
+  {
     key: 'BorderExample',
     category: 'UI',
     module: require('../examples/Border/BorderExample').default,
@@ -223,6 +228,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
       .default,
   },
   // Only show the link for the example if the API is available.
+  // $FlowExpectedError[cannot-resolve-name]
   typeof IntersectionObserver === 'function'
     ? {
         key: 'IntersectionObserver',
@@ -254,6 +260,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
   },
+  // $FlowExpectedError[cannot-resolve-name]
   typeof MutationObserver === 'function'
     ? {
         key: 'MutationObserver',

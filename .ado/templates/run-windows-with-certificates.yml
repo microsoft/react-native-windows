@@ -13,7 +13,7 @@ parameters:
       - Release
   - name: buildPlatform
     type: string
-  - name: deployOption
+  - name: moreRunWindowsArgs
     type: string
     default: ''
   - name: buildLogDirectory
@@ -45,7 +45,7 @@ steps:
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
         --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}${{ parameters.moreMSBuildProps }}
-        ${{ parameters.deployOption }}
+        ${{ parameters.moreRunWindowsArgs }}
       displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -58,7 +58,7 @@ steps:
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
         --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}${{ parameters.moreMSBuildProps }}
-        ${{ parameters.deployOption }}
+        ${{ parameters.moreRunWindowsArgs }}
       displayName: run-windows (Release) - PR
       workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -75,7 +75,7 @@ steps:
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
         --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx,PackageCertificatePassword=${{ parameters.certificatePassword }}${{ parameters.moreMSBuildProps }}
-        ${{ parameters.deployOption }}
+        ${{ parameters.moreRunWindowsArgs }}
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
 

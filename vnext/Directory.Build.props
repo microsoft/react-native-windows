@@ -74,10 +74,13 @@
 
     <IntermediateOutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(IntDir)</IntermediateOutputPath>
     <OutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(OutDir)</OutputPath>
+  </PropertyGroup>
 
-    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
+  <PropertyGroup Condition="'$(BuildingInRnwRepo)' != 'true'">
+    <!-- Consumers of RNW outside of the repo don't need lock files unless they ask for it -->
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)' == ''">false</RestoreLockedMode>
+    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">false</RestorePackagesWithLockFile>
     <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">false</RestoreForceEvaluate>
-
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">

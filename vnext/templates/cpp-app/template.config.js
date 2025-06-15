@@ -142,10 +142,11 @@ async function postInstall(config = {}, options = {}) {
 }
 
 module.exports = {
-  name: 'React Native Windows Application (New Arch, C++, Win32, Hermes)',
+  name: 'React Native Windows Application (New Arch, WinAppSDK, C++)',
   description:
-    "[Experimental] A RNW app targeting RN's new architecture, with the Hermes JS engine.",
+    "A RNW app using RN's New Architecture, built in C++ and targeting WinAppSDK.",
   preInstall,
   getFileMappings,
   postInstall,
+  isDefault: true,
 };

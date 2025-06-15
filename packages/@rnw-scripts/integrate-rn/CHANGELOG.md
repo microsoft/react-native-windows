@@ -1,8 +1,22 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Tue, 13 May 2025 21:05:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:25:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.58
+
+Fri, 30 May 2025 05:25:03 GMT
+
+### Patches
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.94
+- Bump @react-native-windows/fs to v0.0.0-canary.65
+- Bump @react-native-windows/package-utils to v0.0.0-canary.91
+- Bump react-native-platform-override to v1.9.55
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
 
 ## 1.4.57
 

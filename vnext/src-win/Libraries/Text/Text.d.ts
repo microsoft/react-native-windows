@@ -188,7 +188,7 @@ export interface TextProps
 
   /**
    * This function is called on long press.
-   * e.g., `onLongPress={this.increaseSize}>``
+   * e.g., `onLongPress={this.increaseSize}>`
    */
   onLongPress?: ((event: GestureResponderEvent) => void) | undefined;
 

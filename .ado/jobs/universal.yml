@@ -151,7 +151,7 @@
                 - template: ../templates/apply-published-version-vars.yml
 
                 - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
-                  - template:  ../templates/enable-experimental-winui3.yml
+                  - template: ../templates/enable-experimental-winui3.yml
                     parameters:
                       workingDir: vnext
 
@@ -269,12 +269,17 @@
                   displayName: Restore NuGet packages
                   # Should be kept in sync with UniversalBuild - template: ../templates/msbuild-sln.yml
                   inputs:
-                    solution: vnext/Microsoft.ReactNative.sln
+                    ${{ if eq(matrix.UseFabric, true) }}:
+                      solution: vnext/Microsoft.ReactNative.NewArch.sln
+                    ${{ else }}:
+                      solution: vnext/Microsoft.ReactNative.sln
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
                     msbuildArchitecture: x64
                     msbuildArguments:
-                      /t:Restore
+                      /restore
+                      /p:RestoreLockedMode=true
+                      /p:RestoreForceEvaluate=true
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (Native)

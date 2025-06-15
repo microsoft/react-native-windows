@@ -331,4 +331,4 @@ jobs:
                   useChakra: ${{ coalesce(matrix.useChakra, false) }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
                   useExperimentalWinUI3: ${{ coalesce(matrix.useExperimentalWinUI3, false) }}
-                  publishNuGet:  ${{ coalesce(matrix.publishNuGet, false) }}
+                  publishNuGet: ${{ coalesce(matrix.publishNuGet, false) }}
