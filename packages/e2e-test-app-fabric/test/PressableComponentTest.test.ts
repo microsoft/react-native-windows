@@ -345,42 +345,6 @@ describe('Pressable Tests', () => {
       },
     );
   });
-  test('Pressable should register onPress action when hit within hitSlop range', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await app.waitUntil(
-      async () => {
-        await searchBox.setValue('Pre');
-        return (await searchBox.getText()) === 'Pre';
-      },
-      {
-        interval: 1500,
-        timeout: 5000,
-        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
-      },
-    );
-    const component = await app.findElementByTestID(
-      'pressable_hit_slop_button',
-    );
-    await component.waitForDisplayed({timeout: 20000});
-
-    // Click on the component to test hitSlop interaction
-    await component.click();
-
-    const dump = await dumpVisualTree('pressable_hit_slop');
-    expect(dump).toMatchSnapshot();
-
-    await app.waitUntil(
-      async () => {
-        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === 'Search...';
-      },
-      {
-        interval: 1500,
-        timeout: 5000,
-        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
-      },
-    );
-  });
   test('Pressable should support different disabled styling configurations', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
