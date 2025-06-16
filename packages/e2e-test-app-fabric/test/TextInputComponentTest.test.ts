@@ -202,9 +202,11 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-press');
     expect(dump).toMatchSnapshot();
 
-    // Trigger onPressIn (click only)
-    await component.click();
+    // Get reference to state display element
     const stateText = await app.findElementByTestID('textinput-state-display');
+
+    // Trigger onPressIn only (press down but don't release yet)
+    await component.touchAction([{action: 'press', x: 0, y: 0}]);
 
     await app.waitUntil(
       async () => {
@@ -218,6 +220,10 @@ describe('TextInput Tests', () => {
     );
     //  Assertion
     expect(await stateText.getText()).toBe('Holding down the click/touch');
+    
+    // Release the press to clean up
+    await component.touchAction([{action: 'release'}]);
+    
     //  This step helps avoid UI lock by unfocusing the input
     const search = await app.findElementByTestID('example_search');
     await search.setValue('');
