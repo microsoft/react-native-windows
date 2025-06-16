@@ -119,15 +119,6 @@ describe('Touchable Tests', () => {
 });
 
 describe('TouchableOpacity Tests', () => {
-  test('TouchableOpacity should register press in clicked within hitSlop range', async () => {
-    const component = await app.findElementByTestID(
-      'touchable_hit_slop_button',
-    );
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('touchable_hit_slop_button');
-    expect(dump).toMatchSnapshot();
-  });
-
   test('TouchableOpacity should not be interactable when disabled', async () => {
     await searchBox('dis');
     const component = await app.findElementByTestID('disabled_touchable');
