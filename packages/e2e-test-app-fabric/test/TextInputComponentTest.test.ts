@@ -222,6 +222,43 @@ describe('TextInput Tests', () => {
     const search = await app.findElementByTestID('example_search');
     await search.setValue('');
   });
+  test('TextInput triggers onPressOut and updates state text', async () => {
+    // Scroll the example into view
+    await searchBox('onPressIn');
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-press');
+    expect(dump).toMatchSnapshot();
+
+    // Get reference to state display element
+    const stateText = await app.findElementByTestID('textinput-state-display');
+
+    // Trigger onPressIn followed by onPressOut (using touchAction for press and release)
+    await component.touchAction([
+      {action: 'press', x: 0, y: 0},
+      {action: 'wait', ms: 100},
+      {action: 'release'},
+    ]);
+
+    // Wait for onPressOut to update the state text
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Released click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'State text not updated after onPressOut.',
+      },
+    );
+
+    // Assertion
+    expect(await stateText.getText()).toBe('Released click/touch');
+
+    // Clean up by unfocusing the input
+    const search = await app.findElementByTestID('example_search');
+    await search.setValue('');
+  });
   test('TextInputs can have attributed text', async () => {
     const component = await app.findElementByTestID('text-input');
     await component.waitForDisplayed({timeout: 5000});
