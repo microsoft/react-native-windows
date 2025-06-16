@@ -116,4 +116,42 @@ describe('Touchable Tests', () => {
     expect(dump2).toMatchSnapshot();
     await searchBox('');
   });
+  test('TouchableWithoutFeedback should register press in clicked within hitSlop range', async () => {
+    await searchBox('TouchableWithoutFeedback Hit Slop');
+    const component = await app.findElementByTestID(
+      'touchable_without_feedback_hit_slop_button',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree(
+      'touchable_without_feedback_hit_slop_button',
+    );
+    expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree(
+      'touchable_without_feedback_hit_slop_console',
+    );
+    expect(dump2).toMatchSnapshot();
+    await searchBox('');
+  });
+  test('TouchableWithoutFeedback should update style upon fast refresh', async () => {
+    await searchBox('TouchableWithoutFeedback Style Update');
+    const component = await app.findElementByTestID(
+      'touchable_without_feedback_style_update_button',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree(
+      'touchable_without_feedback_style_update_button',
+    );
+    expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree(
+      'touchable_without_feedback_style_update_button',
+    );
+    expect(dump2).toMatchSnapshot();
+    const dump3 = await dumpVisualTree(
+      'touchable_without_feedback_style_update_console',
+    );
+    expect(dump3).toMatchSnapshot();
+    await searchBox('');
+  });
 });
