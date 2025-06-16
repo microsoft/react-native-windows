@@ -172,6 +172,24 @@
       "issue": 13172
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/algorithm/CalculateLayout.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/algorithm/CalculateLayout.cpp",
+      "baseHash": "a25a9c6cdda4c570bbb5d969ef6e0cd5a1cdfe59"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/enums/ExperimentalFeature.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/enums/ExperimentalFeature.h",
+      "baseHash": "f3f2a93e7d8f76eb24543eb3cbdf70d9d573447e"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/YGEnums.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/YGEnums.h",
+      "baseHash": "8f216e611cdaf86e8bd682e0bae234183b966a5e"
+    },
+    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
