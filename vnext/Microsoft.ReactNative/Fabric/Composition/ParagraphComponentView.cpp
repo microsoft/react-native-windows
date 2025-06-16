@@ -63,6 +63,10 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  if (oldViewProps.textAttributes.baseWritingDirection != newViewProps.textAttributes.baseWritingDirection) {
+    m_textLayout = nullptr;
+  }
+
   if (oldViewProps.paragraphAttributes.ellipsizeMode != newViewProps.paragraphAttributes.ellipsizeMode) {
     m_textLayout = nullptr;
   }
