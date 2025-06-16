@@ -159,9 +159,20 @@ void WindowsTextLayoutManager::GetTextLayout(
   winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
 
   // Set reading direction based on baseWritingDirection
-  if (outerFragment.textAttributes.baseWritingDirection &&
-      *outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
-    winrt::check_hresult(spTextFormat->SetReadingDirection(DWRITE_READING_DIRECTION_RIGHT_TO_LEFT));
+  if (outerFragment.textAttributes.baseWritingDirection) {
+    DWRITE_READING_DIRECTION readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+    
+    // Handle explicit RightToLeft
+    if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
+      readingDirection = DWRITE_READING_DIRECTION_RIGHT_TO_LEFT;
+    }
+    // For all other cases (including Natural), use context-aware detection
+    else {
+      // For Natural direction, detect from text content
+      readingDirection = GetNaturalReadingDirection(attributedStringBox);
+    }
+    
+    winrt::check_hresult(spTextFormat->SetReadingDirection(readingDirection));
   }
 
   // Get text with Object Replacement Characters for attachments
@@ -551,6 +562,45 @@ winrt::hstring WindowsTextLayoutManager::GetTransformedText(const AttributedStri
     }
   }
   return result;
+}
+
+DWRITE_READING_DIRECTION WindowsTextLayoutManager::GetNaturalReadingDirection(const AttributedStringBox &attributedStringBox) noexcept {
+  const auto &attributedString = attributedStringBox.getValue();
+  
+  // Analyze the text content to determine the natural reading direction
+  // Look for the first strong directional character
+  for (const auto &fragment : attributedString.getFragments()) {
+    if (!fragment.isAttachment()) {
+      auto fragmentText = Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string);
+      
+      for (wchar_t ch : fragmentText) {
+        // Check for strong RTL characters (Arabic, Hebrew ranges)
+        if ((ch >= 0x0590 && ch <= 0x05FF) ||  // Hebrew
+            (ch >= 0x0600 && ch <= 0x06FF) ||  // Arabic
+            (ch >= 0x0750 && ch <= 0x077F) ||  // Arabic Supplement
+            (ch >= 0x08A0 && ch <= 0x08FF) ||  // Arabic Extended-A
+            (ch >= 0xFB1D && ch <= 0xFB4F) ||  // Hebrew Presentation Forms
+            (ch >= 0xFB50 && ch <= 0xFDFF) ||  // Arabic Presentation Forms-A
+            (ch >= 0xFE70 && ch <= 0xFEFF)) {  // Arabic Presentation Forms-B
+          return DWRITE_READING_DIRECTION_RIGHT_TO_LEFT;
+        }
+        // Check for strong LTR characters (Latin, Cyrillic, etc.)
+        else if ((ch >= 0x0041 && ch <= 0x005A) ||  // Latin uppercase
+                 (ch >= 0x0061 && ch <= 0x007A) ||  // Latin lowercase
+                 (ch >= 0x00C0 && ch <= 0x00D6) ||  // Latin extended
+                 (ch >= 0x00D8 && ch <= 0x00F6) ||  // Latin extended
+                 (ch >= 0x00F8 && ch <= 0x00FF) ||  // Latin extended
+                 (ch >= 0x0100 && ch <= 0x017F) ||  // Latin Extended-A
+                 (ch >= 0x0180 && ch <= 0x024F) ||  // Latin Extended-B
+                 (ch >= 0x0400 && ch <= 0x04FF)) {  // Cyrillic
+          return DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+        }
+      }
+    }
+  }
+  
+  // If no strong directional characters found, use system default (LTR)
+  return DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
 }
 
 } // namespace facebook::react
