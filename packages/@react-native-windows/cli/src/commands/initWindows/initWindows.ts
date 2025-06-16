@@ -165,6 +165,13 @@ export class InitWindows {
         `Unable to find template '${this.options.template}'.`,
       );
     }
+
+    if (this.options.template.startsWith('old')) {
+      spinner.warn(
+        `The legacy '${this.options.template}' template targets the React Native Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.`,
+      );
+    }
+
     const templateConfig = this.templates.get(this.options.template)!;
 
     // Check if there's a passed-in project name and if it's valid
