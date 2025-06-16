@@ -36,6 +36,12 @@ stages:
           AgentPool: ${{ parameters.AgentPool }}
 
       # Disabling CLI Stage as branch is Unsupported, see https://microsoft.github.io/react-native-windows/support
+      # - template: jobs/cli-init-windows.yml
+      #   parameters:
+      #     buildEnvironment: ${{ parameters.buildEnvironment }}
+      #     AgentPool: ${{ parameters.AgentPool }}
+      #     buildNuGetOnly: true
+
       # # NuGet using tests rely on "UniversalBuild" which is done in the build stage
       # - template: jobs/cli-init.yml
       #   parameters:
