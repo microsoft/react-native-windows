@@ -1247,6 +1247,12 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
+    if (windowsTextInputProps().multiline) {
+      facebook::react::WindowsTextInputEventEmitter::OnContentSizeChange onContentSizeChangeArgs;
+      onContentSizeChangeArgs.contentSize.width = m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor;
+      onContentSizeChangeArgs.contentSize.height = m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor;
+      emitter->onContentSizeChange(onContentSizeChangeArgs);
+    }
   }
 
   if (UiaClientsAreListening()) {
