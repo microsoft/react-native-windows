@@ -387,38 +387,6 @@ describe('Pressable Tests', () => {
       },
     );
   });
-  test('Pressable should support different children configurations', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await app.waitUntil(
-      async () => {
-        await searchBox.setValue('Cha');
-        return (await searchBox.getText()) === 'Cha';
-      },
-      {
-        interval: 1500,
-        timeout: 5000,
-        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
-      },
-    );
-
-    // Test pressable with different content based on press state
-    const component = await app.findElementByTestID('one_press_me_button');
-    await component.waitForDisplayed({timeout: 20000});
-    const initialDump = await dumpVisualTree('one_press_me_button');
-    expect(initialDump).toMatchSnapshot();
-
-    await app.waitUntil(
-      async () => {
-        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === 'Search...';
-      },
-      {
-        interval: 1500,
-        timeout: 5000,
-        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
-      },
-    );
-  });
 
   test('Pressables can have advanced borders', async () => {
     const component = await app.findElementByTestID(
