@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add functional tests for TouchableOpacity component in E2E test app (Fabric)",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
