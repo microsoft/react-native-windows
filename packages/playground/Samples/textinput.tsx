@@ -244,6 +244,13 @@ export default class Bootstrap extends React.Component<{}, any> {
               }}
             />
             <TextInput
+              style={styles.input}
+              placeholder="OnPressOut..."
+              onPressOut={event => {
+                Alert.alert('Released!');
+              }}
+            />
+            <TextInput
               placeholder="Single line with selection color"
               cursorColor="#00FF00"
               selectionColor="yellow"
