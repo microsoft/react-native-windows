@@ -700,8 +700,6 @@ void WindowsTextInputComponentView::OnPointerPressed(
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     float offsetX = position.X - m_layoutMetrics.frame.origin.x;
     float offsetY = position.Y - m_layoutMetrics.frame.origin.y;
-    float neutralX = m_layoutMetrics.frame.origin.x;
-    float neutralY = m_layoutMetrics.frame.origin.y;
 
     facebook::react::GestureResponderEvent pressInArgs;
     pressInArgs.target = m_tag;
@@ -758,6 +756,22 @@ void WindowsTextInputComponentView::OnPointerReleased(
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
+  }
+
+  // Emits the OnPressOut event
+  if (m_eventEmitter && !m_comingFromJS) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    float offsetX = position.X - m_layoutMetrics.frame.origin.x;
+    float offsetY = position.Y - m_layoutMetrics.frame.origin.y;
+
+    facebook::react::GestureResponderEvent pressOutArgs;
+    pressOutArgs.target = m_tag;
+    pressOutArgs.pagePoint = {position.X, position.Y};
+    pressOutArgs.offsetPoint = {offsetX, offsetY};
+    pressOutArgs.timestamp = static_cast<double>(pp.Timestamp()) / 1000.0;
+    pressOutArgs.identifier = pp.PointerId();
+
+    emitter->onPressOut(pressOutArgs);
   }
 }
 
