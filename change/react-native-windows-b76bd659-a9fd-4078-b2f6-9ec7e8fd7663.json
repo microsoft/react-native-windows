@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix double onChange event in Fabric TextInput by checking m_comingFromState",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
