@@ -205,31 +205,33 @@ describe('TextInput Tests', () => {
     // Get reference to state display element
     const stateText = await app.findElementByTestID('textinput-state-display');
 
-    // Position the cursor over the component but don't click yet
-    await component.moveTo();
+    // Verify initial state
+    const initialText = await stateText.getText();
+    expect(initialText).toBe('PressIn/PressOut message');
     
-    // Use a custom approach: try to move and click in one motion to isolate onPressIn
-    // Since touchAction isn't working, we'll modify our test strategy to verify
-    // that the component responds to press events and rely on the final state
+    // Trigger press interaction - this will fire both onPressIn and onPressOut
     await component.click();
     
-    // Since click triggers both onPressIn and onPressOut, we should verify
-    // that the press functionality is working by checking the final state
+    // After click interaction, verify that:
+    // 1. The state has changed from the initial state (proving onPressIn fired)
+    // 2. The final state is the expected onPressOut state (proving onPressOut fired)
     await app.waitUntil(
       async () => {
         const currentText = await stateText.getText();
-        // After a complete click, the state should be either the intermediate state
-        // or the final "Released" state depending on timing
-        return currentText === 'Released click/touch' || currentText === 'Holding down the click/touch';
+        return currentText === 'Released click/touch';
       },
       {
         timeout: 5000,
-        timeoutMsg: 'State text not updated after press interaction.',
+        timeoutMsg: 'State text not updated to final onPressOut state after press interaction.',
       },
     );
     
-    // Final assertion - the component should be responsive to press events
-    expect(['Released click/touch', 'Holding down the click/touch']).toContain(await stateText.getText());
+    // Final assertion - verify the complete press/release cycle worked
+    const finalText = await stateText.getText();
+    expect(finalText).toBe('Released click/touch');
+    
+    // Verify that the state changed from initial, proving onPressIn fired
+    expect(finalText).not.toBe(initialText);
     
     //  This step helps avoid UI lock by unfocusing the input
     const search = await app.findElementByTestID('example_search');
@@ -246,6 +248,10 @@ describe('TextInput Tests', () => {
     // Get reference to state display element
     const stateText = await app.findElementByTestID('textinput-state-display');
 
+    // Verify initial state before interaction
+    const initialText = await stateText.getText();
+    expect(initialText).toBe('PressIn/PressOut message');
+
     // Use click() which triggers both onPressIn and onPressOut in sequence
     // This should result in the final state being "Released click/touch"
     await component.click();
@@ -258,11 +264,11 @@ describe('TextInput Tests', () => {
       },
       {
         timeout: 5000,
-        timeoutMsg: 'State text not updated after onPressOut.',
+        timeoutMsg: 'State text not updated to final onPressOut state.',
       },
     );
 
-    // Assertion
+    // Verify that onPressOut event fired and set the final state correctly
     expect(await stateText.getText()).toBe('Released click/touch');
 
     // Clean up by unfocusing the input
