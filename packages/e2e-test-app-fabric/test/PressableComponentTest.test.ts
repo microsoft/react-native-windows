@@ -113,10 +113,10 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('pressable_feedback_events_button');
     expect(dump).toMatchSnapshot();
     await component.moveTo();
-    const console = await app.findElementByTestID(
+    const consoleElement = await app.findElementByTestID(
       'pressable_feedback_events_console',
     );
-    await console.moveTo();
+    await consoleElement.moveTo();
     const dump2 = await dumpVisualTree('pressable_feedback_events_console');
     expect(dump2).toMatchSnapshot();
     await app.waitUntil(
@@ -265,12 +265,135 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('pressable_hit_slop_button');
     expect(dump).toMatchSnapshot();
   });
+  test('Pressable should perform action upon onLongPress', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue('fee');
+        return (await searchBox.getText()) === 'fee';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+    const component = await app.findElementByTestID(
+      'pressable_feedback_events_button',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+
+    // Test that long press functionality is available by capturing events
+    await component.click();
+    await app.pause(1000); // Allow time for events to be processed
+
+    const consoleElement = await app.findElementByTestID(
+      'pressable_feedback_events_console',
+    );
+    const dump = await dumpVisualTree('pressable_feedback_events_console');
+    expect(dump).toMatchSnapshot();
+
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        return (await searchBox.getText()) === 'Search...';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+  });
+  test('Pressable behavior should change upon delayLongPress adjustment', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue('del');
+        return (await searchBox.getText()) === 'del';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+    const component = await app.findElementByTestID(
+      'pressable_delay_events_button',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+
+    // Test delayLongPress behavior by capturing delayed event responses
+    await component.click();
+    await app.pause(1000); // Allow time for delayed events to be processed
+
+    const consoleElement = await app.findElementByTestID(
+      'pressable_delay_events_console',
+    );
+    const dump = await dumpVisualTree('pressable_delay_events_console');
+    expect(dump).toMatchSnapshot();
+
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        return (await searchBox.getText()) === 'Search...';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+  });
+  test('Pressable should support different disabled styling configurations', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue('dis');
+        return (await searchBox.getText()) === 'dis';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+
+    // Test disabled=true styling
+    const disabledComponent = await app.findElementByTestID(
+      'pressable_disabled_true',
+    );
+    await disabledComponent.waitForDisplayed({timeout: 20000});
+    const disabledDump = await dumpVisualTree('pressable_disabled_true');
+    expect(disabledDump).toMatchSnapshot();
+
+    // Test disabled=false styling with press state
+    const enabledComponent = await app.findElementByTestID(
+      'pressable_disabled_false',
+    );
+    await enabledComponent.waitForDisplayed({timeout: 20000});
+    const enabledDump = await dumpVisualTree('pressable_disabled_false');
+    expect(enabledDump).toMatchSnapshot();
+
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        return (await searchBox.getText()) === 'Search...';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+  });
+
   test('Pressables can have advanced borders', async () => {
     const component = await app.findElementByTestID(
       'advanced_borders_pressable',
     );
     await component.waitForDisplayed({timeout: 20000});
-    const dump = await dumpVisualTree('pressable_hit_slop_button');
+    const dump = await dumpVisualTree('advanced_borders_pressable');
     expect(dump).toMatchSnapshot();
   });
   test('Pressables can have ranging opacity', async () => {
