@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.78.11",
+  "version": "0.78.12",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "^15.0.0",
     "@react-native-community/cli-platform-android": "^15.0.0",
     "@react-native-community/cli-platform-ios": "^15.0.0",
-    "@react-native-windows/cli": "0.78.7",
+    "@react-native-windows/cli": "0.78.8",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.78.2",
     "@react-native/codegen": "0.78.2",
