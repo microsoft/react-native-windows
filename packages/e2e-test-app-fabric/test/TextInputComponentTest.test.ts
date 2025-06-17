@@ -233,7 +233,7 @@ describe('TextInput Tests', () => {
     // Trigger onPressOut followed by onPressOut (using touchAction for press and release)
     await component.click();
     console.log('click triggered');
-    const stateText = await app.findElementByTestID('textinput-state-display-in');
+    const stateText = await app.findElementByTestID('textinput-state-display-out');
 
     // Wait for onPressOut to update the state text
     await app.waitUntil(
@@ -922,9 +922,9 @@ describe('TextInput Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('TextInputs can register press events', async () => {
-    const component = await app.findElementByTestID('textinput-press');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('textinput-press');
+    const component = await app.findElementByTestID('textinput-pressin');
+    await component.waitForDisplayed({timeout: 5000})
+    const dump = await dumpVisualTree('textinput-pressin');
     expect(dump).toMatchSnapshot();
   });
   test('TextInputs can autogrow', async () => {

@@ -88,6 +88,7 @@ class PressInOutEvents extends React.Component<
     return (
       <View>
         <Text testID="textinput-state-display-in">{this.state.OnpressInText}</Text>
+        <Text testID="textinput-state-display-out">{this.state.OnpressOutText}</Text>
         <ExampleTextInput
           placeholder="OnPressIn test."
           style={[styles.singleLineWithHeightTextInput]}
