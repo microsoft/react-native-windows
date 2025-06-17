@@ -1245,9 +1245,8 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
   constexpr float HIMETRIC_PER_INCH = 2540.0f;
 
   SIZE extentHimetric = {
-    static_cast<LONG>(availableWidth * scale * HIMETRIC_PER_INCH / dpi),
-    static_cast<LONG>(std::numeric_limits<LONG>::max() * HIMETRIC_PER_INCH / dpi)
-  };
+      static_cast<LONG>(availableWidth * scale * HIMETRIC_PER_INCH / dpi),
+      static_cast<LONG>(std::numeric_limits<LONG>::max() * HIMETRIC_PER_INCH / dpi)};
 
   SIZE naturalSize = {0, 0};
 
@@ -1257,7 +1256,7 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
       nullptr,
       nullptr,
       static_cast<DWORD>(TXTNS_FITTOCONTENTWSP),
-      reinterpret_cast<SIZEL*>(&extentHimetric),
+      reinterpret_cast<SIZEL *>(&extentHimetric),
       &naturalSize.cx,
       &naturalSize.cy);
 
