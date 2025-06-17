@@ -18,30 +18,11 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< Upstream
-const DebugInstructions: () => React.Node = Platform.select({
-  ios: () => (
-    <Text>
-      Press <Text style={styles.highlight}>Cmd + D</Text> in the simulator or{' '}
-      <Text style={styles.highlight}>Shake</Text> your device to open the Dev
-      Menu.
-    </Text>
-  ),
-  default: () => (
-    <Text>
-      Press <Text style={styles.highlight}>Cmd or Ctrl + M</Text> or{' '}
-      <Text style={styles.highlight}>Shake</Text> your device to open the Dev
-      Menu.
-    </Text>
-  ),
-});
-=======
 const DebugInstructions = (): Node => (
   <Text>
     Press <Text style={styles.highlight}>Ctrl+Shift+D</Text> to open the Dev
     Menu.
   </Text>
 );
->>>>>>> Override
 
 export default DebugInstructions;

@@ -20,11 +20,8 @@ import type {
   LayoutRectangle,
   MouseEvent,
   PointerEvent,
-<<<<<<< Upstream
-=======
   GestureResponderEvent,
   KeyEvent, // [Windows]
->>>>>>> Override
 } from '../../Types/CoreEventTypes';
 import type {
   AccessibilityActionEvent,

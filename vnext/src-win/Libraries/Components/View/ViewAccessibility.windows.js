@@ -93,11 +93,8 @@ export type AccessibilityRole =
   | 'drawerlayout'
   | 'slidingdrawer'
   | 'iconmenu'
-<<<<<<< Upstream
+  | 'listitem' // RNW-only
   | string;
-=======
-  | 'listitem'; // RNW-only
->>>>>>> Override
 
 // Role types for web
 export type Role =

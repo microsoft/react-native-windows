@@ -10,13 +10,7 @@
  * @flow
  */
 
-<<<<<<< Upstream
-export type {DeviceInfoConstants} from './NativeDeviceInfo';
-
-import NativeDeviceInfo from './NativeDeviceInfo';
-=======
 import type {Spec} from './NativeDeviceInfo';
->>>>>>> Override
 
 const DeviceInfo: Spec = {
   getConstants: () => ({Dimensions: {}}),
