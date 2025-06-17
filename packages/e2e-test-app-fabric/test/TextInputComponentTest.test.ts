@@ -232,7 +232,6 @@ describe('TextInput Tests', () => {
 
     // Trigger onPressOut followed by onPressOut (using touchAction for press and release)
     await component.click();
-    console.log('click triggered');
     const stateText = await app.findElementByTestID('textinput-state-display-out');
 
     // Wait for onPressOut to update the state text
