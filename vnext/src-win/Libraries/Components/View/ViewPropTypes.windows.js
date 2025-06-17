@@ -15,7 +15,6 @@ import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import type {
   BlurEvent,
   FocusEvent,
-  GestureResponderEvent,
   LayoutChangeEvent,
   LayoutRectangle,
   MouseEvent,
