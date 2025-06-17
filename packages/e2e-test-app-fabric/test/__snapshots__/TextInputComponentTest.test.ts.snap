@@ -394,22 +394,100 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
 exports[`TextInput Tests TextInput triggers onPressIn and updates state text 1`] = `
 {
   "Automation Tree": {
-    "AutomationId": "textinput-press",
+    "AutomationId": "textinput-pressin",
     "ControlType": 50004,
-    "HelpText": "Click inside the box to observe events being fired.",
+    "HelpText": "OnPressIn test.",
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "Name": "Click inside the box to observe events being fired.",
-    "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+    "Name": "OnPressIn test.",
+    "TextRangePattern.GetText": "OnPressIn test.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
     "_Props": {
-      "TestId": "textinput-press",
+      "TestId": "textinput-pressin",
     },
   },
   "Visual Tree": {
-    "Comment": "textinput-press",
+    "Comment": "textinput-pressin",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInput triggers onPressOut and updates state text 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-pressout",
+    "ControlType": 50004,
+    "HelpText": "OnPressOut test.",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "OnPressOut test.",
+    "TextRangePattern.GetText": "OnPressOut test.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-pressout",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-pressout",
     "Offset": "0, 0, 0",
     "Size": "916, 30",
     "Visual Type": "SpriteVisual",
@@ -1080,12 +1158,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 32",
+        "Size": "916, 33",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 32",
+            "Size": "916, 33",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1758,7 +1836,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2679,7 +2757,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
   "Visual Tree": {
     "Comment": "textinput-carethidden",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4255,7 +4333,7 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "textinput-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4548,22 +4626,22 @@ exports[`TextInput Tests TextInputs can propagate events 1`] = `
 exports[`TextInput Tests TextInputs can register press events 1`] = `
 {
   "Automation Tree": {
-    "AutomationId": "textinput-press",
+    "AutomationId": "textinput-pressin",
     "ControlType": 50004,
-    "HelpText": "Click inside the box to observe events being fired.",
+    "HelpText": "OnPressIn test.",
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "Name": "Click inside the box to observe events being fired.",
-    "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+    "Name": "OnPressIn test.",
+    "TextRangePattern.GetText": "OnPressIn test.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
     "_Props": {
-      "TestId": "textinput-press",
+      "TestId": "textinput-pressin",
     },
   },
   "Visual Tree": {
-    "Comment": "textinput-press",
+    "Comment": "textinput-pressin",
     "Offset": "0, 0, 0",
     "Size": "916, 30",
     "Visual Type": "SpriteVisual",
@@ -5968,12 +6046,12 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 33",
+        "Size": "916, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 33",
+            "Size": "916, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
