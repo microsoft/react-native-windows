@@ -77,7 +77,7 @@ class PressInOutEvents extends React.Component<
   $FlowFixMeState,
 > {
   constructor(props) {
-     super(props);
+    super(props);
     this.state = {
       OnpressInText: 'OnPressIn message',
       OnpressOutText: 'OnPressOut message',
@@ -87,8 +87,12 @@ class PressInOutEvents extends React.Component<
   render() {
     return (
       <View>
-        <Text testID="textinput-state-display-in">{this.state.OnpressInText}</Text>
-        <Text testID="textinput-state-display-out">{this.state.OnpressOutText}</Text>
+        <Text testID="textinput-state-display-in">
+          {this.state.OnpressInText}
+        </Text>
+        <Text testID="textinput-state-display-out">
+          {this.state.OnpressOutText}
+        </Text>
         <ExampleTextInput
           placeholder="OnPressIn test."
           style={[styles.singleLineWithHeightTextInput]}

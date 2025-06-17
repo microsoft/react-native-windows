@@ -93,7 +93,7 @@ void WindowsTextInputEventEmitter::onEndEditing(OnEndEditing event) const {
   });
 }
 
-  void WindowsTextInputEventEmitter::onPressOut(GestureResponderEvent event) const {
+void WindowsTextInputEventEmitter::onPressOut(GestureResponderEvent event) const {
   dispatchEvent("textInputPressOut", [event = std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     auto nativeEvent = jsi::Object(runtime);

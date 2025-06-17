@@ -777,7 +777,6 @@ void WindowsTextInputComponentView::OnPointerReleased(
 
     emitter->onPressOut(pressOutArgs);
   }
-
 }
 
 void WindowsTextInputComponentView::OnPointerMoved(

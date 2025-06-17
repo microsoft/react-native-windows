@@ -204,7 +204,9 @@ describe('TextInput Tests', () => {
 
     // Trigger onPressIn (click only)
     await component.click();
-    const stateText = await app.findElementByTestID('textinput-state-display-in');
+    const stateText = await app.findElementByTestID(
+      'textinput-state-display-in',
+    );
 
     await app.waitUntil(
       async () => {
@@ -222,7 +224,7 @@ describe('TextInput Tests', () => {
     const search = await app.findElementByTestID('example_search');
     await search.setValue('');
   });
- test('TextInput triggers onPressOut and updates state text', async () => {
+  test('TextInput triggers onPressOut and updates state text', async () => {
     // Scroll the example into view
     await searchBox('onPressOut');
     const component = await app.findElementByTestID('textinput-pressout');
@@ -232,7 +234,9 @@ describe('TextInput Tests', () => {
 
     // Trigger onPressOut followed by onPressOut (using touchAction for press and release)
     await component.click();
-    const stateText = await app.findElementByTestID('textinput-state-display-out');
+    const stateText = await app.findElementByTestID(
+      'textinput-state-display-out',
+    );
 
     // Wait for onPressOut to update the state text
     await app.waitUntil(
@@ -922,7 +926,7 @@ describe('TextInput Tests', () => {
   });
   test('TextInputs can register press events', async () => {
     const component = await app.findElementByTestID('textinput-pressin');
-    await component.waitForDisplayed({timeout: 5000})
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('textinput-pressin');
     expect(dump).toMatchSnapshot();
   });
