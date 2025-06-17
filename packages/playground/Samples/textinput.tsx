@@ -84,7 +84,7 @@ export default class Bootstrap extends React.Component<{}, any> {
               aria-setsize={30}
             />
             <TextInput
-              style={styles.input}
+              style={[styles.input,  { maxHeight: 120 }]}
               multiline={true}
               onContentSizeChange={event =>
                 this.getHeightAndWidth(
