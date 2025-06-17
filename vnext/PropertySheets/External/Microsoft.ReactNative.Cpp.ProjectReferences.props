@@ -18,5 +18,13 @@
       <Name>Microsoft.ReactNative</Name>
       <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
     </ProjectReference>
+    
+    <!-- TODO: Should we only include this project ref conditionally? -->
+    <ProjectReference Include="$(ReactNativeWindowsDir)Microsoft.ReactNative.Xaml\Microsoft.ReactNative.Xaml.vcxproj">
+      <Project>{e5d1b5d2-0e6a-4011-8bcd-08968256dcbd}</Project>
+      <Name>Microsoft.ReactNative.Xaml</Name>
+      <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
+    </ProjectReference>
+    
   </ItemGroup>
 </Project>

@@ -17,3 +17,4 @@ export const ViewWindows = View;
 import type {View} from './Components/View/View';
 export type ViewWindows = View;
 export * from './AppTheme/AppThemeTypes';
+export * from '../src/private/specs/components/Xaml/XamlHostTypes';
