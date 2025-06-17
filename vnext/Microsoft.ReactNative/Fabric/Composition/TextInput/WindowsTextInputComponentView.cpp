@@ -1240,13 +1240,17 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 
   m_state->updateState(std::move(data));
 
-  if (m_eventEmitter && !m_comingFromJS && !m_comingFromState) {
+  if (m_eventEmitter && !m_comingFromJS) {
     // call onChange event
-    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-    facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
-    onChangeArgs.text = GetTextFromRichEdit();
-    onChangeArgs.eventCount = ++m_nativeEventCount;
-    emitter->onChange(onChangeArgs);
+    auto currentText = GetTextFromRichEdit();
+    if (currentText != m_lastOnChangeText) {
+      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+      facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
+      onChangeArgs.text = currentText;
+      onChangeArgs.eventCount = ++m_nativeEventCount;
+      emitter->onChange(onChangeArgs);
+      m_lastOnChangeText = currentText;
+    }
   }
 
   if (UiaClientsAreListening()) {
