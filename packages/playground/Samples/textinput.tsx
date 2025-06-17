@@ -64,6 +64,10 @@ export default class Bootstrap extends React.Component<{}, any> {
     console.log('Text input focus lost:', text);
   };
 
+  getHeightAndWidth = (height: number, width: number) => {
+    console.log(' onContentSizeChange height: ' + height + ' width: ' + width);
+  };
+
   render() {
     let textInputRef: TextInput | null;
     return (
@@ -74,6 +78,17 @@ export default class Bootstrap extends React.Component<{}, any> {
               style={styles.input}
               placeholder={'MultiLine'}
               multiline={true}
+            />
+            <TextInput
+              style={[styles.input, {maxHeight: 120}]}
+              multiline={true}
+              onContentSizeChange={event =>
+                this.getHeightAndWidth(
+                  event.nativeEvent.contentSize.height,
+                  event.nativeEvent.contentSize.width,
+                )
+              }
+              placeholder={'MultiLine - content size change'}
             />
             <TextInput
               style={styles.input}

@@ -97,6 +97,7 @@ struct WindowsTextInputComponentView
   void UpdateText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
+  std::pair<float, float> GetContentSize() const noexcept;
   std::string GetTextFromRichEdit() const noexcept;
   void updateCursorColor(
       const facebook::react::SharedColor &cursorColor,
