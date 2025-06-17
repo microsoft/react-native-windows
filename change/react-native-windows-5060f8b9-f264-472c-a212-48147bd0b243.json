@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed OnchangeText bug",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}
