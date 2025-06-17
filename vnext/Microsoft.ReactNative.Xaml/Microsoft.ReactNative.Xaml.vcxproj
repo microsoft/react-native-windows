@@ -126,6 +126,7 @@
     </ClCompile>
     <ClCompile Include="XamlApplication.cpp" />
     <ClCompile Include="XamlHost.cpp" />
+    <ClCompile Include="FabricXamlControl.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>

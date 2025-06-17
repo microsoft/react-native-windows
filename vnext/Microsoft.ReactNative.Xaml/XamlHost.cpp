@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 #include "pch.h"
 
-#include "FabricXamlControl.h"
 #include "XamlApplication.h"
 #include "XamlHost.h"
 

@@ -6,4 +6,11 @@ namespace Microsoft.ReactNative.Xaml
   {
     ReactPackageProvider();
   };
+
+  [webhosthidden]
+  interface IXamlControl
+  {
+    Microsoft.UI.Xaml.UIElement GetXamlElement();
+  }
+
 }
