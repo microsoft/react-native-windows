@@ -286,7 +286,14 @@ module.exports = {
   get I18nManager(): I18nManager {
     return require('./Libraries/ReactNative/I18nManager').default;
   },
+<<<<<<< Upstream
+  /**
+   * @deprecated
+   */
+  get InteractionManager() {
+=======
   get InteractionManager(): InteractionManager {
+>>>>>>> Override
     return require('./Libraries/Interaction/InteractionManager').default;
   },
   get Keyboard(): Keyboard {

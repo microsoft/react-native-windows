@@ -31,7 +31,7 @@ import * as React from 'react';
 import {useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 
-type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
+type ViewStyleProp = React.ElementConfig<typeof View>['style'];
 
 export type PressableStateCallbackType = $ReadOnly<{
   pressed: boolean,
@@ -48,7 +48,7 @@ type PressableBaseProps = $ReadOnly<{
    * Either children or a render prop that receives a boolean reflecting whether
    * the component is currently pressed.
    */
-  children: React.Node | ((state: PressableStateCallbackType) => React.Node),
+  children?: React.Node | ((state: PressableStateCallbackType) => React.Node),
 
   /**
    * Duration to wait after hover in before calling `onHoverIn`.
@@ -110,6 +110,10 @@ type PressableBaseProps = $ReadOnly<{
    * Called when a touch is engaged before `onPress`.
    */
   onPressIn?: ?(event: GestureResponderEvent) => mixed,
+  /**
+   * Called when the press location moves.
+   */
+  onPressMove?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Called when a touch is released before `onPress`.
@@ -233,6 +237,7 @@ function Pressable(
     onLongPress,
     onPress,
     onPressIn,
+    onPressMove,
     onPressOut,
     // [Windows
     onBlur,
@@ -321,7 +326,12 @@ function Pressable(
           onPressIn(event);
         }
       },
-      onPressMove: android_rippleConfig?.onPressMove,
+      onPressMove(event: GestureResponderEvent): void {
+        android_rippleConfig?.onPressMove(event);
+        if (onPressMove != null) {
+          onPressMove(event);
+        }
+      },
       onPressOut(event: GestureResponderEvent): void {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressOut(event);
@@ -352,6 +362,7 @@ function Pressable(
       onLongPress,
       onPress,
       onPressIn,
+      onPressMove,
       onPressOut,
       // [Windows
       onBlur,

@@ -8,8 +8,6 @@
  * @format
  */
 
-import type {Node} from 'react';
-
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
 import React from 'react';
@@ -20,6 +18,22 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< Upstream
+const ReloadInstructions: () => React.Node = Platform.select({
+  ios: () => (
+    <Text>
+      Press <Text style={styles.highlight}>Cmd + R</Text> in the simulator to
+      reload your app's code.
+    </Text>
+  ),
+  default: () => (
+    <Text>
+      Double tap <Text style={styles.highlight}>R</Text> on your keyboard to
+      reload your app's code.
+    </Text>
+  ),
+});
+=======
 const ReloadInstructions = (): Node => (
   <Text>
     Press <Text style={styles.highlight}>Ctrl+Shift+D</Text> and select{' '}
@@ -27,5 +41,6 @@ const ReloadInstructions = (): Node => (
     code.
   </Text>
 );
+>>>>>>> Override
 
 export default ReloadInstructions;

@@ -10,6 +10,7 @@
 #include "componentNameByReactViewName.h"
 
 #include <react/debug/react_native_assert.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/legacyviewmanagerinterop/UnstableLegacyViewManagerAutomaticComponentDescriptor.h>
 #include <react/renderer/components/legacyviewmanagerinterop/UnstableLegacyViewManagerAutomaticShadowNode.h>
@@ -83,6 +84,23 @@ const ComponentDescriptor& ComponentDescriptorRegistry::at(
   }
 
   if (it == _registryByName.end()) {
+<<<<<<< Upstream
+    if (ReactNativeFeatureFlags::useFabricInterop()) {
+      auto componentDescriptor = std::make_shared<
+          const UnstableLegacyViewManagerAutomaticComponentDescriptor>(
+          parameters_, unifiedComponentName);
+      registerComponentDescriptor(componentDescriptor);
+      return *_registryByName.find(unifiedComponentName)->second;
+    } else {
+      if (_fallbackComponentDescriptor == nullptr) {
+        throw std::invalid_argument(
+            ("Unable to find componentDescriptor for " + unifiedComponentName)
+                .c_str());
+      } else {
+        return *_fallbackComponentDescriptor.get();
+      }
+    }
+=======
   // [Windows ##14204
     if (_fallbackComponentDescriptor == nullptr) {
       throw std::invalid_argument(
@@ -92,6 +110,7 @@ const ComponentDescriptor& ComponentDescriptorRegistry::at(
       return *_fallbackComponentDescriptor.get();
     }
   // Windows]
+>>>>>>> Override
   }
 
   return *it->second;
