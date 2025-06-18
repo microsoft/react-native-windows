@@ -586,14 +586,6 @@ const HorizontalScrollView = (props: {
         testID={'scroll_horizontal'}>
         {items.map(createItemRow)}
       </ScrollView>
-      <ScrollView
-        automaticallyAdjustContentInsets={false}
-        horizontal={true}
-        snapToInterval={106}
-        style={[styles.scrollView, styles.horizontalScrollView]}
-        testID={'scroll_horizontal_snap_to_interval'}>
-        {items.map(createItemRow)}
-      </ScrollView>
       <Button
         label="Scroll to start"
         onPress={() => {
