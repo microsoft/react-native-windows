@@ -805,6 +805,14 @@ void ScrollViewComponentView::updateProps(
   if (oldViewProps.zoomScale != newViewProps.zoomScale) {
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
+
+  if (!oldProps || oldViewProps.snapToEnd != newViewProps.snapToEnd) {
+    // snapToEnd property is used with snapToOffsets to control whether
+    // the end of the scroll content should be treated as a snap point.
+    // For now, just store the value - full snap functionality requires
+    // implementing snapToOffsets and the snapping behavior.
+    m_snapToEnd = newViewProps.snapToEnd;
+  }
 }
 
 void ScrollViewComponentView::updateState(
