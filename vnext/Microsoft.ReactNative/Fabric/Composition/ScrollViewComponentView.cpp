@@ -808,6 +808,7 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.snapToInterval != newViewProps.snapToInterval) {
     m_snapToInterval = newViewProps.snapToInterval;
+    m_scrollVisual.ConfigureSnapToInterval(m_snapToInterval);
   }
 }
 
@@ -1335,14 +1336,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
 
         // Apply snap behavior if snapToInterval is set
         if (m_snapToInterval > 0.0f) {
-          auto currentPosition = m_scrollVisual.ScrollPosition();
-          auto snapPosition = calculateSnapPosition(currentPosition);
-
-          // Only animate to snap position if it's different from current position
-          if (std::abs(snapPosition.x - currentPosition.x) > 0.1f ||
-              std::abs(snapPosition.y - currentPosition.y) > 0.1f) {
-            m_scrollVisual.TryUpdatePosition(snapPosition, true /* animate */);
-          }
+          m_scrollVisual.ConfigureSnapToInterval(m_snapToInterval);
         }
       });
 
@@ -1441,30 +1435,5 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
-}
-
-winrt::Windows::Foundation::Numerics::float3 ScrollViewComponentView::calculateSnapPosition(
-    winrt::Windows::Foundation::Numerics::float3 currentPosition) noexcept {
-  if (m_snapToInterval <= 0.0f) {
-    return currentPosition;
-  }
-
-  // Determine if we're scrolling horizontally or vertically
-  auto props = std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps());
-  bool isHorizontal = props->horizontal;
-
-  auto snapPosition = currentPosition;
-
-  if (isHorizontal) {
-    // Snap horizontally
-    float snapValue = std::round(currentPosition.x / m_snapToInterval) * m_snapToInterval;
-    snapPosition.x = snapValue;
-  } else {
-    // Snap vertically
-    float snapValue = std::round(currentPosition.y / m_snapToInterval) * m_snapToInterval;
-    snapPosition.y = snapValue;
-  }
-
-  return snapPosition;
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

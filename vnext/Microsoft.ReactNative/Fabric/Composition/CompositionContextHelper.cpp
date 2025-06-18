@@ -74,6 +74,10 @@ struct CompositionTypeTraits<WindowsTypeTag> {
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaModifier =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
@@ -143,6 +147,10 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaModifier =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
@@ -853,6 +861,47 @@ struct CompScrollerVisual : winrt::implements<
 
   void SetMinimumZoomScale(float minimumZoomScale) noexcept {
     m_interactionTracker.MinScale(minimumZoomScale);
+  }
+
+  void ConfigureSnapToInterval(float snapToInterval) noexcept {
+    if (snapToInterval <= 0.0f) {
+      // Clear any existing modifiers by passing empty vectors
+      m_interactionTracker.ConfigurePositionInertiaModifiers({});
+      return;
+    }
+
+    auto compositor = m_visual.Compositor();
+
+    // Create snap-to-interval expressions for both X and Y axes
+    auto snapExpressionX =
+        compositor.CreateExpressionAnimation(L"Round(this.NaturalRestingPosition.X / snapInterval) * snapInterval");
+    snapExpressionX.SetScalarParameter(L"snapInterval", snapToInterval);
+
+    auto snapExpressionY =
+        compositor.CreateExpressionAnimation(L"Round(this.NaturalRestingPosition.Y / snapInterval) * snapInterval");
+    snapExpressionY.SetScalarParameter(L"snapInterval", snapToInterval);
+
+    // Create inertia modifiers for position
+    auto xModifier = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+    xModifier.Condition(compositor.CreateExpressionAnimation(L"true"));
+    xModifier.RestingValue(snapExpressionX);
+
+    auto yModifier = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+    yModifier.Condition(compositor.CreateExpressionAnimation(L"true"));
+    yModifier.RestingValue(snapExpressionY);
+
+    // Apply the modifiers to the interaction tracker
+    winrt::Windows::Foundation::Collections::IVector<typename TTypeRedirects::InteractionTrackerInertiaModifier>
+        modifiers;
+    if (m_horizontal) {
+      modifiers =
+          winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>({xModifier});
+    } else {
+      modifiers =
+          winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>({yModifier});
+    }
+
+    m_interactionTracker.ConfigurePositionInertiaModifiers(modifiers);
   }
 
   void Opacity(float opacity) noexcept {
