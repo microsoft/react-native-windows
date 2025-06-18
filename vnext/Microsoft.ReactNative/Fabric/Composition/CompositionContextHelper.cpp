@@ -891,16 +891,15 @@ struct CompScrollerVisual : winrt::implements<
     yModifier.RestingValue(snapExpressionY);
 
     // Apply the modifiers to the interaction tracker
-    winrt::Windows::Foundation::Collections::IVector<typename TTypeRedirects::InteractionTrackerInertiaModifier>
-        modifiers;
+    std::vector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifierVector;
     if (m_horizontal) {
-      modifiers =
-          winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>({xModifier});
+      modifierVector.push_back(xModifier);
     } else {
-      modifiers =
-          winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>({yModifier});
+      modifierVector.push_back(yModifier);
     }
 
+    auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>(
+        std::move(modifierVector));
     m_interactionTracker.ConfigurePositionInertiaModifiers(modifiers);
   }
 
