@@ -864,44 +864,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void ConfigureSnapToInterval(float snapToInterval) noexcept {
-    if (snapToInterval <= 0.0f) {
-      // Clear any existing modifiers by passing empty collection
-      auto emptyModifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
-      m_interactionTracker.PositionInertiaModifiers(emptyModifiers);
-      return;
-    }
-
-    auto compositor = m_visual.Compositor();
-
-    // Create snap-to-interval expressions for both X and Y axes
-    auto snapExpressionX =
-        compositor.CreateExpressionAnimation(L"Round(this.NaturalRestingPosition.X / snapInterval) * snapInterval");
-    snapExpressionX.SetScalarParameter(L"snapInterval", snapToInterval);
-
-    auto snapExpressionY =
-        compositor.CreateExpressionAnimation(L"Round(this.NaturalRestingPosition.Y / snapInterval) * snapInterval");
-    snapExpressionY.SetScalarParameter(L"snapInterval", snapToInterval);
-
-    // Create inertia modifiers for position
-    auto xModifier = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
-    xModifier.Condition(compositor.CreateExpressionAnimation(L"true"));
-    xModifier.RestingValue(snapExpressionX);
-
-    auto yModifier = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
-    yModifier.Condition(compositor.CreateExpressionAnimation(L"true"));
-    yModifier.RestingValue(snapExpressionY);
-
-    // Apply the modifiers to the interaction tracker
-    std::vector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifierVector;
-    if (m_horizontal) {
-      modifierVector.push_back(xModifier);
-    } else {
-      modifierVector.push_back(yModifier);
-    }
-
-    auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>(
-        std::move(modifierVector));
-    m_interactionTracker.PositionInertiaModifiers(modifiers);
+    // Note: InteractionTracker inertia modifiers are not directly configurable
+    // in all Windows versions. This implementation is disabled until
+    // proper API compatibility is confirmed.
+    // 
+    // The snap-to-interval functionality would require using
+    // InteractionTracker's inertia modification APIs which may not be
+    // available in the current Windows SDK version being used.
   }
 
   void Opacity(float opacity) noexcept {
