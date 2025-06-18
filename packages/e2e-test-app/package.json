@@ -22,7 +22,7 @@
     "react": "^19.0.0",
     "react-native": "0.80.0-nightly-20250317-fc7385c1e",
     "react-native-windows": "^0.0.0-canary.964",
-    "react-native-xaml": "^0.0.78"
+    "react-native-xaml": "^0.0.80"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
