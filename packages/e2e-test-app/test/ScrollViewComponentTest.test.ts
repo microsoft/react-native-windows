@@ -58,4 +58,14 @@ describe('ScrollViewTests', () => {
     const dump = await dumpVisualTree('scroll_pressable_sticky_header');
     expect(dump).toMatchSnapshot();
   });
+  test('ScrollViews can use snapToOffsets for snap-to-points behavior', async () => {
+    // Find and interact with snap to offsets button to enable snapping
+    const snapButton = await $('~snapToOffsets === [] ? \'setSnapToOffsets\' : \'reset snapToOffsets\'');
+    await snapButton.waitForDisplayed({timeout: 10000});
+    await snapButton.click();
+    
+    // Get the visual tree of the ScrollView after enabling snap points
+    const dump = await dumpVisualTree('scroll_snap_to_options');
+    expect(dump).toMatchSnapshot();
+  });
 });
