@@ -74,10 +74,6 @@ struct CompositionTypeTraits<WindowsTypeTag> {
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
-  using InteractionTrackerInertiaModifier =
-      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
-  using InteractionTrackerInertiaRestingValue =
-      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
@@ -147,10 +143,6 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
-  using InteractionTrackerInertiaModifier =
-      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
-  using InteractionTrackerInertiaRestingValue =
-      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
@@ -1036,37 +1028,6 @@ struct CompScrollerVisual : winrt::implements<
 
   void AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass value) noexcept {
     SetAnimationClass<TTypeRedirects>(value, m_visual);
-  }
-
-  void ConfigureSnapPoints(bool snapToEnd) noexcept {
-    // Clear existing inertia modifiers to reset snap behavior
-    m_interactionTracker.ConfigurePositionXInertiaModifiers({});
-    m_interactionTracker.ConfigurePositionYInertiaModifiers({});
-
-    if (snapToEnd) {
-      auto compositor = m_visual.Compositor();
-      auto restingValue = compositor.CreateInteractionTrackerInertiaRestingValue();
-      
-      if (m_horizontal) {
-        // For horizontal scrolling, snap to the end of X axis when scrolling past 90% of content
-        restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.Position.X >= this.Target.MaxPosition.X * 0.9"));
-        restingValue.RestingValue(compositor.CreateExpressionAnimation(L"this.Target.MaxPosition.X"));
-        
-        winrt::Windows::Foundation::Collections::IVector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifiers =
-            winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
-        modifiers.Append(restingValue);
-        m_interactionTracker.ConfigurePositionXInertiaModifiers(modifiers);
-      } else {
-        // For vertical scrolling, snap to the end of Y axis when scrolling past 90% of content
-        restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.Position.Y >= this.Target.MaxPosition.Y * 0.9"));
-        restingValue.RestingValue(compositor.CreateExpressionAnimation(L"this.Target.MaxPosition.Y"));
-        
-        winrt::Windows::Foundation::Collections::IVector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifiers =
-            winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
-        modifiers.Append(restingValue);
-        m_interactionTracker.ConfigurePositionYInertiaModifiers(modifiers);
-      }
-    }
   }
 
  private:
