@@ -766,6 +766,10 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
     m_scrollVisual.Horizontal(newViewProps.horizontal);
+    // Reconfigure snap points when orientation changes since snap direction depends on horizontal/vertical mode
+    if (m_snapToEnd) {
+      m_scrollVisual.ConfigureSnapPoints(m_snapToEnd);
+    }
   }
 
   if (!oldProps || oldViewProps.showsHorizontalScrollIndicator != newViewProps.showsHorizontalScrollIndicator) {
@@ -807,14 +811,12 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (!oldProps || oldViewProps.snapToEnd != newViewProps.snapToEnd) {
-    // snapToEnd property is used with snapToOffsets to control whether
-    // the end of the scroll content should be treated as a snap point.
-    // This property is now accessible in Fabric ScrollView implementation.
-    // Note: Full snap functionality requires implementing snapToOffsets and
-    // the actual snapping behavior, which is not yet implemented in Fabric.
+    // snapToEnd property controls whether the end of the scroll content
+    // should be treated as a snap point using InteractionTracker inertia modifiers.
+    // When enabled, scrolling past 90% of the content will automatically snap to the end.
     m_snapToEnd = newViewProps.snapToEnd;
     
-    // Configure the snap behavior using inertia modifiers
+    // Configure the snap behavior using Windows Composition inertia modifiers
     m_scrollVisual.ConfigureSnapPoints(m_snapToEnd);
   }
 }

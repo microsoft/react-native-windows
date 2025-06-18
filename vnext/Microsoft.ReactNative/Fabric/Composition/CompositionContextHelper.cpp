@@ -1039,7 +1039,7 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void ConfigureSnapPoints(bool snapToEnd) noexcept {
-    // Clear existing inertia modifiers
+    // Clear existing inertia modifiers to reset snap behavior
     m_interactionTracker.ConfigurePositionXInertiaModifiers({});
     m_interactionTracker.ConfigurePositionYInertiaModifiers({});
 
@@ -1048,8 +1048,8 @@ struct CompScrollerVisual : winrt::implements<
       auto restingValue = compositor.CreateInteractionTrackerInertiaRestingValue();
       
       if (m_horizontal) {
-        // For horizontal scrolling, snap to the end of X axis
-        restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.Position.X >= this.Target.MaxPosition.X * 0.8"));
+        // For horizontal scrolling, snap to the end of X axis when scrolling past 90% of content
+        restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.Position.X >= this.Target.MaxPosition.X * 0.9"));
         restingValue.RestingValue(compositor.CreateExpressionAnimation(L"this.Target.MaxPosition.X"));
         
         winrt::Windows::Foundation::Collections::IVector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifiers =
@@ -1057,8 +1057,8 @@ struct CompScrollerVisual : winrt::implements<
         modifiers.Append(restingValue);
         m_interactionTracker.ConfigurePositionXInertiaModifiers(modifiers);
       } else {
-        // For vertical scrolling, snap to the end of Y axis
-        restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.Position.Y >= this.Target.MaxPosition.Y * 0.8"));
+        // For vertical scrolling, snap to the end of Y axis when scrolling past 90% of content
+        restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.Position.Y >= this.Target.MaxPosition.Y * 0.9"));
         restingValue.RestingValue(compositor.CreateExpressionAnimation(L"this.Target.MaxPosition.Y"));
         
         winrt::Windows::Foundation::Collections::IVector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifiers =
