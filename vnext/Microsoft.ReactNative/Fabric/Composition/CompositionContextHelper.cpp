@@ -74,6 +74,8 @@ struct CompositionTypeTraits<WindowsTypeTag> {
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
@@ -143,6 +145,8 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
@@ -785,6 +789,7 @@ struct CompScrollerVisual : winrt::implements<
     m_horizontal = value;
 
     UpdateInteractionModes();
+    ConfigureSnapToStartInertiaModifiers(); // Reconfigure modifiers when direction changes
   }
 
   void UpdateInteractionModes() noexcept {
@@ -856,11 +861,8 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void SnapToStart(bool snapToStart) noexcept {
-    // Store snapToStart flag for future use in scroll calculations
-    // For now, this is a placeholder implementation that stores the value
-    // The actual snapping logic would be implemented based on scroll calculations
-    // similar to how Paper architecture handles it in SnapPointManagingContentControl
     m_snapToStart = snapToStart;
+    ConfigureSnapToStartInertiaModifiers();
   }
 
   void Opacity(float opacity) noexcept {
@@ -1056,6 +1058,31 @@ struct CompScrollerVisual : winrt::implements<
         {std::max<float>(m_contentSize.x - m_visualSize.x, 0),
          std::max<float>(m_contentSize.y - m_visualSize.y, 0),
          0});
+  }
+
+  void ConfigureSnapToStartInertiaModifiers() noexcept {
+    auto compositor = m_visual.Compositor();
+    
+    if (m_snapToStart) {
+      // Create inertia resting value that snaps to position 0 (start)
+      auto restingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+      restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.NaturalRestingPosition < 50"));
+      restingValue.RestingValue(compositor.CreateExpressionAnimation(L"0"));
+      
+      // Configure the appropriate axis based on scroll direction
+      if (m_horizontal) {
+        m_interactionTracker.ConfigurePositionXInertiaModifiers({restingValue});
+      } else {
+        m_interactionTracker.ConfigurePositionYInertiaModifiers({restingValue});
+      }
+    } else {
+      // Clear inertia modifiers when snapToStart is disabled
+      if (m_horizontal) {
+        m_interactionTracker.ConfigurePositionXInertiaModifiers({});
+      } else {
+        m_interactionTracker.ConfigurePositionYInertiaModifiers({});
+      }
+    }
   }
 
   bool m_isScrollEnabled{true};
