@@ -865,8 +865,9 @@ struct CompScrollerVisual : winrt::implements<
 
   void ConfigureSnapToInterval(float snapToInterval) noexcept {
     if (snapToInterval <= 0.0f) {
-      // Clear any existing modifiers by passing empty vectors
-      m_interactionTracker.ConfigurePositionInertiaModifiers({});
+      // Clear any existing modifiers by passing empty collection
+      auto emptyModifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
+      m_interactionTracker.PositionInertiaModifiers(emptyModifiers);
       return;
     }
 
@@ -900,7 +901,7 @@ struct CompScrollerVisual : winrt::implements<
 
     auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>(
         std::move(modifierVector));
-    m_interactionTracker.ConfigurePositionInertiaModifiers(modifiers);
+    m_interactionTracker.PositionInertiaModifiers(modifiers);
   }
 
   void Opacity(float opacity) noexcept {
