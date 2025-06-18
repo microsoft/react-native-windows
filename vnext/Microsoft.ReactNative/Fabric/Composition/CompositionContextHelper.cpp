@@ -698,7 +698,7 @@ struct CompScrollerVisual : winrt::implements<
                                 IVisualInterop> {
   struct ScrollInteractionTrackerOwner
       : public winrt::implements<ScrollInteractionTrackerOwner, typename TTypeRedirects::IInteractionTrackerOwner> {
-    ScrollInteractionTrackerOwner(CompScrollerVisual *outer) : m_outer(outer) {};
+    ScrollInteractionTrackerOwner(CompScrollerVisual *outer) : m_outer(outer){};
 
     void CustomAnimationStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
