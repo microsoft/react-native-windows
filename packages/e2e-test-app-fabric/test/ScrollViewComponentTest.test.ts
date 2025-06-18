@@ -67,6 +67,14 @@ describe('ScrollView Tests', () => {
     const dump = await dumpVisualTree('scroll_to_end_button');
     expect(dump).toMatchSnapshot();
   });
+  test('ScrollView snapToInterval functionality', async () => {
+    const component = await app.findElementByTestID(
+      'scroll_horizontal_snap_to_interval',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('scroll_horizontal_snap_to_interval');
+    expect(dump).toMatchSnapshot();
+  });
   // Disable tests where testID is not found.
   /*test('ScrollViews can have sticky headers', async () => {
     const component = await app.findElementByTestID('scroll_sticky_header');
