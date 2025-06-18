@@ -1247,6 +1247,49 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_imgHeight = newHeight;
 }
 
+std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const noexcept {
+  if (!m_textServices)
+    return {0.0f, 0.0f};
+
+  // Get a device context for measurement
+  HDC hdc = GetDC(nullptr);
+  if (!hdc)
+    return {0.0f, 0.0f};
+
+  // Use the layout width as the constraint (always multiline)
+  float availableWidth = m_layoutMetrics.frame.size.width;
+  float scale = m_layoutMetrics.pointScaleFactor;
+  float dpi = m_layoutMetrics.pointScaleFactor * GetDpiForSystem();
+  constexpr float HIMETRIC_PER_INCH = 2540.0f;
+
+  SIZE extentHimetric = {
+      static_cast<LONG>(availableWidth * scale * HIMETRIC_PER_INCH / dpi),
+      static_cast<LONG>(std::numeric_limits<LONG>::max() * HIMETRIC_PER_INCH / dpi)};
+
+  SIZE naturalSize = {0, 0};
+
+  HRESULT hr = m_textServices->TxGetNaturalSize(
+      DVASPECT_CONTENT,
+      hdc,
+      nullptr,
+      nullptr,
+      static_cast<DWORD>(TXTNS_FITTOCONTENTWSP),
+      reinterpret_cast<SIZEL *>(&extentHimetric),
+      &naturalSize.cx,
+      &naturalSize.cy);
+
+  ReleaseDC(nullptr, hdc);
+
+  if (FAILED(hr)) {
+    return {0.0f, 0.0f};
+  }
+
+  float contentWidth = static_cast<float>(naturalSize.cx) / scale;
+  float contentHeight = static_cast<float>(naturalSize.cy) / scale;
+
+  return {contentWidth, contentHeight};
+}
+
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   auto data = m_state->getData();
@@ -1265,6 +1308,13 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
+    if (windowsTextInputProps().multiline) {
+      auto [contentWidth, contentHeight] = GetContentSize();
+      facebook::react::WindowsTextInputEventEmitter::OnContentSizeChange onContentSizeChangeArgs;
+      onContentSizeChangeArgs.contentSize.width = contentWidth;
+      onContentSizeChangeArgs.contentSize.height = contentHeight;
+      emitter->onContentSizeChange(onContentSizeChangeArgs);
+    }
   }
 
   if (UiaClientsAreListening()) {
