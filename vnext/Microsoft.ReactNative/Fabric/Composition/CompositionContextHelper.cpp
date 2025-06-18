@@ -13,10 +13,10 @@
 #include <Windows.Graphics.Interop.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.Composition.interactions.h>
-#include <winrt/Windows.Foundation.Collections.h>
 #include "CompositionHelpers.h"
 
 #ifdef USE_WINUI3
@@ -1046,30 +1046,30 @@ struct CompScrollerVisual : winrt::implements<
 
     if (snapToEnd) {
       auto compositor = m_visual.Compositor();
-      
+
       if (horizontal) {
         // Create horizontal snap to end inertia modifier
         auto horizontalModifier = typename TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
         // Snap to the end when we're past 80% of the maximum scroll position
-        horizontalModifier.Condition(compositor.CreateExpressionAnimation(
-            L"tracker.NaturalRestingPosition.x >= tracker.MaxPosition.x * 0.8"));
+        horizontalModifier.Condition(
+            compositor.CreateExpressionAnimation(L"tracker.NaturalRestingPosition.x >= tracker.MaxPosition.x * 0.8"));
         horizontalModifier.RestingValue(compositor.CreateExpressionAnimation(L"tracker.MaxPosition.x"));
         horizontalModifier.Condition().SetReferenceParameter(L"tracker", m_interactionTracker);
         horizontalModifier.RestingValue().SetReferenceParameter(L"tracker", m_interactionTracker);
-        
+
         auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
         modifiers.Append(horizontalModifier);
         m_interactionTracker.ConfigurePositionXInertiaModifiers(modifiers);
       } else {
-        // Create vertical snap to end inertia modifier  
+        // Create vertical snap to end inertia modifier
         auto verticalModifier = typename TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
         // Snap to the end when we're past 80% of the maximum scroll position
-        verticalModifier.Condition(compositor.CreateExpressionAnimation(
-            L"tracker.NaturalRestingPosition.y >= tracker.MaxPosition.y * 0.8"));
+        verticalModifier.Condition(
+            compositor.CreateExpressionAnimation(L"tracker.NaturalRestingPosition.y >= tracker.MaxPosition.y * 0.8"));
         verticalModifier.RestingValue(compositor.CreateExpressionAnimation(L"tracker.MaxPosition.y"));
         verticalModifier.Condition().SetReferenceParameter(L"tracker", m_interactionTracker);
         verticalModifier.RestingValue().SetReferenceParameter(L"tracker", m_interactionTracker);
-        
+
         auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
         modifiers.Append(verticalModifier);
         m_interactionTracker.ConfigurePositionYInertiaModifiers(modifiers);

@@ -865,7 +865,7 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
   m_verticalScrollbarComponent->ContentSize(contentSize);
   m_horizontalScrollbarComponent->ContentSize(contentSize);
   m_scrollVisual.ContentSize(contentSize);
-  
+
   // Reconfigure snap behavior when content size changes if snapToEnd is enabled
   if (m_snapToEnd) {
     const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
