@@ -69,12 +69,14 @@ describe('ScrollView Tests', () => {
   });
   // Test snapToStart property toggle functionality
   test('ScrollView snap to start toggle functionality', async () => {
-    const component = await app.findElementByTestID('snap_to_start_toggle_button');
+    const component = await app.findElementByTestID(
+      'snap_to_start_toggle_button',
+    );
     await component.waitForDisplayed({timeout: 20000});
     // Test initial state
     const initialDump = await dumpVisualTree('snap_to_start_toggle_button');
     expect(initialDump).toMatchSnapshot('snap-to-start-toggle-initial');
-    
+
     // Test clicking the toggle to change snapToStart state
     await component.click();
     const toggledDump = await dumpVisualTree('snap_to_start_toggle_button');
@@ -82,7 +84,9 @@ describe('ScrollView Tests', () => {
   });
   // Test ScrollView with snapToStart and other snap options
   test('ScrollView snap to options scrollview', async () => {
-    const component = await app.findElementByTestID('snap_to_options_scrollview');
+    const component = await app.findElementByTestID(
+      'snap_to_options_scrollview',
+    );
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('snap_to_options_scrollview');
     expect(dump).toMatchSnapshot();

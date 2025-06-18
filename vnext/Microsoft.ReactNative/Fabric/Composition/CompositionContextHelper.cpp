@@ -1062,13 +1062,13 @@ struct CompScrollerVisual : winrt::implements<
 
   void ConfigureSnapToStartInertiaModifiers() noexcept {
     auto compositor = m_visual.Compositor();
-    
+
     if (m_snapToStart) {
       // Create inertia resting value that snaps to position 0 (start)
       auto restingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
       restingValue.Condition(compositor.CreateExpressionAnimation(L"this.Target.NaturalRestingPosition < 50"));
       restingValue.RestingValue(compositor.CreateExpressionAnimation(L"0"));
-      
+
       // Configure the appropriate axis based on scroll direction
       if (m_horizontal) {
         m_interactionTracker.ConfigurePositionXInertiaModifiers({restingValue});
