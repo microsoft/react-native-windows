@@ -173,6 +173,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/DynamicEventPayload.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/DynamicEventPayload.cpp",
+      "baseHash": "e81ef42366798ee48a137ba6de65b4885487f964",
+      "issue": 14797
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
       "baseHash": "e03ce8e5db0216f23389ff8b3e9ea450c8a031b7",
