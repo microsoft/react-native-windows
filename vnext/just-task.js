@@ -85,4 +85,4 @@ task(
 
 task('clean', series('cleanRNLibraries'));
 
-task('lint', series('prettier', 'eslint', 'codegen:check'));
+task('lint', series('prettier', 'eslint', 'codegen:check', 'flow-check'));
