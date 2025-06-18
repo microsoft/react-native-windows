@@ -32,7 +32,9 @@ std::optional<double> DynamicEventPayload::extractValue(const std::vector<std::s
   if (dynamic.type() == folly::dynamic::Type::DOUBLE) {
     return dynamic.asDouble();
   } else if (dynamic.type() == folly::dynamic::Type::INT64) {
+    // [Windows ##14797
     return static_cast<double>(dynamic.asInt());
+    // Windows]
   }
   return std::nullopt;
 }
