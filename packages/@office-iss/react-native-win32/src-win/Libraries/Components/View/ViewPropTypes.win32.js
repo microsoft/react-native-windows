@@ -20,7 +20,6 @@ import type {
   LayoutRectangle,
   MouseEvent,
   PointerEvent,
-  GestureResponderEvent,
   KeyEvent, // [Windows]
 } from '../../Types/CoreEventTypes';
 import type {
