@@ -67,6 +67,18 @@ describe('ScrollView Tests', () => {
     const dump = await dumpVisualTree('scroll_to_end_button');
     expect(dump).toMatchSnapshot();
   });
+  test('ScrollView snapToEnd toggle button', async () => {
+    const component = await app.findElementByTestID('snap_to_end_button');
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('snap_to_end_button');
+    expect(dump).toMatchSnapshot();
+  });
+  test('ScrollView with snapToEnd options', async () => {
+    const component = await app.findElementByTestID('snap_options_scrollview');
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('snap_options_scrollview');
+    expect(dump).toMatchSnapshot();
+  });
   // Disable tests where testID is not found.
   /*test('ScrollViews can have sticky headers', async () => {
     const component = await app.findElementByTestID('scroll_sticky_header');
