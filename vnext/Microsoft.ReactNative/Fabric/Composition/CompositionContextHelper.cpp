@@ -855,6 +855,14 @@ struct CompScrollerVisual : winrt::implements<
     m_interactionTracker.MinScale(minimumZoomScale);
   }
 
+  void SnapToStart(bool snapToStart) noexcept {
+    // Store snapToStart flag for future use in scroll calculations
+    // For now, this is a placeholder implementation that stores the value
+    // The actual snapping logic would be implemented based on scroll calculations
+    // similar to how Paper architecture handles it in SnapPointManagingContentControl
+    m_snapToStart = snapToStart;
+  }
+
   void Opacity(float opacity) noexcept {
     m_visual.Opacity(opacity);
   }
@@ -1052,6 +1060,7 @@ struct CompScrollerVisual : winrt::implements<
 
   bool m_isScrollEnabled{true};
   bool m_horizontal{false};
+  bool m_snapToStart{true};
   bool m_inertia{false};
   bool m_custom{false};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
