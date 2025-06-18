@@ -134,6 +134,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
   void updateShowsHorizontalScrollIndicator(bool value) noexcept;
   void updateShowsVerticalScrollIndicator(bool value) noexcept;
+  winrt::Windows::Foundation::Numerics::float3 calculateSnapPosition(
+      winrt::Windows::Foundation::Numerics::float3 currentPosition) noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
@@ -156,6 +158,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double m_scrollEventThrottle{0.0};
   bool m_allowNextScrollNoMatterWhat{false};
   std::chrono::steady_clock::time_point m_lastScrollEventTime{};
+  float m_snapToInterval{0.0f};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 };
 
