@@ -866,6 +866,11 @@ struct CompScrollerVisual : winrt::implements<
     ConfigureSnapInertiaModifiers();
   }
 
+  void SnapToEnd(bool snapToEnd) noexcept {
+    m_snapToEnd = snapToEnd;
+    ConfigureSnapInertiaModifiers();
+  }
+
   void SnapToOffsets(winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets) noexcept {
     m_snapToOffsets.clear();
     if (offsets) {
@@ -1078,7 +1083,7 @@ struct CompScrollerVisual : winrt::implements<
     std::vector<float> snapPositions;
     
     if (!m_snapToOffsets.empty()) {
-      // When snapToOffsets is used, snapToStart controls whether to include position 0
+      // When snapToOffsets is used, snapToStart/snapToEnd control whether to include start/end positions
       if (m_snapToStart) {
         snapPositions.push_back(0.0f);
       }
@@ -1088,8 +1093,19 @@ struct CompScrollerVisual : winrt::implements<
         snapPositions.push_back(offset);
       }
       
-      // Sort snap positions to ensure proper ordering
+      // When snapToOffsets is used, snapToEnd controls whether to include the end position
+      if (m_snapToEnd) {
+        const float maxPosition = m_horizontal 
+          ? std::max<float>(m_contentSize.x - m_visualSize.x, 0)
+          : std::max<float>(m_contentSize.y - m_visualSize.y, 0);
+        if (maxPosition > 0) {
+          snapPositions.push_back(maxPosition);
+        }
+      }
+      
+      // Sort snap positions to ensure proper ordering and remove duplicates
       std::sort(snapPositions.begin(), snapPositions.end());
+      snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
     } else if (m_snapToStart) {
       // Legacy behavior: just snap to start when no offsets are provided
       snapPositions.push_back(0.0f);
@@ -1160,6 +1176,7 @@ struct CompScrollerVisual : winrt::implements<
   bool m_isScrollEnabled{true};
   bool m_horizontal{false};
   bool m_snapToStart{true};
+  bool m_snapToEnd{true};
   std::vector<float> m_snapToOffsets;
   bool m_inertia{false};
   bool m_custom{false};

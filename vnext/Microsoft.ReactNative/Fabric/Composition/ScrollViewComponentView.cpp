@@ -818,6 +818,10 @@ void ScrollViewComponentView::updateProps(
     }
     m_scrollVisual.SnapToOffsets(snapToOffsets.GetView());
   }
+
+  if (!oldProps || oldViewProps.snapToEnd != newViewProps.snapToEnd) {
+    m_scrollVisual.SnapToEnd(newViewProps.snapToEnd);
+  }
 }
 
 void ScrollViewComponentView::updateState(
