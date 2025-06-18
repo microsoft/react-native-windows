@@ -809,8 +809,9 @@ void ScrollViewComponentView::updateProps(
   if (!oldProps || oldViewProps.snapToEnd != newViewProps.snapToEnd) {
     // snapToEnd property is used with snapToOffsets to control whether
     // the end of the scroll content should be treated as a snap point.
-    // For now, just store the value - full snap functionality requires
-    // implementing snapToOffsets and the snapping behavior.
+    // This property is now accessible in Fabric ScrollView implementation.
+    // Note: Full snap functionality requires implementing snapToOffsets and
+    // the actual snapping behavior, which is not yet implemented in Fabric.
     m_snapToEnd = newViewProps.snapToEnd;
   }
 }
