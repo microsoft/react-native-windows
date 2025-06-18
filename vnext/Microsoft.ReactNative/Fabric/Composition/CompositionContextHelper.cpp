@@ -1075,10 +1075,6 @@ struct CompScrollerVisual : winrt::implements<
     // Higher decay rate makes inertia settle faster, creating more responsive snapping
     winrt::Windows::Foundation::Numerics::float3 snapDecayRate{0.98f, 0.98f, 0.98f};
     m_interactionTracker.PositionInertiaDecayRate(snapDecayRate);
-
-    // Configure position velocity threshold for better snap responsiveness
-    m_interactionTracker.PositionVelocityInPixelsPerSecond(
-        winrt::Windows::Foundation::Numerics::float3{50.0f, 50.0f, 0.0f});
   }
 
   std::optional<float> FindNearestSnapOffset(
