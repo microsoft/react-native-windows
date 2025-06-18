@@ -803,6 +803,22 @@ const examples: Array<RNTesterModuleExample> = [
     },
   },
   {
+    title: 'ContextMenuHidden set to True',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>ContextMenuHidden (Right-click to test)</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            contextMenuHidden={true}
+            placeholder="contextMenuHidden={true}"
+            testID="textinput-contextmenuhidden"
+          />
+        </View>
+      );
+    },
+  },
+  {
     title: 'Cursorcolor set to Green',
     render: function (): React.Node {
       return (

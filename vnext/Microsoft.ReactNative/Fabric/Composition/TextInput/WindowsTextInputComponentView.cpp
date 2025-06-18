@@ -736,7 +736,10 @@ void WindowsTextInputComponentView::OnPointerReleased(
         msg = WM_MBUTTONUP;
         break;
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonReleased:
-        msg = WM_RBUTTONUP;
+        // Don't send right button up to RichEdit if context menu is hidden
+        if (!windowsTextInputProps().contextMenuHidden) {
+          msg = WM_RBUTTONUP;
+        }
         break;
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::XButton1Released:
         msg = WM_XBUTTONUP;
@@ -797,6 +800,23 @@ void WindowsTextInputComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
+  
+  // Check for context menu keyboard shortcuts when contextMenuHidden is true
+  if (windowsTextInputProps().contextMenuHidden) {
+    // Block Menu key (VK_APPS)
+    if (args.Key() == winrt::Windows::System::VirtualKey::Application) {
+      args.Handled(true);
+      return;
+    }
+    // Block Shift+F10
+    if (args.Key() == winrt::Windows::System::VirtualKey::F10 &&
+        (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
+      args.Handled(true);
+      return;
+    }
+  }
+  
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
       (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
