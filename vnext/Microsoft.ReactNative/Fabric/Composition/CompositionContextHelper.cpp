@@ -1,6 +1,8 @@
 
 #include "pch.h"
 #include "CompositionContextHelper.h"
+#include <cfloat>
+#include <optional>
 #if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
 #endif
@@ -709,6 +711,17 @@ struct CompScrollerVisual : winrt::implements<
       m_outer->m_custom = false;
       m_outer->m_inertia = true;
       m_outer->m_currentPosition = args.NaturalRestingPosition();
+      
+      // Apply snap to offsets behavior if configured
+      if (m_outer->m_snapToOffsets && m_outer->m_snapToOffsets.Size() > 0) {
+        auto snapPosition = m_outer->FindNearestSnapPoint(args.NaturalRestingPosition());
+        if (snapPosition.has_value()) {
+          auto snapAnimation = m_outer->GetPositionAnimation(snapPosition->x, snapPosition->y);
+          m_outer->m_interactionTracker.TryUpdatePositionWithAnimation(snapAnimation);
+          return;
+        }
+      }
+      
       // When the user stops interacting with the object, tracker can go into two paths:
       // 1. tracker goes into idle state immediately
       // 2. tracker has just started gliding into Inertia state
@@ -853,6 +866,10 @@ struct CompScrollerVisual : winrt::implements<
 
   void SetMinimumZoomScale(float minimumZoomScale) noexcept {
     m_interactionTracker.MinScale(minimumZoomScale);
+  }
+
+  void SetSnapToOffsets(winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets) noexcept {
+    m_snapToOffsets = offsets;
   }
 
   void Opacity(float opacity) noexcept {
@@ -1031,6 +1048,36 @@ struct CompScrollerVisual : winrt::implements<
   }
 
  private:
+  std::optional<winrt::Windows::Foundation::Numerics::float3> FindNearestSnapPoint(const winrt::Windows::Foundation::Numerics::float3& naturalRestingPosition) noexcept {
+    if (!m_snapToOffsets || m_snapToOffsets.Size() == 0) {
+      return std::nullopt;
+    }
+
+    float nearestOffset = -1;
+    float minDistance = FLT_MAX;
+    
+    // Find the nearest snap offset based on the scroll direction
+    float targetPosition = m_horizontal ? naturalRestingPosition.x : naturalRestingPosition.y;
+    
+    for (const auto& offset : m_snapToOffsets) {
+      float distance = std::abs(targetPosition - offset);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestOffset = offset;
+      }
+    }
+    
+    if (nearestOffset >= 0) {
+      if (m_horizontal) {
+        return winrt::Windows::Foundation::Numerics::float3{nearestOffset, naturalRestingPosition.y, naturalRestingPosition.z};
+      } else {
+        return winrt::Windows::Foundation::Numerics::float3{naturalRestingPosition.x, nearestOffset, naturalRestingPosition.z};
+      }
+    }
+    
+    return std::nullopt;
+  }
+
   void FireScrollPositionChanged(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
     m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
   }
@@ -1058,6 +1105,7 @@ struct CompScrollerVisual : winrt::implements<
   winrt::Windows::Foundation::Numerics::float3 m_currentPosition;
   winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
   winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
+  winrt::Windows::Foundation::Collections::IVectorView<float> m_snapToOffsets{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs>>
       m_scrollPositionChangedEvent;

@@ -119,6 +119,7 @@ namespace Microsoft.ReactNative.Composition.Experimental
     void SetDecelerationRate(Windows.Foundation.Numerics.Vector3 decelerationRate);
     void SetMaximumZoomScale(Single maximumZoomScale);
     void SetMinimumZoomScale(Single minimumZoomScale);
+    void SetSnapToOffsets(Windows.Foundation.Collections.IVectorView<Single> offsets);
     Boolean Horizontal;
   }
 

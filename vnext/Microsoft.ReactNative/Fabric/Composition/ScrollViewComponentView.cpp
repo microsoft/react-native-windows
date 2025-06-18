@@ -805,6 +805,14 @@ void ScrollViewComponentView::updateProps(
   if (oldViewProps.zoomScale != newViewProps.zoomScale) {
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
+
+  if (!oldProps || oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
+    auto snapOffsets = winrt::single_threaded_vector<float>();
+    for (const auto& offset : newViewProps.snapToOffsets) {
+      snapOffsets.Append(static_cast<float>(offset));
+    }
+    m_scrollVisual.SetSnapToOffsets(snapOffsets.GetView());
+  }
 }
 
 void ScrollViewComponentView::updateState(
