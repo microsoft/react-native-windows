@@ -766,6 +766,10 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
     m_scrollVisual.Horizontal(newViewProps.horizontal);
+    // Reconfigure snap behavior for new scroll direction if snapToEnd is enabled
+    if (m_snapToEnd) {
+      m_scrollVisual.ConfigureSnapToEnd(m_snapToEnd, newViewProps.horizontal);
+    }
   }
 
   if (!oldProps || oldViewProps.showsHorizontalScrollIndicator != newViewProps.showsHorizontalScrollIndicator) {
@@ -808,9 +812,9 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.snapToEnd != newViewProps.snapToEnd) {
     // snapToEnd property controls whether the end of the scroll content
-    // should be treated as a snap point. When enabled, scrolling past 90%
-    // of the content will automatically snap to the end.
+    // should be treated as a snap point using Windows Composition inertia modifiers
     m_snapToEnd = newViewProps.snapToEnd;
+    m_scrollVisual.ConfigureSnapToEnd(m_snapToEnd, newViewProps.horizontal);
   }
 }
 
@@ -861,6 +865,12 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
   m_verticalScrollbarComponent->ContentSize(contentSize);
   m_horizontalScrollbarComponent->ContentSize(contentSize);
   m_scrollVisual.ContentSize(contentSize);
+  
+  // Reconfigure snap behavior when content size changes if snapToEnd is enabled
+  if (m_snapToEnd) {
+    const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+    m_scrollVisual.ConfigureSnapToEnd(m_snapToEnd, viewProps.horizontal);
+  }
 }
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
@@ -1330,12 +1340,6 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
         updateStateWithContentOffset();
 
-        // Apply snapToEnd behavior when drag ends if enabled
-        if (m_snapToEnd) {
-          auto scrollPosition = args.Position();
-          applySnapToEnd(scrollPosition);
-        }
-
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
           auto scrollMetrics = getScrollMetrics(eventEmitter, args);
@@ -1439,38 +1443,5 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
-}
-
-void ScrollViewComponentView::applySnapToEnd(winrt::Windows::Foundation::Numerics::float3 scrollPosition) noexcept {
-  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return;
-  }
-
-  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
-  bool horizontal = viewProps.horizontal;
-
-  if (horizontal) {
-    // For horizontal scrolling, check if we're near the end (within 90% of max scroll)
-    auto maxScrollX = (m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor;
-    auto threshold = maxScrollX * 0.9f;
-
-    if (maxScrollX > 0 && scrollPosition.x >= threshold) {
-      // Snap to the end
-      auto newPosition = winrt::Windows::Foundation::Numerics::float3{
-          static_cast<float>(maxScrollX), scrollPosition.y, scrollPosition.z};
-      m_scrollVisual.TryUpdatePosition(newPosition, true);
-    }
-  } else {
-    // For vertical scrolling, check if we're near the end (within 90% of max scroll)
-    auto maxScrollY = (m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
-    auto threshold = maxScrollY * 0.9f;
-
-    if (maxScrollY > 0 && scrollPosition.y >= threshold) {
-      // Snap to the end
-      auto newPosition = winrt::Windows::Foundation::Numerics::float3{
-          scrollPosition.x, static_cast<float>(maxScrollY), scrollPosition.z};
-      m_scrollVisual.TryUpdatePosition(newPosition, true);
-    }
-  }
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

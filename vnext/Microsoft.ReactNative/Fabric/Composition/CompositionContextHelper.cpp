@@ -16,6 +16,7 @@
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.Composition.interactions.h>
+#include <winrt/Windows.Foundation.Collections.h>
 #include "CompositionHelpers.h"
 
 #ifdef USE_WINUI3
@@ -74,6 +75,10 @@ struct CompositionTypeTraits<WindowsTypeTag> {
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaModifier =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
@@ -143,6 +148,10 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaModifier =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
   using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
@@ -1028,6 +1037,44 @@ struct CompScrollerVisual : winrt::implements<
 
   void AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass value) noexcept {
     SetAnimationClass<TTypeRedirects>(value, m_visual);
+  }
+
+  void ConfigureSnapToEnd(bool snapToEnd, bool horizontal) noexcept {
+    // Clear existing inertia modifiers
+    m_interactionTracker.ConfigurePositionXInertiaModifiers({});
+    m_interactionTracker.ConfigurePositionYInertiaModifiers({});
+
+    if (snapToEnd) {
+      auto compositor = m_visual.Compositor();
+      
+      if (horizontal) {
+        // Create horizontal snap to end inertia modifier
+        auto horizontalModifier = typename TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+        // Snap to the end when we're past 80% of the maximum scroll position
+        horizontalModifier.Condition(compositor.CreateExpressionAnimation(
+            L"tracker.NaturalRestingPosition.x >= tracker.MaxPosition.x * 0.8"));
+        horizontalModifier.RestingValue(compositor.CreateExpressionAnimation(L"tracker.MaxPosition.x"));
+        horizontalModifier.Condition().SetReferenceParameter(L"tracker", m_interactionTracker);
+        horizontalModifier.RestingValue().SetReferenceParameter(L"tracker", m_interactionTracker);
+        
+        auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
+        modifiers.Append(horizontalModifier);
+        m_interactionTracker.ConfigurePositionXInertiaModifiers(modifiers);
+      } else {
+        // Create vertical snap to end inertia modifier  
+        auto verticalModifier = typename TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+        // Snap to the end when we're past 80% of the maximum scroll position
+        verticalModifier.Condition(compositor.CreateExpressionAnimation(
+            L"tracker.NaturalRestingPosition.y >= tracker.MaxPosition.y * 0.8"));
+        verticalModifier.RestingValue(compositor.CreateExpressionAnimation(L"tracker.MaxPosition.y"));
+        verticalModifier.Condition().SetReferenceParameter(L"tracker", m_interactionTracker);
+        verticalModifier.RestingValue().SetReferenceParameter(L"tracker", m_interactionTracker);
+        
+        auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
+        modifiers.Append(verticalModifier);
+        m_interactionTracker.ConfigurePositionYInertiaModifiers(modifiers);
+      }
+    }
   }
 
  private:
