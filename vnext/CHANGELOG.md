@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 17 Jun 2025 15:27:29 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 18 Jun 2025 22:16:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.13
+
+Wed, 18 Jun 2025 22:16:23 GMT
+
+### Patches
+
+- Remove .. usage in relative include (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.78.12
 

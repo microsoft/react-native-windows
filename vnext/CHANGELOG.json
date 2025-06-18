@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Jun 2025 22:16:23 GMT",
+      "version": "0.78.13",
+      "tag": "react-native-windows_v0.78.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4cc7ab1ee0ea131ac05da63c649665e0fb2894a9",
+            "comment": "Remove .. usage in relative include"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Jun 2025 15:27:29 GMT",
       "version": "0.78.12",
       "tag": "react-native-windows_v0.78.12",
