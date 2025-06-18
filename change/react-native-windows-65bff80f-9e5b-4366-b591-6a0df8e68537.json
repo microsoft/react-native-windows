@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement snapToStart property for ScrollView fabric implementation",
+  "packageName": "react-native-windows",
+  "email": "copilot@microsoft.com",
+  "dependentChangeType": "patch"
+}
