@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove .. usage in relative include",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

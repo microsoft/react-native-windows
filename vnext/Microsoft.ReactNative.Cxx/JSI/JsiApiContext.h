@@ -5,7 +5,7 @@
 #ifndef MICROSOFT_REACTNATIVE_JSI_JSIAPI
 #define MICROSOFT_REACTNATIVE_JSI_JSIAPI
 
-#include "../ReactContext.h"
+#include <ReactContext.h>
 #include "JsiAbiApi.h"
 #include "ReactPromise.h"
 
