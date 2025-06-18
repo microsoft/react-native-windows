@@ -1158,7 +1158,7 @@ void WindowsTextInputComponentView::updateState(
   }
 
   if (!oldState) {
-    m_mostRecentEventCount = m_state->getData().mostRecentEventCount;
+    // Initialize on first state update
   }
 
   if (auto root = rootComponentView()) {
@@ -1170,13 +1170,11 @@ void WindowsTextInputComponentView::updateState(
     }
   }
 
-  if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
-    m_comingFromState = true;
-    auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
-    UpdateText(fragments.size() ? fragments[0].string : "");
+  m_comingFromState = true;
+  auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
+  UpdateText(fragments.size() ? fragments[0].string : "");
 
-    m_comingFromState = false;
-  }
+  m_comingFromState = false;
 }
 
 void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept {
@@ -1240,16 +1238,13 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 
   m_state->updateState(std::move(data));
 
-  if (m_eventEmitter && !m_comingFromJS) {
-    // Only emit onChange if this is a new user-driven change (not duplicate from state update)
-    if (m_nativeEventCount != m_mostRecentEventCount) {
-      // call onChange event
-      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-      facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
-      onChangeArgs.text = GetTextFromRichEdit();
-      onChangeArgs.eventCount = ++m_nativeEventCount;
-      emitter->onChange(onChangeArgs);
-    }
+  if (m_eventEmitter && !m_comingFromJS && !m_comingFromState) {
+    // call onChange event
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
+    onChangeArgs.text = GetTextFromRichEdit();
+    onChangeArgs.eventCount = ++m_nativeEventCount;
+    emitter->onChange(onChangeArgs);
   }
 
   if (UiaClientsAreListening()) {
