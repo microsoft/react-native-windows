@@ -8,6 +8,8 @@
  * @format
  */
 
+import type {Node} from 'react';
+
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
 import React from 'react';
