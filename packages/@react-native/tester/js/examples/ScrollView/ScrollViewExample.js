@@ -651,8 +651,7 @@ const SnapToOptions = () => {
         snapToInterval={snapToInterval}
         snapToOffsets={snapToOffsets}
         snapToStart={snapToStart}
-        nestedScrollEnabled
-        testID="snap_to_options_scrollview">
+        nestedScrollEnabled>
         {ITEMS.map(createItemRow)}
       </ScrollView>
       {Platform.OS === 'ios' ? (
@@ -679,7 +678,6 @@ const SnapToOptions = () => {
       <Button
         label={'snapToStart: ' + snapToStart.toString()}
         onPress={() => setSnapToStart(!snapToStart)}
-        testID="snap_to_start_toggle_button"
       />
       <Button
         label={
