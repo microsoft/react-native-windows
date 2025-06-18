@@ -651,8 +651,13 @@ const SnapToOptions = () => {
         snapToInterval={snapToInterval}
         snapToOffsets={snapToOffsets}
         snapToStart={snapToStart}
-        nestedScrollEnabled>
-        {ITEMS.map(createItemRow)}
+        nestedScrollEnabled
+        testID="scroll_snap_to_options">
+        {snapToOffsets.length > 0
+          ? snapToOffsets.slice(0, 3).map((offset, index) => (
+              <Item key={index} msg={`Snap Point at ${(offset - 2) * 100}`} />
+            ))
+          : ITEMS.map(createItemRow)}
       </ScrollView>
       {Platform.OS === 'ios' ? (
         <>
@@ -689,10 +694,10 @@ const SnapToOptions = () => {
       />
       <Button
         label={
-          snapToOffsets === [] ? 'setSnapToOffsets' : 'reset snapToOffsets'
+          snapToOffsets.length === 0 ? 'setSnapToOffsets' : 'reset snapToOffsets'
         }
         onPress={() =>
-          snapToOffsets === []
+          snapToOffsets.length === 0
             ? setSnapToOffsets([2, 4, 6, 8, 10])
             : setSnapToOffsets([])
         }

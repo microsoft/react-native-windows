@@ -61,7 +61,7 @@ describe('ScrollViewTests', () => {
   test('ScrollViews can use snapToOffsets for snap-to-points behavior', async () => {
     // Find and interact with snap to offsets button to enable snapping
     const snapButton = await $(
-      "~snapToOffsets === [] ? 'setSnapToOffsets' : 'reset snapToOffsets'",
+      "~snapToOffsets.length === 0 ? 'setSnapToOffsets' : 'reset snapToOffsets'",
     );
     await snapButton.waitForDisplayed({timeout: 10000});
     await snapButton.click();
