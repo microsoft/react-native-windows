@@ -926,3 +926,181 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
   },
 }
 `;
+
+exports[`ScrollView Tests ScrollView snap to options scrollview 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "snap_to_options_scrollview",
+    "ControlType": 50033,
+    "LocalizedControlType": "pane",
+    "ScrollPattern.VerticallyScrollable": true,
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Item 0",
+        "TextRangePattern.GetText": "Item 0",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Item 1",
+        "TextRangePattern.GetText": "Item 1",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ScrollViewComponentView",
+    "_Props": {
+      "TestId": "snap_to_options_scrollview",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "snap_to_options_scrollview",
+    "Offset": "0, 0, 0",
+    "Size": "916, 200",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(238, 238, 238, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "916, 200",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`ScrollView Tests ScrollView snap to start toggle functionality snap-to-start-toggle-initial 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "snap_to_start_toggle_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "snapToStart: true",
+        "TextRangePattern.GetText": "snapToStart: true",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "snap_to_start_toggle_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(204, 204, 204, 255)",
+    },
+    "Comment": "snap_to_start_toggle_button",
+    "Offset": "0, 0, 0",
+    "Size": "906, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "402, 5, 0",
+        "Size": "102, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "102, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`ScrollView Tests ScrollView snap to start toggle functionality snap-to-start-toggle-toggled 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "snap_to_start_toggle_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "snapToStart: false",
+        "TextRangePattern.GetText": "snapToStart: false",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "snap_to_start_toggle_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(204, 204, 204, 255)",
+    },
+    "Comment": "snap_to_start_toggle_button",
+    "Offset": "0, 0, 0",
+    "Size": "906, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "398, 5, 0",
+        "Size": "110, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "110, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
