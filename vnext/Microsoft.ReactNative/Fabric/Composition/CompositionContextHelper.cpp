@@ -710,27 +710,27 @@ struct CompScrollerVisual : winrt::implements<
         typename TTypeRedirects::InteractionTrackerInertiaStateEnteredArgs args) noexcept {
       m_outer->m_custom = false;
       m_outer->m_inertia = true;
-      
+
       // Apply snap-to-offset behavior using InteractionTracker position animation
       if (m_outer->m_snapToOffsets && m_outer->m_snapToOffsets.Size() > 0) {
         auto naturalPosition = args.NaturalRestingPosition();
         auto snapOffset = m_outer->FindNearestSnapOffset(naturalPosition);
-        
+
         if (snapOffset.has_value()) {
           // Use TryUpdatePositionWithAnimation for smooth snap transition
           // This works within the inertia system rather than against it
           auto snapAnimation = m_outer->CreateSnapAnimation(snapOffset.value());
           m_outer->m_interactionTracker.TryUpdatePositionWithAnimation(snapAnimation);
-          m_outer->m_currentPosition = m_outer->m_horizontal ? 
-            winrt::Windows::Foundation::Numerics::float3{snapOffset.value(), naturalPosition.y, naturalPosition.z} :
-            winrt::Windows::Foundation::Numerics::float3{naturalPosition.x, snapOffset.value(), naturalPosition.z};
+          m_outer->m_currentPosition = m_outer->m_horizontal
+              ? winrt::Windows::Foundation::Numerics::float3{snapOffset.value(), naturalPosition.y, naturalPosition.z}
+              : winrt::Windows::Foundation::Numerics::float3{naturalPosition.x, snapOffset.value(), naturalPosition.z};
         } else {
           m_outer->m_currentPosition = args.NaturalRestingPosition();
         }
       } else {
         m_outer->m_currentPosition = args.NaturalRestingPosition();
       }
-      
+
       // When the user stops interacting with the object, tracker can go into two paths:
       // 1. tracker goes into idle state immediately
       // 2. tracker has just started gliding into Inertia state
@@ -1068,16 +1068,18 @@ struct CompScrollerVisual : winrt::implements<
     // Configure InteractionTracker for better snap behavior
     // Use a higher decay rate to make scrolling settle faster near snap points
     auto compositor = m_visual.Compositor();
-    
+
     // Higher decay rate makes inertia settle faster, creating more responsive snapping
     winrt::Windows::Foundation::Numerics::float3 snapDecayRate{0.98f, 0.98f, 0.98f};
     m_interactionTracker.PositionInertiaDecayRate(snapDecayRate);
-    
-    // Configure position velocity threshold for better snap responsiveness  
-    m_interactionTracker.PositionVelocityInPixelsPerSecond(winrt::Windows::Foundation::Numerics::float3{50.0f, 50.0f, 0.0f});
+
+    // Configure position velocity threshold for better snap responsiveness
+    m_interactionTracker.PositionVelocityInPixelsPerSecond(
+        winrt::Windows::Foundation::Numerics::float3{50.0f, 50.0f, 0.0f});
   }
 
-  std::optional<float> FindNearestSnapOffset(const winrt::Windows::Foundation::Numerics::float3& naturalRestingPosition) noexcept {
+  std::optional<float> FindNearestSnapOffset(
+      const winrt::Windows::Foundation::Numerics::float3 &naturalRestingPosition) noexcept {
     if (!m_snapToOffsets || m_snapToOffsets.Size() == 0) {
       return std::nullopt;
     }
@@ -1085,7 +1087,7 @@ struct CompScrollerVisual : winrt::implements<
     float targetPosition = m_horizontal ? naturalRestingPosition.x : naturalRestingPosition.y;
     float nearestOffset = m_snapToOffsets.GetAt(0);
     float minDistance = std::abs(targetPosition - nearestOffset);
-    
+
     for (uint32_t i = 1; i < m_snapToOffsets.Size(); i++) {
       float offset = m_snapToOffsets.GetAt(i);
       float distance = std::abs(targetPosition - offset);
@@ -1094,35 +1096,32 @@ struct CompScrollerVisual : winrt::implements<
         nearestOffset = offset;
       }
     }
-    
+
     return nearestOffset;
   }
 
   typename TTypeRedirects::CompositionAnimation CreateSnapAnimation(float snapOffset) noexcept {
     auto compositor = m_visual.Compositor();
     auto animation = compositor.CreateVector3KeyFrameAnimation();
-    
+
     // Create smooth animation to snap offset that feels natural within inertia
     // Use cubic-bezier easing that mimics inertia decay characteristics
     auto easingFunction = compositor.CreateCubicBezierEasingFunction(
-      winrt::Windows::Foundation::Numerics::float2{0.25f, 0.46f}, 
-      winrt::Windows::Foundation::Numerics::float2{0.45f, 0.94f}
-    );
-    
+        winrt::Windows::Foundation::Numerics::float2{0.25f, 0.46f},
+        winrt::Windows::Foundation::Numerics::float2{0.45f, 0.94f});
+
     winrt::Windows::Foundation::Numerics::float3 targetPosition;
     if (m_horizontal) {
       targetPosition = {snapOffset, m_currentPosition.y, m_currentPosition.z};
     } else {
       targetPosition = {m_currentPosition.x, snapOffset, m_currentPosition.z};
     }
-    
+
     animation.InsertKeyFrame(1.0f, targetPosition, easingFunction);
     animation.Duration(std::chrono::milliseconds(250)); // Quick but smooth snap
-    
+
     return animation;
   }
-
-
 
   void FireScrollPositionChanged(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
     m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));

@@ -1,5 +1,5 @@
 {
-  "comment": "        ",
+  "comment": "Update snapToOffsets implementation to use proper inertia-based approach and add e2e test",
   "type": "prerelease",
   "packageName": "react-native-windows",
   "email": "198982749+Copilot@users.noreply.github.com",

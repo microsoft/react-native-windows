@@ -808,7 +808,7 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
     auto snapOffsets = winrt::single_threaded_vector<float>();
-    for (const auto& offset : newViewProps.snapToOffsets) {
+    for (const auto &offset : newViewProps.snapToOffsets) {
       snapOffsets.Append(static_cast<float>(offset));
     }
     m_scrollVisual.SetSnapToOffsets(snapOffsets.GetView());
