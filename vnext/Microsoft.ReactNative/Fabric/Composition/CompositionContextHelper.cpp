@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "CompositionContextHelper.h"
+#include <algorithm>
 #include <cfloat>
 #include <chrono>
 #include <cmath>
@@ -1010,8 +1011,8 @@ struct CompScrollerVisual : winrt::implements<
   static constexpr int64_t s_offsetsChangeMaxMs{1000};
 
   typename TTypeRedirects::CompositionAnimation GetPositionAnimation(float x, float y) noexcept {
-    const int64_t distance =
-        static_cast<int64_t>(std::sqrt(std::pow(x - m_currentPosition.x, 2.0f) + pow(y - m_currentPosition.y, 2.0f)));
+    const int64_t distance = static_cast<int64_t>(
+        std::sqrt(std::pow(x - m_currentPosition.x, 2.0f) + std::pow(y - m_currentPosition.y, 2.0f)));
     auto compositor = m_visual.Compositor();
     auto positionAnimation = compositor.CreateVector3KeyFrameAnimation();
 
@@ -1535,8 +1536,8 @@ struct CompActivityVisual : winrt::implements<
   void InsertAt(
       const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual,
       uint32_t index) noexcept {
-    auto containerChildren = m_contentVisual.Children();
-    auto compVisual = typename TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
+    auto containerChildren = m_visual.Children();
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
       return;
@@ -1548,8 +1549,8 @@ struct CompActivityVisual : winrt::implements<
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
-    auto compVisual = typename TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    auto containerChildren = m_contentVisual.Children();
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
+    auto containerChildren = m_visual.Children();
     containerChildren.Remove(compVisual);
   }
 
@@ -1558,7 +1559,7 @@ struct CompActivityVisual : winrt::implements<
     auto it = containerChildren.First();
     for (uint32_t i = 0; i < index; i++)
       it.MoveNext();
-    return typename TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
+    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
   }
 
   void Opacity(float opacity) noexcept {
@@ -1656,7 +1657,6 @@ struct CompActivityVisual : winrt::implements<
 
  private:
   typename TTypeRedirects::SpriteVisual m_visual{nullptr};
-  typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
 };
 using WindowsCompActivityVisual = CompActivityVisual<WindowsTypeRedirects>;
 #ifdef USE_WINUI3
