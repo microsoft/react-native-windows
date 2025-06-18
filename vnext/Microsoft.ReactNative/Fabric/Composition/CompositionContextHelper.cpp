@@ -1157,11 +1157,11 @@ struct CompScrollerVisual : winrt::implements<
         restingValues.push_back(restingValue);
       }
 
-      // Configure the appropriate axis based on scroll direction
+      // Configure the appropriate axis based on scroll direction  
       if (m_horizontal) {
-        m_interactionTracker.ConfigurePositionXInertiaModifiers(winrt::single_threaded_vector(std::move(restingValues)));
+        m_interactionTracker.ConfigurePositionXInertiaModifiers(winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaRestingValue>(std::move(restingValues)));
       } else {
-        m_interactionTracker.ConfigurePositionYInertiaModifiers(winrt::single_threaded_vector(std::move(restingValues)));
+        m_interactionTracker.ConfigurePositionYInertiaModifiers(winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaRestingValue>(std::move(restingValues)));
       }
     } else {
       // Clear inertia modifiers when no snapping is configured
