@@ -953,4 +953,21 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
   });
+
+  test('TextInput autoFocus example renders correctly', async () => {
+    // Scroll the example into view
+    await searchBox('Auto-focus');
+    
+    // Verify the autoFocus example section is accessible
+    const textInputs = await app.findElementsByA11yLabel('I am the accessibility label for text input');
+    expect(textInputs.length).toBeGreaterThanOrEqual(2);
+    
+    // The first should have autoFocus=false text, the second autoFocus=true text
+    expect(await textInputs[0].getText()).toContain('autoFocus: false');
+    expect(await textInputs[1].getText()).toContain('autoFocus: true');
+    
+    // Take a visual dump to verify the structure  
+    const dump = await dumpVisualTree('textinput');
+    expect(dump).toMatchSnapshot();
+  });
 });
