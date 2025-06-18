@@ -1333,11 +1333,6 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
               ->onScrollEndDrag(scrollMetrics);
         }
-
-        // Apply snap behavior if snapToInterval is set
-        if (m_snapToInterval > 0.0f) {
-          m_scrollVisual.ConfigureSnapToInterval(m_snapToInterval);
-        }
       });
 
   return visual;
