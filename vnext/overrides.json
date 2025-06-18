@@ -151,6 +151,13 @@
       "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/DynamicEventPayload.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/DynamicEventPayload.cpp",
+      "baseHash": "4fa9c00291790a3b7eca1d38aeb5c28bc081143c",
+      "issue": 14797
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSHexColor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSHexColor.h",
@@ -170,13 +177,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/CullingContext.cpp",
       "baseHash": "a9687af594ded016b7f79f9fb7cd2d0ba649e56e",
       "issue": 14673
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/DynamicEventPayload.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/DynamicEventPayload.cpp",
-      "baseHash": "e81ef42366798ee48a137ba6de65b4885487f964",
-      "issue": 14797
     },
     {
       "type": "patch",
