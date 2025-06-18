@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "CompositionContextHelper.h"
 #include <cfloat>
+#include <chrono>
+#include <cmath>
 #include <optional>
 #if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
@@ -869,7 +871,7 @@ struct CompScrollerVisual : winrt::implements<
     m_interactionTracker.PositionInertiaDecayRate(decelerationRate);
   }
 
-  void SetMaximumZoomScale(float maximumZoomScale) const noexcept {
+  void SetMaximumZoomScale(float maximumZoomScale) noexcept {
     m_interactionTracker.MaxScale(maximumZoomScale);
   }
 
@@ -1110,11 +1112,12 @@ struct CompScrollerVisual : winrt::implements<
         winrt::Windows::Foundation::Numerics::float2{0.25f, 0.46f},
         winrt::Windows::Foundation::Numerics::float2{0.45f, 0.94f});
 
+    winrt::Windows::Foundation::Numerics::float3 currentPosition = m_interactionTracker.Position();
     winrt::Windows::Foundation::Numerics::float3 targetPosition;
     if (m_horizontal) {
-      targetPosition = {snapOffset, m_currentPosition.y, m_currentPosition.z};
+      targetPosition = {snapOffset, currentPosition.y, currentPosition.z};
     } else {
-      targetPosition = {m_currentPosition.x, snapOffset, m_currentPosition.z};
+      targetPosition = {currentPosition.x, snapOffset, currentPosition.z};
     }
 
     animation.InsertKeyFrame(1.0f, targetPosition, easingFunction);
