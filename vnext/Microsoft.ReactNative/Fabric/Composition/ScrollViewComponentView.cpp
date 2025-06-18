@@ -813,6 +813,9 @@ void ScrollViewComponentView::updateProps(
     // Note: Full snap functionality requires implementing snapToOffsets and
     // the actual snapping behavior, which is not yet implemented in Fabric.
     m_snapToEnd = newViewProps.snapToEnd;
+    
+    // Configure the snap behavior using inertia modifiers
+    m_scrollVisual.ConfigureSnapPoints(m_snapToEnd);
   }
 }
 
