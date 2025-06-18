@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "CompositionContextHelper.h"
+#include <algorithm>
 #if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
 #endif
@@ -74,6 +75,10 @@ struct CompositionTypeTraits<WindowsTypeTag> {
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
+  using InteractionTrackerInertiaModifier =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
   using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
@@ -143,6 +148,10 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
+  using InteractionTrackerInertiaModifier =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
   using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
@@ -785,6 +794,7 @@ struct CompScrollerVisual : winrt::implements<
     m_horizontal = value;
 
     UpdateInteractionModes();
+    ConfigureSnapInertiaModifiers(); // Reconfigure modifiers when direction changes
   }
 
   void UpdateInteractionModes() noexcept {
@@ -853,6 +863,26 @@ struct CompScrollerVisual : winrt::implements<
 
   void SetMinimumZoomScale(float minimumZoomScale) noexcept {
     m_interactionTracker.MinScale(minimumZoomScale);
+  }
+
+  void SnapToStart(bool snapToStart) noexcept {
+    m_snapToStart = snapToStart;
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void SnapToEnd(bool snapToEnd) noexcept {
+    m_snapToEnd = snapToEnd;
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void SnapToOffsets(winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets) noexcept {
+    m_snapToOffsets.clear();
+    if (offsets) {
+      for (auto const &offset : offsets) {
+        m_snapToOffsets.push_back(offset);
+      }
+    }
+    ConfigureSnapInertiaModifiers();
   }
 
   void Opacity(float opacity) noexcept {
@@ -1050,8 +1080,109 @@ struct CompScrollerVisual : winrt::implements<
          0});
   }
 
+  void ConfigureSnapInertiaModifiers() noexcept {
+    auto compositor = m_visual.Compositor();
+
+    // Collect all snap positions
+    std::vector<float> snapPositions;
+
+    if (!m_snapToOffsets.empty()) {
+      // When snapToOffsets is used, snapToStart/snapToEnd control whether to include start/end positions
+      if (m_snapToStart) {
+        snapPositions.push_back(0.0f);
+      }
+
+      // Add all the offset positions
+      for (const auto &offset : m_snapToOffsets) {
+        snapPositions.push_back(offset);
+      }
+
+      // When snapToOffsets is used, snapToEnd controls whether to include the end position
+      if (m_snapToEnd) {
+        const float maxPosition = m_horizontal ? std::max<float>(m_contentSize.x - m_visualSize.x, 0)
+                                               : std::max<float>(m_contentSize.y - m_visualSize.y, 0);
+        if (maxPosition > 0) {
+          snapPositions.push_back(maxPosition);
+        }
+      }
+
+      // Sort snap positions to ensure proper ordering and remove duplicates
+      std::sort(snapPositions.begin(), snapPositions.end());
+      snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
+    } else if (m_snapToStart) {
+      // Legacy behavior: just snap to start when no offsets are provided
+      snapPositions.push_back(0.0f);
+    }
+
+    if (!snapPositions.empty()) {
+      std::vector<typename TTypeRedirects::InteractionTrackerInertiaRestingValue> restingValues;
+
+      // Create a resting value for each snap position with proper conditions
+      for (size_t i = 0; i < snapPositions.size(); ++i) {
+        const auto position = snapPositions[i];
+        auto restingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+
+        // Create condition that determines when to snap to this position
+        winrt::hstring condition;
+        if (snapPositions.size() == 1) {
+          // Single snap point - use simple distance condition
+          condition = winrt::hstring(L"Abs(this.Target.NaturalRestingPosition - ") + winrt::to_hstring(position) +
+              winrt::hstring(L") < 50");
+        } else {
+          // Multiple snap points - use range-based conditions
+          if (i == 0) {
+            // First snap point
+            const auto nextPosition = snapPositions[i + 1];
+            const auto midpoint = (position + nextPosition) / 2.0f;
+            condition = winrt::hstring(L"this.Target.NaturalRestingPosition < ") + winrt::to_hstring(midpoint);
+          } else if (i == snapPositions.size() - 1) {
+            // Last snap point
+            const auto prevPosition = snapPositions[i - 1];
+            const auto midpoint = (prevPosition + position) / 2.0f;
+            condition = winrt::hstring(L"this.Target.NaturalRestingPosition >= ") + winrt::to_hstring(midpoint);
+          } else {
+            // Middle snap point
+            const auto prevPosition = snapPositions[i - 1];
+            const auto nextPosition = snapPositions[i + 1];
+            const auto prevMidpoint = (prevPosition + position) / 2.0f;
+            const auto nextMidpoint = (position + nextPosition) / 2.0f;
+            condition = winrt::hstring(L"this.Target.NaturalRestingPosition >= ") + winrt::to_hstring(prevMidpoint) +
+                winrt::hstring(L" && this.Target.NaturalRestingPosition < ") + winrt::to_hstring(nextMidpoint);
+          }
+        }
+
+        restingValue.Condition(compositor.CreateExpressionAnimation(condition));
+        restingValue.RestingValue(compositor.CreateExpressionAnimation(winrt::to_hstring(position)));
+
+        restingValues.push_back(restingValue);
+      }
+
+      // Configure the appropriate axis based on scroll direction
+      std::vector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifiers;
+      modifiers.reserve(restingValues.size());
+      for (auto &&v : restingValues) {
+        modifiers.push_back(v);
+      }
+      if (m_horizontal) {
+        m_interactionTracker.ConfigurePositionXInertiaModifiers(winrt::single_threaded_vector(std::move(modifiers)));
+      } else {
+        m_interactionTracker.ConfigurePositionYInertiaModifiers(winrt::single_threaded_vector(std::move(modifiers)));
+      }
+    } else {
+      // Clear inertia modifiers when no snapping is configured
+      if (m_horizontal) {
+        m_interactionTracker.ConfigurePositionXInertiaModifiers({});
+      } else {
+        m_interactionTracker.ConfigurePositionYInertiaModifiers({});
+      }
+    }
+  }
+
   bool m_isScrollEnabled{true};
   bool m_horizontal{false};
+  bool m_snapToStart{true};
+  bool m_snapToEnd{true};
+  std::vector<float> m_snapToOffsets;
   bool m_inertia{false};
   bool m_custom{false};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
