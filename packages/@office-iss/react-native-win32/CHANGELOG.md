@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 10 Jun 2025 18:31:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 19 Jun 2025 05:40:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.78.6
+
+Thu, 19 Jun 2025 05:40:23 GMT
+
+### Patches
+
+- Remove usage of Animated in LogBox (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.78.5
 

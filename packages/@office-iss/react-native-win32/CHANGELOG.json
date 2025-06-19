@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 19 Jun 2025 05:40:23 GMT",
+      "version": "0.78.6",
+      "tag": "@office-iss/react-native-win32_v0.78.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ac2372dd27d496243ea0ea5891295fc9223b94be",
+            "comment": "Remove usage of Animated in LogBox"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Jun 2025 18:31:03 GMT",
       "version": "0.78.5",
       "tag": "@office-iss/react-native-win32_v0.78.5",
