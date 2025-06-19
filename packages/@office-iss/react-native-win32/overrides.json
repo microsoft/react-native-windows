@@ -437,12 +437,6 @@
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Utilities/DeviceInfo.win32.js",
-      "baseFile": "packages/react-native/Libraries/Utilities/DeviceInfo.js",
-      "baseHash": "ec1ee16a3a8a173434728d036fee565d542732ef"
-    },
-    {
-      "type": "derived",
       "file": "src-win/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Dimensions.js",
       "baseHash": "07b59b2dd822c45eb9bccba8da0ce361eeb67bc1"
