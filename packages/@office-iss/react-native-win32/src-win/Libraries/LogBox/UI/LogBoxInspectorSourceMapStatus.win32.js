@@ -71,7 +71,7 @@ function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
   }, [props.status, state.animation]);
   */
 
-  let image;
+  // let image;
   let color;
   switch (props.status) {
     case 'FAILED':
