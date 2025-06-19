@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Fri, 30 May 2025 05:24:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 19 Jun 2025 17:16:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.289
+
+Thu, 19 Jun 2025 17:16:23 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
+- Update to @types/react 19 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.288
 
