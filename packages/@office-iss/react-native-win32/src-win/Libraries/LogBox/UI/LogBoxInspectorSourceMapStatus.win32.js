@@ -69,9 +69,9 @@ function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
       }
     };
   }, [props.status, state.animation]);
-  */
 
-  // let image;
+  let image;
+  */
   let color;
   switch (props.status) {
     case 'FAILED':
@@ -82,9 +82,11 @@ function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
       // image = require('./LogBoxImages/loader.png'); // [win32] Dont use LogBox images
       color = LogBoxStyle.getWarningColor(1);
       break;
+    default: // [Win32]
+      return null; // [Win32]
   }
 
-  if (props.status === 'COMPLETE' || image == null) {
+  if (props.status === 'COMPLETE' /* [Win32] || image == null */) {
     return null;
   }
 
