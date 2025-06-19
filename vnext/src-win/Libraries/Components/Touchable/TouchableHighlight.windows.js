@@ -67,7 +67,7 @@ type TouchableHighlightBaseProps = $ReadOnly<{
   hostRef: React.RefSetter<React.ElementRef<typeof View>>,
 }>;
 
-type TouchableHighlightProps = $ReadOnly<{
+export type TouchableHighlightProps = $ReadOnly<{
   ...TouchableWithoutFeedbackProps,
   ...AndroidProps,
   ...IOSProps,
