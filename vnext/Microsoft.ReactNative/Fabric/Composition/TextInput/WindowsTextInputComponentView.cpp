@@ -1283,16 +1283,23 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 
   m_state->updateState(std::move(data));
 
-  if (m_eventEmitter && !m_comingFromJS) {
-    // call onChange event
-    auto currentText = GetTextFromRichEdit();
-    if (currentText != m_lastOnChangeText) {
-      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-      facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
-      onChangeArgs.text = currentText;
-      onChangeArgs.eventCount = ++m_nativeEventCount;
-      emitter->onChange(onChangeArgs);
-      m_lastOnChangeText = currentText;
+  if (m_eventEmitter && !m_comingFromJS && !m_comingFromState) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    // Check if RichEdit says the control was modified
+    LRESULT modified = 0;
+    m_textServices->TxSendMessage(EM_GETMODIFY, 0, 0, &modified);
+    // Add debug logging
+    OutputDebugStringW(L"EM_GETMODIFY returned: ");
+    OutputDebugStringW(modified ? L"TRUE\n" : L"FALSE\n");
+    
+    if (modified) {
+        // Clear the modify flag
+        m_textServices->TxSendMessage(EM_SETMODIFY, FALSE, 0, nullptr);
+        facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
+        onChangeArgs.text = GetTextFromRichEdit();
+        onChangeArgs.eventCount = ++m_nativeEventCount;
+        emitter->onChange(onChangeArgs);
+    }
     if (windowsTextInputProps().multiline) {
       auto [contentWidth, contentHeight] = GetContentSize();
       facebook::react::WindowsTextInputEventEmitter::OnContentSizeChange onContentSizeChangeArgs;

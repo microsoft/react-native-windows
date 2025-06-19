@@ -144,7 +144,6 @@ struct WindowsTextInputComponentView
   HCURSOR m_hcursor{nullptr};
   std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
-  std::string m_lastOnChangeText;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
