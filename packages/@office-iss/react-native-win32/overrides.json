@@ -315,6 +315,12 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.win32.js",
+      "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.js",
+      "baseHash": "a54e016381421c1154d4f667f553400704a6e793"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
       "baseHash": "663d3325298404d7c012a6aa53e833eb5fc2ec76",
