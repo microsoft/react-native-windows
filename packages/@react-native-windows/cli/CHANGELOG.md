@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Thu, 19 Jun 2025 17:16:24 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 20 Jun 2025 05:21:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.267
+
+Fri, 20 Jun 2025 05:21:53 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.266
 
