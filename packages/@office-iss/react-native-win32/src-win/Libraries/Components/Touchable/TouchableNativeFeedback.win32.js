@@ -111,7 +111,7 @@ export type TouchableNativeFeedbackProps = $ReadOnly<{
   tooltip?: string, // Win32
 }>;
 
-type State = $ReadOnly<{
+type TouchableNativeFeedbackState = $ReadOnly<{
   pressability: Pressability,
 }>;
 
@@ -127,7 +127,7 @@ type State = $ReadOnly<{
  */
 class TouchableNativeFeedback extends React.Component<
   TouchableNativeFeedbackProps,
-  State,
+  TouchableNativeFeedbackState,
 > {
   /**
    * Creates an object that represents android theme's default background for
@@ -203,7 +203,7 @@ class TouchableNativeFeedback extends React.Component<
   static canUseNativeForeground: () => boolean = () =>
     Platform.OS === 'android';
 
-  state: State = {
+  state: TouchableNativeFeedbackState = {
     pressability: new Pressability(this._createPressabilityConfig()),
   };
 
@@ -285,7 +285,7 @@ class TouchableNativeFeedback extends React.Component<
 
   componentDidUpdate(
     prevProps: TouchableNativeFeedbackProps,
-    prevState: State,
+    prevState: TouchableNativeFeedbackState,
   ) {
     this.state.pressability.configure(this._createPressabilityConfig());
   }

@@ -3,6 +3,15 @@
  * Licensed under the MIT License.
  * @format
  */
+
+import Platform from '../Utilities/Platform';
+
+let Settings: {
+  get(key: string): any,
+  set(settings: Object): void,
+  watchKeys(keys: string | Array<string>, callback: () => void): number,
+  clearWatch(watchId: number): void,
+  ...
 'use strict';
 
 var Settings = {
@@ -24,5 +33,11 @@ var Settings = {
     console.warn('Settings is not yet supported on Win32');
   },
 };
+
+if (Platform.OS === 'ios') {
+  Settings = require('./Settings').default;
+} else {
+  Settings = require('./SettingsFallback').default;
+}
 
 export default Settings;

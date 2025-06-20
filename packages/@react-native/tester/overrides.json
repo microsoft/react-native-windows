@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.80.0-nightly-20250331-398ac1f71",
+  "baseVersion": "0.80.0-nightly-20250414-70cdf12c4",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "e958931698aa6af1dca6aaa7a026fd93b02593f1",
+      "baseHash": "a3c1d060354c35c7f881a160af3a5fe12e44a248",
       "issue": 4054
     },
     {
@@ -75,7 +75,7 @@
       "type": "copy",
       "directory": "js/examples/Border",
       "baseDirectory": "packages/rn-tester/js/examples/Border",
-      "baseHash": "178f9214d1a072813784b0112b83997086db6e12",
+      "baseHash": "d4d79d08b9d427dcb847985494b7844e8b1cf613",
       "issue": 4054
     },
     {
@@ -152,7 +152,7 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "6c42401f603681fc27a072bbbe9bc249f437082f",
+      "baseHash": "0f848072ec538bd6c4caf8c170b2455dfd16148c",
       "issue": 4054
     },
     {
@@ -222,7 +222,7 @@
       "type": "copy",
       "directory": "js/examples/Linking",
       "baseDirectory": "packages/rn-tester/js/examples/Linking",
-      "baseHash": "5869f151c258c24ed73dd3a73b3caf4b9da53111",
+      "baseHash": "60513b510bbb62fdfe22b558cb675162ba37d7a2",
       "issue": 4054
     },
     {
@@ -319,7 +319,7 @@
       "type": "copy",
       "directory": "js/examples/Playground",
       "baseDirectory": "packages/rn-tester/js/examples/Playground",
-      "baseHash": "3a5d3afe8a387b32015195cf09ca7291c071a428",
+      "baseHash": "f040917b3d5bb020105a6e391f1398676d063149",
       "issue": 4054
     },
     {
@@ -480,7 +480,7 @@
       "type": "patch",
       "file": "js/examples/TextInput/TextInputSharedExamples.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
-      "baseHash": "c6ff0d7ecf6b0db88ec76b4b4fc8dfe142337dd6",
+      "baseHash": "ee743b3780deb0e7e369fddd6862b6c2b2dedaa7",
       "issue": 14291
     },
     {
@@ -577,7 +577,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "17c0337c12657736483e4aeb195bb8714b5c1ef6",
+      "baseHash": "9b376a167e67589a9d5ed684d73ce25a7c2b7417",
       "issue": 4054
     },
     {
