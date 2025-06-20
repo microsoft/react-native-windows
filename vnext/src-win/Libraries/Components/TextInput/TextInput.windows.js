@@ -14,19 +14,51 @@ import type {
   KeyEvent, // Windows
   MouseEvent, // Windows
   GestureResponderEvent,
-  NativeSyntheticEvent,
   ScrollEvent,
 } from '../../Types/CoreEventTypes';
+<<<<<<< Upstream
+import type {
+  AutoCapitalize,
+  EnterKeyHintType,
+  EnterKeyHintTypeAndroid,
+  EnterKeyHintTypeIOS,
+  EnterKeyHintTypeOptions,
+  InputModeOptions,
+  KeyboardType,
+  KeyboardTypeAndroid,
+  KeyboardTypeIOS,
+  KeyboardTypeOptions,
+  ReturnKeyType,
+  ReturnKeyTypeAndroid,
+  ReturnKeyTypeIOS,
+  ReturnKeyTypeOptions,
+  Selection,
+  SubmitBehavior,
+  TextContentType,
+  TextInputAndroidProps,
+  TextInputBlurEvent,
+  TextInputChangeEvent,
+  TextInputContentSizeChangeEvent,
+  TextInputEditingEvent,
+  TextInputEndEditingEvent,
+  TextInputEvent,
+  TextInputFocusEvent,
+  TextInputInstance,
+  TextInputIOSProps,
+  TextInputKeyPressEvent,
+  TextInputProps,
+  TextInputSelectionChangeEvent,
+  TextInputSubmitEditingEvent,
+  TextInputType,
+} from './TextInput.flow';
+=======
 import type {TextInputInstance, TextInputType} from './TextInput.flow';
 import type {HandledKeyboardEvent, ViewProps} from '../View/ViewPropTypes';
+>>>>>>> Override
 
 import usePressability from '../../Pressability/usePressability';
 import flattenStyle from '../../StyleSheet/flattenStyle';
-import StyleSheet, {
-  type ColorValue,
-  type TextStyleProp,
-  type ViewStyleProp,
-} from '../../StyleSheet/StyleSheet';
+import StyleSheet, {type TextStyleProp} from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
 import TextAncestor from '../../Text/TextAncestor';
 import Platform from '../../Utilities/Platform';
@@ -69,65 +101,40 @@ else if (Platform.OS === 'windows') {
 }
 // Windows]
 
-/**
- * @see TextInputProps.onChange
- */
-type TextInputChangeEventData = $ReadOnly<{
-  eventCount: number,
-  target: number,
-  text: string,
-}>;
-
-export type TextInputChangeEvent =
-  NativeSyntheticEvent<TextInputChangeEventData>;
-
-export type TextInputEvent = NativeSyntheticEvent<
-  $ReadOnly<{
-    eventCount: number,
-    previousText: string,
-    range: $ReadOnly<{
-      start: number,
-      end: number,
-    }>,
-    target: number,
-    text: string,
-  }>,
->;
-
-type TextInputContentSizeChangeEventData = $ReadOnly<{
-  target: number,
-  contentSize: $ReadOnly<{
-    width: number,
-    height: number,
-  }>,
-}>;
-
-/**
- * @see TextInputProps.onContentSizeChange
- */
-export type TextInputContentSizeChangeEvent =
-  NativeSyntheticEvent<TextInputContentSizeChangeEventData>;
-
-export type TargetEvent = $ReadOnly<{
-  target: number,
-}>;
-
-type TextInputFocusEventData = TargetEvent;
-
-/**
- * @see TextInputProps.onBlur
- */
-export type TextInputBlurEvent = NativeSyntheticEvent<TextInputFocusEventData>;
-
-/**
- * @see TextInputProps.onFocus
- */
-export type TextInputFocusEvent = NativeSyntheticEvent<TextInputFocusEventData>;
-
-type TextInputScrollEventData = {
-  contentOffset: {x: number, y: number},
+export type {
+  AutoCapitalize,
+  EnterKeyHintType,
+  EnterKeyHintTypeAndroid,
+  EnterKeyHintTypeIOS,
+  EnterKeyHintTypeOptions,
+  InputModeOptions,
+  KeyboardType,
+  KeyboardTypeAndroid,
+  KeyboardTypeIOS,
+  KeyboardTypeOptions,
+  ReturnKeyType,
+  ReturnKeyTypeAndroid,
+  ReturnKeyTypeIOS,
+  ReturnKeyTypeOptions,
+  SubmitBehavior,
+  TextContentType,
+  TextInputAndroidProps,
+  TextInputBlurEvent,
+  TextInputChangeEvent,
+  TextInputContentSizeChangeEvent,
+  TextInputEditingEvent,
+  TextInputEndEditingEvent,
+  TextInputEvent,
+  TextInputFocusEvent,
+  TextInputIOSProps,
+  TextInputKeyPressEvent,
+  TextInputProps,
+  TextInputSelectionChangeEvent,
+  TextInputSubmitEditingEvent,
 };
 
+<<<<<<< Upstream
+=======
 /**
  * @see TextInputProps.onScroll
  */
@@ -1133,6 +1140,7 @@ export type TextInputProps = $ReadOnly<{
   ...TextInputWindowsProps, // [Windows]
 }>;
 
+>>>>>>> Override
 type TextInputStateType = $ReadOnly<{
   /**
    * @deprecated Use currentlyFocusedInput

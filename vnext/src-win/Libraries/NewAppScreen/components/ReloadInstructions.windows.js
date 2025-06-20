@@ -10,7 +10,12 @@
 
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
+<<<<<<< Upstream
+import Platform from '../../Utilities/Platform';
+import * as React from 'react';
+=======
 import React from 'react';
+>>>>>>> Override
 
 const styles = StyleSheet.create({
   highlight: {
