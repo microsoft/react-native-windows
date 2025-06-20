@@ -25,7 +25,7 @@ struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<CalendarViewProps>();
-       label = cloneFromProps->label;  
+       displayMode = cloneFromProps->displayMode;  
      }
   }
 
@@ -33,15 +33,32 @@ struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
-  REACT_FIELD(label)
-  std::string label;
+  REACT_FIELD(displayMode)
+  int32_t displayMode{};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
+};
+
+REACT_STRUCT(CalendarView_OnSelectedDatesChanged)
+struct CalendarView_OnSelectedDatesChanged {
+  REACT_FIELD(value)
+  bool value{};
+
+  REACT_FIELD(startDate)
+  std::string startDate;
 };
 
 struct CalendarViewEventEmitter {
   CalendarViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
+
+  using OnSelectedDatesChanged = CalendarView_OnSelectedDatesChanged;
+
+  void onSelectedDatesChanged(OnSelectedDatesChanged &value) const {
+    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
 
  private:
   winrt::Microsoft::ReactNative::EventEmitter m_eventEmitter{nullptr};

@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -64,6 +64,8 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const [selectedDate, setSelectedDate] = useState(true);
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -80,10 +82,19 @@ function App(): React.JSX.Element {
           }}>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this.
-            I'll try showing a CalendarView here:
+            I'll try showing a CalendarView here (displayMode=1 for month view).
           </Section>
 
-          <CalendarView style={{width: 400, height: 400}} />
+          <CalendarView
+            style={{width: 400, height: 400}}
+            displayMode="1"
+            onSelectedDatesChanged={e => {
+              setSelectedDate(e.nativeEvent.startDate);
+            }}
+          />
+
+          <Section title="Selected date">Selected date: {selectedDate}</Section>
+
           <Section title="See Your Changes">
             <ReloadInstructions />
           </Section>

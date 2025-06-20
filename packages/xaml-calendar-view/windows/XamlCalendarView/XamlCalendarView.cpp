@@ -9,14 +9,58 @@ namespace winrt::XamlCalendarView
 {
 
 struct CalendarView : public winrt::implements<CalendarView, winrt::Microsoft::ReactNative::Xaml::IXamlControl, winrt::IInspectable>, 
-                    Codegen::BaseCalendarView<CalendarView> {
+                    public Codegen::BaseCalendarView<CalendarView> {
 
   winrt::Microsoft::UI::Xaml::UIElement GetXamlElement() {
     if (m_calendarView == nullptr) {
-      m_calendarView = winrt::Microsoft::UI::Xaml::Controls::CalendarView();
+      CreateXamlCalendarView();
     }
     return m_calendarView;
   }
+
+  void UpdateProps(
+    const winrt::Microsoft::ReactNative::ComponentView &view,
+    const winrt::com_ptr<Codegen::CalendarViewProps> &newProps,
+    const winrt::com_ptr<Codegen::CalendarViewProps> &oldProps) noexcept override {
+    Codegen::BaseCalendarView<CalendarView>::UpdateProps(view, newProps, oldProps);
+    
+    if (m_calendarView && newProps) {
+      m_calendarView.DisplayMode(static_cast<winrt::Microsoft::UI::Xaml::Controls::CalendarViewDisplayMode>(
+          newProps->displayMode));
+    }
+  }
+
+  void CreateXamlCalendarView() {
+    m_calendarView = winrt::Microsoft::UI::Xaml::Controls::CalendarView();
+    if (Props()) {
+      m_calendarView.DisplayMode(
+        static_cast<winrt::Microsoft::UI::Xaml::Controls::CalendarViewDisplayMode>(
+        Props()->displayMode));
+    }
+    m_calendarView.SelectedDatesChanged([this](auto &&, auto &&) {
+      if (auto emitter = EventEmitter()) {
+        Codegen::CalendarView_OnSelectedDatesChanged args;
+        auto selectedDates = m_calendarView.SelectedDates();
+        if (selectedDates.Size() == 0) {
+          args.startDate = "(none)";
+        } else {
+          auto firstSelectedDate = selectedDates.GetAt(0);
+
+          auto tt = winrt::clock::to_time_t(firstSelectedDate);
+          tm local{};
+          localtime_s(&local, &tt);
+          auto timeStr = std::put_time(&local, "%F");
+
+          std::stringstream ss;
+          ss << (timeStr._Tptr->tm_year + 1900) << "-" << (timeStr._Tptr->tm_mon + 1) << "-" << timeStr._Tptr->tm_mday;
+
+          args.startDate = ss.str();
+        }
+        emitter->onSelectedDatesChanged(args);
+      }
+    });
+  }
+
 
   private:
     winrt::Microsoft::UI::Xaml::Controls::CalendarView m_calendarView{ nullptr };

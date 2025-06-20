@@ -6,8 +6,8 @@ import XamlHost from 'react-native-windows/Libraries/Components/Xaml/XamlHost';
 
 function CalendarView(props: any) {
   return (
-    <XamlHost {...props}>
-      <RawCalendarView label='unused' />
+    <XamlHost label='unused'>
+      <RawCalendarView label='unused' {...props} />
     </XamlHost>
   );
 }
