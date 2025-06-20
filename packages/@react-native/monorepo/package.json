@@ -7,11 +7,8 @@
   "scripts": {
     "android": "cd packages/rn-tester && npm run android",
     "build-android": "./gradlew :packages:react-native:ReactAndroid:build",
-<<<<<<< Upstream
     "build": "node ./scripts/build/build.js",
     "build-types": "node ./scripts/build-types",
-=======
->>>>>>> Override
     "clang-format": "clang-format -i --glob=*/**/*.{h,cpp,m,mm}",
     "clean": "node ./scripts/build/clean.js",
     "flow-check": "flow check",
@@ -21,11 +18,8 @@
     "featureflags": "cd packages/react-native && yarn featureflags",
     "lint-ci": "./scripts/circleci/analyze_code.sh && yarn shellcheck",
     "lint-java": "node ./scripts/lint-java.js",
-<<<<<<< Upstream
     "lint-markdown": "markdownlint-cli2 2>&1",
     "lint": "eslint .",
-=======
->>>>>>> Override
     "prettier": "prettier --write \"./**/*.{js,md,yml,ts,tsx}\"",
     "print-packages": "node ./scripts/monorepo/print",
     "shellcheck": "./scripts/circleci/analyze_scripts.sh",

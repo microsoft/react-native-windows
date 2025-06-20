@@ -3,7 +3,6 @@
  * Licensed under the MIT License.
  * @format
  */
-<<<<<<< Upstream
 
 import Platform from '../Utilities/Platform';
 
@@ -13,7 +12,6 @@ let Settings: {
   watchKeys(keys: string | Array<string>, callback: () => void): number,
   clearWatch(watchId: number): void,
   ...
-=======
 'use strict';
 
 var Settings = {
@@ -34,7 +32,6 @@ var Settings = {
   clearWatch(watchId: number) {
     console.warn('Settings is not yet supported on Win32');
   },
->>>>>>> Override
 };
 
 if (Platform.OS === 'ios') {
