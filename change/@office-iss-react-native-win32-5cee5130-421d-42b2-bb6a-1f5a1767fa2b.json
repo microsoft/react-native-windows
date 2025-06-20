@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Remove rnw/cli dependency on rnc/cli",
-  "packageName": "@react-native-windows/cli",
+  "comment": "Remove usage of Animated in LogBox",
+  "packageName": "@office-iss/react-native-win32",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
 }

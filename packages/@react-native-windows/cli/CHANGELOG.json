@@ -2,6 +2,54 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 20 Jun 2025 05:21:53 GMT",
+      "version": "0.0.0-canary.267",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.267",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ca29f4ea3226621a8c1e8f9553fe55302ff6d4b9",
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 19 Jun 2025 17:16:24 GMT",
+      "version": "0.0.0-canary.266",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.266",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "b9f8da60def51cfa9a9991eb5a34fcb60d314e3c",
+            "comment": "Remove rnw/cli dependency on rnc/cli"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "f04d0384d49a266ab1e545c2155ab6b3f6d290b9",
+            "comment": "Add warning to CLI commands about using the old architecture"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "1d04e27895246a0e86f485a708b9c2af3320690e",
+            "comment": "Change `init-windows` default new app template to New Architecture"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "56637fc1b13f290eab37a10c098e7be87adf909e",
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 May 2025 05:25:00 GMT",
       "version": "0.0.0-canary.265",
       "tag": "@react-native-windows/cli_v0.0.0-canary.265",

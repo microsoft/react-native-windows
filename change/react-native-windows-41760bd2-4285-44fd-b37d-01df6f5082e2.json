@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix(vnext-template): add additional include dirs for submodules",
-  "packageName": "react-native-windows",
-  "email": "fcalise@gmail.com",
-  "dependentChangeType": "patch"
-}
