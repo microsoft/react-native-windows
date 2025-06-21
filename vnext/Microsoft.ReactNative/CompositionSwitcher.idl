@@ -120,6 +120,9 @@ namespace Microsoft.ReactNative.Composition.Experimental
     void SetMaximumZoomScale(Single maximumZoomScale);
     void SetMinimumZoomScale(Single minimumZoomScale);
     Boolean Horizontal;
+    void SnapToStart(Boolean snapToStart);
+    void SnapToEnd(Boolean snapToEnd);
+    void SnapToOffsets(Windows.Foundation.Collections.IVectorView<Single> offsets);
   }
 
   [webhosthidden]
