@@ -11,11 +11,12 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
   RefreshControl,
   TextInput,
 } from 'react-native';
+
+import {ScrollView} from 'react-native-windows';
 
 function wait(timeout: number) {
   return new Promise(resolve => {
@@ -251,6 +252,7 @@ export default class Bootstrap extends React.Component<{}, any> {
         </View>
         <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
           <ScrollView
+            accessibilityLevel={1}
             style={
               this.state.horizontalValue
                 ? styles.horizontalScrollViewStyle
