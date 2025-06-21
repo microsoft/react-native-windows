@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 21 Jun 2025 05:21:48 GMT",
+      "version": "0.0.0-canary.291",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.291",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "43cb59d27c487257dca5d6b036755a18d5d72366",
+            "comment": "Remove usage of Animated in LogBox"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Jun 2025 05:21:53 GMT",
       "version": "0.0.0-canary.290",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.290",
