@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 23 Jun 2025 15:25:23 GMT",
+      "version": "0.79.1",
+      "tag": "@react-native-windows/cli_v0.79.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "7afcde70ce8a7cf2e43dabec2215b180258f16af",
+            "comment": "Fix `init-windows` template default not set for telemetry purposes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Jun 2025 18:35:17 GMT",
       "version": "0.79.0",
       "tag": "@react-native-windows/cli_v0.79.0",
