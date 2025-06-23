@@ -7,6 +7,8 @@
 
 #pragma once
 
+#ifdef __cplusplus
+
 #include <ReactCommon/RuntimeExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <jsinspector-modern/ConsoleMessage.h>
@@ -85,3 +87,5 @@ class JSIRuntimeHolder : public JSRuntime {
 };
 
 } // namespace facebook::react
+
+#endif // __cplusplus
