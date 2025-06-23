@@ -121,6 +121,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\ProfileTreeNode.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\NetworkReporter.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
@@ -182,6 +183,7 @@
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryCircularBuffer.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserver.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryKeyedBuffer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

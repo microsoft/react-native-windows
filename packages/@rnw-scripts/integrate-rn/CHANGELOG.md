@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 20 Jun 2025 05:21:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.60
+
+Fri, 20 Jun 2025 05:21:53 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+
+## 1.4.59
+
+Thu, 19 Jun 2025 17:16:25 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
 
 ## 1.4.58
 

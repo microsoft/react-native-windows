@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://twitter.com/intent/follow?&screen_name=ReactNativeMSFT">
-    <img src="https://img.shields.io/twitter/follow/windowsui.svg?label=Follow ReactNativeMSFT on X" alt="Follow @windowsui" />
+    <img src="https://img.shields.io/twitter/follow/ReactNativeMSFT?style=for-the-badge&logo=X&labelColor=black&color=white" alt="Follow @ReactNativeMSFT" />
   </a>
 </p>
 
@@ -68,7 +68,7 @@ React Native has [great documentation](https://reactnative.dev/docs/getting-star
 ## 📢 Contributing
 See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
 
-Not sure where to start? The [good first issue](https://github.com/microsoft/react-native-windows/labels/good%20first%20issue) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) labels are the best starting points.
+Not sure where to start? The [good first issue](https://github.com/microsoft/react-native-windows/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22) and [help wanted](https://github.com/microsoft/react-native-windows/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22help%20wanted%22) labels are the best starting points.
 
 ## Code of Conduct
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

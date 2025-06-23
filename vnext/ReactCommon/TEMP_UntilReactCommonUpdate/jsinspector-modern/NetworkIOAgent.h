@@ -7,17 +7,15 @@
 
 #pragma once
 
-#include "CdpJson.h"
 #include "InspectorInterfaces.h"
 #include "ScopedExecutor.h"
 
 #include <folly/dynamic.h>
-#include <mutex>
-#include <sstream>
+#include <jsinspector-modern/cdp/CdpJson.h>
+
 #include <string>
 #include <unordered_map>
 #include <utility>
-#include <variant>
 
 namespace facebook::react::jsinspector_modern {
 

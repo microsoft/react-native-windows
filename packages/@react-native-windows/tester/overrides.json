@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.79.0-nightly-20250303-cee63397b",
+  "baseVersion": "0.80.0-nightly-20250331-398ac1f71",
   "overrides": [
     {
       "type": "derived",
@@ -23,7 +23,7 @@
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "72db5711fe07e139f5d66c7246bf04f059782ebb"
+      "baseHash": "314dacf1e200ddc9dc414bd9be1a21ee77ae097a"
     },
     {
       "type": "patch",
@@ -91,7 +91,7 @@
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "dd016bc7cd48220dc8f0d50523c0282e019c89e6"
+      "baseHash": "85f44b8ecf18784f6a0088df636b2b9742546b09"
     },
     {
       "type": "patch",
@@ -104,7 +104,7 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "57b504a530b7ecfe38ebfa4092aa2c8554726e74"
+      "baseHash": "b40001649bf2c261009213ba56c7bc0bf2998419"
     },
     {
       "type": "derived",
@@ -129,8 +129,7 @@
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "5cfdbaaa81a57c5611955cce6f484eca7ad7a355",
-      "issue": 0
+      "baseHash": "5cfdbaaa81a57c5611955cce6f484eca7ad7a355"
     },
     {
       "type": "patch",
@@ -149,7 +148,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "3cf41a5b5fe9269145523937f8cc190ad154e615"
+      "baseHash": "39dc13e5f5a3b5fb58b807788ee5021ff6b7889c"
     }
   ]
 }

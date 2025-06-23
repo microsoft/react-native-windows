@@ -523,7 +523,7 @@ function MaxFontSizeMultiplierExample(props: {}): React.Node {
 
 function NumberOfLinesExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="number-of-lines">
       <RNTesterText
         numberOfLines={1}
         style={styles.wrappedText}
@@ -543,11 +543,18 @@ function NumberOfLinesExample(props: {}): React.Node {
         RNTesterText of two lines no matter now much I write here. If I keep
         writing it{"'"}ll just truncate after two lines
       </RNTesterText>
+      <RNTesterText numberOfLines={1} style={{marginTop: 20}}>
+        The hotdog should be truncated. The hotdog should be truncated. The
+        hotdog should be truncated. The hotdog should be truncated. The hotdog
+        should be truncated. The hotdog should be truncated. The hotdog should
+        be truncated. The hotdog should be truncated. The hotdog should be
+        truncated. The hotdog should be truncated.
+      </RNTesterText>
       <RNTesterText style={[{marginTop: 20}, styles.wrappedText]}>
         No maximum lines specified no matter now much I write here. If I keep
         writing it{"'"}ll just keep going and going
       </RNTesterText>
-    </>
+    </View>
   );
 }
 

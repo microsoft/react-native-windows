@@ -11,7 +11,11 @@
 #include "Base64.h"
 #include "Utf8.h"
 
+#include <jsinspector-modern/network/NetworkReporter.h>
+
+#include <sstream>
 #include <utility>
+#include <variant>
 
 namespace facebook::react::jsinspector_modern {
 
@@ -268,9 +272,27 @@ bool NetworkIOAgent::handleRequest(
   }
 
   if (InspectorFlags::getInstance().getNetworkInspectionEnabled()) {
+    auto& networkReporter = NetworkReporter::getInstance();
+
+    // @cdp Network.enable support is experimental.
     if (req.method == "Network.enable") {
+      networkReporter.setFrontendChannel(frontendChannel_);
+      networkReporter.enableDebugging();
       frontendChannel_(cdp::jsonResult(req.id));
       return true;
+    }
+
+    // @cdp Network.disable support is experimental.
+    if (req.method == "Network.disable") {
+      networkReporter.disableDebugging();
+      frontendChannel_(cdp::jsonResult(req.id));
+      return true;
+    }
+
+    // @cdp Network.getResponseBody support is experimental.
+    if (req.method == "Network.getResponseBody") {
+      // TODO(T218468200)
+      return false;
     }
   }
 

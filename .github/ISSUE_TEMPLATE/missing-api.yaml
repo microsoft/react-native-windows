@@ -1,0 +1,58 @@
+name: Missing React Native API on Windows
+description: Report that a React Native API is missing on Windows
+title: Implement <missing API name> for <architecture>
+labels: ['enhancement', 'API: Completion']
+type: 'Task'
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is to report APIs (methods or properties, etc.) which exist in React Native for iOS/Android but are missing or otherwise not implemented in React Native for Windows.
+
+        If the API does not exist in React Native, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=feature-request.yaml) instead.
+        
+        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: APInName
+      description: What is the name of the missing API (including module or component name)?
+      placeholder: API Name
+  - type: dropdown
+    validations:
+      required: true
+    attributes:
+      label: API Type
+      description: What is the type of the missing API?
+      options:
+        - "Component Method"
+        - "Component Property"
+        - "Module Method"
+        - "Module Property"
+        - "Other"
+    id: type
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: React Native Docs URL
+      description: Where is the API documented on reactnative.dev?
+      placeholder: https://reactnative.dev/docs/components-and-apis
+    id: url
+  - type: dropdown
+    validations:
+      required: true
+    attributes:
+      label: Supported Architecture
+      description: For which React Native architecture is the API supported?
+      options:
+        - "Both Architectures"
+        - "New Only"
+        - "Old Only"
+    id: architecture
+  - type: textarea
+    attributes:
+      label: Other Details
+      description: Please add any other details that may be relevant to implementing this API.
+    id: details
