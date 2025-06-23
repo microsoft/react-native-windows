@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 07 Apr 2025 15:25:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 23 Jun 2025 15:24:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.7
+
+Mon, 23 Jun 2025 15:24:28 GMT
+
+### Patches
+
+- Fix `init-windows` template default not set for telemetry purposes (jthysell@microsoft.com)
 
 ## 0.76.6
 
