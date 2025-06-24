@@ -69,7 +69,7 @@ void ParagraphComponentView::updateProps(
   }
 
   if (oldViewProps.paragraphAttributes.adjustsFontSizeToFit != newViewProps.paragraphAttributes.adjustsFontSizeToFit) {
-    m_requireRedraw = true;
+    m_textLayout = nullptr;
   }
 
   Super::updateProps(props, oldProps);
