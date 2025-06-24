@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 20 Jun 2025 05:21:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 24 Jun 2025 05:22:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.967
+
+Tue, 24 Jun 2025 05:22:49 GMT
+
+### Changes
+
+- updated adjustsFontSizeToFit textlayout to nullptr (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.0.0-canary.966
 

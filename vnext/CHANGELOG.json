@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Jun 2025 05:22:49 GMT",
+      "version": "0.0.0-canary.967",
+      "tag": "react-native-windows_v0.0.0-canary.967",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3e6cccc8fd031bc96ff369306b7084ddfa4f8c82",
+            "comment": "updated adjustsFontSizeToFit textlayout to nullptr"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Jun 2025 05:21:54 GMT",
       "version": "0.0.0-canary.966",
       "tag": "react-native-windows_v0.0.0-canary.966",
