@@ -66,6 +66,8 @@ type State = $ReadOnly<{
   targetRef?: React.ReactNode,
 }>;
 
+const isFabric = global.nativeFabricUIManager;
+
 /**
  * Renders a flyout component.
  *
@@ -93,6 +95,12 @@ export class Flyout extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+
+    if (__DEV__ && isFabric) {
+      console.warn(
+        '`Flyout` is deprecated and not supported in the New Architecture. Use the new `Modal` component instead.',
+      );
+    }
   }
 
   render(): React.Node {
