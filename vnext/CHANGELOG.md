@@ -18,7 +18,7 @@ Fri, 20 Jun 2025 05:21:54 GMT
 
 ### Changes
 
-- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250414-70cdf12c4 (kvineeth@microsoft.com)
 - Bump @react-native-windows/cli to v0.0.0-canary.267
 
 ## 0.0.0-canary.965

@@ -19,7 +19,7 @@
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.291",
     "react": "19.0.0",
-    "react-native": "0.80.0-nightly-20250331-398ac1f71"
+    "react-native": "0.80.0-nightly-20250414-70cdf12c4"
   },
   "devDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.291",

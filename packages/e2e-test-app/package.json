@@ -31,7 +31,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "17.0.0",
-    "@react-native/metro-config": "0.80.0-nightly-20250331-398ac1f71",
+    "@react-native/metro-config": "0.80.0-nightly-20250414-70cdf12c4",
     "@react-native-windows/automation": "^0.3.389",
     "@react-native-windows/automation-commands": "^0.1.410",
     "@rnw-scripts/babel-node-config": "2.3.2",

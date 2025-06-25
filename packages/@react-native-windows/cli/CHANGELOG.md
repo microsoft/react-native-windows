@@ -10,7 +10,7 @@ Fri, 20 Jun 2025 05:21:53 GMT
 
 ### Changes
 
-- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250414-70cdf12c4 (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.266
 
