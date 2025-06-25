@@ -321,8 +321,8 @@ export interface AccessibilityPropsWindows {
    * while accessibilityHint provides information on what will happen when they perform an action.
    *
    */
-  accessibilityDescription?: string;// Windows
-  'aria-description'?: string;// Windows
+  accessibilityDescription?: string; // Windows
+  'aria-description'?: string; // Windows
 }
 
 export interface AccessibilityPropsAndroid {

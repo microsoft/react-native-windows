@@ -731,9 +731,8 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(
-        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-            newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+        newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
