@@ -2,6 +2,143 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Jun 2025 05:22:49 GMT",
+      "version": "0.0.0-canary.967",
+      "tag": "react-native-windows_v0.0.0-canary.967",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3e6cccc8fd031bc96ff369306b7084ddfa4f8c82",
+            "comment": "updated adjustsFontSizeToFit textlayout to nullptr"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Jun 2025 05:21:54 GMT",
+      "version": "0.0.0-canary.966",
+      "tag": "react-native-windows_v0.0.0-canary.966",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ca29f4ea3226621a8c1e8f9553fe55302ff6d4b9",
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.267",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 19 Jun 2025 17:16:25 GMT",
+      "version": "0.0.0-canary.965",
+      "tag": "react-native-windows_v0.0.0-canary.965",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "69163709e6094be64af0ff05b20662457c3344de",
+            "comment": "[Fabric] Implement aria-level, aria-posinset, aria-setsize in Switch"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "241ba7a65b9ea3a05af1c1f7dae66c54567d59e4",
+            "comment": "Force all in-repo projects to build locally with RestoreForceEvaluate"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d6501a3c4209cff2dcb23b7031d4aa002528baca",
+            "comment": "updated ellipsis to respect tail and clip behaviour , for head , middle follow defaulty tail behaviour"
+          },
+          {
+            "author": "fcalise@gmail.com",
+            "package": "react-native-windows",
+            "commit": "3295db98d7875b0705b94aec91e75605c91589aa",
+            "comment": "fix(vnext-template): add additional include dirs for submodules"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9c55fc409d70433e306c43cb6d4e93a56d80d6ba",
+            "comment": "Add aria-level, aria-posinset and aria-setsize in Image"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2805c1e9e9fd6dcd8dc78c2c98f81e7349b98cd3",
+            "comment": "[Fabric] Implement aria-level, aria-posinset, aria-setsize in TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "06a52c2ca0ccdf323f2ead1eb8dcdbbd0f6b189d",
+            "comment": "Update to @types/react 19"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1d04e27895246a0e86f485a708b9c2af3320690e",
+            "comment": "Change `init-windows` default new app template to New Architecture"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8237585e0bbfa720a79f67102d347b3e80ff5ba4",
+            "comment": "Remove .. usage in relative include"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2969c7bad35d063ed7e0fd568c6c1146ce1ef77d",
+            "comment": "[Fabric] Implement keyboardDismissMode in ScrollView"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dee65eb856717dd9e389df3636f8fd2f73783c15",
+            "comment": "[Fabric] Implement onContentSizeChange in TextInput"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "45fccf903ccca815525da277f8c386c6717688e0",
+            "comment": "creaternwapp.cmd: Override default RN CLI template when nightly detected"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "56637fc1b13f290eab37a10c098e7be87adf909e",
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.266",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4757284bba1a6a6f07fd76763d6758247c4b33a6",
+            "comment": "Added support for selectionColor for textInput"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 31 May 2025 05:24:43 GMT",
       "version": "0.0.0-canary.964",
       "tag": "react-native-windows_v0.0.0-canary.964",

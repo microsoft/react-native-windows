@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e",
+  "comment": "Added fix for AutoFocus",
   "packageName": "react-native-windows",
   "email": "hmalothu@microsoft.com",
   "dependentChangeType": "patch"

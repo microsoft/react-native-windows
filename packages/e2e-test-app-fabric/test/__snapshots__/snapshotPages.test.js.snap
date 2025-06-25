@@ -85394,6 +85394,19 @@ exports[`snapshotAllPages URL 1`] = `
   >
     search: ?query=testQuery&key=value
   </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: query=testQuery&key=value
+  </Text>
 </View>
 `;
 
@@ -85521,6 +85534,19 @@ exports[`snapshotAllPages URL 2`] = `
     testID="URL-search"
   >
     search: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: 
   </Text>
 </View>
 `;
@@ -85650,6 +85676,19 @@ exports[`snapshotAllPages URL 3`] = `
   >
     search: ?query=testQuery&key=value
   </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: query=testQuery&key=value
+  </Text>
 </View>
 `;
 
@@ -85777,6 +85816,19 @@ exports[`snapshotAllPages URL 4`] = `
     testID="URL-search"
   >
     search: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: 
   </Text>
 </View>
 `;

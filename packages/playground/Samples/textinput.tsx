@@ -288,6 +288,20 @@ export default class Bootstrap extends React.Component<{}, any> {
               placeholder="Focus and then click outside"
               onEndEditing={this.handleEndEditing}
             />
+            <TextInput
+              style={[styles.input, {borderColor: 'green', borderWidth: 2}]}
+              placeholder={
+                'autoFocus: true - This input will be focused automatically'
+              }
+              autoFocus={true}
+            />
+            <TextInput
+              style={[styles.input, {borderColor: 'red', borderWidth: 2}]}
+              placeholder={
+                'autoFocus: false - This input will NOT be focused automatically'
+              }
+              autoFocus={false}
+            />
 
             <KeyboardAvoidingView
               style={styles.container}

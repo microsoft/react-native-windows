@@ -1389,6 +1389,13 @@ void WindowsTextInputComponentView::onMounted() noexcept {
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
   InternalFinalize();
+
+  // Handle autoFocus property - focus the component when mounted if autoFocus is true
+  if (windowsTextInputProps().autoFocus) {
+    if (auto root = rootComponentView()) {
+      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+    }
+  }
 }
 
 std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue() noexcept {

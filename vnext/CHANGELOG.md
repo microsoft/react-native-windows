@@ -1,8 +1,46 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 31 May 2025 05:24:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 24 Jun 2025 05:22:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.967
+
+Tue, 24 Jun 2025 05:22:49 GMT
+
+### Changes
+
+- updated adjustsFontSizeToFit textlayout to nullptr (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.966
+
+Fri, 20 Jun 2025 05:21:54 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.267
+
+## 0.0.0-canary.965
+
+Thu, 19 Jun 2025 17:16:25 GMT
+
+### Changes
+
+- [Fabric] Implement aria-level, aria-posinset, aria-setsize in Switch (54227869+anupriya13@users.noreply.github.com)
+- Force all in-repo projects to build locally with RestoreForceEvaluate (jthysell@microsoft.com)
+- updated ellipsis to respect tail and clip behaviour , for head , middle follow defaulty tail behaviour (74712637+iamAbhi-916@users.noreply.github.com)
+- fix(vnext-template): add additional include dirs for submodules (fcalise@gmail.com)
+- Add aria-level, aria-posinset and aria-setsize in Image (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement aria-level, aria-posinset, aria-setsize in TextInput (54227869+anupriya13@users.noreply.github.com)
+- Update to @types/react 19 (30809111+acoates-ms@users.noreply.github.com)
+- Change `init-windows` default new app template to New Architecture (jthysell@microsoft.com)
+- Remove .. usage in relative include (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement keyboardDismissMode in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement onContentSizeChange in TextInput (54227869+anupriya13@users.noreply.github.com)
+- creaternwapp.cmd: Override default RN CLI template when nightly detected (jthysell@microsoft.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.266
 
 ## 0.0.0-canary.964
 
