@@ -537,7 +537,6 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentItemStatus(&itemStatus);
   pTarget->get_CurrentItemType(&itemType);
   pTarget->get_CurrentAccessKey(&accessKey);
-  pTarget->get_CurrentFullDescription(&description);
   IUIAutomationElement4 *pTarget4;
   HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
   if (SUCCEEDED(hr) && pTarget4) {
@@ -546,6 +545,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     pTarget4->get_CurrentLiveSetting(&liveSetting);
     pTarget4->get_CurrentLevel(&level);
     pTarget4->Release();
+  }
+  IUIAutomationElement6 *pTarget6;
+  hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement6), reinterpret_cast<void **>(&pTarget6));
+  if (SUCCEEDED(hr) && pTarget6) {
+    pTarget6->get_CurrentFullDescription(&description);
   }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
