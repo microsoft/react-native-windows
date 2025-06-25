@@ -10,6 +10,8 @@ import FlyoutNativeComponent from './FlyoutNativeComponent';
 import * as React from 'react';
 import {findNodeHandle, StyleSheet} from 'react-native';
 
+const warnOnce = require('../../Utilities/warnOnce').default;
+
 type Placement =
   | 'top'
   | 'bottom'
@@ -97,7 +99,8 @@ export class Flyout extends React.Component<Props, State> {
     super(props);
 
     if (__DEV__ && isFabric) {
-      console.warn(
+      warnOnce(
+        'flyout-new-arch-deprecated',
         '`Flyout` is deprecated and not supported in the New Architecture. Use the new `Modal` component instead.',
       );
     }
