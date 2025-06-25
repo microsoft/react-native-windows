@@ -9,27 +9,13 @@
 const generateWindows = require('../../generate');
 const templateUtils = require('../templateUtils');
 
-function makeGenerateWindowsWrapper(
-  language = 'cpp',
-  projectType = 'app',
-  isDefault = false,
-) {
-  const name =
-    projectType === 'lib'
-      ? `React Native Windows Library (Old Arch, UWP, ${
-          language === 'cs' ? 'C#' : 'C++'
-        })`
-      : `React Native Windows Application (Old Arch, UWP, ${
-          language === 'cs' ? 'C#' : 'C++'
-        }, Hermes)`;
-  const description =
-    projectType === 'lib'
-      ? `A RNW module written in ${
-          language === 'cs' ? 'C#' : 'C++'
-        }, targeting UWP and RN's old architecture.`
-      : `A RNW app written in ${
-          language === 'cs' ? 'C#' : 'C++'
-        }, targeting UWP and RN's old architecture, with the Hermes JS engine.`;
+function makeGenerateWindowsWrapper(language = 'cpp', isDefault = false) {
+  const name = `React Native Windows Application (Old Arch, UWP, ${
+    language === 'cs' ? 'C#' : 'C++'
+  })`;
+  const description = `[Legacy] A RNW app using RN's Old Architecture, built in ${
+    language === 'cs' ? 'C#' : 'C++'
+  } and targeting UWP.`;
 
   const postInstall = async (config = {}, options = {}) => {
     const experimentalFeatures = config?.project?.windows?.experimentalFeatures;
@@ -39,7 +25,7 @@ function makeGenerateWindowsWrapper(
     const generateOptions = {
       overwrite: !!options.overwrite,
       language,
-      projectType,
+      projectType: 'app',
       experimentalNuGetDependency:
         experimentalFeatures?.UseExperimentalNuget === 'true' ?? false,
       useWinUI3: experimentalFeatures?.UseWinUI3 === 'true' ?? false,

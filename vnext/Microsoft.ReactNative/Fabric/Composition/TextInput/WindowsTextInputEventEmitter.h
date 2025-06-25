@@ -52,6 +52,7 @@ class WindowsTextInputEventEmitter : public ViewEventEmitter {
   void onSubmitEditing(OnSubmitEditing value) const;
   void onKeyPress(OnKeyPress value) const;
   void onContentSizeChange(OnContentSizeChange value) const;
+  void onPressIn(GestureResponderEvent event) const override;
   void onEndEditing(OnEndEditing value) const;
 };
 

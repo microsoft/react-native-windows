@@ -8,6 +8,12 @@
         "resolved": "1.83.0",
         "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
+      "Microsoft.Windows.CppWinRT": {
+        "type": "Direct",
+        "requested": "[2.0.230706.1, )",
+        "resolved": "2.0.230706.1",
+        "contentHash": "l0D7oCw/5X+xIKHqZTi62TtV+1qeSz7KVluNFdrJ9hXsst4ghvqQ/Yhura7JqRdZWBXAuDS0G0KwALptdoxweQ=="
+      },
       "fmt": {
         "type": "Project"
       },

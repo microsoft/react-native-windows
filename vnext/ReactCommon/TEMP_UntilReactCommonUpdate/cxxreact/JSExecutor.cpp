@@ -9,10 +9,11 @@
 
 #include "RAMBundleRegistry.h"
 
-#include <folly/Conv.h>
 #include <jsinspector-modern/ReactCdp.h>
+#include <jsinspector-modern/tracing/InstanceTracingProfile.h>
 #include <react/timing/primitives.h>
 
+#include <array>
 #include <chrono>
 
 namespace facebook::react {
@@ -23,7 +24,10 @@ std::string JSExecutor::getSyntheticBundlePath(
   if (bundleId == RAMBundleRegistry::MAIN_BUNDLE_ID) {
     return bundlePath;
   }
-  return folly::to<std::string>("seg-", bundleId, ".js");
+
+  std::array<char, 32> buffer{};
+  std::snprintf(buffer.data(), buffer.size(), "seg-%u.js", bundleId);
+  return buffer.data();
 }
 
 double JSExecutor::performanceNow() {
@@ -42,6 +46,19 @@ std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> JSExecutor::cap
     facebook::jsi::Runtime &runtime,
     size_t framesToSkip) {
   return std::make_unique<facebook::react::jsinspector_modern::StackTrace>();
+}
+
+void JSExecutor::enableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+void JSExecutor::disableSamplingProfiler()  {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor::collectSamplingProfile() {
+  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
+      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>

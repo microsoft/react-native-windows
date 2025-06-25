@@ -94,9 +94,15 @@ jobs:
             - ${{ if eq(matrix.BuildConfiguration, 'Debug') }}:
               # The build is more likely to crash after we've started other bits that
               # take up memory. Do the expensive parts of the build first.
-              - script: yarn windows --no-launch --no-packager --no-deploy --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
-                displayName: yarn windows --no-launch
-                workingDirectory: packages/integration-test-app
+              - template: ../templates/run-windows-with-certificates.yml
+                parameters:
+                  buildEnvironment: ${{ parameters.BuildEnvironment }}
+                  buildConfiguration: ${{ matrix.BuildConfiguration }}
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  buildLogDirectory: $(BuildLogDirectory)
+                  workingDirectory: packages/integration-test-app
+                  moreRunWindowsArgs: --no-packager --no-deploy --no-autolink
+                  errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
 
               - powershell: Start-Process npm.cmd -ArgumentList "run","start"
                 displayName: Start packager
@@ -132,8 +138,18 @@ jobs:
                 workingDirectory: packages/integration-test-app
 
             - ${{ if eq(matrix.BuildConfiguration, 'Release') }}:
-              - script: yarn windows --release ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
-                displayName: yarn windows --release
+              - template: ../templates/run-windows-with-certificates.yml
+                parameters:
+                  buildEnvironment: ${{ parameters.BuildEnvironment }}
+                  buildConfiguration: ${{ matrix.BuildConfiguration }}
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  buildLogDirectory: $(BuildLogDirectory)
+                  workingDirectory: packages/integration-test-app
+                  moreRunWindowsArgs: ${{ matrix.DeployOptions }} --no-packager --no-autolink
+                  errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
+
+              - script: yarn windows --release --no-build ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging
+                displayName: yarn windows --release --no-build
                 workingDirectory: packages/integration-test-app
 
             - ${{ if ne(matrix.DeployOptions, '--no-deploy') }}:

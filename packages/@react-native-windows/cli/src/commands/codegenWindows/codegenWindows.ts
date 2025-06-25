@@ -9,13 +9,13 @@ import chalk from 'chalk';
 import {performance} from 'perf_hooks';
 import {Ora} from 'ora';
 
-import {Command, Config} from '@react-native-community/cli-types';
+import type {Command, Config} from '@react-native-community/cli-types';
 import {Telemetry, CodedError} from '@react-native-windows/telemetry';
-import {
+import type {
   CodeGenOptions as RnwCodeGenOptions,
   CppStringTypes,
-  runCodeGen,
 } from '@react-native-windows/codegen';
+import {runCodeGen} from '@react-native-windows/codegen';
 
 import {
   newSpinner,
@@ -26,7 +26,8 @@ import {
   startTelemetrySession,
   endTelemetrySession,
 } from '../../utils/telemetryHelpers';
-import {CodeGenOptions, codegenOptions} from './codegenWindowsOptions';
+import type {CodeGenOptions} from './codegenWindowsOptions';
+import {codegenOptions} from './codegenWindowsOptions';
 
 export class CodeGenWindows {
   private changesNecessary: boolean;
@@ -143,7 +144,10 @@ export class CodeGenWindows {
       'modulesWindows',
     ];
 
-    const jsRootPathRelative = path.relative(process.cwd(), jsRootDir);
+    const jsRootPathRelative = path
+      .relative(process.cwd(), jsRootDir)
+      .split(path.sep)
+      .join('/');
     const options: RnwCodeGenOptions = {
       files: [
         `${jsRootPathRelative}${

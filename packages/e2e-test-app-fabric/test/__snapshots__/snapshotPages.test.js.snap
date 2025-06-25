@@ -8,8 +8,20 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
     The following has accessibilityLabel and accessibilityHint:
   </Text>
   <View
+    accessibilityAccessKey="accessKey"
+    accessibilityAnnotation={
+      {
+        "author": "Clint Westwood",
+        "dateTime": "3/19/2025 1:03 PM",
+        "typeID": "Comment",
+        "typeName": "Check Comment",
+      }
+    }
     accessibilityHint="A hint for the blue box."
+    accessibilityItemType="comment"
     accessibilityLabel="A blue box"
+    accessibilityLevel={1}
+    accessible={true}
     style={
       {
         "backgroundColor": "blue",
@@ -17,12 +29,14 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-1"
   />
   <Text>
     The following has accessible and accessibilityLabel:
   </Text>
   <View
     accessibilityLabel="A hint for the red box."
+    accessibilityLevel={2}
     accessible={true}
     style={
       {
@@ -31,18 +45,20 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-2"
   />
   <Text>
     The following has accessibilitySetSize, accessibilityPosInSet and accessibilityLabel:
   </Text>
   <View
     accessibilityLabel="This label should not be used"
-    accessibilityLevel={4}
+    accessibilityLevel={5}
     accessibilityPosInSet={2}
     accessibilityRole="listitem"
     accessibilitySetSize={5}
     accessible={true}
     aria-label="Aria label takes precedence"
+    aria-level={9}
     style={
       {
         "backgroundColor": "red",
@@ -50,6 +66,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "width": 50,
       }
     }
+    testID="accessibility-base-view-3"
   />
 </View>
 `;
@@ -1696,21 +1713,21 @@ exports[`snapshotAllPages Alerts 8`] = `
 <View>
   <Text
     style={
-      {
-        "marginBottom": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginBottom": 10,
+        },
+      ]
     }
   >
     <Text
       style={
-        [
-          {
-            "color": "#3c3c4399",
-          },
-          {
-            "fontWeight": "bold",
-          },
-        ]
+        {
+          "fontWeight": "bold",
+        }
       }
     >
       Prompt value:
@@ -7564,73 +7581,66 @@ exports[`snapshotAllPages AppState 1`] = `
       undefined,
     ]
   }
+  testID="initial-state"
 />
 `;
 
 exports[`snapshotAllPages AppState 2`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  />
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+  testID="current-state"
+/>
 `;
 
 exports[`snapshotAllPages AppState 3`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    []
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+  testID="previous-states"
+/>
 `;
 
 exports[`snapshotAllPages AppState 4`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    0
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+>
+  0
+</Text>
 `;
 
 exports[`snapshotAllPages AppState 5`] = `
-<View>
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    []
-  </Text>
-</View>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+>
+  []
+</Text>
 `;
 
 exports[`snapshotAllPages Border 1`] = `
@@ -8379,6 +8389,30 @@ exports[`snapshotAllPages Border 23`] = `
     />
   </View>
 </View>
+`;
+
+exports[`snapshotAllPages Border 24`] = `
+<View
+  style={
+    [
+      {
+        "height": 50,
+        "width": 50,
+      },
+      {
+        "backgroundColor": "red",
+        "borderLeftWidth": 10,
+        "borderRadius": 10,
+        "transform": [
+          {
+            "scale": 1.2,
+          },
+        ],
+      },
+    ]
+  }
+  testID="border-test-scaling-transforms"
+/>
 `;
 
 exports[`snapshotAllPages Button 1`] = `
@@ -12138,15 +12172,21 @@ exports[`snapshotAllPages Fast Path Texts 7`] = `
 `;
 
 exports[`snapshotAllPages Filter 1`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-brightness"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-brightness"
   >
     <View
       style={
@@ -12189,13 +12229,47 @@ exports[`snapshotAllPages Filter 1`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "brightness": 1.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12221,15 +12295,6 @@ exports[`snapshotAllPages Filter 1`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12239,13 +12304,7 @@ exports[`snapshotAllPages Filter 1`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "brightness": 1.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12253,30 +12312,22 @@ exports[`snapshotAllPages Filter 1`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 2`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12322,13 +12373,47 @@ exports[`snapshotAllPages Filter 2`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "opacity": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12354,15 +12439,6 @@ exports[`snapshotAllPages Filter 2`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12372,13 +12448,7 @@ exports[`snapshotAllPages Filter 2`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "opacity": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12386,30 +12456,22 @@ exports[`snapshotAllPages Filter 2`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 3`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12455,13 +12517,47 @@ exports[`snapshotAllPages Filter 3`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "contrast": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12487,15 +12583,6 @@ exports[`snapshotAllPages Filter 3`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12505,13 +12592,7 @@ exports[`snapshotAllPages Filter 3`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "contrast": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12519,30 +12600,22 @@ exports[`snapshotAllPages Filter 3`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 4`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12588,13 +12661,47 @@ exports[`snapshotAllPages Filter 4`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "sepia": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12620,15 +12727,6 @@ exports[`snapshotAllPages Filter 4`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12638,13 +12736,7 @@ exports[`snapshotAllPages Filter 4`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "sepia": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12652,30 +12744,22 @@ exports[`snapshotAllPages Filter 4`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 5`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12721,13 +12805,47 @@ exports[`snapshotAllPages Filter 5`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "grayscale": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12753,15 +12871,6 @@ exports[`snapshotAllPages Filter 5`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12771,13 +12880,7 @@ exports[`snapshotAllPages Filter 5`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "grayscale": 0.5,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12785,30 +12888,22 @@ exports[`snapshotAllPages Filter 5`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 6`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12854,13 +12949,47 @@ exports[`snapshotAllPages Filter 6`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "saturate": 4,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -12886,15 +13015,6 @@ exports[`snapshotAllPages Filter 6`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -12904,13 +13024,7 @@ exports[`snapshotAllPages Filter 6`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "saturate": 4,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -12918,30 +13032,22 @@ exports[`snapshotAllPages Filter 6`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 7`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -12987,13 +13093,47 @@ exports[`snapshotAllPages Filter 7`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "hueRotate": "-90deg",
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13019,15 +13159,6 @@ exports[`snapshotAllPages Filter 7`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13037,13 +13168,7 @@ exports[`snapshotAllPages Filter 7`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "hueRotate": "-90deg",
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13051,30 +13176,22 @@ exports[`snapshotAllPages Filter 7`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 8`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -13120,13 +13237,47 @@ exports[`snapshotAllPages Filter 8`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "invert": 0.7,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13152,15 +13303,6 @@ exports[`snapshotAllPages Filter 8`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13170,13 +13312,7 @@ exports[`snapshotAllPages Filter 8`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "invert": 0.7,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13184,34 +13320,26 @@ exports[`snapshotAllPages Filter 8`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 9`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-blur"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-blur"
   >
     <View
       style={
@@ -13254,13 +13382,47 @@ exports[`snapshotAllPages Filter 9`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "blur": 10,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13286,15 +13448,6 @@ exports[`snapshotAllPages Filter 9`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13304,13 +13457,7 @@ exports[`snapshotAllPages Filter 9`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "blur": 10,
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13318,34 +13465,26 @@ exports[`snapshotAllPages Filter 9`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 10`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-drop-shadow"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-drop-shadow"
   >
     <View
       style={
@@ -13388,13 +13527,47 @@ exports[`snapshotAllPages Filter 10`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "dropShadow": "30px 10px 4px #4444dd",
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13420,15 +13593,6 @@ exports[`snapshotAllPages Filter 10`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13438,13 +13602,7 @@ exports[`snapshotAllPages Filter 10`] = `
       }
       style={
         [
-          {
-            "filter": [
-              {
-                "dropShadow": "30px 10px 4px #4444dd",
-              },
-            ],
-          },
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13452,50 +13610,40 @@ exports[`snapshotAllPages Filter 10`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 11`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-chain"
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
-    testID="filter-test-chain"
   >
     <View
       style={
         [
-          [
-            {
-              "filter": [
-                {
-                  "brightness": 1.5,
-                },
-                {
-                  "opacity": 0.5,
-                },
-              ],
-            },
-          ],
+          {
+            "filter": [
+              {
+                "brightness": 1.5,
+              },
+              {
+                "opacity": 0.5,
+              },
+            ],
+          },
           {
             "backgroundColor": "#275752",
             "height": 150,
@@ -13527,13 +13675,50 @@ exports[`snapshotAllPages Filter 11`] = `
         </Text>
       </View>
     </View>
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
+      style={
+        [
+          {
+            "filter": [
+              {
+                "brightness": 1.5,
+              },
+              {
+                "opacity": 0.5,
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
     <View
       style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
       }
     >
       <View
@@ -13559,15 +13744,6 @@ exports[`snapshotAllPages Filter 11`] = `
         </Text>
       </View>
     </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13577,18 +13753,7 @@ exports[`snapshotAllPages Filter 11`] = `
       }
       style={
         [
-          [
-            {
-              "filter": [
-                {
-                  "brightness": 1.5,
-                },
-                {
-                  "opacity": 0.5,
-                },
-              ],
-            },
-          ],
+          undefined,
           {
             "height": 90,
             "width": 150,
@@ -13596,30 +13761,22 @@ exports[`snapshotAllPages Filter 11`] = `
         ]
       }
     />
-    <Image
-      resizeMode="contain"
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
-      style={
-        {
-          "height": 90,
-          "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages Filter 12`] = `
-[
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+    }
+  }
+>
   <View
     style={
       {
-        "flexDirection": "row",
         "justifyContent": "space-around",
       }
     }
@@ -13667,47 +13824,6 @@ exports[`snapshotAllPages Filter 12`] = `
         </Text>
       </View>
     </View>
-    <View
-      style={
-        {
-          "backgroundColor": "#275752",
-          "height": 150,
-          "width": 150,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "backgroundColor": "#8d2b8f",
-            "height": 75,
-            "width": 75,
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "#32a840",
-              "height": 38.5,
-              "width": 38.5,
-            }
-          }
-        />
-        <Text>
-          Hello world!
-        </Text>
-      </View>
-    </View>
-  </View>,
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-      }
-    }
-  >
     <Image
       resizeMode="contain"
       source={
@@ -13733,6 +13849,49 @@ exports[`snapshotAllPages Filter 12`] = `
         ]
       }
     />
+  </View>
+  <View
+    style={
+      {
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View
+      style={
+        [
+          undefined,
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#8d2b8f",
+            "height": 75,
+            "width": 75,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#32a840",
+              "height": 38.5,
+              "width": 38.5,
+            }
+          }
+        />
+        <Text>
+          Hello world!
+        </Text>
+      </View>
+    </View>
     <Image
       resizeMode="contain"
       source={
@@ -13741,14 +13900,103 @@ exports[`snapshotAllPages Filter 12`] = `
         }
       }
       style={
+        [
+          undefined,
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Filter 13`] = `
+<View
+  style={
+    {
+      "justifyContent": "space-around",
+    }
+  }
+  testID="filter-test-transforms"
+>
+  <View
+    style={
+      [
+        {
+          "filter": [
+            {
+              "brightness": 1.5,
+            },
+          ],
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
+        {
+          "backgroundColor": "#275752",
+          "height": 150,
+          "width": 150,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#8d2b8f",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#32a840",
+            "height": 38.5,
+            "width": 38.5,
+          }
+        }
+      />
+      <Text>
+        Hello world!
+      </Text>
+    </View>
+  </View>
+  <Image
+    resizeMode="contain"
+    source={
+      {
+        "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+      }
+    }
+    style={
+      [
+        {
+          "filter": [
+            {
+              "brightness": 1.5,
+            },
+          ],
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
         {
           "height": 90,
           "width": 150,
-        }
-      }
-    />
-  </View>,
-]
+        },
+      ]
+    }
+  />
+</View>
 `;
 
 exports[`snapshotAllPages FlatList 1`] = `
@@ -19728,9 +19976,14 @@ exports[`snapshotAllPages FlatList 9`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       <Text
@@ -19747,9 +20000,14 @@ exports[`snapshotAllPages FlatList 9`] = `
     </Text>
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       <Text
@@ -19767,9 +20025,14 @@ exports[`snapshotAllPages FlatList 9`] = `
     </Text>
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       <Text
@@ -19786,9 +20049,14 @@ exports[`snapshotAllPages FlatList 9`] = `
     </Text>
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       <Text
@@ -40219,12 +40487,17 @@ exports[`snapshotAllPages RTLExample 1`] = `
   >
     <Text
       style={
-        {
-          "flex": 1,
-          "marginBottom": 5,
-          "marginTop": 5,
-          "textAlign": "center",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "flex": 1,
+            "marginBottom": 5,
+            "marginTop": 5,
+            "textAlign": "center",
+          },
+        ]
       }
     >
       forceRTL
@@ -40423,7 +40696,16 @@ exports[`snapshotAllPages RTLExample 2`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             Text Text Text
           </Text>
         </View>
@@ -40509,7 +40791,16 @@ exports[`snapshotAllPages RTLExample 2`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             Text Text Text
           </Text>
         </View>
@@ -40654,27 +40945,42 @@ exports[`snapshotAllPages RTLExample 3`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       Left-to-Right language without text alignment.
     </Text>
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       من اليمين إلى اليسار اللغة دون محاذاة النص
     </Text>
     <Text
       style={
-        {
-          "fontSize": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 10,
+          },
+        ]
       }
     >
       מימין לשמאל השפה בלי יישור טקסט
@@ -40789,11 +41095,16 @@ exports[`snapshotAllPages RTLExample 4`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "left",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "left",
+            },
+          ],
         ]
       }
     >
@@ -40803,11 +41114,16 @@ exports[`snapshotAllPages RTLExample 4`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "left",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "left",
+            },
+          ],
         ]
       }
     >
@@ -40817,11 +41133,16 @@ exports[`snapshotAllPages RTLExample 4`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "left",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "left",
+            },
+          ],
         ]
       }
     >
@@ -40937,11 +41258,16 @@ exports[`snapshotAllPages RTLExample 5`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "right",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -40951,11 +41277,16 @@ exports[`snapshotAllPages RTLExample 5`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "right",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -40965,11 +41296,16 @@ exports[`snapshotAllPages RTLExample 5`] = `
       style={
         [
           {
-            "fontSize": 10,
+            "color": "#000000ff",
           },
-          {
-            "textAlign": "right",
-          },
+          [
+            {
+              "fontSize": 10,
+            },
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -41085,8 +41421,13 @@ exports[`snapshotAllPages RTLExample 6`] = `
       style={
         [
           {
-            "textAlign": "right",
+            "color": "#000000ff",
           },
+          [
+            {
+              "textAlign": "right",
+            },
+          ],
         ]
       }
     >
@@ -41229,9 +41570,14 @@ exports[`snapshotAllPages RTLExample 7`] = `
       />
       <Text
         style={
-          {
-            "fontSize": 8,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 8,
+            },
+          ]
         }
       >
         Without directional meaning
@@ -41270,9 +41616,14 @@ exports[`snapshotAllPages RTLExample 7`] = `
       />
       <Text
         style={
-          {
-            "fontSize": 8,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 8,
+            },
+          ]
         }
       >
         With directional meaning
@@ -41449,30 +41800,67 @@ exports[`snapshotAllPages RTLExample 9`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     paddingStart: 50,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     paddingEnd: 10
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The 
     teal
      is padding.
@@ -41603,30 +41991,67 @@ exports[`snapshotAllPages RTLExample 10`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     marginStart: 50,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     marginEnd: 10
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The green is margin.
   </Text>
   <View
@@ -41755,27 +42180,55 @@ exports[`snapshotAllPages RTLExample 11`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     start: 50
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The orange is position.
   </Text>
   <View
@@ -41895,27 +42348,55 @@ exports[`snapshotAllPages RTLExample 11`] = `
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     end: 50
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     The orange is position.
   </Text>
   <View
@@ -42039,25 +42520,53 @@ exports[`snapshotAllPages RTLExample 12`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartWidth: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndWidth: 50
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42181,25 +42690,53 @@ exports[`snapshotAllPages RTLExample 13`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartColor: 'red',
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndColor: 'green',
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42326,31 +42863,77 @@ exports[`snapshotAllPages RTLExample 14`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopStartRadius: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopEndRadius: 20,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomStartRadius: 30,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomEndRadius: 40
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42478,31 +43061,77 @@ exports[`snapshotAllPages RTLExample 15`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartStartRadius: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartEndRadius: 20,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndStartRadius: 30,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndEndRadius: 40
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -42630,43 +43259,125 @@ exports[`snapshotAllPages RTLExample 16`] = `
 <View>
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Styles
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartColor: 'red',
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndColor: 'green',
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderStartWidth: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderEndWidth: 50,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopStartRadius: 10,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderTopEndRadius: 20,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomStartRadius: 30,
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     borderBottomEndRadius: 40
   </Text>
   <Text />
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Demo: 
@@ -50965,6 +51676,113 @@ exports[`snapshotAllPages ScrollView 22`] = `
       <Text>
         Item 11
       </Text>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
+exports[`snapshotAllPages ScrollView 23`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "backgroundColor": "red",
+    }
+  }
+  horizontal={true}
+  nestedScrollEnabled={true}
+  style={
+    [
+      {
+        "backgroundColor": "#eeeeee",
+        "height": 300,
+      },
+      {
+        "height": 200,
+        "width": "100%",
+      },
+    ]
+  }
+  testID="touchable_overflowing_container_horizontal"
+>
+  <View>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "minHeight": 45,
+          "minWidth": "100%",
+        }
+      }
+    >
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_1"
+      >
+        <Text>
+          Item 
+          1
+        </Text>
+      </View>
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_2"
+      >
+        <Text>
+          Item 
+          2
+        </Text>
+      </View>
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_3"
+      >
+        <Text>
+          Item 
+          3
+        </Text>
+      </View>
     </View>
   </View>
 </RCTScrollView>
@@ -71146,7 +71964,9 @@ exports[`snapshotAllPages Text 26`] = `
 `;
 
 exports[`snapshotAllPages Text 27`] = `
-[
+<View
+  testID="number-of-lines"
+>
   <Text
     numberOfLines={1}
     style={
@@ -71164,7 +71984,7 @@ exports[`snapshotAllPages Text 27`] = `
     Maximum of one line no matter now much I write here. If I keep writing it
     '
     ll just truncate after one line
-  </Text>,
+  </Text>
   <Text
     numberOfLines={1}
     style={
@@ -71186,7 +72006,7 @@ exports[`snapshotAllPages Text 27`] = `
     Maximum of one line no matter now much I write here. If I keep writing it
     '
     ll just truncate after one line
-  </Text>,
+  </Text>
   <Text
     numberOfLines={2}
     style={
@@ -71208,7 +72028,22 @@ exports[`snapshotAllPages Text 27`] = `
     RNTesterText of two lines no matter now much I write here. If I keep writing it
     '
     ll just truncate after two lines
-  </Text>,
+  </Text>
+  <Text
+    numberOfLines={1}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginTop": 20,
+        },
+      ]
+    }
+  >
+    The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated.
+  </Text>
   <Text
     style={
       [
@@ -71229,8 +72064,8 @@ exports[`snapshotAllPages Text 27`] = `
     No maximum lines specified no matter now much I write here. If I keep writing it
     '
     ll just keep going and going
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 28`] = `
@@ -71302,6 +72137,61 @@ exports[`snapshotAllPages Text 28`] = `
 `;
 
 exports[`snapshotAllPages Text 29`] = `
+<View
+  testID="max-font-size-multiplier"
+>
+  <Text>
+    When allowFontScaling is enabled, you can use the maxFontSizeMultiplier prop to set an upper limit on how much the font size will be scaled.
+  </Text>
+  <Text
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1}
+    style={
+      {
+        "marginTop": 10,
+      }
+    }
+  >
+    This text will not scale up (max 1x)
+  </Text>
+  <Text
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1.5}
+  >
+    This text will scale up (max 1.5x)
+  </Text>
+  <Text
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1}
+  >
+    <Text>
+      Inherit max (max 1x)
+    </Text>
+  </Text>
+  <Text
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1}
+  >
+    <Text
+      maxFontSizeMultiplier={1.5}
+    >
+      Override inherited max (max 1.5x)
+    </Text>
+  </Text>
+  <Text
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1}
+  >
+    <Text
+      maxFontSizeMultiplier={0}
+    >
+      Ignore inherited max (no max)
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 30`] = `
 <Text
   selectable={true}
   style={
@@ -71318,7 +72208,7 @@ exports[`snapshotAllPages Text 29`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 30`] = `
+exports[`snapshotAllPages Text 31`] = `
 <Text
   selectable={true}
   selectionColor="orange"
@@ -71336,7 +72226,7 @@ exports[`snapshotAllPages Text 30`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 31`] = `
+exports[`snapshotAllPages Text 32`] = `
 <Text
   style={
     [
@@ -71360,7 +72250,7 @@ exports[`snapshotAllPages Text 31`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 32`] = `
+exports[`snapshotAllPages Text 33`] = `
 [
   <Text
     numberOfLines={1}
@@ -71428,7 +72318,7 @@ exports[`snapshotAllPages Text 32`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 33`] = `
+exports[`snapshotAllPages Text 34`] = `
 <View
   testID="font-variants"
 >
@@ -71539,7 +72429,7 @@ exports[`snapshotAllPages Text 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 34`] = `
+exports[`snapshotAllPages Text 35`] = `
 [
   <View
     style={
@@ -71651,7 +72541,7 @@ exports[`snapshotAllPages Text 34`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 35`] = `
+exports[`snapshotAllPages Text 36`] = `
 <View
   testID="text-transform"
 >
@@ -71911,7 +72801,7 @@ exports[`snapshotAllPages Text 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 36`] = `
+exports[`snapshotAllPages Text 37`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
@@ -71981,7 +72871,7 @@ exports[`snapshotAllPages Text 36`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 37`] = `
+exports[`snapshotAllPages Text 38`] = `
 <View>
   <Text
     style={
@@ -72403,7 +73293,7 @@ exports[`snapshotAllPages Text 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 38`] = `
+exports[`snapshotAllPages Text 39`] = `
 <View>
   <Text
     style={
@@ -72422,7 +73312,7 @@ exports[`snapshotAllPages Text 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 39`] = `
+exports[`snapshotAllPages Text 40`] = `
 <View>
   <Text
     style={
@@ -72491,7 +73381,7 @@ exports[`snapshotAllPages Text 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
@@ -72516,7 +73406,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View>
   <Text
     style={
@@ -72537,7 +73427,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -72555,7 +73445,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -72632,7 +73522,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 45`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -72688,7 +73578,7 @@ exports[`snapshotAllPages Text 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 45`] = `
+exports[`snapshotAllPages Text 46`] = `
 <View
   testID="text-opacity"
 >
@@ -72795,7 +73685,7 @@ exports[`snapshotAllPages Text 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 46`] = `
+exports[`snapshotAllPages Text 47`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -72809,6 +73699,181 @@ exports[`snapshotAllPages Text 46`] = `
     }
   >
     This text has customized dimensions.
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 48`] = `
+<View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightcoral",
+          "fontSize": 20,
+          "height": 100,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-default-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={3}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 80,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 500,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-0-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 120,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 475,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-1-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#A0C782",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-a"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
+  </Text>
+  <Text
+    numberOfLines={0}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "lightblue",
+          "fontSize": 40,
+          "height": 160,
+          "marginBottom": 10,
+          "padding": 10,
+          "width": 450,
+        },
+      ]
+    }
+    testID="text-adjustfontsizetofit-2-b"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40
   </Text>
 </View>
 `;
@@ -77492,6 +78557,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         "fontSize": 16,
       }
     }
+    testID="dynamic-width-uncontrolled-textinput"
   />
   <Text
     style={
@@ -77515,6 +78581,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         "fontSize": 16,
       }
     }
+    testID="dynamic-width-controlled-textinput"
     value=""
   />
   <View
@@ -77834,6 +78901,64 @@ exports[`snapshotAllPages TextInput 22`] = `
 
 exports[`snapshotAllPages TextInput 23`] = `
 <View>
+  <Text>
+    Select text on focus:
+  </Text>
+  <TextInput
+    selectTextOnFocus={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="select-text-on-focus"
+  />
+  <Text>
+    Do not select text on focus if clear text on focus is enabled:
+  </Text>
+  <TextInput
+    clearTextOnFocus={true}
+    selectTextOnFocus={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="select-text-on-focus-while-clear-text-on-focus"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 24`] = `
+<View>
   <TextInput
     defaultValue="Default color text"
     style={
@@ -78092,7 +79217,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -78430,7 +79555,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View
   testID="style-fontFamily"
 >
@@ -78658,7 +79783,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -78686,7 +79811,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -78803,7 +79928,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -78862,7 +79987,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -78889,7 +80014,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -79005,7 +80130,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     editable={true}
@@ -79098,7 +80223,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View
   style={
     {
@@ -79197,7 +80322,119 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
+<View>
+  <Text>
+    By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
+  </Text>
+  <TextInput
+    allowFontScaling={false}
+    placeholder="allowFontScaling = false"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    allowFontScaling={true}
+    placeholder="allowFontScaling = false"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 35`] = `
+<View
+  testID="max-font-size-multiplier"
+>
+  <Text>
+    When allowFontScaling is enabled, you can use the maxFontSizeMultiplier prop to set an upper limit on how much the font size will be scaled.
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1}
+    placeholder="This text will not scale up (max 1x)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
+    }
+    testID="non-scalable-text-input"
+  />
+  <TextInput
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1.5}
+    placeholder="This text will scale up (max 1.5x)"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
+    }
+    testID="scalable-text-input"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 36`] = `
 <View
   style={
     {
@@ -79315,7 +80552,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -79429,7 +80666,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -79650,7 +80887,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -79727,7 +80964,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <TextInput
     style={
@@ -79757,9 +80994,11 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
-  <Text>
+  <Text
+    testID="textinput-state-display"
+  >
     PressIn/PressOut message
   </Text>
   <TextInput
@@ -79792,7 +81031,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -79928,7 +81167,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 [
   <View
     focusable={true}
@@ -79994,7 +81233,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -80043,7 +81282,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 <View>
   <Text>
     CaretHidden
@@ -80075,7 +81314,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 <View>
   <Text>
     Cursorcolor
@@ -80107,7 +81346,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View>
   <Text>
     Shadow
@@ -80145,7 +81384,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -80228,7 +81467,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -82606,6 +83845,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
     </View>
   </View>
   <View
+    accessible={true}
     style={
       {
         "borderColor": "#f0f0f0",
@@ -83072,12 +84312,14 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
+        "backgroundColor": "transparent",
         "flexDirection": "row",
         "justifyContent": "center",
         "opacity": 1,
         "padding": 10,
       }
     }
+    testID="disabled_touchable"
   >
     <Text
       style={
@@ -83994,6 +85236,570 @@ exports[`snapshotAllPages TransparentHitTestExample 1`] = `
       }
     }
   />
+</View>
+`;
+
+exports[`snapshotAllPages URL 1`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://username:password@reactnative.dev:8080/docs/path?query=testQuery&key=value#fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: #fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev:8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: password
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: username
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: ?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: query=testQuery&key=value
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 2`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://reactnative.dev/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: 
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 3`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://reactnative.dev/docs/path?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: ?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: query=testQuery&key=value
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 4`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://username:password@reactnative.dev:8080/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev:8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: password
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: username
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: 
+  </Text>
 </View>
 `;
 
@@ -86096,7 +87902,10 @@ exports[`snapshotAllPages View 19`] = `
 <View
   style={
     {
-      "gap": 20,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 30,
+      "padding": 20,
     }
   }
   testID="view-test-box-shadow"
@@ -86104,153 +87913,150 @@ exports[`snapshotAllPages View 19`] = `
   <View
     style={
       {
-        "flexDirection": "row",
-        "gap": 15,
+        "borderColor": "red",
+        "borderRadius": 10,
+        "borderWidth": 5,
+        "boxShadow": "0 0 10px 0 black",
+        "height": 50,
+        "width": 50,
       }
     }
-  >
-    <View
-      style={
-        {
-          "borderColor": "red",
-          "borderRadius": 10,
-          "borderWidth": 5,
-          "boxShadow": "0 0 10px 0 black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderColor": "red",
-          "borderRadius": 30,
-          "borderWidth": 5,
-          "boxShadow": "inset 0 0 10px 0 black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderColor": "red",
-          "borderRadius": 30,
-          "borderWidth": 5,
-          "boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    />
-  </View>
+  />
   <View
     style={
       {
-        "flexDirection": "row",
-        "gap": 15,
+        "borderColor": "red",
+        "borderRadius": 30,
+        "borderWidth": 5,
+        "boxShadow": "inset 0 0 10px 0 black",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderColor": "red",
+        "borderRadius": 30,
+        "borderWidth": 5,
+        "boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "boxShadow": "0px 0px 5px 5px black",
+        "height": 50,
+        "width": 50,
       }
     }
   >
-    <View
-      style={
-        {
-          "boxShadow": "0px 0px 5px 5px black",
-          "height": 75,
-          "width": 75,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "backgroundColor": "cyan",
-            "height": 25,
-            "left": -10,
-            "width": 25,
-          }
-        }
-      />
-    </View>
     <View
       style={
         {
           "backgroundColor": "red",
           "boxShadow": "inset 0px 0px 5px 5px black",
-          "height": 75,
-          "width": 75,
+          "height": 50,
+          "width": 50,
         }
       }
     />
     <View
       style={
         {
-          "flexDirection": "row",
-          "height": 75,
-          "width": 75,
+          "boxShadow": " 0px 0px 20px 5px black",
+          "height": 50,
+          "width": 50,
         }
       }
-    >
-      <View
-        style={
-          {
-            "backgroundColor": "cyan",
-            "height": 25,
-            "width": 25,
-          }
-        }
-      />
-      <View
-        style={
-          {
-            "boxShadow": " 0px 0px 20px 5px black",
-            "height": 75,
-            "width": 75,
-          }
-        }
-      />
-      <View
-        style={
-          {
-            "backgroundColor": "cyan",
-            "height": 25,
-            "width": 25,
-          }
-        }
-      />
-    </View>
+    />
   </View>
   <View
     style={
       {
-        "flexDirection": "row",
-        "gap": 15,
+        "backgroundColor": "green",
+        "boxShadow": "0px 10px",
+        "height": 50,
+        "width": 50,
       }
     }
-  >
-    <View
-      style={
-        {
-          "backgroundColor": "green",
-          "boxShadow": "0px 10px",
-          "height": 75,
-          "width": 75,
-        }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "orange",
+        "boxShadow": "5px 5px 5px 0px rgba(0, 0, 0, 0)",
+        "height": 50,
+        "width": 50,
       }
-    />
-    <View
-      style={
+    }
+  />
+  <View
+    style={
+      [
         {
-          "backgroundColor": "orange",
-          "boxShadow": "5px 5px 5px 0px rgba(0, 0, 0, 0)",
-          "height": 75,
-          "width": 75,
-        }
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "brown",
+          "boxShadow": "5px 5px 5px 0px rgba(0, 0, 255, 1) inset",
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "hotpink",
+        "boxShadow": [
+          {
+            "blurRadius": 5,
+            "color": "green",
+            "offsetX": 5,
+            "offsetY": "5px",
+            "spreadDistance": "1px",
+          },
+          {
+            "blurRadius": "5px",
+            "color": "orange",
+            "offsetX": "-5px",
+            "offsetY": "0",
+            "spreadDistance": 2,
+          },
+        ],
+        "height": 50,
+        "width": 50,
       }
-    />
-  </View>
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "hotpink",
+        "boxShadow": [
+          {
+            "blurRadius": 5,
+            "color": "green",
+            "offsetX": "-5px",
+            "offsetY": "",
+            "spreadDistance": "1px",
+          },
+        ],
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
 </View>
 `;
 

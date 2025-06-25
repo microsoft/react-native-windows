@@ -28,7 +28,6 @@ import {convertObjectFitToResizeMode} from './ImageUtils';
 import ImageViewNativeComponent from './ImageViewNativeComponent';
 import NativeImageLoaderIOS from './NativeImageLoaderIOS';
 import resolveAssetSource from './resolveAssetSource';
-import TextInlineImageNativeComponent from './TextInlineImageNativeComponent';
 import * as React from 'react';
 
 function getSize(
@@ -150,7 +149,10 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     'aria-selected': ariaSelected,
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
-    'aria-required': ariaRequired, // Windows
+    'aria-required': ariaRequired, // Windows,
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
     height,
     src,
     ...restProps
@@ -168,6 +170,9 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     required: ariaRequired ?? props.accessibilityState?.required, // Windows
   };
   const accessibilityLabel = props['aria-label'] ?? props.accessibilityLabel;
+  const accessibilityLevel = ariaLevel ?? props.accessibilityLevel; // Windows
+  const accessibilityPosInSet = ariaPosinset ?? props.accessibilityPosInSet; // Windows
+  const accessibilitySetSize = ariaSetsize ?? props.accessibilitySetSize; // Windows
 
   const actualRef = useWrapRefWithImageAttachedCallbacks(forwardedRef);
 
@@ -190,6 +195,9 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
                   {...restProps}
                   accessible={props.alt !== undefined ? true : props.accessible}
                   accessibilityLabel={accessibilityLabel ?? props.alt}
+                  accessibilityLevel={accessibilityLevel} // Windows
+                  accessibilityPosInSet={accessibilityPosInSet} // Windows
+                  accessibilitySetSize={accessibilitySetSize} // Windows
                   ref={actualRef}
                   style={style}
                   resizeMode={resizeMode}
@@ -212,6 +220,9 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
             {...restProps}
             accessible={props.alt !== undefined ? true : props.accessible}
             accessibilityLabel={accessibilityLabel ?? props.alt}
+            accessibilityLevel={accessibilityLevel} // Windows
+            accessibilityPosInSet={accessibilityPosInSet} // Windows
+            accessibilitySetSize={accessibilitySetSize} // Windows
             ref={actualRef}
             style={style}
             resizeMode={resizeMode}
@@ -293,4 +304,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Image;
+export default Image;

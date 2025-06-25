@@ -1,8 +1,39 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:25:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.120
+
+Fri, 30 May 2025 05:25:01 GMT
+
+### Changes
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.65
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
+
+## 0.0.0-canary.119
+
+Tue, 13 May 2025 21:05:07 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.64
+- Bump @rnw-scripts/eslint-config to v1.2.35
+- Bump @rnw-scripts/just-task to v2.3.52
+
+## 0.0.0-canary.118
+
+Thu, 08 May 2025 05:23:33 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.63
+- Bump @rnw-scripts/eslint-config to v1.2.34
+- Bump @rnw-scripts/just-task to v2.3.51
 
 ## 0.0.0-canary.117
 

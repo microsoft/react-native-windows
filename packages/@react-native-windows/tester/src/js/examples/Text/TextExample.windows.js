@@ -29,7 +29,7 @@ const {
   View,
 } = require('react-native');
 
-class Entity extends React.Component<{|children: React.Node|}> {
+class Entity extends React.Component<{children: React.Node}> {
   render(): React.Node {
     return (
       <Text style={{fontWeight: 'bold', color: '#527fe4'}}>
@@ -86,12 +86,12 @@ class AttributeToggler extends React.Component<{...}, $FlowFixMeState> {
   }
 }
 
-type AdjustingFontSizeProps = $ReadOnly<{||}>;
+type AdjustingFontSizeProps = $ReadOnly<{}>;
 
-type AdjustingFontSizeState = {|
+type AdjustingFontSizeState = {
   dynamicText: string,
   shouldRender: boolean,
-|};
+};
 
 class AdjustingFontSize extends React.Component<
   AdjustingFontSizeProps,
@@ -490,9 +490,40 @@ function AllowFontScalingExample(props: {}): React.Node {
   );
 }
 
+function MaxFontSizeMultiplierExample(props: {}): React.Node {
+  return (
+    <View testID={'max-font-size-multiplier'}>
+      <Text>
+        When allowFontScaling is enabled, you can use the maxFontSizeMultiplier
+        prop to set an upper limit on how much the font size will be scaled.
+      </Text>
+      <Text
+        allowFontScaling={true}
+        maxFontSizeMultiplier={1}
+        style={{marginTop: 10}}>
+        This text will not scale up (max 1x)
+      </Text>
+      <Text allowFontScaling={true} maxFontSizeMultiplier={1.5}>
+        This text will scale up (max 1.5x)
+      </Text>
+      <Text allowFontScaling={true} maxFontSizeMultiplier={1}>
+        <Text>Inherit max (max 1x)</Text>
+      </Text>
+      <Text allowFontScaling={true} maxFontSizeMultiplier={1}>
+        <Text maxFontSizeMultiplier={1.5}>
+          Override inherited max (max 1.5x)
+        </Text>
+      </Text>
+      <Text allowFontScaling={true} maxFontSizeMultiplier={1}>
+        <Text maxFontSizeMultiplier={0}>Ignore inherited max (no max)</Text>
+      </Text>
+    </View>
+  );
+}
+
 function NumberOfLinesExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="number-of-lines">
       <RNTesterText
         numberOfLines={1}
         style={styles.wrappedText}
@@ -512,11 +543,18 @@ function NumberOfLinesExample(props: {}): React.Node {
         RNTesterText of two lines no matter now much I write here. If I keep
         writing it{"'"}ll just truncate after two lines
       </RNTesterText>
+      <RNTesterText numberOfLines={1} style={{marginTop: 20}}>
+        The hotdog should be truncated. The hotdog should be truncated. The
+        hotdog should be truncated. The hotdog should be truncated. The hotdog
+        should be truncated. The hotdog should be truncated. The hotdog should
+        be truncated. The hotdog should be truncated. The hotdog should be
+        truncated. The hotdog should be truncated.
+      </RNTesterText>
       <RNTesterText style={[{marginTop: 20}, styles.wrappedText]}>
         No maximum lines specified no matter now much I write here. If I keep
         writing it{"'"}ll just keep going and going
       </RNTesterText>
-    </>
+    </View>
   );
 }
 
@@ -1658,6 +1696,13 @@ const examples = [
     },
   },
   {
+    title: 'maxFontSizeMultiplier attribute',
+    name: 'maxFontSizeMultiplier',
+    render(): React.Node {
+      return <MaxFontSizeMultiplierExample />;
+    },
+  },
+  {
     title: 'selectable attribute',
     name: 'selectable',
     render(): React.Node {
@@ -1922,6 +1967,76 @@ const examples = [
           <Text style={{height: 100, width: 100}}>
             This text has customized dimensions.
           </Text>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'AdjustFontSize according to the Width, Height and LinesCount',
+    name: 'adjustFontSizeToFit',
+    render: function (): React.Node {
+      return (
+        <View>
+          <RNTesterText
+            style={{
+              width: 500,
+              height: 100,
+              fontSize: 20,
+              backgroundColor: 'lightcoral',
+              padding: 10,
+              marginBottom: 10,
+            }}
+            testID="text-adjustfontsizetofit-default-a">
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
+          </RNTesterText>
+          <RNTesterText
+            adjustsFontSizeToFit
+            style={{
+              width: 500,
+              height: 100,
+              fontSize: 20,
+              backgroundColor: 'lightcoral',
+              padding: 10,
+              marginBottom: 10,
+            }}
+            testID="text-adjustfontsizetofit-default-b">
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
+          </RNTesterText>
+          {[
+            {width: 500, height: 80, lineCount: 3},
+            {width: 475, height: 120, lineCount: 5},
+            {width: 450, height: 160, lineCount: 0},
+          ].map((item, index) => (
+            <React.Fragment key={index}>
+              <RNTesterText
+                testID={`text-adjustfontsizetofit-${index}-a`}
+                numberOfLines={item.lineCount}
+                adjustsFontSizeToFit
+                style={{
+                  width: item.width,
+                  height: item.height,
+                  fontSize: 40,
+                  backgroundColor: '#A0C782',
+                  padding: 10,
+                  marginBottom: 10,
+                }}>
+                {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
+              </RNTesterText>
+              <RNTesterText
+                testID={`text-adjustfontsizetofit-${index}-b`}
+                numberOfLines={item.lineCount}
+                style={{
+                  width: item.width,
+                  height: item.height,
+                  fontSize: 40,
+                  backgroundColor: 'lightblue',
+                  padding: 10,
+                  marginBottom: 10,
+                }}>
+                {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
+              </RNTesterText>
+            </React.Fragment>
+          ))}
         </View>
       );
     },

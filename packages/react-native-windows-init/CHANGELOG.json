@@ -2,6 +2,204 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 20 Jun 2025 05:21:54 GMT",
+      "version": "1.4.71",
+      "tag": "react-native-windows-init_v1.4.71",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.267",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 19 Jun 2025 17:16:28 GMT",
+      "version": "1.4.70",
+      "tag": "react-native-windows-init_v1.4.70",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.266",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 May 2025 05:24:59 GMT",
+      "version": "1.4.69",
+      "tag": "react-native-windows-init_v1.4.69",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "02e7363a430b16c3e7437462be2e9c1558ab3ca6",
+            "comment": "integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.65",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.120",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.265",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.36",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.53",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 17 May 2025 05:25:32 GMT",
+      "version": "1.4.68",
+      "tag": "react-native-windows-init_v1.4.68",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.264",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 May 2025 21:05:07 GMT",
+      "version": "1.4.67",
+      "tag": "react-native-windows-init_v1.4.67",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.64",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.119",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.263",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.35",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.52",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 May 2025 05:23:33 GMT",
+      "version": "1.4.66",
+      "tag": "react-native-windows-init_v1.4.66",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.63",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.118",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.262",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.34",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.51",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Apr 2025 05:24:04 GMT",
+      "version": "1.4.65",
+      "tag": "react-native-windows-init_v1.4.65",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.261",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Apr 2025 05:25:01 GMT",
+      "version": "1.4.64",
+      "tag": "react-native-windows-init_v1.4.64",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.260",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Apr 2025 05:22:08 GMT",
       "version": "1.4.63",
       "tag": "react-native-windows-init_v1.4.63",

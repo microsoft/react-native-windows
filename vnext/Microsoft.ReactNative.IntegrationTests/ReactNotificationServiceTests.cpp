@@ -65,7 +65,7 @@ struct NotificationTestModule {
 
 struct NotificationTestPackageProvider : winrt::implements<NotificationTestPackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-    TryAddAttributedModule(packageBuilder, L"NotificationTestModule");
+    TryAddAttributedModule(packageBuilder, L"NotificationTestModule", true);
   }
 };
 

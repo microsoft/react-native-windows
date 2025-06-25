@@ -83,7 +83,36 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     // Ideally we'd have a dialog we could push UI updates to. -- Maybe we could load XAML and host the XAML dialog?
 
     std::stringstream ss;
-    ss << m_errorInfo.Message;
+
+    const std::regex colorsRegex(
+        "(\\x1b\\[[0-9;]*m)|(\\\\u001b\\[\\d*m)"); // strip out console colors which is often added to JS error messages
+    auto message = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
+    bool needsMessage = true;
+
+    if (!message.empty() && message[0] == '{') {
+      try {
+        auto json = folly::parseJson(message);
+
+        if (json.count("type") && json["type"] == "TransformError") {
+          ss << "TransformError: " << std::endl;
+          if (json.count("errors")) {
+            for (const auto &err : json["errors"]) {
+              ss << "Filename: " << err["filename"] << std::endl;
+              ss << "lineNumber: " << err["lineNumber"] << std::endl;
+              ss << err["description"] << std::endl;
+            }
+          }
+          needsMessage = false;
+        } else {
+          message = folly::toPrettyJson(json);
+          message = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
+        }
+      } catch (...) {
+      }
+    }
+
+    if (needsMessage)
+      ss << message;
     ss << std::endl << std::endl;
     for (auto frame : m_errorInfo.Callstack) {
       ss << frame.Method << "\n" << frame.File << ":" << frame.Line << ":" << frame.Column << std::endl;

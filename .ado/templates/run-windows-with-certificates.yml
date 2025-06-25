@@ -13,7 +13,7 @@ parameters:
       - Release
   - name: buildPlatform
     type: string
-  - name: deployOption
+  - name: moreRunWindowsArgs
     type: string
     default: ''
   - name: buildLogDirectory
@@ -26,6 +26,9 @@ parameters:
   - name: restoreForceEvaluate
     type: boolean
     default: true
+  - name: errorOnNuGetLockChanges
+    type: boolean
+    default : true
   - name: moreMSBuildProps
     type: string
     default: ''
@@ -42,7 +45,7 @@ steps:
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
         --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}${{ parameters.moreMSBuildProps }}
-        ${{ parameters.deployOption }}
+        ${{ parameters.moreRunWindowsArgs }}
       displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -55,7 +58,7 @@ steps:
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
         --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}${{ parameters.moreMSBuildProps }}
-        ${{ parameters.deployOption }}
+        ${{ parameters.moreRunWindowsArgs }}
       displayName: run-windows (Release) - PR
       workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -72,8 +75,13 @@ steps:
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
         --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx,PackageCertificatePassword=${{ parameters.certificatePassword }}${{ parameters.moreMSBuildProps }}
-        ${{ parameters.deployOption }}
+        ${{ parameters.moreRunWindowsArgs }}
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
 
     - template: ../templates/cleanup-certificate.yml
+
+  - ${{ if eq(parameters.restoreLockedMode, 'true') }}:
+    - template: detect-nuget-lockfile-changes.yml
+      parameters:
+        errorOnNuGetLockChanges: ${{ parameters.errorOnNuGetLockChanges }}

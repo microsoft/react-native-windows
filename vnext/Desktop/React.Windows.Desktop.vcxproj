@@ -94,6 +94,8 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\WinUI.props" Condition="'$(UseWinUI3)'=='true'" />
     <Import Project="..\PropertySheets\WebView2.props" Condition="'$(UseWinUI3)'=='true'" />
+    <!-- Added since we build this project with/without UseExperimentalWinUI3. -->
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -125,15 +127,13 @@
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
         "$(ReactNativeWindowsDir)Microsoft.ReactNative";
-        "$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
         "$(ReactNativeWindowsDir)codegen";
         "$(ReactNativeWindowsDir)codegen\react\components\rnwcore";
-        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj /await</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
@@ -239,9 +239,6 @@
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\JsiWriter.h">
-      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="..\Microsoft.ReactNative\JSDispatcherWriter.h">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactInstanceSettings.h">

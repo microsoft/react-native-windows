@@ -14,23 +14,23 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          - Name: X64Chakra
-            BuildPlatform: x64
-            UseChakra: true
+          #- Name: X64Chakra
+          #  BuildPlatform: x64
+          #  UseChakra: true
           - Name: X64Hermes
             BuildPlatform: x64
             UseChakra: false
       - BuildEnvironment: Continuous
         Matrix:
-          - Name: X64Chakra
-            BuildPlatform: x64
-            UseChakra: true
+          #- Name: X64Chakra
+          #  BuildPlatform: x64
+          #  UseChakra: true
           - Name: X64Hermes
             BuildPlatform: x64
             UseChakra: false
-          - Name: X86Chakra
-            BuildPlatform: x86
-            UseChakra: true
+          #- Name: X86Chakra
+          #  BuildPlatform: x86
+          #  UseChakra: true
           - Name: X86Hermes
             BuildPlatform: x86
             UseChakra: false
@@ -84,6 +84,7 @@ jobs:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app
+                errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
 
             - script: |
                 echo ##vso[task.setvariable variable=StartedTests]true

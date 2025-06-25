@@ -3,7 +3,7 @@
 
 const React = require('react');
 const renderer = require('react-native/jest/renderer');
-const View = require('../Components/View/View');
+const View = require('../Components/View/View').default;
 
 describe('View', () => {
   it('renders basic view', async () => {

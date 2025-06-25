@@ -53,7 +53,7 @@ void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder
  */
 struct EllipseImageHandler
     : winrt::implements<EllipseImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
-  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
+  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext /*context*/, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"ellipse";
   }
 
@@ -104,11 +104,7 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-#ifdef USE_EXPERIMENTAL_WINUI3
     RegisterCustomComponent(packageBuilder);
-#else
-    UNREFERENCED_PARAMETER(packageBuilder);
-#endif // USE_EXPERIMENTAL_WINUI3
   }
 };
 
@@ -118,7 +114,6 @@ winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 constexpr auto WindowDataProperty = L"WindowData";
 
 int RunPlayground(int showCmd, bool useWebDebugger);
-winrt::Microsoft::ReactNative::IReactPackageProvider CreateStubDeviceInfoPackageProvider() noexcept;
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -243,12 +238,12 @@ struct WindowData {
                 ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
                 m_compRootView.SizeChanged(
                     [hwnd, props = InstanceSettings().Properties()](
-                        auto sender, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                        auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
                       auto compositor =
                           winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
                       auto async = compositor.RequestCommitAsync();
                       async.Completed([hwnd, size = args.Size()](
-                                          auto asyncInfo, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
+                                          auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
                         RECT rcClient, rcWindow;
                         GetClientRect(hwnd, &rcClient);
                         GetWindowRect(hwnd, &rcWindow);
@@ -344,7 +339,7 @@ struct WindowData {
       case IDM_UNLOAD: {
         auto async = Host().UnloadInstance();
         async.Completed([&, uidispatch = InstanceSettings().UIDispatcher()](
-                            auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+                            auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           asyncStatus;
           OutputDebugStringA("Instance Unload completed\n");
 
@@ -367,6 +362,15 @@ struct WindowData {
                            : winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
         }
         m_forceRTL = !m_forceRTL;
+      }
+      case IDM_SETPROPS: {
+        m_compRootView.SetProperties([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
+          static int value = 123;
+          writer.WriteObjectBegin();
+          winrt::Microsoft::ReactNative::WriteProperty(writer, L"testProp1", value++);
+          winrt::Microsoft::ReactNative::WriteProperty(writer, L"testProp2", L"value2");
+          writer.WriteObjectEnd();
+        });
       }
     }
 
@@ -578,7 +582,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
             L"ReactNative.Composition", L"CompositionContext"});
 
         auto async = data->m_host.UnloadInstance();
-        async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+        async.Completed([host = data->m_host](auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
@@ -707,12 +711,9 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
   g_liftedCompositor = winrt::Microsoft::UI::Composition::Compositor();
 
-// We only want to init XAML if we are using XAML islands
-#ifdef USE_EXPERIMENTAL_WINUI3
   // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
   // in Microsoft.ui.xaml.controls.dll.
   auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
-#endif
 
   return RunPlayground(showCmd, false);
 }

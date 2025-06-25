@@ -6,7 +6,7 @@
  */
 
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
-import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
+import type {HostComponent} from '../../../src/private/types/HostComponent';
 import type {
   DirectEventHandler,
   Double,

@@ -65,7 +65,7 @@
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>JSI_VERSION=11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=19;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         To address the crash on the first call to std::mutex::lock.
         See: https://github.com/microsoft/STL/wiki/Changelog#vs-2022-1710
@@ -138,7 +138,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions) /await</AdditionalOptions>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SpectreMitigation>Spectre</SpectreMitigation>
 
@@ -150,11 +150,16 @@
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)\ReactCommon\jsitooling;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
         $(ReactNativeDir)\ReactCommon\react\bridging;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform;
+        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\view\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>

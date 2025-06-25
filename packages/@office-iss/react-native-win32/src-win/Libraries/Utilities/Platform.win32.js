@@ -9,7 +9,7 @@
 import type {
   Platform as PlatformType,
   PlatformSelectSpec,
-} from './Platform.flow';
+} from './PlatformTypes';
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
@@ -22,7 +22,7 @@ const Platform: PlatformType = {
     return this.constants.osVersion;
   },
   // $FlowFixMe[unsafe-getters-setters]
-  get constants(): {|
+  get constants(): {
     forceTouchAvailable: boolean,
     interfaceIdiom: string,
     isTesting: boolean,
@@ -36,7 +36,7 @@ const Platform: PlatformType = {
     |},
     systemName: string,
     isMacCatalyst?: boolean,
-  |} {
+  } {
     // $FlowFixMe[object-this-reference]
     if (this.__constants == null) {
       // $FlowFixMe[object-this-reference]
@@ -78,4 +78,4 @@ const Platform: PlatformType = {
           spec.default,
 };
 
-module.exports = Platform;
+export default Platform;

@@ -8,7 +8,7 @@ REM name            The name of the app to create (default: testapp)
 REM /r [version]    Use react@version (default: latest)
 REM /rn [version]   Use react-native@version (default: latest)
 REM /rnw [version]  Use react-native-windows@version (default: latest)
-REM /lt [template]  Use template (default: cpp-app)
+REM /t [template]   Use template (default: cpp-app)
 REM /linkrnw        Use your local RNW repo at RNW_ROOT
 REM /verdaccio      Configure new project to use verdaccio (used in CI)
 REM
@@ -16,6 +16,12 @@ REM Requirements:
 REM - You've set the RNW_ROOT environment variable with the path to your clone
 
 setlocal enableextensions enabledelayedexpansion
+
+call git rev-parse --is-inside-work-tree > NUL 2>&1
+if %ERRORLEVEL% equ 0 (
+  @echo creaternwapp.cmd: Unable to create a new project in an existing git repo
+  exit /b -1
+)
 
 if "%RNW_ROOT%"=="" (
   @echo creaternwapp.cmd: RNW_ROOT environment variable set to %~dp0..\..
@@ -50,7 +56,7 @@ if not "%part%"=="" (
   ) else if "%part%"=="/rnw" (
       set RNW_VERSION=%param%
       shift
-  ) else if "%part%"=="/lt" (
+  ) else if "%part%"=="/t" (
       set RNW_TEMPLATE_TYPE=%param%
       shift
   ) else if "%part:~0,1%"=="/" (
@@ -105,8 +111,14 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 
 @echo creaternwapp.cmd Creating RNW app "%APP_NAME%" with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 
-@echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true
-call npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true
+set RNCLI_TEMPLATE=
+if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
+  @echo creaternwapp.cmd Override @react-native-community/template version
+  set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
+)
+
+@echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
+call npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwapp.cmd: Unable to create base RN app project
@@ -117,10 +129,9 @@ pushd "%APP_NAME%"
 
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwapp.cmd Fixing react-native nightly issues
-  pwsh.exe -Command "(gc package.json) -replace '""nightly""', '""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli"": "".*""', '""@react-native-community/cli"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-android"": "".*""', '""@react-native-community/cli-platform-android"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli-platform-ios"": "".*""', '""@react-native-community/cli-platform-ios"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
 )
 
 @echo creaternwapp.cmd: Calling yarn install
@@ -129,7 +140,7 @@ call yarn install
 @echo creaternwapp.cmd: Creating commit to save current state
 if not exist ".git\" call git init .
 call git add .
-call git commit -m "npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% --verbose --skip-install --install-pods false --skip-git-init true"
+call git commit -m "npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true"
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting yarn to use verdaccio at http://localhost:4873

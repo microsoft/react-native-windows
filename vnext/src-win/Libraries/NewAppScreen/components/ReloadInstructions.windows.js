@@ -8,8 +8,6 @@
  * @format
  */
 
-import type {Node} from 'react';
-
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
 import React from 'react';
@@ -20,7 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReloadInstructions = (): Node => (
+const ReloadInstructions = (): React.Node => (
   <Text>
     Press <Text style={styles.highlight}>Ctrl+Shift+D</Text> and select{' '}
     <Text style={styles.highlight}>Reload javascript</Text> to reload your app's

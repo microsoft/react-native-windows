@@ -14,6 +14,18 @@ import "IReactPropertyBag.idl";
 namespace Microsoft.ReactNative
 {
 
+  DOC_STRING("Function that acts on a JsiRuntime, provided as the argument to the function.  ABI safe version of facebook::react::CallFunc in CallInvoker.h. Most direct usage of this should be avoided by using ReactContext.CallInvoker.")
+  delegate void CallFunc(Object runtime);
+
+  [webhosthidden]
+  [default_interface]
+  DOC_STRING("CallInvoker used to access the jsi runtime. Most direct usage of this should be avoided by using ReactContext.CallInvoker.")
+  runtimeclass CallInvoker
+  {
+    void InvokeAsync(CallFunc func);
+    void InvokeSync(CallFunc func);
+  };
+
   DOC_STRING(
     "Used to represent the state of the React Native JavaScript instance")
   enum LoadingState
@@ -173,6 +185,7 @@ namespace Microsoft.ReactNative
       "It is a shortcut for the @ReactDispatcherHelper.UIDispatcherProperty from the @.Properties property bag.")
     IReactDispatcher UIDispatcher { get; };
 
+    [deprecated("Use @IReactContext.CallInvoker instead", deprecate, 1)]
     DOC_STRING(
       "Gets the JavaScript engine thread dispatcher.\n"
       "It is a shortcut for the @ReactDispatcherHelper.JSDispatcherProperty from the @.Properties property bag.")
@@ -182,8 +195,12 @@ namespace Microsoft.ReactNative
       "Gets the JavaScript runtime for the running React instance.\n"
       "It can be null if Web debugging is used.\n"
       "**Note: do not use this property directly. "
-      "It is an experimental property that may be removed or changed in a future version.")
+      "It is an experimental property will be removed in a future version.\n"
+      "Deprecated for new Arch: Use @IReactContext.CallInvoker instead.")
     Object JSRuntime { get; };
+
+    DOC_STRING("used to schedule work on the JS runtime. Most direct usage of this should be avoided by using ReactContext.CallInvoker.")
+    CallInvoker CallInvoker { get; };
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
     [deprecated("Use @XamlUIService.DispatchEvent instead", deprecate, 1)]

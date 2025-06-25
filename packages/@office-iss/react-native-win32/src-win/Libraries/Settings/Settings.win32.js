@@ -6,7 +6,7 @@
 'use strict';
 
 var Settings = {
-  get(key: string): mixed {
+  get(key: string): any {
     console.warn('Settings is not yet supported on Win32');
     return null;
   },
@@ -15,7 +15,7 @@ var Settings = {
     console.warn('Settings is not yet supported on Win32');
   },
 
-  watchKeys(keys: string | Array<string>, callback: Function): number {
+  watchKeys(keys: string | Array<string>, callback: () => void): number {
     console.warn('Settings is not yet supported on Win32');
     return -1;
   },
@@ -25,4 +25,4 @@ var Settings = {
   },
 };
 
-module.exports = Settings;
+export default Settings;

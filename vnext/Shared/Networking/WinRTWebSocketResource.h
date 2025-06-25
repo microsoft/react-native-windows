@@ -18,17 +18,101 @@ namespace Microsoft::React::Networking {
 
 class WinRTWebSocketResource2 : public IWebSocketResource,
                                 public std::enable_shared_from_this<WinRTWebSocketResource2> {
+  ///
+  // See https://devblogs.microsoft.com/oldnewthing/20250328-00/?p=111016
+  ///
+  struct TaskSequencer {
+    TaskSequencer() = default;
+    TaskSequencer(const TaskSequencer &) = delete;
+    void operator=(const TaskSequencer &) = delete;
+
+   private:
+    using CoroHandle = std::experimental::coroutine_handle<>;
+
+    struct Suspender {
+      CoroHandle m_handle;
+
+      bool await_ready() const noexcept {
+        return false;
+      }
+
+      void await_suspend(CoroHandle h) noexcept {
+        m_handle = h;
+      }
+
+      void await_resume() const noexcept {}
+    };
+
+    static void *Completed() {
+      return reinterpret_cast<void *>(1);
+    }
+
+    struct ChainedTask {
+     private:
+      std::atomic<void *> m_next;
+
+     public:
+      ChainedTask(void *state = nullptr) : m_next(state) {}
+
+      void ContinueWith(CoroHandle h) {
+        if (m_next.exchange(h.address(), std::memory_order_acquire) != nullptr) {
+          h();
+        }
+      }
+
+      void Complete() {
+        auto resumeAddress = m_next.exchange(Completed());
+        if (resumeAddress) {
+          CoroHandle::from_address(resumeAddress).resume();
+        }
+      }
+    };
+
+    struct Completer {
+      std::shared_ptr<ChainedTask> m_chain;
+
+      ~Completer() {
+        m_chain->Complete();
+      }
+    };
+
+    winrt::slim_mutex m_mutex;
+    std::shared_ptr<ChainedTask> m_latest = std::make_shared<ChainedTask>(Completed());
+
+   public:
+    template <typename Maker>
+    auto QueueTaskAsync(Maker &&maker) -> decltype(maker()) {
+      auto node = std::make_shared<ChainedTask>();
+      Suspender suspend;
+
+      using Async = decltype(maker());
+      auto task = [&node, &suspend, &maker]() -> Async {
+        Completer completer{node};
+        auto localMaker = std::forward<Maker>(maker);
+        auto context = winrt::apartment_context();
+
+        co_await suspend;
+        co_await context;
+
+        co_return co_await localMaker();
+      }();
+
+      {
+        winrt::slim_lock_guard guard(m_mutex);
+        m_latest.swap(node);
+      }
+
+      node->ContinueWith(suspend.m_handle);
+
+      return task;
+    }
+  };
+
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
-
-  ///
-  // Connection attempt performed, either succeeding or failing
-  ///
-  winrt::handle m_connectPerformed;
-
   ReadyState m_readyState;
+  TaskSequencer m_sequencer;
   Mso::DispatchQueue m_callingQueue;
   Mso::DispatchQueue m_backgroundQueue;
-  std::queue<std::pair<std::string, bool>> m_outgoingMessages;
   CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;
 
@@ -52,9 +136,9 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
       winrt::Windows::Networking::Sockets::IWebSocketClosedEventArgs const &args);
 
   winrt::fire_and_forget PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
-  winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::fire_and_forget EnqueueWrite(std::string &&message, bool isBinary) noexcept;
+  winrt::Windows::Foundation::IAsyncAction PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
-  winrt::Windows::Foundation::IAsyncAction SendPendingMessages() noexcept;
 
   WinRTWebSocketResource2(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,

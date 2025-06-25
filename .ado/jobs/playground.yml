@@ -42,14 +42,6 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
-          - Name: X86DebugWin32
-            BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground-Win32.sln
-          - Name: X64ReleaseWin32
-            BuildConfiguration: Release
-            BuildPlatform: x64
-            SolutionFile: Playground-Win32.sln
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X86DebugCompositionExperimentalWinUI3
@@ -104,14 +96,6 @@ parameters:
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
             UseExperimentalWinUI3: true
-          - Name: X86DebugWin32
-            BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground-Win32.sln
-          - Name: X64ReleaseWin32
-            BuildConfiguration: Release
-            BuildPlatform: x64
-            SolutionFile: Playground-Win32.sln
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -142,19 +126,9 @@ jobs:
                   certificatePassword: ${{ parameters.certificatePassword }}
         
             - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
-              - template:  ../templates/enable-experimental-winui3.yml
+              - template: ../templates/enable-experimental-winui3.yml
                 parameters:
                   workingDir: packages\playground\windows
-
-            # NuGet ignores packages.config if it detects <PackageReference>.
-            # Use restore packages.config directly to keep compabitility with ReactNativePicker.
-            - pwsh: |
-                Get-ChildItem -Recurse -Path packages.config |`
-                  Foreach-Object {`
-                    NuGet.exe Restore -PackagesDirectory packages $_`
-                  }
-              workingDirectory: packages/playground/windows
-              displayName: Restore packages.config items
 
             - template: ../templates/msbuild-sln.yml
               parameters:

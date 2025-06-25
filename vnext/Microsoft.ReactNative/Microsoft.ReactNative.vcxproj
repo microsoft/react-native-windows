@@ -17,7 +17,6 @@
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
-    <BuildMSRNCxxModule>false</BuildMSRNCxxModule>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -101,7 +100,6 @@
       <AdditionalIncludeDirectories>
         $(FmtDir)\include;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
-        $(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Pch;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
@@ -199,9 +197,6 @@
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="DynamicWriter.h">
-      <DependentUpon>IJSValueWriter.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="JSDispatcherWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="HResult.h" />

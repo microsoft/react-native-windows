@@ -260,7 +260,7 @@ export default class Bootstrap extends React.Component<
                   : {tintColor: this.state.tintColor},
               ]}
               defaultSource={{uri: this.state.defaultImageUri}}
-              source={{uri: this.state.imageUri}}
+              source={{uri: this.state.imageUri, body: 'test'}}
               loadingIndicatorSource={{uri: loadingImageUri}}
               resizeMode={this.state.selectedResizeMode}
               blurRadius={this.state.blurRadius}
@@ -268,6 +268,9 @@ export default class Bootstrap extends React.Component<
               onLoadStart={() => console.log('onLoadStart')}
               onLoadEnd={() => console.log('onLoadEnd')}
               onProgress={this.handleOnProgress}
+              aria-level={1}
+              aria-posinset={10}
+              aria-setsize={100}
             />
           )}
         </View>

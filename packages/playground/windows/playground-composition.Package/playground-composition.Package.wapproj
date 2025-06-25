@@ -44,6 +44,8 @@
   </ItemGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.Package.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.Package.props')" />
+    <!-- Added since we build this project with/without UseExperimentalWinUI3. -->
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

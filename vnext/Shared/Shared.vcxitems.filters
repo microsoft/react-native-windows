@@ -155,9 +155,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.cpp">
       <Filter>Source Files\Fabric</Filter>
     </ClCompile>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequestParams.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClInclude>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -218,6 +215,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp">
+      <Filter>Source Files\Fabric\Composition</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeIsland.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
@@ -235,9 +235,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
       <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp">
-      <Filter>Source Files\Fabric\platform\react\renderer\textlayoutmanager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\PortalComponentView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\RootComponentView.cpp" />
@@ -286,7 +283,6 @@
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\AsynchronousEventBeat.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SynchronousEventBeat.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.cpp" />
@@ -323,7 +319,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetDebuggerSessionObserver.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContextManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContext.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\CdpJson.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\cdp\CdpJson.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ConsoleMessage.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\NetworkIOAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
@@ -341,6 +337,13 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequestParams.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\CallInvoker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatPosix.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatWindows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\WindowsTextLayoutManager.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

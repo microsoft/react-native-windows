@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-channel",
-  "version": "0.12.279",
+  "version": "0.12.307",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -22,9 +22,9 @@
     "jsonrpc-lite": "^2.2.0"
   },
   "devDependencies": {
-    "@react-native-community/cli": "15.0.0-alpha.2",
-    "@rnw-scripts/eslint-config": "1.2.33",
-    "@rnw-scripts/just-task": "2.3.50",
+    "@react-native-community/cli": "17.0.0",
+    "@rnw-scripts/eslint-config": "1.2.36",
+    "@rnw-scripts/just-task": "2.3.53",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/find-up": "^4.0.0",
     "@types/node": "^18.0.0",
@@ -32,15 +32,14 @@
     "just-scripts": "^1.3.2",
     "prettier": "2.8.8",
     "react": "19.0.0",
-    "react-native": "0.78.0-nightly-20250113-d4407d6f7",
-    "react-native-windows": "^0.0.0-canary.939",
+    "react-native": "0.80.0-nightly-20250331-398ac1f71",
+    "react-native-windows": "^0.0.0-canary.967",
     "typescript": "5.0.4"
   },
   "files": [
     "lib-commonjs",
     "windows",
-    "!packages.lock.json",
-    "!packages.fabric.lock.json"
+    "!packages*.lock.json"
   ],
   "engines": {
     "node": ">= 18"

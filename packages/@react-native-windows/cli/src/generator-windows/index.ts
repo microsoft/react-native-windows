@@ -478,11 +478,11 @@ export async function installScriptsAndDependencies(options: {
 
   // We add an exclusionList from metro config. This will be hoisted, but add
   // an explicit dep because we require it directly.
-  const cliPackage = await findPackage('@react-native-community/cli', {
+  const rnMetroConfigPacakge = await findPackage('@react-native/metro-config', {
     searchPath: rnPackage.path,
   });
   const metroConfigPackage = await findPackage('metro-config', {
-    searchPath: cliPackage?.path || rnPackage.path,
+    searchPath: rnMetroConfigPacakge?.path || rnPackage.path,
   });
 
   if (metroConfigPackage) {

@@ -14,14 +14,13 @@ namespace Microsoft.ReactNative
 
   [webhosthidden]
   [experimental]
-  DOC_STRING("Provides ability to register custom ViewComponents when running fabric.  Methods on this interface will eventually be moved onto @IReactPackageProvider once fabric ships.")
+  DOC_STRING("Provides ability to register custom ViewComponents when running fabric.")
   interface IReactPackageBuilderFabric
   {
     DOC_STRING("Registers a custom native view component.")
     void AddViewComponent(String componentName, ReactViewComponentProvider componentProvider);
 
-    DOC_STRING(
-      "Ability to load images using custom Uri protocol handlers. The provider should implement @Composition.IUriImageStreamProvider or @Composition.Experimental.IUriBrushProvider.")
+    DOC_STRING("Ability to load images using custom Uri protocol handlers.")
     void AddUriImageProvider(Microsoft.ReactNative.Composition.IUriImageProvider provider);
   };
 

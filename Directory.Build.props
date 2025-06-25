@@ -28,6 +28,10 @@
   <PropertyGroup Label="NuGet">
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' != ''">$(RootIntDir)\ProjectExtensions\$(ProjectName)\</MSBuildProjectExtensionsPath>
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' == ''">$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)' == ''">true</RestoreLockedMode>
+    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
+    <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">true</RestoreForceEvaluate>
   </PropertyGroup>
 
   <!-- User overrides -->

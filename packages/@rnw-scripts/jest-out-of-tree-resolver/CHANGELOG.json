@@ -2,6 +2,57 @@
   "name": "@rnw-scripts/jest-out-of-tree-resolver",
   "entries": [
     {
+      "date": "Fri, 30 May 2025 05:25:03 GMT",
+      "version": "1.1.39",
+      "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.1.39",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/jest-out-of-tree-resolver",
+            "commit": "02e7363a430b16c3e7437462be2e9c1558ab3ca6",
+            "comment": "integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-out-of-tree-resolver",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.36",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 May 2025 21:05:07 GMT",
+      "version": "1.1.38",
+      "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.1.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-out-of-tree-resolver",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.35",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 May 2025 05:23:33 GMT",
+      "version": "1.1.37",
+      "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.1.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-out-of-tree-resolver",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.34",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Apr 2025 05:22:08 GMT",
       "version": "1.1.36",
       "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.1.36",

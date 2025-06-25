@@ -14,6 +14,7 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
+  TextInput,
 } from 'react-native';
 
 function wait(timeout: number) {
@@ -33,6 +34,8 @@ export default class Bootstrap extends React.Component<{}, any> {
     keyboardDismiss: false,
     snapToOffsets: true,
     pagingEnabled: false,
+    showsHorizontalScrollIndicatorValue: true,
+    showsVerticalScrollIndicatorValue: false,
   };
 
   toggleSwitch1 = (value: boolean) => {
@@ -65,6 +68,14 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   toggleSwitch8 = (value: boolean) => {
     this.setState({keyboardDismiss: value});
+  };
+
+  toggleSwitch9 = (value: boolean) => {
+    this.setState({showsHorizontalScrollIndicatorValue: value});
+  };
+
+  toggleSwitch10 = (value: boolean) => {
+    this.setState({showsVerticalScrollIndicatorValue: value});
   };
 
   onRefresh = () => {
@@ -107,6 +118,42 @@ export default class Bootstrap extends React.Component<{}, any> {
             <Switch
               onValueChange={this.toggleSwitch1}
               value={this.state.horizontalValue}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>
+              {' '}
+              {this.state.showsHorizontalScrollIndicatorValue
+                ? 'Show Horizontal Indicator'
+                : 'Hide Horizontal Indicator'}
+            </Text>
+            <Switch
+              onValueChange={this.toggleSwitch9}
+              value={this.state.showsHorizontalScrollIndicatorValue}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>
+              {' '}
+              {this.state.showsVerticalScrollIndicatorValue
+                ? 'Show Vertical Indicator'
+                : 'Hide Vertical Indicator'}
+            </Text>
+            <Switch
+              onValueChange={this.toggleSwitch10}
+              value={this.state.showsVerticalScrollIndicatorValue}
             />
           </View>
           <View
@@ -201,23 +248,6 @@ export default class Bootstrap extends React.Component<{}, any> {
               value={this.state.pagingEnabled}
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              alignSelf: 'stretch',
-              justifyContent: 'center',
-              padding: 20,
-            }}>
-            <Text>
-              {'KeyboardDismiss: '.concat(
-                this.state.keyboardDismiss ? 'on-drag' : 'none',
-              )}
-            </Text>
-            <Switch
-              onValueChange={this.toggleSwitch8}
-              value={this.state.keyboardDismiss}
-            />
-          </View>
         </View>
         <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
           <ScrollView
@@ -246,13 +276,63 @@ export default class Bootstrap extends React.Component<{}, any> {
             snapToEnd={this.state.snapToEndValue}
             snapToAlignment={this.state.alignToStartValue ? 'start' : 'end'}
             horizontal={this.state.horizontalValue}
+            showsHorizontalScrollIndicator={
+              this.state.showsHorizontalScrollIndicatorValue
+            }
+            showsVerticalScrollIndicator={
+              this.state.showsVerticalScrollIndicatorValue
+            }
             onScrollBeginDrag={() => {
               console.log('onScrollBeginDrag');
             }}
+            onScrollEndDrag={() => {
+              console.log('onScrollEndDrag');
+            }}
             onScroll={() => {
               console.log('onScroll');
-            }}>
+            }}
+            decelerationRate={0.95}
+            scrollEventThrottle={50}>
             {this.makeItems(20, [styles.itemWrapper])}
+          </ScrollView>
+        </View>
+        <View
+          style={{
+            flexDirection: 'column',
+            alignSelf: 'stretch',
+            justifyContent: 'center',
+            padding: 20,
+          }}>
+          <Text>
+            {'KeyboardDismiss: '.concat(
+              this.state.keyboardDismiss ? 'on-drag' : 'none',
+            )}
+          </Text>
+          <Switch
+            onValueChange={this.toggleSwitch8}
+            value={this.state.keyboardDismiss}
+          />
+        </View>
+        <View style={{height: 200}}>
+          <ScrollView
+            style={{borderWidth: 2, borderColor: 'green'}}
+            keyboardDismissMode={
+              this.state.keyboardDismiss ? 'on-drag' : 'none'
+            }
+            contentContainerStyle={{padding: 20}}>
+            <TextInput
+              style={{
+                borderWidth: 1,
+                marginBottom: 20,
+                padding: 8,
+                height: 40,
+              }}
+              placeholder="Touch here for keyboard"
+            />
+            <Text>Scroll to test keyboard dismiss behavior.</Text>
+            <View style={{height: 100, marginTop: 20}}>
+              <Text>Scroll down to see more empty content.</Text>
+            </View>
           </ScrollView>
         </View>
       </View>

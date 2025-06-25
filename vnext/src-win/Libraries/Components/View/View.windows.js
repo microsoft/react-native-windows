@@ -58,7 +58,7 @@ const childrenWithImportantForAccessibility = children => {
  * @see https://reactnative.dev/docs/view
  */
 const View: component(
-  ref: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
+  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) = React.forwardRef(
   (
@@ -288,9 +288,9 @@ const View: component(
         // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
         // But since Views are not currently supported in Text, we do not need the extra provider
         <TextAncestor.Consumer>
-          {hasTextAncestor => {
+          {consumerHasTextAncestor => {
             invariant(
-              !hasTextAncestor,
+              !consumerHasTextAncestor,
               'Nesting of <View> within <Text> is not currently supported.',
             );
             return (
@@ -355,4 +355,4 @@ const View: component(
 
 View.displayName = 'View';
 
-module.exports = View;
+export default View;

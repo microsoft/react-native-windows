@@ -12,6 +12,8 @@
 #include <cxxreact/TraceSection.h>
 #include <jsinspector-modern/ConsoleMessage.h>
 #include <jsinspector-modern/InspectorInterfaces.h>
+#include <jsinspector-modern/tracing/InstanceTracingProfile.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <mutex>
 #include "SafeLoadLibrary.h"
 
@@ -324,6 +326,9 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   CRASH_ON_ERROR(api.jsr_config_set_inspector_runtime_name(config, devSettings->debuggerRuntimeName.c_str()));
   CRASH_ON_ERROR(api.jsr_config_set_inspector_port(config, devSettings->debuggerPort));
   CRASH_ON_ERROR(api.jsr_config_set_inspector_break_on_start(config, devSettings->debuggerBreakOnNextLine));
+  CRASH_ON_ERROR(api.jsr_config_set_explicit_microtasks(
+      config, facebook::react::ReactNativeFeatureFlags::enableBridgelessArchitecture()));
+
   if (m_jsQueue) {
     HermesTaskRunner::Create(config, m_jsQueue);
   }
@@ -423,6 +428,19 @@ std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> HermesJSRuntime
     facebook::jsi::Runtime &runtime,
     size_t framesToSkip) {
   return std::make_unique<facebook::react::jsinspector_modern::StackTrace>();
+}
+
+void HermesJSRuntime::enableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+void HermesJSRuntime::disableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesJSRuntime::collectSamplingProfile() {
+  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
+      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(

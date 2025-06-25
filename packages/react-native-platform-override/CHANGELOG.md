@@ -1,8 +1,41 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Wed, 02 Apr 2025 05:22:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 May 2025 05:24:58 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.9.55
+
+Fri, 30 May 2025 05:24:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.65
+- Bump @react-native-windows/package-utils to v0.0.0-canary.91
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
+
+## 1.9.54
+
+Tue, 13 May 2025 21:05:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.64
+- Bump @react-native-windows/package-utils to v0.0.0-canary.90
+- Bump @rnw-scripts/eslint-config to v1.2.35
+- Bump @rnw-scripts/just-task to v2.3.52
+
+## 1.9.53
+
+Thu, 08 May 2025 05:23:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.63
+- Bump @react-native-windows/package-utils to v0.0.0-canary.89
+- Bump @rnw-scripts/eslint-config to v1.2.34
+- Bump @rnw-scripts/just-task to v2.3.51
 
 ## 1.9.52
 

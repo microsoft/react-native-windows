@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <CppWinRTIncludes.h>
 #include <Fabric/ComponentView.h>
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <react/renderer/components/view/ViewEventEmitter.h>

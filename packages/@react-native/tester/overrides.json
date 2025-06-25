@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.78.0-nightly-20250113-d4407d6f7",
+  "baseVersion": "0.80.0-nightly-20250331-398ac1f71",
   "overrides": [
     {
       "type": "copy",
@@ -12,21 +12,21 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "d3434b14e1358290362abc7ef289243d9e66e8e1",
+      "baseHash": "e958931698aa6af1dca6aaa7a026fd93b02593f1",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "434664d5613e7c89ec06087f48290d6759529d8b",
+      "baseHash": "bb677ac75ceca365e1e107bd9bea79b4a74ac900",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/ActionSheetIOS",
       "baseDirectory": "packages/rn-tester/js/examples/ActionSheetIOS",
-      "baseHash": "a346f2ad86ee36c62870e8ce442c921c930b693a",
+      "baseHash": "e278ed7aaecc90529ce5bc548f9d277bc9e16fc1",
       "issue": 4054
     },
     {
@@ -40,21 +40,21 @@
       "type": "copy",
       "directory": "js/examples/Alert",
       "baseDirectory": "packages/rn-tester/js/examples/Alert",
-      "baseHash": "4dbd8fd631d378bb84362914b87d647df88e16ff",
+      "baseHash": "6b91f55baed6720cd5d01dfa1fadbd4c2f073fe4",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Animated",
       "baseDirectory": "packages/rn-tester/js/examples/Animated",
-      "baseHash": "6dbef5bd375952034e454b7b816b3e5d6278bc40",
+      "baseHash": "b2a746d61292c1c0b7e5360fd62071f980c7d6ae",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/AnimatedGratuitousApp",
       "baseDirectory": "packages/rn-tester/js/examples/AnimatedGratuitousApp",
-      "baseHash": "d9f91a2c3d2cbb44b04b74dc10454280962b1de9",
+      "baseHash": "ac4e5fc05ccc16a740867ea59a0a60c8f98acef1",
       "issue": 4054
     },
     {
@@ -68,14 +68,14 @@
       "type": "copy",
       "directory": "js/examples/AppState",
       "baseDirectory": "packages/rn-tester/js/examples/AppState",
-      "baseHash": "0179738eb4b14486465946030300549f2c7db92c",
+      "baseHash": "fe70acb5cebfb2bfff126e19d9e507143c4e1600",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Border",
       "baseDirectory": "packages/rn-tester/js/examples/Border",
-      "baseHash": "5abfca6522407f53ee97231ae2c1e3f9014cd459",
+      "baseHash": "178f9214d1a072813784b0112b83997086db6e12",
       "issue": 4054
     },
     {
@@ -138,42 +138,42 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "938d8d7699b2f8f24783ccbe37d810190bedc0ae",
+      "baseHash": "34462179028828cfa80634d326cdff7415df26e2",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Filter",
       "baseDirectory": "packages/rn-tester/js/examples/Filter",
-      "baseHash": "a9379afe462199b7cbfa76f71ea441e82356349c",
+      "baseHash": "131051d070a95aae095d76b9a7fd67d01396097d",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "a6b0801ed07ae3a9ac23cadbd1ee3a67327f26ec",
+      "baseHash": "6c42401f603681fc27a072bbbe9bc249f437082f",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "1f01708a3651bee3f6a4df97a9c5964b81bf043b",
+      "baseHash": "9df3036794e251a8fadc4c153f6a17d076ff5bf0",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/InputAccessoryView",
       "baseDirectory": "packages/rn-tester/js/examples/InputAccessoryView",
-      "baseHash": "51fe1f354f1185ec8e20794b7bf305eb45efb566",
+      "baseHash": "3786b55aa9476b0460b6f8f7ba4ca281945bc399",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/IntersectionObserver",
       "baseDirectory": "packages/rn-tester/js/examples/IntersectionObserver",
-      "baseHash": "e472434c26d83ac79b0c56c84c5715a64e56fb00",
+      "baseHash": "6474162bb9c7e116ffd4f062a549a7d79cc395f8",
       "issue": 4054
     },
     {
@@ -208,21 +208,21 @@
       "type": "copy",
       "directory": "js/examples/Layout",
       "baseDirectory": "packages/rn-tester/js/examples/Layout",
-      "baseHash": "5be634ecc4b6534280736d6e5cd0be664efc6b54",
+      "baseHash": "886c6e5c3907152e9000eba4f095f32fd0a8f743",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/LinearGradient",
       "baseDirectory": "packages/rn-tester/js/examples/LinearGradient/",
-      "baseHash": "f7dda687686dfa4f255046878140b5224d3da937",
+      "baseHash": "64c80f60907fd5520a1d19c3a4574caa4fb9bc43",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Linking",
       "baseDirectory": "packages/rn-tester/js/examples/Linking",
-      "baseHash": "250d6df4c0e5c1ef453431a531126f0f99dd19ee",
+      "baseHash": "5869f151c258c24ed73dd3a73b3caf4b9da53111",
       "issue": 4054
     },
     {
@@ -236,14 +236,14 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "bec272a54741b3047be30e3401c61767622df600",
+      "baseHash": "6f7b3e5f779970df44071279b741476f194e38d4",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/MutationObserver",
       "baseDirectory": "packages/rn-tester/js/examples/MutationObserver",
-      "baseHash": "c3f3eca5c49bf5b9511e63ad4399fde6169966d1",
+      "baseHash": "7a5beec3f7ec8418eea64f8e155d475d2ae0f62f",
       "issue": 4054
     },
     {
@@ -271,7 +271,7 @@
       "type": "copy",
       "directory": "js/examples/OrientationChange",
       "baseDirectory": "packages/rn-tester/js/examples/OrientationChange",
-      "baseHash": "f384bfcfcc22c0a0de2e5cb969ace12133b95844",
+      "baseHash": "9342e3741a9dad9a5a9efd6a1436deebfb14b17e",
       "issue": 4054
     },
     {
@@ -292,14 +292,13 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "b024f27ad92d5a60ab9d7273643407d46a073321",
-      "issue": 0
+      "baseHash": "92bfefb1a48b340fb9728044cd7647464e357997"
     },
     {
       "type": "copy",
       "directory": "js/examples/PermissionsAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/PermissionsAndroid",
-      "baseHash": "b934cb304a979eeb21878ccdc00bb0fd822b76aa",
+      "baseHash": "26cf38c650e6a5a123e66f16f0eaa2abcddb2c99",
       "issue": 4054
     },
     {
@@ -327,7 +326,7 @@
       "type": "copy",
       "directory": "js/examples/PointerEvents",
       "baseDirectory": "packages/rn-tester/js/examples/PointerEvents",
-      "baseHash": "f3054ec6fb37c2be1064a9573aec03e8a8601db1",
+      "baseHash": "439ad0ce20342e79754ab0b4397e6bc3386b7067",
       "issue": 4054
     },
     {
@@ -355,7 +354,7 @@
       "type": "copy",
       "directory": "js/examples/RefreshControl",
       "baseDirectory": "packages/rn-tester/js/examples/RefreshControl",
-      "baseHash": "f6065ae1b6013901b518ec436d002411ac53fdc5",
+      "baseHash": "366c8af162ee6ebcc97c424a850e708e2f69bab0",
       "issue": 4054
     },
     {
@@ -369,28 +368,28 @@
       "type": "copy",
       "directory": "js/examples/RTL",
       "baseDirectory": "packages/rn-tester/js/examples/RTL",
-      "baseHash": "53933eb40bb9dd4d70579fb8094100d0eae52ea6",
+      "baseHash": "113d8ee424b9676575de92dacd740926f911a13a",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/SafeAreaView",
       "baseDirectory": "packages/rn-tester/js/examples/SafeAreaView",
-      "baseHash": "151301db3973d9a2eb315fee9ca075d8a1a3de3f",
+      "baseHash": "4df33da99a390e2a6d63cb29cce7332128f2045f",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "b4ca87411a52529dc7fb7bee78a2cd6f2a673bde",
+      "baseHash": "1dbe14827aa2ce436656ba7dbad7390302d2e9b2",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "0f5ad580a611d3a8885e9df69a94578d85c3f48e",
+      "baseHash": "c5c9b64b7678f873888676140afd0dff1890be4a",
       "issue": 4054
     },
     {
@@ -411,7 +410,7 @@
       "type": "copy",
       "directory": "js/examples/Snapshot",
       "baseDirectory": "packages/rn-tester/js/examples/Snapshot",
-      "baseHash": "b246e61a078d11634f6242cfa5dc6ad06225990b",
+      "baseHash": "ff7219b5d29b096329d0f440219c3cdf3d4bb6de",
       "issue": 4054
     },
     {
@@ -425,42 +424,42 @@
       "type": "copy",
       "directory": "js/examples/SwipeableCardExample",
       "baseDirectory": "packages/rn-tester/js/examples/SwipeableCardExample",
-      "baseHash": "6fdea3ff7e2486b9e2eebc8ccb7c54ead7dd3de5",
+      "baseHash": "0d5b9bb8e9196c9655d149f11ed5128f6c92b59d",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Switch",
       "baseDirectory": "packages/rn-tester/js/examples/Switch",
-      "baseHash": "655fda15d78197de210e842f110a6113f1101044",
+      "baseHash": "95e37e042fb493552002e6e3b01f759d825f4af6",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "d1e17fc8ba110c86804569969dbda99af0e7ac3e",
+      "baseHash": "9f90a3af870c1efe28bc29b30abf3cb874820978",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "js/examples/TextInput/ExampleTextInput.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/ExampleTextInput.js",
-      "baseHash": "5175c63fd2de760adc595158a3e815497f296b27",
+      "baseHash": "15edc74a957b755f70751498da6048214a8f2b8a",
       "issue": 14292
     },
     {
       "type": "copy",
       "file": "js/examples/TextInput/TextInputExample.android.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "fcd8e5e42372bb200be07d8339c644e76dfdb12e",
+      "baseHash": "8cc115a30795ee2fcf174e91f9cdbf56f4513a93",
       "issue": 14292
     },
     {
       "type": "copy",
       "file": "js/examples/TextInput/TextInputExample.ios.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.ios.js",
-      "baseHash": "1a0722932f22f96501391d759b5ccde095c3bdf5",
+      "baseHash": "174f5038a7e38cee2f35393c47396a0581cb9f66",
       "issue": 14292
     },
     {
@@ -481,14 +480,14 @@
       "type": "patch",
       "file": "js/examples/TextInput/TextInputSharedExamples.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
-      "baseHash": "f8b28746822f0d00afaa6d8372c8436cdcbd6473",
+      "baseHash": "c6ff0d7ecf6b0db88ec76b4b4fc8dfe142337dd6",
       "issue": 14291
     },
     {
       "type": "copy",
       "directory": "js/examples/Timer",
       "baseDirectory": "packages/rn-tester/js/examples/Timer",
-      "baseHash": "32aabaf6fa45c99a3b891a50d79ebe1412fec60d",
+      "baseHash": "0a8230263e436de9ddb70be4df231460b7f00168",
       "issue": 4054
     },
     {
@@ -502,7 +501,7 @@
       "type": "copy",
       "directory": "js/examples/Touchable",
       "baseDirectory": "packages/rn-tester/js/examples/Touchable",
-      "baseHash": "a2a47fabefe8fc075f826bae8a65d731c61982b7",
+      "baseHash": "b9a82318edc3eee1c039cee7281f44c73a05adfc",
       "issue": 4054
     },
     {
@@ -523,8 +522,14 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "2f582e83efe8cb05db597f6bfb126f4de49e7836",
+      "baseHash": "ba8d337f59715ce8fbd05f6cbc79def6ea14334c",
       "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/Urls/UrlExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Urls/UrlExample.js",
+      "baseHash": "5713b32ed9e7fd55f6dfd65c10228a8a77242031"
     },
     {
       "type": "copy",
@@ -537,7 +542,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "8f7c9c71d0f55be6b856828c8e1d00b512494559",
+      "baseHash": "780c2954afdbc7b99f02b6f1ad462ce0dc9564c1",
       "issue": 4054
     },
     {
@@ -551,7 +556,7 @@
       "type": "copy",
       "directory": "js/examples/XHR",
       "baseDirectory": "packages/rn-tester/js/examples/XHR",
-      "baseHash": "06c0c450a6c70d128e01a9660d61789c11f3bd45",
+      "baseHash": "bd25a7f1e3e8f2e5ca6bd395fb77f8df90340051",
       "issue": 4054
     },
     {
@@ -572,28 +577,28 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "8381b2c2e97bd18b48ac04c7a058a636d0b58a90",
+      "baseHash": "17c0337c12657736483e4aeb195bb8714b5c1ef6",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/types",
       "baseDirectory": "packages/rn-tester/js/types",
-      "baseHash": "10df2e84e75d8ed6c927b015058d337ed5e3c37d",
+      "baseHash": "ce2c43009937f94ce98bbcc4e672339e628cd7db",
       "issue": 4054
     },
     {
       "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "d007fb16f30b2630ba84a5fa61e4190c6d9a18b1",
+      "baseHash": "39dc13e5f5a3b5fb58b807788ee5021ff6b7889c",
       "issue": 13228
     },
     {
       "type": "patch",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "910d5f8e8e1eacd7d4224755cf38201ef69e7d3e",
+      "baseHash": "7ca1b93dcc72ef3ff5e8856d6fa3ccd906a63e96",
       "issue": 13228
     },
     {
@@ -621,21 +626,21 @@
       "type": "copy",
       "file": "js/utils/useJsStalls.js",
       "baseFile": "packages/rn-tester/js/utils/useJsStalls.js",
-      "baseHash": "4b8631d7c3e20ca834b81b754a233b82b7d658ca",
+      "baseHash": "249b933993f4fe9d91e6e443035c27dfcdd2d65c",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "12db5b446df4d0d02a367211d699beaf05fb4588",
+      "baseHash": "b03261079dcb6d7c5d2ab8d8300f319798f6e37f",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeViewNativeComponent.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeViewNativeComponent.js",
-      "baseHash": "d23f5402d30ccf2d3283ea14b993523ae9121529",
+      "baseHash": "7b762cd4e4bd11dae3de515e2aeb0e7b1b660dd7",
       "issue": 4054
     },
     {
@@ -649,15 +654,27 @@
       "type": "copy",
       "file": "NativeModuleExample/NativeScreenshotManager.js",
       "baseFile": "packages/rn-tester/NativeModuleExample/NativeScreenshotManager.js",
-      "baseHash": "a473b951bd920c27f2927399090886a6c08ea770",
+      "baseHash": "a4c34cbf3e97fb65dab6b7db48943fef15229b19",
       "issue": 4054
     },
     {
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "84b8642071785bd41cdbb7acc216422662fc95ed",
+      "baseHash": "2f7663ba7a6c61d57a3424eea96c3ab0d7c82b18",
       "issue": 13228
+    },
+    {
+      "type": "copy",
+      "file": "ReportFullyDrawnView/ReportFullyDrawnView.js",
+      "baseFile": "packages/rn-tester/ReportFullyDrawnView/ReportFullyDrawnView.js",
+      "baseHash": "2f2b868b9b4870303f8665e55293cce4ed6b8d3f"
+    },
+    {
+      "type": "copy",
+      "file": "ReportFullyDrawnView/ReportFullyDrawnViewNativeComponent.js",
+      "baseFile": "packages/rn-tester/ReportFullyDrawnView/ReportFullyDrawnViewNativeComponent.js",
+      "baseHash": "6bf9a8a646111c9613a511281686d8cec6c964ca"
     }
   ]
 }

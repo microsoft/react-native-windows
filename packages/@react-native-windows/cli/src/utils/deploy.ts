@@ -27,9 +27,9 @@ import {
   RunWindowsOptions,
 } from '../commands/runWindows/runWindowsOptions';
 import MSBuildTools from './msbuildtools';
-import {Config} from '@react-native-community/cli-types';
+import type {Config} from '@react-native-community/cli-types';
 import * as configUtils from '../commands/config/configUtils';
-import {WindowsProjectConfig} from '../commands/config/projectConfig';
+import type {WindowsProjectConfig} from '../commands/config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import Version from './version';
 
