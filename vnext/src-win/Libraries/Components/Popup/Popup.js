@@ -11,6 +11,8 @@ import type {ViewProps} from '../View/ViewPropTypes';
 import {findNodeHandle} from '../../ReactNative/RendererProxy';
 import StyleSheet from '../../StyleSheet/StyleSheet';
 
+const warnOnce = require('../../Utilities/warnOnce').default;
+
 const styles = StyleSheet.create({
   rctPopup: {
     position: 'absolute',
@@ -79,7 +81,8 @@ export class Popup extends React.Component<Props, State> {
     this.state = {target: undefined, targetRef: null};
 
     if (__DEV__ && isFabric) {
-      console.warn(
+      warnOnce(
+        'popup-new-arch-deprecated',
         '`Popup` is deprecated and not supported in the New Architecture. Use the new `Modal` component instead.',
       );
     }
