@@ -525,6 +525,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BSTR itemStatus;
   BSTR itemType;
   BSTR accessKey;
+  BSTR description;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -536,6 +537,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentItemStatus(&itemStatus);
   pTarget->get_CurrentItemType(&itemType);
   pTarget->get_CurrentAccessKey(&accessKey);
+  pTarget->get_CurrentFullDescription(&description);
   IUIAutomationElement4 *pTarget4;
   HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
   if (SUCCEEDED(hr) && pTarget4) {
@@ -560,6 +562,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"ItemStatus", itemStatus);
   InsertStringValueIfNotEmpty(result, L"ItemType", itemType);
   InsertStringValueIfNotEmpty(result, L"AccessKey", accessKey);
+  InsertStringValueIfNotEmpty(result, L"Description", description);
   DumpUIAPatternInfo(pTarget, result);
 
   IUIAutomationElement *pChild;

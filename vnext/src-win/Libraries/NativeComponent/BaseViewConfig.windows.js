@@ -385,6 +385,7 @@ const validAttributesForNonEventProps = {
   accessibilityAnnotation: true, // [Windows]
   accessibilityItemType: true, // [Windows]
   accessibilityAccessKey: true, // [Windows]
+  accessibilityDescription : true, // [Windows]
   disabled: true, // [Windows]
   focusable: true, // [Windows]
   keyDownEvents: true, // [Windows]
