@@ -930,6 +930,23 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-carethidden');
     expect(dump).toMatchSnapshot();
   });
+  test('TextInputs can have contextMenuHidden', async () => {
+    const component = await app.findElementByTestID('textinput-contextmenuhidden');
+    await component.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    const dump = await dumpVisualTree('textinput-contextmenuhidden');
+    expect(dump).toMatchSnapshot();
+  });
   test('Text have cursorColor', async () => {
     const component = await app.findElementByTestID('textinput-cursorColor');
     await component.waitForDisplayed({timeout: 5000});
