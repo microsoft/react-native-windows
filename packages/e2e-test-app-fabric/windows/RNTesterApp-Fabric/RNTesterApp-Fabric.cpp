@@ -525,7 +525,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BSTR itemStatus;
   BSTR itemType;
   BSTR accessKey;
-  BSTR description;
+  BSTR description = nullptr;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -587,6 +587,9 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   ::SysFreeString(localizedControlType);
   ::SysFreeString(name);
   ::SysFreeString(itemStatus);
+  ::SysFreeString(itemType);
+  ::SysFreeString(accessKey);
+  ::SysFreeString(description);
   return result;
 }
 
