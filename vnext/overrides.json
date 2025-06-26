@@ -62,6 +62,13 @@
       "issue": 13172
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/TraceSection.h",
+      "baseFile": "packages/react-native/ReactCommon/cxxreact/TraceSection.h",
+      "baseHash": "0eac478d62ce71a7b81c2a2a15da0927c1b0eff9",
+      "issue": 14819
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
