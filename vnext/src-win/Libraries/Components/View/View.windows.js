@@ -67,6 +67,7 @@ const View: component(
       accessibilityLabel,
       accessibilityLabelledBy,
       accessibilityLevel, // Windows
+      accessibilityDescription, //Windows
       accessibilityLiveRegion,
       accessibilityPosInSet, // Windows
       accessibilitySetSize, // Windows
@@ -78,6 +79,7 @@ const View: component(
       'aria-expanded': ariaExpanded,
       'aria-multiselectable': ariaMultiselectable, // Windows
       'aria-required': ariaRequired, // Windows
+      'aria-description': ariaDescription, //Windows
       'aria-hidden': ariaHidden,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
@@ -250,6 +252,7 @@ const View: component(
         }
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
         accessibilityLevel={ariaLevel ?? accessibilityLevel}
+        accessibilityDescription={ariaDescription ?? accessibilityDescription}
         accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
         accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
         focusable={_focusable}
@@ -303,6 +306,9 @@ const View: component(
                 }
                 accessibilityLabel={ariaLabel ?? accessibilityLabel}
                 accessibilityLevel={ariaLevel ?? accessibilityLevel}
+                accessibilityDescription={
+                  ariaDescription ?? accessibilityDescription
+                }
                 accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
                 accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
                 focusable={_focusable}
