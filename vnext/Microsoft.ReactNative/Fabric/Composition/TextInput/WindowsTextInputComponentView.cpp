@@ -1158,7 +1158,7 @@ void WindowsTextInputComponentView::updateState(
   }
 
   if (!oldState) {
-    // Initialize on first state update
+    m_mostRecentEventCount = m_state->getData().mostRecentEventCount;
   }
 
   if (auto root = rootComponentView()) {
@@ -1170,11 +1170,13 @@ void WindowsTextInputComponentView::updateState(
     }
   }
 
-  m_comingFromState = true;
-  auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
-  UpdateText(fragments.size() ? fragments[0].string : "");
+  if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
+    m_comingFromState = true;
+    auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
+    UpdateText(fragments.size() ? fragments[0].string : "");
 
-  m_comingFromState = false;
+    m_comingFromState = false;
+  }
 }
 
 void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept {
