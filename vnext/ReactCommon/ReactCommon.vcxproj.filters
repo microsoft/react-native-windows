@@ -156,9 +156,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.cpp">
-      <Filter>turbomodule\core</Filter>
-    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
@@ -309,9 +306,6 @@
       <Filter>turbomodule\core</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h">
-      <Filter>turbomodule\core</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h">
