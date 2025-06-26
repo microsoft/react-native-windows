@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "version": "0.0.0-canary.968",
+      "tag": "react-native-windows_v0.0.0-canary.968",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d0f17f82300ab219deaa53026d7a6c24ffaf2da6",
+            "comment": "Added fix for AutoFocus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Jun 2025 05:22:49 GMT",
       "version": "0.0.0-canary.967",
       "tag": "react-native-windows_v0.0.0-canary.967",
