@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added fix for AutoFocus",
-  "packageName": "react-native-windows",
-  "email": "hmalothu@microsoft.com",
-  "dependentChangeType": "patch"
-}
