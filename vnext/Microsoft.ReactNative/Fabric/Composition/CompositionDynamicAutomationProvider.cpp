@@ -527,6 +527,29 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
           : SysAllocString(L"");
       break;
     }
+    case UIA_LevelPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = props->accessibilityLevel;
+      break;
+    }
+    case UIA_AccessKeyPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto accessKey = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAccessKey.value_or(""));
+      pRetVal->bstrVal = SysAllocString(accessKey.c_str());
+      break;
+    }
+    case UIA_ItemTypePropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto itemtype = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityItemType.value_or(""));
+      pRetVal->bstrVal = SysAllocString(itemtype.c_str());
+      break;
+    }
+    case UIA_FullDescriptionPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto desc = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityDescription.value_or(""));
+      pRetVal->bstrVal = SysAllocString(desc.c_str());
+      break;
+    }
   }
 
   return hr;

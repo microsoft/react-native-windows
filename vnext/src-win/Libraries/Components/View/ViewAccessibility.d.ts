@@ -258,6 +258,72 @@ export type AccessibilityRole =
   | 'listitem' // Windows
   | 'toolbar';
 
+// [Windows]
+export type AnnotationType =
+  | 'AdvanceProofingIssue'
+  | 'Author'
+  | 'CircularReferenceError'
+  | 'Comment'
+  | 'ConflictingChange'
+  | 'DataValidationError'
+  | 'DeletionChange'
+  | 'EditingLockedChange'
+  | 'Endnote'
+  | 'ExternalChange'
+  | 'Footer'
+  | 'Footnote'
+  | 'FormatChange'
+  | 'FormulaError'
+  | 'GrammarError'
+  | 'Header'
+  | 'Highlighted'
+  | 'InsertionChange'
+  | 'Mathematics'
+  | 'MoveChange'
+  | 'SpellingError'
+  | 'TrackChanges'
+  | 'Unknown'
+  | 'UnsyncedChange';
+
+// [Windows]
+export type AccessibilityAnnotationInfo = Readonly<{
+  typeID: AnnotationType;
+  typeName?: string;
+  author?: string;
+  dateTime?: string;
+  target?: string;
+}>;
+export interface AccessibilityPropsWindows {
+  /**
+   * Tells a person using a screen reader what kind of annotation they
+   * have selected. If available, it will also tell a person the author of the annotation and
+   * the date and time the annotation was posted.
+   *
+   * Note: If typeID is 'Unknown', a typeName must be provided.
+   */
+  accessibilityAnnotation?: AccessibilityAnnotationInfo; //Windows
+
+  /**
+   * Identifies the ItemType property, which is a text string describing the type of the automation element.
+   * ItemType is used to obtain information about items in a list, tree view, or data grid. For example, an item in a file directory view might be a "Document File" or a "Folder".
+   */
+  accessibilityItemType?: string; //Windows
+
+  /**
+   * An access key to hook up to the UIA_AccessKey_Property.
+   * Access keys are used in keyboard navigation to allow quick navigation to UI in an application.
+   */
+  accessibilityAccessKey?: string; //Windows
+
+  /**
+   * accessibilityDescription provides more detailed information specific to the element (i.e. last edit date, full location for a file)
+   * while accessibilityHint provides information on what will happen when they perform an action.
+   *
+   */
+  accessibilityDescription?: string; // Windows
+  'aria-description'?: string; // Windows
+}
+
 export interface AccessibilityPropsAndroid {
   /**
    * Identifies the element that labels the element it is applied to. When the assistive technology focuses on the component with this props,
