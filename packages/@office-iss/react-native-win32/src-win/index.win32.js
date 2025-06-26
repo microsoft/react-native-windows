@@ -292,6 +292,9 @@ module.exports = {
   get I18nManager(): I18nManager {
     return require('./Libraries/ReactNative/I18nManager').default;
   },
+  /**
+   * @deprecated
+   */
   get InteractionManager(): InteractionManager {
     return require('./Libraries/Interaction/InteractionManager').default;
   },
