@@ -41,6 +41,13 @@
       "baseHash": "8ff58257e2af054b3c8367cad566abcaf36d7cba"
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/CxxNativeModule.cpp",
+      "baseFile": "packages/react-native/ReactCommon/cxxreact/CxxNativeModule.cpp",
+      "baseHash": "de69b8e127fa19a72d0521760e1c1664201b525e",
+      "issue": 14819
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
