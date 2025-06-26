@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Merge branch 'user/satkh/rn-integrate-march31_april14' of https://github.com/satkh/react-native-windows into user/satkh/rn-integrate-march31_april14",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "satkh@microsoft.com",
+  "dependentChangeType": "patch"
+}
