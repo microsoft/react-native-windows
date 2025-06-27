@@ -3,15 +3,6 @@
  * Licensed under the MIT License.
  * @format
  */
-
-import Platform from '../Utilities/Platform';
-
-let Settings: {
-  get(key: string): any,
-  set(settings: Object): void,
-  watchKeys(keys: string | Array<string>, callback: () => void): number,
-  clearWatch(watchId: number): void,
-  ...
 'use strict';
 
 var Settings = {
