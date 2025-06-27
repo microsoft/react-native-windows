@@ -58,6 +58,7 @@ class WindowsTextLayoutManager : public TextLayoutManager {
 
  private:
   static winrt::hstring GetTransformedText(const AttributedStringBox &attributedStringBox);
+  static DWRITE_READING_DIRECTION GetNaturalReadingDirection(const AttributedStringBox &attributedStringBox) noexcept;
   static void GetTextLayout(
       const AttributedStringBox &attributedStringBox,
       const ParagraphAttributes &paragraphAttributes,
