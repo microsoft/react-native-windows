@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement the onPressOut property for the fabric implementation of TextInput",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}
