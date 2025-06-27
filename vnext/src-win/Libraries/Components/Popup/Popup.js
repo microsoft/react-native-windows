@@ -11,6 +11,8 @@ import type {ViewProps} from '../View/ViewPropTypes';
 import {findNodeHandle} from '../../ReactNative/RendererProxy';
 import StyleSheet from '../../StyleSheet/StyleSheet';
 
+const warnOnce = require('../../Utilities/warnOnce').default;
+
 const styles = StyleSheet.create({
   rctPopup: {
     position: 'absolute',
@@ -49,6 +51,8 @@ type State = $ReadOnly<{|
   targetRef?: React.ReactNode,
 |}>;
 
+const isFabric = global.nativeFabricUIManager;
+
 /**
  * Renders a popup component.
  *
@@ -75,6 +79,13 @@ export class Popup extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {target: undefined, targetRef: null};
+
+    if (__DEV__ && isFabric) {
+      warnOnce(
+        'popup-new-arch-deprecated',
+        '`Popup` is deprecated and not supported in the New Architecture. Use the new `Modal` component instead.',
+      );
+    }
   }
 
   render(): React.Node {
