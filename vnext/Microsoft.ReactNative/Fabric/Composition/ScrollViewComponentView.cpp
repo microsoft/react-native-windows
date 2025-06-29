@@ -806,21 +806,13 @@ void ScrollViewComponentView::updateProps(
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
 
-  if (!oldProps || oldViewProps.snapToStart != newViewProps.snapToStart) {
-    m_scrollVisual.SnapToStart(newViewProps.snapToStart);
-  }
-
-  if (!oldProps || oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
-    // Convert from std::vector<facebook::react::Float> to winrt::IVectorView<float>
+  if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
     const auto snapToOffsets = winrt::single_threaded_vector<float>();
     for (const auto &offset : newViewProps.snapToOffsets) {
       snapToOffsets.Append(static_cast<float>(offset));
     }
-    m_scrollVisual.SnapToOffsets(snapToOffsets.GetView());
-  }
-
-  if (!oldProps || oldViewProps.snapToEnd != newViewProps.snapToEnd) {
-    m_scrollVisual.SnapToEnd(newViewProps.snapToEnd);
+    m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
   }
 }
 

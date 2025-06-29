@@ -865,17 +865,12 @@ struct CompScrollerVisual : winrt::implements<
     m_interactionTracker.MinScale(minimumZoomScale);
   }
 
-  void SnapToStart(bool snapToStart) noexcept {
+  void SetSnapPoints(
+      bool snapToStart,
+      bool snapToEnd,
+      winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets) noexcept {
     m_snapToStart = snapToStart;
-    ConfigureSnapInertiaModifiers();
-  }
-
-  void SnapToEnd(bool snapToEnd) noexcept {
     m_snapToEnd = snapToEnd;
-    ConfigureSnapInertiaModifiers();
-  }
-
-  void SnapToOffsets(winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets) noexcept {
     m_snapToOffsets.clear();
     if (offsets) {
       for (auto const &offset : offsets) {
@@ -1086,77 +1081,95 @@ struct CompScrollerVisual : winrt::implements<
     // Collect all snap positions
     std::vector<float> snapPositions;
 
-    if (!m_snapToOffsets.empty()) {
-      // When snapToOffsets is used, snapToStart/snapToEnd control whether to include start/end positions
-      if (m_snapToStart) {
-        snapPositions.push_back(0.0f);
-      }
-
-      // Add all the offset positions
-      for (const auto &offset : m_snapToOffsets) {
-        snapPositions.push_back(offset);
-      }
-
-      // When snapToOffsets is used, snapToEnd controls whether to include the end position
-      if (m_snapToEnd) {
-        const float maxPosition = m_horizontal ? std::max<float>(m_contentSize.x - m_visualSize.x, 0)
-                                               : std::max<float>(m_contentSize.y - m_visualSize.y, 0);
-        if (maxPosition > 0) {
-          snapPositions.push_back(maxPosition);
-        }
-      }
-
-      // Sort snap positions to ensure proper ordering and remove duplicates
-      std::sort(snapPositions.begin(), snapPositions.end());
-      snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
-    } else if (m_snapToStart) {
-      // Legacy behavior: just snap to start when no offsets are provided
+    // When snapToOffsets is used, snapToStart/snapToEnd control whether to include start/end positions
+    if (m_snapToStart) {
       snapPositions.push_back(0.0f);
     }
 
-    if (!snapPositions.empty()) {
-      std::vector<typename TTypeRedirects::InteractionTrackerInertiaRestingValue> restingValues;
+    // Add all the offset positions
+    snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
 
-      // Create a resting value for each snap position with proper conditions
-      for (size_t i = 0; i < snapPositions.size(); ++i) {
-        const auto position = snapPositions[i];
-        auto restingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+    // Sort snap positions to ensure proper ordering and remove duplicates
+    std::sort(snapPositions.begin(), snapPositions.end());
+    snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
 
-        // Create condition that determines when to snap to this position
-        winrt::hstring condition;
-        if (snapPositions.size() == 1) {
-          // Single snap point - use simple distance condition
-          condition = winrt::hstring(L"Abs(this.Target.NaturalRestingPosition - ") + winrt::to_hstring(position) +
-              winrt::hstring(L") < 50");
+    std::vector<typename TTypeRedirects::InteractionTrackerInertiaRestingValue> restingValues;
+
+    // Create a resting value for each static snap position with proper conditions
+    for (size_t i = 0; i < snapPositions.size(); ++i) {
+      const auto position = snapPositions[i];
+      auto restingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+
+      // Create condition that determines when to snap to this position
+      winrt::hstring condition;
+      if (snapPositions.size() == 1) {
+        // Single snap point - use simple distance condition
+        condition = winrt::hstring(L"Abs(this.Target.NaturalRestingPosition - ") + winrt::to_hstring(position) +
+            winrt::hstring(L") < 50");
+      } else {
+        // Multiple snap points - use range-based conditions
+        if (i == 0) {
+          // First snap point
+          const auto nextPosition = snapPositions[i + 1];
+          const auto midpoint = (position + nextPosition) / 2.0f;
+          condition = winrt::hstring(L"this.Target.NaturalRestingPosition < ") + winrt::to_hstring(midpoint);
+        } else if (i == snapPositions.size() - 1) {
+          // Last snap point
+          const auto prevPosition = snapPositions[i - 1];
+          const auto midpoint = (prevPosition + position) / 2.0f;
+          condition = winrt::hstring(L"this.Target.NaturalRestingPosition >= ") + winrt::to_hstring(midpoint);
         } else {
-          // Multiple snap points - use range-based conditions
-          if (i == 0) {
-            // First snap point
-            const auto nextPosition = snapPositions[i + 1];
-            const auto midpoint = (position + nextPosition) / 2.0f;
-            condition = winrt::hstring(L"this.Target.NaturalRestingPosition < ") + winrt::to_hstring(midpoint);
-          } else if (i == snapPositions.size() - 1) {
-            // Last snap point
-            const auto prevPosition = snapPositions[i - 1];
-            const auto midpoint = (prevPosition + position) / 2.0f;
-            condition = winrt::hstring(L"this.Target.NaturalRestingPosition >= ") + winrt::to_hstring(midpoint);
-          } else {
-            // Middle snap point
-            const auto prevPosition = snapPositions[i - 1];
-            const auto nextPosition = snapPositions[i + 1];
-            const auto prevMidpoint = (prevPosition + position) / 2.0f;
-            const auto nextMidpoint = (position + nextPosition) / 2.0f;
-            condition = winrt::hstring(L"this.Target.NaturalRestingPosition >= ") + winrt::to_hstring(prevMidpoint) +
-                winrt::hstring(L" && this.Target.NaturalRestingPosition < ") + winrt::to_hstring(nextMidpoint);
-          }
+          // Middle snap point
+          const auto prevPosition = snapPositions[i - 1];
+          const auto nextPosition = snapPositions[i + 1];
+          const auto prevMidpoint = (prevPosition + position) / 2.0f;
+          const auto nextMidpoint = (position + nextPosition) / 2.0f;
+          condition = winrt::hstring(L"this.Target.NaturalRestingPosition >= ") + winrt::to_hstring(prevMidpoint) +
+              winrt::hstring(L" && this.Target.NaturalRestingPosition < ") + winrt::to_hstring(nextMidpoint);
         }
-
-        restingValue.Condition(compositor.CreateExpressionAnimation(condition));
-        restingValue.RestingValue(compositor.CreateExpressionAnimation(winrt::to_hstring(position)));
-
-        restingValues.push_back(restingValue);
       }
 
+      restingValue.Condition(compositor.CreateExpressionAnimation(condition));
+      restingValue.RestingValue(compositor.CreateExpressionAnimation(winrt::to_hstring(position)));
+
+      restingValues.push_back(restingValue);
+    }
+
+    // Add dynamic end snap point if needed
+    if (m_snapToEnd) {
+      auto endRestingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+
+      // Use a property set to wrap the size values for use in the expression
+      auto contentSizePropertySet = compositor.CreatePropertySet();
+      contentSizePropertySet.InsertVector2(L"Size", m_contentVisual.Size());
+      auto visualSizePropertySet = compositor.CreatePropertySet();
+      visualSizePropertySet.InsertVector2(L"Size", m_visual.Size());
+
+      winrt::hstring endPositionExpr = m_horizontal ? L"max(contentSize.Size.x - visualSize.Size.x, 0)"
+                                                    : L"max(contentSize.Size.y - visualSize.Size.y, 0)";
+
+      float prevPosition = snapPositions.empty() ? 0.0f : snapPositions.back();
+      winrt::hstring conditionExpr = m_horizontal
+          ? (L"this.Target.NaturalRestingPosition >= ((max(contentSize.Size.x - visualSize.Size.x, 0) + " +
+             winrt::to_hstring(prevPosition) + L") / 2.0)")
+          : (L"this.Target.NaturalRestingPosition >= ((max(contentSize.Size.y - visualSize.Size.y, 0) + " +
+             winrt::to_hstring(prevPosition) + L") / 2.0)");
+
+      auto endCondition = compositor.CreateExpressionAnimation(conditionExpr);
+      auto endResting = compositor.CreateExpressionAnimation(endPositionExpr);
+
+      endCondition.SetReferenceParameter(L"contentSize", contentSizePropertySet);
+      endCondition.SetReferenceParameter(L"visualSize", visualSizePropertySet);
+      endResting.SetReferenceParameter(L"contentSize", contentSizePropertySet);
+      endResting.SetReferenceParameter(L"visualSize", visualSizePropertySet);
+
+      endRestingValue.Condition(endCondition);
+      endRestingValue.RestingValue(endResting);
+
+      restingValues.push_back(endRestingValue);
+    }
+
+    if (!restingValues.empty()) {
       // Configure the appropriate axis based on scroll direction
       std::vector<typename TTypeRedirects::InteractionTrackerInertiaModifier> modifiers;
       modifiers.reserve(restingValues.size());
