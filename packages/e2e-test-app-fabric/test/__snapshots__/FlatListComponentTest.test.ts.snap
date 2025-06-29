@@ -101,7 +101,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-basic",
     "Offset": "0, 0, 0",
-    "Size": "998, 398",
+    "Size": "998, 452",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -110,7 +110,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 398",
+        "Size": "998, 452",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -119,12 +119,12 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 398",
+            "Size": "998, 452",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "998, 398",
+                "Size": "998, 452",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
@@ -133,7 +133,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                       "Color": "rgba(255, 255, 255, 255)",
                     },
                     "Offset": "0, 0, 0",
-                    "Size": "998, 398",
+                    "Size": "998, 452",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -418,7 +418,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 392",
+            "Size": "12, 446",
             "Visual Type": "Visual",
           },
           {
@@ -435,7 +435,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 366",
+            "Size": "6, 420",
             "Visual Type": "Visual",
           },
         ],
@@ -798,7 +798,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 534",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -807,7 +807,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 534",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -846,12 +846,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -877,12 +877,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -908,12 +908,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -939,12 +939,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -970,12 +970,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1001,12 +1001,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1032,12 +1032,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1063,12 +1063,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1094,12 +1094,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1125,12 +1125,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1156,12 +1156,12 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1186,7 +1186,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 528",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -1203,7 +1203,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 283",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],
@@ -1566,7 +1566,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 534",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1575,7 +1575,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 534",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -1614,12 +1614,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1645,12 +1645,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1676,12 +1676,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1707,12 +1707,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1738,12 +1738,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1769,12 +1769,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1800,12 +1800,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1831,12 +1831,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1862,12 +1862,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1893,12 +1893,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1924,12 +1924,12 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -1954,7 +1954,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 528",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -1971,7 +1971,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 283",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],
@@ -2504,7 +2504,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 574",
+    "Size": "998, 628",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2513,7 +2513,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 574",
+        "Size": "998, 628",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -2552,12 +2552,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -2612,12 +2612,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -2672,12 +2672,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -2732,12 +2732,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -2792,12 +2792,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -2852,12 +2852,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -2912,12 +2912,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -2972,12 +2972,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -3032,12 +3032,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -3092,12 +3092,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -3152,12 +3152,12 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -3182,7 +3182,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 568",
+            "Size": "12, 622",
             "Visual Type": "Visual",
           },
           {
@@ -3199,7 +3199,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 292",
+            "Size": "6, 351",
             "Visual Type": "Visual",
           },
         ],
@@ -3448,7 +3448,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-sticky",
     "Offset": "0, 0, 0",
-    "Size": "998, 574",
+    "Size": "998, 628",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3457,7 +3457,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 574",
+        "Size": "998, 628",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -3497,12 +3497,12 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                       },
                       {
                         "Offset": "20, 116, 0",
-                        "Size": "958, 32",
+                        "Size": "958, 33",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "958, 32",
+                            "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
@@ -3565,7 +3565,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                       },
                       {
                         "Offset": "0, 536, 0",
-                        "Size": "998, 72",
+                        "Size": "998, 71",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -3574,7 +3574,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                               "Color": "rgba(255, 192, 203, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "998, 72",
+                            "Size": "998, 71",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
@@ -3593,7 +3593,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                       },
                       {
                         "Offset": "0, 623, 0",
-                        "Size": "998, 71",
+                        "Size": "998, 72",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -3602,7 +3602,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                               "Color": "rgba(255, 192, 203, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "998, 71",
+                            "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
@@ -3731,12 +3731,12 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                               },
                               {
                                 "Offset": "20, 28, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -3845,7 +3845,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 568",
+            "Size": "12, 622",
             "Visual Type": "Visual",
           },
           {
@@ -3862,7 +3862,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 322",
+            "Size": "6, 387",
             "Visual Type": "Visual",
           },
         ],
@@ -3948,6 +3948,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
+        "Name": "20",
+        "TextRangePattern.GetText": "20",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
         "Name": "21",
         "TextRangePattern.GetText": "21",
       },
@@ -3971,6 +3978,126 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
         "LocalizedControlType": "text",
         "Name": "24",
         "TextRangePattern.GetText": "24",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "25",
+        "TextRangePattern.GetText": "25",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50033,
+        "LocalizedControlType": "pane",
+        "ScrollPattern.HorizontallyScrollable": true,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "56",
+            "TextRangePattern.GetText": "56",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "57",
+            "TextRangePattern.GetText": "57",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "58",
+            "TextRangePattern.GetText": "58",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "59",
+            "TextRangePattern.GetText": "59",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "60",
+            "TextRangePattern.GetText": "60",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "76",
+        "TextRangePattern.GetText": "76",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "77",
+        "TextRangePattern.GetText": "77",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "78",
+        "TextRangePattern.GetText": "78",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "79",
+        "TextRangePattern.GetText": "79",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "80",
+        "TextRangePattern.GetText": "80",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "81",
+        "TextRangePattern.GetText": "81",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "82",
+        "TextRangePattern.GetText": "82",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "83",
+        "TextRangePattern.GetText": "83",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "84",
+        "TextRangePattern.GetText": "84",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "85",
+        "TextRangePattern.GetText": "85",
       },
     ],
   },
@@ -4033,6 +4160,170 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
             "_Props": {},
           },
           {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ScrollViewComponentView",
+            "_Props": {},
+            "__Children": [
+              {
+                "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+                "_Props": {},
+                "__Children": [
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+                    "_Props": {},
+                  },
+                  {
+                    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+                    "_Props": {},
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+            "_Props": {},
+          },
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+          {
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {},
           },
@@ -4071,7 +4362,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-nested",
     "Offset": "0, 0, 0",
-    "Size": "998, 347",
+    "Size": "998, 402",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4120,7 +4411,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 347",
+        "Size": "998, 402",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -4129,17 +4420,17 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 777",
+            "Size": "998, 1237",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "1, 1, 0",
-                "Size": "996, 776",
+                "Size": "996, 1236",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "996, 776",
+                    "Size": "996, 1236",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -4172,7 +4463,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                       },
                       {
                         "Offset": "10, 50, 0",
-                        "Size": "478, 368",
+                        "Size": "478, 460",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -4181,7 +4472,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               "Color": "rgba(144, 238, 144, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "478, 368",
+                            "Size": "478, 460",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
@@ -4467,8 +4758,78 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         ],
                       },
                       {
+                        "Offset": "20, 428, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "241, 454, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
                         "Offset": "508, 50, 0",
-                        "Size": "478, 368",
+                        "Size": "478, 460",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -4477,7 +4838,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               "Color": "rgba(144, 238, 144, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "478, 368",
+                            "Size": "478, 460",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
@@ -4762,6 +5123,1300 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                           },
                         ],
                       },
+                      {
+                        "Offset": "518, 428, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "739, 454, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "0, 520, 0",
+                        "Size": "996, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(173, 216, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "996, 72",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "0, 592, 0",
+                        "Size": "996, 92",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "996, 92",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "996, 92",
+                                "Visual Type": "SpriteVisual",
+                                "__Children": [
+                                  {
+                                    "Brush": {
+                                      "Brush Type": "ColorBrush",
+                                      "Color": "rgba(0, 0, 0, 0)",
+                                    },
+                                    "Offset": "0, 0, 0",
+                                    "Size": "996, 92",
+                                    "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "820, 92",
+                                        "Visual Type": "SpriteVisual",
+                                        "__Children": [
+                                          {
+                                            "Offset": "0, 0, 0",
+                                            "Size": "820, 92",
+                                            "Visual Type": "SpriteVisual",
+                                            "__Children": [
+                                              {
+                                                "Offset": "10, 10, 0",
+                                                "Size": "144, 72",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Brush": {
+                                                      "Brush Type": "ColorBrush",
+                                                      "Color": "rgba(253, 245, 230, 255)",
+                                                    },
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "144, 72",
+                                                    "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, 0, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, -1, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "74, 36, 0",
+                                                "Size": "16, 19",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "16, 19",
+                                                    "Visual Type": "SpriteVisual",
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "174, 10, 0",
+                                                "Size": "144, 72",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Brush": {
+                                                      "Brush Type": "ColorBrush",
+                                                      "Color": "rgba(253, 245, 230, 255)",
+                                                    },
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "144, 72",
+                                                    "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, 0, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, -1, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "238, 36, 0",
+                                                "Size": "16, 19",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "16, 19",
+                                                    "Visual Type": "SpriteVisual",
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "338, 10, 0",
+                                                "Size": "144, 72",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Brush": {
+                                                      "Brush Type": "ColorBrush",
+                                                      "Color": "rgba(253, 245, 230, 255)",
+                                                    },
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "144, 72",
+                                                    "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, 0, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, -1, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "402, 36, 0",
+                                                "Size": "16, 19",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "16, 19",
+                                                    "Visual Type": "SpriteVisual",
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "502, 10, 0",
+                                                "Size": "144, 72",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Brush": {
+                                                      "Brush Type": "ColorBrush",
+                                                      "Color": "rgba(253, 245, 230, 255)",
+                                                    },
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "144, 72",
+                                                    "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, 0, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, -1, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "566, 36, 0",
+                                                "Size": "16, 19",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "16, 19",
+                                                    "Visual Type": "SpriteVisual",
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "666, 10, 0",
+                                                "Size": "144, 72",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Brush": {
+                                                      "Brush Type": "ColorBrush",
+                                                      "Color": "rgba(253, 245, 230, 255)",
+                                                    },
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "144, 72",
+                                                    "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, 0, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 0, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "-1, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "1, -1, 0",
+                                                        "Size": "-2, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, -1, 0",
+                                                        "Size": "1, 1",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
+                                                        "Offset": "0, 1, 0",
+                                                        "Size": "1, -2",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
+                                                  },
+                                                ],
+                                              },
+                                              {
+                                                "Offset": "730, 36, 0",
+                                                "Size": "16, 19",
+                                                "Visual Type": "SpriteVisual",
+                                                "__Children": [
+                                                  {
+                                                    "Offset": "0, 0, 0",
+                                                    "Size": "16, 19",
+                                                    "Visual Type": "SpriteVisual",
+                                                  },
+                                                ],
+                                              },
+                                            ],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                              {
+                                "Offset": "-13, 0, 0",
+                                "Size": "12, 0",
+                                "Visual Type": "SpriteVisual",
+                                "__Children": [
+                                  {
+                                    "Offset": "-12, 3, 0",
+                                    "Opacity": 0,
+                                    "Size": "12, 86",
+                                    "Visual Type": "Visual",
+                                  },
+                                  {
+                                    "Offset": "0, 4, 0",
+                                    "Opacity": 0,
+                                    "Size": "12, 12",
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": "0, -16, 0",
+                                    "Opacity": 0,
+                                    "Size": "12, 12",
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": "-5, 16, 0",
+                                    "Size": "6, 60",
+                                    "Visual Type": "Visual",
+                                  },
+                                ],
+                              },
+                              {
+                                "Offset": "0, -13, 0",
+                                "Size": "0, 12",
+                                "Visual Type": "SpriteVisual",
+                                "__Children": [
+                                  {
+                                    "Offset": "3, -12, 0",
+                                    "Opacity": 0,
+                                    "Size": "990, 12",
+                                    "Visual Type": "Visual",
+                                  },
+                                  {
+                                    "Offset": "4, 0, 0",
+                                    "Opacity": 0,
+                                    "Size": "12, 12",
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": "-16, 0, 0",
+                                    "Opacity": 0,
+                                    "Size": "12, 12",
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": "16, -5, 0",
+                                    "Size": "964, 6",
+                                    "Visual Type": "Visual",
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "0, 684, 0",
+                        "Size": "996, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(173, 216, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "996, 72",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "10, 766, 0",
+                        "Size": "478, 460",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(144, 238, 144, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "478, 460",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "20, 776, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "241, 802, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "20, 868, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "241, 894, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "20, 960, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "241, 986, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "20, 1052, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "241, 1078, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "20, 1144, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "241, 1170, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "508, 766, 0",
+                        "Size": "478, 460",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(144, 238, 144, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "478, 460",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "518, 776, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "739, 802, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "518, 868, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "739, 894, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "518, 960, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "739, 986, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "518, 1052, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "739, 1078, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "518, 1144, 0",
+                        "Size": "458, 72",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(253, 245, 230, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "458, 72",
+                            "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, 0, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 0, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "-1, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "1, -1, 0",
+                                "Size": "-2, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, -1, 0",
+                                "Size": "1, 1",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Offset": "0, 1, 0",
+                                "Size": "1, -2",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "739, 1170, 0",
+                        "Size": "16, 19",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "16, 19",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
                     ],
                   },
                 ],
@@ -4778,7 +6433,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 341",
+            "Size": "12, 396",
             "Visual Type": "Visual",
           },
           {
@@ -4795,7 +6450,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 141",
+            "Size": "6, 120",
             "Visual Type": "Visual",
           },
         ],
@@ -5158,7 +6813,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 534",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5167,7 +6822,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 534",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -5206,12 +6861,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5237,12 +6892,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5268,12 +6923,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5299,12 +6954,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5330,12 +6985,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5361,12 +7016,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5392,12 +7047,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5423,12 +7078,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5454,12 +7109,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5485,12 +7140,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5516,12 +7171,12 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -5546,7 +7201,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 528",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -5563,7 +7218,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 283",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],
@@ -5926,7 +7581,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 534",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5935,7 +7590,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 534",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -5974,12 +7629,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6005,12 +7660,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6036,12 +7691,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6067,12 +7722,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6098,12 +7753,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6129,12 +7784,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6160,12 +7815,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6191,12 +7846,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6222,12 +7877,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6253,12 +7908,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6284,12 +7939,12 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                             "__Children": [
                               {
                                 "Offset": "20, 19, 0",
-                                "Size": "958, 33",
+                                "Size": "958, 32",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
                                     "Offset": "0, 0, 0",
-                                    "Size": "958, 33",
+                                    "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
                                   },
                                 ],
@@ -6314,7 +7969,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 528",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -6330,8 +7985,8 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
             "Visual Type": "SpriteVisual",
           },
           {
-            "Offset": "-5, 235, 0",
-            "Size": "6, 283",
+            "Offset": "-5, 226, 0",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],

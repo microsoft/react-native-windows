@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "reverting vcxproj commit",
+  "packageName": "@react-native-windows/automation",
+  "email": "satkh@microsoft.com",
+  "dependentChangeType": "patch"
+}

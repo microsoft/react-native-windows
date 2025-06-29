@@ -25,4 +25,10 @@ var Settings = {
   },
 };
 
+if (Platform.OS === 'ios') {
+  Settings = require('./Settings').default;
+} else {
+  Settings = require('./SettingsFallback').default;
+}
+
 export default Settings;

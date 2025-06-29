@@ -25,6 +25,8 @@ import typeof AppState from './Libraries/AppState/AppState';
 import typeof NativeModules from './Libraries/BatchedBridge/NativeModules';
 import typeof codegenNativeCommands from './Libraries/Utilities/codegenNativeCommands';
 import typeof codegenNativeComponent from './Libraries/Utilities/codegenNativeComponent';
+import {findNodeHandle} from './Libraries/ReactNative/RendererProxy';
+import {unstable_batchedUpdates} from './Libraries/ReactNative/RendererProxy';
 // Components
 import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';
 import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/ActivityIndicator';
@@ -45,7 +47,7 @@ import typeof ScrollView from './Libraries/Components/ScrollView/ScrollView';
 import typeof StatusBar from './Libraries/Components/StatusBar/StatusBar';
 import typeof Switch from './Libraries/Components/Switch/Switch';
 import typeof InputAccessoryView from './Libraries/Components/TextInput/InputAccessoryView';
-import typeof TextInput from './Libraries/Components/TextInput/TextInput';
+import TextInput from './Libraries/Components/TextInput/TextInput';
 import typeof ToastAndroid from './Libraries/Components/ToastAndroid/ToastAndroid';
 import typeof Touchable from './Libraries/Components/Touchable/Touchable';
 import typeof TouchableHighlight from './Libraries/Components/Touchable/TouchableHighlight';
@@ -184,7 +186,7 @@ module.exports = {
   get Text(): Text {
     return require('./Libraries/Text/Text').default;
   },
-  get TextInput(): TextInput {
+  get TextInput(): typeof TextInput {
     return require('./Libraries/Components/TextInput/TextInput').default;
   },
   get Touchable(): Touchable {
@@ -280,7 +282,7 @@ module.exports = {
   get Easing(): Easing {
     return require('./Libraries/Animated/Easing').default;
   },
-  get findNodeHandle(): $PropertyType<ReactNative, 'findNodeHandle'> {
+  get findNodeHandle(): typeof findNodeHandle {
     return require('./Libraries/ReactNative/RendererProxy').findNodeHandle;
   },
   get I18nManager(): I18nManager {
@@ -379,10 +381,7 @@ module.exports = {
   get UIManager(): UIManager {
     return require('./Libraries/ReactNative/UIManager').default;
   },
-  get unstable_batchedUpdates(): $PropertyType<
-    ReactNative,
-    'unstable_batchedUpdates',
-  > {
+  get unstable_batchedUpdates(): typeof unstable_batchedUpdates {
     return require('./Libraries/ReactNative/RendererProxy')
       .unstable_batchedUpdates;
   },
