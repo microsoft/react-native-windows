@@ -69,15 +69,6 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
-        $(ReactNativeDir)\ReactCommon;
-        $(ReactNativeDir)\ReactCommon\react;
-        $(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon;
-        $(ReactNativeDir)\ReactCommon\react\renderer;
-        $(ReactNativeDir)\ReactCommon\react\renderer\components\view;
-        $(ReactNativeDir)\ReactCommon\react\renderer\graphics;
-        $(ReactNativeDir)\ReactCommon\jsi;
-        $(ReactNativeDir)\ReactCommon\jsitooling;
-        $(FmtDir)\include;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
         %(AdditionalIncludeDirectories);
@@ -123,6 +114,14 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\InstanceTracingProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopTaskReporter.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\ProfileTreeNode.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventProfile.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\NetworkReporter.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
@@ -146,6 +145,9 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorFlags.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopTaskReporter.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\fusebox\FuseboxTracer.cpp" />
@@ -181,6 +183,7 @@
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryCircularBuffer.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserver.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryKeyedBuffer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -224,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
   </ItemGroup>
   <PropertyGroup>
     <NodeApiJsiZipDir>$(NodeApiJsiDir)..\.node-api-jsi-zip</NodeApiJsiZipDir>

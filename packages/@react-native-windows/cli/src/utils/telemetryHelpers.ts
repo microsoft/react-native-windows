@@ -6,7 +6,7 @@
 
 import {camelCase} from 'lodash';
 
-import {
+import type {
   Config,
   CommandOption,
   OptionValue,

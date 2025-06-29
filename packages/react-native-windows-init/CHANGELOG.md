@@ -1,8 +1,37 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Sat, 17 May 2025 05:25:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 20 Jun 2025 05:21:54 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.71
+
+Fri, 20 Jun 2025 05:21:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.267
+
+## 1.4.70
+
+Thu, 19 Jun 2025 17:16:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.266
+
+## 1.4.69
+
+Fri, 30 May 2025 05:24:59 GMT
+
+### Patches
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.65
+- Bump @react-native-windows/telemetry to v0.0.0-canary.120
+- Bump @react-native-windows/cli to v0.0.0-canary.265
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
 
 ## 1.4.68
 

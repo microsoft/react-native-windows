@@ -10,7 +10,7 @@ export const examples = [
     {
       title: 'Win32 Image control test',
       description: 'Test Image',
-      render(): JSX.Element {
+      render() {
         return (
           <Image
             style={ { width: 100, height: 100 } }

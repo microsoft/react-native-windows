@@ -72,7 +72,7 @@
       string literals. It prevents code like
         wchar_t* str = L"hello";
       from compiling. -->
-      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /await</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings</AdditionalOptions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>

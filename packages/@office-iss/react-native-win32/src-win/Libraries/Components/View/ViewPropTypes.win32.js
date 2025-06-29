@@ -15,18 +15,19 @@ import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import type {
   BlurEvent,
   FocusEvent,
+  GestureResponderEvent,
   LayoutChangeEvent,
   LayoutRectangle,
   MouseEvent,
   PointerEvent,
-  GestureResponderEvent,
   KeyEvent, // [Windows]
 } from '../../Types/CoreEventTypes';
 import type {
   AccessibilityActionEvent,
   AccessibilityProps,
 } from './ViewAccessibility';
-import type {Node} from 'react';
+
+import React from 'react';
 
 export type ViewLayout = LayoutRectangle;
 export type ViewLayoutEvent = LayoutChangeEvent;
@@ -323,7 +324,7 @@ export type ViewPropsAndroid = $ReadOnly<{
    *
    * @platform android
    */
-  focusable?: boolean,
+  focusable?: ?boolean,
 
   /**
    * Indicates whether this `View` should be focusable with a non-touch input device, eg. receive focus with a hardware keyboard.
@@ -346,6 +347,51 @@ export type ViewPropsAndroid = $ReadOnly<{
   onClick?: ?(event: GestureResponderEvent) => mixed,
 }>;
 
+export type TVViewPropsIOS = $ReadOnly<{
+  /**
+   * *(Apple TV only)* When set to true, this view will be focusable
+   * and navigable using the Apple TV remote.
+   *
+   * @platform ios
+   */
+  isTVSelectable?: boolean,
+
+  /**
+   * *(Apple TV only)* May be set to true to force the Apple TV focus engine to move focus to this view.
+   *
+   * @platform ios
+   */
+  hasTVPreferredFocus?: boolean,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 2.0.
+   *
+   * @platform ios
+   */
+  tvParallaxShiftDistanceX?: number,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 2.0.
+   *
+   * @platform ios
+   */
+  tvParallaxShiftDistanceY?: number,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 0.05.
+   *
+   * @platform ios
+   */
+  tvParallaxTiltAngle?: number,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 1.0.
+   *
+   * @platform ios
+   */
+  tvParallaxMagnification?: number,
+}>;
+
 export type ViewPropsIOS = $ReadOnly<{
   /**
    * Whether this `View` should be rendered as a bitmap before compositing.
@@ -357,77 +403,8 @@ export type ViewPropsIOS = $ReadOnly<{
   shouldRasterizeIOS?: ?boolean,
 }>;
 
-// [Windows
-
-export type HandledKeyboardEvent = $ReadOnly<{|
-  altKey?: ?boolean,
-  ctrlKey?: ?boolean,
-  metaKey?: ?boolean,
-  shiftKey?: ?boolean,
-  code: string,
-  handledEventPhase?: number,
-|}>;
-
-type ViewPropsWindows = $ReadOnly<{|
-  /**
-   * Key up event
-   *
-   * @platform windows
-   */
-  onKeyUp?: ?(e: KeyEvent) => void,
-  onKeyUpCapture?: ?(e: KeyEvent) => void,
-  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
-
-  onKeyDown?: ?(e: KeyEvent) => void,
-  onKeyDownCapture?: ?(e: KeyEvent) => void,
-  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
-  /**
-   * Specifies the Tooltip for the view
-   * @platform windows
-   */
-  tooltip?: ?string,
-
-  tabIndex?: ?number,
-
-  accessibilitySetSize?: ?number,
-  accessibilityControls?: ?Stringish,
-  accessibilityDescribedBy?: ?Stringish,
-  accessibilityDescription?: ?Stringish,
-  accessibilityLevel?: ?number,
-  accessibilityPositionInSet?: ?number,
-  'aria-posinset'?: ?number,
-  'aria-setsize'?: ?number,
-  'aria-description'?: ?Stringish,
-  'aria-level'?: ?number,
-  'aria-controls'?: ?Stringish,
-  'aria-describedby'?: ?Stringish,
-  'aria-multiselectable'?: ?boolean,
-  'aria-required'?: ?boolean,
-
-  /**
-   * Specifies if the control should show System focus visuals
-   */
-  enableFocusRing?: ?boolean,
-
-  onFocus?: ?(event: FocusEvent) => mixed,
-  onBlur?: ?(event: FocusEvent) => mixed,
-  onMouseLeave?: ?(event: MouseEvent) => mixed,
-  onMouseEnter?: ?(event: MouseEvent) => mixed,
-|}>;
-// Windows]
-
-export type ViewProps = $ReadOnly<{
-  ...DirectEventProps,
-  ...GestureResponderHandlers,
-  ...MouseEventProps,
-  ...PointerEventProps,
-  ...FocusEventProps,
-  ...TouchEventProps,
-  ...ViewPropsAndroid,
-  ...ViewPropsIOS,
-  ...AccessibilityProps,
-  ...ViewPropsWindows, // [Windows]
-  children?: Node,
+type ViewBaseProps = $ReadOnly<{
+  children?: React.Node,
   style?: ?ViewStyleProp,
 
   /**
@@ -536,4 +513,76 @@ export type ViewProps = $ReadOnly<{
    * @platform win32
    */
   accessibilityControls?: ?string,
+}>;
+
+// [Windows
+export type HandledKeyboardEvent = $ReadOnly<{|
+  altKey?: ?boolean,
+  ctrlKey?: ?boolean,
+  metaKey?: ?boolean,
+  shiftKey?: ?boolean,
+  code: string,
+  handledEventPhase?: number,
+|}>;
+
+type ViewPropsWindows = $ReadOnly<{|
+  /**
+   * Key up event
+   *
+   * @platform windows
+   */
+  onKeyUp?: ?(e: KeyEvent) => void,
+  onKeyUpCapture?: ?(e: KeyEvent) => void,
+  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+
+  onKeyDown?: ?(e: KeyEvent) => void,
+  onKeyDownCapture?: ?(e: KeyEvent) => void,
+  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  /**
+   * Specifies the Tooltip for the view
+   * @platform windows
+   */
+  tooltip?: ?string,
+
+  tabIndex?: ?number,
+
+  accessibilitySetSize?: ?number,
+  accessibilityControls?: ?Stringish,
+  accessibilityDescribedBy?: ?Stringish,
+  accessibilityDescription?: ?Stringish,
+  accessibilityLevel?: ?number,
+  accessibilityPositionInSet?: ?number,
+  'aria-posinset'?: ?number,
+  'aria-setsize'?: ?number,
+  'aria-description'?: ?Stringish,
+  'aria-level'?: ?number,
+  'aria-controls'?: ?Stringish,
+  'aria-describedby'?: ?Stringish,
+  'aria-multiselectable'?: ?boolean,
+  'aria-required'?: ?boolean,
+
+  /**
+   * Specifies if the control should show System focus visuals
+   */
+  enableFocusRing?: ?boolean,
+
+  onFocus?: ?(event: FocusEvent) => mixed,
+  onBlur?: ?(event: FocusEvent) => mixed,
+  onMouseLeave?: ?(event: MouseEvent) => mixed,
+  onMouseEnter?: ?(event: MouseEvent) => mixed,
+|}>;
+// Windows]
+
+export type ViewProps = $ReadOnly<{
+  ...DirectEventProps,
+  ...GestureResponderHandlers,
+  ...MouseEventProps,
+  ...PointerEventProps,
+  ...FocusEventProps,
+  ...TouchEventProps,
+  ...ViewPropsAndroid,
+  ...ViewPropsIOS,
+  ...AccessibilityProps,
+  ...ViewBaseProps,
+  ...ViewPropsWindows, // [Windows]
 }>;

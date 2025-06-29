@@ -26,7 +26,8 @@ import type {
   AccessibilityActionEvent,
   AccessibilityProps,
 } from './ViewAccessibility';
-import type {Node} from 'react';
+
+import React from 'react';
 
 export type ViewLayout = LayoutRectangle;
 export type ViewLayoutEvent = LayoutChangeEvent;
@@ -323,7 +324,7 @@ export type ViewPropsAndroid = $ReadOnly<{
    *
    * @platform android
    */
-  focusable?: boolean,
+  focusable?: ?boolean,
 
   /**
    * Indicates whether this `View` should be focusable with a non-touch input device, eg. receive focus with a hardware keyboard.
@@ -344,6 +345,51 @@ export type ViewPropsAndroid = $ReadOnly<{
    * @platform android
    */
   onClick?: ?(event: GestureResponderEvent) => mixed,
+}>;
+
+export type TVViewPropsIOS = $ReadOnly<{
+  /**
+   * *(Apple TV only)* When set to true, this view will be focusable
+   * and navigable using the Apple TV remote.
+   *
+   * @platform ios
+   */
+  isTVSelectable?: boolean,
+
+  /**
+   * *(Apple TV only)* May be set to true to force the Apple TV focus engine to move focus to this view.
+   *
+   * @platform ios
+   */
+  hasTVPreferredFocus?: boolean,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 2.0.
+   *
+   * @platform ios
+   */
+  tvParallaxShiftDistanceX?: number,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 2.0.
+   *
+   * @platform ios
+   */
+  tvParallaxShiftDistanceY?: number,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 0.05.
+   *
+   * @platform ios
+   */
+  tvParallaxTiltAngle?: number,
+
+  /**
+   * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 1.0.
+   *
+   * @platform ios
+   */
+  tvParallaxMagnification?: number,
 }>;
 
 export type ViewPropsIOS = $ReadOnly<{
@@ -408,6 +454,8 @@ type ViewPropsWindows = $ReadOnly<{|
   'aria-posinset'?: ?number,
   accessibilitySetSize?: ?number,
   'aria-setsize'?: ?number,
+  accessibilityDescription?: ?string,
+  'aria-description'?: ?string,
 
   /**
    * Specifies if the control should show System focus visuals
@@ -421,18 +469,8 @@ type ViewPropsWindows = $ReadOnly<{|
 |}>;
 // Windows]
 
-export type ViewProps = $ReadOnly<{
-  ...DirectEventProps,
-  ...GestureResponderHandlers,
-  ...MouseEventProps,
-  ...PointerEventProps,
-  ...FocusEventProps,
-  ...TouchEventProps,
-  ...ViewPropsAndroid,
-  ...ViewPropsIOS,
-  ...ViewPropsWindows, // [Windows]
-  ...AccessibilityProps,
-  children?: Node,
+type ViewBaseProps = $ReadOnly<{
+  children?: React.Node,
   style?: ?ViewStyleProp,
 
   /**
@@ -519,8 +557,22 @@ export type ViewProps = $ReadOnly<{
    */
   removeClippedSubviews?: ?boolean,
 
-  'aria-readonly'?: ?boolean, // Windows
+  'aria-readonly'?: ?boolean, // [Windows]
 
-  'aria-multiselectable'?: ?boolean, // Windows
-  'aria-required'?: ?boolean, // Windows
+  'aria-multiselectable'?: ?boolean, // [Windows]
+  'aria-required'?: ?boolean, // [Windows]
+}>;
+
+export type ViewProps = $ReadOnly<{
+  ...DirectEventProps,
+  ...GestureResponderHandlers,
+  ...MouseEventProps,
+  ...PointerEventProps,
+  ...FocusEventProps,
+  ...TouchEventProps,
+  ...ViewPropsAndroid,
+  ...ViewPropsIOS,
+  ...ViewPropsWindows, // [Windows]
+  ...AccessibilityProps,
+  ...ViewBaseProps,
 }>;

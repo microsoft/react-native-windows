@@ -10,6 +10,7 @@
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -319,20 +320,30 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
           return (*m_outer->windowsTextInputProps().textAttributes.foregroundColor).AsColorRefNoAlpha();
         // cr = 0x000000FF;
         break;
-
       case COLOR_WINDOW:
         if (m_outer->viewProps()->backgroundColor)
           return (*m_outer->viewProps()->backgroundColor).AsColorRefNoAlpha();
         break;
-        // case COLOR_HIGHLIGHT:
-        // cr = RGB(0, 0, 255);
-        // cr = 0x0000ffFF;
-        //          break;
 
-        // case COLOR_HIGHLIGHTTEXT:
-        // cr = RGB(255, 0, 0);
-        // cr = 0xFFFFFFFF;
-        //          break;
+      case COLOR_HIGHLIGHT:
+        if (m_outer->windowsTextInputProps().selectionColor)
+          return (*m_outer->windowsTextInputProps().selectionColor).AsColorRefNoAlpha();
+        break;
+
+      case COLOR_HIGHLIGHTTEXT:
+        // For selected text color, we use the same color as the selection background
+        // or the text color if selection color is not specified
+        if (m_outer->windowsTextInputProps().selectionColor) {
+          // Calculate appropriate text color based on selection background
+          auto selectionColor = (*m_outer->windowsTextInputProps().selectionColor).AsColorRefNoAlpha();
+          // Use white text for dark selection, black text for light selection
+          int r = GetRValue(selectionColor);
+          int g = GetGValue(selectionColor);
+          int b = GetBValue(selectionColor);
+          int brightness = (r * 299 + g * 587 + b * 114) / 1000;
+          return brightness > 125 ? RGB(0, 0, 0) : RGB(255, 255, 255);
+        }
+        break;
 
         // case COLOR_GRAYTEXT:
         // cr = RGB(128, 128, 128);
@@ -1128,9 +1139,12 @@ void WindowsTextInputComponentView::updateProps(
     bool effectiveSpellCheck = newTextInputProps.spellCheck || newTextInputProps.autoCorrect;
     updateSpellCheck(effectiveSpellCheck);
   }
-
   if (!oldProps || oldTextInputProps.autoCorrect != newTextInputProps.autoCorrect) {
     updateAutoCorrect(newTextInputProps.autoCorrect);
+  }
+
+  if (oldTextInputProps.selectionColor != newTextInputProps.selectionColor) {
+    m_needsRedraw = true;
   }
 
   UpdatePropertyBits();
@@ -1218,6 +1232,49 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_imgHeight = newHeight;
 }
 
+std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const noexcept {
+  if (!m_textServices)
+    return {0.0f, 0.0f};
+
+  // Get a device context for measurement
+  HDC hdc = GetDC(nullptr);
+  if (!hdc)
+    return {0.0f, 0.0f};
+
+  // Use the layout width as the constraint (always multiline)
+  float availableWidth = m_layoutMetrics.frame.size.width;
+  float scale = m_layoutMetrics.pointScaleFactor;
+  float dpi = m_layoutMetrics.pointScaleFactor * GetDpiForSystem();
+  constexpr float HIMETRIC_PER_INCH = 2540.0f;
+
+  SIZE extentHimetric = {
+      static_cast<LONG>(availableWidth * scale * HIMETRIC_PER_INCH / dpi),
+      static_cast<LONG>(std::numeric_limits<LONG>::max() * HIMETRIC_PER_INCH / dpi)};
+
+  SIZE naturalSize = {0, 0};
+
+  HRESULT hr = m_textServices->TxGetNaturalSize(
+      DVASPECT_CONTENT,
+      hdc,
+      nullptr,
+      nullptr,
+      static_cast<DWORD>(TXTNS_FITTOCONTENTWSP),
+      reinterpret_cast<SIZEL *>(&extentHimetric),
+      &naturalSize.cx,
+      &naturalSize.cy);
+
+  ReleaseDC(nullptr, hdc);
+
+  if (FAILED(hr)) {
+    return {0.0f, 0.0f};
+  }
+
+  float contentWidth = static_cast<float>(naturalSize.cx) / scale;
+  float contentHeight = static_cast<float>(naturalSize.cy) / scale;
+
+  return {contentWidth, contentHeight};
+}
+
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   auto data = m_state->getData();
@@ -1236,6 +1293,13 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
+    if (windowsTextInputProps().multiline) {
+      auto [contentWidth, contentHeight] = GetContentSize();
+      facebook::react::WindowsTextInputEventEmitter::OnContentSizeChange onContentSizeChangeArgs;
+      onContentSizeChangeArgs.contentSize.width = contentWidth;
+      onContentSizeChangeArgs.contentSize.height = contentHeight;
+      emitter->onContentSizeChange(onContentSizeChangeArgs);
+    }
   }
 
   if (UiaClientsAreListening()) {
@@ -1310,6 +1374,13 @@ void WindowsTextInputComponentView::onMounted() noexcept {
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
   InternalFinalize();
+
+  // Handle autoFocus property - focus the component when mounted if autoFocus is true
+  if (windowsTextInputProps().autoFocus) {
+    if (auto root = rootComponentView()) {
+      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+    }
+  }
 }
 
 std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue() noexcept {
@@ -1491,7 +1562,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
   constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight);
 
-  facebook::react::TextLayoutManager::GetTextLayout(
+  facebook::react::WindowsTextLayoutManager::GetTextLayout(
       facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
 
   return textLayout;

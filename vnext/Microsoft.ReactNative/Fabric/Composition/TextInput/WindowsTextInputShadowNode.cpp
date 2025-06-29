@@ -24,14 +24,6 @@ void WindowsTextInputShadowNode::setTextLayoutManager(std::shared_ptr<const Text
 Size WindowsTextInputShadowNode::measureContent(
     const LayoutContext &layoutContext,
     const LayoutConstraints &layoutConstraints) const {
-  if (getStateData().cachedAttributedStringId != 0) {
-    facebook::react::ParagraphAttributes paragraphAttributes{};
-    paragraphAttributes.maximumNumberOfLines = getConcreteProps().multiline ? 0 : 1;
-    return textLayoutManager_
-        ->measureCachedSpannableById(getStateData().cachedAttributedStringId, paragraphAttributes, layoutConstraints)
-        .size;
-  }
-
   // Layout is called right after measure.
   // Measure is marked as `const`, and `layout` is not; so State can be updated
   // during layout, but not during `measure`. If State is out-of-date in layout,

@@ -5,7 +5,7 @@
 namespace winrt::{{ namespaceCpp }}
 {
 
-// See https://microsoft.github.io/react-native-windows/docs/native-modules for details on writing native modules
+// See https://microsoft.github.io/react-native-windows/docs/native-platform for help writing native modules
 
 void {{ pascalName }}::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;

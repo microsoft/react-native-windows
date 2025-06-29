@@ -188,19 +188,19 @@ export const description =
 export const examples = [
   {
     title: 'Popup Anchor to text input w/ light dismiss',
-    render: function (): JSX.Element {
+    render: function () {
       return <AnchoredPopupExample />;
     },
   },
   {
     title: 'Popup centered on screen',
-    render: function (): JSX.Element {
+    render: function () {
       return <PopupPlacementExample />;
     },
   },
   {
     title: 'Popup with Accessibility Customization',
-    render: function (): JSX.Element {
+    render: function () {
       return <PopupAccessibilityExample />;
     },
   },

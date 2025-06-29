@@ -1,8 +1,41 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Sat, 17 May 2025 05:25:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 20 Jun 2025 05:21:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.267
+
+Fri, 20 Jun 2025 05:21:53 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+
+## 0.0.0-canary.266
+
+Thu, 19 Jun 2025 17:16:24 GMT
+
+### Changes
+
+- Remove rnw/cli dependency on rnc/cli (30809111+acoates-ms@users.noreply.github.com)
+- Add warning to CLI commands about using the old architecture (jthysell@microsoft.com)
+- Change `init-windows` default new app template to New Architecture (jthysell@microsoft.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.265
+
+Fri, 30 May 2025 05:25:00 GMT
+
+### Changes
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.123
+- Bump @react-native-windows/fs to v0.0.0-canary.65
+- Bump @react-native-windows/package-utils to v0.0.0-canary.91
+- Bump @react-native-windows/telemetry to v0.0.0-canary.120
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
 
 ## 0.0.0-canary.264
 

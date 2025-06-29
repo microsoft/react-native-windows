@@ -1,8 +1,122 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 20 May 2025 06:25:35 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 27 Jun 2025 05:23:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.969
+
+Fri, 27 Jun 2025 05:23:18 GMT
+
+### Changes
+
+- [Fabric] Implementation of accessibilityDescription (kvineeth@microsoft.com)
+
+## 0.0.0-canary.968
+
+Thu, 26 Jun 2025 05:22:52 GMT
+
+### Changes
+
+- Added fix for AutoFocus (hmalothu@microsoft.com)
+
+## 0.0.0-canary.967
+
+Tue, 24 Jun 2025 05:22:49 GMT
+
+### Changes
+
+- updated adjustsFontSizeToFit textlayout to nullptr (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.966
+
+Fri, 20 Jun 2025 05:21:54 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.267
+
+## 0.0.0-canary.965
+
+Thu, 19 Jun 2025 17:16:25 GMT
+
+### Changes
+
+- [Fabric] Implement aria-level, aria-posinset, aria-setsize in Switch (54227869+anupriya13@users.noreply.github.com)
+- Force all in-repo projects to build locally with RestoreForceEvaluate (jthysell@microsoft.com)
+- updated ellipsis to respect tail and clip behaviour , for head , middle follow defaulty tail behaviour (74712637+iamAbhi-916@users.noreply.github.com)
+- fix(vnext-template): add additional include dirs for submodules (fcalise@gmail.com)
+- Add aria-level, aria-posinset and aria-setsize in Image (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement aria-level, aria-posinset, aria-setsize in TextInput (54227869+anupriya13@users.noreply.github.com)
+- Update to @types/react 19 (30809111+acoates-ms@users.noreply.github.com)
+- Change `init-windows` default new app template to New Architecture (jthysell@microsoft.com)
+- Remove .. usage in relative include (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement keyboardDismissMode in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement onContentSizeChange in TextInput (54227869+anupriya13@users.noreply.github.com)
+- creaternwapp.cmd: Override default RN CLI template when nightly detected (jthysell@microsoft.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.266
+
+## 0.0.0-canary.964
+
+Sat, 31 May 2025 05:24:43 GMT
+
+### Changes
+
+- Fix blob module in paper (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.963
+
+Fri, 30 May 2025 05:24:58 GMT
+
+### Changes
+
+- PointerEvent fixes (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.265
+- Bump @react-native-windows/codegen to v0.0.0-canary.123
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.40
+- Bump @rnw-scripts/just-task to v2.3.53
+- Bump react-native-platform-override to v1.9.55
+
+## 0.0.0-canary.962
+
+Thu, 29 May 2025 05:23:11 GMT
+
+### Changes
+
+- Fix warning in glog stub (30809111+acoates-ms@users.noreply.github.com)
+- JSValue shouldn't export data fields, which make it hard to use MS.RN.Cxx across dll boundaries (30809111+acoates-ms@users.noreply.github.com)
+- Update folly exports from rn-win32 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.961
+
+Wed, 28 May 2025 05:24:00 GMT
+
+### Changes
+
+- Removed unused `react-shallow-renderer` dependency (4123478+tido64@users.noreply.github.com)
+- Update native module doc links in cpp-lib template (jthysell@microsoft.com)
+- Cleanup a bunch of unneeded ReactCommon patching, and extra hostplatform overrides (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.960
+
+Sat, 24 May 2025 05:22:21 GMT
+
+### Changes
+
+- Clean up error messages (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.959
+
+Thu, 22 May 2025 05:24:49 GMT
+
+### Changes
+
+- Integrate RN  0.79.0-nightly-20250220-41b597c73 (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement maxFontSizeMultiplier in Text (54227869+anupriya13@users.noreply.github.com)
+- Fix descriptions for new project templates (jthysell@microsoft.com)
 
 ## 0.0.0-canary.958
 

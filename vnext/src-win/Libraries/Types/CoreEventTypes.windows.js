@@ -8,7 +8,7 @@
  * @format
  */
 
-import type {HostInstance} from '../Renderer/shims/ReactNativeTypes';
+import type {HostInstance} from '../../src/private/types/HostInstance';
 
 export type NativeSyntheticEvent<+T> = $ReadOnly<{
   bubbles: ?boolean,
@@ -76,7 +76,7 @@ export type LayoutChangeEvent = NativeSyntheticEvent<
   }>,
 >;
 
-export type TextLayoutEventData = $ReadOnly<{
+type TextLayoutEventData = $ReadOnly<{
   lines: Array<TextLayoutLine>,
 }>;
 

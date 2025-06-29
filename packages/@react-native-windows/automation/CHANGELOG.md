@@ -1,8 +1,100 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Tue, 20 May 2025 06:25:35 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 27 Jun 2025 05:23:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.3.391
+
+Fri, 27 Jun 2025 05:23:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.309
+
+## 0.3.390
+
+Thu, 26 Jun 2025 05:22:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.308
+
+## 0.3.389
+
+Tue, 24 Jun 2025 05:22:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.307
+
+## 0.3.388
+
+Fri, 20 Jun 2025 05:21:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.306
+
+## 0.3.387
+
+Thu, 19 Jun 2025 17:16:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.305
+
+## 0.3.386
+
+Sat, 31 May 2025 05:24:43 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.304
+
+## 0.3.385
+
+Fri, 30 May 2025 05:25:00 GMT
+
+### Patches
+
+- integration nightly 0.79.0-nightly-20250303-cee63397b , overrides solved (tatianakapos@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.12.303
+- Bump @react-native-windows/fs to v0.0.0-canary.65
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/just-task to v2.3.53
+
+## 0.3.384
+
+Thu, 29 May 2025 05:23:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.302
+
+## 0.3.383
+
+Wed, 28 May 2025 05:24:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.301
+
+## 0.3.382
+
+Sat, 24 May 2025 05:22:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.300
+
+## 0.3.381
+
+Thu, 22 May 2025 05:24:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.299
 
 ## 0.3.380
 

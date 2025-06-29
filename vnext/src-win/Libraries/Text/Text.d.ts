@@ -16,8 +16,7 @@ import {TextStyle, ViewStyle} from '../StyleSheet/StyleSheetTypes';
 import {
   GestureResponderEvent,
   LayoutChangeEvent,
-  NativeSyntheticEvent,
-  TextLayoutEventData,
+  TextLayoutEvent,
 } from '../Types/CoreEventTypes';
 
 export interface TextPropsIOS {
@@ -173,9 +172,7 @@ export interface TextProps
   /**
    * Invoked on Text layout
    */
-  onTextLayout?:
-    | ((event: NativeSyntheticEvent<TextLayoutEventData>) => void)
-    | undefined;
+  onTextLayout?: ((event: TextLayoutEvent) => void) | undefined;
 
   /**
    * This function is called on press.
@@ -188,7 +185,7 @@ export interface TextProps
 
   /**
    * This function is called on long press.
-   * e.g., `onLongPress={this.increaseSize}>``
+   * e.g., `onLongPress={this.increaseSize}>`
    */
   onLongPress?: ((event: GestureResponderEvent) => void) | undefined;
 

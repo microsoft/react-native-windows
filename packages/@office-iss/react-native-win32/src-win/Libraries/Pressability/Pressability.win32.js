@@ -8,13 +8,13 @@
  * @format
  */
 
-import type {HostInstance} from '../Renderer/shims/ReactNativeTypes';
+import type {HostInstance} from '../../src/private/types/HostInstance';
 import type {
   BlurEvent,
   FocusEvent,
-  KeyEvent,
-  MouseEvent,
+  KeyEvent, // [Windows]
   GestureResponderEvent,
+  MouseEvent,
 } from '../Types/CoreEventTypes';
 
 import SoundManager from '../Components/Sound/SoundManager';
@@ -934,7 +934,7 @@ export default class Pressability {
   };
 
   _isTouchWithinResponderRegion(
-    touch: $PropertyType<GestureResponderEvent, 'nativeEvent'>,
+    touch: GestureResponderEvent['nativeEvent'],
     responderRegion: $ReadOnly<{
       bottom: number,
       left: number,

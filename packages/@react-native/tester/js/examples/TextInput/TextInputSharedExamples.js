@@ -220,7 +220,7 @@ class RewriteInvalidCharactersAndClearExample extends React.Component<
   }
 }
 
-type ExampleRef = {current: null | {focus(): void, ...}};
+type ExampleRef = {current: null | React.ElementRef<typeof ExampleTextInput>};
 
 class BlurOnSubmitExample extends React.Component<{...}> {
   ref1: ExampleRef = React.createRef();
@@ -866,6 +866,7 @@ function DynamicContentWidth() {
     <View>
       <RNTesterText>Uncontrolled:</RNTesterText>
       <TextInput
+        testID="dynamic-width-uncontrolled-textinput"
         placeholder="Type..."
         style={{
           fontSize: 16,
@@ -875,6 +876,7 @@ function DynamicContentWidth() {
       />
       <RNTesterText>Controlled:</RNTesterText>
       <TextInput
+        testID="dynamic-width-controlled-textinput"
         placeholder="..."
         value={text}
         onChangeText={setText}

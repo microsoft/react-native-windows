@@ -10,7 +10,7 @@
 #include <dwrite.h>
 #include <dwrite_1.h>
 #include <react/renderer/telemetry/TransactionTelemetry.h>
-#include "TextLayoutManager.h"
+#include "WindowsTextLayoutManager.h"
 
 #include <unicode.h>
 
@@ -66,7 +66,15 @@ class AttachmentInlineObject : public winrt::implements<AttachmentInlineObject, 
   float m_height;
 };
 
-void TextLayoutManager::GetTextLayout(
+TextLayoutManager::TextLayoutManager(const ContextContainer::Shared &contextContainer)
+    : contextContainer_(contextContainer),
+      textMeasureCache_(kSimpleThreadSafeCacheSizeCap),
+      lineMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
+
+WindowsTextLayoutManager::WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer)
+    : TextLayoutManager(contextContainer) {}
+
+void WindowsTextLayoutManager::GetTextLayout(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     Size size,
@@ -152,7 +160,6 @@ void TextLayoutManager::GetTextLayout(
 
   // Get text with Object Replacement Characters for attachments
   auto str = GetTransformedText(attributedStringBox);
-
   winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
       str.c_str(), // The string to be laid out and formatted.
       static_cast<UINT32>(str.size()), // The length of the string.
@@ -161,6 +168,39 @@ void TextLayoutManager::GetTextLayout(
       size.height, // The height of the layout box.
       spTextLayout.put() // The IDWriteTextLayout interface pointer.
       ));
+
+  // Apply max width constraint and ellipsis trimming to ensure consistency with rendering
+  DWRITE_TEXT_METRICS metrics;
+  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
+
+  if (metrics.width > size.width) {
+    spTextLayout->SetMaxWidth(size.width);
+  }
+
+  // Apply DWRITE_TRIMMING for ellipsizeMode
+  DWRITE_TRIMMING trimming = {};
+  winrt::com_ptr<IDWriteInlineObject> ellipsisSign;
+
+  switch (paragraphAttributes.ellipsizeMode) {
+    case facebook::react::EllipsizeMode::Tail:
+      trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
+      break;
+    case facebook::react::EllipsizeMode::Clip:
+      trimming.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
+      break;
+    default:
+      trimming.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER; // Default to tail behavior
+      break;
+  }
+
+  // Use DWriteFactory to create the ellipsis trimming sign
+  if (trimming.granularity != DWRITE_TRIMMING_GRANULARITY_NONE) {
+    auto dwriteFactory = Microsoft::ReactNative::DWriteFactory();
+    HRESULT hr = dwriteFactory->CreateEllipsisTrimmingSign(spTextLayout.get(), ellipsisSign.put());
+    if (SUCCEEDED(hr)) {
+      spTextLayout->SetTrimming(&trimming, ellipsisSign.get());
+    }
+  }
 
   // Calculate positions for attachments and set inline objects
   unsigned int position = 0;
@@ -241,7 +281,7 @@ void TextLayoutManager::GetTextLayout(
   }
 }
 
-void TextLayoutManager::GetTextLayout(
+void WindowsTextLayoutManager::GetTextLayout(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints,
@@ -264,7 +304,7 @@ void TextLayoutManager::GetTextLayout(
   }
 }
 
-void TextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
+void WindowsTextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
     AttributedStringBox attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints,
@@ -333,11 +373,11 @@ TextMeasurement TextLayoutManager::measure(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     const TextLayoutContext &layoutContext,
-    LayoutConstraints layoutConstraints) const {
+    const LayoutConstraints &layoutConstraints) const {
   TextMeasurement measurement{};
   auto &attributedString = attributedStringBox.getValue();
 
-  measurement = m_measureCache.get(
+  measurement = textMeasureCache_.get(
       {attributedString, paragraphAttributes, layoutConstraints}, [&](TextMeasureCacheKey const &key) {
         auto telemetry = TransactionTelemetry::threadLocalTelemetry();
         if (telemetry) {
@@ -347,7 +387,7 @@ TextMeasurement TextLayoutManager::measure(
         winrt::com_ptr<IDWriteTextLayout> spTextLayout;
 
         TextMeasurement::Attachments attachments;
-        GetTextLayout(
+        WindowsTextLayoutManager::GetTextLayout(
             attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
 
         if (spTextLayout) {
@@ -381,18 +421,6 @@ TextMeasurement TextLayoutManager::measure(
   return measurement;
 }
 
-/**
- * Measures an AttributedString on the platform, as identified by some
- * opaque cache ID.
- */
-TextMeasurement TextLayoutManager::measureCachedSpannableById(
-    int64_t cacheId,
-    const ParagraphAttributes &paragraphAttributes,
-    LayoutConstraints layoutConstraints) const {
-  assert(false);
-  return {};
-}
-
 Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTransform> const &transform) {
   if (transform) {
     switch (transform.value()) {
@@ -415,12 +443,12 @@ Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTra
 LinesMeasurements TextLayoutManager::measureLines(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
-    Size size) const {
+    const Size &size) const {
   LinesMeasurements lineMeasurements{};
 
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
   TextMeasurement::Attachments attachments;
-  GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
+  WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
 
   if (spTextLayout) {
     std::vector<DWRITE_LINE_METRICS> lineMetrics;
@@ -485,24 +513,13 @@ LinesMeasurements TextLayoutManager::measureLines(
   return lineMeasurements;
 }
 
-std::shared_ptr<void> TextLayoutManager::getHostTextStorage(
+Float TextLayoutManager::baseline(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
-    LayoutConstraints layoutConstraints) const {
-  return nullptr;
-}
-
-void *TextLayoutManager::getNativeTextLayoutManager() const {
-  return (void *)this;
-}
-
-Float TextLayoutManager::baseline(
-    AttributedStringBox attributedStringBox,
-    ParagraphAttributes paragraphAttributes,
-    Size size) const {
+    const Size &size) const {
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
   TextMeasurement::Attachments attachments;
-  GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
+  WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
   if (!spTextLayout) {
     return 0;
   }
@@ -513,7 +530,7 @@ Float TextLayoutManager::baseline(
       0.8f; // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
 }
 
-winrt::hstring TextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {
+winrt::hstring WindowsTextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {
   winrt::hstring result{};
   const auto &attributedString = attributedStringBox.getValue();
 

@@ -147,12 +147,12 @@ class TouchableBounce extends React.Component<Props, State> {
       selected:
         this.props['aria-selected'] ?? this.props.accessibilityState?.selected,
       readOnly:
-        this.props['aria-readonly'] ?? this.props.accessibilityState?.readOnly, // Windows
+        this.props['aria-readonly'] ?? this.props.accessibilityState?.readOnly, // [Windows]
       multiselectable:
         this.props['aria-multiselectable'] ??
-        this.props.accessibilityState?.multiselectable, // Windows
+        this.props.accessibilityState?.multiselectable, // [Windows]
       required:
-        this.props['aria-required'] ?? this.props.accessibilityState?.required, // Windows
+        this.props['aria-required'] ?? this.props.accessibilityState?.required, // [Windows]
     };
 
     const accessibilityValue = {
@@ -180,7 +180,8 @@ class TouchableBounce extends React.Component<Props, State> {
         importantForAccessibility={
           this.props['aria-hidden'] === true
             ? 'no-hide-descendants'
-            : this.props.importantForAccessibility
+            : // $FlowFixMe[incompatible-type] - AnimatedProps types were made more strict and need refining at this call site
+              this.props.importantForAccessibility
         }
         accessibilityViewIsModal={
           this.props['aria-modal'] ?? this.props.accessibilityViewIsModal
@@ -221,7 +222,7 @@ class TouchableBounce extends React.Component<Props, State> {
   }
 }
 
-export default (React.forwardRef((props, hostRef) => (
+export default (React.forwardRef((props, hostRef: React.RefSetter<mixed>) => (
   <TouchableBounce {...props} hostRef={hostRef} />
 )): component(
   ref: React.RefSetter<mixed>,

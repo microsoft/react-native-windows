@@ -1,8 +1,60 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 13 May 2025 21:05:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 21 Jun 2025 05:21:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.291
+
+Sat, 21 Jun 2025 05:21:48 GMT
+
+### Changes
+
+- Remove usage of Animated in LogBox (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.290
+
+Fri, 20 Jun 2025 05:21:53 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+
+## 0.0.0-canary.289
+
+Thu, 19 Jun 2025 17:16:23 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
+- Update to @types/react 19 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.288
+
+Fri, 30 May 2025 05:24:59 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.36
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.40
+- Bump @rnw-scripts/just-task to v2.3.53
+- Bump react-native-platform-override to v1.9.55
+
+## 0.0.0-canary.287
+
+Wed, 28 May 2025 05:24:00 GMT
+
+### Changes
+
+- Removed unused `react-shallow-renderer` dependency (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.286
+
+Thu, 22 May 2025 05:24:49 GMT
+
+### Changes
+
+- Integrate RN  0.79.0-nightly-20250220-41b597c73 (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.285
 
