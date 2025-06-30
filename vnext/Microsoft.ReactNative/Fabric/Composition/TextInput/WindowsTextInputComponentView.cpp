@@ -1062,7 +1062,10 @@ void WindowsTextInputComponentView::updateProps(
       oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
       !facebook::react::floatEquality(
           oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
-      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
+      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily ||
+      !facebook::react::floatEquality(
+          oldTextInputProps.textAttributes.maxFontSizeMultiplier,
+          newTextInputProps.textAttributes.maxFontSizeMultiplier)) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1371,6 +1374,13 @@ void WindowsTextInputComponentView::onMounted() noexcept {
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
   InternalFinalize();
+
+  // Handle autoFocus property - focus the component when mounted if autoFocus is true
+  if (windowsTextInputProps().autoFocus) {
+    if (auto root = rootComponentView()) {
+      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+    }
+  }
 }
 
 std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue() noexcept {
@@ -1415,9 +1425,15 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
 
   // set font size -- 15 to convert twips to pt
   const auto &props = windowsTextInputProps();
-  float fontSize = m_fontSizeMultiplier *
+  float fontSize =
       (std::isnan(props.textAttributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
                                                  : props.textAttributes.fontSize);
+
+  // Apply maxFontSizeMultiplier if specified
+  auto maxFontSizeMultiplier = windowsTextInputProps().textAttributes.maxFontSizeMultiplier;
+  fontSize *=
+      (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, m_fontSizeMultiplier) : m_fontSizeMultiplier;
+
   // TODO get fontSize from props.textAttributes, or defaultTextAttributes, or fragment?
   cfNew.dwMask |= CFM_SIZE;
   cfNew.yHeight = static_cast<LONG>(fontSize * 15);

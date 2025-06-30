@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 20 Jun 2025 05:21:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 27 Jun 2025 05:23:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.969
+
+Fri, 27 Jun 2025 05:23:18 GMT
+
+### Changes
+
+- [Fabric] Implementation of accessibilityDescription (kvineeth@microsoft.com)
+
+## 0.0.0-canary.968
+
+Thu, 26 Jun 2025 05:22:52 GMT
+
+### Changes
+
+- Added fix for AutoFocus (hmalothu@microsoft.com)
+
+## 0.0.0-canary.967
+
+Tue, 24 Jun 2025 05:22:49 GMT
+
+### Changes
+
+- updated adjustsFontSizeToFit textlayout to nullptr (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.0.0-canary.966
 

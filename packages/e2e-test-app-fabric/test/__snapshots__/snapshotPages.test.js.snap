@@ -17,6 +17,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "typeName": "Check Comment",
       }
     }
+    accessibilityDescription="Sample Description"
     accessibilityHint="A hint for the blue box."
     accessibilityItemType="comment"
     accessibilityLabel="A blue box"
