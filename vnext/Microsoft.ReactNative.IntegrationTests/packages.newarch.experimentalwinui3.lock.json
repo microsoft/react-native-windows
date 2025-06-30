@@ -28,8 +28,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -93,7 +93,7 @@
           "Folly": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
-          "Microsoft.WindowsAppSDK": "[1.7.250127003-experimental3, )",
+          "Microsoft.WindowsAppSDK": "[1.8.0-experimental3, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
@@ -115,8 +115,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -138,8 +138,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -161,8 +161,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -184,8 +184,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",

@@ -16,8 +16,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -38,8 +38,8 @@
     "native,Version=v0.0/win": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -55,8 +55,8 @@
     "native,Version=v0.0/win-arm64": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -72,8 +72,8 @@
     "native,Version=v0.0/win-x64": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
@@ -89,8 +89,8 @@
     "native,Version=v0.0/win-x86": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.7.250127003-experimental3, )",
-        "resolved": "1.7.250127003-experimental3",
+        "requested": "[1.8.0-experimental3, )",
+        "resolved": "1.8.0-experimental3",
         "contentHash": "oR/J+gLxnx9w9vaSzOUQ8wD7zNtejf4R2x+gS2aPRQAvb12SpMN7zSKJD3bogHPZpA6qbu9w1KouQm0axDyNsQ==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2792.45",
