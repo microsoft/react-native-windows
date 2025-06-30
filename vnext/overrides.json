@@ -41,7 +41,7 @@
       "baseHash": "8ff58257e2af054b3c8367cad566abcaf36d7cba"
     },
     {
-      "type": "derived",
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/CxxNativeModule.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/CxxNativeModule.cpp",
       "baseHash": "de69b8e127fa19a72d0521760e1c1664201b525e",
@@ -69,7 +69,7 @@
       "issue": 13172
     },
     {
-      "type": "derived",
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/TraceSection.h",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/TraceSection.h",
       "baseHash": "0eac478d62ce71a7b81c2a2a15da0927c1b0eff9",
@@ -132,7 +132,7 @@
       "issue": 14128
     },
     {
-      "type": "derived",
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleWithJSIBindings.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleWithJSIBindings.cpp",
       "baseHash": "7976153776eee72a33af8e7ef3a24153f38e05d8",

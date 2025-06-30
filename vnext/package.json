@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.969",
+  "version": "0.0.0-canary.967",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -28,13 +28,13 @@
     "@react-native-community/cli-platform-ios": "17.0.0",
     "@react-native-windows/cli": "0.0.0-canary.267",
     "@react-native/assets": "1.0.0",
-    "@react-native/assets-registry": "0.80.0-nightly-20250331-398ac1f71",
-    "@react-native/codegen": "0.80.0-nightly-20250331-398ac1f71",
-    "@react-native/community-cli-plugin": "0.80.0-nightly-20250331-398ac1f71",
-    "@react-native/gradle-plugin": "0.80.0-nightly-20250331-398ac1f71",
-    "@react-native/js-polyfills": "0.80.0-nightly-20250331-398ac1f71",
-    "@react-native/normalize-colors": "0.80.0-nightly-20250331-398ac1f71",
-    "@react-native/virtualized-lists": "0.80.0-nightly-20250331-398ac1f71",
+    "@react-native/assets-registry": "0.80.0-nightly-20250414-70cdf12c4",
+    "@react-native/codegen": "0.80.0-nightly-20250414-70cdf12c4",
+    "@react-native/community-cli-plugin": "0.80.0-nightly-20250414-70cdf12c4",
+    "@react-native/gradle-plugin": "0.80.0-nightly-20250414-70cdf12c4",
+    "@react-native/js-polyfills": "0.80.0-nightly-20250414-70cdf12c4",
+    "@react-native/normalize-colors": "0.80.0-nightly-20250414-70cdf12c4",
+    "@react-native/virtualized-lists": "0.80.0-nightly-20250414-70cdf12c4",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "ansi-regex": "^5.0.0",
@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "@react-native-windows/codegen": "0.0.0-canary.123",
-    "@react-native/metro-config": "0.80.0-nightly-20250331-398ac1f71",
+    "@react-native/metro-config": "0.80.0-nightly-20250414-70cdf12c4",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.36",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.40",
@@ -91,7 +91,7 @@
   "peerDependencies": {
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
-    "react-native": "0.80.0-nightly-20250331-398ac1f71"
+    "react-native": "0.80.0-nightly-20250414-70cdf12c4"
   },
   "beachball": {
     "defaultNpmTag": "canary",

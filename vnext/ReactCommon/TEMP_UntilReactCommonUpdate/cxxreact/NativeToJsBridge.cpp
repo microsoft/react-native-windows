@@ -173,7 +173,7 @@ void NativeToJsBridge::callFunction(
   int systraceCookie = -1;
 #ifdef WITH_FBSYSTRACE
   systraceCookie = m_systraceCookie++;
-  FbSystraceAsyncFlow::begin(TRACE_TAG_REACT_CXX_BRIDGE, "JSCall", systraceCookie); // [Windows]
+  FbSystraceAsyncFlow::begin(TRACE_TAG_REACT_CXX_BRIDGE, "JSCall", systraceCookie); // [Windows] [issue #14819]
 #endif
 
   runOnExecutorQueue([this,

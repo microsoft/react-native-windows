@@ -188,7 +188,7 @@ void CxxNativeModule::invoke(
 #ifdef WITH_FBSYSTRACE
     if (callId != -1) {
       //fbsystrace_end_async_flow(TRACE_TAG_REACT, "native", callId);
-      fbsystrace_end_async_flow(TRACE_TAG_REACT_CXX_BRIDGE, "native", callId); // [Windows]
+      fbsystrace_end_async_flow(TRACE_TAG_REACT_CXX_BRIDGE, "native", callId); // [Windows] [issue #14819]
     }
 #else
     (void)(callId);

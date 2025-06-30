@@ -15,7 +15,7 @@ namespace facebook::react {
     const std::shared_ptr<TurboModule>& cxxModule,
     jsi::Runtime& runtime) {
   
-  // check if rtti is enabled before using dynamic_cast [windows]
+  // check if rtti is enabled before using dynamic_cast [windows] [issue #14820]
   #if defined(__GXX_RTTI) || defined(__cpp_rtti) || (defined(_MSC_VER) && defined(_CPPRTTI))    
   if (auto* cxxModuleWithJSIBindings =
           dynamic_cast<TurboModuleWithJSIBindings*>(cxxModule.get())) {
