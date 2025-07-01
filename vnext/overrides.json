@@ -389,6 +389,12 @@
       "baseHash": "b795ee6b2241f8bd8a6cbeda095b508242a317be"
     },
     {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
+      "baseHash": "de4c9224bac0ba920b41573b8d3c27b332a843de"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
