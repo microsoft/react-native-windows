@@ -106,6 +106,12 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/Components/TextInput/TextInput.flow.win32.js",
+      "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
+      "baseHash": "de4c9224bac0ba920b41573b8d3c27b332a843de"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
       "baseHash": "32d0f756ca2cbd454a5c2d8aa18f3b1ea1d20557"
