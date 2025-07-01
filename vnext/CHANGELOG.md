@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 27 Jun 2025 05:23:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 01 Jul 2025 05:24:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.970
+
+Tue, 01 Jul 2025 05:24:43 GMT
+
+### Changes
+
+- [Fabric] Implement maxFontSizeMultiplier in Text Input (54227869+anupriya13@users.noreply.github.com)
+- Add e2e test cases for snapToStart property in ScrollView fabric implementation (198982749+Copilot@users.noreply.github.com)
 
 ## 0.0.0-canary.969
 
