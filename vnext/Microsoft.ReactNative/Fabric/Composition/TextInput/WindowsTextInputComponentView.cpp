@@ -1286,7 +1286,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 
   m_state->updateState(std::move(data));
 
-  if (m_eventEmitter && !m_comingFromJS) {
+  if (m_eventEmitter && !m_comingFromJS && !m_comingFromState) {
     // call onChange event
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
