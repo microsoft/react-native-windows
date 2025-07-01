@@ -13,9 +13,9 @@ import fs from '@react-native-windows/fs';
 import path from 'path';
 import chalk from 'chalk';
 import {performance} from 'perf_hooks';
-import {XMLSerializer} from '@xmldom/xmldom';
+
 import {Ora} from 'ora';
-const formatter = require('xml-formatter');
+
 
 import type {
   Command,
@@ -113,9 +113,6 @@ export class AutoLinkWindows {
     const projectLang = windowsAppProjectConfig.projectLang!;
 
     verboseMessage('Parsing dependencies...', verbose);
-
-    this.changesNecessary =
-      (await this.ensureXAMLDialect()) || this.changesNecessary;
 
     // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
@@ -691,161 +688,6 @@ export class AutoLinkWindows {
       changesNecessary = changesNecessary || contentsChanged;
     });
     return changesNecessary;
-  }
-
-  protected getExperimentalFeaturesPropsXml() {
-    const experimentalFeaturesProps = path.join(
-      path.dirname(this.getSolutionFile()),
-      'ExperimentalFeatures.props',
-    );
-    if (fs.existsSync(experimentalFeaturesProps)) {
-      const experimentalFeaturesContents = configUtils.readProjectFile(
-        experimentalFeaturesProps,
-      );
-      return {
-        path: experimentalFeaturesProps,
-        content: experimentalFeaturesContents,
-      };
-    }
-    return undefined;
-  }
-
-  public async ensureXAMLDialect() {
-    let changesNeeded = false;
-    const experimentalFeatures = this.getExperimentalFeaturesPropsXml();
-    if (experimentalFeatures) {
-      const useWinUI3FromExperimentalFeatures =
-        configUtils
-          .tryFindPropertyValue(experimentalFeatures.content, 'UseWinUI3')
-          ?.toLowerCase() === 'true';
-      // Check if WinUI2xVersion is specified in experimental features
-      const targetWinUI2xVersion = configUtils.tryFindPropertyValue(
-        experimentalFeatures.content,
-        'WinUI2xVersion',
-      );
-      // Check if WinUI3Version is specified in experimental features
-      const targetWinUI3xVersion = configUtils.tryFindPropertyValue(
-        experimentalFeatures.content,
-        'WinUI3Version',
-      );
-      // Use the UseWinUI3 value from ExperimentalFeatures.props
-      changesNeeded = await this.updatePackagesConfigXAMLDialect(
-        useWinUI3FromExperimentalFeatures,
-        targetWinUI2xVersion,
-        targetWinUI3xVersion,
-      );
-    }
-    return changesNeeded;
-  }
-
-  protected getPackagesConfigXml() {
-    const projectFile = this.getProjectFile();
-    const packagesConfig = path.join(
-      path.dirname(projectFile),
-      'packages.config',
-    );
-
-    if (fs.existsSync(packagesConfig)) {
-      return {
-        path: packagesConfig,
-        content: configUtils.readProjectFile(packagesConfig),
-      };
-    }
-    return undefined;
-  }
-
-  private async updatePackagesConfigXAMLDialect(
-    useWinUI3: boolean,
-    targetWinUI2xVersion: string | null,
-    targetWinUI3xVersion: string | null,
-  ) {
-    let changed = false;
-    const packagesConfig = this.getPackagesConfigXml();
-    if (packagesConfig) {
-      // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
-      const project = this.getWindowsConfig();
-
-      const winUIPropsPath = path.join(
-        resolveRnwRoot(project),
-        'PropertySheets/WinUI.props',
-      );
-      const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
-
-      // Use the given WinUI2xVersion, otherwise fallback to WinUI.props
-      const winui2xVersion =
-        targetWinUI2xVersion ??
-        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI2xVersion');
-
-      // Use the given WinUI3Version, otherwise fallback to WinUI.props
-      const winui3Version =
-        targetWinUI3xVersion ??
-        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI3Version');
-
-      const dialects = [
-        {id: 'Microsoft.WindowsAppSDK', version: winui3Version!},
-        {id: 'Microsoft.UI.Xaml', version: winui2xVersion!},
-      ];
-      const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
-      const removePkg = useWinUI3 ? dialects[1] : dialects[0];
-
-      changed = this.updatePackagesConfig(
-        packagesConfig,
-        [removePkg],
-        [keepPkg],
-      );
-
-      if (!this.options.check && changed) {
-        const serializer = new XMLSerializer();
-        const output = serializer.serializeToString(packagesConfig.content);
-        const formattedXml = formatter(output, {indentation: '  '});
-        await this.updateFile(packagesConfig.path, formattedXml);
-      }
-    }
-    return changed;
-  }
-
-  private updatePackagesConfig(
-    packagesConfig: {path: string; content: Document},
-    removePkgs: {id: string; version: string}[],
-    keepPkgs: {id: string; version: string}[],
-  ) {
-    let changed = false;
-    const packageElements =
-      packagesConfig.content.documentElement.getElementsByTagName('package');
-
-    const nodesToRemove: Element[] = [];
-
-    for (let i = 0; i < packageElements.length; i++) {
-      const packageElement = packageElements.item(i)!;
-      const idAttr = packageElement!.getAttributeNode('id');
-      const id = idAttr!.value;
-      const keepPkg = keepPkgs.find(pkg => pkg.id === id);
-      if (removePkgs.find(pkg => pkg.id === id)) {
-        nodesToRemove.push(packageElement);
-        changed = true;
-      } else if (keepPkg) {
-        changed =
-          changed || keepPkg.version !== packageElement.getAttribute('version');
-        packageElement.setAttribute('version', keepPkg.version!);
-        keepPkgs = keepPkgs.filter(pkg => pkg.id !== keepPkg.id);
-      }
-    }
-
-    nodesToRemove.forEach(pkg =>
-      packagesConfig.content.documentElement.removeChild(pkg),
-    );
-
-    keepPkgs.forEach(keepPkg => {
-      const newPkg = packagesConfig.content.createElement('package');
-
-      Object.entries(keepPkg).forEach(([attr, value]) => {
-        newPkg.setAttribute(attr, value as string);
-      });
-      newPkg.setAttribute('targetFramework', 'native');
-      packagesConfig.content.documentElement.appendChild(newPkg);
-      changed = true;
-    });
-    return changed;
   }
 
   /** @return The CLI command to invoke autolink-windows independently */
