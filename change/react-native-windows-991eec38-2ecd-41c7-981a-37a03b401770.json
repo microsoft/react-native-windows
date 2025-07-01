@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix telemetry blank fields by correcting property mismatches and adding fallbacks",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
