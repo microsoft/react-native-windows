@@ -191,7 +191,7 @@ void NativeToJsBridge::callFunction(
     }
 
 #ifdef WITH_FBSYSTRACE
-    FbSystraceAsyncFlow::end(TRACE_TAG_REACT_CXX_BRIDGE, "JSCall", systraceCookie); // [Windows]
+    FbSystraceAsyncFlow::end(TRACE_TAG_REACT_CXX_BRIDGE, "JSCall", systraceCookie); // [Windows] [issue #14819]
     TraceSection s(
         "NativeToJsBridge::callFunction", "module", module, "method", method);
 #else
@@ -210,7 +210,7 @@ void NativeToJsBridge::invokeCallback(
   int systraceCookie = -1;
 #ifdef WITH_FBSYSTRACE
   systraceCookie = m_systraceCookie++;
-  FbSystraceAsyncFlow::begin(TRACE_TAG_REACT_CXX_BRIDGE, "<callback>", systraceCookie); // [Windows]
+  FbSystraceAsyncFlow::begin(TRACE_TAG_REACT_CXX_BRIDGE, "<callback>", systraceCookie); // [Windows] [issue #14819]
 #endif
 
   runOnExecutorQueue(
@@ -224,7 +224,7 @@ void NativeToJsBridge::invokeCallback(
               "Attempting to invoke JS callback on a bad application bundle.");
         }
 #ifdef WITH_FBSYSTRACE
-        FbSystraceAsyncFlow::end(TRACE_TAG_REACT_CXX_BRIDGE, "<callback>", systraceCookie); // [Windows]
+        FbSystraceAsyncFlow::end(TRACE_TAG_REACT_CXX_BRIDGE, "<callback>", systraceCookie); // [Windows] [issue #14819]
         TraceSection s("NativeToJsBridge::invokeCallback");
 #else
         (void)(systraceCookie);

@@ -71,7 +71,6 @@ struct ConcreteTraceSection {
   explicit ConcreteTraceSection(
       const char* name,
       ConvertsToStringPiece&&... args)
-      //: m_section(TRACE_TAG_REACT, name, args...) {}
       : m_section(TRACE_TAG_REACT_CXX_BRIDGE, name, args...) {} // [Windows][issue #14819]
 
  private:
