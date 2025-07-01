@@ -26,7 +26,7 @@
             "author": "kvineeth@microsoft.com",
             "package": "@office-iss/react-native-win32",
             "commit": "ca29f4ea3226621a8c1e8f9553fe55302ff6d4b9",
-            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250414-70cdf12c4"
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71"
           }
         ]
       }
