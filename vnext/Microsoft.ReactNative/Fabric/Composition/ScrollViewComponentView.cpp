@@ -807,12 +807,13 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
-      oldViewProps.snapToOffsets != newViewProps.snapToOffsets || oldViewProps.snapToAlignment != newViewProps.snapToAlignment) {
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets ||
+      oldViewProps.snapToAlignment != newViewProps.snapToAlignment) {
     const auto snapToOffsets = winrt::single_threaded_vector<float>();
     for (const auto &offset : newViewProps.snapToOffsets) {
       snapToOffsets.Append(static_cast<float>(offset));
     }
-    
+
     // Convert React Native snapToAlignment to Windows SnapPointsAlignment enum
     winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment snapAlignment;
     switch (newViewProps.snapToAlignment) {
@@ -827,8 +828,9 @@ void ScrollViewComponentView::updateProps(
         snapAlignment = winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Near;
         break;
     }
-    
-    m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
+
+    m_scrollVisual.SetSnapPoints(
+        newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
   }
 }
 
