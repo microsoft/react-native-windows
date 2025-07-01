@@ -121,6 +121,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
  private:
   void updateDecelerationRate(float value) noexcept;
   void updateContentVisualSize() noexcept;
+  void updateSnapPoints() noexcept;
   bool scrollToEnd(bool animate) noexcept;
   bool scrollToStart(bool animate) noexcept;
   bool scrollDown(float delta, bool animate) noexcept;
