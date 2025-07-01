@@ -809,7 +809,17 @@ void ScrollViewComponentView::updateProps(
   if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
       oldViewProps.snapToOffsets != newViewProps.snapToOffsets ||
       oldViewProps.snapToInterval != newViewProps.snapToInterval) {
-    updateSnapPoints();
+    if (newViewProps.snapToInterval > 0 || oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+      // Use the comprehensive updateSnapPoints method when snapToInterval is involved
+      updateSnapPoints();
+    } else {
+      // Keep original inline logic for the basic snapToOffsets case
+      const auto snapToOffsets = winrt::single_threaded_vector<float>();
+      for (const auto &offset : newViewProps.snapToOffsets) {
+        snapToOffsets.Append(static_cast<float>(offset));
+      }
+      m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
+    }
   }
 }
 
