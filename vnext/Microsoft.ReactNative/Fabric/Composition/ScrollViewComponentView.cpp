@@ -807,12 +807,28 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
-      oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets || oldViewProps.snapToAlignment != newViewProps.snapToAlignment) {
     const auto snapToOffsets = winrt::single_threaded_vector<float>();
     for (const auto &offset : newViewProps.snapToOffsets) {
       snapToOffsets.Append(static_cast<float>(offset));
     }
-    m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
+    
+    // Convert React Native snapToAlignment to Windows SnapPointsAlignment enum
+    winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment snapAlignment;
+    switch (newViewProps.snapToAlignment) {
+      case facebook::react::ScrollViewSnapToAlignment::Center:
+        snapAlignment = winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Center;
+        break;
+      case facebook::react::ScrollViewSnapToAlignment::End:
+        snapAlignment = winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Far;
+        break;
+      case facebook::react::ScrollViewSnapToAlignment::Start:
+      default:
+        snapAlignment = winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Near;
+        break;
+    }
+    
+    m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
   }
 }
 
