@@ -807,7 +807,8 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
-      oldViewProps.snapToOffsets != newViewProps.snapToOffsets || oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets ||
+      oldViewProps.snapToInterval != newViewProps.snapToInterval) {
     updateSnapPoints();
   }
 }
@@ -859,7 +860,7 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
   m_verticalScrollbarComponent->ContentSize(contentSize);
   m_horizontalScrollbarComponent->ContentSize(contentSize);
   m_scrollVisual.ContentSize(contentSize);
-  
+
   // Update snap points if snapToInterval is being used, as content size affects the number of snap points
   updateSnapPoints();
 }
@@ -1438,7 +1439,7 @@ void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
 void ScrollViewComponentView::updateSnapPoints() noexcept {
   const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
   const auto snapToOffsets = winrt::single_threaded_vector<float>();
-  
+
   // snapToOffsets has priority over snapToInterval (matches React Native behavior)
   if (viewProps.snapToOffsets.size() > 0) {
     // Use explicit snapToOffsets
@@ -1448,25 +1449,25 @@ void ScrollViewComponentView::updateSnapPoints() noexcept {
   } else if (viewProps.snapToInterval > 0) {
     // Generate snap points based on interval
     // Calculate the content size to determine how many intervals to create
-    float contentLength = viewProps.horizontal 
+    float contentLength = viewProps.horizontal
         ? std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor
         : std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
-    
+
     float interval = static_cast<float>(viewProps.snapToInterval) * m_layoutMetrics.pointScaleFactor;
-    
+
     // Ensure we have a reasonable minimum interval to avoid infinite loops or excessive memory usage
     if (interval >= 1.0f && contentLength > 0) {
       // Generate offsets at each interval, but limit the number of snap points to avoid excessive memory usage
       const int maxSnapPoints = 1000; // Reasonable limit
       int snapPointCount = 0;
-      
+
       for (float offset = 0; offset <= contentLength && snapPointCount < maxSnapPoints; offset += interval) {
         snapToOffsets.Append(offset);
         snapPointCount++;
       }
     }
   }
-  
+
   m_scrollVisual.SetSnapPoints(viewProps.snapToStart, viewProps.snapToEnd, snapToOffsets.GetView());
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
