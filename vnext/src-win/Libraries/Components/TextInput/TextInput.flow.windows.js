@@ -13,6 +13,8 @@ import type {
   GestureResponderEvent,
   NativeSyntheticEvent,
   ScrollEvent,
+  KeyEvent, // Windows
+  MouseEvent, // Windows
 } from '../../Types/CoreEventTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
@@ -21,6 +23,7 @@ import {
   type TextStyleProp,
   type ViewStyleProp,
 } from '../../StyleSheet/StyleSheet';
+
 import * as React from 'react';
 
 /**
@@ -523,7 +526,7 @@ type SubmitKeyEvent = $ReadOnly<{|
   code: string,
 |}>;
 
-type TextInputWindowsProps = $ReadOnly<{|
+export type TextInputWindowsProps = $ReadOnly<{|
   /**
    * If `true`, clears the text field synchronously before `onSubmitEditing` is emitted.
    * @platform windows

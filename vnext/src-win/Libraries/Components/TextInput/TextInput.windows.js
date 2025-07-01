@@ -50,7 +50,7 @@ import type {
   TextInputSubmitEditingEvent,
   TextInputType,
   TextInputWindowsProps, // [Windows]
-} from './TextInput.flow';
+} from './TextInput.flow.windows';
 import type {HandledKeyboardEvent} from '../View/ViewPropTypes';
 
 import usePressability from '../../Pressability/usePressability';
