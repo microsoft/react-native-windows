@@ -10131,12 +10131,12 @@ react-is@^19.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-19.0.0.tgz#d6669fd389ff022a9684f708cf6fa4962d1fea7a"
   integrity sha512-H91OHcwjZsbq3ClIDHMzBShc1rotbfACdWENsmEf0IFvZ3FgGPtdHMcsv45bQ1hAbgdfiA8SnxTKfDS+x/8m2g==
 
-react-native-xaml@^0.0.78:
-  version "0.0.78"
-  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.78.tgz#146264bc459e1ddb645e61f0e0b69cd893d20069"
-  integrity sha512-JLey4nTc+JHpixGRz8V6GpdBOAEZrAU38AjdYo+3bU6OAXb7VBAAQs2P9moIda9cJlvgfhYYoHSAwW+cAcDkaA==
+react-native-xaml@^0.0.80:
+  version "0.0.80"
+  resolved "https://registry.npmjs.org/react-native-xaml/-/react-native-xaml-0.0.80.tgz#1505adad9a7688ee890557a7d32d5022ad69ed7c"
+  integrity sha512-6YA/+Qdx5BJ+g/HU60PPC/MFnv+AluaMOkpgM8hBJ1INsX9Eq1/CW+eG64Zg/4MthzU4LargZQUudTOdBKQdiA==
   dependencies:
-    "@types/react" "*"
+    "@types/react" "^19.0.0"
 
 react-native@0.80.0-nightly-20250331-398ac1f71:
   version "0.80.0-nightly-20250331-398ac1f71"
