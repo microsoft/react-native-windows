@@ -872,7 +872,7 @@ struct CompScrollerVisual : winrt::implements<
       bool snapToStart,
       bool snapToEnd,
       winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets,
-      winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment snapToAlignment) noexcept {
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment snapToAlignment) noexcept {
     m_snapToStart = snapToStart;
     m_snapToEnd = snapToEnd;
     m_snapToAlignment = snapToAlignment;
@@ -1105,18 +1105,18 @@ struct CompScrollerVisual : winrt::implements<
 
     // Adjust snap positions based on alignment
     const float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
-    if (m_snapToAlignment == winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Center) {
+    if (m_snapToAlignment == winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center) {
       // For center alignment, offset snap positions by half the viewport size
       for (auto &position : snapPositions) {
         position = std::max(0.0f, position - viewportSize / 2.0f);
       }
-    } else if (m_snapToAlignment == winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Far) {
+    } else if (m_snapToAlignment == winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End) {
       // For end alignment, offset snap positions by the full viewport size
       for (auto &position : snapPositions) {
         position = std::max(0.0f, position - viewportSize);
       }
     }
-    // For Near (start) alignment, no adjustment needed
+    // For Start alignment, no adjustment needed
 
     std::sort(snapPositions.begin(), snapPositions.end());
     snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
@@ -1245,8 +1245,8 @@ struct CompScrollerVisual : winrt::implements<
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
   std::vector<float> m_snapToOffsets;
-  winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment m_snapToAlignment{
-      winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Near};
+  winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment m_snapToAlignment{
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start};
   bool m_inertia{false};
   bool m_custom{false};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;

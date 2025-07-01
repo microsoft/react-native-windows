@@ -814,18 +814,18 @@ void ScrollViewComponentView::updateProps(
       snapToOffsets.Append(static_cast<float>(offset));
     }
 
-    // Convert React Native snapToAlignment to Windows SnapPointsAlignment enum
-    winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment snapAlignment;
+    // Convert React Native snapToAlignment to local SnapAlignment enum
+    winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment snapAlignment;
     switch (newViewProps.snapToAlignment) {
       case facebook::react::ScrollViewSnapToAlignment::Center:
-        snapAlignment = winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Center;
+        snapAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center;
         break;
       case facebook::react::ScrollViewSnapToAlignment::End:
-        snapAlignment = winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Far;
+        snapAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End;
         break;
       case facebook::react::ScrollViewSnapToAlignment::Start:
       default:
-        snapAlignment = winrt::Windows::UI::Xaml::Controls::SnapPointsAlignment::Near;
+        snapAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start;
         break;
     }
 
