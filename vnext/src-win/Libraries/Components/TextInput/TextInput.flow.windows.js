@@ -18,6 +18,8 @@ import type {
 } from '../../Types/CoreEventTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
+import type {HandledKeyboardEvent} from '../View/ViewPropTypes'; // Windows
+
 import {
   type ColorValue,
   type TextStyleProp,
