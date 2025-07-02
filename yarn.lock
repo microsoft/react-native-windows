@@ -2793,9 +2793,9 @@
   integrity sha512-vDgdbMy2QXHnAruzlv68pUtXCjmqUk3WrBAsRboRovsOmxbfn/WiYCjmecyKjGztnMps5dWp4Uq2prp+Ilo17Q==
 
 "@types/npm-registry-fetch@^8.0.0":
-  version "8.0.7"
-  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.7.tgz#83734d6c5ae834b08f383bed2b8f8b7d1031889d"
-  integrity sha512-db9iBh7kDDg4lRT4k4XZ6IiecTEgFCID4qk+VDVPbtzU855q3KZLCn08ATr4H27ntRJVhulQ7GWjl24H42x96w==
+  version "8.0.8"
+  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.8.tgz#5d29636566dc51545f6fa0b744acd436a209507f"
+  integrity sha512-VL/chssZawBkaQ5gFD5njblJce/ny9OICBlWAG9X6/m/ypPNJMWYiM22SY2mhLIGoknd4AyEJyi+FGyrBnsr+A==
   dependencies:
     "@types/node" "*"
     "@types/node-fetch" "*"
@@ -12173,9 +12173,9 @@ ws@^7, ws@^7.4.6, ws@^7.5.10:
   integrity sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==
 
 ws@^7.2.3, ws@^8.17.1, ws@^8.18.0:
-  version "8.18.2"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.18.2.tgz#42738b2be57ced85f46154320aabb51ab003705a"
-  integrity sha512-DMricUmwGZUVr++AEAe2uiVM7UoO9MAVZMDu05UQOaUII0lp+zOzLLU4Xqh/JvTqklB1T4uELaaPBKyjE1r4fQ==
+  version "8.18.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.18.3.tgz#b56b88abffde62791c639170400c93dcb0c95472"
+  integrity sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==
 
 xml-formatter@^2.4.0:
   version "2.6.1"
