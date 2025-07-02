@@ -26,6 +26,9 @@ import typeof FocusManager from './Libraries/Utilities/FocusManager';
 import typeof NativeModules from './Libraries/BatchedBridge/NativeModules';
 import typeof codegenNativeCommands from './Libraries/Utilities/codegenNativeCommands';
 import typeof codegenNativeComponent from './Libraries/Utilities/codegenNativeComponent';
+import {findNodeHandle} from './Libraries/ReactNative/RendererProxy';
+import {unstable_batchedUpdates} from './Libraries/ReactNative/RendererProxy';
+
 // Components
 import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';
 import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/ActivityIndicator';
@@ -283,7 +286,7 @@ module.exports = {
   get Easing(): Easing {
     return require('./Libraries/Animated/Easing').default;
   },
-  get findNodeHandle(): $PropertyType<ReactNative, 'findNodeHandle'> {
+  get findNodeHandle(): typeof findNodeHandle {
     return require('./Libraries/ReactNative/RendererProxy').findNodeHandle;
   },
   get FocusManager(): FocusManager {
@@ -389,10 +392,7 @@ module.exports = {
   get UIManager(): UIManager {
     return require('./Libraries/ReactNative/UIManager').default;
   },
-  get unstable_batchedUpdates(): $PropertyType<
-    ReactNative,
-    'unstable_batchedUpdates',
-  > {
+  get unstable_batchedUpdates(): typeof unstable_batchedUpdates {
     return require('./Libraries/ReactNative/RendererProxy')
       .unstable_batchedUpdates;
   },

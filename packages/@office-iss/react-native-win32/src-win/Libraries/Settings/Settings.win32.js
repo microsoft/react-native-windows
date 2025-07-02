@@ -1,28 +1,27 @@
 /**
- * Copyright (c) Microsoft Corporation.
- * Licensed under the MIT License.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
  * @format
  */
-'use strict';
 
-var Settings = {
-  get(key: string): any {
-    console.warn('Settings is not yet supported on Win32');
-    return null;
-  },
+import Platform from '../Utilities/Platform';
 
-  set(settings: Object) {
-    console.warn('Settings is not yet supported on Win32');
-  },
-
-  watchKeys(keys: string | Array<string>, callback: () => void): number {
-    console.warn('Settings is not yet supported on Win32');
-    return -1;
-  },
-
-  clearWatch(watchId: number) {
-    console.warn('Settings is not yet supported on Win32');
-  },
+let Settings: {
+  get(key: string): any,
+  set(settings: Object): void,
+  watchKeys(keys: string | Array<string>, callback: () => void): number,
+  clearWatch(watchId: number): void,
+  ...
 };
+
+if (Platform.OS === 'ios') {
+  Settings = require('./Settings').default;
+} else {
+  Settings = require('./SettingsFallback').default;
+}
 
 export default Settings;
