@@ -456,6 +456,7 @@ type ViewPropsWindows = $ReadOnly<{|
   'aria-setsize'?: ?number,
   accessibilityDescription?: ?string,
   'aria-description'?: ?string,
+  'aria-hidden'?: ?boolean,
 
   /**
    * Specifies if the control should show System focus visuals
