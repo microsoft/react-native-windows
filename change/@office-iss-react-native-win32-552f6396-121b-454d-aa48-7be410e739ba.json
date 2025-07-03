@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "intergrate rn 0.80.0-nightly-20250414-70cdf12c4",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "satkh@microsoft.com",
-  "dependentChangeType": "patch"
-}
