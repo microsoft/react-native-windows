@@ -79,6 +79,21 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
         xaml::Automation::Peers::AutomationNotificationProcessing::ImportantMostRecent,
         hstr,
         hstr);
+#else
+    // Fabric implementation using Win32 UIA
+    if (!UiaClientsAreListening()) {
+      return;
+    }
+
+    // For Fabric, use the Win32 UIA API to raise the notification event
+    // We don't need a specific provider - UiaRaiseNotificationEvent with nullptr
+    // will use the focused element or foreground window
+    UiaRaiseNotificationEvent(
+        nullptr, // nullptr means use the current active/focused element
+        UIA_NotificationKindOther,
+        UIA_NotificationProcessingImportantMostRecent,
+        announcement.c_str(),
+        announcement.c_str());
 #endif
   });
 }
