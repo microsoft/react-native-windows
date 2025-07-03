@@ -317,9 +317,7 @@ const View: component(
                 focusable={_focusable}
                 disabled={disabled}
                 accessibilityState={_accessibilityState}
-                ariaHidden={
-                  ariaHidden ?? accessibilityElementsHidden
-                }
+                ariaHidden={ariaHidden ?? accessibilityElementsHidden}
                 accessibilityLabelledBy={_accessibilityLabelledBy}
                 accessibilityValue={_accessibilityValue}
                 importantForAccessibility={computedImportantForAccessibility}
@@ -332,9 +330,9 @@ const View: component(
                 // [Windows
                 accessible={_accessible}
                 children={
-                 computedImportantForAccessibility === 'no-hide-descendants'
-                  ? childrenWithImportantForAccessibility(otherProps.children)
-                  : otherProps.children
+                  computedImportantForAccessibility === 'no-hide-descendants'
+                    ? childrenWithImportantForAccessibility(otherProps.children)
+                    : otherProps.children
                 }
                 // Windows]
               />
