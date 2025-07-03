@@ -104,4 +104,22 @@ describe('Accessibility Tests', () => {
     const dump = await dumpVisualTree('accessibility-base-view-3');
     expect(dump).toMatchSnapshot();
   });
+  test('Aria-hidden set to true parent.', async () => {
+    await searchBox('Lab');
+    const componentsTab = await app.findElementByTestID(
+      'accessibility-aria-hidden-view',
+    );
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('accessibility-aria-hidden-view');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Aria-hidden set to true for child test.', async () => {
+    await searchBox('Lab');
+    const componentsTab = await app.findElementByTestID(
+      'accessibility-aria-hidden-child-text',
+    );
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('accessibility-aria-hidden-child-text');
+    expect(dump).toMatchSnapshot();
+  });
 });
