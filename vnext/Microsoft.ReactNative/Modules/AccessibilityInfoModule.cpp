@@ -85,15 +85,52 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
       return;
     }
 
-    // For Fabric, use the Win32 UIA API to raise the notification event
-    // We don't need a specific provider - UiaRaiseNotificationEvent with nullptr
-    // will use the focused element or foreground window
-    UiaRaiseNotificationEvent(
-        nullptr, // nullptr means use the current active/focused element
-        UIA_NotificationKindOther,
-        UIA_NotificationProcessingImportantMostRecent,
-        announcement.c_str(),
-        announcement.c_str());
+    HWND hwnd = ::GetActiveWindow();
+    if (!hwnd) {
+        return;
+    }
+
+    IRawElementProviderSimple* provider = nullptr;
+    HRESULT hrProvider = UiaHostProviderFromHwnd(hwnd, &provider);
+    if (FAILED(hrProvider) || !provider) {
+      return;
+    }
+
+    // Convert announcement string to BSTR
+    BSTR bstrAnnouncement = SysAllocString(announcement.c_str());
+    if (!bstrAnnouncement) {
+      provider->Release();
+      return;
+    }
+
+    // Create a GUID and get string form for activityId
+    GUID guid;
+    wchar_t guidString[40] = {};
+    BSTR bstrActivityId = nullptr;
+
+    if (SUCCEEDED(CoCreateGuid(&guid))) {
+      int len = StringFromGUID2(guid, guidString, ARRAYSIZE(guidString));
+      if (len > 1) {
+        bstrActivityId = SysAllocString(guidString);
+      }
+    }
+
+    if (!bstrActivityId) {
+      SysFreeString(bstrAnnouncement);
+      provider->Release();
+      return;
+    }
+
+    HRESULT hr = UiaRaiseNotificationEvent(
+        provider,
+        NotificationKind_Other,
+        NotificationProcessing_ImportantMostRecent,
+        bstrAnnouncement,
+        bstrActivityId);
+
+    SysFreeString(bstrAnnouncement);
+    SysFreeString(bstrActivityId);
+    provider->Release();
 #endif
   });
 }
