@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix(new-arch): add deprecation warning for Flyout/Popup",
+  "packageName": "react-native-windows",
+  "email": "fcalise@gmail.com",
+  "dependentChangeType": "patch"
+}
