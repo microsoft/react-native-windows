@@ -23,6 +23,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
     accessibilityLabel="A blue box"
     accessibilityLevel={1}
     accessible={true}
+    aria-hidden={true}
     style={
       {
         "backgroundColor": "blue",
@@ -69,6 +70,32 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
     }
     testID="accessibility-base-view-3"
   />
+  <Text>
+    The following has aria-hidden set to true:
+  </Text>
+  <View
+    accessibilityLabel="This view is hidden from screen readers"
+    accessible={true}
+    aria-hidden={true}
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 50,
+        "width": 50,
+      }
+    }
+    testID="accessibility-aria-hidden-view"
+  />
+  <View
+    aria-hidden={true}
+  >
+    <Text
+      aria-label="yellow2"
+      testID="accessibility-aria-hidden-child-text"
+    >
+      This text should be HIDDEN from screen readers (aria-hidden=true)
+    </Text>
+  </View>
 </View>
 `;
 
@@ -8395,25 +8422,33 @@ exports[`snapshotAllPages Border 23`] = `
 exports[`snapshotAllPages Border 24`] = `
 <View
   style={
-    [
-      {
-        "height": 50,
-        "width": 50,
-      },
-      {
-        "backgroundColor": "red",
-        "borderLeftWidth": 10,
-        "borderRadius": 10,
-        "transform": [
-          {
-            "scale": 1.2,
-          },
-        ],
-      },
-    ]
+    {
+      "padding": 10,
+    }
   }
   testID="border-test-scaling-transforms"
-/>
+>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderLeftWidth": 10,
+          "borderRadius": 10,
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
+      ]
+    }
+  />
+</View>
 `;
 
 exports[`snapshotAllPages Button 1`] = `
@@ -77293,19 +77328,9 @@ exports[`snapshotAllPages TextInput 18`] = `
       6
     </Text>
   </View>
-  <View>
-    <View
-      style={
-        {
-          "bottom": -5,
-          "left": 120,
-          "position": "absolute",
-          "right": -5,
-          "top": -5,
-        }
-      }
-      testID="styles-screenshot-area"
-    />
+  <View
+    testID="text-styles"
+  >
     <View
       style={
         {
