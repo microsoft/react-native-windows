@@ -394,6 +394,7 @@ const validAttributesForNonEventProps = {
   tooltip: true, // [Windows]
   onClick: true, // [Windows]
   enableFocusRing: true, // [Windows]
+  importantForAccessibility: true, // [Windows]
 
   style: ReactNativeStyleAttributes,
 };
