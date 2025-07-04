@@ -871,9 +871,11 @@ struct CompScrollerVisual : winrt::implements<
   void SetSnapPoints(
       bool snapToStart,
       bool snapToEnd,
-      winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets) noexcept {
+      winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets,
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment snapToAlignment) noexcept {
     m_snapToStart = snapToStart;
     m_snapToEnd = snapToEnd;
+    m_snapToAlignment = snapToAlignment;
     m_snapToOffsets.clear();
     if (offsets) {
       for (auto const &offset : offsets) {
@@ -1100,6 +1102,22 @@ struct CompScrollerVisual : winrt::implements<
     }
 
     snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
+
+    // Adjust snap positions based on alignment
+    const float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
+    if (m_snapToAlignment == winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center) {
+      // For center alignment, offset snap positions by half the viewport size
+      for (auto &position : snapPositions) {
+        position = std::max(0.0f, position - viewportSize / 2.0f);
+      }
+    } else if (m_snapToAlignment == winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End) {
+      // For end alignment, offset snap positions by the full viewport size
+      for (auto &position : snapPositions) {
+        position = std::max(0.0f, position - viewportSize);
+      }
+    }
+    // For Start alignment, no adjustment needed
+
     std::sort(snapPositions.begin(), snapPositions.end());
     snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
 
@@ -1227,6 +1245,8 @@ struct CompScrollerVisual : winrt::implements<
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
   std::vector<float> m_snapToOffsets;
+  winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment m_snapToAlignment{
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start};
   bool m_inertia{false};
   bool m_custom{false};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
