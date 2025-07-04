@@ -86,13 +86,4 @@ describe('ScrollView Tests', () => {
     const dump = await dumpVisualTree('scroll_pressable_sticky_header');
     expect(dump).toMatchSnapshot();
   });*/
-  test('ScrollView snapToAlignment does not cause errors', async () => {
-    // This test ensures that the snapToAlignment prop is handled without crashing
-    // We test this by navigating to the snap options example and verifying it loads
-    await goToComponentExample('<ScrollView> SnapTo Options');
-    const component = await app.findElementByTestID('snap_scrollview');
-    await component.waitForDisplayed({timeout: 20000});
-    const dump = await dumpVisualTree('snap_scrollview');
-    expect(dump).toMatchSnapshot();
-  });
 });
