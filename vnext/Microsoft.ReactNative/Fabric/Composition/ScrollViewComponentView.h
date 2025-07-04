@@ -134,6 +134,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
   void updateShowsHorizontalScrollIndicator(bool value) noexcept;
   void updateShowsVerticalScrollIndicator(bool value) noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment convertSnapToAlignment(
+      facebook::react::ScrollViewSnapToAlignment alignment) noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};

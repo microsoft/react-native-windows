@@ -807,12 +807,17 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
-      oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets ||
+      oldViewProps.snapToAlignment != newViewProps.snapToAlignment) {
     const auto snapToOffsets = winrt::single_threaded_vector<float>();
     for (const auto &offset : newViewProps.snapToOffsets) {
       snapToOffsets.Append(static_cast<float>(offset));
     }
-    m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
+
+    auto snapAlignment = convertSnapToAlignment(newViewProps.snapToAlignment);
+
+    m_scrollVisual.SetSnapPoints(
+        newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
   }
 }
 
@@ -1434,5 +1439,18 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment ScrollViewComponentView::convertSnapToAlignment(
+    facebook::react::ScrollViewSnapToAlignment alignment) noexcept {
+  switch (alignment) {
+    case facebook::react::ScrollViewSnapToAlignment::Center:
+      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center;
+    case facebook::react::ScrollViewSnapToAlignment::End:
+      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End;
+    case facebook::react::ScrollViewSnapToAlignment::Start:
+    default:
+      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start;
+  }
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
