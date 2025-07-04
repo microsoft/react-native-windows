@@ -651,11 +651,10 @@ const SnapToOptions = () => {
         snapToInterval={snapToInterval}
         snapToOffsets={snapToOffsets}
         snapToStart={snapToStart}
-        testID="snap_scrollview"
         nestedScrollEnabled>
         {ITEMS.map(createItemRow)}
       </ScrollView>
-      {Platform.OS === 'ios' || Platform.OS === 'windows' ? (
+      {Platform.OS === 'ios' ? (
         <>
           <RNTesterText style={styles.rowTitle}>
             Select Snap to Alignment Mode
