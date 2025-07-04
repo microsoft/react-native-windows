@@ -265,7 +265,7 @@ const View: component(
         focusable={_focusable}
         disabled={disabled}
         accessibilityState={_accessibilityState}
-        ariaHidden={ariaHidden ?? accessibilityElementsHidden}
+        accessibilityElementsHidden={ariaHidden ?? accessibilityElementsHidden}
         accessibilityLabelledBy={_accessibilityLabelledBy}
         accessibilityValue={_accessibilityValue}
         importantForAccessibility={computedImportantForAccessibility}
@@ -277,11 +277,7 @@ const View: component(
         onKeyUpCapture={_keyUpCapture}
         // [Windows
         accessible={_accessible}
-        children={
-          computedImportantForAccessibility === 'no-hide-descendants'
-            ? childrenWithImportantForAccessibility(otherProps.children)
-            : otherProps.children
-        }
+        children={otherProps.children}
         // Windows]
       />
     );
@@ -317,7 +313,7 @@ const View: component(
                 focusable={_focusable}
                 disabled={disabled}
                 accessibilityState={_accessibilityState}
-                ariaHidden={ariaHidden ?? accessibilityElementsHidden}
+                accessibilityElementsHidden={ariaHidden ?? accessibilityElementsHidden}
                 accessibilityLabelledBy={_accessibilityLabelledBy}
                 accessibilityValue={_accessibilityValue}
                 importantForAccessibility={computedImportantForAccessibility}
