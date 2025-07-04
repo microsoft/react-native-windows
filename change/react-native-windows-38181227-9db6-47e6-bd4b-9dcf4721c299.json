@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement announceForAccessibility for Fabric using Win32 UIA",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
