@@ -1029,14 +1029,8 @@ exports[`View Tests Views can have customized accessibility 1`] = `
         "_Props": {},
       },
       {
-        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
         "_Props": {},
-        "__Children": [
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-        ],
       },
       {
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -1082,27 +1076,13 @@ exports[`View Tests Views can have customized accessibility 1`] = `
       },
       {
         "Offset": "0, 37, 0",
-        "Size": "916, 18",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 18",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "916, 20",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "916, 20",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
           },
         ],
       },
