@@ -465,6 +465,10 @@ void FabricUIManager::schedulerDidSetIsJSResponder(
     bool isJSResponder,
     bool blockNativeResponder) {}
 
+void FabricUIManager::schedulerShouldSynchronouslyUpdateViewOnUIThread(
+    facebook::react::Tag tag,
+    const folly::dynamic &props) {}
+
 void FabricUIManager::schedulerDidSendAccessibilityEvent(
     const facebook::react::ShadowView &shadowView,
     std::string const &eventType) {

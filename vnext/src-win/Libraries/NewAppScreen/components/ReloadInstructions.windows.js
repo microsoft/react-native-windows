@@ -10,7 +10,8 @@
 
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
-import React from 'react';
+import Platform from '../../Utilities/Platform';
+import * as React from 'react';
 
 const styles = StyleSheet.create({
   highlight: {

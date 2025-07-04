@@ -2,6 +2,57 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 04 Jul 2025 05:21:22 GMT",
+      "version": "0.12.312",
+      "tag": "@react-native-windows/automation-channel_v0.12.312",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.972",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Jul 2025 05:24:24 GMT",
+      "version": "0.12.311",
+      "tag": "@react-native-windows/automation-channel_v0.12.311",
+      "comments": {
+        "patch": [
+          {
+            "author": "satkh@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "96e291820b36af670c743a204b4cb4103a012ce2",
+            "comment": "intergrate rn 0.80.0-nightly-20250414-70cdf12c4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.971",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Jul 2025 05:24:44 GMT",
+      "version": "0.12.310",
+      "tag": "@react-native-windows/automation-channel_v0.12.310",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.970",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Jun 2025 05:23:18 GMT",
       "version": "0.12.309",
       "tag": "@react-native-windows/automation-channel_v0.12.309",

@@ -89,7 +89,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
-    <CIInclude Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.h"/>
+    <CIInclude Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.h" />
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
@@ -200,6 +200,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
   </ItemGroup>
