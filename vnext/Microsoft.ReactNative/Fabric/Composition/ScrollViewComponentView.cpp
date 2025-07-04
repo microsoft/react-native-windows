@@ -814,20 +814,7 @@ void ScrollViewComponentView::updateProps(
       snapToOffsets.Append(static_cast<float>(offset));
     }
 
-    // Convert React Native snapToAlignment to local SnapAlignment enum
-    winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment snapAlignment;
-    switch (newViewProps.snapToAlignment) {
-      case facebook::react::ScrollViewSnapToAlignment::Center:
-        snapAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center;
-        break;
-      case facebook::react::ScrollViewSnapToAlignment::End:
-        snapAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End;
-        break;
-      case facebook::react::ScrollViewSnapToAlignment::Start:
-      default:
-        snapAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start;
-        break;
-    }
+    auto snapAlignment = convertSnapToAlignment(newViewProps.snapToAlignment);
 
     m_scrollVisual.SetSnapPoints(
         newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
@@ -1452,5 +1439,18 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment ScrollViewComponentView::convertSnapToAlignment(
+    facebook::react::ScrollViewSnapToAlignment alignment) noexcept {
+  switch (alignment) {
+    case facebook::react::ScrollViewSnapToAlignment::Center:
+      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center;
+    case facebook::react::ScrollViewSnapToAlignment::End:
+      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End;
+    case facebook::react::ScrollViewSnapToAlignment::Start:
+    default:
+      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start;
+  }
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
