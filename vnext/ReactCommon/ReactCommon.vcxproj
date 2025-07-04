@@ -196,6 +196,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\Function.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\Base.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\Convert.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h" />
