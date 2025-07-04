@@ -313,7 +313,9 @@ const View: component(
                 focusable={_focusable}
                 disabled={disabled}
                 accessibilityState={_accessibilityState}
-                accessibilityElementsHidden={ariaHidden ?? accessibilityElementsHidden}
+                accessibilityElementsHidden={
+                  ariaHidden ?? accessibilityElementsHidden
+                }
                 accessibilityLabelledBy={_accessibilityLabelledBy}
                 accessibilityValue={_accessibilityValue}
                 importantForAccessibility={computedImportantForAccessibility}
