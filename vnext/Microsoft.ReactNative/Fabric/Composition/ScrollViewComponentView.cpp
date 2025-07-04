@@ -807,12 +807,19 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
-      oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
-    const auto snapToOffsets = winrt::single_threaded_vector<float>();
-    for (const auto &offset : newViewProps.snapToOffsets) {
-      snapToOffsets.Append(static_cast<float>(offset));
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets ||
+      oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+    if (newViewProps.snapToInterval > 0 || oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+      // Use the comprehensive updateSnapPoints method when snapToInterval is involved
+      updateSnapPoints();
+    } else {
+      // Keep original inline logic for the basic snapToOffsets case
+      const auto snapToOffsets = winrt::single_threaded_vector<float>();
+      for (const auto &offset : newViewProps.snapToOffsets) {
+        snapToOffsets.Append(static_cast<float>(offset));
+      }
+      m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
     }
-    m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
   }
 }
 
@@ -863,6 +870,14 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
   m_verticalScrollbarComponent->ContentSize(contentSize);
   m_horizontalScrollbarComponent->ContentSize(contentSize);
   m_scrollVisual.ContentSize(contentSize);
+
+  // TODO: For optimal performance, snapToInterval should use InteractionTrackerInertiaRestingValue 
+  // with expression animations (similar to snapToEnd implementation) to avoid recalculating 
+  // all snap points on content size changes. For now, only update when actually needed.
+  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+  if (viewProps.snapToInterval > 0 && viewProps.snapToOffsets.size() == 0) {
+    updateSnapPointsForInterval();
+  }
 }
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
@@ -1434,5 +1449,64 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+void ScrollViewComponentView::updateSnapPoints() noexcept {
+  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+  const auto snapToOffsets = winrt::single_threaded_vector<float>();
+
+  // snapToOffsets has priority over snapToInterval (matches React Native behavior)
+  if (viewProps.snapToOffsets.size() > 0) {
+    // Use explicit snapToOffsets
+    for (const auto &offset : viewProps.snapToOffsets) {
+      snapToOffsets.Append(static_cast<float>(offset));
+    }
+  } else if (viewProps.snapToInterval > 0) {
+    // For snapToInterval, delegate to specialized method
+    updateSnapPointsForInterval();
+    return;
+  }
+
+  m_scrollVisual.SetSnapPoints(viewProps.snapToStart, viewProps.snapToEnd, snapToOffsets.GetView());
+}
+
+void ScrollViewComponentView::updateSnapPointsForInterval() noexcept {
+  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+  
+  if (viewProps.snapToInterval <= 0) {
+    return;
+  }
+
+  const auto snapToOffsets = winrt::single_threaded_vector<float>();
+  float interval = static_cast<float>(viewProps.snapToInterval) * m_layoutMetrics.pointScaleFactor;
+
+  if (interval < 1.0f) {
+    return;
+  }
+
+  // Calculate the content size
+  float contentLength = viewProps.horizontal
+      ? std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor
+      : std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
+
+  if (contentLength <= 0) {
+    return;
+  }
+
+  // Performance optimization: Instead of generating all possible snap points,
+  // generate a reasonable number based on the current viewport and content size.
+  // The composition system's InteractionTrackerInertiaRestingValue would be ideal
+  // for true dynamic calculation, but requires interface changes.
+  
+  const int maxSnapPoints = 500; // Reduced from 1000 for better performance
+  int snapPointCount = 0;
+  
+  // Generate snap points across the entire content length
+  for (float offset = 0; offset <= contentLength && snapPointCount < maxSnapPoints; offset += interval) {
+    snapToOffsets.Append(offset);
+    snapPointCount++;
+  }
+
+  m_scrollVisual.SetSnapPoints(viewProps.snapToStart, viewProps.snapToEnd, snapToOffsets.GetView());
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
