@@ -87,10 +87,10 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
 
     HWND hwnd = ::GetActiveWindow();
     if (!hwnd) {
-        return;
+      return;
     }
 
-    IRawElementProviderSimple* provider = nullptr;
+    IRawElementProviderSimple *provider = nullptr;
     HRESULT hrProvider = UiaHostProviderFromHwnd(hwnd, &provider);
     if (FAILED(hrProvider) || !provider) {
       return;
@@ -122,11 +122,7 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
     }
 
     HRESULT hr = UiaRaiseNotificationEvent(
-        provider,
-        NotificationKind_Other,
-        NotificationProcessing_ImportantMostRecent,
-        bstrAnnouncement,
-        bstrActivityId);
+        provider, NotificationKind_Other, NotificationProcessing_ImportantMostRecent, bstrAnnouncement, bstrActivityId);
 
     SysFreeString(bstrAnnouncement);
     SysFreeString(bstrActivityId);
