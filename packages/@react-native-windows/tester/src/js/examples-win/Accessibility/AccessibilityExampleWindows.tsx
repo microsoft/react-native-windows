@@ -26,7 +26,6 @@ class AccessibilityBaseExample extends React.Component {
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
           accessibilityLevel={1}
-          aria-hidden
           accessibilityItemType="comment"
           accessibilityAccessKey="accessKey"
           accessibilityDescription="Sample Description"
@@ -62,21 +61,6 @@ class AccessibilityBaseExample extends React.Component {
           aria-level={9} //aria-level takes precedence over accessibilityLevel
           accessibilityLevel={5}
         />
-        <Text>The following has aria-hidden set to true:</Text>
-        <View
-          style={{width: 50, height: 50, backgroundColor: 'green'}}
-          accessible={true}
-          accessibilityLabel="This view is hidden from screen readers"
-          aria-hidden={true}
-          testID="accessibility-aria-hidden-view"
-        />
-        <View aria-hidden={true}>
-          <Text
-            aria-label="yellow2"
-            testID="accessibility-aria-hidden-child-text">
-            This text should be HIDDEN from screen readers (aria-hidden=true)
-          </Text>
-        </View>
       </View>
     );
   }
