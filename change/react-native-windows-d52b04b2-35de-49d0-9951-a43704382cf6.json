@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade WinUI3 Experimental to 1.8.0-experimental3",
+  "packageName": "react-native-windows",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
