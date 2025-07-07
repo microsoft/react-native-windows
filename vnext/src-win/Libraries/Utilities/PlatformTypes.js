@@ -159,6 +159,8 @@ type MacOSPlatform = {
 type WebPlatform = {
   OS: 'web',
   // $FlowFixMe[unsafe-getters-setters]
+  get Version(): void,
+  // $FlowFixMe[unsafe-getters-setters]
   get constants(): {
     reactNativeVersion: {
       major: number,
