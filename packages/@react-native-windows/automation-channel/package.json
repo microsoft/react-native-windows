@@ -32,7 +32,7 @@
     "just-scripts": "^1.3.2",
     "prettier": "2.8.8",
     "react": "19.0.0",
-    "react-native": "0.80.0-nightly-20250414-70cdf12c4",
+    "react-native": "0.80.0-nightly-20250428-9efcdc091",
     "react-native-windows": "^0.0.0-canary.972",
     "typescript": "5.0.4"
   },

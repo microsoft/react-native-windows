@@ -513,7 +513,7 @@ LinesMeasurements TextLayoutManager::measureLines(
   return lineMeasurements;
 }
 
-Float TextLayoutManager::baseline(
+/* Float TextLayoutManager::baseline(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     const Size &size) const {
@@ -529,6 +529,7 @@ Float TextLayoutManager::baseline(
   return metrics.height *
       0.8f; // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
 }
+*/
 
 winrt::hstring WindowsTextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {
   winrt::hstring result{};

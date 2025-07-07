@@ -25,10 +25,11 @@ Size WindowsTextInputShadowNode::measureContent(
     const LayoutContext &layoutContext,
     const LayoutConstraints &layoutConstraints) const {
   // Layout is called right after measure.
-  // Measure is marked as `const`, and `layout` is not; so State can be updated
-  // during layout, but not during `measure`. If State is out-of-date in layout,
-  // it's too late: measure will have already operated on old State. Thus, we
-  // use the same value here that we *will* use in layout to update the state.
+  // Measure is marked as `const`, and `layout` is not; so State can be
+  // updated during layout, but not during `measure`. If State is out-of-date
+  // in layout, it's too late: measure will have already operated on old
+  // State. Thus, we use the same value here that we *will* use in layout to
+  // update the state.
   AttributedString attributedString = getMostRecentAttributedString(layoutContext);
 
   if (attributedString.isEmpty()) {
@@ -88,9 +89,8 @@ LayoutConstraints WindowsTextInputShadowNode::getTextConstraints(const LayoutCon
 
 void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layoutContext) {
   ensureUnsealed();
-
-  auto reactTreeAttributedString = getAttributedString(layoutContext);
   const auto &stateData = getStateData();
+  auto reactTreeAttributedString = getAttributedString(layoutContext);
 
   // Tree is often out of sync with the value of the TextInput.
   // This is by design - don't change the value of the TextInput in the State,
@@ -124,8 +124,10 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // current attributedString unchanged, and pass in zero for the "event count"
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
-  setStateData(facebook::react::TextInputState{
-      AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
+
+  setStateData(
+      facebook::react::TextInputState{
+          AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
@@ -133,7 +135,6 @@ AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutCon
 
   auto childTextAttributes = TextAttributes::defaultTextAttributes();
   childTextAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
-
   childTextAttributes.apply(getConcreteProps().textAttributes);
   // Don't propagate the background color of the TextInput onto the attributed
   // string. Android tries to render shadow of the background alongside the
@@ -151,6 +152,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutCon
     auto textAttributes = TextAttributes::defaultTextAttributes();
     textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
     textAttributes.apply(getConcreteProps().textAttributes);
+    textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
     auto fragment = AttributedString::Fragment{};
     fragment.string = getConcreteProps().text;
     fragment.textAttributes = textAttributes;
@@ -187,36 +189,18 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const
 // TODO T67606511: We will redefine the measurement of empty strings as part
 // of T67606511
 AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(const LayoutContext &layoutContext) const {
-  // Return placeholder text, since text and children are empty.
-  auto textAttributedString = AttributedString{};
-  auto fragment = AttributedString::Fragment{};
-  fragment.string = getConcreteProps().placeholder;
+  const auto &props = BaseShadowNode::getConcreteProps();
 
-  if (fragment.string.empty()) {
-    fragment.string = BaseTextShadowNode::getEmptyPlaceholder();
-  }
-
+  AttributedString attributedString;
+  auto placeholderString = !props.placeholder.empty() ? props.placeholder : BaseTextShadowNode::getEmptyPlaceholder();
   auto textAttributes = TextAttributes::defaultTextAttributes();
   textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
-  textAttributes.apply(getConcreteProps().textAttributes);
-
-  // If there's no text, it's possible that this Fragment isn't actually
-  // appended to the AttributedString (see implementation of appendFragment)
-  fragment.textAttributes = textAttributes;
-  fragment.parentShadowView = ShadowView(*this);
-  textAttributedString.appendFragment(std::move(fragment));
-
-  return textAttributedString;
-  // TextLayoutContext textLayoutContext;
-  // textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
-  // auto textSize = textLayoutManager_
-  //                     ->measure(
-  //                         AttributedStringBox{attributedString},
-  //                         getConcreteProps().paragraphAttributes,
-  //                         textLayoutContext,
-  //                         textConstraints)
-  //                     .size;
-  // return layoutConstraints.clamp(textSize);
+  textAttributes.apply(props.textAttributes);
+  attributedString.appendFragment(
+      {.string = std::move(placeholderString),
+       .textAttributes = textAttributes,
+       .parentShadowView = ShadowView(*this)});
+  return attributedString;
 }
 
 #pragma mark - LayoutableShadowNode
