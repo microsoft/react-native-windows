@@ -814,7 +814,10 @@ void ScrollViewComponentView::updateProps(
       snapToOffsets.Append(static_cast<float>(offset));
     }
 
-    auto snapAlignment = convertSnapToAlignment(newViewProps.snapToAlignment);
+    // When snapToInterval is set, snapToAlignment will define the relationship of the snapping to the scroll view.
+    auto snapAlignment = newViewProps.snapToInterval > 0.0f
+        ? convertSnapToAlignment(newViewProps.snapToAlignment)
+        : winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center;
 
     m_scrollVisual.SetSnapPoints(
         newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
