@@ -125,9 +125,8 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
 
-  setStateData(
-      facebook::react::TextInputState{
-          AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
+  setStateData(facebook::react::TextInputState{
+      AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
