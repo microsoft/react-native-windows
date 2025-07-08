@@ -22,7 +22,7 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -87,7 +87,7 @@
           "Folly": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
-          "Microsoft.WindowsAppSDK": "[1.8.0-experimental3, )",
+          "Microsoft.WindowsAppSDK": "[1.8.250410001-experimental1, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }

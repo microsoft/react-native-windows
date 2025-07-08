@@ -32,7 +32,7 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -87,7 +87,7 @@
     "native,Version=v0.0/win10-arm": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -104,7 +104,7 @@
     "native,Version=v0.0/win10-arm-aot": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -121,7 +121,7 @@
     "native,Version=v0.0/win10-arm64-aot": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -138,7 +138,7 @@
     "native,Version=v0.0/win10-x64": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -155,7 +155,7 @@
     "native,Version=v0.0/win10-x64-aot": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -172,7 +172,7 @@
     "native,Version=v0.0/win10-x86": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
@@ -189,7 +189,7 @@
     "native,Version=v0.0/win10-x86-aot": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.0-experimental3, )",
+        "requested": "[1.8.250410001-experimental1, )",
         "resolved": "1.8.250410001-experimental1",
         "contentHash": "AynQ25hhGWL3wt9ay614TkijMg0ea7EX2SsRVkRMX8YVF6QjuGHNlLc74wtK13n4v6VZBVBylmNTIZKdDwSDHA==",
         "dependencies": {
