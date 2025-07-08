@@ -224,7 +224,13 @@ AccessibilityProps::AccessibilityProps(
   // it probably can, but this is a fairly rare edge-case that (1) is easy-ish
   // to work around here, and (2) would require very careful work to address
   // this case and not regress the more common cases.
-  if (!ReactNativeFeatureFlags::enableCppPropsIteratorSetter()) {
+  // [Windows ##14845
+  if (ReactNativeFeatureFlags::enableCppPropsIteratorSetter()) {
+    accessibilityRole = sourceProps.accessibilityRole;
+    role = sourceProps.role;
+    accessibilityTraits = sourceProps.accessibilityTraits;
+  } else {
+    // Windows]
     auto* accessibilityRoleValue =
         rawProps.at("accessibilityRole", nullptr, nullptr);
     auto* roleValue = rawProps.at("role", nullptr, nullptr);
@@ -250,12 +256,6 @@ AccessibilityProps::AccessibilityProps(
     } else {
       fromRawValue(context, *precedentRoleValue, accessibilityTraits);
     }
-  }
-  else
-  {
-    accessibilityRole = sourceProps.accessibilityRole;
-    role = sourceProps.role;
-    accessibilityTraits = sourceProps.accessibilityTraits;
   }
 }
 
