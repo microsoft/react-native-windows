@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Jul 2025 05:21:22 GMT",
+      "version": "0.0.0-canary.972",
+      "tag": "react-native-windows_v0.0.0-canary.972",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "fcalise@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e7fd8adddd04d60195d56998a8e17cff398159bb",
+            "comment": "fix(new-arch): add deprecation warning for Flyout/Popup"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Jul 2025 05:24:25 GMT",
       "version": "0.0.0-canary.971",
       "tag": "react-native-windows_v0.0.0-canary.971",
