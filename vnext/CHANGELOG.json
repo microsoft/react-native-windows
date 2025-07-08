@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Jul 2025 05:21:22 GMT",
+      "version": "0.0.0-canary.972",
+      "tag": "react-native-windows_v0.0.0-canary.972",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "fcalise@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e7fd8adddd04d60195d56998a8e17cff398159bb",
+            "comment": "fix(new-arch): add deprecation warning for Flyout/Popup"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Jul 2025 05:24:25 GMT",
+      "version": "0.0.0-canary.971",
+      "tag": "react-native-windows_v0.0.0-canary.971",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "satkh@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "96e291820b36af670c743a204b4cb4103a012ce2",
+            "comment": "intergrate rn 0.80.0-nightly-20250414-70cdf12c4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Jul 2025 05:24:43 GMT",
+      "version": "0.0.0-canary.970",
+      "tag": "react-native-windows_v0.0.0-canary.970",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "068dba7d247bf748ea918873780df7567d5d3627",
+            "comment": "[Fabric] Implement maxFontSizeMultiplier in Text Input"
+          },
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2198313567bd24ca3a622bb667ff5e9f26f39303",
+            "comment": "Add e2e test cases for snapToStart property in ScrollView fabric implementation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Jun 2025 05:23:18 GMT",
       "version": "0.0.0-canary.969",
       "tag": "react-native-windows_v0.0.0-canary.969",

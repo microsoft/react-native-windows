@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add e2e test cases for snapToStart property in ScrollView fabric implementation",
-  "packageName": "react-native-windows",
-  "email": "198982749+Copilot@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

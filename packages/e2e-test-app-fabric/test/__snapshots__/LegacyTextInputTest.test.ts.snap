@@ -162,7 +162,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 745",
+    "Size": "998, 801",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -308,7 +308,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 690",
+    "Size": "998, 689",
     "Visual Type": "SpriteVisual",
   },
 }
