@@ -2151,7 +2151,7 @@
     "@babel/traverse" "^7.25.3"
     "@react-native/codegen" "0.80.0-nightly-20250428-9efcdc091"
 
-"@react-native/babel-preset@0.80.0-nightly-20250428-9efcdc091", "@react-native/babel-preset@00.80.0-nightly-20250428-9efcdc091":
+"@react-native/babel-preset@0.80.0-nightly-20250428-9efcdc091":
   version "0.80.0-nightly-20250428-9efcdc091"
   resolved "https://registry.yarnpkg.com/@react-native/babel-preset/-/babel-preset-0.80.0-nightly-20250428-9efcdc091.tgz#ee5b61976c719f10d5e546e7c75b7f605138e912"
   integrity sha512-LU1JtPnEc5vLzEqG8rZJG41yOz2EHi/v+9RDEmW41akgN7mIMHtN7DfHf8ky0rq+CBpVgLFz2L9ZHVioL8zwdw==
@@ -2202,7 +2202,7 @@
     babel-plugin-transform-flow-enums "^0.0.2"
     react-refresh "^0.14.0"
 
-"@react-native/codegen@0.80.0-nightly-20250428-9efcdc091", "@react-native/codegen@00.80.0-nightly-20250428-9efcdc091":
+"@react-native/codegen@0.80.0-nightly-20250428-9efcdc091":
   version "0.80.0-nightly-20250428-9efcdc091"
   resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.80.0-nightly-20250428-9efcdc091.tgz#d39f1311a33369974ce72b310244567b5be86f7b"
   integrity sha512-JtG2i6A7/PkAATr1EqvUoWadOTX8J8egdYeZJfCkjSiD6tDMnnI13cui6Ir2wIHk9UizeQfQ8o5AXzm9EKKieQ==
