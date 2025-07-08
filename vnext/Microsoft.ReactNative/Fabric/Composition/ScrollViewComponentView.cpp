@@ -811,7 +811,10 @@ void ScrollViewComponentView::updateProps(
       oldViewProps.snapToInterval != newViewProps.snapToInterval) {
     if (newViewProps.snapToInterval > 0 || oldViewProps.snapToInterval != newViewProps.snapToInterval) {
       // Use the comprehensive updateSnapPoints method when snapToInterval is involved
-      updateSnapPoints();
+      // Typically used in combination with snapToAlignment and decelerationRate="fast".
+      if (newViewProps.decelerationRate >= 0.99) {
+        updateSnapPoints();
+      }
     } else {
       // Keep original inline logic for the basic snapToOffsets case
       const auto snapToOffsets = winrt::single_threaded_vector<float>();
