@@ -154,15 +154,6 @@ AccessibilityProps::AccessibilityProps(
                     "accessibilityIgnoresInvertColors",
                     sourceProps.accessibilityIgnoresInvertColors,
                     false)),
-      accessibilityRespondsToUserInteraction(
-          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
-              ? sourceProps.accessibilityRespondsToUserInteraction
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "accessibilityRespondsToUserInteraction",
-                    sourceProps.accessibilityRespondsToUserInteraction,
-                    true)),
       onAccessibilityTap(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.onAccessibilityTap
@@ -281,7 +272,6 @@ void AccessibilityProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityViewIsModal);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityElementsHidden);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityIgnoresInvertColors);
-    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityRespondsToUserInteraction);
     RAW_SET_PROP_SWITCH_CASE_BASIC(onAccessibilityTap);
     RAW_SET_PROP_SWITCH_CASE_BASIC(onAccessibilityMagicTap);
     RAW_SET_PROP_SWITCH_CASE_BASIC(onAccessibilityEscape);
