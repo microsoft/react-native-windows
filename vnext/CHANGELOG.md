@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 24 Jun 2025 05:22:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 04 Jul 2025 05:21:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.972
+
+Fri, 04 Jul 2025 05:21:22 GMT
+
+### Changes
+
+- fix(new-arch): add deprecation warning for Flyout/Popup (fcalise@gmail.com)
+
+## 0.0.0-canary.971
+
+Thu, 03 Jul 2025 05:24:25 GMT
+
+### Changes
+
+- intergrate rn 0.80.0-nightly-20250414-70cdf12c4 (satkh@microsoft.com)
+
+## 0.0.0-canary.970
+
+Tue, 01 Jul 2025 05:24:43 GMT
+
+### Changes
+
+- [Fabric] Implement maxFontSizeMultiplier in Text Input (54227869+anupriya13@users.noreply.github.com)
+- Add e2e test cases for snapToStart property in ScrollView fabric implementation (198982749+Copilot@users.noreply.github.com)
+
+## 0.0.0-canary.969
+
+Fri, 27 Jun 2025 05:23:18 GMT
+
+### Changes
+
+- [Fabric] Implementation of accessibilityDescription (kvineeth@microsoft.com)
+
+## 0.0.0-canary.968
+
+Thu, 26 Jun 2025 05:22:52 GMT
+
+### Changes
+
+- Added fix for AutoFocus (hmalothu@microsoft.com)
 
 ## 0.0.0-canary.967
 

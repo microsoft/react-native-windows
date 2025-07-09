@@ -39,6 +39,7 @@ exports[`Accessibility Tests Accessibility data for Label,Level and Hint 1`] = `
     "AnnotationPattern.TypeName": "Check Comment",
     "AutomationId": "accessibility-base-view-1",
     "ControlType": 50026,
+    "Description": "Sample Description",
     "HelpText": "A hint for the blue box.",
     "ItemType": "comment",
     "Level": 1,
@@ -275,9 +276,9 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
 {
   "Automation Tree": {
     "AutomationId": "Selectable item 1",
-    "ControlType": 50026,
+    "ControlType": 50000,
     "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
+    "LocalizedControlType": "button",
     "Name": "Selectable item 1",
     "SelectionItemPattern.IsSelected": true,
     "__Children": [

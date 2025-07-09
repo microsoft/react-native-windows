@@ -588,6 +588,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->bstrVal = SysAllocString(itemtype.c_str());
       break;
     }
+    case UIA_FullDescriptionPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto desc = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityDescription.value_or(""));
+      pRetVal->bstrVal = SysAllocString(desc.c_str());
+      break;
+    }
   }
   return hr;
 }
