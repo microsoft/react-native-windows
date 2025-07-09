@@ -2,6 +2,90 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Jun 2025 22:16:23 GMT",
+      "version": "0.78.13",
+      "tag": "react-native-windows_v0.78.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4cc7ab1ee0ea131ac05da63c649665e0fb2894a9",
+            "comment": "Remove .. usage in relative include"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Jun 2025 15:27:29 GMT",
+      "version": "0.78.12",
+      "tag": "react-native-windows_v0.78.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c2c72076c01c5632485e1f9cf74c7cf33b1a99ff",
+            "comment": "Add office required yoga flag"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.8",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Jun 2025 00:16:07 GMT",
+      "version": "0.78.10",
+      "tag": "react-native-windows_v0.78.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "47e475c277286700b16c492f7631e1ebc52450d7",
+            "comment": "Add office required yoga flag"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Jun 2025 18:31:04 GMT",
+      "version": "0.78.9",
+      "tag": "react-native-windows_v0.78.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7eb3a4e885addc9ddddfe3161d3009b32ee91fb4",
+            "comment": "Promote 0.78 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.78.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.78.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Jun 2025 21:29:03 GMT",
       "version": "0.78.8",
       "tag": "react-native-windows_v0.78.8",

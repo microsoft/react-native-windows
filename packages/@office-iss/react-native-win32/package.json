@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.78.4",
+  "version": "0.78.6",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "repository": {
     "type": "git",
@@ -98,7 +98,7 @@
     "react-native": "^0.78.0"
   },
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.78-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
