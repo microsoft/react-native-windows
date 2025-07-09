@@ -1107,12 +1107,12 @@ struct CompScrollerVisual : winrt::implements<
 
     // Adjust snap positions based on alignment
     const float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
-    if (m_snapToAlignment == winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center) {
+    if (m_snapToAlignment == SnapAlignment::Center) {
       // For center alignment, offset snap positions by half the viewport size
       for (auto &position : snapPositions) {
         position = std::max(0.0f, position - viewportSize / 2.0f);
       }
-    } else if (m_snapToAlignment == winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End) {
+    } else if (m_snapToAlignment == SnapAlignment::End) {
       // For end alignment, offset snap positions by the full viewport size
       for (auto &position : snapPositions) {
         position = std::max(0.0f, position - viewportSize);
