@@ -27,6 +27,8 @@
 
 namespace Microsoft::ReactNative::Composition::Experimental {
 
+using namespace winrt::Microsoft::ReactNative::Composition::Experimental;
+
 template <typename TSpriteVisual>
 struct CompositionTypeTraits {};
 
@@ -872,7 +874,7 @@ struct CompScrollerVisual : winrt::implements<
       bool snapToStart,
       bool snapToEnd,
       winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets,
-      winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment snapToAlignment) noexcept {
+      SnapAlignment snapToAlignment) noexcept {
     m_snapToStart = snapToStart;
     m_snapToEnd = snapToEnd;
     m_snapToAlignment = snapToAlignment;
@@ -1245,8 +1247,7 @@ struct CompScrollerVisual : winrt::implements<
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
   std::vector<float> m_snapToOffsets;
-  winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment m_snapToAlignment{
-      winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start};
+  SnapAlignment m_snapToAlignment{SnapAlignment::Start};
   bool m_inertia{false};
   bool m_custom{false};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
