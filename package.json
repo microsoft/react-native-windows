@@ -63,10 +63,12 @@
     "**/webdriverio/**/puppeteer-core/ws": "^8.17.1",
     "**/detox/ws": "^5.2.4",
     "xml2js": "^0.5.0",
-    "z-schema": "^5.0.2"
+    "z-schema": "^5.0.2",
+    "string_decoder": "^1.3.0"
   },
   "resolutions.justification": {
-    "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo"
+    "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo",
+    "string_decoder": "MVS-2021-w6qm-jxf5 security vulnerability in string_decoder v1.1.1. Force all transitive dependencies to use secure v1.3.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
