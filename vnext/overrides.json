@@ -170,7 +170,7 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityProps.cpp",
       "baseHash": "22bd92d03ec6511ec5efa8ae6758ab0b75538fff",
-      "issue": 5678
+      "issue": 14845
     },
     {
       "type": "derived",
