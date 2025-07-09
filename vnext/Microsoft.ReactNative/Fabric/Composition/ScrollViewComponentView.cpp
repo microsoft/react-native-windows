@@ -815,9 +815,8 @@ void ScrollViewComponentView::updateProps(
     }
 
     // When snapToInterval is set, snapToAlignment will define the relationship of the snapping to the scroll view.
-    auto snapAlignment = newViewProps.snapToInterval > 0.0f
-        ? convertSnapToAlignment(newViewProps.snapToAlignment)
-        : winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center;
+    auto snapAlignment = newViewProps.snapToInterval > 0.0f ? convertSnapToAlignment(newViewProps.snapToAlignment)
+                                                            : SnapAlignment::Center;
 
     m_scrollVisual.SetSnapPoints(
         newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
@@ -1444,16 +1443,16 @@ void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
 }
 
-winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment ScrollViewComponentView::convertSnapToAlignment(
+SnapAlignment ScrollViewComponentView::convertSnapToAlignment(
     facebook::react::ScrollViewSnapToAlignment alignment) noexcept {
   switch (alignment) {
     case facebook::react::ScrollViewSnapToAlignment::Center:
-      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Center;
+      return SnapAlignment::Center;
     case facebook::react::ScrollViewSnapToAlignment::End:
-      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::End;
+      return SnapAlignment::End;
     case facebook::react::ScrollViewSnapToAlignment::Start:
     default:
-      return winrt::Microsoft::ReactNative::Composition::Experimental::SnapAlignment::Start;
+      return SnapAlignment::Start;
   }
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
