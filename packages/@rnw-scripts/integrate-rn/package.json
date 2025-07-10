@@ -19,7 +19,7 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-community/template": "0.79.0-nightly-202536-45e44d1",
+    "@react-native-community/template": "0.80.0-nightly-2025428-f955873",
     "@react-native-windows/find-repo-root": "^0.0.0-canary.94",
     "@react-native-windows/fs": "^0.0.0-canary.65",
     "@react-native-windows/package-utils": "^0.0.0-canary.91",

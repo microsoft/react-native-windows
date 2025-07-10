@@ -197,6 +197,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/AppState/AppStateExample'),
   },
   {
+    key: 'ContentURLAndroid',
+    category: 'Android',
+    module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
+  },
+  {
     key: 'URLExample',
     category: 'Basic',
     module: require('../examples/Urls/UrlExample'),
@@ -332,9 +337,14 @@ const APIs: Array<RNTesterModuleInfo> = ([
   },
   /*
   {
-    key: 'LinearGradient',
+    key: 'LinearGradientExample',
     category: 'UI',
     module: require('../examples/LinearGradient/LinearGradientExample'),
+  },
+  {
+    key: 'RadialGradientExample',
+    category: 'UI',
+    module: require('../examples/RadialGradient/RadialGradientExample'),
   },
   {
     key: 'MixBlendModeExample',

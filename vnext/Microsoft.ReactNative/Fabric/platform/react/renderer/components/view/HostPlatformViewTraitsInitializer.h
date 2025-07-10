@@ -20,4 +20,8 @@ inline ShadowNodeTraits::Trait extraTraits() {
   return ShadowNodeTraits::Trait::None;
 }
 
+inline bool isKeyboardFocusable(const ViewProps &viewProps) {
+  return false;
+}
+
 } // namespace facebook::react::HostPlatformViewTraitsInitializer

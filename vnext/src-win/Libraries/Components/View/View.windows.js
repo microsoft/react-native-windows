@@ -107,8 +107,7 @@ const View: component(
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
 
-    let _accessibilityState;
-    if (
+    const _accessibilityState =
       accessibilityState != null ||
       ariaBusy != null ||
       ariaChecked != null ||
@@ -118,34 +117,32 @@ const View: component(
       ariaReadOnly != null || // Windows
       ariaMultiselectable != null || // Windows
       ariaRequired != null // Windows
-    ) {
-      _accessibilityState = {
-        busy: ariaBusy ?? accessibilityState?.busy,
-        checked: ariaChecked ?? accessibilityState?.checked,
-        disabled: ariaDisabled ?? accessibilityState?.disabled,
-        expanded: ariaExpanded ?? accessibilityState?.expanded,
-        selected: ariaSelected ?? accessibilityState?.selected,
-        readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
-        multiselectable:
-          ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
-        required: ariaRequired ?? accessibilityState?.required, // Windows
-      };
-    }
-    let _accessibilityValue;
-    if (
+        ? {
+            busy: ariaBusy ?? accessibilityState?.busy,
+            checked: ariaChecked ?? accessibilityState?.checked,
+            disabled: ariaDisabled ?? accessibilityState?.disabled,
+            expanded: ariaExpanded ?? accessibilityState?.expanded,
+            selected: ariaSelected ?? accessibilityState?.selected,
+            readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+            multiselectable:
+              ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+            required: ariaRequired ?? accessibilityState?.required, // Windows
+          }
+        : undefined;
+
+    const _accessibilityValue =
       accessibilityValue != null ||
       ariaValueMax != null ||
       ariaValueMin != null ||
       ariaValueNow != null ||
       ariaValueText != null
-    ) {
-      _accessibilityValue = {
-        max: ariaValueMax ?? accessibilityValue?.max,
-        min: ariaValueMin ?? accessibilityValue?.min,
-        now: ariaValueNow ?? accessibilityValue?.now,
-        text: ariaValueText ?? accessibilityValue?.text,
-      };
-    }
+        ? {
+            max: ariaValueMax ?? accessibilityValue?.max,
+            min: ariaValueMin ?? accessibilityValue?.min,
+            now: ariaValueNow ?? accessibilityValue?.now,
+            text: ariaValueText ?? accessibilityValue?.text,
+          }
+        : undefined;
 
     const _keyDown =
       otherProps.keyDownEvents || otherProps.onKeyDown

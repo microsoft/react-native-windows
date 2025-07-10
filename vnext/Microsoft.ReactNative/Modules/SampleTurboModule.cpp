@@ -118,4 +118,8 @@ void SampleTurboModule::promiseAssert(::React::ReactPromise<void> &&result) noex
   // TODO: Proper impl
 }
 
+void SampleTurboModule::getImageUrl(::React::ReactPromise<void> &&result) noexcept {
+  // TODO: Proper impl
+}
+
 } // namespace Microsoft::ReactNative

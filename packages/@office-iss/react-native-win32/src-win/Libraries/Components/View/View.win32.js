@@ -78,8 +78,7 @@ const View: component(
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
 
-    let _accessibilityState;
-    if (
+    const _accessibilityState =
       accessibilityState != null ||
       ariaBusy != null ||
       ariaChecked != null ||
@@ -88,33 +87,31 @@ const View: component(
       ariaMultiselectable != null ||
       ariaRequired != null ||
       ariaSelected != null
-    ) {
-      _accessibilityState = {
-        busy: ariaBusy ?? accessibilityState?.busy,
-        checked: ariaChecked ?? accessibilityState?.checked,
-        disabled: ariaDisabled ?? accessibilityState?.disabled,
-        expanded: ariaExpanded ?? accessibilityState?.expanded,
-        multiselectable:
-          ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
-        required: ariaRequired ?? accessibilityState?.required, // Win32
-        selected: ariaSelected ?? accessibilityState?.selected,
-      };
-    }
-    let _accessibilityValue;
-    if (
+        ? {
+            busy: ariaBusy ?? accessibilityState?.busy,
+            checked: ariaChecked ?? accessibilityState?.checked,
+            disabled: ariaDisabled ?? accessibilityState?.disabled,
+            expanded: ariaExpanded ?? accessibilityState?.expanded,
+            multiselectable:
+              ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+            required: ariaRequired ?? accessibilityState?.required, // Win32
+            selected: ariaSelected ?? accessibilityState?.selected,
+          }
+        : undefined;
+
+    const _accessibilityValue =
       accessibilityValue != null ||
       ariaValueMax != null ||
       ariaValueMin != null ||
       ariaValueNow != null ||
       ariaValueText != null
-    ) {
-      _accessibilityValue = {
-        max: ariaValueMax ?? accessibilityValue?.max,
-        min: ariaValueMin ?? accessibilityValue?.min,
-        now: ariaValueNow ?? accessibilityValue?.now,
-        text: ariaValueText ?? accessibilityValue?.text,
-      };
-    }
+        ? {
+            max: ariaValueMax ?? accessibilityValue?.max,
+            min: ariaValueMin ?? accessibilityValue?.min,
+            now: ariaValueNow ?? accessibilityValue?.now,
+            text: ariaValueText ?? accessibilityValue?.text,
+          }
+        : undefined;
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {

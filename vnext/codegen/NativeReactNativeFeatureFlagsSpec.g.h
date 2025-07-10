@@ -23,24 +23,24 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{3, L"cxxNativeAnimatedEnabled"},
       SyncMethod<bool() noexcept>{4, L"disableMainQueueSyncDispatchIOS"},
       SyncMethod<bool() noexcept>{5, L"disableMountItemReorderingAndroid"},
-      SyncMethod<bool() noexcept>{6, L"disableShadowNodeOnNewArchitectureAndroid"},
-      SyncMethod<bool() noexcept>{7, L"enableAccessibilityOrder"},
-      SyncMethod<bool() noexcept>{8, L"enableAccumulatedUpdatesInRawPropsAndroid"},
-      SyncMethod<bool() noexcept>{9, L"enableBridgelessArchitecture"},
-      SyncMethod<bool() noexcept>{10, L"enableCppPropsIteratorSetter"},
+      SyncMethod<bool() noexcept>{6, L"enableAccessibilityOrder"},
+      SyncMethod<bool() noexcept>{7, L"enableAccumulatedUpdatesInRawPropsAndroid"},
+      SyncMethod<bool() noexcept>{8, L"enableBridgelessArchitecture"},
+      SyncMethod<bool() noexcept>{9, L"enableCppPropsIteratorSetter"},
+      SyncMethod<bool() noexcept>{10, L"enableCustomFocusSearchOnClippedElementsAndroid"},
       SyncMethod<bool() noexcept>{11, L"enableEagerRootViewAttachment"},
       SyncMethod<bool() noexcept>{12, L"enableFabricLogs"},
       SyncMethod<bool() noexcept>{13, L"enableFabricRenderer"},
-      SyncMethod<bool() noexcept>{14, L"enableFontScaleChangesUpdatingLayout"},
-      SyncMethod<bool() noexcept>{15, L"enableIOSViewClipToPaddingBox"},
-      SyncMethod<bool() noexcept>{16, L"enableJSRuntimeGCOnMemoryPressureOnIOS"},
-      SyncMethod<bool() noexcept>{17, L"enableLayoutAnimationsOnAndroid"},
-      SyncMethod<bool() noexcept>{18, L"enableLayoutAnimationsOnIOS"},
-      SyncMethod<bool() noexcept>{19, L"enableMainQueueModulesOnIOS"},
-      SyncMethod<bool() noexcept>{20, L"enableNativeCSSParsing"},
-      SyncMethod<bool() noexcept>{21, L"enableNewBackgroundAndBorderDrawables"},
-      SyncMethod<bool() noexcept>{22, L"enablePropsUpdateReconciliationAndroid"},
-      SyncMethod<bool() noexcept>{23, L"enableReportEventPaintTime"},
+      SyncMethod<bool() noexcept>{14, L"enableFixForParentTagDuringReparenting"},
+      SyncMethod<bool() noexcept>{15, L"enableFontScaleChangesUpdatingLayout"},
+      SyncMethod<bool() noexcept>{16, L"enableIOSViewClipToPaddingBox"},
+      SyncMethod<bool() noexcept>{17, L"enableJSRuntimeGCOnMemoryPressureOnIOS"},
+      SyncMethod<bool() noexcept>{18, L"enableLayoutAnimationsOnAndroid"},
+      SyncMethod<bool() noexcept>{19, L"enableLayoutAnimationsOnIOS"},
+      SyncMethod<bool() noexcept>{20, L"enableMainQueueModulesOnIOS"},
+      SyncMethod<bool() noexcept>{21, L"enableNativeCSSParsing"},
+      SyncMethod<bool() noexcept>{22, L"enableNewBackgroundAndBorderDrawables"},
+      SyncMethod<bool() noexcept>{23, L"enablePropsUpdateReconciliationAndroid"},
       SyncMethod<bool() noexcept>{24, L"enableSynchronousStateUpdates"},
       SyncMethod<bool() noexcept>{25, L"enableViewCulling"},
       SyncMethod<bool() noexcept>{26, L"enableViewRecycling"},
@@ -49,16 +49,17 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{29, L"fixMappingOfEventPrioritiesBetweenFabricAndReact"},
       SyncMethod<bool() noexcept>{30, L"fuseboxEnabledRelease"},
       SyncMethod<bool() noexcept>{31, L"fuseboxNetworkInspectionEnabled"},
-      SyncMethod<bool() noexcept>{32, L"removeTurboModuleManagerDelegateMutex"},
-      SyncMethod<bool() noexcept>{33, L"traceTurboModulePromiseRejectionsOnAndroid"},
+      SyncMethod<bool() noexcept>{32, L"traceTurboModulePromiseRejectionsOnAndroid"},
+      SyncMethod<bool() noexcept>{33, L"updateRuntimeShadowNodeReferencesOnCommit"},
       SyncMethod<bool() noexcept>{34, L"useAlwaysAvailableJSErrorHandling"},
       SyncMethod<bool() noexcept>{35, L"useEditTextStockAndroidFocusBehavior"},
       SyncMethod<bool() noexcept>{36, L"useFabricInterop"},
       SyncMethod<bool() noexcept>{37, L"useNativeViewConfigsInBridgelessMode"},
       SyncMethod<bool() noexcept>{38, L"useOptimizedEventBatchingOnAndroid"},
       SyncMethod<bool() noexcept>{39, L"useRawPropsJsiValue"},
-      SyncMethod<bool() noexcept>{40, L"useTurboModuleInterop"},
-      SyncMethod<bool() noexcept>{41, L"useTurboModules"},
+      SyncMethod<bool() noexcept>{40, L"useShadowNodeStateOnClone"},
+      SyncMethod<bool() noexcept>{41, L"useTurboModuleInterop"},
+      SyncMethod<bool() noexcept>{42, L"useTurboModules"},
   };
 
   template <class TModule>
@@ -97,29 +98,29 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(disableMountItemReorderingAndroid) static bool disableMountItemReorderingAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
-          "disableShadowNodeOnNewArchitectureAndroid",
-          "    REACT_SYNC_METHOD(disableShadowNodeOnNewArchitectureAndroid) bool disableShadowNodeOnNewArchitectureAndroid() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(disableShadowNodeOnNewArchitectureAndroid) static bool disableShadowNodeOnNewArchitectureAndroid() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          7,
           "enableAccessibilityOrder",
           "    REACT_SYNC_METHOD(enableAccessibilityOrder) bool enableAccessibilityOrder() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableAccessibilityOrder) static bool enableAccessibilityOrder() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          8,
+          7,
           "enableAccumulatedUpdatesInRawPropsAndroid",
           "    REACT_SYNC_METHOD(enableAccumulatedUpdatesInRawPropsAndroid) bool enableAccumulatedUpdatesInRawPropsAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableAccumulatedUpdatesInRawPropsAndroid) static bool enableAccumulatedUpdatesInRawPropsAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          9,
+          8,
           "enableBridgelessArchitecture",
           "    REACT_SYNC_METHOD(enableBridgelessArchitecture) bool enableBridgelessArchitecture() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableBridgelessArchitecture) static bool enableBridgelessArchitecture() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          10,
+          9,
           "enableCppPropsIteratorSetter",
           "    REACT_SYNC_METHOD(enableCppPropsIteratorSetter) bool enableCppPropsIteratorSetter() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableCppPropsIteratorSetter) static bool enableCppPropsIteratorSetter() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          10,
+          "enableCustomFocusSearchOnClippedElementsAndroid",
+          "    REACT_SYNC_METHOD(enableCustomFocusSearchOnClippedElementsAndroid) bool enableCustomFocusSearchOnClippedElementsAndroid() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableCustomFocusSearchOnClippedElementsAndroid) static bool enableCustomFocusSearchOnClippedElementsAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
           "enableEagerRootViewAttachment",
@@ -137,54 +138,54 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableFabricRenderer) static bool enableFabricRenderer() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
+          "enableFixForParentTagDuringReparenting",
+          "    REACT_SYNC_METHOD(enableFixForParentTagDuringReparenting) bool enableFixForParentTagDuringReparenting() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableFixForParentTagDuringReparenting) static bool enableFixForParentTagDuringReparenting() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          15,
           "enableFontScaleChangesUpdatingLayout",
           "    REACT_SYNC_METHOD(enableFontScaleChangesUpdatingLayout) bool enableFontScaleChangesUpdatingLayout() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableFontScaleChangesUpdatingLayout) static bool enableFontScaleChangesUpdatingLayout() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          15,
+          16,
           "enableIOSViewClipToPaddingBox",
           "    REACT_SYNC_METHOD(enableIOSViewClipToPaddingBox) bool enableIOSViewClipToPaddingBox() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableIOSViewClipToPaddingBox) static bool enableIOSViewClipToPaddingBox() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          16,
+          17,
           "enableJSRuntimeGCOnMemoryPressureOnIOS",
           "    REACT_SYNC_METHOD(enableJSRuntimeGCOnMemoryPressureOnIOS) bool enableJSRuntimeGCOnMemoryPressureOnIOS() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableJSRuntimeGCOnMemoryPressureOnIOS) static bool enableJSRuntimeGCOnMemoryPressureOnIOS() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          17,
+          18,
           "enableLayoutAnimationsOnAndroid",
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnAndroid) bool enableLayoutAnimationsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnAndroid) static bool enableLayoutAnimationsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          18,
+          19,
           "enableLayoutAnimationsOnIOS",
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnIOS) bool enableLayoutAnimationsOnIOS() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnIOS) static bool enableLayoutAnimationsOnIOS() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          19,
+          20,
           "enableMainQueueModulesOnIOS",
           "    REACT_SYNC_METHOD(enableMainQueueModulesOnIOS) bool enableMainQueueModulesOnIOS() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableMainQueueModulesOnIOS) static bool enableMainQueueModulesOnIOS() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          20,
+          21,
           "enableNativeCSSParsing",
           "    REACT_SYNC_METHOD(enableNativeCSSParsing) bool enableNativeCSSParsing() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableNativeCSSParsing) static bool enableNativeCSSParsing() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          21,
+          22,
           "enableNewBackgroundAndBorderDrawables",
           "    REACT_SYNC_METHOD(enableNewBackgroundAndBorderDrawables) bool enableNewBackgroundAndBorderDrawables() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableNewBackgroundAndBorderDrawables) static bool enableNewBackgroundAndBorderDrawables() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          22,
+          23,
           "enablePropsUpdateReconciliationAndroid",
           "    REACT_SYNC_METHOD(enablePropsUpdateReconciliationAndroid) bool enablePropsUpdateReconciliationAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enablePropsUpdateReconciliationAndroid) static bool enablePropsUpdateReconciliationAndroid() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          23,
-          "enableReportEventPaintTime",
-          "    REACT_SYNC_METHOD(enableReportEventPaintTime) bool enableReportEventPaintTime() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(enableReportEventPaintTime) static bool enableReportEventPaintTime() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           24,
           "enableSynchronousStateUpdates",
@@ -227,14 +228,14 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(fuseboxNetworkInspectionEnabled) static bool fuseboxNetworkInspectionEnabled() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           32,
-          "removeTurboModuleManagerDelegateMutex",
-          "    REACT_SYNC_METHOD(removeTurboModuleManagerDelegateMutex) bool removeTurboModuleManagerDelegateMutex() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(removeTurboModuleManagerDelegateMutex) static bool removeTurboModuleManagerDelegateMutex() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          33,
           "traceTurboModulePromiseRejectionsOnAndroid",
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) static bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          33,
+          "updateRuntimeShadowNodeReferencesOnCommit",
+          "    REACT_SYNC_METHOD(updateRuntimeShadowNodeReferencesOnCommit) bool updateRuntimeShadowNodeReferencesOnCommit() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(updateRuntimeShadowNodeReferencesOnCommit) static bool updateRuntimeShadowNodeReferencesOnCommit() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           34,
           "useAlwaysAvailableJSErrorHandling",
@@ -267,11 +268,16 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(useRawPropsJsiValue) static bool useRawPropsJsiValue() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           40,
+          "useShadowNodeStateOnClone",
+          "    REACT_SYNC_METHOD(useShadowNodeStateOnClone) bool useShadowNodeStateOnClone() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(useShadowNodeStateOnClone) static bool useShadowNodeStateOnClone() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          41,
           "useTurboModuleInterop",
           "    REACT_SYNC_METHOD(useTurboModuleInterop) bool useTurboModuleInterop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModuleInterop) static bool useTurboModuleInterop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          41,
+          42,
           "useTurboModules",
           "    REACT_SYNC_METHOD(useTurboModules) bool useTurboModules() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModules) static bool useTurboModules() noexcept { /* implementation */ }\n");

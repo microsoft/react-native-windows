@@ -83,6 +83,9 @@ struct SampleTurboModule {
   REACT_METHOD(promiseAssert)
   void promiseAssert(::React::ReactPromise<void> &&result) noexcept;
 
+  REACT_METHOD(getImageUrl)
+  void getImageUrl(::React::ReactPromise<void> &&result) noexcept;
+
  private:
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
 };
