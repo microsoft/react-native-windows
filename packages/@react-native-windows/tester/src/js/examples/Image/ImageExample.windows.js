@@ -2173,7 +2173,6 @@ exports.examples = [
             accessibilityLabel="This is an accessibility label"
             accessibilityRole="image"
             accessibilityValue={{text: '50%'}}
-            importantForAccessibility="no-hide-descendants"
             testID="image-accessibility-properties"
             accessible
           />
