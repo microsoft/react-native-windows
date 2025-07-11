@@ -4,6 +4,7 @@
 
 #include <winrt/Microsoft.ReactNative.Xaml.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.Web.WebView2.Core.h>
 
 namespace winrt::XamlCalendarView
 {
@@ -12,10 +13,10 @@ struct CalendarView : public winrt::implements<CalendarView, winrt::Microsoft::R
                     public Codegen::BaseCalendarView<CalendarView> {
 
   winrt::Microsoft::UI::Xaml::UIElement GetXamlElement() {
-    if (m_calendarView == nullptr) {
+    if (m_datePicker == nullptr) {
       CreateXamlCalendarView();
     }
-    return m_calendarView;
+    return m_webView2;
   }
 
   void UpdateProps(
@@ -24,13 +25,30 @@ struct CalendarView : public winrt::implements<CalendarView, winrt::Microsoft::R
     const winrt::com_ptr<Codegen::CalendarViewProps> &oldProps) noexcept override {
     Codegen::BaseCalendarView<CalendarView>::UpdateProps(view, newProps, oldProps);
     
+    /*
     if (m_calendarView && newProps) {
       m_calendarView.DisplayMode(static_cast<winrt::Microsoft::UI::Xaml::Controls::CalendarViewDisplayMode>(
           newProps->displayMode));
     }
+          */
   }
 
   void CreateXamlCalendarView() {
+    m_datePicker = winrt::Microsoft::UI::Xaml::Controls::DatePicker();
+
+    m_webView2 = winrt::Microsoft::UI::Xaml::Controls::WebView2();
+
+
+            m_webView2.CoreWebView2Initialized([](winrt::Microsoft::UI::Xaml::Controls::WebView2 const& sender, 
+                winrt::Microsoft::UI::Xaml::Controls::CoreWebView2InitializedEventArgs const& args)
+                {
+                        sender.CoreWebView2().Navigate(L"https://github.com");
+                });
+            
+            // Initialize WebView2 environment
+            m_webView2.EnsureCoreWebView2Async(nullptr);
+
+    /*
     m_calendarView = winrt::Microsoft::UI::Xaml::Controls::CalendarView();
     if (Props()) {
       m_calendarView.DisplayMode(
@@ -59,11 +77,14 @@ struct CalendarView : public winrt::implements<CalendarView, winrt::Microsoft::R
         emitter->onSelectedDatesChanged(args);
       }
     });
+    */
   }
 
 
   private:
-    winrt::Microsoft::UI::Xaml::Controls::CalendarView m_calendarView{ nullptr };
+    //winrt::Microsoft::UI::Xaml::Controls::CalendarView m_calendarView{ nullptr };
+    winrt::Microsoft::UI::Xaml::Controls::DatePicker m_datePicker{ nullptr };
+    winrt::Microsoft::UI::Xaml::Controls::WebView2 m_webView2{ nullptr };
 };
 
 

@@ -12,6 +12,7 @@
 #include <Utils/ValueUtils.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
+#include <winrt/Microsoft.UI.Interop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "RootComponentView.h"
@@ -44,11 +45,39 @@ ContentIslandComponentView::ContentIslandComponentView(
 }
 
 void ContentIslandComponentView::OnMounted() noexcept {
+
+
+
+
+  
+  // Cheat and use an HWND.
+  HWND hwnd = rootComponentView()
+      ->GetHwndForParenting();
+
+  // Get the first child, that is the DesktopChildSiteBridge window.
+  HWND child = ::GetWindow(hwnd, GW_CHILD);
+  assert(child);
+
+  if (child) {
+    m_childSiteBridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+      this->Compositor(),
+      winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+  }
+
+  auto clientRect = getClientRect();
+
+  m_childSiteBridge.MoveAndResize(winrt::Windows::Graphics::RectInt32{
+      clientRect.left, clientRect.top, static_cast<int32_t>(m_layoutMetrics.frame.size.width), static_cast<int32_t>(m_layoutMetrics.frame.size.height)});
+  m_childSiteBridge.MoveInZOrderAtTop();
+  m_childSiteBridge.Show();
+
+/*
   m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
       rootComponentView()->parentContentIsland(),
       winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
           .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
   m_childSiteLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
+
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 
@@ -64,9 +93,11 @@ void ContentIslandComponentView::OnMounted() noexcept {
   // We configure automation even if there's no UIA client at this point, because it's possible the first UIA
   // request we'll get will be for a child of this island calling upward in the UIA tree.
   ConfigureChildSiteLinkAutomation();
+*/
 
   if (m_islandToConnect) {
-    m_childSiteLink.Connect(m_islandToConnect);
+    //m_childSiteLink.Connect(m_islandToConnect);
+    m_childSiteBridge.Connect(m_islandToConnect);
     m_islandToConnect = nullptr;
   }
 
@@ -102,20 +133,23 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
     if (auto strongThis = wkThis.get()) {
       auto clientRect = strongThis->getClientRect();
 
-      strongThis->m_childSiteLink.LocalToParentTransformMatrix(
+      /*
+      strongThis->m_childSiteBridge.LocalToParentTransformMatrix(
           winrt::Windows::Foundation::Numerics::make_float4x4_translation(
               static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
-
+*/
       strongThis->m_layoutChangePosted = false;
     }
   });
 }
 
 winrt::IInspectable ContentIslandComponentView::EnsureUiaProvider() noexcept {
+  /*
   if (m_uiaProvider == nullptr) {
     m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
         *get_strong(), m_childSiteLink);
   }
+        */
   return m_uiaProvider;
 }
 
@@ -152,6 +186,7 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
   }
+  /*
   if (m_childSiteLink) {
     if (m_fragmentRootAutomationProviderRequestedToken) {
       m_childSiteLink.FragmentRootAutomationProviderRequested(m_fragmentRootAutomationProviderRequestedToken);
@@ -170,6 +205,7 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
       m_previousSiblingAutomationProviderRequestedToken = {};
     }
   }
+    */
   if (m_islandToConnect) {
     m_islandToConnect.Close();
   }
@@ -195,17 +231,22 @@ void ContentIslandComponentView::UnmountChildComponentView(
 void ContentIslandComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  if (m_childSiteLink) {
-    m_childSiteLink.ActualSize({layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
+  if (m_childSiteBridge) {
+    //m_childSiteBridge.ActualSize({layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
+
+    auto clientRect = getClientRect();
+
+    m_childSiteBridge.MoveAndResize(winrt::Windows::Graphics::RectInt32{
+        clientRect.left, clientRect.top, static_cast<int32_t>(layoutMetrics.frame.size.width), static_cast<int32_t>(layoutMetrics.frame.size.height)});
     ParentLayoutChanged();
   }
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
 void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept {
-  if (m_childSiteLink) {
+  if (m_childSiteBridge) {
     m_islandToConnect = nullptr;
-    m_childSiteLink.Connect(contentIsland);
+    m_childSiteBridge.Connect(contentIsland);
   } else {
     m_islandToConnect = contentIsland;
   }
@@ -215,7 +256,9 @@ void ContentIslandComponentView::prepareForRecycle() noexcept {
   Super::prepareForRecycle();
 }
 
+
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
+  #if 0
   // This automation mode must be set before connecting the child ContentIsland.
   // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
   // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
@@ -265,6 +308,7 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
         args.AutomationProvider(nullptr);
         args.Handled(true);
       });
+      #endif
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

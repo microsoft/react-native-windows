@@ -61,7 +61,8 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::event_token m_mountedToken;
   winrt::event_token m_unmountedToken;
   std::vector<winrt::Microsoft::ReactNative::ComponentView::LayoutMetricsChanged_revoker> m_layoutMetricChangedRevokers;
-  winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
+  //winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
+  winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_childSiteBridge{nullptr};
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
 
