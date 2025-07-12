@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Improve error handling in GetSystemWheelScrollLines helper",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
