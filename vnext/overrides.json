@@ -169,7 +169,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityProps.cpp",
-      "baseHash": "22bd92d03ec6511ec5efa8ae6758ab0b75538fff",
+      "baseHash": "0b7955fc456e4daebd0f1b01a386f93ff1c2a645",
       "issue": 14845
     },
     {
