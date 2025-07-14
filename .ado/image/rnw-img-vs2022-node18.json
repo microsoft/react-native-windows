@@ -34,7 +34,7 @@
         {
             "name": "Windows-NodeJS",
             "parameters": {
-                "Version": "20.0.0"
+                "Version": "18.18.0"
             }
         },
         {
