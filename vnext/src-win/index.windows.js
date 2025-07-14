@@ -104,7 +104,7 @@ import typeof Platform from './Libraries/Utilities/Platform';
 import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
-import typeof DevMenu from './src/private/devmenu/DevMenu';
+import typeof DevMenu from './src/private/devsupport/devmenu/DevMenu';
 
 export type {HostComponent, HostInstance};
 // Windows]]
@@ -266,7 +266,7 @@ module.exports = {
   get DeviceInfo(): DeviceInfo {
     return require('./Libraries/Utilities/DeviceInfo').default;
   },
-  get DevMenu() {
+  get DevMenu(): DevMenu {
     return require('./src/private/devsupport/devmenu/DevMenu').default;
   },
   get DevSettings(): DevSettings {

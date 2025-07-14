@@ -102,7 +102,7 @@ import typeof Platform from './Libraries/Utilities/Platform';
 import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
-import typeof DevMenu from './src/private/devmenu/DevMenu';
+import typeof DevMenu from './src/private/devsupport/devmenu/DevMenu';
 import typeof registerCallableModule from './Libraries/Core/registerCallableModule';
 // Windows]]
 
@@ -232,9 +232,7 @@ module.exports = {
   },
   // Include any types exported in the Animated module together with its default export, so
   // you can references types such as Animated.Numeric
-  get Animated(): {...$Diff<AnimatedModule, {default: any}>, ...Animated} {
-    // $FlowFixMe[incompatible-variance]: Ignoring variance issue with Color property
-    // $FlowExpectedError[prop-missing]: we only return the default export, all other exports are types
+  get Animated(): Animated {
     return require('./Libraries/Animated/Animated').default;
   },
   get Appearance(): Appearance {
@@ -270,7 +268,7 @@ module.exports = {
   get DeviceInfo(): DeviceInfo {
     return require('./Libraries/Utilities/DeviceInfo').default;
   },
-  get DevMenu() {
+  get DevMenu(): DevMenu {
     return require('./src/private/devsupport/devmenu/DevMenu').default;
   },
   get DevSettings(): DevSettings {

@@ -1066,7 +1066,7 @@ type TextInputBaseProps = $ReadOnly<{
 }>;
 
 export type TextInputProps = $ReadOnly<{
-  ...$Diff<ViewProps, $ReadOnly<{style: ?ViewStyleProp}>>,
+  ...Omit<ViewProps, 'style'>,
   ...TextInputIOSProps,
   ...TextInputAndroidProps,
   ...TextInputBaseProps,
