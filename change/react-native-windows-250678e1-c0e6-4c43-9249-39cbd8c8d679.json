@@ -1,0 +1,7 @@
+{
+  "comment": "Fix remaining Node.js version references from 18.18 to 20.0.0",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
