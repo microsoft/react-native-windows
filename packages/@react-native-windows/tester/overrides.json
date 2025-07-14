@@ -8,7 +8,7 @@
   "baseVersion": "0.80.0-nightly-20250428-9efcdc091",
   "overrides": [
     {
-      "type": "derived",
+      "type": "copy",
       "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
       "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
       "baseHash": "f54f9e74fbe883c58a5ea6a6425b5ad548134940",
