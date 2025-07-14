@@ -438,7 +438,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 18.18)';
+        Name = 'Node.js (LTS, >= 20.0.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { WinGetInstall OpenJS.NodeJS.LTS "20.0.0" };
