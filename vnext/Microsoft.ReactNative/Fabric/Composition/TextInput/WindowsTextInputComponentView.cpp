@@ -388,13 +388,12 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the bits representing requested scroll bars for the window
   HRESULT TxGetScrollBars(DWORD *pdwScrollBar) override {
-    // Check if scrolling is enabled
-    if (!m_outer->windowsTextInputProps().scrollEnabled) {
-      *pdwScrollBar = 0;
-      return S_OK;
-    }
-    
     if (m_outer->m_multiline) {
+      // Check if scrolling is enabled for multiline inputs
+      if (!m_outer->windowsTextInputProps().scrollEnabled) {
+        *pdwScrollBar = 0;
+        return S_OK;
+      }
       *pdwScrollBar = WS_VSCROLL | WS_HSCROLL | ES_AUTOVSCROLL | ES_AUTOHSCROLL;
     } else {
       *pdwScrollBar = WS_HSCROLL | ES_AUTOHSCROLL;
