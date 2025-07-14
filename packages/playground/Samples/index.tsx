@@ -7,7 +7,6 @@
 import React from 'react';
 import {
   AppRegistry,
-  Button,
   StyleSheet,
   ScrollView,
   Switch,
@@ -24,7 +23,7 @@ import {
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import {Popup} from 'react-native-windows';
+import {Button, Popup} from 'react-native-windows';
 
 class TicTacButton extends React.Component<{}, {text: string}> {
   constructor(props: {}) {
@@ -39,6 +38,7 @@ class TicTacButton extends React.Component<{}, {text: string}> {
         onPress={this._onPress}
         title={this.state.text}
         accessibilityLabel={this.state.text}
+        accessibilityValue={{text: this.state.text}}
       />
     );
   }

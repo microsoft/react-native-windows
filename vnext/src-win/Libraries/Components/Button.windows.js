@@ -382,21 +382,12 @@ const Button: component(
       ? {..._accessibilityState, disabled}
       : _accessibilityState;
 
-  let _accessibilityValue;
-  if (
-    accessibilityValue != null ||
-    ariaValueMax != null ||
-    ariaValueMin != null ||
-    ariaValueNow != null ||
-    ariaValueText != null
-  ) {
-    _accessibilityValue = {
-      max: ariaValueMax ?? accessibilityValue?.max,
-      min: ariaValueMin ?? accessibilityValue?.min,
-      now: ariaValueNow ?? accessibilityValue?.now,
-      text: ariaValueText ?? accessibilityValue?.text,
-    };
-  }
+  let _accessibilityValue = {
+    max: ariaValueMax ?? accessibilityValue?.max,
+    min: ariaValueMin ?? accessibilityValue?.min,
+    now: ariaValueNow ?? accessibilityValue?.now,
+    text: ariaValueText ?? accessibilityValue?.text,
+  };
 
   if (disabled) {
     buttonStyles.push(styles.buttonDisabled);
