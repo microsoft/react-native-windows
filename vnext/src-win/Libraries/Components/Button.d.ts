@@ -8,7 +8,7 @@
  */
 
 import * as React from 'react';
-import {Button as RNButton, ButtonProps as RNButtonProps} from 'react-native';
+import {ButtonProps as RNButtonProps} from 'react-native';
 
 export interface ButtonPropsWindows {
   /**
@@ -20,5 +20,5 @@ export interface ButtonPropsWindows {
 
 export interface ButtonProps extends RNButtonProps, ButtonPropsWindows {}
 
-export class Button extends React.Component<ButtonProps> {}
+declare const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<any>>;
 export default Button;
