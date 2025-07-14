@@ -9,6 +9,13 @@
   "overrides": [
     {
       "type": "derived",
+      "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
+      "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
+      "baseHash": "f54f9e74fbe883c58a5ea6a6425b5ad548134940",
+      "issue": 14844
+    },
+    {
+      "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
       "baseHash": "74a0b8d26ba5e62ea6e39e17a9fc9bc2d5c235fa"
