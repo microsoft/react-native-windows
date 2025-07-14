@@ -241,6 +241,13 @@ const View: component(
       );
     }
 
+    const computedImportantForAccessibility =
+      ariaHidden === true ||
+      importantForAccessibility === 'no-hide-descendants' ||
+      accessibilityElementsHidden === true
+        ? 'no-hide-descendants'
+        : importantForAccessibility;
+
     const actualView = (
       <ViewNativeComponent
         {...otherProps}
@@ -258,11 +265,7 @@ const View: component(
         accessibilityElementsHidden={ariaHidden ?? accessibilityElementsHidden}
         accessibilityLabelledBy={_accessibilityLabelledBy}
         accessibilityValue={_accessibilityValue}
-        importantForAccessibility={
-          ariaHidden === true
-            ? 'no-hide-descendants'
-            : importantForAccessibility
-        }
+        importantForAccessibility={computedImportantForAccessibility}
         nativeID={id ?? nativeID}
         ref={forwardedRef}
         onKeyDown={_keyDown}
@@ -271,11 +274,7 @@ const View: component(
         onKeyUpCapture={_keyUpCapture}
         // [Windows
         accessible={_accessible}
-        children={
-          importantForAccessibility === 'no-hide-descendants'
-            ? childrenWithImportantForAccessibility(otherProps.children)
-            : otherProps.children
-        }
+        children={otherProps.children}
         // Windows]
       />
     );
@@ -316,11 +315,7 @@ const View: component(
                 }
                 accessibilityLabelledBy={_accessibilityLabelledBy}
                 accessibilityValue={_accessibilityValue}
-                importantForAccessibility={
-                  ariaHidden === true
-                    ? 'no-hide-descendants'
-                    : importantForAccessibility
-                }
+                importantForAccessibility={computedImportantForAccessibility}
                 nativeID={id ?? nativeID}
                 ref={forwardedRef}
                 onKeyDown={_keyDown}
@@ -330,7 +325,7 @@ const View: component(
                 // [Windows
                 accessible={_accessible}
                 children={
-                  importantForAccessibility === 'no-hide-descendants'
+                  computedImportantForAccessibility === 'no-hide-descendants'
                     ? childrenWithImportantForAccessibility(otherProps.children)
                     : otherProps.children
                 }
