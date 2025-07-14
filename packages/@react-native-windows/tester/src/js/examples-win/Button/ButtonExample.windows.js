@@ -222,7 +222,11 @@ exports.examples = [
                 accessibilityPosInSet={1}
                 accessibilitySetSize={1}
                 accessibilityLiveRegion="assertive"
-                accessibilityValue={{Text: 'Submit Application'}}
+                accessibilityValue={{text: 'Submit Application'}}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={75}
+                aria-valuetext="75 percent complete"
               />
             );
           }}
