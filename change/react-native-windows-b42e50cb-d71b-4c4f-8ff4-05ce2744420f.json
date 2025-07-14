@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[BugFix] Node Version upgrade needed for CI pipelines to run -> Unblock all PRs CI",
+  "packageName": "react-native-windows",
+  "email": "54227869+anupriya13@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
