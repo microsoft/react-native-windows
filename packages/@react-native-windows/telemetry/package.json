@@ -18,8 +18,6 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@azure/core-auth": "1.8.0",
-    "@azure/core-util": "1.11.0",
     "@microsoft/1ds-core-js": "^4.3.0",
     "@microsoft/1ds-post-js": "^4.3.0",
     "@react-native-windows/fs": "0.0.0-canary.65",
