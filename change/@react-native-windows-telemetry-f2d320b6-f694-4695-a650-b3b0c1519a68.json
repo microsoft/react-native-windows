@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Lock `@azure/core-auth` and `@azure/core-util` to latest versions that still use Node 18",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
