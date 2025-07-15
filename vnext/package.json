@@ -90,7 +90,7 @@
   },
   "peerDependencies": {
     "@types/react": "^19.0.0",
-    "react": "^19.0.0",
+    "react": "^19.1.0",
     "react-native": "0.80.0-nightly-20250428-9efcdc091"
   },
   "beachball": {
