@@ -816,19 +816,14 @@ void ScrollViewComponentView::updateProps(
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
 
-  if (oldViewProps.snapToStart != newViewProps.snapToStart ||
-      oldViewProps.snapToEnd != newViewProps.snapToEnd ||
+  if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
       oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
-    if (newViewProps.snapToInterval > 0 &&
-        oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+    if (oldViewProps.snapToInterval != newViewProps.snapToInterval) {
       updateSnapPoints();
     } else {
       const auto snapToOffsets = CreateSnapToOffsets(newViewProps.snapToOffsets);
       m_scrollVisual.SetSnapPoints(
-          newViewProps.snapToStart,
-          newViewProps.snapToEnd,
-          snapToOffsets.GetView(),
-          SnapAlignment::Center);
+          newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), SnapAlignment::Center);
     }
   }
 }
@@ -1468,7 +1463,7 @@ SnapAlignment ScrollViewComponentView::convertSnapToAlignment(
       return SnapAlignment::Start;
   }
 }
-  
+
 void ScrollViewComponentView::updateSnapPoints() noexcept {
   const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
   const auto snapToOffsets = CreateSnapToOffsets(viewProps.snapToOffsets);
