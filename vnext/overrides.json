@@ -274,6 +274,13 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
+      "type": "patch",
+      "file": "src-win/jest/setup.js",
+      "baseFile": "packages/react-native/jest/setup.js",
+      "baseHash": "f2df27daa5a8570194b1143b36957e31b1811f85",
+      "issue": 14929
+    },
+    {
       "type": "platform",
       "file": "src-win/Libraries/__tests__/ViewWindows-test.js"
     },
