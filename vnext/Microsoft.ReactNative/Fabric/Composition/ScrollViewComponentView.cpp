@@ -1468,8 +1468,8 @@ void ScrollViewComponentView::updateSnapPoints() noexcept {
   const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
   const auto snapToOffsets = CreateSnapToOffsets(viewProps.snapToOffsets);
   // Typically used in combination with snapToAlignment and decelerationRate="fast"
-  const auto snapAlignment = SnapAlignment::Center;
-  const auto decelerationRate = viewProps.decelerationRate;
+  auto snapAlignment = SnapAlignment::Center;
+  auto decelerationRate = viewProps.decelerationRate;
 
   // snapToOffsets has priority over snapToInterval (matches React Native behavior)
   if (viewProps.snapToInterval > 0 && decelerationRate >= 0.99) {
