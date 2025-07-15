@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 15 Jul 2025 05:27:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.121
+
+Tue, 15 Jul 2025 05:27:19 GMT
+
+### Changes
+
+- Removed uneeded `@azure/core-auth` dependency (jthysell@microsoft.com)
 
 ## 0.0.0-canary.120
 

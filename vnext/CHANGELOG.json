@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Jul 2025 05:27:19 GMT",
+      "version": "0.0.0-canary.973",
+      "tag": "react-native-windows_v0.0.0-canary.973",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b054122732278dd23f0fa1557c68f69201d7bb6f",
+            "comment": "Changes for updating accessibilityValue prop in UIA"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.268",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5cc75aef8d73348b5ded46efff1978b0231c8f8b",
+            "comment": "handled ariaHidden for windows with same behaviour as importantForAccessibility and accessibilityElementsHidden as ( android and ios )"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Jul 2025 05:24:06 GMT",
       "version": "0.0.0-canary.972",
       "tag": "react-native-windows_v0.0.0-canary.972",

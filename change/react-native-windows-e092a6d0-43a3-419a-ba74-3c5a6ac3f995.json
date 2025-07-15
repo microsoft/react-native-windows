@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "handled ariaHidden for windows with same behaviour as importantForAccessibility and accessibilityElementsHidden as ( android and ios )",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
