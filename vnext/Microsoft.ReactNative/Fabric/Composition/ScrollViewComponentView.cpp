@@ -27,6 +27,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 constexpr float c_scrollerLineDelta = 16.0f;
+constexpr auto c_maxSnapPoints = 1000;
 
 enum class ScrollbarHitRegion : int {
   Unknown = -1,
@@ -740,6 +741,15 @@ void ScrollViewComponentView::updateBackgroundColor(const facebook::react::Share
   }
 }
 
+winrt::Windows::Foundation::Collections::IVector<float> ScrollViewComponentView::CreateSnapToOffsets(
+    const std::vector<float> &offsets) {
+  auto snapToOffsets = winrt::single_threaded_vector<float>();
+  for (const auto &offset : offsets) {
+    snapToOffsets.Append(offset);
+  }
+  return snapToOffsets;
+}
+
 void ScrollViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -806,20 +816,20 @@ void ScrollViewComponentView::updateProps(
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
 
-  if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
-      oldViewProps.snapToOffsets != newViewProps.snapToOffsets ||
-      oldViewProps.snapToAlignment != newViewProps.snapToAlignment) {
-    const auto snapToOffsets = winrt::single_threaded_vector<float>();
-    for (const auto &offset : newViewProps.snapToOffsets) {
-      snapToOffsets.Append(static_cast<float>(offset));
+  if (oldViewProps.snapToStart != newViewProps.snapToStart ||
+      oldViewProps.snapToEnd != newViewProps.snapToEnd ||
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
+    if (newViewProps.snapToInterval > 0 &&
+        oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+      updateSnapPoints();
+    } else {
+      const auto snapToOffsets = CreateSnapToOffsets(newViewProps.snapToOffsets);
+      m_scrollVisual.SetSnapPoints(
+          newViewProps.snapToStart,
+          newViewProps.snapToEnd,
+          snapToOffsets.GetView(),
+          SnapAlignment::Center);
     }
-
-    // When snapToInterval is set, snapToAlignment will define the relationship of the snapping to the scroll view.
-    auto snapAlignment = newViewProps.snapToInterval > 0.0f ? convertSnapToAlignment(newViewProps.snapToAlignment)
-                                                            : SnapAlignment::Center;
-
-    m_scrollVisual.SetSnapPoints(
-        newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
   }
 }
 
@@ -870,6 +880,9 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
   m_verticalScrollbarComponent->ContentSize(contentSize);
   m_horizontalScrollbarComponent->ContentSize(contentSize);
   m_scrollVisual.ContentSize(contentSize);
+
+  // Update snap points if snapToInterval is being used, as content size affects the number of snap points
+  updateSnapPoints();
 }
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
@@ -1454,5 +1467,38 @@ SnapAlignment ScrollViewComponentView::convertSnapToAlignment(
     default:
       return SnapAlignment::Start;
   }
+}
+  
+void ScrollViewComponentView::updateSnapPoints() noexcept {
+  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+  const auto snapToOffsets = CreateSnapToOffsets(viewProps.snapToOffsets);
+  // Typically used in combination with snapToAlignment and decelerationRate="fast"
+  const auto snapAlignment = SnapAlignment::Center;
+  const auto decelerationRate = viewProps.decelerationRate;
+
+  // snapToOffsets has priority over snapToInterval (matches React Native behavior)
+  if (viewProps.snapToInterval > 0 && decelerationRate >= 0.99) {
+    snapAlignment = convertSnapToAlignment(viewProps.snapToAlignment);
+    // Generate snap points based on interval
+    // Calculate the content size to determine how many intervals to create
+    float contentLength = viewProps.horizontal
+        ? std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor
+        : std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
+
+    float interval = static_cast<float>(viewProps.snapToInterval) * m_layoutMetrics.pointScaleFactor;
+
+    // Ensure we have a reasonable minimum interval to avoid infinite loops or excessive memory usage
+    if (interval >= 1.0f && contentLength > 0) {
+      // Generate offsets at each interval, but limit the number of snap points to avoid excessive memory usage
+      int snapPointCount = 0;
+
+      for (float offset = 0; offset <= contentLength && snapPointCount < c_maxSnapPoints; offset += interval) {
+        snapToOffsets.Append(offset);
+        snapPointCount++;
+      }
+    }
+  }
+
+  m_scrollVisual.SetSnapPoints(viewProps.snapToStart, viewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

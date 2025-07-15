@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 04 Jul 2025 05:21:22 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 15 Jul 2025 05:27:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.973
+
+Tue, 15 Jul 2025 05:27:19 GMT
+
+### Changes
+
+- Changes for updating accessibilityValue prop in UIA (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.268
 
 ## 0.0.0-canary.972
 
