@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 15 Jul 2025 05:27:19 GMT",
+      "version": "0.0.0-canary.121",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.121",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "c5d7457de0f2e640a46ff0c1022a9898e32cbef4",
+            "comment": "Removed uneeded `@azure/core-auth` dependency"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 May 2025 05:25:01 GMT",
       "version": "0.0.0-canary.120",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.120",
