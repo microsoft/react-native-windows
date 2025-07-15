@@ -14,6 +14,21 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+// Helper function to check if any parent has NoHideDescendants
+bool IsHiddenByParent(const winrt::Microsoft::ReactNative::ComponentView &view) {
+  auto parent = view.Parent();
+  while (parent) {
+    auto parentProps = std::static_pointer_cast<const facebook::react::ViewProps>(
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parent)->props());
+    if (parentProps &&
+        parentProps->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants) {
+      return true;
+    }
+    parent = parent.Parent();
+  }
+  return false;
+}
+
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
     : m_view{componentView} {
@@ -521,16 +536,25 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsContentElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal =
-          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+      // Check if this element or any parent has NoHideDescendants
+      bool isHidden =
+          props->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants ||
+          IsHiddenByParent(strongView);
+      pRetVal->boolVal = (!isHidden && props->accessible &&
+                          (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
           ? VARIANT_TRUE
           : VARIANT_FALSE;
       break;
     }
+
     case UIA_IsControlElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal =
-          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+      // Check if this element or any parent has NoHideDescendants
+      bool isHidden =
+          props->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants ||
+          IsHiddenByParent(strongView);
+      pRetVal->boolVal = (!isHidden && props->accessible &&
+                          (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
           ? VARIANT_TRUE
           : VARIANT_FALSE;
       break;

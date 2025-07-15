@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Jul 2025 05:24:06 GMT",
+      "version": "0.0.0-canary.972",
+      "tag": "react-native-windows_v0.0.0-canary.972",
+      "comments": {
+        "none": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "02593fb7002046ecd42c8f28a50ea9f3f1f42734",
+            "comment": "overriding AccessibilityProps.cpp"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Jul 2025 05:21:22 GMT",
       "version": "0.0.0-canary.972",
       "tag": "react-native-windows_v0.0.0-canary.972",
