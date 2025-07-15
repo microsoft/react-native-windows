@@ -2,112 +2,688 @@
 
 exports[`SwitchTests Change events can be detected, event bottom 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "event-switch-bottom",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "event-switch-bottom",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "event-switch-bottom",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Change events can be detected, event regression top 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "event-switch-regression-top",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "event-switch-regression-top",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "event-switch-regression-top",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "24, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Change events can be detected, event top 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "event-switch-top",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "event-switch-top",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "event-switch-top",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Change events can be detected, events regression bottom 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "event-switch-regression-bottom",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "event-switch-regression-bottom",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "event-switch-regression-bottom",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "24, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Controlled switch 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "controlled-switch",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "controlled-switch",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "controlled-switch",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "initial-false-switch",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "initial-false-switch",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "initial-false-switch",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "initial-true-switch",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "initial-true-switch",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "initial-true-switch",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "24, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "disabled-initial-off",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "disabled-initial-off",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "disabled-initial-off",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Switches can be disabled, initial false 2`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "disabled-initial-off",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "disabled-initial-off",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "disabled-initial-off",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "disabled-initial-on",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "disabled-initial-on",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "disabled-initial-on",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "24, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "on-off-initial-off",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "on-off-initial-off",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "on-off-initial-off",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "4, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "on-off-initial-off",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "on-off-initial-off",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "on-off-initial-off",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "22, 3, 0",
+            "Size": "14, 14",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "on-off-initial-on",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+    "_Props": {
+      "TestId": "on-off-initial-on",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "on-off-initial-on",
+    "Offset": "0, 0, 0",
+    "Size": "51, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "5.5, 5.5, 0",
+        "Size": "40, 20",
+        "Visual Type": "Visual",
+        "__Children": [
+          {
+            "Offset": "24, 4, 0",
+            "Size": "12, 12",
+            "Visual Type": "Visual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`SwitchTests Switches can have customized accessibility 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "accessibility-switch",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50000,
+        "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "button",
+        "Name": "This is a Switch",
+        "PositionInSet": 1,
+        "SizeofSet": 4,
+        "TogglePattern.ToggleState": "On",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50000,
+        "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "button",
+        "Name": "This is a Switch with focusable set to false",
+        "PositionInSet": 2,
+        "SizeofSet": 4,
+        "TogglePattern.ToggleState": "On",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50000,
+        "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Polite",
+        "LocalizedControlType": "button",
+        "Name": "This is a Switch with accessible set to false",
+        "PositionInSet": 3,
+        "SizeofSet": 4,
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50000,
+        "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Assertive",
+        "LocalizedControlType": "button",
+        "Name": "This is a Switch with focusable and accessible set to false",
+        "PositionInSet": 4,
+        "SizeofSet": 4,
+        "TogglePattern.ToggleState": "On",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "accessibility-switch",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+        "_Props": {
+          "AccessibilityLabel": "This is a Switch",
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+        "_Props": {
+          "AccessibilityLabel": "This is a Switch with focusable set to false",
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+        "_Props": {
+          "AccessibilityLabel": "This is a Switch with accessible set to false",
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
+        "_Props": {
+          "AccessibilityLabel": "This is a Switch with focusable and accessible set to false",
+        },
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "accessibility-switch",
+    "Offset": "0, 0, 0",
+    "Size": "916, 82",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "51, 31",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "51, 31",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "5.5, 5.5, 0",
+                "Size": "40, 20",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "24, 4, 0",
+                    "Size": "12, 12",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "865, 0, 0",
+        "Size": "51, 31",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "51, 31",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "5.5, 5.5, 0",
+                "Size": "40, 20",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "24, 4, 0",
+                    "Size": "12, 12",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 41, 0",
+        "Size": "51, 31",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "51, 31",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "5.5, 5.5, 0",
+                "Size": "40, 20",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "4, 4, 0",
+                    "Size": "12, 12",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "865, 41, 0",
+        "Size": "51, 31",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "51, 31",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "5.5, 5.5, 0",
+                "Size": "40, 20",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "24, 4, 0",
+                    "Size": "12, 12",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 }
 `;

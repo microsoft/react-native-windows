@@ -2,160 +2,2005 @@
 
 exports[`Pressable Tests Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_set",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "PositionInSet": 1,
+        "SizeofSet": 3,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 1 of 3",
+            "TextRangePattern.GetText": "Pressable 1 of 3",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Polite",
+        "LocalizedControlType": "group",
+        "PositionInSet": 2,
+        "SizeofSet": 3,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 2 of 3",
+            "TextRangePattern.GetText": "Pressable 2 of 3",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Assertive",
+        "LocalizedControlType": "group",
+        "PositionInSet": 3,
+        "SizeofSet": 3,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 3 of 3",
+            "TextRangePattern.GetText": "Pressable 3 of 3",
+          },
+        ],
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_set",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_set",
+    "Offset": "0, 0, 0",
+    "Size": "916, 56",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 19, 0",
+        "Size": "916, 18",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 18",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 37, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_disabled_false",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Enabled Pressable",
+        "TextRangePattern.GetText": "Enabled Pressable",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_disabled_false",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_disabled_false",
+    "Offset": "0, 0, 0",
+    "Size": "916, 39",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "402, 10, 0",
+        "Size": "112, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "112, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_disabled_true",
+    "ControlType": 50026,
+    "IsEnabled": false,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Disabled Pressable",
+        "TextRangePattern.GetText": "Disabled Pressable",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_disabled_true",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {
+          "Opacity": 0.5,
+        },
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_disabled_true",
+    "Offset": "0, 0, 0",
+    "Size": "916, 38",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "400, 10, 0",
+        "Size": "116, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Opacity": 0.5,
+            "Size": "116, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can change style when pressed 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-change-pressable",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "style-change-pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "style-change-pressable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "426, 6, 0",
+        "Size": "64, 23",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "64, 23",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "one_press_me_button",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Press Me",
+    "TextRangePattern.GetText": "Press Me",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "one_press_me_button",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "one_press_me_button",
+    "Offset": "0, 0, 0",
+    "Size": "56, 20",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can change text on press/rest, state rest 2`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_press_console",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "onPress",
+    "TextRangePattern.GetText": "onPress",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressable_press_console",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "pressable_press_console",
+    "Offset": "0, 0, 0",
+    "Size": "854, 19",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have advanced borders 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_hit_slop_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Press Outside This View",
+        "TextRangePattern.GetText": "Press Outside This View",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_hit_slop_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 0, 255)",
+    },
+    "Comment": "pressable_hit_slop_button",
+    "Offset": "0, 0, 0",
+    "Size": "146, 19",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "146, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "146, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_delay_events_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_delay_events_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_delay_events_button",
+    "Offset": "0, 0, 0",
+    "Size": "56, 18",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "56, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "56, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_delay_events_console",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "pressOut",
+        "TextRangePattern.GetText": "pressOut",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "pressIn",
+        "TextRangePattern.GetText": "pressIn",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_delay_events_console",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(249, 249, 249, 255)",
+    },
+    "Comment": "pressable_delay_events_console",
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 29, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_button",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "pressable feedback events",
+    "ValuePattern.Value": "Press Me",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "pressable feedback events",
+      "TestId": "pressable_feedback_events_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_feedback_events_button",
+    "Offset": "0, 0, 0",
+    "Size": "56, 18",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "56, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "56, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_console",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "hover in",
+        "TextRangePattern.GetText": "hover in",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_feedback_events_console",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(249, 249, 249, 255)",
+    },
+    "Comment": "pressable_feedback_events_console",
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have event handlers, hover and click 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_button",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "pressable feedback events",
+    "ValuePattern.Value": "Press Me",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Press Me",
+        "TextRangePattern.GetText": "Press Me",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "pressable feedback events",
+      "TestId": "pressable_feedback_events_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_feedback_events_button",
+    "Offset": "0, 0, 0",
+    "Size": "56, 18",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "56, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "56, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have event handlers, hover and click 2`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_console",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "pressOut",
+        "TextRangePattern.GetText": "pressOut",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "press",
+        "TextRangePattern.GetText": "press",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "pressIn",
+        "TextRangePattern.GetText": "pressIn",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "hover in",
+        "TextRangePattern.GetText": "hover in",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_feedback_events_console",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(249, 249, 249, 255)",
+    },
+    "Comment": "pressable_feedback_events_console",
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 29, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 48, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 66, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "pressable_hit_slop_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Press Outside This View",
+        "TextRangePattern.GetText": "Press Outside This View",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_hit_slop_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 0, 255)",
+    },
+    "Comment": "pressable_hit_slop_button",
+    "Offset": "0, 0, 0",
+    "Size": "146, 19",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "146, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "146, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "opacity_pressable",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "opacity_pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.10000000149011612,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.20000000298023224,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.30000001192092896,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.4000000059604645,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.5,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.6000000238418579,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.699999988079071,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.800000011920929,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.8999999761581421,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "opacity_pressable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 550",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 50, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.10000000149011612,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 100, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.20000000298023224,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 150, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.30000001192092896,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 200, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.4000000059604645,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 250, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.5,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 300, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.6000000238418579,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 350, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.699999988079071,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 400, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.800000011920929,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 450, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.8999999761581421,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 500, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have their accessibility and keyboard focus removed 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "accessible_pressable",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable with accessible=true and focusable=true",
+            "TextRangePattern.GetText": "Pressable with accessible=true and focusable=true",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Pressable with accessible=false",
+        "TextRangePattern.GetText": "Pressable with accessible=false",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable with focusable=false",
+            "TextRangePattern.GetText": "Pressable with focusable=false",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Pressable with accessible=false and focusable=false",
+        "TextRangePattern.GetText": "Pressable with accessible=false and focusable=false",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "accessible_pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "accessible_pressable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 180",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 50, 0",
+        "Size": "916, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 100, 0",
+        "Size": "916, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 150, 0",
+        "Size": "916, 30",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 30",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can have tooltips 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "tooltip_pressable",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Pressable with ToolTip "Pressable"",
+        "TextRangePattern.GetText": "Pressable with ToolTip "Pressable"",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "tooltip_pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "tooltip_pressable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 19",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Pressables can hide their backface 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "backface_pressable",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "View #1, front is visible, back is hidden.",
+        "TextRangePattern.GetText": "View #1, front is visible, back is hidden.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Front",
+            "TextRangePattern.GetText": "Front",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Back (You should not see this)",
+            "TextRangePattern.GetText": "Back (You should not see this)",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "View #2, front is hidden, back is visible.",
+        "TextRangePattern.GetText": "View #2, front is hidden, back is visible.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Front (You should not see this)",
+            "TextRangePattern.GetText": "Front (You should not see this)",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Back",
+            "TextRangePattern.GetText": "Back",
+          },
+        ],
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "backface_pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "backface_pressable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 467",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 30",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 30",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "358, 29, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 255, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "83, 90, 0",
+                "Size": "34, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "34, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "358, 29, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "8, 90, 0",
+                "Size": "184, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "184, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 228, 0",
+        "Size": "916, 40",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 40",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "358, 267, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 255, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "6, 90, 0",
+                "Size": "188, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "188, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "358, 267, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "85, 90, 0",
+                "Size": "30, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "30, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`Pressable Tests Text can have pressable behavior 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "tappable_text",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Text has built-in onPress handling",
+    "TextRangePattern.GetText": "Text has built-in onPress handling",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "tappable_text",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "tappable_text",
+    "Offset": "0, 0, 0",
+    "Size": "916, 20",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
 exports[`Pressable Tests Text can have pressable behavior 2`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "tappable_text_console",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "2x text onPress",
+    "TextRangePattern.GetText": "2x text onPress",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "tappable_text_console",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "tappable_text_console",
+    "Offset": "0, 0, 0",
+    "Size": "854, 19",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
