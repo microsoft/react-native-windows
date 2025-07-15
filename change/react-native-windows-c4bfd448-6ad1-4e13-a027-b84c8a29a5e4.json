@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": " Changes for updating accessibilityValue prop in UIA",
+  "packageName": "react-native-windows",
+  "email": "kvineeth@microsoft.com",
+  "dependentChangeType": "patch"
+}
