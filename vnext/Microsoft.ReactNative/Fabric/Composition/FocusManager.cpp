@@ -5,6 +5,7 @@
 #include "FocusManager.h"
 #include "Composition.FocusManager.g.cpp"
 #include <Fabric/FabricUIManagerModule.h>
+#include <limits>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -116,10 +117,20 @@ winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelpe
     winrt::Microsoft::ReactNative::implementation::ComponentView &view,
     winrt::Microsoft::ReactNative::FocusNavigationReason reason) {
   if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First) {
+    // For First navigation, we need to consider tabIndex
+    auto tabIndex = view.tabIndex();
+    
+    // If this view has a positive tabIndex, it should be focusable
+    if (tabIndex >= 0 && tabIndex != std::numeric_limits<int>::max()) {
+      return &view;
+    }
+    
+    // Otherwise, check if it's naturally focusable
     if (view.focusable()) {
       return &view;
     }
   }
+  
   winrt::Microsoft::ReactNative::implementation::ComponentView *toFocus = nullptr;
 
   Mso::Functor<bool(::winrt::Microsoft::ReactNative::implementation::ComponentView & v)> fn =
@@ -131,6 +142,15 @@ winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelpe
   }
 
   if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::Last) {
+    // For Last navigation, we need to consider tabIndex
+    auto tabIndex = view.tabIndex();
+    
+    // If this view has a positive tabIndex, it should be focusable
+    if (tabIndex >= 0 && tabIndex != std::numeric_limits<int>::max()) {
+      return &view;
+    }
+    
+    // Otherwise, check if it's naturally focusable
     if (view.focusable()) {
       return &view;
     }

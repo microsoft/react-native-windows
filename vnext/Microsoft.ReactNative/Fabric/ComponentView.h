@@ -200,6 +200,7 @@ struct ComponentView
   bool TryFocus() noexcept;
 
   virtual bool focusable() const noexcept;
+  virtual int tabIndex() const noexcept;
   virtual facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept;
   virtual facebook::react::SharedViewEventEmitter eventEmitter() noexcept;
   virtual facebook::react::Tag Tag() const noexcept;

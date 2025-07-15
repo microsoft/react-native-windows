@@ -1429,6 +1429,75 @@ export default ({
           </View>
         );
       },
+    },
+    {
+      title: 'Tab Index',
+      name: 'tab-index',
+      render(): React.Node {
+        return (
+          <View
+            testID="view-test-tab-index"
+            style={{
+              padding: 10,
+              gap: 10,
+            }}>
+            <RNTesterText style={{fontSize: 16, fontWeight: 'bold'}}>
+              Tab Index Example
+            </RNTesterText>
+            <RNTesterText style={{fontSize: 12}}>
+              These views should be focusable with tabIndex:
+            </RNTesterText>
+            <View
+              style={{
+                backgroundColor: 'lightblue',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: 'blue',
+              }}
+              tabIndex={1}
+              accessible
+              accessibilityLabel="First tab index view">
+              <RNTesterText>tabIndex: 1</RNTesterText>
+            </View>
+            <View
+              style={{
+                backgroundColor: 'lightgreen',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: 'green',
+              }}
+              tabIndex={3}
+              accessible
+              accessibilityLabel="Third tab index view">
+              <RNTesterText>tabIndex: 3</RNTesterText>
+            </View>
+            <View
+              style={{
+                backgroundColor: 'lightyellow',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: 'orange',
+              }}
+              tabIndex={2}
+              accessible
+              accessibilityLabel="Second tab index view">
+              <RNTesterText>tabIndex: 2</RNTesterText>
+            </View>
+            <View
+              style={{
+                backgroundColor: 'lightcoral',
+                padding: 10,
+                borderWidth: 1,
+                borderColor: 'red',
+              }}
+              tabIndex={-1}
+              accessible
+              accessibilityLabel="Negative tab index view">
+              <RNTesterText>tabIndex: -1 (not in tab order)</RNTesterText>
+            </View>
+          </View>
+        );
+      },
     }, // ]TODO(macOS ISS#2323203)
     // Windows]
   ],
