@@ -7,6 +7,7 @@
 #include <react/renderer/components/view/conversions.h>
 #include <react/renderer/core/graphicsConversions.h>
 #include <react/renderer/core/propsConversions.h>
+#include <limits>
 
 namespace facebook::react {
 
@@ -71,7 +72,11 @@ HostPlatformViewProps::HostPlatformViewProps(
                                                                         rawProps,
                                                                         "accessibilityLiveRegion",
                                                                         sourceProps.accessibilityLiveRegion,
-                                                                        "none")) {}
+                                                                        "none")),
+      tabIndex(
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.tabIndex
+              : convertRawProp(context, rawProps, "tabIndex", sourceProps.tabIndex, std::numeric_limits<int>::max())) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
@@ -117,6 +122,7 @@ void HostPlatformViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(tooltip);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(tabIndex);
   }
 }
 

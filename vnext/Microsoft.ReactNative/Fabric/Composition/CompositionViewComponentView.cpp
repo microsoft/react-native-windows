@@ -1323,7 +1323,18 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentV
 }
 
 bool ViewComponentView::focusable() const noexcept {
+  // If tabIndex is set to a valid value (not max int), then it should be focusable
+  // This matches the behavior of the Paper implementation
+  if (m_props->tabIndex != std::numeric_limits<int>::max()) {
+    return true;
+  }
+  
+  // Otherwise, use the focusable property
   return m_props->focusable;
+}
+
+int ViewComponentView::tabIndex() const noexcept {
+  return m_props->tabIndex;
 }
 
 std::string ViewComponentView::DefaultControlType() const noexcept {
