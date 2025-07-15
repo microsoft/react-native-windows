@@ -16,7 +16,7 @@ import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
   AccessibilityState,
-  AccessibilityValue,
+  AccessibilityValue, // Windows
 } from './View/ViewAccessibility';
 
 import StyleSheet, {type ColorValue} from '../StyleSheet/StyleSheet';
@@ -155,7 +155,7 @@ export type ButtonProps = $ReadOnly<{
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   onAccessibilityTap?: ?() => void, // Windows
   accessibilityState?: ?AccessibilityState,
-  accessibilityValue?: ?AccessibilityValue,
+  accessibilityValue?: ?AccessibilityValue, // Windows
 
   /**
    * alias for accessibilityState
@@ -319,7 +319,7 @@ const Button: component(
   const {
     accessibilityLabel,
     accessibilityState,
-    accessibilityValue,
+    accessibilityValue, // Windows
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
     'aria-disabled': ariaDisabled,
@@ -329,10 +329,10 @@ const Button: component(
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
-    'aria-valuemax': ariaValueMax,
-    'aria-valuemin': ariaValueMin,
-    'aria-valuenow': ariaValueNow,
-    'aria-valuetext': ariaValueText,
+    'aria-valuemax': ariaValueMax, // Windows
+    'aria-valuemin': ariaValueMin, // Windows
+    'aria-valuenow': ariaValueNow, // Windows
+    'aria-valuetext': ariaValueText, // Windows
     importantForAccessibility,
     color,
     onPress,
@@ -382,12 +382,14 @@ const Button: component(
       ? {..._accessibilityState, disabled}
       : _accessibilityState;
 
+  // [Windows
   let _accessibilityValue = {
     max: ariaValueMax ?? accessibilityValue?.max,
     min: ariaValueMin ?? accessibilityValue?.min,
     now: ariaValueNow ?? accessibilityValue?.now,
     text: ariaValueText ?? accessibilityValue?.text,
   };
+  // Windows]
 
   if (disabled) {
     buttonStyles.push(styles.buttonDisabled);
@@ -416,7 +418,7 @@ const Button: component(
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"
         accessibilityState={_accessibilityState}
-        accessibilityValue={_accessibilityValue}
+        accessibilityValue={_accessibilityValue} // Windows
         onAccessibilityTap={onAccessibilityTap} // Windows
         importantForAccessibility={_importantForAccessibility}
         hasTVPreferredFocus={hasTVPreferredFocus}
@@ -519,7 +521,6 @@ const Button: component(
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"
         accessibilityState={_accessibilityState}
-        accessibilityValue={_accessibilityValue}
         importantForAccessibility={_importantForAccessibility}
         hasTVPreferredFocus={hasTVPreferredFocus}
         nextFocusDown={nextFocusDown}
