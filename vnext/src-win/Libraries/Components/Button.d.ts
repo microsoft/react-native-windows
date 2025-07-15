@@ -7,8 +7,7 @@
  * @format
  */
 
-import * as React from 'react';
-import {ButtonProps as RNButtonProps} from 'react-native';
+import type {ButtonProps as RNButtonProps} from 'react-native';
 
 export interface ButtonPropsWindows {
   /**
@@ -18,7 +17,7 @@ export interface ButtonPropsWindows {
   onAccessibilityTap?: () => void;
 }
 
-export interface ButtonProps extends RNButtonProps, ButtonPropsWindows {}
+export type ButtonProps = RNButtonProps & ButtonPropsWindows;
 
-declare const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<any>>;
-export default Button;
+// Re-export Button with extended props for Windows
+export {Button as default} from 'react-native';
