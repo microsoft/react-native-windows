@@ -82,7 +82,7 @@
     "jscodeshift": "^0.14.0",
     "just-scripts": "^1.3.3",
     "prettier": "2.8.8",
-    "react": "19.0.0",
+    "react": "19.1.0",
     "react-native": "0.80.0-nightly-20250428-9efcdc091",
     "react-native-platform-override": "^1.9.55",
     "react-refresh": "^0.14.0",

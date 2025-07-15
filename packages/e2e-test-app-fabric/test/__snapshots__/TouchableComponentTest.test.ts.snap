@@ -2,735 +2,88 @@
 
 exports[`Touchable Tests Text components can be tappable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "tappable_text",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Text has built-in onPress handling",
-    "TextRangePattern.GetText": "Text has built-in onPress handling",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "tappable_text",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "tappable_text",
-    "Offset": "0, 0, 0",
-    "Size": "916, 20",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests TouchableWithoutFeedback components should not give visual feedback 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_without_feedback_button",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Tap Here For No Feedback!",
-        "TextRangePattern.GetText": "Tap Here For No Feedback!",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "touchable_without_feedback_button",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "touchable_without_feedback_button",
-    "Offset": "0, 0, 0",
-    "Size": "916, 33",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "6, 6, 0",
-        "Size": "904, 22",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "904, 22",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can be defined in a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_set",
-    "ControlType": 50026,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "PositionInSet": 1,
-        "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Touchable Highlight (Control 1 in Set of 3)",
-            "TextRangePattern.GetText": "Touchable Highlight (Control 1 in Set of 3)",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "IsKeyboardFocusable": true,
-        "LiveSetting": "Polite",
-        "LocalizedControlType": "group",
-        "PositionInSet": 2,
-        "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Touchable Opacity (Control 2 in Set of 3)",
-            "TextRangePattern.GetText": "Touchable Opacity (Control 2 in Set of 3)",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "IsKeyboardFocusable": true,
-        "LiveSetting": "Assertive",
-        "LocalizedControlType": "text",
-        "Name": "TouchableWithoutFeedback (Control 3 in Set of 3)",
-        "PositionInSet": 3,
-        "SizeofSet": 3,
-        "TextRangePattern.GetText": "TouchableWithoutFeedback (Control 3 in Set of 3)",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "touchable_set",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-        "_Props": {},
-        "__Children": [
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-        ],
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-        "_Props": {},
-        "__Children": [
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-        ],
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "touchable_set",
-    "Offset": "0, 0, 0",
-    "Size": "916, 55",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "916, 18",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 18",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "916, 20",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "916, 20",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 19, 0",
-        "Size": "916, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 19",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "916, 19",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "916, 19",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 37, 0",
-        "Size": "916, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can be disabled 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "disabled_touchable",
-    "ControlType": 50026,
-    "IsEnabled": false,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Disabled TouchableOpacity",
-        "TextRangePattern.GetText": "Disabled TouchableOpacity",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "disabled_touchable",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {
-          "Opacity": 0.5,
-        },
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(0, 0, 0, 0)",
-    },
-    "Comment": "disabled_touchable",
-    "Offset": "0, 0, 0",
-    "Size": "916, 38",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "374, 10, 0",
-        "Size": "168, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Opacity": 0.5,
-            "Size": "168, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can be disabled 2`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "disabled_touchable",
-    "ControlType": 50026,
-    "IsEnabled": false,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Disabled TouchableOpacity",
-        "TextRangePattern.GetText": "Disabled TouchableOpacity",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "disabled_touchable",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {
-          "Opacity": 0.5,
-        },
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(0, 0, 0, 0)",
-    },
-    "Comment": "disabled_touchable",
-    "Offset": "0, 0, 0",
-    "Size": "916, 38",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "374, 10, 0",
-        "Size": "168, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Opacity": 0.5,
-            "Size": "168, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can contain a Text component 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_highlight_text_button",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Tap Here For Custom Highlight!",
-        "TextRangePattern.GetText": "Tap Here For Custom Highlight!",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "touchable_highlight_text_button",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "touchable_highlight_text_button",
-    "Offset": "0, 0, 0",
-    "Size": "234, 50",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "6, 6, 0",
-        "Size": "224, 22",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "224, 22",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can contain an Image component 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_highlight_image_button",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "touchable_highlight_image_button",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
-            },
-          ],
-        },
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "touchable_highlight_image_button",
-    "Offset": "0, 0, 0",
-    "Size": "50, 50",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "50, 50",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "50, 50",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can delay events 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_delay_events_button",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "touchable_delay_events_button",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "touchable_delay_events_button",
-    "Offset": "0, 0, 0",
-    "Size": "56, 19",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "56, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "56, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_hit_slop_button",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Outside This View",
-        "TextRangePattern.GetText": "Press Outside This View",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "touchable_hit_slop_button",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 0, 0, 255)",
-    },
-    "Comment": "touchable_hit_slop_button",
-    "Offset": "0, 0, 0",
-    "Size": "146, 18",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "146, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "146, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can register feedback events 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_feedback_events_button",
-    "ControlType": 50000,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "button",
-    "Name": "touchable feedback events",
-    "ValuePattern.Value": "Press Me",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "touchable feedback events",
-      "TestId": "touchable_feedback_events_button",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "touchable_feedback_events_button",
-    "Offset": "0, 0, 0",
-    "Size": "56, 19",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "56, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "56, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Touchable Tests Touchables can register feedback events 2`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "touchable_feedback_events_console",
-    "ControlType": 50026,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "press",
-        "TextRangePattern.GetText": "press",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressIn",
-        "TextRangePattern.GetText": "pressIn",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "touchable_feedback_events_console",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "touchable_feedback_events_console",
-    "Offset": "0, 0, 0",
-    "Size": "896, 120",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, 0, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, -1, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "11, 11, 0",
-        "Size": "874, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "874, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "11, 29, 0",
-        "Size": "874, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "874, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;

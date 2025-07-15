@@ -17,11 +17,11 @@
     "sample-custom-component": "0.0.1"
   },
   "peerDependencies": {
-    "@react-native-picker/picker": "2.4.10",
+    "@react-native-picker/picker": "2.11.0",
     "react": "19.1.0",
     "react-native": "0.80.0-nightly-20250428-9efcdc091",
     "react-native-windows": "^0.0.0-canary.973",
-    "react-native-xaml": "^0.0.78"
+    "react-native-xaml": "^0.0.80"
   },
   "devDependencies": {
     "@react-native/tester": "0.80.0-main",

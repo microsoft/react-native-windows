@@ -2,1327 +2,192 @@
 
 exports[`Text Tests Padding can be added to Text 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-padding",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "This text is indented by 10px padding on all sides.",
-    "TextRangePattern.GetText": "This text is indented by 10px padding on all sides.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-padding",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-padding",
-    "Offset": "0, 0, 0",
-    "Size": "916, 40",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 0 a 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-0-a",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-0-a",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-0-a",
-    "Offset": "0, 0, 0",
-    "Size": "500, 80",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 0 b 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-0-b",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-0-b",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-0-b",
-    "Offset": "0, 0, 0",
-    "Size": "500, 80",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 1 a 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-1-a",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-1-a",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-1-a",
-    "Offset": "0, 0, 0",
-    "Size": "475, 120",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 1 b 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-1-b",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-1-b",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-1-b",
-    "Offset": "0, 0, 0",
-    "Size": "475, 120",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 2 a 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-2-a",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-2-a",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-2-a",
-    "Offset": "0, 0, 0",
-    "Size": "450, 160",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, case 2 b 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-2-b",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-2-b",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-2-b",
-    "Offset": "0, 0, 0",
-    "Size": "450, 160",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, default a 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-default-a",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-default-a",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-default-a",
-    "Offset": "0, 0, 0",
-    "Size": "500, 100",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can adjust its fontsize according to its limitations, default b 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-adjustfontsizetofit-default-b",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-adjustfontsizetofit-default-b",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-adjustfontsizetofit-default-b",
-    "Offset": "0, 0, 0",
-    "Size": "500, 100",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can be restricted to one line 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-one-line",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
-    "TextRangePattern.GetText": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-one-line",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-one-line",
-    "Offset": "0, 0, 0",
-    "Size": "300, 20",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can be selectable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-selectable",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
-    "TextRangePattern.GetText": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-selectable",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-selectable",
-    "Offset": "0, 0, 0",
-    "Size": "916, 20",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have a color 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-color",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Red color",
-    "TextRangePattern.GetText": "Red color",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-color",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-color",
-    "Offset": "0, 0, 0",
-    "Size": "916, 19",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have a customized selection color 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-selection-color",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "This text will have a orange highlight on selection.",
-    "TextRangePattern.GetText": "This text will have a orange highlight on selection.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-selection-color",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-selection-color",
-    "Offset": "0, 0, 0",
-    "Size": "916, 20",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have a size 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-size",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Size 23",
-    "TextRangePattern.GetText": "Size 23",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-size",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-size",
-    "Offset": "0, 0, 0",
-    "Size": "916, 32",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have advanced borders 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "advanced-borders",
-    "ControlType": 50026,
-    "LocalizedControlType": "group",
-    "Name": "Advanced Border Example",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This text has customized borders.",
-        "TextRangePattern.GetText": "This text has customized borders.",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This text has customized borders.",
-        "TextRangePattern.GetText": "This text has customized borders.",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This text has customized borders.",
-        "TextRangePattern.GetText": "This text has customized borders.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Advanced Border Example",
-      "TestId": "advanced-borders",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "advanced-borders",
-    "Offset": "0, 0, 0",
-    "Size": "916, 97",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "916, 40",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 40",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "0, 0, 0",
-                "Size": "27, 22",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "27, 0, 0",
-                "Size": "874, 15",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "-15, 0, 0",
-                "Size": "15, 20",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "-10, 20, 0",
-                "Size": "10, 14",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "-11, -6, 0",
-                "Size": "11, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "23, -5, 0",
-                "Size": "882, 5",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "0, -8, 0",
-                "Size": "23, 8",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 0, 0, 255)",
-                },
-                "Offset": "0, 22, 0",
-                "Size": "20, 10",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 38, 0",
-        "Size": "916, 39",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 39",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "0, 0, 0",
-                "Size": "27, 22",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "27, 0, 0",
-                "Size": "874, 15",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "-15, 0, 0",
-                "Size": "15, 20",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "-10, 20, 0",
-                "Size": "10, 13",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "-11, -6, 0",
-                "Size": "11, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "23, -5, 0",
-                "Size": "882, 5",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "0, -8, 0",
-                "Size": "23, 8",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "0, 22, 0",
-                "Size": "20, 9",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 77, 0",
-        "Size": "916, 22",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 22",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "0, 0, 0",
-                "Size": "4, 4",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "4, 0, 0",
-                "Size": "908, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "-4, 0, 0",
-                "Size": "4, 4",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "-1, 4, 0",
-                "Size": "1, 14",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "-4, -4, 0",
-                "Size": "4, 4",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "4, -1, 0",
-                "Size": "908, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "0, -4, 0",
-                "Size": "4, 4",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 128, 0, 255)",
-                },
-                "Offset": "0, 4, 0",
-                "Size": "1, 14",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have an outer color 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-outer-color",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
-    "TextRangePattern.GetText": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-outer-color",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-outer-color",
-    "Offset": "0, 0, 0",
-    "Size": "916, 20",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have borders 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-border",
-    "ControlType": 50026,
-    "LocalizedControlType": "group",
-    "Name": "Border Example",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Sample bordered text with default styling.",
-        "TextRangePattern.GetText": "Sample bordered text with default styling.",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Some more bordered text + a tad of CSS.
-1st nested - border specifcied but ignored.
-2nd Inside text!",
-        "TextRangePattern.GetText": "Some more bordered text + a tad of CSS.
-1st nested - border specifcied but ignored.
-2nd Inside text!",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
-        "TextRangePattern.GetText": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Border Example",
-      "TestId": "text-border",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "text-border",
-    "Offset": "0, 0, 0",
-    "Size": "916, 385",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "400, 29",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "400, 29",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "2, 2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "2, 0, 0",
-                "Size": "-4, 2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-2, 0, 0",
-                "Size": "2, 2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-2, 2, 0",
-                "Size": "2, -4",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-2, -2, 0",
-                "Size": "2, 2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "2, -2, 0",
-                "Size": "-4, 2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -2, 0",
-                "Size": "2, 2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 2, 0",
-                "Size": "2, -4",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "100, 127, 0",
-        "Size": "716, 139",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "716, 139",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "3, 3",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "3, 0, 0",
-                "Size": "-6, 3",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-3, 0, 0",
-                "Size": "3, 3",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-3, 3, 0",
-                "Size": "3, -6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-3, -3, 0",
-                "Size": "3, 3",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "3, -3, 0",
-                "Size": "-6, 3",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -3, 0",
-                "Size": "3, 3",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 3, 0",
-                "Size": "3, -6",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 365, 0",
-        "Size": "916, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-decoration-solid-linethru",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Solid line-through",
-    "TextRangePattern.GetText": "Solid line-through",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-decoration-solid-linethru",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-decoration-solid-linethru",
-    "Offset": "0, 0, 0",
-    "Size": "916, 20",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have decoration lines: Underline 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-decoration-underline",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Solid underline",
-    "TextRangePattern.GetText": "Solid underline",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-decoration-underline",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-decoration-underline",
-    "Offset": "0, 0, 0",
-    "Size": "916, 20",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have inline views/images 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-view",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "This text contains an inline blue view ￼ and an inline image ￼. Neat, huh?",
-    "TextRangePattern.GetText": "This text contains an inline blue view ￯﾿ﾼ and an inline image ￯﾿ﾼ. Neat, huh?",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-view",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 3,
-              "Size": "33, 33",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/flux@3x.png",
-            },
-          ],
-        },
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "text-view",
-    "Offset": "0, 0, 0",
-    "Size": "916, 26",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "0, 0",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(70, 130, 180, 255)",
-            },
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 0, 0",
-        "Size": "0, 0",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have nested views 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-nested-view",
-    "ControlType": 50026,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This is the first row",
-        "TextRangePattern.GetText": "This is the first row",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This is a nested text ￼ with a Red View",
-        "TextRangePattern.GetText": "This is a nested text ￯﾿ﾼ with a Red View",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "text-nested-view",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-        "__Children": [
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-        ],
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "text-nested-view",
-    "Offset": "0, 0, 0",
-    "Size": "916, 40",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "916, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 18, 0",
-        "Size": "916, 23",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 23",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "0, 0",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 0, 0, 255)",
-                    },
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can have shadows 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-shadow",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Demo text shadow",
-    "TextRangePattern.GetText": "Demo text shadow",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-shadow",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-shadow",
-    "Offset": "0, 0, 0",
-    "Size": "916, 28",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Text can wrap 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-wrap",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
-    "TextRangePattern.GetText": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-    "_Props": {
-      "TestId": "text-wrap",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "text-wrap",
-    "Offset": "0, 0, 0",
-    "Size": "300, 39",
-    "Visual Type": "SpriteVisual",
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`Text Tests Texts can clip inline View/Images 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "text-view-images-clipped",
-    "ControlType": 50026,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "The inline view below is taller than its Text parent and should be clipped.",
-        "TextRangePattern.GetText": "The inline view below is taller than its Text parent and should be clipped.",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This is an inline view￼",
-        "TextRangePattern.GetText": "This is an inline view￯﾿ﾼ",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "The inline image below is taller than its Text parent and should be clipped.",
-        "TextRangePattern.GetText": "The inline image below is taller than its Text parent and should be clipped.",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "This is an inline image￼",
-        "TextRangePattern.GetText": "This is an inline image￯﾿ﾼ",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "text-view-images-clipped",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-        "__Children": [
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-        ],
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-        "__Children": [
-          {
-            "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-            "_Props": {
-              "Sources": [
-                {
-                  "Size": "50, 100",
-                  "Type": "Remote",
-                  "Uri": "https://picsum.photos/100",
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "text-view-images-clipped",
-    "Offset": "0, 0, 0",
-    "Size": "916, 223",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "916, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 18, 0",
-        "Size": "150, 75",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "150, 75",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "0, 0",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 0, 0, 255)",
-                    },
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-              {
-                "Offset": "0, 0, 0",
-                "Size": "0, 0",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(70, 130, 180, 255)",
-                    },
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 103, 0",
-        "Size": "916, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 122, 0",
-        "Size": "175, 100",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "175, 100",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "0, 0",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  "Automation Tree": {},
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;

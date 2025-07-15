@@ -25631,64 +25631,273 @@ exports[`snapshotAllPages Glyph UWP 1`] = `
 
 exports[`snapshotAllPages Keyboard 1`] = `
 <View>
-  <Text
+  <Text>
+    No tab index, this item will be tabbed to last
+  </Text>
+  <View
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
+      {
+        "alignItems": "center",
+        "backgroundColor": "aqua",
+        "height": 50,
+        "justifyContent": "center",
+        "width": 120,
+      }
     }
   >
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      Keyboard is 
+    <Text>
+      tabIndex default
     </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          {
-            "color": "red",
-          },
-        ]
-      }
-    >
-      closed
-    </Text>
+  </View>
+  <Text>
+    These 3 items should tab in the order of first, last, middle:
   </Text>
   <View
     style={
       {
-        "borderWidth": 0.5,
-        "marginTop": 10,
-        "padding": 5,
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
       }
     }
   >
-    <Text
+    <View
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "aqua",
+          "height": 50,
+          "justifyContent": "center",
+          "width": 120,
+        }
+      }
+      tabIndex={1}
+    >
+      <Text>
+        tabIndex 1
+      </Text>
+    </View>
+    <View
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "aqua",
+          "height": 50,
+          "justifyContent": "center",
+          "width": 120,
+        }
+      }
+      tabIndex={3}
+    >
+      <Text>
+        tabIndex 3
+      </Text>
+    </View>
+    <View
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "aqua",
+          "height": 50,
+          "justifyContent": "center",
+          "width": 120,
+        }
+      }
+      tabIndex={2}
+    >
+      <Text>
+        tabIndex 2
+      </Text>
+    </View>
+  </View>
+  <Text>
+    Controls like Picker should also do the same tab in the order of first, last, middle:
+  </Text>
+  <View
+    style={
+      {
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <RNCPicker
+      items={
+        [
+          {
+            "label": "tabIndex 11",
+            "testID": undefined,
+            "textColor": undefined,
+            "value": undefined,
+          },
+        ]
+      }
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      selectedIndex={0}
       style={
         [
           {
-            "color": "#000000ff",
+            "height": 32,
+          },
+          {
+            "height": 50,
+            "width": 120,
           },
           undefined,
         ]
       }
-    >
-      No events observed
-    </Text>
+    />
+    <RNCPicker
+      items={
+        [
+          {
+            "label": "tabIndex 13",
+            "testID": undefined,
+            "textColor": undefined,
+            "value": undefined,
+          },
+        ]
+      }
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      selectedIndex={0}
+      style={
+        [
+          {
+            "height": 32,
+          },
+          {
+            "height": 50,
+            "width": 120,
+          },
+          undefined,
+        ]
+      }
+    />
+    <RNCPicker
+      items={
+        [
+          {
+            "label": "tabIndex 12",
+            "testID": undefined,
+            "textColor": undefined,
+            "value": undefined,
+          },
+        ]
+      }
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      selectedIndex={0}
+      style={
+        [
+          {
+            "height": 32,
+          },
+          {
+            "height": 50,
+            "width": 120,
+          },
+          undefined,
+        ]
+      }
+    />
   </View>
 </View>
 `;

@@ -3,53 +3,23 @@
 exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
 {
   "Automation Tree": {},
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "control-style-switch-view",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "control-style-switch-view",
-    "Offset": "0, 0, 0",
-    "Size": "998, 180",
-    "Visual Type": "SpriteVisual",
-  },
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
 {
   "Automation Tree": {},
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "control-style-switch-view",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "control-style-switch-view",
-    "Offset": "0, 0, 0",
-    "Size": "998, 180",
-    "Visual Type": "SpriteVisual",
-  },
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
 
 exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
 {
   "Automation Tree": {},
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "control-style-switch-view",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "control-style-switch-view",
-    "Offset": "0, 0, 0",
-    "Size": "998, 180",
-    "Visual Type": "SpriteVisual",
-  },
+  "Component Tree": {},
+  "Visual Tree": {},
 }
 `;
