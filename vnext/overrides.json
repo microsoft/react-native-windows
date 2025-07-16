@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.80.0-nightly-20250414-70cdf12c4",
+  "baseVersion": "0.80.0-nightly-20250428-9efcdc091",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "635f6473853a94bd7de26e582a2a03c6869344ea"
+      "baseHash": "d274ca7bb384b334c5b2ee0827726e7a3d6c98c9"
     },
     {
       "type": "derived",
@@ -26,13 +26,13 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "20978f20c4aa318b40572f7da5d8d81e6e676db1"
+      "baseHash": "ea5dfca71e7440a2f9e90b1270123a91ce0ee04a"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "199608e05b08edbf7fecf1792997786a46cf4741"
+      "baseHash": "ea72eb77c69d2fb50e2707cab1bac68b80f1a98b"
     },
     {
       "type": "derived",
@@ -163,13 +163,13 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
-      "baseHash": "6db5b174fe1dc7d108ae7f9e730decfe5f633bd8"
+      "baseHash": "eaef0d9a78f2a5b00fab2c6d3803919eb8529a85"
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityProps.cpp",
-      "baseHash": "22bd92d03ec6511ec5efa8ae6758ab0b75538fff",
+      "baseHash": "0b7955fc456e4daebd0f1b01a386f93ff1c2a645",
       "issue": 14845
     },
     {
@@ -231,7 +231,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "8de9394a317351d4d0e582de3f138e6374456823"
+      "baseHash": "96361b83bfc122f1d78cc7d87ea0d7c3bfac138f"
     },
     {
       "type": "platform",
@@ -274,14 +274,15 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/__tests__/ViewWindows-test.js"
+      "type": "patch",
+      "file": "src-win/jest/setup.js",
+      "baseFile": "packages/react-native/jest/setup.js",
+      "baseHash": "f2df27daa5a8570194b1143b36957e31b1811f85",
+      "issue": 14929
     },
     {
-      "type": "copy",
-      "file": "src-win/Libraries/.npmignore",
-      "baseFile": "packages/react-native/Libraries/.npmignore",
-      "baseHash": "41a5e3a8e06cac85f71510c4e7e6c50a6850f86f"
+      "type": "platform",
+      "file": "src-win/Libraries/__tests__/ViewWindows-test.js"
     },
     {
       "type": "patch",
@@ -314,6 +315,13 @@
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
       "baseHash": "706e7b9a66fbddcb4b19c6d1d9b9838db9d15d52",
       "issue": 4578
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/Button.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/Button.d.ts",
+      "baseHash": "b7ff8fc53fcd1bd40eb8116c153ae68aed720436",
+      "issue": 14902
     },
     {
       "type": "derived",
@@ -369,7 +377,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "47e088807b206707cec6b17359c4d3017e61aaea"
+      "baseHash": "96bdd4aebf4133fd2fe6d1b448f9d7b4cd3e8982"
     },
     {
       "type": "patch",
@@ -393,19 +401,19 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Switch/Switch.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
-      "baseHash": "b795ee6b2241f8bd8a6cbeda095b508242a317be"
+      "baseHash": "8afc31651e3dd7c3f14f96e47ca1def85113d8b6"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
-      "baseHash": "de4c9224bac0ba920b41573b8d3c27b332a843de"
+      "baseHash": "f407548782cade71af32a52ecb440f72a403f06e"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "32d0f756ca2cbd454a5c2d8aa18f3b1ea1d20557"
+      "baseHash": "4b3128471dd0d362e9828df8937f708d53694e12"
     },
     {
       "type": "patch",
@@ -417,7 +425,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/AndroidTextInputNativeComponent.js",
-      "baseHash": "acbb61e29566d4878c44b7a6c47cc158571837ed"
+      "baseHash": "b237b9acafeb808c012109729a41395f167f62d8"
     },
     {
       "type": "patch",
@@ -466,7 +474,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "5721d3baf49a611a12939b03840ef73b6974db26"
+      "baseHash": "2dd3e58cf6c4bc0882550eedd8150435972365eb"
     },
     {
       "type": "derived",
@@ -669,9 +677,9 @@
     },
     {
       "type": "copy",
-      "file": "src-win/src/private/debugging/ReactDevToolsSettingsManager.windows.js",
-      "baseFile": "packages/react-native/src/private/debugging/ReactDevToolsSettingsManager.android.js",
-      "baseHash": "1e0309d141da6c7a6a9afa571aae831ca221bbe2"
+      "file": "src-win/src/private/devsupport/rndevtools/ReactDevToolsSettingsManager.windows.js",
+      "baseFile": "packages/react-native/src/private/devsupport/rndevtools/ReactDevToolsSettingsManager.android.js",
+      "baseHash": "2d33789b0c7a45996dc23f26c4b09fb2026a9285"
     },
     {
       "type": "patch",

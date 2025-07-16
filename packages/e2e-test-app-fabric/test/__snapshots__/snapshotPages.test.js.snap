@@ -7572,6 +7572,195 @@ exports[`snapshotAllPages Animated 13`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Animated 14`] = `
+<View
+  style={
+    {
+      "alignItems": "stretch",
+      "justifyContent": "flex-start",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#3c3c4399",
+        }
+      }
+    >
+      Use Native Driver
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      testID="toggle-use-native-driver"
+      value={false}
+    />
+  </View>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Block js thread for 5s
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "cyan",
+          "height": 160,
+          "justifyContent": "center",
+          "padding": 12,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 160,
+        }
+      }
+    >
+      <View
+        pointerEvents="none"
+      >
+        <Text
+          style={
+            {
+              "pointerEvents": "none",
+            }
+          }
+        >
+          Use PanResponder
+           
+          + JS Animated value
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages AppState 1`] = `
 <Text
   style={
@@ -10578,6 +10767,74 @@ exports[`snapshotAllPages Composition Bugs Example 6`] = `
       }
     />
   </View>
+</View>
+`;
+
+exports[`snapshotAllPages ContentURLAndroid 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      [
+        {
+          "borderRadius": 4,
+          "borderWidth": 0.5,
+          "height": 45,
+          "margin": 10,
+          "marginBottom": 0,
+          "padding": 10,
+        },
+        {
+          "backgroundColor": "#f2f2f7ff",
+          "borderColor": "#3c3c4349",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontSize": 19,
+            "fontWeight": "500",
+          },
+          {
+            "color": "#000000ff",
+          },
+        ]
+      }
+    >
+      fetch content:// scheme urls on Android as a Blob
+    </Text>
+  </View>
+  <RCTScrollView
+    automaticallyAdjustContentInsets={false}
+    contentContainerStyle={
+      {
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+    keyboardDismissMode="interactive"
+    keyboardShouldPersistTaps="handled"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View />
+  </RCTScrollView>
 </View>
 `;
 
@@ -78844,6 +79101,107 @@ exports[`snapshotAllPages TextInput 21`] = `
 
 exports[`snapshotAllPages TextInput 22`] = `
 <View>
+  <TextInput
+    experimental_acceptDragAndDropTypes={[]}
+    placeholder="Does not accept drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    experimental_acceptDragAndDropTypes={
+      [
+        "public.plain-text",
+      ]
+    }
+    placeholder="Only accepts plaintext drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    experimental_acceptDragAndDropTypes={
+      [
+        "public.plain-text",
+      ]
+    }
+    multiline={true}
+    numberOfLines={3}
+    placeholder="Only accepts plaintext drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "height": 60,
+        },
+      ]
+    }
+  />
+  <TextInput
+    experimental_acceptDragAndDropTypes={null}
+    placeholder="Accepts all drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 23`] = `
+<View>
   <Text>
     Do not clear text on focus:
   </Text>
@@ -78898,7 +79256,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <View>
   <Text>
     Select text on focus:
@@ -78956,7 +79314,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <TextInput
     defaultValue="Default color text"
@@ -79216,7 +79574,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -79554,7 +79912,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <View
   testID="style-fontFamily"
 >
@@ -79782,7 +80140,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -79810,7 +80168,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -79927,7 +80285,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -79986,7 +80344,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -80013,7 +80371,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -80129,7 +80487,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     editable={true}
@@ -80222,7 +80580,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View
   style={
     {
@@ -80321,7 +80679,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <Text>
     By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
@@ -80373,7 +80731,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View
   testID="max-font-size-multiplier"
 >
@@ -80433,7 +80791,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View
   style={
     {
@@ -80551,7 +80909,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -80665,7 +81023,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -80886,7 +81244,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -80963,7 +81321,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <TextInput
     style={
@@ -80993,7 +81351,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text
     testID="textinput-state-display-in"
@@ -81060,7 +81418,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -81196,7 +81554,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 [
   <View
     focusable={true}
@@ -81262,7 +81620,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -81311,7 +81669,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 <View>
   <Text>
     CaretHidden
@@ -81343,7 +81701,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View>
   <Text>
     Cursorcolor
@@ -81375,7 +81733,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View>
   <Text>
     Shadow
@@ -81413,7 +81771,7 @@ exports[`snapshotAllPages TextInput 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 48`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -81496,7 +81854,7 @@ exports[`snapshotAllPages TextInput 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 49`] = `
+exports[`snapshotAllPages TextInput 50`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -85376,6 +85734,32 @@ exports[`snapshotAllPages URL 1`] = `
         undefined,
       ]
     }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://username:password@reactnative.dev:8080/docs/path?query=testQuery&key=value#fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
     testID="URL-port"
   >
     port: 8080
@@ -85507,6 +85891,32 @@ exports[`snapshotAllPages URL 2`] = `
     testID="URL-pathname"
   >
     pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://reactnative.dev/docs/path
   </Text>
   <Text
     style={
@@ -85658,6 +86068,32 @@ exports[`snapshotAllPages URL 3`] = `
         undefined,
       ]
     }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://reactnative.dev/docs/path?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
     testID="URL-port"
   >
     port: 
@@ -85789,6 +86225,32 @@ exports[`snapshotAllPages URL 4`] = `
     testID="URL-pathname"
   >
     pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://username:password@reactnative.dev:8080/docs/path
   </Text>
   <Text
     style={

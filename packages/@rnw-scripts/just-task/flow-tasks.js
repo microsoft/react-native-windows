@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const https = require('https');
+const minimatch = require('minimatch');
 const path = require('path');
 const {pipeline} = require('stream');
 
@@ -23,6 +24,11 @@ function downloadFile(url, destPath, overwrite = false) {
     }
 
     https.get(url, response => {
+      // Create target path if necessary
+      if (!fs.existsSync(path.dirname(destPath))) {
+        fs.mkdirSync(path.dirname(destPath), {recursive: true});
+      }
+
       const file = fs.createWriteStream(destPath, {});
 
       if (response.statusCode < 200 || response.statusCode >= 300) {
@@ -46,16 +52,11 @@ function downloadFile(url, destPath, overwrite = false) {
 
 async function downloadFilesFromReactNative(
   reactNativeRef,
-  srcPath,
-  destRootPath,
+  srcPath, // path in mono-repo
+  destRootPath, // local path
+  fileGlob = '**/*.*',
   overwrite = false,
 ) {
-  // Create target path if necessary
-  const destPath = path.resolve(destRootPath, srcPath);
-  if (!fs.existsSync(destPath)) {
-    fs.mkdirSync(destPath, {recursive: true});
-  }
-
   const octokit = new Octokit({
     auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN, // Used to make sure CI doesn't get rate-throttled
     userAgent: 'RNW Just Task Script',
@@ -80,19 +81,24 @@ async function downloadFilesFromReactNative(
 
   if (ghResponse.status === 200) {
     for (const fileEntry of ghResponse.data) {
+      const destPath = path.resolve(
+        destRootPath,
+        fileEntry.path.substr(srcPath.length + 1),
+      );
+
       if (fileEntry.type === 'dir') {
         await downloadFilesFromReactNative(
           reactNativeRef,
           fileEntry.path,
-          destRootPath,
+          destPath,
+          fileGlob,
           overwrite,
         );
-      } else if (fileEntry.type === 'file') {
-        await downloadFile(
-          fileEntry.download_url,
-          path.resolve(destRootPath, fileEntry.path),
-          overwrite,
-        );
+      } else if (
+        fileEntry.type === 'file' &&
+        minimatch(fileEntry.path, fileGlob)
+      ) {
+        await downloadFile(fileEntry.download_url, destPath, overwrite);
       }
     }
   }
@@ -106,22 +112,31 @@ async function downloadFlowTypes(overwrite = false) {
 
   const reactNativeRef = await getAbbreviatedRef(reactNativeVersion);
 
-  const typedPath = 'flow-typed/npm';
-  const destRootPath = path.resolve(rnDir, '../.flow/');
-
   await downloadFilesFromReactNative(
     reactNativeRef,
-    typedPath,
-    destRootPath,
+    'flow-typed',
+    path.resolve(rnDir, '../.flow/flow-typed'),
+    '**/*.*',
     overwrite,
   );
 
-  await downloadFilesFromReactNative(
-    reactNativeRef,
-    'flow-typed/environment',
-    destRootPath,
-    overwrite,
-  );
+  // Get the unpublished @react-native/* flow files from the react-native monorepo
+  const reactNativePackages = [
+    {
+      name: '@react-native/normalize-colors',
+      path: 'packages/normalize-color',
+    },
+  ];
+
+  for (const reactNativePackage of reactNativePackages) {
+    await downloadFilesFromReactNative(
+      reactNativeRef,
+      reactNativePackage.path,
+      path.dirname(require.resolve(`${reactNativePackage.name}/package.json`)),
+      '**/*.js.flow',
+      overwrite,
+    );
+  }
 }
 
 task('downloadFlowTypes', async () => await downloadFlowTypes(false));

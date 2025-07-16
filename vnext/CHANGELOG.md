@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 15 Jul 2025 05:27:19 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 16 Jul 2025 05:26:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.974
+
+Wed, 16 Jul 2025 05:26:19 GMT
+
+### Changes
+
+- Implement snapToInterval property for Fabric ScrollView (198982749+Copilot@users.noreply.github.com)
+- Implement the onPressOut property for the fabric implementation of TextInput (hmalothu@microsoft.com)
 
 ## 0.0.0-canary.973
 

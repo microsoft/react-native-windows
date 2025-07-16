@@ -41,11 +41,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disable
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableShadowNodeOnNewArchitectureAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableShadowNodeOnNewArchitectureAndroid(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccessibilityOrder(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableAccessibilityOrder(
     rt
@@ -66,6 +61,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableC
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCustomFocusSearchOnClippedElementsAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableCustomFocusSearchOnClippedElementsAndroid(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEagerRootViewAttachment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableEagerRootViewAttachment(
     rt
@@ -78,6 +78,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableF
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFabricRenderer(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableFabricRenderer(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFixForParentTagDuringReparenting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableFixForParentTagDuringReparenting(
     rt
   );
 }
@@ -126,11 +131,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableP
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableReportEventPaintTime(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableReportEventPaintTime(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableSynchronousStateUpdates(
     rt
@@ -171,13 +171,13 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fusebox
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_removeTurboModuleManagerDelegateMutex(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->removeTurboModuleManagerDelegateMutex(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->traceTurboModulePromiseRejectionsOnAndroid(
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->traceTurboModulePromiseRejectionsOnAndroid(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_updateRuntimeShadowNodeReferencesOnCommit(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->updateRuntimeShadowNodeReferencesOnCommit(
     rt
   );
 }
@@ -211,6 +211,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useRawP
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useShadowNodeStateOnClone(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useShadowNodeStateOnClone(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useTurboModuleInterop(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useTurboModuleInterop(
     rt
@@ -230,14 +235,15 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["cxxNativeAnimatedEnabled"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_cxxNativeAnimatedEnabled};
   methodMap_["disableMainQueueSyncDispatchIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMainQueueSyncDispatchIOS};
   methodMap_["disableMountItemReorderingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid};
-  methodMap_["disableShadowNodeOnNewArchitectureAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableShadowNodeOnNewArchitectureAndroid};
   methodMap_["enableAccessibilityOrder"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccessibilityOrder};
   methodMap_["enableAccumulatedUpdatesInRawPropsAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccumulatedUpdatesInRawPropsAndroid};
   methodMap_["enableBridgelessArchitecture"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBridgelessArchitecture};
   methodMap_["enableCppPropsIteratorSetter"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCppPropsIteratorSetter};
+  methodMap_["enableCustomFocusSearchOnClippedElementsAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCustomFocusSearchOnClippedElementsAndroid};
   methodMap_["enableEagerRootViewAttachment"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEagerRootViewAttachment};
   methodMap_["enableFabricLogs"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFabricLogs};
   methodMap_["enableFabricRenderer"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFabricRenderer};
+  methodMap_["enableFixForParentTagDuringReparenting"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFixForParentTagDuringReparenting};
   methodMap_["enableFontScaleChangesUpdatingLayout"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFontScaleChangesUpdatingLayout};
   methodMap_["enableIOSViewClipToPaddingBox"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableIOSViewClipToPaddingBox};
   methodMap_["enableJSRuntimeGCOnMemoryPressureOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableJSRuntimeGCOnMemoryPressureOnIOS};
@@ -247,7 +253,6 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableNativeCSSParsing"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableNativeCSSParsing};
   methodMap_["enableNewBackgroundAndBorderDrawables"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableNewBackgroundAndBorderDrawables};
   methodMap_["enablePropsUpdateReconciliationAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enablePropsUpdateReconciliationAndroid};
-  methodMap_["enableReportEventPaintTime"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableReportEventPaintTime};
   methodMap_["enableSynchronousStateUpdates"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates};
   methodMap_["enableViewCulling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableViewCulling};
   methodMap_["enableViewRecycling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableViewRecycling};
@@ -256,34 +261,17 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["fixMappingOfEventPrioritiesBetweenFabricAndReact"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact};
   methodMap_["fuseboxEnabledRelease"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledRelease};
   methodMap_["fuseboxNetworkInspectionEnabled"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxNetworkInspectionEnabled};
-  methodMap_["removeTurboModuleManagerDelegateMutex"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_removeTurboModuleManagerDelegateMutex};
   methodMap_["traceTurboModulePromiseRejectionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_traceTurboModulePromiseRejectionsOnAndroid};
+  methodMap_["updateRuntimeShadowNodeReferencesOnCommit"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_updateRuntimeShadowNodeReferencesOnCommit};
   methodMap_["useAlwaysAvailableJSErrorHandling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useAlwaysAvailableJSErrorHandling};
   methodMap_["useEditTextStockAndroidFocusBehavior"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useEditTextStockAndroidFocusBehavior};
   methodMap_["useFabricInterop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useFabricInterop};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
   methodMap_["useOptimizedEventBatchingOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useOptimizedEventBatchingOnAndroid};
   methodMap_["useRawPropsJsiValue"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useRawPropsJsiValue};
+  methodMap_["useShadowNodeStateOnClone"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useShadowNodeStateOnClone};
   methodMap_["useTurboModuleInterop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useTurboModuleInterop};
   methodMap_["useTurboModules"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useTurboModules};
-}
-static jsi::Value __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_setReloadAndProfileConfig(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI *>(&turboModule)->setReloadAndProfileConfig(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_getReloadAndProfileConfig(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI *>(&turboModule)->getReloadAndProfileConfig(
-    rt
-  );
-}
-
-NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI::NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("ReactDevToolsRuntimeSettingsModule", jsInvoker) {
-  methodMap_["setReloadAndProfileConfig"] = MethodMetadata {1, __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_setReloadAndProfileConfig};
-  methodMap_["getReloadAndProfileConfig"] = MethodMetadata {0, __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_getReloadAndProfileConfig};
 }
 static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isReduceMotionEnabled(
@@ -1164,40 +1152,6 @@ NativeDevLoadingViewCxxSpecJSI::NativeDevLoadingViewCxxSpecJSI(std::shared_ptr<C
   : TurboModule("DevLoadingView", jsInvoker) {
   methodMap_["showMessage"] = MethodMetadata {3, __hostFunction_NativeDevLoadingViewCxxSpecJSI_showMessage};
   methodMap_["hide"] = MethodMetadata {0, __hostFunction_NativeDevLoadingViewCxxSpecJSI_hide};
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->show(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_reload(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->reload(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setProfilingEnabled(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setHotLoadingEnabled(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDevMenuCxxSpecJSI::NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DevMenu", jsInvoker) {
-  methodMap_["show"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_show};
-  methodMap_["reload"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_reload};
-  methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled};
-  methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled};
 }
 static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_reload(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->reload(
@@ -2125,25 +2079,6 @@ NativePushNotificationManagerIOSCxxSpecJSI::NativePushNotificationManagerIOSCxxS
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativePushNotificationManagerIOSCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativePushNotificationManagerIOSCxxSpecJSI_removeListeners};
 }
-static jsi::Value __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_setGlobalHookSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeReactDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setGlobalHookSettings(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_getGlobalHookSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  auto result = static_cast<NativeReactDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getGlobalHookSettings(
-    rt
-  );
-  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
-}
-
-NativeReactDevToolsSettingsManagerCxxSpecJSI::NativeReactDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("ReactDevToolsSettingsManager", jsInvoker) {
-  methodMap_["setGlobalHookSettings"] = MethodMetadata {1, __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_setGlobalHookSettings};
-  methodMap_["getGlobalHookSettings"] = MethodMetadata {0, __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_getGlobalHookSettings};
-}
 static jsi::Value __hostFunction_NativeRedBoxCxxSpecJSI_setExtraData(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeRedBoxCxxSpecJSI *>(&turboModule)->setExtraData(
     rt,
@@ -2278,6 +2213,11 @@ static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseAssert
     rt
   );
 }
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getImageUrl(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getImageUrl(
+    rt
+  );
+}
 
 NativeSampleTurboModuleCxxSpecJSI::NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("SampleTurboModule", jsInvoker) {
@@ -2300,6 +2240,7 @@ NativeSampleTurboModuleCxxSpecJSI::NativeSampleTurboModuleCxxSpecJSI(std::shared
   methodMap_["voidFuncAssert"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncAssert};
   methodMap_["getObjectAssert"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectAssert};
   methodMap_["promiseAssert"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseAssert};
+  methodMap_["getImageUrl"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getImageUrl};
 }
 static jsi::Value __hostFunction_NativeSegmentFetcherCxxSpecJSI_fetchSegment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeSegmentFetcherCxxSpecJSI *>(&turboModule)->fetchSegment(
@@ -2867,6 +2808,77 @@ NativeWebSocketModuleCxxSpecJSI::NativeWebSocketModuleCxxSpecJSI(std::shared_ptr
   methodMap_["close"] = MethodMetadata {3, __hostFunction_NativeWebSocketModuleCxxSpecJSI_close};
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_removeListeners};
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->show(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_reload(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->reload(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setProfilingEnabled(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setHotLoadingEnabled(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDevMenuCxxSpecJSI::NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DevMenu", jsInvoker) {
+  methodMap_["show"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_show};
+  methodMap_["reload"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_reload};
+  methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled};
+  methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled};
+}
+static jsi::Value __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_setReloadAndProfileConfig(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI *>(&turboModule)->setReloadAndProfileConfig(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_getReloadAndProfileConfig(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI *>(&turboModule)->getReloadAndProfileConfig(
+    rt
+  );
+}
+
+NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI::NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("ReactDevToolsRuntimeSettingsModule", jsInvoker) {
+  methodMap_["setReloadAndProfileConfig"] = MethodMetadata {1, __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_setReloadAndProfileConfig};
+  methodMap_["getReloadAndProfileConfig"] = MethodMetadata {0, __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_getReloadAndProfileConfig};
+}
+static jsi::Value __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_setGlobalHookSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeReactDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setGlobalHookSettings(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_getGlobalHookSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativeReactDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getGlobalHookSettings(
+    rt
+  );
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
+}
+
+NativeReactDevToolsSettingsManagerCxxSpecJSI::NativeReactDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("ReactDevToolsSettingsManager", jsInvoker) {
+  methodMap_["setGlobalHookSettings"] = MethodMetadata {1, __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_setGlobalHookSettings};
+  methodMap_["getGlobalHookSettings"] = MethodMetadata {0, __hostFunction_NativeReactDevToolsSettingsManagerCxxSpecJSI_getGlobalHookSettings};
 }
 static jsi::Value __hostFunction_NativeIdleCallbacksCxxSpecJSI_requestIdleCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeIdleCallbacksCxxSpecJSI *>(&turboModule)->requestIdleCallback(

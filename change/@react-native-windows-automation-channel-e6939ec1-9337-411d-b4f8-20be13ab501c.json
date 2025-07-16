@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "10109130+sharath2727@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

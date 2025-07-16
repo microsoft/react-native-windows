@@ -26,14 +26,15 @@ public:
   virtual bool cxxNativeAnimatedEnabled(jsi::Runtime &rt) = 0;
   virtual bool disableMainQueueSyncDispatchIOS(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
-  virtual bool disableShadowNodeOnNewArchitectureAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAccessibilityOrder(jsi::Runtime &rt) = 0;
   virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
+  virtual bool enableCustomFocusSearchOnClippedElementsAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRenderer(jsi::Runtime &rt) = 0;
+  virtual bool enableFixForParentTagDuringReparenting(jsi::Runtime &rt) = 0;
   virtual bool enableFontScaleChangesUpdatingLayout(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
   virtual bool enableJSRuntimeGCOnMemoryPressureOnIOS(jsi::Runtime &rt) = 0;
@@ -43,7 +44,6 @@ public:
   virtual bool enableNativeCSSParsing(jsi::Runtime &rt) = 0;
   virtual bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
-  virtual bool enableReportEventPaintTime(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableViewCulling(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
@@ -52,14 +52,15 @@ public:
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) = 0;
-  virtual bool removeTurboModuleManagerDelegateMutex(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool updateRuntimeShadowNodeReferencesOnCommit(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
   virtual bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useRawPropsJsiValue(jsi::Runtime &rt) = 0;
+  virtual bool useShadowNodeStateOnClone(jsi::Runtime &rt) = 0;
   virtual bool useTurboModuleInterop(jsi::Runtime &rt) = 0;
   virtual bool useTurboModules(jsi::Runtime &rt) = 0;
 
@@ -140,14 +141,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::disableMountItemReorderingAndroid, jsInvoker_, instance_);
     }
-    bool disableShadowNodeOnNewArchitectureAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::disableShadowNodeOnNewArchitectureAndroid) == 1,
-          "Expected disableShadowNodeOnNewArchitectureAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::disableShadowNodeOnNewArchitectureAndroid, jsInvoker_, instance_);
-    }
     bool enableAccessibilityOrder(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableAccessibilityOrder) == 1,
@@ -180,6 +173,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableCppPropsIteratorSetter, jsInvoker_, instance_);
     }
+    bool enableCustomFocusSearchOnClippedElementsAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableCustomFocusSearchOnClippedElementsAndroid) == 1,
+          "Expected enableCustomFocusSearchOnClippedElementsAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableCustomFocusSearchOnClippedElementsAndroid, jsInvoker_, instance_);
+    }
     bool enableEagerRootViewAttachment(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableEagerRootViewAttachment) == 1,
@@ -203,6 +204,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableFabricRenderer, jsInvoker_, instance_);
+    }
+    bool enableFixForParentTagDuringReparenting(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableFixForParentTagDuringReparenting) == 1,
+          "Expected enableFixForParentTagDuringReparenting(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableFixForParentTagDuringReparenting, jsInvoker_, instance_);
     }
     bool enableFontScaleChangesUpdatingLayout(jsi::Runtime &rt) override {
       static_assert(
@@ -276,14 +285,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enablePropsUpdateReconciliationAndroid, jsInvoker_, instance_);
     }
-    bool enableReportEventPaintTime(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableReportEventPaintTime) == 1,
-          "Expected enableReportEventPaintTime(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableReportEventPaintTime, jsInvoker_, instance_);
-    }
     bool enableSynchronousStateUpdates(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableSynchronousStateUpdates) == 1,
@@ -348,14 +349,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fuseboxNetworkInspectionEnabled, jsInvoker_, instance_);
     }
-    bool removeTurboModuleManagerDelegateMutex(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::removeTurboModuleManagerDelegateMutex) == 1,
-          "Expected removeTurboModuleManagerDelegateMutex(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::removeTurboModuleManagerDelegateMutex, jsInvoker_, instance_);
-    }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::traceTurboModulePromiseRejectionsOnAndroid) == 1,
@@ -363,6 +356,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::traceTurboModulePromiseRejectionsOnAndroid, jsInvoker_, instance_);
+    }
+    bool updateRuntimeShadowNodeReferencesOnCommit(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::updateRuntimeShadowNodeReferencesOnCommit) == 1,
+          "Expected updateRuntimeShadowNodeReferencesOnCommit(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::updateRuntimeShadowNodeReferencesOnCommit, jsInvoker_, instance_);
     }
     bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) override {
       static_assert(
@@ -412,6 +413,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useRawPropsJsiValue, jsInvoker_, instance_);
     }
+    bool useShadowNodeStateOnClone(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useShadowNodeStateOnClone) == 1,
+          "Expected useShadowNodeStateOnClone(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useShadowNodeStateOnClone, jsInvoker_, instance_);
+    }
     bool useTurboModuleInterop(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useTurboModuleInterop) == 1,
@@ -431,168 +440,6 @@ private:
 
   private:
     friend class NativeReactNativeFeatureFlagsCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  
-#pragma mark - NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig
-
-template <typename P0, typename P1>
-struct NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig {
-  P0 shouldReloadAndProfile;
-  P1 recordChangeDescriptions;
-  bool operator==(const NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig &other) const {
-    return shouldReloadAndProfile == other.shouldReloadAndProfile && recordChangeDescriptions == other.recordChangeDescriptions;
-  }
-};
-
-template <typename T>
-struct NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfigBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.shouldReloadAndProfile)>(rt, value.getProperty(rt, "shouldReloadAndProfile"), jsInvoker),
-      bridging::fromJs<decltype(types.recordChangeDescriptions)>(rt, value.getProperty(rt, "recordChangeDescriptions"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static bool shouldReloadAndProfileToJs(jsi::Runtime &rt, decltype(types.shouldReloadAndProfile) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool recordChangeDescriptionsToJs(jsi::Runtime &rt, decltype(types.recordChangeDescriptions) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    if (value.shouldReloadAndProfile) {
-      result.setProperty(rt, "shouldReloadAndProfile", bridging::toJs(rt, value.shouldReloadAndProfile.value(), jsInvoker));
-    }
-    if (value.recordChangeDescriptions) {
-      result.setProperty(rt, "recordChangeDescriptions", bridging::toJs(rt, value.recordChangeDescriptions.value(), jsInvoker));
-    }
-    return result;
-  }
-};
-
-
-
-#pragma mark - NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig
-
-template <typename P0, typename P1>
-struct NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig {
-  P0 shouldReloadAndProfile;
-  P1 recordChangeDescriptions;
-  bool operator==(const NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig &other) const {
-    return shouldReloadAndProfile == other.shouldReloadAndProfile && recordChangeDescriptions == other.recordChangeDescriptions;
-  }
-};
-
-template <typename T>
-struct NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfigBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.shouldReloadAndProfile)>(rt, value.getProperty(rt, "shouldReloadAndProfile"), jsInvoker),
-      bridging::fromJs<decltype(types.recordChangeDescriptions)>(rt, value.getProperty(rt, "recordChangeDescriptions"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static bool shouldReloadAndProfileToJs(jsi::Runtime &rt, decltype(types.shouldReloadAndProfile) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool recordChangeDescriptionsToJs(jsi::Runtime &rt, decltype(types.recordChangeDescriptions) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "shouldReloadAndProfile", bridging::toJs(rt, value.shouldReloadAndProfile, jsInvoker));
-    result.setProperty(rt, "recordChangeDescriptions", bridging::toJs(rt, value.recordChangeDescriptions, jsInvoker));
-    return result;
-  }
-};
-
-class JSI_EXPORT NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI : public TurboModule {
-protected:
-  NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void setReloadAndProfileConfig(jsi::Runtime &rt, jsi::Object config) = 0;
-  virtual jsi::Object getReloadAndProfileConfig(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeReactDevToolsRuntimeSettingsModuleCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "ReactDevToolsRuntimeSettingsModule";
-
-protected:
-  NativeReactDevToolsRuntimeSettingsModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeReactDevToolsRuntimeSettingsModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void setReloadAndProfileConfig(jsi::Runtime &rt, jsi::Object config) override {
-      static_assert(
-          bridging::getParameterCount(&T::setReloadAndProfileConfig) == 2,
-          "Expected setReloadAndProfileConfig(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setReloadAndProfileConfig, jsInvoker_, instance_, std::move(config));
-    }
-    jsi::Object getReloadAndProfileConfig(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getReloadAndProfileConfig) == 1,
-          "Expected getReloadAndProfileConfig(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getReloadAndProfileConfig, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeReactDevToolsRuntimeSettingsModuleCxxSpec;
     T *instance_;
   };
 
@@ -2991,87 +2838,6 @@ private:
 
   private:
     friend class NativeDevLoadingViewCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeDevMenuCxxSpecJSI : public TurboModule {
-protected:
-  NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void show(jsi::Runtime &rt) = 0;
-  virtual void reload(jsi::Runtime &rt) = 0;
-  virtual void setProfilingEnabled(jsi::Runtime &rt, bool enabled) = 0;
-  virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDevMenuCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "DevMenu";
-
-protected:
-  NativeDevMenuCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDevMenuCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeDevMenuCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDevMenuCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void show(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::show) == 1,
-          "Expected show(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::show, jsInvoker_, instance_);
-    }
-    void reload(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::reload) == 1,
-          "Expected reload(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::reload, jsInvoker_, instance_);
-    }
-    void setProfilingEnabled(jsi::Runtime &rt, bool enabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setProfilingEnabled) == 2,
-          "Expected setProfilingEnabled(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setProfilingEnabled, jsInvoker_, instance_, std::move(enabled));
-    }
-    void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) override {
-      static_assert(
-          bridging::getParameterCount(&T::setHotLoadingEnabled) == 2,
-          "Expected setHotLoadingEnabled(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setHotLoadingEnabled, jsInvoker_, instance_, std::move(enabled));
-    }
-
-  private:
-    friend class NativeDevMenuCxxSpec;
     T *instance_;
   };
 
@@ -6338,69 +6104,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpecJSI : public TurboModule {
-protected:
-  NativeReactDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) = 0;
-  virtual std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "ReactDevToolsSettingsManager";
-
-protected:
-  NativeReactDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeReactDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeReactDevToolsSettingsManagerCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeReactDevToolsSettingsManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) override {
-      static_assert(
-          bridging::getParameterCount(&T::setGlobalHookSettings) == 2,
-          "Expected setGlobalHookSettings(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setGlobalHookSettings, jsInvoker_, instance_, std::move(settings));
-    }
-    std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getGlobalHookSettings) == 1,
-          "Expected getGlobalHookSettings(...) to have 1 parameters");
-
-      return bridging::callFromJs<std::optional<jsi::String>>(
-          rt, &T::getGlobalHookSettings, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeReactDevToolsSettingsManagerCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativeRedBoxCxxSpecJSI : public TurboModule {
 protected:
   NativeRedBoxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -6571,6 +6274,7 @@ public:
   virtual void voidFuncAssert(jsi::Runtime &rt) = 0;
   virtual jsi::Object getObjectAssert(jsi::Runtime &rt, jsi::Object arg) = 0;
   virtual jsi::Value promiseAssert(jsi::Runtime &rt) = 0;
+  virtual jsi::Value getImageUrl(jsi::Runtime &rt) = 0;
 
 };
 
@@ -6779,6 +6483,14 @@ private:
 
       return bridging::callFromJs<jsi::Value>(
           rt, &T::promiseAssert, jsInvoker_, instance_);
+    }
+    jsi::Value getImageUrl(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getImageUrl) == 1,
+          "Expected getImageUrl(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::getImageUrl, jsInvoker_, instance_);
     }
 
   private:
@@ -7912,6 +7624,312 @@ private:
 
   private:
     friend class NativeWebSocketModuleCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  class JSI_EXPORT NativeDevMenuCxxSpecJSI : public TurboModule {
+protected:
+  NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void show(jsi::Runtime &rt) = 0;
+  virtual void reload(jsi::Runtime &rt) = 0;
+  virtual void setProfilingEnabled(jsi::Runtime &rt, bool enabled) = 0;
+  virtual void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDevMenuCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "DevMenu";
+
+protected:
+  NativeDevMenuCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeDevMenuCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeDevMenuCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDevMenuCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void show(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::show) == 1,
+          "Expected show(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::show, jsInvoker_, instance_);
+    }
+    void reload(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::reload) == 1,
+          "Expected reload(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::reload, jsInvoker_, instance_);
+    }
+    void setProfilingEnabled(jsi::Runtime &rt, bool enabled) override {
+      static_assert(
+          bridging::getParameterCount(&T::setProfilingEnabled) == 2,
+          "Expected setProfilingEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setProfilingEnabled, jsInvoker_, instance_, std::move(enabled));
+    }
+    void setHotLoadingEnabled(jsi::Runtime &rt, bool enabled) override {
+      static_assert(
+          bridging::getParameterCount(&T::setHotLoadingEnabled) == 2,
+          "Expected setHotLoadingEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setHotLoadingEnabled, jsInvoker_, instance_, std::move(enabled));
+    }
+
+  private:
+    friend class NativeDevMenuCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig
+
+template <typename P0, typename P1>
+struct NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig {
+  P0 shouldReloadAndProfile;
+  P1 recordChangeDescriptions;
+  bool operator==(const NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfig &other) const {
+    return shouldReloadAndProfile == other.shouldReloadAndProfile && recordChangeDescriptions == other.recordChangeDescriptions;
+  }
+};
+
+template <typename T>
+struct NativeReactDevToolsRuntimeSettingsModulePartialReloadAndProfileConfigBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.shouldReloadAndProfile)>(rt, value.getProperty(rt, "shouldReloadAndProfile"), jsInvoker),
+      bridging::fromJs<decltype(types.recordChangeDescriptions)>(rt, value.getProperty(rt, "recordChangeDescriptions"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool shouldReloadAndProfileToJs(jsi::Runtime &rt, decltype(types.shouldReloadAndProfile) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool recordChangeDescriptionsToJs(jsi::Runtime &rt, decltype(types.recordChangeDescriptions) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.shouldReloadAndProfile) {
+      result.setProperty(rt, "shouldReloadAndProfile", bridging::toJs(rt, value.shouldReloadAndProfile.value(), jsInvoker));
+    }
+    if (value.recordChangeDescriptions) {
+      result.setProperty(rt, "recordChangeDescriptions", bridging::toJs(rt, value.recordChangeDescriptions.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig
+
+template <typename P0, typename P1>
+struct NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig {
+  P0 shouldReloadAndProfile;
+  P1 recordChangeDescriptions;
+  bool operator==(const NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfig &other) const {
+    return shouldReloadAndProfile == other.shouldReloadAndProfile && recordChangeDescriptions == other.recordChangeDescriptions;
+  }
+};
+
+template <typename T>
+struct NativeReactDevToolsRuntimeSettingsModuleReloadAndProfileConfigBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.shouldReloadAndProfile)>(rt, value.getProperty(rt, "shouldReloadAndProfile"), jsInvoker),
+      bridging::fromJs<decltype(types.recordChangeDescriptions)>(rt, value.getProperty(rt, "recordChangeDescriptions"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool shouldReloadAndProfileToJs(jsi::Runtime &rt, decltype(types.shouldReloadAndProfile) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool recordChangeDescriptionsToJs(jsi::Runtime &rt, decltype(types.recordChangeDescriptions) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "shouldReloadAndProfile", bridging::toJs(rt, value.shouldReloadAndProfile, jsInvoker));
+    result.setProperty(rt, "recordChangeDescriptions", bridging::toJs(rt, value.recordChangeDescriptions, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI : public TurboModule {
+protected:
+  NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void setReloadAndProfileConfig(jsi::Runtime &rt, jsi::Object config) = 0;
+  virtual jsi::Object getReloadAndProfileConfig(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeReactDevToolsRuntimeSettingsModuleCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "ReactDevToolsRuntimeSettingsModule";
+
+protected:
+  NativeReactDevToolsRuntimeSettingsModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeReactDevToolsRuntimeSettingsModuleCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void setReloadAndProfileConfig(jsi::Runtime &rt, jsi::Object config) override {
+      static_assert(
+          bridging::getParameterCount(&T::setReloadAndProfileConfig) == 2,
+          "Expected setReloadAndProfileConfig(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setReloadAndProfileConfig, jsInvoker_, instance_, std::move(config));
+    }
+    jsi::Object getReloadAndProfileConfig(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getReloadAndProfileConfig) == 1,
+          "Expected getReloadAndProfileConfig(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getReloadAndProfileConfig, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeReactDevToolsRuntimeSettingsModuleCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpecJSI : public TurboModule {
+protected:
+  NativeReactDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) = 0;
+  virtual std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = "ReactDevToolsSettingsManager";
+
+protected:
+  NativeReactDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeReactDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeReactDevToolsSettingsManagerCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeReactDevToolsSettingsManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) override {
+      static_assert(
+          bridging::getParameterCount(&T::setGlobalHookSettings) == 2,
+          "Expected setGlobalHookSettings(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setGlobalHookSettings, jsInvoker_, instance_, std::move(settings));
+    }
+    std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getGlobalHookSettings) == 1,
+          "Expected getGlobalHookSettings(...) to have 1 parameters");
+
+      return bridging::callFromJs<std::optional<jsi::String>>(
+          rt, &T::getGlobalHookSettings, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeReactDevToolsSettingsManagerCxxSpec;
     T *instance_;
   };
 

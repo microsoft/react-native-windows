@@ -513,23 +513,6 @@ LinesMeasurements TextLayoutManager::measureLines(
   return lineMeasurements;
 }
 
-Float TextLayoutManager::baseline(
-    const AttributedStringBox &attributedStringBox,
-    const ParagraphAttributes &paragraphAttributes,
-    const Size &size) const {
-  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-  TextMeasurement::Attachments attachments;
-  WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
-  if (!spTextLayout) {
-    return 0;
-  }
-
-  DWRITE_TEXT_METRICS metrics;
-  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-  return metrics.height *
-      0.8f; // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
-}
-
 winrt::hstring WindowsTextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {
   winrt::hstring result{};
   const auto &attributedString = attributedStringBox.getValue();
