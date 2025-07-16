@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 16 Jul 2025 05:26:19 GMT",
+      "version": "0.0.0-canary.974",
+      "tag": "react-native-windows_v0.0.0-canary.974",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2cde3f11b7c67db52b6b56203cc3df560ac48ea7",
+            "comment": "Implement snapToInterval property for Fabric ScrollView"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7b7c004fc928aaf00e3a51664ccaac1643b6bdc2",
+            "comment": "Implement the onPressOut property for the fabric implementation of TextInput"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Jul 2025 05:27:19 GMT",
       "version": "0.0.0-canary.973",
       "tag": "react-native-windows_v0.0.0-canary.973",

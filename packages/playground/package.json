@@ -16,7 +16,7 @@
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.0.0",
     "react-native": "0.80.0-nightly-20250414-70cdf12c4",
-    "react-native-windows": "^0.0.0-canary.973"
+    "react-native-windows": "^0.0.0-canary.974"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
