@@ -137,7 +137,7 @@ function shouldIncludeInReleaseNotes(prDescription) {
   const marker = 'Should this change be included in the release notes:';
   const markerIndex = prDescription.indexOf(marker);
   
-  if (markerIndex === -1) return false;
+  if (markerIndex === -1) return true;
   
   // Get text after the marker
   const afterMarker = prDescription.substring(markerIndex + marker.length);
@@ -147,9 +147,9 @@ function shouldIncludeInReleaseNotes(prDescription) {
   
   if (lines.length === 0) return false;
   
-  // Check if the first non-empty line contains "yes" or "_yes_"
+  // Check if the first non-empty line contains "no" or "_no_"
   const firstLine = lines[0].toLowerCase();
-  return firstLine.includes('yes') || firstLine.includes('_yes_');
+  return !(firstLine.includes('no') || firstLine.includes('_no_'));
 }
 
 function extractReleaseNotesSummary(prDescription) {
