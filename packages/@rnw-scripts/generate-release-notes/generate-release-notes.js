@@ -105,7 +105,53 @@ function filterCommitsByDate(commits) {
   });
 }
 
-function categorizeCommits(commits) {
+function extractPRNumber(commitMessage) {
+  // Extract PR number from commit message like "(#14813)"
+  const match = commitMessage.match(/\(#(\d+)\)/);
+  return match ? parseInt(match[1]) : null;
+}
+
+async function fetchPRDetails(prNumber) {
+  if (!prNumber) return null;
+  
+  try {
+    const url = `https://api.github.com/repos/${REPO}/pulls/${prNumber}`;
+    const res = await fetch(url, { headers: HEADERS });
+    
+    if (!res.ok) {
+      console.warn(`Failed to fetch PR #${prNumber}: ${res.status}`);
+      return null;
+    }
+    
+    return await res.json();
+  } catch (error) {
+    console.warn(`Error fetching PR #${prNumber}:`, error.message);
+    return null;
+  }
+}
+
+function extractReleaseNotesSummary(prDescription) {
+  if (!prDescription) return null;
+  
+  // Look for the release notes summary marker
+  const marker = 'Add a brief summary of the change to use in the release notes for the next release.';
+  const markerIndex = prDescription.indexOf(marker);
+  
+  if (markerIndex === -1) return null;
+  
+  // Get text after the marker
+  const afterMarker = prDescription.substring(markerIndex + marker.length);
+  
+  // Extract the next line or paragraph after the marker
+  const lines = afterMarker.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+  
+  if (lines.length === 0) return null;
+  
+  // Return the first non-empty line after the marker
+  return lines[0];
+}
+
+async function categorizeCommits(commits) {
 // TODO: Update logic for commits categorisation, refer 'All Commits' section for all the commits.
   const categories = {
     'All Commits': [],
@@ -147,7 +193,25 @@ function categorizeCommits(commits) {
     const lowerMsg = msg.toLowerCase();
     const sha = c.sha.slice(0, 7);
     const url = c.html_url;
-    const entry = `- ${msg.split('\n')[0]} [${msg.split('\n')[0]} · ${REPO}@${sha} (github.com)](${url})`;
+    const commitTitle = msg.split('\n')[0];
+    
+    // Try to get a better summary from PR description
+    const prNumber = extractPRNumber(commitTitle);
+    let summary = commitTitle;
+    
+    if (prNumber) {
+      console.log(`Fetching PR details for #${prNumber}...`);
+      const prDetails = await fetchPRDetails(prNumber);
+      if (prDetails) {
+        const releaseNotesSummary = extractReleaseNotesSummary(prDetails.body);
+        if (releaseNotesSummary) {
+          summary = releaseNotesSummary;
+          console.log(`Found release notes summary for PR #${prNumber}: ${summary}`);
+        }
+      }
+    }
+    
+    const entry = `- ${summary} [${commitTitle} · ${REPO}@${sha} (github.com)](${url})`;
 
     const matched = Object.keys(keywords).filter((k) =>
       keywords[k].some((word) => lowerMsg.includes(word))
@@ -198,7 +262,7 @@ function generateReleaseNotes(commits, categories) {
 async function main() {
   const commits = await fetchCommits();
   const filtered = filterCommitsByDate(commits);
-  const categories = categorizeCommits(filtered);
+  const categories = await categorizeCommits(filtered);
   const notes = generateReleaseNotes(filtered, categories);
   fs.writeFileSync('release_notes.md', notes, 'utf8');
 }
