@@ -63,8 +63,7 @@
     "**/webdriverio/**/puppeteer-core/ws": "^8.17.1",
     "**/detox/ws": "^5.2.4",
     "xml2js": "^0.5.0",
-    "z-schema": "^5.0.2",
-    "tar-fs": "^3.0.9"
+    "z-schema": "^5.0.2"
   },
   "resolutions.justification": {
     "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo",
