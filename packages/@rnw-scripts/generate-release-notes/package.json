@@ -2,12 +2,21 @@
   "name": "@rnw-scripts/generate-release-notes",
   "version": "1.0.0",
   "description": "Generates release notes for React Native Windows",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@rnw-scripts/generate-release-notes"
+  },
   "main": "generate-release-notes.js",
   "scripts": {
     "release-notes": "node generate-release-notes.js"
   },
   "dependencies": {
     "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">= 18"
   },
   "type": "module"
 }
