@@ -197,7 +197,10 @@ type PressableBaseProps = $ReadOnly<{
 }>;
 
 export type PressableProps = $ReadOnly<{
-  ...ViewProps,
+  // Pressability may override `onMouseEnter` and `onMouseLeave` to
+  // implement `onHoverIn` and `onHoverOut` in a platform-agnostic way.
+  // Hover events should be used instead of mouse events.
+  ...Omit<ViewProps, 'onMouseEnter' | 'onMouseLeave'>,
   ...PressableBaseProps,
 }>;
 
