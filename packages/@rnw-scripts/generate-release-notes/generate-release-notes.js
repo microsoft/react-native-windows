@@ -196,8 +196,38 @@ function extractReleaseNotesSummary(prDescription) {
   return summary && summary.length > 0 ? summary : null;
 }
 
+function extractTypeOfChange(prDescription) {
+  if (!prDescription) return null;
+  
+  // Look for the "### Type of Change" section
+  const marker = '### Type of Change';
+  const markerIndex = prDescription.indexOf(marker);
+  
+  if (markerIndex === -1) return null;
+  
+  // Get text after the marker until the next section (###) or end
+  const afterMarker = prDescription.substring(markerIndex + marker.length);
+  const nextSectionIndex = afterMarker.indexOf('###');
+  const sectionText = nextSectionIndex !== -1 
+    ? afterMarker.substring(0, nextSectionIndex)
+    : afterMarker;
+  
+  // Convert to lowercase for easier matching
+  const lowerSectionText = sectionText.toLowerCase();
+  
+  // Check for each type of change
+  if (lowerSectionText.includes('bug fix')) {
+    return 'Bug fix';
+  } else if (lowerSectionText.includes('new feature')) {
+    return 'New feature';
+  } else if (lowerSectionText.includes('breaking change')) {
+    return 'Breaking change';
+  }
+  
+  return null;
+}
+
 async function categorizeCommits(commits) {
-// TODO: Update logic for commits categorisation, refer 'All Commits' section for all the commits.
   const categories = {
     'All Commits': [],
     'Breaking Changes': [],
@@ -207,35 +237,8 @@ async function categorizeCommits(commits) {
     Other: [],
   };
 
-  const keywords = {
-    'All Commits': [],
-    'Breaking Changes': [
-      'break',
-      'remove',
-      'deprecated',
-      'incompatible',
-      'remove support',
-      'change api',
-      'breaking',
-    ],
-    'New Features': ['feature', 'add', 'introduce', 'support', 'enable'],
-    'Reliability': ['fix', 'bug', 'error', 'issue', 'crash', 'fault', 'defect', 'patch'],
-    'New Architecture-specific changes': [
-      'implement',
-      'new',
-      'fabric',
-      'arch',
-      'modal',
-      'architecture',
-      'refactor',
-      'restructure',
-      'modularize',
-    ],
-  };
-
   for (const c of commits) {
     const msg = c.commit.message;
-    const lowerMsg = msg.toLowerCase();
     const sha = c.sha.slice(0, 7);
     const url = c.html_url;
     const commitTitle = msg.split('\n')[0];
@@ -244,6 +247,7 @@ async function categorizeCommits(commits) {
     const prNumber = extractPRNumber(commitTitle);
     let summary = commitTitle;
     let shouldInclude = true; // Default to include if we can't determine
+    let category = 'Other'; // Default category
     
     if (prNumber) {
       console.log(`Fetching PR details for #${prNumber}...`);
@@ -258,6 +262,35 @@ async function categorizeCommits(commits) {
             summary = releaseNotesSummary;
             console.log(`Found release notes summary for PR #${prNumber}: ${summary}`);
           }
+          
+          // Determine category based on PR description "Type of Change"
+          const typeOfChange = extractTypeOfChange(prDetails.body);
+          const prTitle = prDetails.title || '';
+          const prDescription = prDetails.body || '';
+          
+          // Check for special architecture keywords first
+          const lowerTitle = prTitle.toLowerCase();
+          const lowerDescription = prDescription.toLowerCase();
+          const hasArchKeywords = lowerTitle.includes('fabric') || 
+                                  lowerTitle.includes('implement') || 
+                                  lowerTitle.includes('prop') ||
+                                  lowerDescription.includes('fabric') || 
+                                  lowerDescription.includes('implement') || 
+                                  lowerDescription.includes('prop');
+          
+          if (hasArchKeywords) {
+            category = 'New Architecture-specific changes';
+          } else if (typeOfChange === 'Bug fix') {
+            category = 'Reliability';
+          } else if (typeOfChange === 'New feature') {
+            category = 'New Features';
+          } else if (typeOfChange === 'Breaking change') {
+            category = 'Breaking Changes';
+          } else {
+            category = 'Other';
+          }
+          
+          console.log(`PR #${prNumber}: Type of Change = "${typeOfChange}", Category = "${category}"`);
         } else {
           console.log(`Skipping PR #${prNumber} - not marked for inclusion in release notes`);
           continue; // Skip this commit
@@ -266,19 +299,6 @@ async function categorizeCommits(commits) {
     }
     
     const entry = `- ${summary} [${commitTitle} · ${REPO}@${sha} (github.com)](${url})`;
-
-    const matched = Object.keys(keywords).filter((k) =>
-      keywords[k].some((word) => lowerMsg.includes(word))
-    );
-    const category = matched.includes('Breaking Changes')
-      ? 'Breaking Changes'
-      : matched.includes('New Features')
-      ? 'New Features'
-      : matched.includes('Reliability')
-      ? 'Reliability'
-      : matched.includes('New Architecture-specific changes')
-      ? 'New Architecture-specific changes'
-      : 'Other';
 
     categories['All Commits'].push(entry);
     categories[category].push(entry);
