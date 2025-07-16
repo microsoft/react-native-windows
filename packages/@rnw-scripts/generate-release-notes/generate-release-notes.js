@@ -130,6 +130,28 @@ async function fetchPRDetails(prNumber) {
   }
 }
 
+function shouldIncludeInReleaseNotes(prDescription) {
+  if (!prDescription) return false;
+  
+  // Look for the inclusion marker
+  const marker = 'Should this change be included in the release notes:';
+  const markerIndex = prDescription.indexOf(marker);
+  
+  if (markerIndex === -1) return false;
+  
+  // Get text after the marker
+  const afterMarker = prDescription.substring(markerIndex + marker.length);
+  
+  // Extract the next line or paragraph after the marker
+  const lines = afterMarker.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+  
+  if (lines.length === 0) return false;
+  
+  // Check if the first non-empty line contains "yes" or "_yes_"
+  const firstLine = lines[0].toLowerCase();
+  return firstLine.includes('yes') || firstLine.includes('_yes_');
+}
+
 function extractReleaseNotesSummary(prDescription) {
   if (!prDescription) return null;
   
@@ -142,13 +164,36 @@ function extractReleaseNotesSummary(prDescription) {
   // Get text after the marker
   const afterMarker = prDescription.substring(markerIndex + marker.length);
   
-  // Extract the next line or paragraph after the marker
-  const lines = afterMarker.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+  // Split into lines and get all non-empty lines
+  const lines = afterMarker.split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
   
   if (lines.length === 0) return null;
   
-  // Return the first non-empty line after the marker
-  return lines[0];
+  // Get the first non-empty line after the marker
+  let summary = lines[0];
+  
+  // Remove Microsoft Reviewers text if it exists anywhere in the summary
+  const reviewersMarker = 'Microsoft Reviewers: [Open in CodeFlow';
+  if (summary.includes(reviewersMarker)) {
+    const reviewersIndex = summary.indexOf(reviewersMarker);
+    summary = summary.substring(0, reviewersIndex).trim();
+  }
+  
+  // Filter out lines that contain Microsoft Reviewers text
+  if (!summary || summary.length === 0) {
+    // Try the next lines if the first one was entirely Microsoft Reviewers text
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (!line.includes('Microsoft Reviewers: [Open in CodeFlow')) {
+        summary = line;
+        break;
+      }
+    }
+  }
+  
+  return summary && summary.length > 0 ? summary : null;
 }
 
 async function categorizeCommits(commits) {
@@ -198,15 +243,24 @@ async function categorizeCommits(commits) {
     // Try to get a better summary from PR description
     const prNumber = extractPRNumber(commitTitle);
     let summary = commitTitle;
+    let shouldInclude = true; // Default to include if we can't determine
     
     if (prNumber) {
       console.log(`Fetching PR details for #${prNumber}...`);
       const prDetails = await fetchPRDetails(prNumber);
       if (prDetails) {
-        const releaseNotesSummary = extractReleaseNotesSummary(prDetails.body);
-        if (releaseNotesSummary) {
-          summary = releaseNotesSummary;
-          console.log(`Found release notes summary for PR #${prNumber}: ${summary}`);
+        // Check if this PR should be included in release notes
+        shouldInclude = shouldIncludeInReleaseNotes(prDetails.body);
+        
+        if (shouldInclude) {
+          const releaseNotesSummary = extractReleaseNotesSummary(prDetails.body);
+          if (releaseNotesSummary) {
+            summary = releaseNotesSummary;
+            console.log(`Found release notes summary for PR #${prNumber}: ${summary}`);
+          }
+        } else {
+          console.log(`Skipping PR #${prNumber} - not marked for inclusion in release notes`);
+          continue; // Skip this commit
         }
       }
     }
