@@ -1,19 +1,60 @@
-import fetch from 'node-fetch';
-import fs from 'fs';
-import process from 'process';
+import fetch from "node-fetch";
+import fs from "fs";
+import process from "process";
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const REPO = 'microsoft/react-native-windows';
-const RELEASE_TAG = process.env.RELEASE_TAG || 'Unreleased';
-const START_DATE = process.env.START_DATE;
-const END_DATE = process.env.END_DATE;
+function printHelp() {
+  console.log(`
+Usage:
+  yarn release-notes --token <GITHUB_TOKEN> --start <START_DATE> --end <END_DATE> [--repo <OWNER/REPO>] [--tag <RELEASE_TAG>]
 
-if (!GITHUB_TOKEN) {
-  console.error('GITHUB_TOKEN is not set. Please set it before running.');
-  process.exit(1);
+Options:
+  --token       (required) GitHub personal access token.
+  --start       (required) Start date in YYYY-MM-DD.
+  --end         (required) End date in YYYY-MM-DD.
+  --repo        Repository in OWNER/REPO format. Default: microsoft/react-native-windows
+  --tag         Release tag label. Default: Unreleased
+  --help        Show this help message.
+`);
 }
-if (!START_DATE || !END_DATE) {
-  console.error('START_DATE and END_DATE are required.');
+
+function parseArgs() {
+  const args = process.argv.slice(2);
+  const options = {};
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "--help") {
+      printHelp();
+      process.exit(0);
+    } else if (arg === "--token") {
+      options.token = args[++i];
+    } else if (arg === "--start") {
+      options.start = args[++i];
+    } else if (arg === "--end") {
+      options.end = args[++i];
+    } else if (arg === "--repo") {
+      options.repo = args[++i];
+    } else if (arg === "--tag") {
+      options.tag = args[++i];
+    } else {
+      console.error(`Unknown argument: ${arg}`);
+      printHelp();
+      process.exit(1);
+    }
+  }
+  return options;
+}
+
+const args = parseArgs();
+
+const GITHUB_TOKEN = args.token;
+const REPO = args.repo || "microsoft/react-native-windows";
+const RELEASE_TAG = args.tag || "Unreleased";
+const START_DATE = args.start;
+const END_DATE = args.end;
+
+if (!GITHUB_TOKEN || !START_DATE || !END_DATE) {
+  console.error("Error: --token, --start, and --end are required.");
+  printHelp();
   process.exit(1);
 }
 
@@ -21,7 +62,7 @@ console.log(`Generating release notes for ${REPO} from ${START_DATE} to ${END_DA
 
 const HEADERS = {
   Authorization: `token ${GITHUB_TOKEN}`,
-  Accept: 'application/vnd.github+json',
+  Accept: "application/vnd.github+json",
 };
 
 function parseDate(dateStr) {
@@ -273,10 +314,7 @@ async function categorizeCommits(commits) {
           const lowerDescription = prDescription.toLowerCase();
           const hasArchKeywords = lowerTitle.includes('fabric') || 
                                   lowerTitle.includes('implement') || 
-                                  lowerTitle.includes('prop') ||
-                                  lowerDescription.includes('fabric') || 
-                                  lowerDescription.includes('implement') || 
-                                  lowerDescription.includes('prop');
+                                  lowerTitle.includes('prop');
           
           if (hasArchKeywords) {
             category = 'New Architecture-specific changes';
