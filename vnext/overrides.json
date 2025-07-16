@@ -317,6 +317,13 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/Components/Button.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/Button.d.ts",
+      "baseHash": "b7ff8fc53fcd1bd40eb8116c153ae68aed720436",
+      "issue": 14902
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/Components/Button.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
       "baseHash": "4e77e13aa5774e813fbd874a13a920ea12e3ed91"
