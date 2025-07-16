@@ -39,6 +39,9 @@ class TicTacButton extends React.Component<{}, {text: string}> {
         title={this.state.text}
         accessibilityLabel={this.state.text}
         accessibilityValue={{text: this.state.text}}
+        onAccessibilityTap={() => {
+          this.setState({text: 'A'});
+        }}
       />
     );
   }
