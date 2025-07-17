@@ -31,6 +31,8 @@ public:
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
   virtual bool enableCustomFocusSearchOnClippedElementsAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableDestroyShadowTreeRevisionAsync(jsi::Runtime &rt) = 0;
+  virtual bool enableDoubleMeasurementFixAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRenderer(jsi::Runtime &rt) = 0;
@@ -42,8 +44,11 @@ public:
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableMainQueueModulesOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableNativeCSSParsing(jsi::Runtime &rt) = 0;
+  virtual bool enableNetworkEventReporting(jsi::Runtime &rt) = 0;
   virtual bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) = 0;
+  virtual bool enablePreparedTextLayout(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableResourceTimingAPI(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableViewCulling(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
@@ -52,10 +57,10 @@ public:
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) = 0;
+  virtual bool incorporateMaxLinesDuringAndroidLayout(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool updateRuntimeShadowNodeReferencesOnCommit(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
-  virtual bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
@@ -181,6 +186,22 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableCustomFocusSearchOnClippedElementsAndroid, jsInvoker_, instance_);
     }
+    bool enableDestroyShadowTreeRevisionAsync(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableDestroyShadowTreeRevisionAsync) == 1,
+          "Expected enableDestroyShadowTreeRevisionAsync(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableDestroyShadowTreeRevisionAsync, jsInvoker_, instance_);
+    }
+    bool enableDoubleMeasurementFixAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableDoubleMeasurementFixAndroid) == 1,
+          "Expected enableDoubleMeasurementFixAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableDoubleMeasurementFixAndroid, jsInvoker_, instance_);
+    }
     bool enableEagerRootViewAttachment(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableEagerRootViewAttachment) == 1,
@@ -269,6 +290,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableNativeCSSParsing, jsInvoker_, instance_);
     }
+    bool enableNetworkEventReporting(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableNetworkEventReporting) == 1,
+          "Expected enableNetworkEventReporting(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableNetworkEventReporting, jsInvoker_, instance_);
+    }
     bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableNewBackgroundAndBorderDrawables) == 1,
@@ -277,6 +306,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableNewBackgroundAndBorderDrawables, jsInvoker_, instance_);
     }
+    bool enablePreparedTextLayout(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enablePreparedTextLayout) == 1,
+          "Expected enablePreparedTextLayout(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enablePreparedTextLayout, jsInvoker_, instance_);
+    }
     bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enablePropsUpdateReconciliationAndroid) == 1,
@@ -284,6 +321,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enablePropsUpdateReconciliationAndroid, jsInvoker_, instance_);
+    }
+    bool enableResourceTimingAPI(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableResourceTimingAPI) == 1,
+          "Expected enableResourceTimingAPI(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableResourceTimingAPI, jsInvoker_, instance_);
     }
     bool enableSynchronousStateUpdates(jsi::Runtime &rt) override {
       static_assert(
@@ -349,6 +394,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fuseboxNetworkInspectionEnabled, jsInvoker_, instance_);
     }
+    bool incorporateMaxLinesDuringAndroidLayout(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::incorporateMaxLinesDuringAndroidLayout) == 1,
+          "Expected incorporateMaxLinesDuringAndroidLayout(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::incorporateMaxLinesDuringAndroidLayout, jsInvoker_, instance_);
+    }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::traceTurboModulePromiseRejectionsOnAndroid) == 1,
@@ -372,14 +425,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useAlwaysAvailableJSErrorHandling, jsInvoker_, instance_);
-    }
-    bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useEditTextStockAndroidFocusBehavior) == 1,
-          "Expected useEditTextStockAndroidFocusBehavior(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useEditTextStockAndroidFocusBehavior, jsInvoker_, instance_);
     }
     bool useFabricInterop(jsi::Runtime &rt) override {
       static_assert(
@@ -987,12 +1032,13 @@ private:
   
 #pragma mark - NativeAnimatedModuleEndResult
 
-template <typename P0, typename P1>
+template <typename P0, typename P1, typename P2>
 struct NativeAnimatedModuleEndResult {
   P0 finished;
   P1 value;
+  P2 offset;
   bool operator==(const NativeAnimatedModuleEndResult &other) const {
-    return finished == other.finished && value == other.value;
+    return finished == other.finished && value == other.value && offset == other.offset;
   }
 };
 
@@ -1006,7 +1052,8 @@ struct NativeAnimatedModuleEndResultBridging {
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     T result{
       bridging::fromJs<decltype(types.finished)>(rt, value.getProperty(rt, "finished"), jsInvoker),
-      bridging::fromJs<decltype(types.value)>(rt, value.getProperty(rt, "value"), jsInvoker)};
+      bridging::fromJs<decltype(types.value)>(rt, value.getProperty(rt, "value"), jsInvoker),
+      bridging::fromJs<decltype(types.offset)>(rt, value.getProperty(rt, "offset"), jsInvoker)};
     return result;
   }
 
@@ -1016,6 +1063,10 @@ struct NativeAnimatedModuleEndResultBridging {
   }
 
   static double valueToJs(jsi::Runtime &rt, decltype(types.value) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double offsetToJs(jsi::Runtime &rt, decltype(types.offset) value) {
     return bridging::toJs(rt, value);
   }
 #endif
@@ -1028,6 +1079,9 @@ struct NativeAnimatedModuleEndResultBridging {
     result.setProperty(rt, "finished", bridging::toJs(rt, value.finished, jsInvoker));
     if (value.value) {
       result.setProperty(rt, "value", bridging::toJs(rt, value.value.value(), jsInvoker));
+    }
+    if (value.offset) {
+      result.setProperty(rt, "offset", bridging::toJs(rt, value.offset.value(), jsInvoker));
     }
     return result;
   }
@@ -1345,12 +1399,13 @@ private:
   
 #pragma mark - NativeAnimatedTurboModuleEndResult
 
-template <typename P0, typename P1>
+template <typename P0, typename P1, typename P2>
 struct NativeAnimatedTurboModuleEndResult {
   P0 finished;
   P1 value;
+  P2 offset;
   bool operator==(const NativeAnimatedTurboModuleEndResult &other) const {
-    return finished == other.finished && value == other.value;
+    return finished == other.finished && value == other.value && offset == other.offset;
   }
 };
 
@@ -1364,7 +1419,8 @@ struct NativeAnimatedTurboModuleEndResultBridging {
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     T result{
       bridging::fromJs<decltype(types.finished)>(rt, value.getProperty(rt, "finished"), jsInvoker),
-      bridging::fromJs<decltype(types.value)>(rt, value.getProperty(rt, "value"), jsInvoker)};
+      bridging::fromJs<decltype(types.value)>(rt, value.getProperty(rt, "value"), jsInvoker),
+      bridging::fromJs<decltype(types.offset)>(rt, value.getProperty(rt, "offset"), jsInvoker)};
     return result;
   }
 
@@ -1374,6 +1430,10 @@ struct NativeAnimatedTurboModuleEndResultBridging {
   }
 
   static double valueToJs(jsi::Runtime &rt, decltype(types.value) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double offsetToJs(jsi::Runtime &rt, decltype(types.offset) value) {
     return bridging::toJs(rt, value);
   }
 #endif
@@ -1386,6 +1446,9 @@ struct NativeAnimatedTurboModuleEndResultBridging {
     result.setProperty(rt, "finished", bridging::toJs(rt, value.finished, jsInvoker));
     if (value.value) {
       result.setProperty(rt, "value", bridging::toJs(rt, value.value.value(), jsInvoker));
+    }
+    if (value.offset) {
+      result.setProperty(rt, "offset", bridging::toJs(rt, value.offset.value(), jsInvoker));
     }
     return result;
   }
@@ -8660,7 +8723,7 @@ struct NativePerformancePerformanceObserverInitBridging {
 
 #pragma mark - NativePerformanceRawPerformanceEntry
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10, typename P11, typename P12, typename P13>
 struct NativePerformanceRawPerformanceEntry {
   P0 name;
   P1 entryType;
@@ -8669,8 +8732,15 @@ struct NativePerformanceRawPerformanceEntry {
   P4 processingStart;
   P5 processingEnd;
   P6 interactionId;
+  P7 fetchStart;
+  P8 requestStart;
+  P9 connectStart;
+  P10 connectEnd;
+  P11 responseStart;
+  P12 responseEnd;
+  P13 responseStatus;
   bool operator==(const NativePerformanceRawPerformanceEntry &other) const {
-    return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
+    return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId && fetchStart == other.fetchStart && requestStart == other.requestStart && connectStart == other.connectStart && connectEnd == other.connectEnd && responseStart == other.responseStart && responseEnd == other.responseEnd && responseStatus == other.responseStatus;
   }
 };
 
@@ -8689,7 +8759,14 @@ struct NativePerformanceRawPerformanceEntryBridging {
       bridging::fromJs<decltype(types.duration)>(rt, value.getProperty(rt, "duration"), jsInvoker),
       bridging::fromJs<decltype(types.processingStart)>(rt, value.getProperty(rt, "processingStart"), jsInvoker),
       bridging::fromJs<decltype(types.processingEnd)>(rt, value.getProperty(rt, "processingEnd"), jsInvoker),
-      bridging::fromJs<decltype(types.interactionId)>(rt, value.getProperty(rt, "interactionId"), jsInvoker)};
+      bridging::fromJs<decltype(types.interactionId)>(rt, value.getProperty(rt, "interactionId"), jsInvoker),
+      bridging::fromJs<decltype(types.fetchStart)>(rt, value.getProperty(rt, "fetchStart"), jsInvoker),
+      bridging::fromJs<decltype(types.requestStart)>(rt, value.getProperty(rt, "requestStart"), jsInvoker),
+      bridging::fromJs<decltype(types.connectStart)>(rt, value.getProperty(rt, "connectStart"), jsInvoker),
+      bridging::fromJs<decltype(types.connectEnd)>(rt, value.getProperty(rt, "connectEnd"), jsInvoker),
+      bridging::fromJs<decltype(types.responseStart)>(rt, value.getProperty(rt, "responseStart"), jsInvoker),
+      bridging::fromJs<decltype(types.responseEnd)>(rt, value.getProperty(rt, "responseEnd"), jsInvoker),
+      bridging::fromJs<decltype(types.responseStatus)>(rt, value.getProperty(rt, "responseStatus"), jsInvoker)};
     return result;
   }
 
@@ -8721,6 +8798,34 @@ struct NativePerformanceRawPerformanceEntryBridging {
   static double interactionIdToJs(jsi::Runtime &rt, decltype(types.interactionId) value) {
     return bridging::toJs(rt, value);
   }
+
+  static double fetchStartToJs(jsi::Runtime &rt, decltype(types.fetchStart) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double requestStartToJs(jsi::Runtime &rt, decltype(types.requestStart) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double connectStartToJs(jsi::Runtime &rt, decltype(types.connectStart) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double connectEndToJs(jsi::Runtime &rt, decltype(types.connectEnd) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double responseStartToJs(jsi::Runtime &rt, decltype(types.responseStart) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double responseEndToJs(jsi::Runtime &rt, decltype(types.responseEnd) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double responseStatusToJs(jsi::Runtime &rt, decltype(types.responseStatus) value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
@@ -8740,6 +8845,27 @@ struct NativePerformanceRawPerformanceEntryBridging {
     }
     if (value.interactionId) {
       result.setProperty(rt, "interactionId", bridging::toJs(rt, value.interactionId.value(), jsInvoker));
+    }
+    if (value.fetchStart) {
+      result.setProperty(rt, "fetchStart", bridging::toJs(rt, value.fetchStart.value(), jsInvoker));
+    }
+    if (value.requestStart) {
+      result.setProperty(rt, "requestStart", bridging::toJs(rt, value.requestStart.value(), jsInvoker));
+    }
+    if (value.connectStart) {
+      result.setProperty(rt, "connectStart", bridging::toJs(rt, value.connectStart.value(), jsInvoker));
+    }
+    if (value.connectEnd) {
+      result.setProperty(rt, "connectEnd", bridging::toJs(rt, value.connectEnd.value(), jsInvoker));
+    }
+    if (value.responseStart) {
+      result.setProperty(rt, "responseStart", bridging::toJs(rt, value.responseStart.value(), jsInvoker));
+    }
+    if (value.responseEnd) {
+      result.setProperty(rt, "responseEnd", bridging::toJs(rt, value.responseEnd.value(), jsInvoker));
+    }
+    if (value.responseStatus) {
+      result.setProperty(rt, "responseStatus", bridging::toJs(rt, value.responseStatus.value(), jsInvoker));
     }
     return result;
   }
