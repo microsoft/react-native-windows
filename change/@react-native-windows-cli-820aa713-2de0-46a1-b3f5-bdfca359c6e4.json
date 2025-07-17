@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable Console Logging for playground Apps",
+  "packageName": "@react-native-windows/cli",
+  "email": "satkh@microsoft.com",
+  "dependentChangeType": "patch"
+}
