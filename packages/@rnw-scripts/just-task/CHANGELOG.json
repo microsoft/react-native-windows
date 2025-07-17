@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Thu, 17 Jul 2025 05:27:01 GMT",
+      "version": "2.3.54",
+      "tag": "@rnw-scripts/just-task_v2.3.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "b4ad43a0d79d39aae1c1ecf91d3a0089c0e334ec",
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 May 2025 05:25:03 GMT",
       "version": "2.3.53",
       "tag": "@rnw-scripts/just-task_v2.3.53",

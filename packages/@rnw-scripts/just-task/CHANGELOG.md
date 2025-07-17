@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 17 Jul 2025 05:27:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.54
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
 
 ## 2.3.53
 

@@ -1,8 +1,21 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Fri, 20 Jun 2025 05:21:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 17 Jul 2025 05:27:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.61
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.95
+- Bump @react-native-windows/fs to v0.0.0-canary.66
+- Bump @react-native-windows/package-utils to v0.0.0-canary.92
+- Bump react-native-platform-override to v1.9.56
+- Bump @rnw-scripts/just-task to v2.3.54
 
 ## 1.4.60
 
