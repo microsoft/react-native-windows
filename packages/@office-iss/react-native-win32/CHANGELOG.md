@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 03 Jul 2025 05:24:24 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 17 Jul 2025 05:27:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.293
+
+Thu, 17 Jul 2025 05:27:00 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.54
+- Bump react-native-platform-override to v1.9.56
 
 ## 0.0.0-canary.292
 

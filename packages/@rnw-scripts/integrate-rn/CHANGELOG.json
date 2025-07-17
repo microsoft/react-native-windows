@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Thu, 17 Jul 2025 05:27:01 GMT",
+      "version": "1.4.61",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.61",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "b4ad43a0d79d39aae1c1ecf91d3a0089c0e334ec",
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.95",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.66",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.92",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.9.56",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.54",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Jun 2025 05:21:53 GMT",
       "version": "1.4.60",
       "tag": "@rnw-scripts/integrate-rn_v1.4.60",

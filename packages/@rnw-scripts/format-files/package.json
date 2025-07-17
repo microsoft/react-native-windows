@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/format-files",
-  "version": "1.1.56",
+  "version": "1.1.57",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.36",
-    "@rnw-scripts/just-task": "2.3.53",
+    "@rnw-scripts/just-task": "2.3.54",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/async": "^3.2.5",
     "@types/node": "^18.0.0",

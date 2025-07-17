@@ -15,8 +15,8 @@
     "stamp-version": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.65",
-    "@react-native-windows/package-utils": "^0.0.0-canary.91",
+    "@react-native-windows/fs": "^0.0.0-canary.66",
+    "@react-native-windows/package-utils": "^0.0.0-canary.92",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "mustache": "^4.0.1",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.36",
-    "@rnw-scripts/just-task": "2.3.53",
+    "@rnw-scripts/just-task": "2.3.54",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/jest": "^29.2.2",
     "@types/mustache": "^4.1.1",
