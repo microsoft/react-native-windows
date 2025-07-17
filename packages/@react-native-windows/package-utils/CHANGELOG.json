@@ -2,6 +2,33 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Thu, 17 Jul 2025 05:27:01 GMT",
+      "version": "0.0.0-canary.92",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.92",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.95",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.66",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.54",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 May 2025 05:25:01 GMT",
       "version": "0.0.0-canary.91",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.91",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "10109130+sharath2727@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

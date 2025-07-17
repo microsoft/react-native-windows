@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 16 Jul 2025 05:26:19 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 17 Jul 2025 05:27:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.975
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Changes
+
+- Add accessibilityValue support to Button component (54227869+anupriya13@users.noreply.github.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.269
+- Bump @react-native-windows/codegen to v0.0.0-canary.124
+- Bump @rnw-scripts/just-task to v2.3.54
+- Bump react-native-platform-override to v1.9.56
 
 ## 0.0.0-canary.974
 
