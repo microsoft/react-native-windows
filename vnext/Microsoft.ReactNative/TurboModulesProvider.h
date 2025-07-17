@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <ReactCommon/LongLivedObject.h>
 #include <TurboModuleRegistry.h>
+#include <react/bridging/LongLivedObject.h>
 #include "Base/FollyIncludes.h"
 #include "winrt/Microsoft.ReactNative.h"
 
