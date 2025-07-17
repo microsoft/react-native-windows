@@ -4,8 +4,8 @@
 #ifndef MICROSOFT_REACTNATIVE_JSI_LONGLIVEDJSIVALUE_
 #define MICROSOFT_REACTNATIVE_JSI_LONGLIVEDJSIVALUE_
 
-#include <react/bridging/LongLivedObject.h>
 #include <jsi/jsi.h>
+#include <react/bridging/LongLivedObject.h>
 
 namespace winrt::Microsoft::ReactNative {
 
