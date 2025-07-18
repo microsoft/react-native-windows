@@ -44,6 +44,9 @@
 <PROJECT_ROOT>/IntegrationTests/ImageCachePolicyTest.js
 <PROJECT_ROOT>/IntegrationTests/LayoutEventsTest.js
 <PROJECT_ROOT>/IntegrationTests/IntegrationTestsApp.js
+<PROJECT_ROOT>/ReactCopies/IntegrationTests/ImageCachePolicyTest.js
+<PROJECT_ROOT>/ReactCopies/IntegrationTests/LayoutEventsTest.js
+<PROJECT_ROOT>/ReactCopies/IntegrationTests/IntegrationTestsApp.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*

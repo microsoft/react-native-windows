@@ -256,14 +256,6 @@
     },
     {
       "type": "platform",
-      "file": "src-win/IntegrationTests/ImageCachePolicyTest.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/IntegrationTests/LayoutEventsTest.js"
-    },
-    {
-      "type": "platform",
       "file": "src-win/IntegrationTests/BlobTest.js"
     },
     {
