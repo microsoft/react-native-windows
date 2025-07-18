@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Upgrade WinUI3 Experimental to 1.8.0-experimental1",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
