@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 18 Jul 2025 05:27:06 GMT",
+      "version": "0.0.0-canary.975",
+      "tag": "react-native-windows_v0.0.0-canary.975",
+      "comments": {
+        "none": [
+          {
+            "author": "chpurrer@meta.com",
+            "package": "react-native-windows",
+            "commit": "af04d4d517f95d7773e4744edf2cef42fa0870c8",
+            "comment": "[react-native-windows] Use new LongLivedObject.h header namespace"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Jul 2025 05:27:01 GMT",
       "version": "0.0.0-canary.975",
       "tag": "react-native-windows_v0.0.0-canary.975",
