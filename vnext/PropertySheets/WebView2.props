@@ -3,6 +3,6 @@
   <PropertyGroup Label="WebView2 versioning">
       <!-- WinAppSDK 1.6+ has a dependency on Microsoft.Web.WebView2, there are a few places we need to pull in this package explicitly. -->
       <!-- This minimum fallback version should be greater than or equal to what's needed by both the default and experimental versions of WinAppSDK in WinUI.props. -->
-      <WebView2PackageVersion Condition="'$(WebView2PackageVersion)'=='' Or $([MSBuild]::VersionLessThan('$(WebView2PackageVersion)', '1.0.3179.45'))">1.0.3179.45</WebView2PackageVersion>
+      <WebView2PackageVersion Condition="'$(WebView2PackageVersion)'=='' Or $([MSBuild]::VersionLessThan('$(WebView2PackageVersion)', '1.0.2903.40'))">1.0.2903.40</WebView2PackageVersion>
   </PropertyGroup>
 </Project>
