@@ -10,7 +10,10 @@
 
 'use strict';
 
-import type {LayoutChangeEvent, LayoutRectangle} from 'react-native/Libraries/Types/CoreEventTypes'; // Windows
+import type {
+  LayoutChangeEvent,
+  LayoutRectangle,
+} from 'react-native/Libraries/Types/CoreEventTypes'; // Windows
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 const React = require('react');
