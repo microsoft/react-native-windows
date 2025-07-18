@@ -32,9 +32,8 @@ import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/A
 import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/ActivityIndicator';
 // [Windows
 import typeof AppTheme from './Libraries/AppTheme/AppTheme';
-import typeof ImageURISource from './Libraries/Image/ImageSource';
-import typeof LayoutChangeEvent from './Libraries/Types/CoreEventTypes';
-import typeof LayoutRectangle from './Libraries/Types/CoreEventTypes';
+export {ImageURISource} from './Libraries/Image/ImageSource';
+export {LayoutChangeEvent, LayoutRectangle} from './Libraries/Types/CoreEventTypes';
 // Windows]
 import typeof Button from './Libraries/Components/Button';
 import typeof Clipboard from './Libraries/Components/Clipboard/Clipboard';
