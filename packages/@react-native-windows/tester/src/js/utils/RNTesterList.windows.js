@@ -9,6 +9,7 @@
 
 import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import * as RNTesterListFbInternal from './RNTesterListFbInternal';
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const Components: Array<RNTesterModuleInfo> = [
@@ -216,6 +217,7 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
   },
   */
+  ...RNTesterListFbInternal.Components,
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -344,14 +346,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
   },
-  // $FlowExpectedError[cannot-resolve-name]
-  typeof MutationObserver === 'function'
-    ? {
-        key: 'MutationObserver',
-        category: 'UI',
-        module: require('../examples/MutationObserver/MutationObserverIndex'),
-      }
-    : null,
   {
     key: 'MouseExample',
     category: 'Basic',
@@ -471,11 +465,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
   },
-  {
-    key: 'PerformanceApiExample',
-    category: 'Basic',
-    module: require('../examples/Performance/PerformanceApiExample'),
-  },
+  ...RNTesterListFbInternal.APIs,
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {

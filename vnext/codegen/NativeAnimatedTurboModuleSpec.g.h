@@ -17,6 +17,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct AnimatedTurboModuleSpec_EndResult {
     bool finished;
     std::optional<double> value;
+    std::optional<double> offset;
 };
 
 struct AnimatedTurboModuleSpec_EventMapping {
@@ -29,6 +30,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AnimatedTurboModule
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"finished", &AnimatedTurboModuleSpec_EndResult::finished},
         {L"value", &AnimatedTurboModuleSpec_EndResult::value},
+        {L"offset", &AnimatedTurboModuleSpec_EndResult::offset},
     };
     return fieldMap;
 }

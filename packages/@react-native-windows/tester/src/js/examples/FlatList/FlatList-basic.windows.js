@@ -12,9 +12,9 @@
 
 import type {Item} from '../../components/ListExampleShared';
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+import type {ListRenderItemInfo} from 'react-native';
 import type {AnimatedComponentType} from 'react-native/Libraries/Animated/createAnimatedComponent';
 import typeof FlatListType from 'react-native/Libraries/Lists/FlatList';
-import type {ListRenderItemInfo} from 'react-native/Libraries/Lists/VirtualizedList';
 
 import {
   FooterComponent,

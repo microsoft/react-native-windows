@@ -33,6 +33,13 @@ struct PerformanceSpec_RawPerformanceEntry {
     std::optional<double> processingStart;
     std::optional<double> processingEnd;
     std::optional<double> interactionId;
+    std::optional<double> fetchStart;
+    std::optional<double> requestStart;
+    std::optional<double> connectStart;
+    std::optional<double> connectEnd;
+    std::optional<double> responseStart;
+    std::optional<double> responseEnd;
+    std::optional<double> responseStatus;
 };
 
 struct PerformanceSpec_ReactNativeStartupTiming {
@@ -66,6 +73,13 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceSpec_Raw
         {L"processingStart", &PerformanceSpec_RawPerformanceEntry::processingStart},
         {L"processingEnd", &PerformanceSpec_RawPerformanceEntry::processingEnd},
         {L"interactionId", &PerformanceSpec_RawPerformanceEntry::interactionId},
+        {L"fetchStart", &PerformanceSpec_RawPerformanceEntry::fetchStart},
+        {L"requestStart", &PerformanceSpec_RawPerformanceEntry::requestStart},
+        {L"connectStart", &PerformanceSpec_RawPerformanceEntry::connectStart},
+        {L"connectEnd", &PerformanceSpec_RawPerformanceEntry::connectEnd},
+        {L"responseStart", &PerformanceSpec_RawPerformanceEntry::responseStart},
+        {L"responseEnd", &PerformanceSpec_RawPerformanceEntry::responseEnd},
+        {L"responseStatus", &PerformanceSpec_RawPerformanceEntry::responseStatus},
     };
     return fieldMap;
 }
