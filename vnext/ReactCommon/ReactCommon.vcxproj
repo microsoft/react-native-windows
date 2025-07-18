@@ -206,6 +206,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\basePrimitives.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\TextInputState.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textlayoutmanager\TextLayoutManager.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx\react\renderer\imagemanager\ImageRequestParams.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\CullingContext.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\sliceChildShadowNodeViewPairs.h" />
