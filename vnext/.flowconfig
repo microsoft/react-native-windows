@@ -4,6 +4,9 @@
 .*/*[.]ios.js
 .*/*[.]macos.js
 
+; Ignore fb_internal modules
+<PROJECT_ROOT>/packages/react-native/src/fb_internal/.*
+
 ; These modules have base components and Windows versions.
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step
@@ -162,4 +165,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.268.0
+^0.269.1
