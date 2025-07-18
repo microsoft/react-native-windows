@@ -160,6 +160,20 @@
       "issue": 14204
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/ParagraphState.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h",
+      "baseHash": "6796ef1375e0b729785bbf99908add097c2861e2",
+      "issue": 0
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/textinput/TextInputState.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/TextInputState.h",
+      "baseHash": "44d97403ef1124a493ac799a03077c0297f7be3f",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
