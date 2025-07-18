@@ -42,6 +42,10 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
 
+<PROJECT_ROOT>/IntegrationTests/ImageCachePolicyTest.js
+<PROJECT_ROOT>/IntegrationTests/LayoutEventsTest.js
+<PROJECT_ROOT>/IntegrationTests/IntegrationTestsApp.js
+
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
