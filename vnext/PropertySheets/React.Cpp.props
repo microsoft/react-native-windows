@@ -164,6 +164,7 @@
         $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\android\react\renderer\components\text;
         $(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\platform\android;
         $(ReactNativeDir)\ReactCommon\react\utils\platform\android;
+        $(ReactNativeDir)\ReactCommon\react\ReactAndroid\src\main\jni;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>
