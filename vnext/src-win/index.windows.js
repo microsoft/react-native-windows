@@ -33,7 +33,10 @@ import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/A
 // [Windows
 import typeof AppTheme from './Libraries/AppTheme/AppTheme';
 export type {ImageURISource} from './Libraries/Image/ImageSource';
-export type {LayoutChangeEvent, LayoutRectangle} from './Libraries/Types/CoreEventTypes';
+export type {
+  LayoutChangeEvent,
+  LayoutRectangle,
+} from './Libraries/Types/CoreEventTypes';
 // Windows]
 import typeof Button from './Libraries/Components/Button';
 import typeof Clipboard from './Libraries/Components/Clipboard/Clipboard';
