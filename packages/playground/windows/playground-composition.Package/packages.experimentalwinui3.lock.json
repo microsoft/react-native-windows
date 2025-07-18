@@ -89,6 +89,7 @@
           "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
+          "Microsoft.Web.WebView2": "[1.0.2903.40, )",
           "Microsoft.WindowsAppSDK": "[1.8.250410001-experimental1, )",
           "SampleCustomComponent": "[1.0.0, )",
           "boost": "[1.83.0, )"
@@ -106,6 +107,7 @@
         "dependencies": {
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
+          "Microsoft.Web.WebView2": "[1.0.2903.40, )",
           "Microsoft.WindowsAppSDK": "[1.8.250410001-experimental1, )",
           "boost": "[1.83.0, )"
         }

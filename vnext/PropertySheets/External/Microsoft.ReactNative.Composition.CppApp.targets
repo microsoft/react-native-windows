@@ -23,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2PackageVersion)" />
   </ItemGroup>
 
 </Project>

@@ -8,10 +8,19 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Common.props" />
+  <!-- Check that Microsoft.ReactNative.WindowsSdk.Default.props has already been imported. -->
+  <Target Name="EnsureRnwSdkDefaultsSetTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwSdkDefaultsSet)'!='true'">
+    <Warning Text="Property `RnwSdkDefaultsSet` was not set. Please ensure your project imports 'Microsoft.ReactNative.WindowsSdk.Default.props' before importing this prop sheet." />
+  </Target>
+
+  <!-- Import common props sheets common to all Composition projects. -->
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.Common.props" />
+
    <!-- Fixes NuGet restore issues: -->
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
+
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WebView2.props" />
 
   <PropertyGroup>
     <RnwExternalPropsLoaded>$(MSBuildThisFile)</RnwExternalPropsLoaded>
