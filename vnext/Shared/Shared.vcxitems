@@ -643,6 +643,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponseObserverCoordinator.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\LeakChecker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\WeakFamilyRegistry.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\platform\android\react\utils\LowPriorityExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4389;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingCoordinator.cpp" DisableSpecificWarnings="4459;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingTransaction.cpp" />
@@ -677,6 +678,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jserrorhandler\StackTraceParser.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\native\NativeComponentRegistryBinding.cpp" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\utils\platform\android\react\utils\LowPriorityExecutor.h" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\threading\MessageQueueThreadImpl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\threading\TaskDispatchThread.cpp" />
   </ItemGroup>
