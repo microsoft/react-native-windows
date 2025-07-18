@@ -162,6 +162,7 @@
         $(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\android;
         $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\android\react\renderer\components\text;
+        $(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\platform\cxx\react\renderer\textlayoutmanager;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>
