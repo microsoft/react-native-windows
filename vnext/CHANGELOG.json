@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 19 Jul 2025 05:26:21 GMT",
+      "version": "0.0.0-canary.976",
+      "tag": "react-native-windows_v0.0.0-canary.976",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6bd0793c1a9e2afd31ac1f00d3b0eb5bb8138e1f",
+            "comment": "Implement snapToAlignment support for Fabric ScrollView - interface and prop handling"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:06 GMT",
       "version": "0.0.0-canary.975",
       "tag": "react-native-windows_v0.0.0-canary.975",

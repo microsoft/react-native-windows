@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implement snapToAlignment support for Fabric ScrollView - interface and prop handling",
-  "packageName": "react-native-windows",
-  "email": "198982749+Copilot@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
