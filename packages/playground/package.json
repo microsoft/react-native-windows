@@ -3,7 +3,7 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "start": "npx @react-native-community/cli start",
+    "start": "npx @react-native-community/cli start --client-logs",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
     "windows": "npx @react-native-community/cli run-windows"
