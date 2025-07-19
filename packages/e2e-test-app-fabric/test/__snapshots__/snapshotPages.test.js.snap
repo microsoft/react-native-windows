@@ -8836,6 +8836,7 @@ exports[`snapshotAllPages Button 3`] = `
     }
     accessible={true}
     focusable={true}
+    onAccessibilityTap={[Function]}
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}

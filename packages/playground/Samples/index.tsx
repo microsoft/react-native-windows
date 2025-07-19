@@ -39,17 +39,18 @@ class TicTacButton extends React.Component<{}, {text: string}> {
         title={this.state.text}
         accessibilityLabel={this.state.text}
         accessibilityValue={{text: this.state.text}}
+        onAccessibilityTap={() => this._onPress()}
       />
     );
   }
 
-  _onPress(_event: NativeSyntheticEvent<NativeTouchEvent>) {
+  _onPress = (_event?: NativeSyntheticEvent<NativeTouchEvent>) => {
     if (this.state.text === 'X') {
       this.setState({text: 'o'});
     } else {
       this.setState({text: 'X'});
     }
-  }
+  };
 }
 
 class PopupButton extends React.Component<
