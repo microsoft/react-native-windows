@@ -811,6 +811,27 @@ void WindowsTextInputComponentView::OnPointerMoved(
       DVASPECT_CONTENT, -1, nullptr, nullptr, nullptr, nullptr, nullptr, ptContainer.x, ptContainer.y);
 }
 
+void WindowsTextInputComponentView::OnPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (windowsTextInputProps().scrollEnabled) {
+    auto ppp = args.GetCurrentPoint(-1).Properties();
+
+    auto delta = static_cast<float>(ppp.MouseWheelDelta());
+
+    if (!ppp.IsHorizontalMouseWheel()) {
+      if (delta > 0) {
+        m_textServices->TxSendMessage(WM_VSCROLL, SB_LINEUP, 0, nullptr);
+      } else {
+        m_textServices->TxSendMessage(WM_VSCROLL, SB_LINEDOWN, 0, nullptr);
+      }
+      args.Handled(true);
+    }
+    // Emit the onScroll event
+    EmitOnScrollEvent();
+    // We don't support horizontal scrolling yet
+  }
+  Super::OnPointerWheelChanged(args);
+}
 void WindowsTextInputComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
@@ -836,7 +857,8 @@ void WindowsTextInputComponentView::OnKeyDown(
       args.Handled(true);
     }
   }
-
+  // Emit the onScroll event
+  EmitOnScrollEvent();
   Super::OnKeyDown(args);
 }
 
@@ -866,7 +888,8 @@ void WindowsTextInputComponentView::OnKeyUp(
       args.Handled(true);
     }
   }
-
+  // Emit the onScroll event
+  EmitOnScrollEvent();
   Super::OnKeyUp(args);
 }
 
@@ -1324,6 +1347,22 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     auto text = GetTextFromRichEdit();
     winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
         EnsureUiaProvider(), UIA_ValueValuePropertyId, text, text);
+  }
+}
+
+void WindowsTextInputComponentView::EmitOnScrollEvent() noexcept {
+  if (windowsTextInputProps().scrollEnabled) {
+    if (m_eventEmitter && !m_comingFromJS) {
+      LONG lMin, lMax, lxPos, lyPos, lPage;
+      BOOL fEnabled;
+      m_textServices->TxGetHScroll(&lMin, &lMax, &lxPos, &lPage, &fEnabled);
+      m_textServices->TxGetVScroll(&lMin, &lMax, &lyPos, &lPage, &fEnabled);
+      facebook::react::Point offset;
+      offset.x = static_cast<float>(lxPos);
+      offset.y = static_cast<float>(lyPos);
+      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+      emitter->onScroll(offset);
+    }
   }
 }
 

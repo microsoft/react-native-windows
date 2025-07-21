@@ -60,6 +60,8 @@ struct WindowsTextInputComponentView
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void OnPointerMoved(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void OnPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
@@ -87,7 +89,7 @@ struct WindowsTextInputComponentView
     ~DrawBlock();
     WindowsTextInputComponentView &m_view;
   };
-
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
   facebook::react::AttributedString getAttributedString() const;
   void ensureDrawingSurface() noexcept;
   void DrawText() noexcept;
@@ -97,6 +99,7 @@ struct WindowsTextInputComponentView
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
+  void EmitOnScrollEvent() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::pair<float, float> GetContentSize() const noexcept;
   std::string GetTextFromRichEdit() const noexcept;
