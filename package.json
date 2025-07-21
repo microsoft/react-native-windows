@@ -12,6 +12,7 @@
     "format": "format-files -i -style=file",
     "format:verify": "format-files -i -style=file -verify",
     "postinstall": "yarn build",
+    "release-notes": "yarn workspace @rnw-scripts/generate-release-notes release-notes",
     "spellcheck": "npx cspell",
     "test": "lage test --verbose --passWithNoTests",
     "validate-overrides": "react-native-platform-override validate"
