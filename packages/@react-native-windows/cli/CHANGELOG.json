@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 21 Jul 2025 15:27:04 GMT",
+      "version": "0.77.5",
+      "tag": "@react-native-windows/cli_v0.77.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.77.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Jun 2025 15:25:37 GMT",
       "version": "0.77.4",
       "tag": "@react-native-windows/cli_v0.77.4",
