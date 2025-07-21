@@ -156,6 +156,13 @@
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "aded9dd37f3ac325aa1cc095f6d217114c45a8b9"
+    },
+    {
+      "type": "copy",
+      "file": "src/js/utils/RNTesterListFbInternal.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterListFbInternal.js",
+      "baseHash": "fe9f56b0fbc6677a817f9fdaf020185b9c8ffb58",
+      "issue": 0
     }
   ]
 }
