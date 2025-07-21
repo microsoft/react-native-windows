@@ -257,13 +257,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Layout/LayoutExample'),
   },
   // $FlowExpectedError[cannot-resolve-name]
-  typeof MutationObserver === 'function'
-    ? {
-        key: 'MutationObserver',
-        category: 'UI',
-        module: require('../examples/MutationObserver/MutationObserverIndex'),
-      }
-    : null,
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
