@@ -35,6 +35,7 @@
     "@react-native/js-polyfills": "0.80.0-nightly-20250506-3ac16dd6a",
     "@react-native/normalize-colors": "0.80.0-nightly-20250506-3ac16dd6a",
     "@react-native/virtualized-lists": "0.80.0-nightly-20250506-3ac16dd6a",
+    "@react-native/new-app-screen": "0.80.0-nightly-20250506-3ac16dd6a",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "ansi-regex": "^5.0.0",
