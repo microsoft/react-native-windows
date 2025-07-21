@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 28 Apr 2025 15:26:13 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Jul 2025 15:26:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.5
+
+Mon, 21 Jul 2025 15:26:16 GMT
+
+### Patches
+
+- Removed unneeded `@azure/core-auth` dependency (jthysell@microsoft.com)
 
 ## 0.75.4
 

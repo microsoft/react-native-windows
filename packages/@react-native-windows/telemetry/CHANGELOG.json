@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 21 Jul 2025 15:26:16 GMT",
+      "version": "0.75.5",
+      "tag": "@react-native-windows/telemetry_v0.75.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "fa96dde41455470f0e8234d6c66178b0809cc136",
+            "comment": "Removed unneeded `@azure/core-auth` dependency"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 15:26:13 GMT",
       "version": "0.75.4",
       "tag": "@react-native-windows/telemetry_v0.75.4",

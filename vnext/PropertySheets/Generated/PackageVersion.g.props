@@ -10,11 +10,11 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ReactNativeWindowsVersion>0.75.18</ReactNativeWindowsVersion>
+    <ReactNativeWindowsVersion>0.75.19</ReactNativeWindowsVersion>
     <ReactNativeWindowsMajor>0</ReactNativeWindowsMajor>
     <ReactNativeWindowsMinor>75</ReactNativeWindowsMinor>
-    <ReactNativeWindowsPatch>18</ReactNativeWindowsPatch>
+    <ReactNativeWindowsPatch>19</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>false</ReactNativeWindowsCanary>
-    <ReactNativeWindowsCommitId>40684c4b29c337e4073c164fb264cc61de42ee18</ReactNativeWindowsCommitId>
+    <ReactNativeWindowsCommitId>fa96dde41455470f0e8234d6c66178b0809cc136</ReactNativeWindowsCommitId>
   </PropertyGroup>
 </Project>

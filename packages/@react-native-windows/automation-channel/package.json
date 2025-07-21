@@ -32,7 +32,7 @@
     "prettier": "2.8.8",
     "react": "18.3.1",
     "react-native": "0.75.5",
-    "react-native-windows": "0.75.18",
+    "react-native-windows": "0.75.19",
     "typescript": "5.0.4"
   },
   "files": [
