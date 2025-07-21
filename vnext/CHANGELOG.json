@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Jul 2025 15:44:54 GMT",
+      "version": "0.79.2",
+      "tag": "react-native-windows_v0.79.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.79.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Jun 2025 15:25:23 GMT",
       "version": "0.79.1",
       "tag": "react-native-windows_v0.79.1",
