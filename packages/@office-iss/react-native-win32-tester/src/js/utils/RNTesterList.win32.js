@@ -234,13 +234,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
   },
   // Only show the link for the example if the API is available.
   // $FlowExpectedError[cannot-resolve-name]
-  typeof IntersectionObserver === 'function'
-    ? {
-        key: 'IntersectionObserver',
-        category: 'UI',
-        module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
-      }
-    : null,
   {
     key: 'InvalidPropsExample',
     module: require('../examples/InvalidProps/InvalidPropsExample'),
