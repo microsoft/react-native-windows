@@ -28,18 +28,19 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.8.250610002-experimental3, )",
-        "resolved": "1.8.250610002-experimental3",
-        "contentHash": "uOl3G6dCbt5LlO8SRDFk0uZavb6rbdfeK/+X24cWrezSe/8ktRwz4QLO99rvco/3BUIfmFFh8z/fTILuVbw+QA==",
+        "requested": "[1.8.250702007-experimental4, )",
+        "resolved": "1.8.250702007-experimental4",
+        "contentHash": "nByTnXrYJyR+bBJDM8fOTpsddm2VGb5BfryIwon0ZCyJBfgVCv/Y7bJmVbBSiwdlySuJiENmlKlQTeuYNtd5eg==",
         "dependencies": {
-          "Microsoft.WindowsAppSDK.AI": "[1.8.203-experimental]",
+          "Microsoft.WindowsAppSDK.AI": "[1.8.407-experimental]",
           "Microsoft.WindowsAppSDK.Base": "[1.8.250509001-experimental]",
           "Microsoft.WindowsAppSDK.DWrite": "[1.8.25052801-experimental3]",
-          "Microsoft.WindowsAppSDK.Foundation": "[1.8.250608001-experimental]",
-          "Microsoft.WindowsAppSDK.InteractiveExperiences": "[1.8.250523001-experimental]",
-          "Microsoft.WindowsAppSDK.Packages": "[1.8.250610002-experimental3]",
+          "Microsoft.WindowsAppSDK.Foundation": "[1.8.250701000-experimental]",
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "[1.8.250626001-experimental]",
+          "Microsoft.WindowsAppSDK.ML": "[1.8.126-experimental]",
+          "Microsoft.WindowsAppSDK.Runtime": "[1.8.250702007-experimental4]",
           "Microsoft.WindowsAppSDK.Widgets": "[1.8.250610001-experimental]",
-          "Microsoft.WindowsAppSDK.WinUI": "[1.8.250610001-experimental]"
+          "Microsoft.WindowsAppSDK.WinUI": "[1.8.250701000-experimental]"
         }
       },
       "Microsoft.Build.Tasks.Git": {
@@ -78,11 +79,11 @@
       },
       "Microsoft.WindowsAppSDK.AI": {
         "type": "Transitive",
-        "resolved": "1.8.203-experimental",
-        "contentHash": "UxC27Sz4C4moit8ROTQIe7h1cA/aHP5Tgwknh20m4fKLFufNkz0AfLRei0/WwlqmtFb5z4OECsvOCrygrpdyZA==",
+        "resolved": "1.8.407-experimental",
+        "contentHash": "evbWwVGjLM2YPajnt4GztSUFJEp9Mk/6KdOU/LL2i3VB/gmzyAZBKwi7Xj8a7EDG3A4GuFY+iTs8omIbpIxXbA==",
         "dependencies": {
-          "Microsoft.WindowsAppSDK.Base": "1.8.250501001-experimental",
-          "Microsoft.WindowsAppSDK.Foundation": "1.8.0-20250429.5.nightly.internal"
+          "Microsoft.WindowsAppSDK.Base": "1.8.250509001-experimental",
+          "Microsoft.WindowsAppSDK.Foundation": "1.8.250701000-experimental"
         }
       },
       "Microsoft.WindowsAppSDK.Base": {
@@ -104,25 +105,34 @@
       },
       "Microsoft.WindowsAppSDK.Foundation": {
         "type": "Transitive",
-        "resolved": "1.8.250608001-experimental",
-        "contentHash": "vPUhGa+8qidTzwFr3MUz9ustj6fswyuFl785q3t4GBxPLFsSR6URfaEAoj9b6HlyA80BHPJP8ZuvQzIqqv/Dyg==",
+        "resolved": "1.8.250701000-experimental",
+        "contentHash": "wM6C3p9x6nGRVnpZMTSU5sitBDW27jgu9Dzu0Ru6NTzOtqA0OQIOUK7j08W0V+Um33ZrWoUGJIVZnrYrzOHFYg==",
         "dependencies": {
           "Microsoft.WindowsAppSDK.Base": "1.8.250509001-experimental",
-          "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.250523001-experimental"
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.250626001-experimental"
         }
       },
       "Microsoft.WindowsAppSDK.InteractiveExperiences": {
         "type": "Transitive",
-        "resolved": "1.8.250523001-experimental",
-        "contentHash": "mkwjL2vP0YNki04bdMNezOSw4oxJSBXJOJ4iocL1N5N/dRp/Vn65twxwIlipLVMDyNy8CqB40MEFTfqNg19/RA==",
+        "resolved": "1.8.250626001-experimental",
+        "contentHash": "HXNtlVduthY3sOenbcgxI7rHqkCpVN0QU1hjTEAzuPPDWO1hQ22OfByKF/yUgDrwv8KxfRUe1vgUX4JwbeFDGQ==",
         "dependencies": {
           "Microsoft.WindowsAppSDK.Base": "1.8.250501001-experimental"
         }
       },
-      "Microsoft.WindowsAppSDK.Packages": {
+      "Microsoft.WindowsAppSDK.ML": {
         "type": "Transitive",
-        "resolved": "1.8.250610002-experimental3",
-        "contentHash": "bjTBF1wgcZNo84qv+cQw4F9jVVMJa6yaMAEalirDA5Jf7bFcn2oVCZKAOOt3NGknVPratM327YJ1fGtEjFh7ag==",
+        "resolved": "1.8.126-experimental",
+        "contentHash": "LW/MPS8qHa4wQVdsH+s1AjUhaUVeT+nSmjj8md/hNsKhp/z9qMDXv26ht0k0o+VbbdhRCrSrJYtNEuoQCOoOww==",
+        "dependencies": {
+          "Microsoft.WindowsAppSDK.Base": "1.8.250509001-experimental",
+          "Microsoft.WindowsAppSDK.Foundation": "1.8.250701000-experimental"
+        }
+      },
+      "Microsoft.WindowsAppSDK.Runtime": {
+        "type": "Transitive",
+        "resolved": "1.8.250702007-experimental4",
+        "contentHash": "zm0LhlOxut0yGEox8aGSq73RadSm7i/5RrKM9Ygk0+BgmC3t27wekr5BUsDFMdakvn/8dAzNiM4HZxFHFTniEg==",
         "dependencies": {
           "Microsoft.WindowsAppSDK.Base": "1.8.250509001-experimental"
         }
@@ -137,13 +147,13 @@
       },
       "Microsoft.WindowsAppSDK.WinUI": {
         "type": "Transitive",
-        "resolved": "1.8.250610001-experimental",
-        "contentHash": "LIIYIWmmJad69fOmcpNHXsQ0+P2I8YQzFlFSTvyL0wnWLLFV4tNLJLvm0h+g0assjv48Nb3eCCvMYnSx5gj3GQ==",
+        "resolved": "1.8.250701000-experimental",
+        "contentHash": "vkA9eI9aTzg+YH/QTQgFyuJv02KOvHIlpmkV6RhyfNt/Z1faZmtOWFVPpnmE+0GJZRHyBkHX/iQ7RZ0xZK5r/A==",
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.3179.45",
           "Microsoft.WindowsAppSDK.Base": "1.8.250509001-experimental",
-          "Microsoft.WindowsAppSDK.Foundation": "1.8.250608001-experimental",
-          "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.250523001-experimental"
+          "Microsoft.WindowsAppSDK.Foundation": "1.8.250701000-experimental",
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.250626001-experimental"
         }
       },
       "common": {
@@ -169,7 +179,7 @@
           "Folly": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
-          "Microsoft.WindowsAppSDK": "[1.8.250610002-experimental3, )",
+          "Microsoft.WindowsAppSDK": "[1.8.250702007-experimental4, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
