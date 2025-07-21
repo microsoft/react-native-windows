@@ -303,7 +303,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
       .default,
   },
   // Only show the link for the example if the API is available.
-  // $FlowExpectedError[cannot-resolve-name]
   // E2E Tests failing when this test is enabled
   // {
   //   key: 'InvalidPropsExample',

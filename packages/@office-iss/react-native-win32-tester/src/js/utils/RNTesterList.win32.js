@@ -233,7 +233,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
       .default,
   },
   // Only show the link for the example if the API is available.
-  // $FlowExpectedError[cannot-resolve-name]
   {
     key: 'InvalidPropsExample',
     module: require('../examples/InvalidProps/InvalidPropsExample'),
@@ -258,7 +257,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
   },
-  // $FlowExpectedError[cannot-resolve-name]
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
@@ -365,11 +363,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'TurboCxxModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
-  },
-  {
-    key: 'PerformanceApiExample',
-    category: 'Basic',
-    module: require('../examples/Performance/PerformanceApiExample'),
   },
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
