@@ -813,7 +813,7 @@ void WindowsTextInputComponentView::OnPointerMoved(
 
 void WindowsTextInputComponentView::OnPointerWheelChanged(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-  if (windowsTextInputProps().scrollEnabled) {
+  if (windowsTextInputProps().scrollEnabled && windowsTextInputProps().multiline) {
     auto ppp = args.GetCurrentPoint(-1).Properties();
 
     auto delta = static_cast<float>(ppp.MouseWheelDelta());
