@@ -12,12 +12,13 @@
     "bundle": "rnw-scripts prepareBundle && npx @react-native-community/cli bundle --platform windows --entry-file App.tsx --bundle-output windows/SampleAppFabric/Bundle/app.windows.bundle --assets-dest windows/SampleAppFabric/Bundle"
   },
   "dependencies": {
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.1.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.1.0",
-    "react-native": "0.80.0-nightly-20250428-9efcdc091",
-    "react-native-windows": "^0.0.0-canary.976"
+    "react-native": "0.80.0-nightly-20250506-3ac16dd6a",
+    "react-native-windows": "^0.0.0-canary.976",
+    "@react-native/new-app-screen": "0.80.0-nightly-20250506-3ac16dd6a"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -27,7 +28,7 @@
     "@babel/runtime": "^7.20.0",
     "@jest/globals": "^29.7.0",
     "@react-native-community/cli": "17.0.0",
-    "@react-native/metro-config": "0.80.0-nightly-20250428-9efcdc091",
+    "@react-native/metro-config": "0.80.0-nightly-20250506-3ac16dd6a",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.36",

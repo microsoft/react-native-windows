@@ -227,13 +227,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
   },
   // Only show the link for the example if the API is available.
   // $FlowExpectedError[cannot-resolve-name]
-  typeof IntersectionObserver === 'function'
-    ? {
-        key: 'IntersectionObserver',
-        category: 'UI',
-        module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
-      }
-    : null,
   {
     key: 'InvalidPropsExample',
     module: require('../examples/InvalidProps/InvalidPropsExample'),
@@ -264,13 +257,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Layout/LayoutExample'),
   },
   // $FlowExpectedError[cannot-resolve-name]
-  typeof MutationObserver === 'function'
-    ? {
-        key: 'MutationObserver',
-        category: 'UI',
-        module: require('../examples/MutationObserver/MutationObserverIndex'),
-      }
-    : null,
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
@@ -379,11 +365,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'TurboCxxModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
-  },
-  {
-    key: 'PerformanceApiExample',
-    category: 'Basic',
-    module: require('../examples/Performance/PerformanceApiExample'),
   },
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
