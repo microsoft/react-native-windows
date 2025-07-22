@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Jul 2025 05:26:15 GMT",
+      "version": "0.0.0-canary.976",
+      "tag": "react-native-windows_v0.0.0-canary.976",
+      "comments": {
+        "none": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8f83ec68ca49895529b86f14964eda0ca3cd6f8c",
+            "comment": "adding typescript support for onAccessibilitytap for button that was missing"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Jul 2025 05:26:21 GMT",
       "version": "0.0.0-canary.976",
       "tag": "react-native-windows_v0.0.0-canary.976",

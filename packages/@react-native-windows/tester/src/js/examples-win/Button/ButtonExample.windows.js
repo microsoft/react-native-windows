@@ -82,6 +82,7 @@ exports.examples = [
                   color={theme.SystemRedColor}
                   title="Cancel"
                   accessibilityLabel="Press to cancel your application!"
+                  onAccessibilityTap={() => onButtonPress('cancelled')}
                 />
                 <Button
                   onPress={() => onButtonPress('submitted')}
