@@ -89,7 +89,7 @@ struct WindowsTextInputComponentView
     ~DrawBlock();
     WindowsTextInputComponentView &m_view;
   };
-  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
+
   facebook::react::AttributedString getAttributedString() const;
   void ensureDrawingSurface() noexcept;
   void DrawText() noexcept;
