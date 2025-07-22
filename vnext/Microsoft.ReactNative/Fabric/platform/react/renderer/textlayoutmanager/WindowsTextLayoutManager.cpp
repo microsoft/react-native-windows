@@ -67,8 +67,7 @@ class AttachmentInlineObject : public winrt::implements<AttachmentInlineObject, 
 };
 
 TextLayoutManager::TextLayoutManager(const ContextContainer::Shared &contextContainer)
-    : contextContainer_(contextContainer),
-      textMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
+    : contextContainer_(contextContainer), textMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
 
 WindowsTextLayoutManager::WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer)
     : TextLayoutManager(contextContainer) {}
