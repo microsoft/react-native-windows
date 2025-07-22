@@ -1,0 +1,20 @@
+{
+  "name": "@rnw-scripts/generate-release-notes",
+  "entries": [
+    {
+      "date": "Tue, 22 Jul 2025 05:26:15 GMT",
+      "version": "1.0.1",
+      "tag": "@rnw-scripts/generate-release-notes_v1.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "copilot@example.com",
+            "package": "@rnw-scripts/generate-release-notes",
+            "commit": "4f7ec119652c62b183151cee3a4ebc7afaf0d289",
+            "comment": "Add a new \"yarn release-notes\" script to generate release notes"
+          }
+        ]
+      }
+    }
+  ]
+}

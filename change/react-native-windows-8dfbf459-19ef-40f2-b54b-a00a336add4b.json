@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "adding typescript support for onAccessibilitytap for button that was missing",
-  "packageName": "react-native-windows",
-  "email": "protikbiswas100@microsoft.com",
-  "dependentChangeType": "none"
-}
