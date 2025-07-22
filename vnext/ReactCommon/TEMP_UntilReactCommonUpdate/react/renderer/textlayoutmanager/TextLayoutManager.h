@@ -26,6 +26,7 @@
  class TextLayoutManager {
   public:
    TextLayoutManager(const ContextContainer::Shared& contextContainer);
+   virtual ~TextLayoutManager() = default;
  
    /*
     * Not copyable.
@@ -42,34 +43,15 @@
    /*
     * Measures `attributedString` using native text rendering infrastructure.
     */
-   TextMeasurement measure(
+   virtual TextMeasurement measure(
        const AttributedStringBox& attributedStringBox,
        const ParagraphAttributes& paragraphAttributes,
        const TextLayoutContext& layoutContext,
        const LayoutConstraints& layoutConstraints) const;
  
-   /**
-    * Measures an AttributedString on the platform, as identified by some
-    * opaque cache ID.
-    */
-   TextMeasurement measureCachedSpannableById(
-       int64_t cacheId,
-       const ParagraphAttributes& paragraphAttributes,
-       const LayoutConstraints& layoutConstraints) const;
- 
-   /*
-    * Measures lines of `attributedString` using native text rendering
-    * infrastructure.
-    */
-   LinesMeasurements measureLines(
-       const AttributedStringBox& attributedStringBox,
-       const ParagraphAttributes& paragraphAttributes,
-       const Size& size) const;
- 
-  private:
+  protected:
    std::shared_ptr<const ContextContainer> contextContainer_;
    TextMeasureCache textMeasureCache_;
-   LineMeasureCache lineMeasureCache_;
  };
  
  } // namespace facebook::react
