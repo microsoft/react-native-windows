@@ -2,6 +2,36 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Sat, 19 Jul 2025 05:26:21 GMT",
+      "version": "0.1.419",
+      "tag": "@react-native-windows/automation-commands_v0.1.419",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.316",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Jul 2025 05:27:01 GMT",
+      "version": "0.1.418",
+      "tag": "@react-native-windows/automation-commands_v0.1.418",
+      "comments": {
+        "none": [
+          {
+            "author": "chpurrer@meta.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "af04d4d517f95d7773e4744edf2cef42fa0870c8",
+            "comment": "[react-native-windows] Use new LongLivedObject.h header namespace"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Jul 2025 05:27:01 GMT",
       "version": "0.1.418",
       "tag": "@react-native-windows/automation-commands_v0.1.418",
