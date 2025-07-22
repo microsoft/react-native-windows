@@ -818,7 +818,7 @@ void WindowsTextInputComponentView::OnPointerWheelChanged(
 
     auto delta = static_cast<float>(ppp.MouseWheelDelta());
 
-    if (!ppp.IsHorizontalMouseWheel()) {
+    if (m_textServices  && !ppp.IsHorizontalMouseWheel()) {
       if (delta > 0) {
         m_textServices->TxSendMessage(WM_VSCROLL, SB_LINEUP, 0, nullptr);
       } else {
@@ -1351,19 +1351,19 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 }
 
 void WindowsTextInputComponentView::EmitOnScrollEvent() noexcept {
-  if (windowsTextInputProps().scrollEnabled) {
-    if (m_eventEmitter && !m_comingFromJS) {
-      LONG lMin, lMax, lxPos, lyPos, lPage;
-      BOOL fEnabled;
-      m_textServices->TxGetHScroll(&lMin, &lMax, &lxPos, &lPage, &fEnabled);
-      m_textServices->TxGetVScroll(&lMin, &lMax, &lyPos, &lPage, &fEnabled);
-      facebook::react::Point offset;
-      offset.x = static_cast<float>(lxPos);
-      offset.y = static_cast<float>(lyPos);
-      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-      emitter->onScroll(offset);
-    }
+  if (!windowsTextInputProps().scrollEnabled || !m_eventEmitter || m_comingFromJS) {
+    return;
   }
+  LONG hMin, hMax, hPos, hPage;
+  LONG vMin, vMax, vPos, vPage;
+  BOOL hEnabled, vEnabled;
+  m_textServices->TxGetHScroll(&hMin, &hMax, &hPos, &hPage, &hEnabled);
+  m_textServices->TxGetVScroll(&vMin, &vMax, &vPos, &vPage, &vEnabled);
+  facebook::react::Point offset;
+  offset.x = static_cast<float>(hPos);
+  offset.y = static_cast<float>(vPos);
+  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+  emitter->onScroll(offset);
 }
 
 void WindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
