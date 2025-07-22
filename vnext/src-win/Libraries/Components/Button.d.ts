@@ -38,6 +38,8 @@ export interface ButtonProps
    * Color of the text (iOS), or background color of the button (Android).
    */
   color?: ColorValue | undefined;
+
+  onAccessibilityTap?: () => void; // Windows
 }
 
 export class Button extends React.Component<ButtonProps> {}

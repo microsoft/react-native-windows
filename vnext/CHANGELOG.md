@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 17 Jul 2025 05:27:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 19 Jul 2025 05:26:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.976
+
+Sat, 19 Jul 2025 05:26:21 GMT
+
+### Changes
+
+- Implement snapToAlignment support for Fabric ScrollView - interface and prop handling (198982749+Copilot@users.noreply.github.com)
 
 ## 0.0.0-canary.975
 
