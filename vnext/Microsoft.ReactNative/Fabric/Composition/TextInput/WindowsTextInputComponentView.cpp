@@ -814,11 +814,12 @@ void WindowsTextInputComponentView::OnPointerMoved(
 void WindowsTextInputComponentView::OnPointerWheelChanged(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (windowsTextInputProps().scrollEnabled && windowsTextInputProps().multiline) {
-    auto ppp = args.GetCurrentPoint(-1).Properties();
+    auto pointerPointProperties = args.GetCurrentPoint(-1).Properties();
 
-    auto delta = static_cast<float>(ppp.MouseWheelDelta());
+    auto delta = static_cast<float>(pointerPointProperties.MouseWheelDelta());
 
-    if (m_textServices && !ppp.IsHorizontalMouseWheel()) {
+    if (m_textServices && !pointerPointProperties.IsHorizontalMouseWheel()) {
+      // Vertical scrolling
       if (delta > 0) {
         m_textServices->TxSendMessage(WM_VSCROLL, SB_LINEUP, 0, nullptr);
       } else {
@@ -828,7 +829,8 @@ void WindowsTextInputComponentView::OnPointerWheelChanged(
     }
     // Emit the onScroll event
     EmitOnScrollEvent();
-    // We don't support horizontal scrolling yet
+
+    // We don't support horizontal scrolling yet cause it is not implemented in Android/IOS
   }
   Super::OnPointerWheelChanged(args);
 }
@@ -1351,14 +1353,14 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 }
 
 void WindowsTextInputComponentView::EmitOnScrollEvent() noexcept {
-  if (!windowsTextInputProps().scrollEnabled || !m_eventEmitter || m_comingFromJS) {
+  if (!windowsTextInputProps().scrollEnabled || !m_eventEmitter || m_comingFromJS || !m_textServices) {
     return;
   }
   LONG hMin, hMax, hPos, hPage;
   LONG vMin, vMax, vPos, vPage;
   BOOL hEnabled, vEnabled;
-  m_textServices->TxGetHScroll(&hMin, &hMax, &hPos, &hPage, &hEnabled);
-  m_textServices->TxGetVScroll(&vMin, &vMax, &vPos, &vPage, &vEnabled);
+  winrt::check_hresult(m_textServices->TxGetHScroll(&hMin, &hMax, &hPos, &hPage, &hEnabled));
+  winrt::check_hresult(m_textServices->TxGetVScroll(&vMin, &vMax, &vPos, &vPage, &vEnabled));
   facebook::react::Point offset;
   offset.x = static_cast<float>(hPos);
   offset.y = static_cast<float>(vPos);
