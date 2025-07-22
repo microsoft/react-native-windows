@@ -818,7 +818,7 @@ void WindowsTextInputComponentView::OnPointerWheelChanged(
 
     auto delta = static_cast<float>(ppp.MouseWheelDelta());
 
-    if (m_textServices  && !ppp.IsHorizontalMouseWheel()) {
+    if (m_textServices && !ppp.IsHorizontalMouseWheel()) {
       if (delta > 0) {
         m_textServices->TxSendMessage(WM_VSCROLL, SB_LINEUP, 0, nullptr);
       } else {
