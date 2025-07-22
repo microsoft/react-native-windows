@@ -160,11 +160,10 @@
         $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\components\view\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx;
-        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\android;
-        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\android\react\renderer\components\text;
-        $(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\platform\android;
-        $(ReactNativeDir)\ReactCommon\react\utils\platform\android;
-        $(ReactNativeDir)\ReactCommon\react\ReactAndroid\src\main\jni;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\cxx\react\renderer\components\text;
+        $(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\utils\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>

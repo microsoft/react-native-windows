@@ -215,31 +215,10 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/textlayoutmanager/TextLayoutManager.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/android/react/renderer/textlayoutmanager/TextLayoutManager.cpp",
-      "baseHash": "f654697e201d3f9ae683b44b2cd1e132e82761e8",
-      "issue": 0
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/textlayoutmanager/TextLayoutManager.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/android/react/renderer/textlayoutmanager/TextLayoutManager.h",
-      "baseHash": "edb31b6a6118a58a4f4408e40fa51dc618de5ab7",
-      "issue": 0
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
       "baseHash": "d9767072276759fde75aa7be5a4acec405d892d3",
       "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/platform/android/react/utils/LowPriorityExecutor.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/utils/platform/android/react/utils/LowPriorityExecutor.cpp",
-      "baseHash": "c4505cf6f0f69c0b0e4b5e16e4b928299e645207",
-      "issue": 0
     },
     {
       "type": "copy",
