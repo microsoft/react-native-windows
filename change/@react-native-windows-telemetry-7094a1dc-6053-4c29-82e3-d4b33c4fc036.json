@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.79] Removed unneeded `@azure/core-auth` dependency",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
