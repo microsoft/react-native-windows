@@ -12,6 +12,7 @@
 
 import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import * as RNTesterListFbInternal from './RNTesterListFbInternal';
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const Components: Array<RNTesterModuleInfo> = [
@@ -156,6 +157,7 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
   },
   */
+  ...RNTesterListFbInternal.Components,
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -229,8 +231,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/DisplayContents/DisplayContentsExample')
       .default,
   },
-  // Only show the link for the example if the API is available.
-  // $FlowExpectedError[cannot-resolve-name]
   {
     key: 'InvalidPropsExample',
     module: require('../examples/InvalidProps/InvalidPropsExample'),
@@ -251,7 +251,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LinkingExample',
     module: require('../examples/Linking/LinkingExample'),
   },
-  // $FlowExpectedError[cannot-resolve-name]
   {
     key: 'NativeAnimationsExample',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
@@ -342,6 +341,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'XHRExample',
     module: require('../examples/XHR/XHRExample'),
   },
+  ...RNTesterListFbInternal.APIs,
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {

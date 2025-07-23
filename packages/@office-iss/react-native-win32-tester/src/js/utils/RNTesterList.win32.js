@@ -12,6 +12,7 @@
 
 import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import * as RNTesterListFbInternal from './RNTesterListFbInternal';
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const Components: Array<RNTesterModuleInfo> = [
@@ -159,6 +160,7 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
   },
   */
+  ...RNTesterListFbInternal.Components,
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -364,6 +366,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
   },
+  ...RNTesterListFbInternal.APIs,
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
