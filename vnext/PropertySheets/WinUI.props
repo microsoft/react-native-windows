@@ -15,6 +15,8 @@
     <WindowsAppSdkAutoInitialize Condition="'$(WindowsAppSdkAutoInitialize)'=='' And $([MSBuild]::VersionGreaterThan('$(WinUI3Version)', '1.7.0'))">false</WindowsAppSdkAutoInitialize>
     <!-- This is needed to prevent build errors with WinAppSDK >= 1.8 returning false with it's GetUnreferencedDependencies task -->
     <WindowsAppSDKVerifyTransitiveDependencies  Condition="'$(WindowsAppSDKVerifyTransitiveDependencies)'=='' And $([MSBuild]::VersionGreaterThan('$(WinUI3Version)', '1.8.0'))">false</WindowsAppSDKVerifyTransitiveDependencies>
+    <!-- This is needed to prevent build errors with WinAppSDK >= 1.8 selecting the wrong WebView2 version -->
+    <WebView2EnableCsWinRTProjection Condition="'$(WindowsAppSDKVerifyTransitiveDependencies)'=='' And $([MSBuild]::VersionGreaterThan('$(WinUI3Version)', '1.8.0'))">true</WebView2EnableCsWinRTProjection>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">
