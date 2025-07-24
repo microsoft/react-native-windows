@@ -1115,20 +1115,31 @@ void ViewComponentView::updateProps(
     Visual().Comment(winrt::to_hstring(newViewProps.testId));
   }
 
-  // Update tabIndex using Windows.UI.Composition Visual Properties
+  // Update tabIndex using Windows.UI.Composition APIs for focus management
   if (oldViewProps.tabIndex != newViewProps.tabIndex) {
     auto visual =
         winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual());
+    
     if (newViewProps.tabIndex != std::numeric_limits<int>::max()) {
-      // Store tabIndex in Visual's Properties collection
+      // Use Windows.UI.Composition Visual Properties API to store tabIndex for focus navigation
       visual.Properties().InsertScalar(L"ReactNative.TabIndex", static_cast<float>(newViewProps.tabIndex));
-      // Also set IsHitTestVisible to make it participate in focus
+      
+      // Enable Windows.UI.Composition focus participation by setting IsHitTestVisible
+      // This integrates with the native Windows focus system for proper tab order handling
       visual.IsHitTestVisible(true);
+      
+      // Set focus capability in Visual properties for Windows.UI.Composition focus system
+      visual.Properties().InsertBoolean(L"ReactNative.Focusable", true);
     } else {
-      // Remove tabIndex property when not set
+      // Remove Windows.UI.Composition focus properties when tabIndex is not set
       if (visual.Properties().TryGetScalar(L"ReactNative.TabIndex")) {
         visual.Properties().Remove(L"ReactNative.TabIndex");
       }
+      if (visual.Properties().TryGetBoolean(L"ReactNative.Focusable")) {
+        visual.Properties().Remove(L"ReactNative.Focusable");
+      }
+      // Reset hit test visibility when not focusable through tabIndex
+      visual.IsHitTestVisible(false);
     }
   }
 
@@ -1340,28 +1351,35 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentV
 }
 
 bool ViewComponentView::focusable() const noexcept {
-  // Check if tabIndex is explicitly set via Windows.UI.Composition Visual Properties
+  // Windows.UI.Composition focus logic - check Visual Properties for focus capability
   if (m_visual) {
     auto visual =
         winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual());
+    
+    // Check if explicitly marked as focusable in Windows.UI.Composition Visual Properties
+    if (auto focusableValue = visual.Properties().TryGetBoolean(L"ReactNative.Focusable")) {
+      return focusableValue.Value();
+    }
+    
+    // Check Windows.UI.Composition Visual Properties for tabIndex-based focus capability
     if (auto tabIndexValue = visual.Properties().TryGetScalar(L"ReactNative.TabIndex")) {
       auto tabIndex = static_cast<int>(tabIndexValue.Value());
-      // Elements with tabIndex >= 0 are focusable, negative tabIndex means focusable but not in tab order
+      // Elements with tabIndex >= -1 are focusable (negative means focusable but not in tab order)
       return tabIndex >= -1;
     }
   }
 
-  // Fallback to props-based logic if not set in Visual Properties
+  // Fallback to React Native props-based focus logic if not set in Windows.UI.Composition
   if (m_props->tabIndex != std::numeric_limits<int>::max()) {
     return m_props->tabIndex >= -1;
   }
 
-  // Default focusable behavior from props
+  // Default React Native focusable behavior from props
   return m_props->focusable;
 }
 
 int ViewComponentView::tabIndex() const noexcept {
-  // Read tabIndex from Windows.UI.Composition Visual Properties
+  // Windows.UI.Composition focus logic - read tabIndex from Visual Properties
   if (m_visual) {
     auto visual =
         winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual());
@@ -1369,7 +1387,7 @@ int ViewComponentView::tabIndex() const noexcept {
       return static_cast<int>(tabIndexValue.Value());
     }
   }
-  // Fallback to props if not set in Visual Properties
+  // Fallback to React Native props if not set in Windows.UI.Composition Visual Properties
   return m_props->tabIndex;
 }
 

@@ -112,9 +112,14 @@ void GettingFocusEventArgs::TrySetNewFocusedComponent(
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+// Windows.UI.Composition-aware focus navigation helper
+// This function implements the core focus navigation logic using Windows.UI.Composition APIs
+// and React Native component tree traversal for tab order management
 winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelper(
     winrt::Microsoft::ReactNative::implementation::ComponentView &view,
     winrt::Microsoft::ReactNative::FocusNavigationReason reason) {
+  
+  // Windows.UI.Composition focus logic: Check if this view is focusable first
   if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First) {
     if (view.focusable()) {
       return &view;
@@ -123,15 +128,18 @@ winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelpe
 
   winrt::Microsoft::ReactNative::implementation::ComponentView *toFocus = nullptr;
 
+  // Focus navigation through component tree with Windows.UI.Composition integration
   Mso::Functor<bool(::winrt::Microsoft::ReactNative::implementation::ComponentView & v)> fn =
       [reason, &toFocus](::winrt::Microsoft::ReactNative::implementation::ComponentView &v) noexcept -> bool {
     return (toFocus = NavigateFocusHelper(v, reason));
   };
 
+  // Traverse children using Windows.UI.Composition-aware focus logic
   if (view.runOnChildren(reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First, fn)) {
     return toFocus;
   }
 
+  // Windows.UI.Composition focus logic: Check if this view is focusable for last navigation
   if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::Last) {
     if (view.focusable()) {
       return &view;
@@ -141,9 +149,12 @@ winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelpe
   return nullptr;
 }
 
+// Windows.UI.Composition focus API: Find the first focusable element in the component tree
+// Uses Windows.UI.Composition Visual Properties to determine focus capability
 winrt::Microsoft::ReactNative::ComponentView FocusManager::FindFirstFocusableElement(
     const winrt::Microsoft::ReactNative::ComponentView &searchScope) noexcept {
   auto selfSearchScope = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(searchScope);
+  // Use Windows.UI.Composition-aware navigation helper for focus search
   auto view = NavigateFocusHelper(*selfSearchScope, winrt::Microsoft::ReactNative::FocusNavigationReason::First);
   if (view) {
     winrt::Microsoft::ReactNative::ComponentView component{nullptr};
@@ -154,9 +165,12 @@ winrt::Microsoft::ReactNative::ComponentView FocusManager::FindFirstFocusableEle
   return nullptr;
 }
 
+// Windows.UI.Composition focus API: Find the last focusable element in the component tree  
+// Uses Windows.UI.Composition Visual Properties to determine focus capability
 winrt::Microsoft::ReactNative::ComponentView FocusManager::FindLastFocusableElement(
     const winrt::Microsoft::ReactNative::ComponentView &searchScope) noexcept {
   auto selfSearchScope = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(searchScope);
+  // Use Windows.UI.Composition-aware navigation helper for focus search
   auto view = NavigateFocusHelper(*selfSearchScope, winrt::Microsoft::ReactNative::FocusNavigationReason::Last);
   if (view) {
     winrt::Microsoft::ReactNative::ComponentView component{nullptr};
