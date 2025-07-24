@@ -14,14 +14,17 @@ export default class Bootstrap extends React.Component {
 
   onSmallIncrement = () => {
     this.setState({ticker: this.state.ticker + 1});
+    console.log(' onSmallIncrement !');
   };
 
   onMediumIncrement = () => {
     this.setState({ticker: this.state.ticker + 10});
+    console.log(' onMediumIncrement !');
   };
 
   onLargeIncrement = () => {
     this.setState({ticker: this.state.ticker + 100});
+    console.log(' onLargeIncrement !');
   };
 
   render() {
