@@ -859,8 +859,6 @@ void WindowsTextInputComponentView::OnKeyDown(
       args.Handled(true);
     }
   }
-  // Emit the onScroll event
-  EmitOnScrollEvent();
   Super::OnKeyDown(args);
 }
 
@@ -890,8 +888,6 @@ void WindowsTextInputComponentView::OnKeyUp(
       args.Handled(true);
     }
   }
-  // Emit the onScroll event
-  EmitOnScrollEvent();
   Super::OnKeyUp(args);
 }
 
