@@ -1738,12 +1738,23 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@microsoft/1ds-core-js@4.3.7", "@microsoft/1ds-core-js@^4.3.0":
+"@microsoft/1ds-core-js@4.3.7":
   version "4.3.7"
   resolved "https://registry.yarnpkg.com/@microsoft/1ds-core-js/-/1ds-core-js-4.3.7.tgz#149c4515f65d8fef3fad41470403c25f28c1b538"
   integrity sha512-nUUvlLqGc92uDrOxP89C2MKwMYPbiIkQcmFzIXGk8hSh3xv/m+SrQblrz4tjycoE52enGujzZBepge08AV5G4A==
   dependencies:
     "@microsoft/applicationinsights-core-js" "3.3.7"
+    "@microsoft/applicationinsights-shims" "3.0.1"
+    "@microsoft/dynamicproto-js" "^2.0.3"
+    "@nevware21/ts-async" ">= 0.5.4 < 2.x"
+    "@nevware21/ts-utils" ">= 0.11.8 < 2.x"
+
+"@microsoft/1ds-core-js@^4.3.0":
+  version "4.3.9"
+  resolved "https://registry.yarnpkg.com/@microsoft/1ds-core-js/-/1ds-core-js-4.3.9.tgz#912a8ad5088514f0687473ba78f0f6acf7f67991"
+  integrity sha512-T8s5qROH7caBNiFrUpN8vgC6wg7QysVPryZKprgl3kLQQPpoMFM6ffIYvUWD74KM9fWWLU7vzFFNBWDBsrTyWg==
+  dependencies:
+    "@microsoft/applicationinsights-core-js" "3.3.9"
     "@microsoft/applicationinsights-shims" "3.0.1"
     "@microsoft/dynamicproto-js" "^2.0.3"
     "@nevware21/ts-async" ">= 0.5.4 < 2.x"
@@ -1764,6 +1775,16 @@
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/@microsoft/applicationinsights-core-js/-/applicationinsights-core-js-3.3.7.tgz#2b5aa05e5f1babd90872daa4ce1207539807c6b1"
   integrity sha512-GVYUv+8c8eCYZdHhXF41PwES1W1+lur/1sVWiRmAmFdbKi42MgGhFJgUdNR8jW6h+CLZ35B9HjPrZOTKZ6X0NQ==
+  dependencies:
+    "@microsoft/applicationinsights-shims" "3.0.1"
+    "@microsoft/dynamicproto-js" "^2.0.3"
+    "@nevware21/ts-async" ">= 0.5.4 < 2.x"
+    "@nevware21/ts-utils" ">= 0.11.8 < 2.x"
+
+"@microsoft/applicationinsights-core-js@3.3.9":
+  version "3.3.9"
+  resolved "https://registry.yarnpkg.com/@microsoft/applicationinsights-core-js/-/applicationinsights-core-js-3.3.9.tgz#3a98a371f3359e3cb6d9028e1e694352a6143622"
+  integrity sha512-xliiE9H09xCycndlua4QjajN8q5k/ET6VCv+e0Jjodxr9+cmoOP/6QY9dun9ptokuwR8TK0qOaIJ8z4fgslVSA==
   dependencies:
     "@microsoft/applicationinsights-shims" "3.0.1"
     "@microsoft/dynamicproto-js" "^2.0.3"
