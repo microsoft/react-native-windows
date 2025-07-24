@@ -77,6 +77,7 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="PropertySheet.props" />
     <Import Project="..\PropertySheets\WinUI.props" />
+    <Import Project="..\PropertySheets\WebView2.props" />
     <!-- Added since we build this project with Paper/Fabric. -->
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
@@ -637,6 +638,7 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2PackageVersion)" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
