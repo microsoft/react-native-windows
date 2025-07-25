@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Implementation of scrollEvent Handling and scrollEnabled,OnScroll prop for TextInput",
+  "packageName": "react-native-windows",
+  "email": "kvineeth@microsoft.com",
+  "dependentChangeType": "patch"
+}
