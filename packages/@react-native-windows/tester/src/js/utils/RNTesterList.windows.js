@@ -87,7 +87,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'NewAppScreenExample',
-    module: require('../examples-win/NewAppScreen/NewAppScreenExample'),
+    module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
   {
     key: 'PressableExample',

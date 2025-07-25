@@ -250,7 +250,7 @@
       "type": "copy",
       "directory": "js/examples/NewAppScreen",
       "baseDirectory": "packages/rn-tester/js/examples/NewAppScreen",
-      "baseHash": "884fc18a2119d52cb7629358c07bb26c764abf4f",
+      "baseHash": "8f10b84d4ebfeab9bd76d2fd9ef06af1bb78bfa7",
       "issue": 0
     },
     {
