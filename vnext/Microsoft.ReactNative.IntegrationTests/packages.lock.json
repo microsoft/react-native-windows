@@ -60,8 +60,8 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+        "resolved": "1.0.3179.45",
+        "contentHash": "3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA=="
       },
       "common": {
         "type": "Project",
@@ -87,6 +87,7 @@
           "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
+          "Microsoft.Web.WebView2": "[1.0.3179.45, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
@@ -108,8 +109,8 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+        "resolved": "1.0.3179.45",
+        "contentHash": "3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA=="
       }
     },
     "native,Version=v0.0/win-arm64": {
@@ -121,8 +122,8 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+        "resolved": "1.0.3179.45",
+        "contentHash": "3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA=="
       }
     },
     "native,Version=v0.0/win-x64": {
@@ -134,8 +135,8 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+        "resolved": "1.0.3179.45",
+        "contentHash": "3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA=="
       }
     },
     "native,Version=v0.0/win-x86": {
@@ -147,8 +148,8 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+        "resolved": "1.0.3179.45",
+        "contentHash": "3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA=="
       }
     }
   }
