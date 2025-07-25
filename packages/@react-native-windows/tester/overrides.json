@@ -28,13 +28,6 @@
     },
     {
       "type": "derived",
-      "file": "src/js/examples-win/NewAppScreen/NewAppScreenExample.js",
-      "baseFile": "packages/rn-tester/js/examples/NewAppScreen/NewAppScreenExample.js",
-      "baseHash": "884fc18a2119d52cb7629358c07bb26c764abf4f",
-      "issue": 0
-    },
-    {
-      "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
       "baseHash": "314dacf1e200ddc9dc414bd9be1a21ee77ae097a"

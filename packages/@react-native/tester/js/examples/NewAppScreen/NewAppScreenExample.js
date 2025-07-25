@@ -8,7 +8,6 @@
  * @flow
  */
 
-// Windows
 'use strict';
 
 const {NewAppScreen} = require('@react-native/new-app-screen');
