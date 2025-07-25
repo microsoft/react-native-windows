@@ -79945,6 +79945,7 @@ exports[`snapshotAllPages TextInput 32`] = `
   <TextInput
     autoCorrect={true}
     multiline={true}
+    onScroll={[Function]}
     style={
       [
         {

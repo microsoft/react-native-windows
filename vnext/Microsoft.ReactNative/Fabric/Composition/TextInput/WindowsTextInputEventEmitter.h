@@ -55,6 +55,7 @@ class WindowsTextInputEventEmitter : public ViewEventEmitter {
   void onPressIn(GestureResponderEvent event) const override;
   void onEndEditing(OnEndEditing value) const;
   void onPressOut(GestureResponderEvent event) const override;
+  void onScroll(facebook::react::Point offset) const;
 };
 
 } // namespace facebook::react

@@ -109,4 +109,17 @@ void WindowsTextInputEventEmitter::onPressOut(GestureResponderEvent event) const
   });
 }
 
+void WindowsTextInputEventEmitter::onScroll(facebook::react::Point offset) const {
+  dispatchEvent("textInputScroll", [offset = std::move(offset)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    {
+      auto contentOffsetObj = jsi::Object(runtime);
+      contentOffsetObj.setProperty(runtime, "x", offset.x);
+      contentOffsetObj.setProperty(runtime, "y", offset.y);
+      payload.setProperty(runtime, "contentOffset", contentOffsetObj);
+    }
+    return payload;
+  });
+}
+
 } // namespace facebook::react

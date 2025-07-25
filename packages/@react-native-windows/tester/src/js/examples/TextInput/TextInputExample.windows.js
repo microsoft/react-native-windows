@@ -486,6 +486,13 @@ const examples: Array<RNTesterModuleExample> = [
           <ExampleTextInput
             autoCorrect={true}
             multiline={true}
+            onScroll={event => {
+              console.log(
+                `onScroll event: ${JSON.stringify(
+                  event.nativeEvent.contentOffset,
+                )}`,
+              );
+            }}
             style={[
               styles.multiline,
               {color: 'blue'},
