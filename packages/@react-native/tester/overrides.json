@@ -596,6 +596,13 @@
     },
     {
       "type": "copy",
+      "file": "js/utils/RNTesterListFbInternal.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterListFbInternal.js",
+      "baseHash": "fe9f56b0fbc6677a817f9fdaf020185b9c8ffb58",
+      "issue": 0
+    },
+    {
+      "type": "copy",
       "file": "js/utils/RNTesterNavigationReducer.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterNavigationReducer.js",
       "baseHash": "b82ce86909eab06480318a5312231d4b7d50e4d2",

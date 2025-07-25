@@ -9,7 +9,6 @@
  * @oncall react_native
  */
 
-// Windows
 import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
 export const Components: Array<RNTesterModuleInfo> = [];
