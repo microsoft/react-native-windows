@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Jul 2025 05:27:19 GMT",
+      "version": "0.0.0-canary.977",
+      "tag": "react-native-windows_v0.0.0-canary.977",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d648ebadb9f1c61b9ac6226e042f5c5f3f712e68",
+            "comment": "[Fabric] Implementation of scrollEvent Handling and scrollEnabled,OnScroll prop for TextInput"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.270",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Jul 2025 05:26:15 GMT",
       "version": "0.0.0-canary.976",
       "tag": "react-native-windows_v0.0.0-canary.976",
