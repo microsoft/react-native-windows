@@ -78,6 +78,7 @@
           "Folly": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+          "Microsoft.Web.WebView2": "[1.0.3179.45, )",
           "Microsoft.WindowsAppSDK": "[1.7.250401001, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.83.0, )"
