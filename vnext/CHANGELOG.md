@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 19 Jul 2025 05:26:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 25 Jul 2025 05:27:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.977
+
+Fri, 25 Jul 2025 05:27:19 GMT
+
+### Changes
+
+- [Fabric] Implementation of scrollEvent Handling and scrollEnabled,OnScroll prop for TextInput (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.270
 
 ## 0.0.0-canary.976
 

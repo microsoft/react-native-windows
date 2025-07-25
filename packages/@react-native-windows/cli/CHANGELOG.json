@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 25 Jul 2025 05:27:19 GMT",
+      "version": "0.0.0-canary.270",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.270",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "satkh@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "16a63e7072e934305df21b8331b60754382b9973",
+            "comment": "Enable Console Logging for playground Apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:01 GMT",
       "version": "0.0.0-canary.269",
       "tag": "@react-native-windows/cli_v0.0.0-canary.269",
