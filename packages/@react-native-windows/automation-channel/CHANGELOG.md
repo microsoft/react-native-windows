@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Fri, 25 Jul 2025 05:27:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 26 Jul 2025 05:26:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.318
+
+Sat, 26 Jul 2025 05:26:14 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250506-3ac16dd6a (54227869+anupriya13@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.978
 
 ## 0.12.317
 
