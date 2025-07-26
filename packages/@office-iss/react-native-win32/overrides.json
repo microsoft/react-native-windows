@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.80.0-nightly-20250428-9efcdc091",
+  "baseVersion": "0.80.0-nightly-20250506-3ac16dd6a",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "d274ca7bb384b334c5b2ee0827726e7a3d6c98c9"
+      "baseHash": "70ed729d5f52c241530e8459cc40263d4e9fa9c0"
     },
     {
       "type": "derived",
@@ -114,7 +114,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "4b3128471dd0d362e9828df8937f708d53694e12"
+      "baseHash": "9965c0079652083ab549bc2799eb9528b56a1b2d"
     },
     {
       "type": "patch",
@@ -183,13 +183,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "d97e29f01e57cc2b0de209a03f8584b984cfe190"
+      "baseHash": "1e4e3a89397960e8f08b86be62496473829c0ac3"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewAccessibility.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "c30dab3926869e84edafebd485e78637d69ccd61"
+      "baseHash": "04981261b2ed61b31bfbb396478bb6b103d99253"
     },
     {
       "type": "derived",
@@ -329,7 +329,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "3ba8fe1a60d744e057e856bc43e2df28f4fd7f66"
+      "baseHash": "b520e2bdb2be31bdb6ad7e3769dbe69168870c8c"
     },
     {
       "type": "copy",
