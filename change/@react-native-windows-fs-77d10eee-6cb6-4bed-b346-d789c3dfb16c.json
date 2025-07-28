@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer>",
+  "packageName": "@react-native-windows/fs",
+  "email": "chpurrer@meta.com",
+  "dependentChangeType": "none"
+}

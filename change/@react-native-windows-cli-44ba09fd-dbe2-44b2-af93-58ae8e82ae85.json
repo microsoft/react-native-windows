@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer>",
+  "packageName": "@react-native-windows/cli",
+  "email": "chpurrer@meta.com",
+  "dependentChangeType": "patch"
+}

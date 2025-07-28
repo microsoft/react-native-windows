@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer>",
+  "packageName": "@react-native-windows/find-repo-root",
+  "email": "chpurrer@meta.com",
+  "dependentChangeType": "none"
+}

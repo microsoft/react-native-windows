@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer>",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "chpurrer@meta.com",
+  "dependentChangeType": "patch"
+}
