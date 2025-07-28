@@ -66,10 +66,10 @@ class AttachmentInlineObject : public winrt::implements<AttachmentInlineObject, 
   float m_height;
 };
 
-TextLayoutManager::TextLayoutManager(const ContextContainer::Shared &contextContainer)
+TextLayoutManager::TextLayoutManager(const std::shared_ptr<const ContextContainer> &contextContainer)
     : contextContainer_(contextContainer), textMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
 
-WindowsTextLayoutManager::WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer)
+WindowsTextLayoutManager::WindowsTextLayoutManager(const std::shared_ptr<const ContextContainer> &contextContainer)
     : TextLayoutManager(contextContainer) {}
 
 void WindowsTextLayoutManager::GetTextLayout(
