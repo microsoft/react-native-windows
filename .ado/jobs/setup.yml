@@ -31,7 +31,7 @@ jobs:
         displayName: Build @rnw-scripts/beachball-config
       
       - pwsh: |
-          npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
+          npx beachball check --branch origin/$(BeachBallBranchName) --verbose 2>&1 | Tee-Object -Variable beachballOutput
           $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
           $beachballErrors | ForEach { Write-Host "##vso[task.logissue type=warning]POSSIBLE $_" }
         displayName: Warn for possible invalid change files

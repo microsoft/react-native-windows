@@ -30,6 +30,10 @@
               BuildConfiguration: Release
               BuildPlatform: x86
               UseFabric: false
+            - Name: Arm64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
+              UseFabric: false
             - Name: Arm64Release
               BuildConfiguration: Release
               BuildPlatform: ARM64
@@ -43,9 +47,17 @@
               BuildConfiguration: Release
               BuildPlatform: x64
               UseFabric: true
+            - Name: X86DebugFabric
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+              UseFabric: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
+              UseFabric: true
+            - Name: Arm64DebugFabric
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
               UseFabric: true
             - Name: Arm64ReleaseFabric
               BuildConfiguration: Release

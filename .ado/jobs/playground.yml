@@ -20,10 +20,13 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             SolutionFile: Playground.sln
+            UploadAppx: true
           - Name: X64ReleaseUniversal
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground.sln
+            RunWack: true
+            UploadAppx: true
           - Name: X64DebugUniversal
             BuildConfiguration: Debug
             BuildPlatform: x64
@@ -33,10 +36,6 @@ parameters:
           - Name: X86DebugComposition
             BuildConfiguration: Debug
             BuildPlatform: x86
-            SolutionFile: Playground-Composition.sln
-          - Name: X64DebugComposition
-            BuildConfiguration: Debug
-            BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
           - Name: X64ReleaseComposition
             BuildConfiguration: Release
