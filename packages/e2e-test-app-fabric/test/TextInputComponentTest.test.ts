@@ -222,7 +222,7 @@ describe('TextInput Tests', () => {
     expect(await stateText.getText()).toBe('Holding down the click/touch');
     //  This step helps avoid UI lock by unfocusing the input
     const search = await app.findElementByTestID('example_search');
-    await search.clearValue();
+    await search.setValue('');
 
     // Wait for the clear to complete
     await app.waitUntil(
@@ -239,7 +239,7 @@ describe('TextInput Tests', () => {
   test('TextInput triggers onPressOut and updates state text', async () => {
     // Clear search box first to ensure clean state
     const searchElement = await app.findElementByTestID('example_search');
-    await searchElement.clearValue();
+    await searchElement.setValue('');
 
     // Wait for the clear to complete
     await app.waitUntil(
