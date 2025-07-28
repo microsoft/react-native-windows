@@ -222,9 +222,37 @@ describe('TextInput Tests', () => {
     expect(await stateText.getText()).toBe('Holding down the click/touch');
     //  This step helps avoid UI lock by unfocusing the input
     const search = await app.findElementByTestID('example_search');
-    await search.setValue('');
+    await search.clearValue();
+
+    // Wait for the clear to complete
+    await app.waitUntil(
+      async () => {
+        const currentText = await search.getText();
+        return currentText === '';
+      },
+      {
+        timeout: 2000,
+        timeoutMsg: 'Search box not cleared properly after onPressIn test',
+      },
+    );
   });
   test('TextInput triggers onPressOut and updates state text', async () => {
+    // Clear search box first to ensure clean state
+    const searchElement = await app.findElementByTestID('example_search');
+    await searchElement.clearValue();
+
+    // Wait for the clear to complete
+    await app.waitUntil(
+      async () => {
+        const currentText = await searchElement.getText();
+        return currentText === '';
+      },
+      {
+        timeout: 2000,
+        timeoutMsg: 'Search box not cleared properly',
+      },
+    );
+
     // Scroll the example into view
     await searchBox('onPressOut');
     const component = await app.findElementByTestID('textinput-pressout');
