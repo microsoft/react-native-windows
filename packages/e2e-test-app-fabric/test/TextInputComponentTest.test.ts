@@ -22,11 +22,14 @@ afterEach(async () => {
 });
 
 const searchBox = async (input: string) => {
-  const searchBox = await app.findElementByTestID('example_search');
+  const searchElement = await app.findElementByTestID('example_search');
   await app.waitUntil(
     async () => {
-      await searchBox.setValue(input);
-      return (await searchBox.getText()) === input;
+      await searchElement.setValue(input);
+      if (input === '') {
+        return (await searchElement.getText()) === 'Search...';
+      }
+      return (await searchElement.getText()) === input;
     },
     {
       interval: 1500,
@@ -220,38 +223,13 @@ describe('TextInput Tests', () => {
     );
     //  Assertion
     expect(await stateText.getText()).toBe('Holding down the click/touch');
-    //  This step helps avoid UI lock by unfocusing the input
-    const search = await app.findElementByTestID('example_search');
-    await search.setValue('');
 
-    // Wait for the clear to complete
-    await app.waitUntil(
-      async () => {
-        const currentText = await search.getText();
-        return currentText === '';
-      },
-      {
-        timeout: 2000,
-        timeoutMsg: 'Search box not cleared properly after onPressIn test',
-      },
-    );
+    // Clean up by clearing the search box
+    await searchBox('');
   });
   test('TextInput triggers onPressOut and updates state text', async () => {
     // Clear search box first to ensure clean state
-    const searchElement = await app.findElementByTestID('example_search');
-    await searchElement.setValue('');
-
-    // Wait for the clear to complete
-    await app.waitUntil(
-      async () => {
-        const currentText = await searchElement.getText();
-        return currentText === '';
-      },
-      {
-        timeout: 2000,
-        timeoutMsg: 'Search box not cleared properly',
-      },
-    );
+    await searchBox('');
 
     // Scroll the example into view
     await searchBox('onPressOut');
@@ -281,9 +259,8 @@ describe('TextInput Tests', () => {
     // Assertion
     expect(await stateText.getText()).toBe('Released click/touch');
 
-    // Clean up by unfocusing the input
-    const search = await app.findElementByTestID('example_search');
-    await search.setValue('');
+    // Clean up by clearing the search box
+    await searchBox('');
   });
   test('TextInputs can have attributed text', async () => {
     const component = await app.findElementByTestID('text-input');
