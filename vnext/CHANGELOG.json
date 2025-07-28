@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Jul 2025 15:27:40 GMT",
+      "version": "0.79.3",
+      "tag": "react-native-windows_v0.79.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "36dd634291d2d03eda930933c9c8ac81735992ac",
+            "comment": "updating tar-fs to 3.0.9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Jul 2025 15:44:54 GMT",
       "version": "0.79.2",
       "tag": "react-native-windows_v0.79.2",

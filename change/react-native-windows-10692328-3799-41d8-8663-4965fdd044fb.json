@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "updating tar-fs to 3.0.9",
-  "packageName": "react-native-windows",
-  "email": "protikbiswas100@microsoft.com",
-  "dependentChangeType": "patch"
-}

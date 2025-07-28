@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 21 Jul 2025 15:44:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 28 Jul 2025 15:27:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.3
+
+Mon, 28 Jul 2025 15:27:40 GMT
+
+### Patches
+
+- updating tar-fs to 3.0.9 (protikbiswas100@microsoft.com)
 
 ## 0.79.2
 
