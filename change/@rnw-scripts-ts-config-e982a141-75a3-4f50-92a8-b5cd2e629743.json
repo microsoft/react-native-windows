@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer>",
-  "packageName": "@rnw-scripts/ts-config",
-  "email": "chpurrer@meta.com",
-  "dependentChangeType": "patch"
-}
