@@ -19,7 +19,7 @@
   "peerDependencies": {
     "@react-native-picker/picker": "2.11.0",
     "react": "19.1.0",
-    "react-native": "0.80.0-rc.0",
+    "react-native": "0.80.0-rc.5",
     "react-native-windows": "0.80.0-preview.0",
     "react-native-xaml": "^0.0.80"
   },
@@ -33,7 +33,7 @@
     "@types/node": "^18.0.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.80.0-rc.0",
+    "react-native": "0.80.0-rc.5",
     "react-native-platform-override": "^1.9.56",
     "react-native-windows": "0.80.0-preview.0",
     "typescript": "5.0.4"

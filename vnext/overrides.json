@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.80.0-rc.0",
+  "baseVersion": "0.80.0-rc.5",
   "overrides": [
     {
       "type": "derived",
@@ -515,7 +515,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/AssetSourceResolver.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/AssetSourceResolver.js",
-      "baseHash": "486a69481ed43238663debe93b3c1b7971762d69"
+      "baseHash": "f9f0b6c2481694bd18f9201864fc1db803965103"
     },
     {
       "type": "patch",
@@ -629,7 +629,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
-      "baseHash": "d31f973c14140792d9d28d208fca15d092a8a4e2"
+      "baseHash": "b0e5a0c71f35c962049d73191ed4b7ace570ca92"
     },
     {
       "type": "patch",

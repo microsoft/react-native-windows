@@ -13,6 +13,7 @@
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
+  AccessibilityProps,
   AccessibilityRole,
   AccessibilityState,
   Role,
@@ -124,20 +125,7 @@ export type TextPropsAndroid = {
 };
 
 type TextBaseProps = $ReadOnly<{
-  /**
-   * Indicates whether the view is an accessibility element.
-   *
-   * See https://reactnative.dev/docs/text#accessible
-   */
-  accessible?: ?boolean,
-  accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
-  accessibilityHint?: ?Stringish,
-  accessibilityLanguage?: ?Stringish,
-  accessibilityLabel?: ?Stringish,
-  accessibilityRole?: ?AccessibilityRole,
-  accessibilityState?: ?AccessibilityState,
-  'aria-label'?: ?string,
   accessibilityControls?: ?Stringish, // Win32
   accessibilityDescribedBy?: ?Stringish, // Win32
   accessibilityDescription?: ?Stringish, // Win32
@@ -159,16 +147,6 @@ type TextBaseProps = $ReadOnly<{
    */
   android_hyphenationFrequency?: ?('normal' | 'none' | 'full'),
 
-  /**
-   * alias for accessibilityState
-   *
-   * see https://reactnative.dev/docs/accessibility#accessibilitystate
-   */
-  'aria-busy'?: ?boolean,
-  'aria-checked'?: ?boolean | 'mixed',
-  'aria-disabled'?: ?boolean,
-  'aria-expanded'?: ?boolean,
-  'aria-selected'?: ?boolean,
   'aria-multiselectable'?: ?boolean, // Win32
   'aria-required'?: ?boolean, // Win32
   'aria-controls'?: ?Stringish, // Win32
@@ -177,11 +155,6 @@ type TextBaseProps = $ReadOnly<{
   'aria-level'?: ?number, // Win32
   'aria-posinset'?: ?number, // Win32
   'aria-setsize'?: ?number, // Win32
-  /**
-   * Represents the nativeID of the associated label text. When the assistive technology focuses on the component with this props, the text is read aloud.
-   * This prop is listed for cross-platform reasons and has no real effect on Android or iOS.
-   */
-  'aria-labelledby'?: ?string,
 
   children?: ?React.Node,
 
@@ -319,4 +292,5 @@ export type TextProps = $ReadOnly<{
   ...TextPropsIOS,
   ...TextPropsAndroid,
   ...TextBaseProps,
+  ...AccessibilityProps,
 }>;

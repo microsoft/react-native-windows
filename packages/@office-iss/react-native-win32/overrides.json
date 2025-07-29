@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.80.0-rc.0",
+  "baseVersion": "0.80.0-rc.5",
   "overrides": [
     {
       "type": "derived",
@@ -92,7 +92,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
-      "baseHash": "c96925930d9664306a8aef8b4102c43055ea03be"
+      "baseHash": "d1cc663442d184b62799b748c475a5a2c5c558c7"
     },
     {
       "type": "copy",
@@ -431,7 +431,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
-      "baseHash": "d31f973c14140792d9d28d208fca15d092a8a4e2"
+      "baseHash": "b0e5a0c71f35c962049d73191ed4b7ace570ca92"
     },
     {
       "type": "patch",

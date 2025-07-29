@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.80.0-rc.0",
+  "baseVersion": "0.80.0-rc.5",
   "overrides": [
     {
       "type": "copy",
@@ -152,7 +152,7 @@
       "type": "copy",
       "directory": "js/examples/Filter",
       "baseDirectory": "packages/rn-tester/js/examples/Filter",
-      "baseHash": "131051d070a95aae095d76b9a7fd67d01396097d",
+      "baseHash": "fbd6577b52e74e00062bb0d60d82fc290493b4cb",
       "issue": 4054
     },
     {
@@ -229,7 +229,7 @@
       "type": "copy",
       "directory": "js/examples/MixBlendMode",
       "baseDirectory": "packages/rn-tester/js/examples/MixBlendMode",
-      "baseHash": "62f7b5128c7dcc35e4b30fc1a97e4a579595f437",
+      "baseHash": "96be032903f54615d3f52793cf0d052339d2191f",
       "issue": 4054
     },
     {
@@ -661,7 +661,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "4c0665426ec4e68338e01213b0b8320edaa28ecc",
+      "baseHash": "568f1f464290b0fddc713a5a1da33f4d1b5c2ac1",
       "issue": 13228
     },
     {
