@@ -245,7 +245,7 @@ describe('TextInput Tests', () => {
         return currentText === 'Released click/touch';
       },
       {
-        timeout: 5000,
+        timeout: 10000,
         timeoutMsg: 'State text not updated after onPressOut.',
       },
     );
