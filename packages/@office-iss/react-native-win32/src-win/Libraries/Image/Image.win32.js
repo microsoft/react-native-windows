@@ -8,7 +8,10 @@
  * @format
  */
 
+import type {HostInstance} from '../../src/private/types/HostInstance';
+import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
 import type {RootTag} from '../Types/RootTagTypes';
+import type {ImageProps} from './ImageProps';
 import type {AbstractImageIOS, ImageIOS} from './ImageTypes.flow';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
@@ -122,7 +125,13 @@ async function queryCache(
  *
  * See https://reactnative.dev/docs/image
  */
-let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
+let BaseImage: AbstractImageIOS = ({
+  ref: forwardedRef,
+  ...props
+}: {
+  ref?: React.RefSetter<HostInstance>,
+  ...ImageProps,
+}) => {
   const source = getImageSourcesFromImageProps(props) || {
     uri: undefined,
     width: undefined,
@@ -215,7 +224,7 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
       }}
     </TextAncestor.Consumer>
   );
-});
+};
 
 const imageComponentDecorator = unstable_getImageComponentDecorator();
 if (imageComponentDecorator != null) {

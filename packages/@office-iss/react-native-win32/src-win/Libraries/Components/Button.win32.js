@@ -400,7 +400,7 @@ const Button: component(
       </View>
     </Touchable>
   );
-});
+};
 
 Button.displayName = 'Button';
 

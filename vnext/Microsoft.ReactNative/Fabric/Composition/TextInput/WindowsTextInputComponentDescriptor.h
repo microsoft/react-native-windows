@@ -3,6 +3,10 @@
 
 #pragma once
 
+#include "AndroidTextInputShadowNode.h"
+#include "AndroidTextInputState.h"
+
+#include <fbjni/fbjni.h>
 #include "WindowsTextInputShadowNode.h"
 
 #include <yoga/YGEnums.h>
@@ -59,8 +63,8 @@ virtual State::Shared createInitialState(
       }
 
     return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
-        std::make_shared<const AndroidTextInputState>(AndroidTextInputState(
-            0, {}, {}, {}, theme.start, theme.end, theme.top, theme.bottom)),
+        std::make_shared<const AndroidTextInputState>(
+            AndroidTextInputState({}, {}, {}, 0)),
         family);
   }
   */

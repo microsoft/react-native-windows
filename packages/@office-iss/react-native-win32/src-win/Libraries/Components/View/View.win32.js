@@ -267,7 +267,3 @@ const View: component(
     );
   },
 );
-
-View.displayName = 'View';
-
-export default View;

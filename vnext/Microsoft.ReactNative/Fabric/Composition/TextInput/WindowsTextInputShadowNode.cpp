@@ -36,30 +36,14 @@ Size WindowsTextInputShadowNode::measureContent(
     attributedString = getPlaceholderAttributedString(layoutContext);
   }
 
-  // BaseTextShadowNode only gets children. We must detect and prepend text
-  // value attributes manually.
-  if (!getConcreteProps().text.empty()) {
-    auto textAttributes = TextAttributes::defaultTextAttributes();
-    textAttributes.apply(getConcreteProps().textAttributes);
-    auto fragment = AttributedString::Fragment{};
-    fragment.string = getConcreteProps().text;
-    fragment.textAttributes = textAttributes;
-    // If the TextInput opacity is 0 < n < 1, the opacity of the TextInput and
-    // text value's background will stack. This is a hack/workaround to prevent
-    // that effect.
-    fragment.textAttributes.backgroundColor = clearColor();
-    fragment.parentShadowView = ShadowView(*this);
-    attributedString.prependFragment(std::move(fragment));
-  }
-
-  TextLayoutContext textLayoutContext;
-  textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
-
-  facebook::react::ParagraphAttributes paragraphAttributes{};
-  paragraphAttributes.maximumNumberOfLines = getConcreteProps().multiline ? 0 : 1;
-  return textLayoutManager_
-      ->measure(AttributedStringBox{attributedString}, paragraphAttributes, textLayoutContext, layoutConstraints)
-      .size;
+  auto textSize = textLayoutManager_
+                      ->measure(
+                          AttributedStringBox{attributedString},
+                          getConcreteProps().paragraphAttributes,
+                          textLayoutContext,
+                          textConstraints)
+                      .size;
+  return layoutConstraints.clamp(textSize);
 }
 
 void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
@@ -125,8 +109,11 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
 
-  setStateData(facebook::react::TextInputState{
-      AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
+  setStateData(AndroidTextInputState{
+      AttributedStringBox(newAttributedString),
+      reactTreeAttributedString,
+      props.paragraphAttributes,
+      newEventCount});
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
@@ -181,24 +168,20 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const
   return (!treeAttributedStringChanged ? state.attributedStringBox.getValue() : reactTreeAttributedString);
 }
 
-// For measurement purposes, we want to make sure that there's at least a
-// single character in the string so that the measured height is greater
-// than zero. Otherwise, empty TextInputs with no placeholder don't
-// display at all.
-// TODO T67606511: We will redefine the measurement of empty strings as part
-// of T67606511
-AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(const LayoutContext &layoutContext) const {
-  const auto &props = BaseShadowNode::getConcreteProps();
+AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(
+    const LayoutContext& layoutContext) const {
+  const auto& props = BaseShadowNode::getConcreteProps();
 
   AttributedString attributedString;
-  auto placeholderString = !props.placeholder.empty() ? props.placeholder : BaseTextShadowNode::getEmptyPlaceholder();
-  auto textAttributes = TextAttributes::defaultTextAttributes();
-  textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
-  textAttributes.apply(props.textAttributes);
-  attributedString.appendFragment(
-      {.string = std::move(placeholderString),
-       .textAttributes = textAttributes,
-       .parentShadowView = ShadowView(*this)});
+  attributedString.setBaseTextAttributes(
+      props.getEffectiveTextAttributes(layoutContext.fontSizeMultiplier));
+
+  if (!props.placeholder.empty()) {
+    attributedString.appendFragment(
+        {.string = props.placeholder,
+         .textAttributes = attributedString.getBaseTextAttributes(),
+         .parentShadowView = {}});
+  }
   return attributedString;
 }
 

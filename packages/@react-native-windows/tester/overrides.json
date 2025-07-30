@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.80.0-nightly-20250506-3ac16dd6a",
+  "baseVersion": "0.81.0-nightly-20250521-3cb70bb6a",
   "overrides": [
     {
       "type": "copy",
       "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
       "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseHash": "f54f9e74fbe883c58a5ea6a6425b5ad548134940",
+      "baseHash": "8c8ae861aa6984218efc0f127bf6aba4b7960040",
       "issue": 14844
     },
     {
@@ -43,7 +43,7 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/BaseFlatListExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
-      "baseHash": "44b784dbde64d0ca1616f0e31a07f232939d8dd7",
+      "baseHash": "533b9b1c2889c22af9ba923e17a8951ffbbfe3d7",
       "issue": 12869
     },
     {
@@ -57,7 +57,7 @@
       "type": "copy",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "51da04f9ee49f1a5fd857db17361443636d73bca",
+      "baseHash": "5b2487a526ee0e4dd0e01f87f334fef99822d682",
       "issue": 12869
     },
     {
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "20dec87a4f2c4c098adf9e3becc0969fb2b3036c",
+      "baseHash": "a3931ef84647705af55804b29eadb845d5185e87",
       "issue": 12869
     },
     {
@@ -111,19 +111,13 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "b40001649bf2c261009213ba56c7bc0bf2998419"
-    },
-    {
-      "type": "derived",
-      "file": "src/js/examples/Text/TextInlineViewsExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/Text/TextInlineViewsExample.js",
-      "baseHash": "63088038921558214c480b323dd2099698911f3f"
+      "baseHash": "b821fd7ae82ed4470ea3f06baafb87ac99c953f1"
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "8cc115a30795ee2fcf174e91f9cdbf56f4513a93",
+      "baseHash": "ed91ff793aa3c1305d75f795be74adcffe540edb",
       "issue": 5688
     },
     {

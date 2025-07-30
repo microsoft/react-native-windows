@@ -3,15 +3,15 @@
 
 #pragma once
 
+#include "AndroidTextInputEventEmitter.h"
+#include "AndroidTextInputProps.h"
+#include "AndroidTextInputState.h"
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 
 #include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
-#include "WindowsTextInputEventEmitter.h"
-#include "WindowsTextInputProps.h"
 
 #include <react/renderer/attributedstring/AttributedString.h>
-#include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/utils/ContextContainer.h>
 
@@ -22,11 +22,11 @@ extern const char WindowsTextInputComponentName[];
 /*
  * `ShadowNode` for <WindowsTextInput> component.
  */
-class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
-                                             WindowsTextInputComponentName,
-                                             WindowsTextInputProps,
-                                             WindowsTextInputEventEmitter,
-                                             TextInputState> {
+class AndroidTextInputShadowNode final : public ConcreteViewShadowNode<
+                                             AndroidTextInputComponentName,
+                                             AndroidTextInputProps,
+                                             AndroidTextInputEventEmitter,
+                                             AndroidTextInputState> {
  public:
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 

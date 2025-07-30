@@ -12,6 +12,7 @@
 
 import RNTesterText from './RNTesterText';
 import React from 'react';
+import {memo} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -164,7 +165,7 @@ class SeparatorComponent extends React.PureComponent<{...}> {
   }
 }
 
-const LoadingComponent: React.ComponentType<{}> = React.memo(() => (
+const LoadingComponent: React.ComponentType<{}> = memo(() => (
   <View style={styles.loadingContainer}>
     <ActivityIndicator />
   </View>

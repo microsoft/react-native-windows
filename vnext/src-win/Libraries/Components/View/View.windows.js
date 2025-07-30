@@ -10,15 +10,22 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
+import * as ReactNativeFeatureFlags from '../../../src/private/featureflags/ReactNativeFeatureFlags';
 import TextAncestor from '../../Text/TextAncestor';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
+import {use} from 'react';
 import invariant from 'invariant'; // [Windows]
 // [Windows
 import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
 export type Props = ViewProps;
+
+type PropsWithRef = $ReadOnly<{
+  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
+  ...ViewProps,
+}>;
 
 // [Windows
 // $FlowFixMe - children typing
@@ -57,12 +64,99 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-const View: component(
-  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
-  ...props: ViewProps
-) = React.forwardRef(
-  (
-    {
+function View(props: PropsWithRef): React.Node {
+  const hasTextAncestor = use(TextAncestor);
+
+  let actualView;
+  if (ReactNativeFeatureFlags.reduceDefaultPropsInView()) {
+    const {
+      accessibilityState,
+      accessibilityValue,
+      'aria-busy': ariaBusy,
+      'aria-checked': ariaChecked,
+      'aria-disabled': ariaDisabled,
+      'aria-expanded': ariaExpanded,
+      'aria-hidden': ariaHidden,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-live': ariaLive,
+      'aria-selected': ariaSelected,
+      'aria-valuemax': ariaValueMax,
+      'aria-valuemin': ariaValueMin,
+      'aria-valuenow': ariaValueNow,
+      'aria-valuetext': ariaValueText,
+      id,
+      tabIndex,
+      ...otherProps
+    } = props;
+
+    // Since we destructured props, we can now treat it as mutable
+    const processedProps = otherProps as {...PropsWithRef};
+
+    const parsedAriaLabelledBy = ariaLabelledBy?.split(/\s*,\s*/g);
+    if (parsedAriaLabelledBy !== undefined) {
+      processedProps.accessibilityLabelledBy = parsedAriaLabelledBy;
+    }
+
+    if (ariaLabel !== undefined) {
+      processedProps.accessibilityLabel = ariaLabel;
+    }
+
+    if (ariaLive !== undefined) {
+      processedProps.accessibilityLiveRegion =
+        ariaLive === 'off' ? 'none' : ariaLive;
+    }
+
+    if (ariaHidden !== undefined) {
+      processedProps.accessibilityElementsHidden = ariaHidden;
+      if (ariaHidden === true) {
+        processedProps.importantForAccessibility = 'no-hide-descendants';
+      }
+    }
+
+    if (id !== undefined) {
+      processedProps.nativeID = id;
+    }
+
+    if (tabIndex !== undefined) {
+      processedProps.focusable = !tabIndex;
+    }
+
+    if (
+      accessibilityState != null ||
+      ariaBusy != null ||
+      ariaChecked != null ||
+      ariaDisabled != null ||
+      ariaExpanded != null ||
+      ariaSelected != null
+    ) {
+      processedProps.accessibilityState = {
+        busy: ariaBusy ?? accessibilityState?.busy,
+        checked: ariaChecked ?? accessibilityState?.checked,
+        disabled: ariaDisabled ?? accessibilityState?.disabled,
+        expanded: ariaExpanded ?? accessibilityState?.expanded,
+        selected: ariaSelected ?? accessibilityState?.selected,
+      };
+    }
+
+    if (
+      accessibilityValue != null ||
+      ariaValueMax != null ||
+      ariaValueMin != null ||
+      ariaValueNow != null ||
+      ariaValueText != null
+    ) {
+      processedProps.accessibilityValue = {
+        max: ariaValueMax ?? accessibilityValue?.max,
+        min: ariaValueMin ?? accessibilityValue?.min,
+        now: ariaValueNow ?? accessibilityValue?.now,
+        text: ariaValueText ?? accessibilityValue?.text,
+      };
+    }
+
+    actualView = <ViewNativeComponent {...processedProps} />;
+  } else {
+    const {
       accessibilityElementsHidden,
       accessibilityLabel,
       accessibilityLabelledBy,
@@ -100,10 +194,7 @@ const View: component(
       nativeID,
       tabIndex,
       ...otherProps
-    }: ViewProps,
-    forwardedRef,
-  ) => {
-    const hasTextAncestor = React.useContext(TextAncestor);
+    } = props;
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
 
@@ -143,7 +234,7 @@ const View: component(
             text: ariaValueText ?? accessibilityValue?.text,
           }
         : undefined;
-
+    
     const _keyDown =
       otherProps.keyDownEvents || otherProps.onKeyDown
         ? (event: KeyEvent) => {
@@ -248,7 +339,7 @@ const View: component(
         ? 'no-hide-descendants'
         : importantForAccessibility;
 
-    const actualView = (
+    actualView = (
       <ViewNativeComponent
         {...otherProps}
         accessibilityLiveRegion={
@@ -267,17 +358,13 @@ const View: component(
         accessibilityValue={_accessibilityValue}
         importantForAccessibility={computedImportantForAccessibility}
         nativeID={id ?? nativeID}
-        ref={forwardedRef}
-        onKeyDown={_keyDown}
-        onKeyDownCapture={_keyDownCapture}
-        onKeyUp={_keyUp}
-        onKeyUpCapture={_keyUpCapture}
         // [Windows
         accessible={_accessible}
         children={otherProps.children}
         // Windows]
       />
     );
+  }
 
     // [Windows - Paper doesn't support Views in Text while Fabric does
     if (global.RN$Bridgeless !== true) {
@@ -336,21 +423,20 @@ const View: component(
         </TextAncestor.Consumer>
         // Windows]
       );
-    } else {
-      if (hasTextAncestor) {
-        return (
-          <TextAncestor.Provider value={false}>
-            {actualView}
-          </TextAncestor.Provider>
-        );
-      }
+    } 
+    // Windows]
+    
+    // Fabric supports Views in Text, so we can use the TextAncestor context
+    // [Windows
+    if (hasTextAncestor) {
+      return <TextAncestor value={false}>{actualView}</TextAncestor>;
     }
     // Windows]
-
+    
     return actualView;
-  },
+  }
+
+export default View as component(
+  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
+  ...props: ViewProps
 );
-
-View.displayName = 'View';
-
-export default View;
