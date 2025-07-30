@@ -932,26 +932,50 @@ describe('TextInput Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('textinput-pressin');
     expect(dump).toMatchSnapshot();
-    await component.click();
 
-    //await componentFocusTrue.click();
+    // Trigger onPressIn (click only)
+    await component.click();
     const stateText = await app.findElementByTestID(
       'textinput-state-display-in',
     );
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Holding down the click/touch';
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'State text not updated after onPressIn.',
+      },
+    );
+    //  Assertion
     expect(await stateText.getText()).toBe('Holding down the click/touch');
-    //  This step helps avoid UI lock by unfocusing the input
   });
   test('TextInput triggers onPressOut and updates state text', async () => {
-    // Scroll the example into view
     const component = await app.findElementByTestID('textinput-pressout');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('textinput-pressout');
     expect(dump).toMatchSnapshot();
+
+    // Trigger onPressOut followed by onPressOut (using touchAction for press and release)
+    await component.click();
     const stateText = await app.findElementByTestID(
       'textinput-state-display-out',
     );
-    // Trigger onPressOut followed by onPressOut (using touchAction for press and release)
-    await component.click();
+
+    // Wait for onPressOut to update the state text
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText === 'Released click/touch';
+      },
+      {
+        timeout: 10000,
+        timeoutMsg: 'State text not updated after onPressOut.',
+      },
+    );
+
     // Assertion
     expect(await stateText.getText()).toBe('Released click/touch');
   });
