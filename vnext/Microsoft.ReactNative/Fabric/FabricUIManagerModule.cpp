@@ -66,7 +66,8 @@ FabricUIManager::~FabricUIManager() {
 void FabricUIManager::installFabricUIManager() noexcept {
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
-  facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
+  std::shared_ptr<const facebook::react::ContextContainer> contextContainer =
+      std::make_shared<facebook::react::ContextContainer>();
 
   // This allows access to our ReactContext from the contextContainer thats passed around the fabric codebase
   contextContainer->insert("MSRN.ReactContext", m_context);
@@ -97,8 +98,9 @@ void FabricUIManager::installFabricUIManager() noexcept {
       };
 
   toolbox.contextContainer = contextContainer;
-  toolbox.componentRegistryFactory = [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
-                                        facebook::react::ContextContainer::Shared const &contextContainer)
+  toolbox.componentRegistryFactory =
+      [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
+         std::shared_ptr<const facebook::react::ContextContainer> const &contextContainer)
       -> facebook::react::ComponentDescriptorRegistry::Shared {
     auto providerRegistry =
         WindowsComponentDescriptorRegistry::FromProperties(
