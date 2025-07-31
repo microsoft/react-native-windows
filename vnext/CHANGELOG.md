@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 26 Jul 2025 05:26:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 31 Jul 2025 05:23:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.979
+
+Thu, 31 Jul 2025 05:23:48 GMT
+
+### Changes
+
+- Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer> (chpurrer@meta.com)
 
 ## 0.0.0-canary.978
 
