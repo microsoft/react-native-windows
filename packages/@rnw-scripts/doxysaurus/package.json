@@ -19,7 +19,7 @@
     "doxysaurus": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.80.0-preview.0",
+    "@react-native-windows/fs": "0.80.0-preview.1",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "chalk": "^4.1.0",

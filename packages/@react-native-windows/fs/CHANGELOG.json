@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Thu, 31 Jul 2025 09:21:06 GMT",
+      "version": "0.80.0-preview.1",
+      "tag": "@react-native-windows/fs_v0.80.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/fs",
+            "commit": "5bbc80002168ea60488f88f25cf6de0b07196447",
+            "comment": "Promote 0.80 to preview"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:02 GMT",
       "version": "0.0.0-canary.66",
       "tag": "@react-native-windows/fs_v0.0.0-canary.66",

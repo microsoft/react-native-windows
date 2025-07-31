@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 26 Jul 2025 05:26:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 31 Jul 2025 09:21:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.1
+
+Thu, 31 Jul 2025 09:21:07 GMT
+
+### Changes
+
+- Promote 0.80 to preview (54227869+anupriya13@users.noreply.github.com)
+- Revert "Change `init-windows` default new app template to New Architecture (#…" (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.80.0-preview.1
+- Bump @react-native-windows/codegen to v0.80.0-preview.1
 
 ## 0.0.0-canary.978
 

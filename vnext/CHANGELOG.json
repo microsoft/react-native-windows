@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Jul 2025 09:21:07 GMT",
+      "version": "0.80.0-preview.1",
+      "tag": "react-native-windows_v0.80.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5bbc80002168ea60488f88f25cf6de0b07196447",
+            "comment": "Promote 0.80 to preview"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "79b0da7bfd78f59a7de9a025ab750e11005766e6",
+            "comment": "Revert \"Change `init-windows` default new app template to New Architecture (#…\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.80.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.80.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Jul 2025 05:26:13 GMT",
       "version": "0.0.0-canary.978",
       "tag": "react-native-windows_v0.0.0-canary.978",

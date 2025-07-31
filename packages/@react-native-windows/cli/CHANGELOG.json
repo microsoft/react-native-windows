@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 31 Jul 2025 09:21:06 GMT",
+      "version": "0.80.0-preview.1",
+      "tag": "@react-native-windows/cli_v0.80.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "79b0da7bfd78f59a7de9a025ab750e11005766e6",
+            "comment": "Revert \"Change `init-windows` default new app template to New Architecture (#…\""
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "5bbc80002168ea60488f88f25cf6de0b07196447",
+            "comment": "Promote 0.80 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.80.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.80.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.80.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.80.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Jul 2025 05:27:19 GMT",
       "version": "0.0.0-canary.270",
       "tag": "@react-native-windows/cli_v0.0.0-canary.270",

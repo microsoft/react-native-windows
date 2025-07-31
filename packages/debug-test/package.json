@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@react-native-windows/automation": "^0.3.400",
-    "@react-native-windows/fs": "0.80.0-preview.0",
+    "@react-native-windows/fs": "0.80.0-preview.1",
     "@rnw-scripts/eslint-config": "1.2.36",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/jest": "^29.2.2",
