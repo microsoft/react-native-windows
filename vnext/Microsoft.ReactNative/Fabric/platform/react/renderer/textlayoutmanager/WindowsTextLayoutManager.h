@@ -20,7 +20,7 @@ namespace facebook::react {
 
 class WindowsTextLayoutManager : public TextLayoutManager {
  public:
-  WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer);
+  WindowsTextLayoutManager(const std::shared_ptr<const ContextContainer> &contextContainer);
   virtual ~WindowsTextLayoutManager() = default;
 
   /*

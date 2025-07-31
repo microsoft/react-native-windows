@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Jul 2025 05:23:48 GMT",
+      "version": "0.0.0-canary.979",
+      "tag": "react-native-windows_v0.0.0-canary.979",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "chpurrer@meta.com",
+            "package": "react-native-windows",
+            "commit": "6f9dbbe5fefa6df16f45f893a7bcec80f5915bf3",
+            "comment": "Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer>"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Jul 2025 05:26:13 GMT",
       "version": "0.0.0-canary.978",
       "tag": "react-native-windows_v0.0.0-canary.978",

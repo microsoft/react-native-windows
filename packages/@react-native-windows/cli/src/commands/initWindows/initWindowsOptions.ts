@@ -24,7 +24,7 @@ export const initOptions: CommandOption[] = [
   {
     name: '--template [string]',
     description: 'Specify the template to use',
-    default: 'cpp-app',
+    default: undefined,
   },
   {
     name: '--name [string]',
