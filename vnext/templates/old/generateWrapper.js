@@ -13,7 +13,7 @@ function makeGenerateWindowsWrapper(language = 'cpp', isDefault = false) {
   const name = `React Native Windows Application (Old Arch, UWP, ${
     language === 'cs' ? 'C#' : 'C++'
   })`;
-  const description = `[Legacy] A RNW app using RN's Old Architecture, built in ${
+  const description = `A RNW app using RN's Old Architecture, built in ${
     language === 'cs' ? 'C#' : 'C++'
   } and targeting UWP.`;
 
