@@ -168,6 +168,23 @@ yarn test
 4. **Add change files** using `yarn change` for versioning
 5. **Test thoroughly** including relevant test suites
 
+### Required Commands for Every PR
+
+**Always run these commands after making changes in PRs:**
+
+```bash
+# Fix linting issues automatically
+yarn lint:fix
+
+# Format C++ code according to project standards
+yarn format
+
+# Generate change files for versioning (prerelease for development)
+yarn change --type prerelease
+```
+
+These commands ensure code quality, consistent formatting, and proper change tracking for the monorepo versioning system.
+
 ### Native Module Development
 
 **C++ Native Module Pattern**:
