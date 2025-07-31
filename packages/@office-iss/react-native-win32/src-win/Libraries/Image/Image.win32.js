@@ -16,7 +16,6 @@ import type {AbstractImageIOS, ImageIOS} from './ImageTypes.flow';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
-import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
 import NativeImageLoaderWin32 from './NativeImageLoaderWin32'; // [Win32] Replace iOS
 
 import {createRootTag} from '../ReactNative/RootTag';

@@ -110,10 +110,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // flowing to Java, so we just ensure it's a noop in those cases.
 
   setStateData(AndroidTextInputState{
-      AttributedStringBox(newAttributedString),
-      reactTreeAttributedString,
-      props.paragraphAttributes,
-      newEventCount});
+      AttributedStringBox(newAttributedString), reactTreeAttributedString, props.paragraphAttributes, newEventCount});
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
@@ -168,13 +165,11 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const
   return (!treeAttributedStringChanged ? state.attributedStringBox.getValue() : reactTreeAttributedString);
 }
 
-AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(
-    const LayoutContext& layoutContext) const {
-  const auto& props = BaseShadowNode::getConcreteProps();
+AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(const LayoutContext &layoutContext) const {
+  const auto &props = BaseShadowNode::getConcreteProps();
 
   AttributedString attributedString;
-  attributedString.setBaseTextAttributes(
-      props.getEffectiveTextAttributes(layoutContext.fontSizeMultiplier));
+  attributedString.setBaseTextAttributes(props.getEffectiveTextAttributes(layoutContext.fontSizeMultiplier));
 
   if (!props.placeholder.empty()) {
     attributedString.appendFragment(

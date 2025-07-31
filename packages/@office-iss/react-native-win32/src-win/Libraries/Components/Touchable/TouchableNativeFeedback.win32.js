@@ -13,6 +13,7 @@ import type {TouchableWithoutFeedbackProps} from './TouchableWithoutFeedback';
 import Pressability, {
   type PressabilityConfig,
 } from '../../Pressability/Pressability';
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import {findHostInstance_DEPRECATED} from '../../ReactNative/RendererProxy';
 import processColor from '../../StyleSheet/processColor';
 import Platform from '../../Utilities/Platform';

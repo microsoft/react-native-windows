@@ -25,6 +25,8 @@ type Props = $ReadOnly<{
 }>;
 
 function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
+  // [Win32] Dont use Animated
+  /*
   const [state, setState] = useState({
     animation: null,
     rotate: null,

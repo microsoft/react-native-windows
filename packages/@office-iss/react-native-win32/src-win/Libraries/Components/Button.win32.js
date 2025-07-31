@@ -288,10 +288,10 @@ const Touchable: typeof TouchableNativeFeedback | typeof TouchableOpacity =
 
 type ButtonRef = React.ElementRef<typeof Touchable>;
 
-const Button: component(
-  ref?: React.RefSetter<ButtonRef>,
-  ...props: ButtonProps
-) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
+const Button = React.forwardRef(function Button(
+  props: ButtonProps,
+  ref: React.RefSetter<ButtonRef>,
+) {
   // Win32
   const {
     accessibilityLabel,
@@ -400,7 +400,7 @@ const Button: component(
       </View>
     </Touchable>
   );
-};
+});
 
 Button.displayName = 'Button';
 

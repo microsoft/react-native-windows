@@ -222,27 +222,29 @@ let BaseImage: AbstractImageIOS = ({
   } else {
     return (
       <ImageAnalyticsTagContext.Consumer>
-        {analyticTag => (
-          <ImageViewNativeComponent
-            accessibilityState={_accessibilityState}
-            {...restProps}
-            accessible={props.alt !== undefined ? true : props.accessible}
-            accessibilityLabel={accessibilityLabel ?? props.alt}
-            accessibilityLevel={accessibilityLevel} // Windows
-            accessibilityPosInSet={accessibilityPosInSet} // Windows
-            accessibilitySetSize={accessibilitySetSize} // Windows
-            ref={actualRef}
-            style={style}
-            resizeMode={resizeMode}
-            tintColor={tintColor}
-            source={sources}
-            internal_analyticTag={analyticTag}
-          />
-        );
-      }}
-    </ImageAnalyticsTagContext.Consumer>
-  );
-  // Windows]
+        {analyticTag => {
+          return (
+            <ImageViewNativeComponent
+              accessibilityState={_accessibilityState}
+              {...restProps}
+              accessible={props.alt !== undefined ? true : props.accessible}
+              accessibilityLabel={accessibilityLabel ?? props.alt}
+              accessibilityLevel={accessibilityLevel} // Windows
+              accessibilityPosInSet={accessibilityPosInSet} // Windows
+              accessibilitySetSize={accessibilitySetSize} // Windows
+              ref={actualRef}
+              style={style}
+              resizeMode={resizeMode}
+              tintColor={tintColor}
+              source={sources}
+              internal_analyticTag={analyticTag}
+            />
+          );
+        }}
+      </ImageAnalyticsTagContext.Consumer>
+    );
+    // Windows]
+  }
 };
 
 const imageComponentDecorator = unstable_getImageComponentDecorator();

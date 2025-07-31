@@ -3,10 +3,10 @@
 
 #pragma once
 
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include "AndroidTextInputEventEmitter.h"
 #include "AndroidTextInputProps.h"
 #include "AndroidTextInputState.h"
-#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 
 #include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>

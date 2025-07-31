@@ -61,7 +61,6 @@ const TextImpl: component(
   'aria-posinset': ariaPosinset, // Windows
   'aria-setsize': ariaSetsize, // Windows
   'aria-readonly': ariaReadOnly, //Windows
-  'aria-label': ariaLabel,
   'aria-selected': ariaSelected,
   children,
   ellipsizeMode,
@@ -268,7 +267,6 @@ const TextImpl: component(
     android:
       accessible == null ? onPress != null || onLongPress != null : accessible,
     default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
-    });
   });
 
   let nativeText = null;

@@ -150,7 +150,7 @@ type TextBaseProps = $ReadOnly<{
   'aria-level'?: ?number, // Win32
   'aria-posinset'?: ?number, // Win32
   'aria-setsize'?: ?number, // Win32
-  
+
   children?: ?React.Node,
 
   /**

@@ -92,13 +92,11 @@ const TextImpl: component(
 }) => {
   const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
   const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
-  const _accessibilityDescribedBy =
-      ariaDescribedBy ?? accessibilityDescribedBy; // Win32
-  const _accessibilityDescription =
-      ariaDescription ?? accessibilityDescription; // Win32
+  const _accessibilityDescribedBy = ariaDescribedBy ?? accessibilityDescribedBy; // Win32
+  const _accessibilityDescription = ariaDescription ?? accessibilityDescription; // Win32
   const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
   const _accessibilityPositionInSet =
-      ariaPosinset ?? accessibilityPositionInSet; // Win32
+    ariaPosinset ?? accessibilityPositionInSet; // Win32
   const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
 
   let _accessibilityState: ?TextProps['accessibilityState'] =

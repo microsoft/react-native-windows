@@ -544,7 +544,7 @@ const Button: component(
     );
   }
   // Windows]
-});
+};
 
 Button.displayName = 'Button';
 

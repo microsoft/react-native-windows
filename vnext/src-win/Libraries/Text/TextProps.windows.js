@@ -146,7 +146,7 @@ type TextBaseProps = $ReadOnly<{
   'aria-readonly'?: ?boolean, // Windows
   'aria-multiselectable'?: ?boolean, // Windows
   'aria-required'?: ?boolean, // Windows
-  
+
   children?: ?React.Node,
 
   /**
