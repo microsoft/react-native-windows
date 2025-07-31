@@ -214,7 +214,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get mouse capture
   void TxSetCapture(BOOL fCapture) override {
-    auto mousePointer = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::Pointer>(winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse, 1 /* 1 is Mouse PointerId*/);
+    auto mousePointer = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::Pointer>(
+        winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse, 1 /* 1 is Mouse PointerId*/);
 
     if (fCapture) {
       m_outer->CapturePointer(mousePointer);
