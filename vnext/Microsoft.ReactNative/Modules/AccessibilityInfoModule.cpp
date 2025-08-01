@@ -7,8 +7,9 @@
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Controls.h>
 #include <XamlUtils.h>
-#endif
+#else
 #include <Fabric/Composition/ReactNativeIsland.h>
+#endif
 #include <uiautomationcore.h>
 #include <uiautomationcoreapi.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
