@@ -8,6 +8,7 @@
 #include <UI.Xaml.Controls.h>
 #include <XamlUtils.h>
 #endif
+#include <Fabric/Composition/ReactNativeIsland.h>
 #include <uiautomationcore.h>
 #include <uiautomationcoreapi.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
@@ -79,6 +80,35 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
         xaml::Automation::Peers::AutomationNotificationProcessing::ImportantMostRecent,
         hstr,
         hstr);
+#else
+    if (auto reactNativeIsland = context.Properties().Get(
+            winrt::Microsoft::ReactNative::implementation::ReactNativeIsland::ReactNativeIslandProperty())) {
+      // Now you have access to the ReactNativeIsland
+      // You can get the ContentIsland from it if needed:
+      if (auto uiaprovider = reactNativeIsland.GetUiaProvider()) {
+        if (auto rawProvider = uiaprovider.try_as<IRawElementProviderSimple>()) {
+          // Convert announcement to BSTR for UIA
+          winrt::hstring hstrAnnouncement{announcement};
+          auto bstrAnnouncement = SysAllocString(hstrAnnouncement.c_str());
+          auto bstrDisplayString = SysAllocString(hstrAnnouncement.c_str());
+
+          if (bstrAnnouncement && bstrDisplayString) {
+            // Raise the UIA notification event
+            HRESULT hr = UiaRaiseNotificationEvent(
+                rawProvider.get(),
+                NotificationKind_Other,
+                NotificationProcessing_ImportantMostRecent,
+                bstrDisplayString,
+                bstrAnnouncement);
+
+            // Clean up BSTRs
+            SysFreeString(bstrAnnouncement);
+            SysFreeString(bstrDisplayString);
+          }
+        }
+      }
+    }
+
 #endif
   });
 }
