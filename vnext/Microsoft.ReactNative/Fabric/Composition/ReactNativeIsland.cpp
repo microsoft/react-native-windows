@@ -869,7 +869,6 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
         });
     focusController.GotFocus(
         [weakThis = get_weak()](const auto &sender, const winrt::Microsoft::UI::Input::FocusChangedEventArgs &args) {
-          OutputDebugStringA("\nReactNativeIsland::GotFocus\n");
           if (auto pThis = weakThis.get()) {
             // Set the island to React context so it can be accessed by native modules
             if (pThis->m_context && pThis->m_island) {
