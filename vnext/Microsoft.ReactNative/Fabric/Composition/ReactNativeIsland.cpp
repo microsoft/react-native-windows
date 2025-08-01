@@ -41,7 +41,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 ReactPropertyId<winrt::Microsoft::ReactNative::ReactNativeIsland>
-ReactNativeIsland::ReactNativeIslandProperty() noexcept {
+ReactNativeIsland::LastFocusedReactNativeIslandProperty() noexcept {
   static const ReactPropertyId<winrt::Microsoft::ReactNative::ReactNativeIsland> prop{
       L"ReactNative.Composition", L"ReactNativeIsland"};
   return prop;
@@ -874,8 +874,8 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (pThis->m_context && pThis->m_island) {
               auto properties = pThis->m_context.Properties();
               properties.Set(
-                  ReactNativeIsland::ReactNativeIslandProperty(),
-                  pThis->get_strong().as<winrt::Microsoft::ReactNative::ReactNativeIsland>());
+                  ReactNativeIsland::LastFocusedReactNativeIslandProperty(),
+                  pThis.as<winrt::Microsoft::ReactNative::ReactNativeIsland>());
             }
           }
         });

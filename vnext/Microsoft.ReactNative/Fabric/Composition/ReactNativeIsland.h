@@ -49,7 +49,8 @@ struct ReactNativeIsland
   ~ReactNativeIsland() noexcept;
 
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
-  static ReactPropertyId<winrt::Microsoft::ReactNative::ReactNativeIsland> ReactNativeIslandProperty() noexcept;
+  static ReactPropertyId<winrt::Microsoft::ReactNative::ReactNativeIsland>
+  LastFocusedReactNativeIslandProperty() noexcept;
   ReactNativeIsland(const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal) noexcept;
 
   static winrt::Microsoft::ReactNative::ReactNativeIsland CreatePortal(

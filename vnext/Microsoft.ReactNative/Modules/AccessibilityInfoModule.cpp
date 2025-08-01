@@ -83,7 +83,7 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
         hstr);
 #else
     if (auto reactNativeIsland = context.Properties().Get(
-            winrt::Microsoft::ReactNative::implementation::ReactNativeIsland::ReactNativeIslandProperty())) {
+            winrt::Microsoft::ReactNative::implementation::ReactNativeIsland::LastFocusedReactNativeIslandProperty())) {
       // Now you have access to the ReactNativeIsland
       if (auto uiaprovider = reactNativeIsland.GetUiaProvider()) {
         if (auto rawProvider = uiaprovider.try_as<IRawElementProviderSimple>()) {
