@@ -85,26 +85,23 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
     if (auto reactNativeIsland = context.Properties().Get(
             winrt::Microsoft::ReactNative::implementation::ReactNativeIsland::ReactNativeIslandProperty())) {
       // Now you have access to the ReactNativeIsland
-      // You can get the ContentIsland from it if needed:
       if (auto uiaprovider = reactNativeIsland.GetUiaProvider()) {
         if (auto rawProvider = uiaprovider.try_as<IRawElementProviderSimple>()) {
           // Convert announcement to BSTR for UIA
           winrt::hstring hstrAnnouncement{announcement};
           auto bstrAnnouncement = SysAllocString(hstrAnnouncement.c_str());
-          auto bstrDisplayString = SysAllocString(hstrAnnouncement.c_str());
 
-          if (bstrAnnouncement && bstrDisplayString) {
+          if (bstrAnnouncement) {
             // Raise the UIA notification event
             HRESULT hr = UiaRaiseNotificationEvent(
                 rawProvider.get(),
                 NotificationKind_Other,
                 NotificationProcessing_ImportantMostRecent,
-                bstrDisplayString,
+                bstrAnnouncement,
                 bstrAnnouncement);
 
             // Clean up BSTRs
             SysFreeString(bstrAnnouncement);
-            SysFreeString(bstrDisplayString);
           }
         }
       }

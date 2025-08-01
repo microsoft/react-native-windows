@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "[Fabric] Implement announceForAccessibility in AccessibiltyInfo Module",
+  "comment": "[Fabric] Implement announceForAccessibility in AccessibilityInfo Module",
   "packageName": "react-native-windows",
   "email": "kvineeth@microsoft.com",
   "dependentChangeType": "patch"
