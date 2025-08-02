@@ -40,10 +40,12 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ReactPropertyId<winrt::Microsoft::ReactNative::ReactNativeIsland>
+ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<
+    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>>>
 ReactNativeIsland::LastFocusedReactNativeIslandProperty() noexcept {
-  static const ReactPropertyId<winrt::Microsoft::ReactNative::ReactNativeIsland> prop{
-      L"ReactNative.Composition", L"ReactNativeIsland"};
+  static const ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<
+      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>>>
+      prop{L"ReactNative.Composition", L"ReactNativeIsland"};
   return prop;
 }
 constexpr float loadingActivitySize = 12.0f;
@@ -875,7 +877,9 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
               auto properties = pThis->m_context.Properties();
               properties.Set(
                   ReactNativeIsland::LastFocusedReactNativeIslandProperty(),
-                  pThis.as<winrt::Microsoft::ReactNative::ReactNativeIsland>());
+                  winrt::Microsoft::ReactNative::ReactNonAbiValue<
+                      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>>{
+                      std::in_place, weakThis});
             }
           }
         });

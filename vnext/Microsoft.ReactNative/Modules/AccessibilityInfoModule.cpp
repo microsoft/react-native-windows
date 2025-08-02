@@ -82,26 +82,27 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
         hstr,
         hstr);
 #else
-    if (auto reactNativeIsland = context.Properties().Get(
+    if (auto weakIslandWrapper = context.Properties().Get(
             winrt::Microsoft::ReactNative::implementation::ReactNativeIsland::LastFocusedReactNativeIslandProperty())) {
-      // Now you have access to the ReactNativeIsland
-      if (auto uiaprovider = reactNativeIsland.GetUiaProvider()) {
-        if (auto rawProvider = uiaprovider.try_as<IRawElementProviderSimple>()) {
-          // Convert announcement to BSTR for UIA
-          winrt::hstring hstrAnnouncement{announcement};
-          auto bstrAnnouncement = SysAllocString(hstrAnnouncement.c_str());
-
-          if (bstrAnnouncement) {
-            // Raise the UIA notification event
-            HRESULT hr = UiaRaiseNotificationEvent(
-                rawProvider.get(),
-                NotificationKind_Other,
-                NotificationProcessing_ImportantMostRecent,
-                bstrAnnouncement,
-                bstrAnnouncement);
-
-            // Clean up BSTRs
-            SysFreeString(bstrAnnouncement);
+      if (auto weakIsland = weakIslandWrapper.Value()) {
+        if (auto reactNativeIsland = weakIsland.get()) {
+          if (auto uiaprovider = reactNativeIsland->GetUiaProvider()) {
+            if (auto rawProvider = uiaprovider.try_as<IRawElementProviderSimple>()) {
+              // Convert announcement to BSTR for UIA
+              winrt::hstring hstrAnnouncement{announcement};
+              auto bstrAnnouncement = SysAllocString(hstrAnnouncement.c_str());
+              if (bstrAnnouncement) {
+                // Raise the UIA notification event
+                HRESULT hr = UiaRaiseNotificationEvent(
+                    rawProvider.get(),
+                    NotificationKind_Other,
+                    NotificationProcessing_ImportantMostRecent,
+                    bstrAnnouncement,
+                    bstrAnnouncement);
+                // Clean up BSTRs
+                SysFreeString(bstrAnnouncement);
+              }
+            }
           }
         }
       }
