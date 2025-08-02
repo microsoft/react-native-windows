@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Add UIA Event Triggers for accessibilityAnnotation Property Changes",
+  "packageName": "react-native-windows",
+  "email": "gsaran252000@gmail.com",
+  "dependentChangeType": "patch"
+}
