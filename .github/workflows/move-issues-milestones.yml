@@ -1,0 +1,56 @@
+name: Move Issues from One Milestone to Another
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_milestone:
+        description: 'Source milestone title (e.g., 0.80)'
+        required: true
+        type: string
+      to_milestone:
+        description: 'Target milestone title (e.g., 0.81)'
+        required: true
+        type: string
+
+jobs:
+  move_issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up GitHub CLI
+        uses: cli/gh-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Move issues from source to target milestone
+        env:
+          REPO: ${{ github.repository }}
+          MILESTONE_FROM: ${{ github.event.inputs.from_milestone }}
+          MILESTONE_TO: ${{ github.event.inputs.to_milestone }}
+        run: |
+          echo "Fetching milestone numbers for $REPO..."
+          FROM_ID=$(gh api repos/$REPO/milestones --jq ".[] | select(.title==\"$MILESTONE_FROM\") | .number")
+          TO_ID=$(gh api repos/$REPO/milestones --jq ".[] | select(.title==\"$MILESTONE_TO\") | .number")
+
+          if [ -z "$FROM_ID" ] || [ -z "$TO_ID" ]; then
+            echo "❌ One of the milestones was not found."
+            exit 1
+          fi
+
+          echo "✅ Milestone $MILESTONE_FROM = $FROM_ID"
+          echo "✅ Milestone $MILESTONE_TO = $TO_ID"
+
+          echo "🔍 Fetching open issues in milestone '$MILESTONE_FROM'..."
+          ISSUE_NUMBERS=$(gh api "repos/$REPO/issues?state=open&milestone=$FROM_ID&per_page=100" --jq '.[].number')
+
+          if [ -z "$ISSUE_NUMBERS" ]; then
+            echo "🎉 No open issues with milestone $MILESTONE_FROM"
+            exit 0
+          fi
+
+          for ISSUE in $ISSUE_NUMBERS; do
+            echo "➡️ Moving issue #$ISSUE to milestone $MILESTONE_TO"
+            gh api -X PATCH "repos/$REPO/issues/$ISSUE" -f milestone=$TO_ID
+          done
+
+          echo "✅ Done moving issues."
