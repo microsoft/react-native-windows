@@ -831,6 +831,46 @@ void ComponentView::updateAccessibilityProps(
       oldViewProps.accessibilityValue.text,
       newViewProps.accessibilityValue.text);
 
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_AnnotationAnnotationTypeIdPropertyId,
+      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->typeID.empty()
+          ? oldViewProps.accessibilityAnnotation->typeID
+          : std::string(),
+      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->typeID.empty()
+          ? newViewProps.accessibilityAnnotation->typeID
+          : std::string());
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_AnnotationAnnotationTypeNamePropertyId,
+      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->typeName.empty()
+          ? oldViewProps.accessibilityAnnotation->typeName
+          : std::string(),
+      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->typeName.empty()
+          ? newViewProps.accessibilityAnnotation->typeName
+          : std::string());
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_AnnotationAuthorPropertyId,
+      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->author.empty()
+          ? oldViewProps.accessibilityAnnotation->author
+          : std::string(),
+      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->author.empty()
+          ? newViewProps.accessibilityAnnotation->author
+          : std::string());
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_AnnotationDateTimePropertyId,
+      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->dateTime.empty()
+          ? oldViewProps.accessibilityAnnotation->dateTime
+          : std::string(),
+      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->dateTime.empty()
+          ? newViewProps.accessibilityAnnotation->dateTime
+          : std::string());
+
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
     auto compProvider =
