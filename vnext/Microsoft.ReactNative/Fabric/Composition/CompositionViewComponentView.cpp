@@ -834,42 +834,26 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_AnnotationAnnotationTypeIdPropertyId,
-      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->typeID.empty()
-          ? oldViewProps.accessibilityAnnotation->typeID
-          : std::string(),
-      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->typeID.empty()
-          ? newViewProps.accessibilityAnnotation->typeID
-          : std::string());
+      oldViewProps.accessibilityAnnotation->typeID,
+      newViewProps.accessibilityAnnotation->typeID);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_AnnotationAnnotationTypeNamePropertyId,
-      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->typeName.empty()
-          ? oldViewProps.accessibilityAnnotation->typeName
-          : std::string(),
-      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->typeName.empty()
-          ? newViewProps.accessibilityAnnotation->typeName
-          : std::string());
+      oldViewProps.accessibilityAnnotation->typeName,
+      newViewProps.accessibilityAnnotation->typeName);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_AnnotationAuthorPropertyId,
-      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->author.empty()
-          ? oldViewProps.accessibilityAnnotation->author
-          : std::string(),
-      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->author.empty()
-          ? newViewProps.accessibilityAnnotation->author
-          : std::string());
+      oldViewProps.accessibilityAnnotation->author,
+      newViewProps.accessibilityAnnotation->author);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_AnnotationDateTimePropertyId,
-      oldViewProps.accessibilityAnnotation && !oldViewProps.accessibilityAnnotation->dateTime.empty()
-          ? oldViewProps.accessibilityAnnotation->dateTime
-          : std::string(),
-      newViewProps.accessibilityAnnotation && !newViewProps.accessibilityAnnotation->dateTime.empty()
-          ? newViewProps.accessibilityAnnotation->dateTime
-          : std::string());
+      oldViewProps.accessibilityAnnotation->dateTime,
+      newViewProps.accessibilityAnnotation->dateTime);
 
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
