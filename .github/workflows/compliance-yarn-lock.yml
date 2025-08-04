@@ -9,8 +9,6 @@ on:
         default: main
         type: choice
         options:
-          - main
-          - 0.80-stable
           - 0.79-stable
           - 0.78-stable
 
