@@ -6,6 +6,7 @@ _Erase all that don't apply._
 - New feature (non-breaking change which adds functionality)
 - Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - This change requires a documentation update
+- Automation (AI changes or Github Actions to reduce effort of manual tasks)
 
 ### Why
 What is the motivation for this change? Add a few sentences describing the context and overall goals of the pull request's commits.
