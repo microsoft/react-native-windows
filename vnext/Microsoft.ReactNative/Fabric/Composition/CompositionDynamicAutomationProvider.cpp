@@ -46,12 +46,13 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     AddSelectionItemsToContainer(this);
   }
 
-  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
-    m_textProvider = winrt::make<CompositionTextProvider>(
-                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                         .try_as<ITextProvider2>();
-  }
+  // if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()
+  // ||
+  //     strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
+  //   m_textProvider = winrt::make<CompositionTextProvider>(
+  //                        strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+  //                        .try_as<ITextProvider2>();
+  // }
 
   if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
     m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
@@ -294,16 +295,18 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_TextPatternId &&
-      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
-       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
-    m_textProvider.as<IUnknown>().copy_to(pRetVal);
-  }
+  // if (patternId == UIA_TextPatternId &&
+  //     (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()
+  //     ||
+  //      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
+  //   m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  // }
 
-  if (patternId == UIA_TextPattern2Id &&
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
-    m_textProvider.as<IUnknown>().copy_to(pRetVal);
-  }
+  // if (patternId == UIA_TextPattern2Id &&
+  //     strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>())
+  //     {
+  //   m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  // }
   if (patternId == UIA_AnnotationPatternId &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>() &&
       accessibilityAnnotationHasValue(props->accessibilityAnnotation)) {
