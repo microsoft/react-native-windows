@@ -935,7 +935,7 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
     return;
   }
 
-  auto* shadowNodePtr = m_host->FindShadowNodeForTag(tag);
+  auto *shadowNodePtr = m_host->FindShadowNodeForTag(tag);
   if (!shadowNodePtr) {
     return;
   }
@@ -968,7 +968,7 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
     float height = YGNodeLayoutGetHeight(yogaNode);
     auto view = shadowNode.GetView();
     auto pViewManager = shadowNode.GetViewManager();
-    
+
     if (pViewManager) {
       pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
       if (shadowNode.m_onLayoutRegistered) {
