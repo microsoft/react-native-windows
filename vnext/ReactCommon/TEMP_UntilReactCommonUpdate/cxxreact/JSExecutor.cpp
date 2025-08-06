@@ -58,7 +58,9 @@ void JSExecutor::disableSamplingProfiler()  {
 
 facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor::collectSamplingProfile() {
   return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
-      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
+    "stubbed_impl", 
+    std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{}, 
+    nullptr); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>

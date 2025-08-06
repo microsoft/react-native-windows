@@ -36,14 +36,30 @@ Size WindowsTextInputShadowNode::measureContent(
     attributedString = getPlaceholderAttributedString(layoutContext);
   }
 
-  auto textSize = textLayoutManager_
-                      ->measure(
-                          AttributedStringBox{attributedString},
-                          getConcreteProps().paragraphAttributes,
-                          textLayoutContext,
-                          textConstraints)
-                      .size;
-  return layoutConstraints.clamp(textSize);
+  // BaseTextShadowNode only gets children. We must detect and prepend text
+  // value attributes manually.
+  if (!getConcreteProps().text.empty()) {
+    auto textAttributes = TextAttributes::defaultTextAttributes();
+    textAttributes.apply(getConcreteProps().textAttributes);
+    auto fragment = AttributedString::Fragment{};
+    fragment.string = getConcreteProps().text;
+    fragment.textAttributes = textAttributes;
+    // If the TextInput opacity is 0 < n < 1, the opacity of the TextInput and
+    // text value's background will stack. This is a hack/workaround to prevent
+    // that effect.
+    fragment.textAttributes.backgroundColor = clearColor();
+    fragment.parentShadowView = ShadowView(*this);
+    attributedString.prependFragment(std::move(fragment));
+  }
+
+  TextLayoutContext textLayoutContext;
+  textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
+
+  facebook::react::ParagraphAttributes paragraphAttributes{};
+  paragraphAttributes.maximumNumberOfLines = getConcreteProps().multiline ? 0 : 1;
+  return textLayoutManager_
+      ->measure(AttributedStringBox{attributedString}, paragraphAttributes, textLayoutContext, layoutConstraints)
+      .size;
 }
 
 void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
@@ -109,8 +125,8 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
 
-  setStateData(AndroidTextInputState{
-      AttributedStringBox(newAttributedString), reactTreeAttributedString, props.paragraphAttributes, newEventCount});
+  setStateData(WindowsTextInputState{
+      AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
@@ -166,17 +182,29 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const
 }
 
 AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(const LayoutContext &layoutContext) const {
-  const auto &props = BaseShadowNode::getConcreteProps();
+  const auto &props = getConcreteProps();
 
   AttributedString attributedString;
-  attributedString.setBaseTextAttributes(props.getEffectiveTextAttributes(layoutContext.fontSizeMultiplier));
-
+  //[windows
   if (!props.placeholder.empty()) {
+    auto textAttributes = TextAttributes::defaultTextAttributes();
+    textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
+    textAttributes.apply(props.textAttributes);
+    
+  /*
+   * These props are applied to `View`, therefore they must not be a part of
+   * base text attributes.
+   */
+    textAttributes.backgroundColor = clearColor();
+    textAttributes.opacity = 1;
+
     attributedString.appendFragment(
         {.string = props.placeholder,
-         .textAttributes = attributedString.getBaseTextAttributes(),
-         .parentShadowView = {}});
+         .textAttributes = textAttributes,
+         .parentShadowView = ShadowView(*this)});
   }
+  // windows]
+  
   return attributedString;
 }
 

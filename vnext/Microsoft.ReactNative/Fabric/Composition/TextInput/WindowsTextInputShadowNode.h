@@ -4,9 +4,9 @@
 #pragma once
 
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
-#include "AndroidTextInputEventEmitter.h"
-#include "AndroidTextInputProps.h"
-#include "AndroidTextInputState.h"
+#include "WindowsTextInputEventEmitter.h"
+#include "WindowsTextInputProps.h"
+#include "WindowsTextInputState.h"
 
 #include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
@@ -22,11 +22,11 @@ extern const char WindowsTextInputComponentName[];
 /*
  * `ShadowNode` for <WindowsTextInput> component.
  */
-class AndroidTextInputShadowNode final : public ConcreteViewShadowNode<
-                                             AndroidTextInputComponentName,
-                                             AndroidTextInputProps,
-                                             AndroidTextInputEventEmitter,
-                                             AndroidTextInputState> {
+class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
+                                             WindowsTextInputComponentName,
+                                             WindowsTextInputProps,
+                                             WindowsTextInputEventEmitter,
+                                             WindowsTextInputState> {
  public:
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 

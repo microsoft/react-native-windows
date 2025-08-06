@@ -3,10 +3,6 @@
 
 #pragma once
 
-#include "AndroidTextInputShadowNode.h"
-#include "AndroidTextInputState.h"
-
-#include <fbjni/fbjni.h>
 #include "WindowsTextInputShadowNode.h"
 
 #include <yoga/YGEnums.h>

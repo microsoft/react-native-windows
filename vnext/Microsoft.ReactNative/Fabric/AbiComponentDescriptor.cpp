@@ -55,7 +55,7 @@ std::shared_ptr<facebook::react::ShadowNode> AbiComponentDescriptor::createShado
   return shadowNode;
 }
 
-facebook::react::ShadowNode::Unshared AbiComponentDescriptor::cloneShadowNode(
+ std::shared_ptr<facebook::react::ShadowNode> AbiComponentDescriptor::cloneShadowNode(
     const facebook::react::ShadowNode &sourceShadowNode,
     const facebook::react::ShadowNodeFragment &fragment) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
