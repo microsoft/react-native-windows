@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 31 Jul 2025 05:23:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 06 Aug 2025 05:28:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.980
+
+Wed, 06 Aug 2025 05:28:00 GMT
+
+### Changes
+
+- Revert "Change `init-windows` default new app template to New Architecture (#…" (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.271
 
 ## 0.0.0-canary.979
 

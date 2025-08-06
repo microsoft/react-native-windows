@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[BugFix] Open Init windows telemetry not capturing the true default template",
-  "packageName": "@react-native-windows/cli",
-  "email": "54227869+anupriya13@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
