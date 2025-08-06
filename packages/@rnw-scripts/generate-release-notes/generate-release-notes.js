@@ -189,8 +189,8 @@ function shouldIncludeInReleaseNotes(prDescription) {
   if (lines.length === 0) return false;
   
   // Check if the first non-empty line contains "no" or "_no_"
-  const firstLine = lines[0].toLowerCase();
-  return !(firstLine.includes('no') || firstLine.includes('_no_'));
+  const firstLine = lines[0].toLowerCase().trim();
+  return !(firstLine === 'no' || firstLine === '_no_');
 }
 
 function extractReleaseNotesSummary(prDescription) {
@@ -270,7 +270,8 @@ function extractTypeOfChange(prDescription) {
 
 async function categorizeCommits(commits) {
   const categories = {
-    'All Commits': [],
+    'All Commits [REVIEW ONLY]': [],
+    'Excluded [REVIEW ONLY]': [],
     'Breaking Changes': [],
     'New Features': [],
     'Reliability': [],
@@ -331,6 +332,8 @@ async function categorizeCommits(commits) {
           console.log(`PR #${prNumber}: Type of Change = "${typeOfChange}", Category = "${category}"`);
         } else {
           console.log(`Skipping PR #${prNumber} - not marked for inclusion in release notes`);
+          const excluded = `- ${commitTitle} [${commitTitle} · ${REPO}@${sha} (github.com)](${url})`;
+          categories['Excluded [REVIEW ONLY]'].push(excluded);
           continue; // Skip this commit
         }
       }
@@ -338,7 +341,7 @@ async function categorizeCommits(commits) {
     
     const entry = `- ${summary} [${commitTitle} · ${REPO}@${sha} (github.com)](${url})`;
 
-    categories['All Commits'].push(entry);
+    categories['All Commits [REVIEW ONLY]'].push(entry);
     categories[category].push(entry);
   }
 
