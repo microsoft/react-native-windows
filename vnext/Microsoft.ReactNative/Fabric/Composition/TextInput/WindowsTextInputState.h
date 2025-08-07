@@ -15,7 +15,6 @@
 #include <react/renderer/mapbuffer/MapBuffer.h>
 #include <react/renderer/mapbuffer/MapBufferBuilder.h> // [windows]
 
-
 namespace facebook::react {
 
 /*
@@ -35,20 +34,12 @@ class WindowsTextInputState final {
         paragraphAttributes(std::move(paragraphAttributes)),
         mostRecentEventCount(mostRecentEventCount) {}
 
-  WindowsTextInputState(
-      const WindowsTextInputState& previousState,
-      const folly::dynamic& data)
+  WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data)
       : attributedStringBox(previousState.attributedStringBox),
         reactTreeAttributedString(previousState.reactTreeAttributedString),
         paragraphAttributes(previousState.paragraphAttributes),
-        mostRecentEventCount(data.getDefault(
-                                     "mostRecentEventCount",
-                                     previousState.mostRecentEventCount)
-                                 .getInt()),
-        cachedAttributedStringId(data.getDefault(
-                                         "opaqueCacheId",
-                                         previousState.cachedAttributedStringId)
-                                     .getInt()) {}
+        mostRecentEventCount(data.getDefault("mostRecentEventCount", previousState.mostRecentEventCount).getInt()),
+        cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt()) {}
 
   folly::dynamic getDynamic() const;
   MapBuffer getMapBuffer() const;

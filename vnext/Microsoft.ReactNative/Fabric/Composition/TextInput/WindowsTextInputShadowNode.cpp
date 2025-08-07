@@ -125,8 +125,8 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
 
-  setStateData(WindowsTextInputState{
-      AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
+  setStateData(
+      WindowsTextInputState{AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
@@ -190,21 +190,19 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
     auto textAttributes = TextAttributes::defaultTextAttributes();
     textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
     textAttributes.apply(props.textAttributes);
-    
-  /*
-   * These props are applied to `View`, therefore they must not be a part of
-   * base text attributes.
-   */
+
+    /*
+     * These props are applied to `View`, therefore they must not be a part of
+     * base text attributes.
+     */
     textAttributes.backgroundColor = clearColor();
     textAttributes.opacity = 1;
 
     attributedString.appendFragment(
-        {.string = props.placeholder,
-         .textAttributes = textAttributes,
-         .parentShadowView = ShadowView(*this)});
+        {.string = props.placeholder, .textAttributes = textAttributes, .parentShadowView = ShadowView(*this)});
   }
   // windows]
-  
+
   return attributedString;
 }
 

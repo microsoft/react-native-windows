@@ -25,9 +25,7 @@ MapBuffer WindowsTextInputState::getMapBuffer() const {
   // through.
   if (cachedAttributedStringId == 0) {
     // TODO truncation
-    builder.putInt(
-        TX_STATE_KEY_MOST_RECENT_EVENT_COUNT,
-        static_cast<int32_t>(mostRecentEventCount));
+    builder.putInt(TX_STATE_KEY_MOST_RECENT_EVENT_COUNT, static_cast<int32_t>(mostRecentEventCount));
 
     auto attStringMapBuffer = toMapBuffer(attributedStringBox.getValue());
     builder.putMapBuffer(TX_STATE_KEY_ATTRIBUTED_STRING, attStringMapBuffer);
