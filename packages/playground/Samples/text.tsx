@@ -8,6 +8,8 @@ import React from 'react';
 import {AppRegistry, StyleSheet} from 'react-native';
 import {Text, View} from 'react-native-windows';
 
+console.log('hello console');
+
 export default class Bootstrap extends React.Component {
   render() {
     return (
