@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 07 Aug 2025 05:25:45 GMT",
+      "version": "0.0.0-canary.981",
+      "tag": "react-native-windows_v0.0.0-canary.981",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dea9967bf2ce3071ee00e35d5f6fd7554d4f0222",
+            "comment": "[Fabric] Implement announceForAccessibility in AccessibilityInfo Module"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Aug 2025 05:28:00 GMT",
       "version": "0.0.0-canary.980",
       "tag": "react-native-windows_v0.0.0-canary.980",
