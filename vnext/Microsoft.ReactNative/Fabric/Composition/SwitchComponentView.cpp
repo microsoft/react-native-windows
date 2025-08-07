@@ -8,6 +8,7 @@
 #include <AutoDraw.h>
 #include <Fabric/AbiViewProps.h>
 #include "CompositionDynamicAutomationProvider.h"
+#include "UiaHelpers.h"
 #include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -74,6 +75,7 @@ void SwitchComponentView::updateProps(
       *std::static_pointer_cast<const facebook::react::SwitchProps>(oldProps ? oldProps : viewProps());
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::SwitchProps>(props);
 
+  m_localToggleState = newViewProps.value;
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor ||
       oldViewProps.thumbTintColor != newViewProps.thumbTintColor || oldViewProps.value != newViewProps.value ||
       oldViewProps.disabled != newViewProps.disabled) {
@@ -319,10 +321,18 @@ bool SwitchComponentView::toggle() noexcept {
   auto switchEventEmitter = std::static_pointer_cast<facebook::react::SwitchEventEmitter const>(m_eventEmitter);
 
   facebook::react::SwitchEventEmitter::OnChange args;
-  args.value = !(switchProps().value);
+  m_localToggleState = args.value = !(switchProps().value);
   args.target = Tag();
 
   switchEventEmitter->onChange(args);
+  if (UiaClientsAreListening()) {
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        EnsureUiaProvider(),
+        UIA_ToggleToggleStatePropertyId,
+        m_localToggleState ? ToggleState_Off : ToggleState_On,
+        m_localToggleState ? ToggleState_On : ToggleState_Off
+        );
+  }
   return true;
 }
 
@@ -341,7 +351,7 @@ const facebook::react::SwitchProps &SwitchComponentView::switchProps() const noe
 
 // getToggleState method for IToggleProvider
 ToggleState SwitchComponentView::getToggleState() noexcept {
-  if (switchProps().value) {
+  if (m_localToggleState) {
     return ToggleState::ToggleState_On;
   } else {
     return ToggleState::ToggleState_Off;

@@ -67,6 +67,7 @@ struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, ViewCompo
   void updateVisuals() noexcept;
 
   bool m_hovered{false};
+  bool m_localToggleState{false}; // Add this to track immediate toggle state
   bool m_pressed{false};
   bool m_supressAnimationForNextFrame{false};
   bool m_visualUpdateRequired{true};
