@@ -175,6 +175,13 @@
     },
     {
       "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h",
+      "baseHash": "022e5643b7f9aee4290b1e456eaab61fb05df358",
+      "issue": 15020
+    },
+    {
+      "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseHash": "6a66bfa6f1a36ac0b1d3c114d0c4d11496c4f82e"

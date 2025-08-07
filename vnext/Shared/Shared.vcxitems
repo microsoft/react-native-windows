@@ -331,7 +331,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputEventEmitter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputProps.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputShadowNode.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.h" />    
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewComponentDescriptor.h" />
