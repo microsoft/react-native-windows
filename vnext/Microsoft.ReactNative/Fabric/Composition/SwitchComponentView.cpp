@@ -8,8 +8,8 @@
 #include <AutoDraw.h>
 #include <Fabric/AbiViewProps.h>
 #include "CompositionDynamicAutomationProvider.h"
-#include "UiaHelpers.h"
 #include "RootComponentView.h"
+#include "UiaHelpers.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -330,8 +330,7 @@ bool SwitchComponentView::toggle() noexcept {
         EnsureUiaProvider(),
         UIA_ToggleToggleStatePropertyId,
         m_localToggleState ? ToggleState_Off : ToggleState_On,
-        m_localToggleState ? ToggleState_On : ToggleState_Off
-        );
+        m_localToggleState ? ToggleState_On : ToggleState_Off);
   }
   return true;
 }
