@@ -70,7 +70,7 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
     return shadowNode;
   }
 
-  facebook::react::ShadowNode::Unshared cloneShadowNode(
+  std::shared_ptr<facebook::react::ShadowNode> cloneShadowNode(
       const facebook::react::ShadowNode &sourceShadowNode,
       const facebook::react::ShadowNodeFragment &fragment) const override {
     auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
