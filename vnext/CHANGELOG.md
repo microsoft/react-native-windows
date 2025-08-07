@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 06 Aug 2025 05:28:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 07 Aug 2025 05:25:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.981
+
+Thu, 07 Aug 2025 05:25:45 GMT
+
+### Changes
+
+- [Fabric] Implement announceForAccessibility in AccessibilityInfo Module (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.980
 
