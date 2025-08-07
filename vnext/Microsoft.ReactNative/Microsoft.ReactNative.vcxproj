@@ -151,7 +151,7 @@
         %(DelayLoadDLLs)
       </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
     </Link>
     <Link Condition="'$(UseFabric)' == 'true'">

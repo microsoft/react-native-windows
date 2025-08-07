@@ -14,6 +14,7 @@ namespace facebook::react {
 
 folly::dynamic WindowsTextInputState::getDynamic() const {
   LOG(FATAL) << "TextInputState state should only be read using MapBuffer";
+  return folly::dynamic::object();
 }
 
 MapBuffer WindowsTextInputState::getMapBuffer() const {
@@ -27,12 +28,12 @@ MapBuffer WindowsTextInputState::getMapBuffer() const {
     // TODO truncation
     builder.putInt(TX_STATE_KEY_MOST_RECENT_EVENT_COUNT, static_cast<int32_t>(mostRecentEventCount));
 
-    auto attStringMapBuffer = toMapBuffer(attributedStringBox.getValue());
-    builder.putMapBuffer(TX_STATE_KEY_ATTRIBUTED_STRING, attStringMapBuffer);
-    auto paMapBuffer = toMapBuffer(paragraphAttributes);
-    builder.putMapBuffer(TX_STATE_KEY_PARAGRAPH_ATTRIBUTES, paMapBuffer);
+    // auto attStringMapBuffer = toMapBuffer(attributedStringBox.getValue());
+    // builder.putMapBuffer(TX_STATE_KEY_ATTRIBUTED_STRING, attStringMapBuffer);
+    // auto paMapBuffer = toMapBuffer(paragraphAttributes);
+    // builder.putMapBuffer(TX_STATE_KEY_PARAGRAPH_ATTRIBUTES, paMapBuffer);
 
-    builder.putInt(TX_STATE_KEY_HASH, attStringMapBuffer.getInt(AS_KEY_HASH));
+    // builder.putInt(TX_STATE_KEY_HASH, attStringMapBuffer.getInt(AS_KEY_HASH));
   }
   return builder.build();
 }

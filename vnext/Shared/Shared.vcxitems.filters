@@ -766,6 +766,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputShadowNode.h">
       <Filter>Header Files\Fabric\Composition\TextInput</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.h">
+      <Filter>Header Files\Fabric\Composition\TextInput</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper.h">
       <Filter>Header Files\Fabric\Composition</Filter>
     </ClInclude>
