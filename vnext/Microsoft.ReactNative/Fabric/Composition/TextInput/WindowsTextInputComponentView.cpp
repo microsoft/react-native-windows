@@ -16,6 +16,7 @@
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
+#include "../Composition.Input.h"
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
 #include "JSValueReader.h"
@@ -213,15 +214,14 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get mouse capture
   void TxSetCapture(BOOL fCapture) override {
-    // assert(false);
-    // TODO capture?
-    /*
+    auto mousePointer = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::Pointer>(
+        winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse, 1 /* 1 is Mouse PointerId*/);
+
     if (fCapture) {
-      ::SetCapture(m_hwndHost);
+      m_outer->CapturePointer(mousePointer);
     } else {
-      ::ReleaseCapture();
+      m_outer->ReleasePointerCapture(mousePointer);
     }
-    */
   }
 
   //@cmember Set the focus to the text window
