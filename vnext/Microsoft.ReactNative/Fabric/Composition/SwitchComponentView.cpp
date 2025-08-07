@@ -81,12 +81,14 @@ void SwitchComponentView::updateProps(
     m_visualUpdateRequired = true;
   }
 
-  if (UiaClientsAreListening()) {
-    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-        EnsureUiaProvider(),
-        UIA_ToggleToggleStatePropertyId,
-        oldViewProps.value ? ToggleState_On : ToggleState_Off,
-        newViewProps.value ? ToggleState_On : ToggleState_Off);
+  if (oldViewProps.value != newViewProps.value) {
+    if (UiaClientsAreListening()) {
+      winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+          EnsureUiaProvider(),
+          UIA_ToggleToggleStatePropertyId,
+          oldViewProps.value ? ToggleState_On : ToggleState_Off,
+          newViewProps.value ? ToggleState_On : ToggleState_Off);
+    }
   }
 
   Super::updateProps(props, oldProps);
