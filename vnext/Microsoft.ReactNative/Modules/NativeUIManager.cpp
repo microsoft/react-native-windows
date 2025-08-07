@@ -953,36 +953,35 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
       }
     }
   }
-}
 
-const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
-if (auto yogaNode = GetYogaNode(tag)) {
-  if (!YGNodeGetHasNewLayout(yogaNode))
-    return;
-  YGNodeSetHasNewLayout(yogaNode, false);
+  const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
+  if (auto yogaNode = GetYogaNode(tag)) {
+    if (!YGNodeGetHasNewLayout(yogaNode))
+      return;
+    YGNodeSetHasNewLayout(yogaNode, false);
 
-  float left = YGNodeLayoutGetLeft(yogaNode);
-  float top = YGNodeLayoutGetTop(yogaNode);
-  float width = YGNodeLayoutGetWidth(yogaNode);
-  float height = YGNodeLayoutGetHeight(yogaNode);
-  auto view = shadowNode.GetView();
-  auto pViewManager = shadowNode.GetViewManager();
+    float left = YGNodeLayoutGetLeft(yogaNode);
+    float top = YGNodeLayoutGetTop(yogaNode);
+    float width = YGNodeLayoutGetWidth(yogaNode);
+    float height = YGNodeLayoutGetHeight(yogaNode);
+    auto view = shadowNode.GetView();
+    auto pViewManager = shadowNode.GetViewManager();
 
-  if (pViewManager) {
-    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
-    if (shadowNode.m_onLayoutRegistered) {
-      const auto hasLayoutChanged = !YogaFloatEquals(left, shadowNode.m_layout.Left) ||
-          !YogaFloatEquals(top, shadowNode.m_layout.Top) || !YogaFloatEquals(width, shadowNode.m_layout.Width) ||
-          !YogaFloatEquals(height, shadowNode.m_layout.Height);
-      if (hasLayoutChanged) {
-        React::JSValueObject layout{{"x", left}, {"y", top}, {"height", height}, {"width", width}};
-        React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
-        pViewManager->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
+    if (pViewManager) {
+      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
+      if (shadowNode.m_onLayoutRegistered) {
+        const auto hasLayoutChanged = !YogaFloatEquals(left, shadowNode.m_layout.Left) ||
+            !YogaFloatEquals(top, shadowNode.m_layout.Top) || !YogaFloatEquals(width, shadowNode.m_layout.Width) ||
+            !YogaFloatEquals(height, shadowNode.m_layout.Height);
+        if (hasLayoutChanged) {
+          React::JSValueObject layout{{"x", left}, {"y", top}, {"height", height}, {"width", width}};
+          React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
+          pViewManager->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
+        }
       }
+      shadowNode.m_layout = {left, top, width, height};
     }
-    shadowNode.m_layout = {left, top, width, height};
   }
-}
 }
 
 winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
