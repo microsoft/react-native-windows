@@ -16,12 +16,16 @@ const mockPrompts = prompts as jest.MockedFunction<typeof prompts>;
 
 describe('architecturePrompt', () => {
   beforeEach(() => {
+    jest.useFakeTimers(); // ensure timers are controlled
     jest.clearAllMocks();
     // Mock console methods to prevent output during tests
     jest.spyOn(console, 'log').mockImplementation(() => {});
   });
 
   afterEach(() => {
+    // flush any pending timers from the timeout in promptForArchitectureChoice
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
     jest.restoreAllMocks();
   });
 

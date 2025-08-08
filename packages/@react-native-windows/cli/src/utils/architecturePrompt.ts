@@ -76,13 +76,13 @@ export async function promptForArchitectureChoice(
               '\n⏳ No input received in 3 seconds. Proceeding with Old Architecture by default.',
             ),
           );
-          resolve({ choice: 'y' });
+          resolve({choice: 'y'});
         }, 3000);
       });
 
       const response = await Promise.race([userInputPromise, timeoutPromise]);
 
-      clearTimeout(timeoutId); // prevent late logging after resolution
+      if (timeoutId) clearTimeout(timeoutId); // prevent late logging after resolution
 
       if (!response.choice) {
         // User cancelled or no input
