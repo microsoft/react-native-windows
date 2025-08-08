@@ -12,6 +12,7 @@ import _ from 'lodash';
 import {performance} from 'perf_hooks';
 import {Ora} from 'ora';
 import util from 'util';
+import prompts from 'prompts';
 
 const glob = util.promisify(globFunc);
 
@@ -167,8 +168,23 @@ export class InitWindows {
     }
 
     if (this.options.template.startsWith('old')) {
-      spinner.warn(
-        `The legacy '${this.options.template}' template targets the React Native Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.`,
+      // Show interactive prompt for Old Architecture templates
+      this.options.template = await promptArchitectureChoice(
+        this.options.template,
+        !!this.options.telemetry,
+      );
+      
+      // Update spinner message if template changed
+      if (!this.options.template.startsWith('old')) {
+        spinner.info(`Switched to template '${this.options.template}'...`);
+      }
+    }
+
+    // Revalidate template after potential change
+    if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
+      throw new CodedError(
+        'InvalidTemplateName',
+        `Unable to find template '${this.options.template}'.`,
       );
     }
 
@@ -271,6 +287,96 @@ export class InitWindows {
 
     spinner.succeed();
   }
+}
+
+/**
+ * Prompts the user to choose between Old and New Architecture for v0.80 templates.
+ * @param templateName The current template name
+ * @param telemetry Whether telemetry is enabled for tracking user choices
+ * @returns The selected template name (original or switched to New Architecture)
+ */
+async function promptArchitectureChoice(
+  templateName: string,
+  telemetry: boolean,
+): Promise<string> {
+  console.log(
+    chalk.yellow(
+      `⚠️ The '${templateName}' template is based on the React Native Old Architecture, which will eventually be deprecated in future releases.`,
+    ),
+  );
+  console.log(
+    chalk.cyan(
+      '💡 We recommend switching to the New Architecture to take advantage of improved performance, long-term support, and modern capabilities.',
+    ),
+  );
+  console.log(
+    chalk.blue(
+      '🔗 Learn more: https://microsoft.github.io/react-native-windows/docs/new-architecture',
+    ),
+  );
+  console.log();
+
+  let attempts = 0;
+  const maxAttempts = 3;
+
+  while (attempts < maxAttempts) {
+    try {
+      const response = await prompts({
+        type: 'confirm',
+        name: 'useOldArchitecture',
+        message: 'Would you like to continue using the Old Architecture?',
+        initial: false, // Default to 'No' to encourage New Architecture adoption
+      });
+
+      // Handle case where user cancelled the prompt (Ctrl+C)
+      if (response.useOldArchitecture === undefined) {
+        console.log(
+          chalk.yellow(
+            '\nNo input received. Proceeding with Old Architecture by default. You can opt into the New Architecture later.',
+          ),
+        );
+        // TODO: Track telemetry for user choice when telemetry API is available
+        return templateName;
+      }
+
+      if (response.useOldArchitecture) {
+        console.log(
+          chalk.yellow(
+            'Proceeding with Old Architecture. You can migrate later using our migration guide: https://microsoft.github.io/react-native-windows/docs/new-architecture',
+          ),
+        );
+        // TODO: Track telemetry for user choice when telemetry API is available
+        return templateName;
+      } else {
+        console.log(
+          chalk.green(
+            'Great choice! Setting up the project with New Architecture support.',
+          ),
+        );
+        // TODO: Track telemetry for user choice when telemetry API is available
+        return 'cpp-app'; // Switch to New Architecture template
+      }
+    } catch (error) {
+      attempts++;
+      if (attempts >= maxAttempts) {
+        console.log(
+          chalk.yellow(
+            `\nMax attempts reached. Proceeding with Old Architecture by default. You can opt into the New Architecture later.`,
+          ),
+        );
+        // TODO: Track telemetry for user choice when telemetry API is available
+        return templateName;
+      }
+      console.log(
+        chalk.red(
+          'Invalid input. Please enter \'Y\' for Yes or \'N\' for No.',
+        ),
+      );
+    }
+  }
+
+  // Fallback (should not reach here)
+  return templateName;
 }
 
 /**

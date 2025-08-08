@@ -126,3 +126,21 @@ test('nameHelpers - isValidProjectNamespace', () => {
     nameHelpers.isValidProjectNamespace('com::company::app-name::other'),
   ).toBe(false);
 });
+
+describe('Architecture prompt detection', () => {
+  test('should detect Old Architecture templates', () => {
+    expect('old/uwp-cpp-app'.startsWith('old')).toBe(true);
+    expect('old/uwp-cs-app'.startsWith('old')).toBe(true);
+    expect('cpp-app'.startsWith('old')).toBe(false);
+    expect('cpp-lib'.startsWith('old')).toBe(false);
+  });
+
+  test('default template should be Old Architecture', () => {
+    const templateOption = initOptions.find(option => 
+      option.name.includes('--template')
+    );
+    const defaultTemplate = templateOption?.default as string;
+    expect(defaultTemplate).toBe('old/uwp-cpp-app');
+    expect(defaultTemplate?.startsWith('old')).toBe(true);
+  });
+});
