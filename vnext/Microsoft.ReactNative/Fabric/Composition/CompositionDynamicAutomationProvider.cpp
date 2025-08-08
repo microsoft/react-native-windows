@@ -50,7 +50,7 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
     m_textProvider = winrt::make<CompositionTextProvider>(
                          strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                         .try_as<ITextProvider2>();
+                         .try_as<ITextProvider>();
   }
 
   if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
