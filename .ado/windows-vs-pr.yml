@@ -16,13 +16,13 @@ parameters:
     default:
       Small:
         name: rnw-pool-2
-        demands: ImageOverride -equals rnw-img-vs2022-node18
+        demands: ImageOverride -equals rnw-img-vs2022-node22
       Medium:
         name: rnw-pool-4
-        demands: ImageOverride -equals rnw-img-vs2022-node18
+        demands: ImageOverride -equals rnw-img-vs2022-node22
       Large:
         name: rnw-pool-8
-        demands: ImageOverride -equals rnw-img-vs2022-node18
+        demands: ImageOverride -equals rnw-img-vs2022-node22
 
 stages:
   - template: stages.yml
