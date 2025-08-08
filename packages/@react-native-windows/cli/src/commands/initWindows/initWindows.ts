@@ -173,7 +173,7 @@ export class InitWindows {
         this.options.template,
         !!this.options.telemetry,
       );
-      
+
       // Update spinner message if template changed
       if (!this.options.template.startsWith('old')) {
         spinner.info(`Switched to template '${this.options.template}'...`);
@@ -368,9 +368,7 @@ async function promptArchitectureChoice(
         return templateName;
       }
       console.log(
-        chalk.red(
-          'Invalid input. Please enter \'Y\' for Yes or \'N\' for No.',
-        ),
+        chalk.red("Invalid input. Please enter 'Y' for Yes or 'N' for No."),
       );
     }
   }

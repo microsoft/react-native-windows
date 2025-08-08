@@ -136,11 +136,11 @@ describe('Architecture prompt detection', () => {
   });
 
   test('default template should be Old Architecture', () => {
-    const templateOption = initOptions.find(option => 
-      option.name.includes('--template')
+    const templateOption = initOptions.find(option =>
+      option.name.includes('--template'),
     );
     const defaultTemplate = templateOption?.default as string;
     expect(defaultTemplate).toBe('old/uwp-cpp-app');
-    expect(defaultTemplate?.startsWith('old')).toBe(true);
+    expect(defaultTemplate.startsWith('old')).toBe(true);
   });
 });
