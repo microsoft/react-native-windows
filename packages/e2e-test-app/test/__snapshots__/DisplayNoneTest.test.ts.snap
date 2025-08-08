@@ -57,7 +57,7 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "Background": "#80F9F9F9",
+              "Background": "#B3FFFFFF",
               "BorderBrush": "#FF808080",
               "BorderThickness": "1,1,1,1",
               "Clip": null,
