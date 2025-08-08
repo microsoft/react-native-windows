@@ -208,9 +208,24 @@ async function runWindowsInternal(
 
   // Warn about old architecture projects
   if (config.project.windows?.rnwConfig?.projectArch === 'old') {
-    newWarn(
-      'This project is using the React Native (for Windows) Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.',
+    console.log(
+      chalk.yellow(
+        `⚠️ The 'old architecture project' is based on the React Native Old Architecture, which will eventually be deprecated in future releases.`,
+      ),
     );
+    console.log();
+    console.log(
+      chalk.cyan(
+        '💡 We recommend switching to the New Architecture to take advantage of improved performance, long-term support, and modern capabilities.',
+      ),
+    );
+    console.log();
+    console.log(
+      chalk.blue(
+        '🔗 Learn more: https://microsoft.github.io/react-native-windows/docs/new-architecture',
+      ),
+    );
+    console.log();
   }
 
   // Get the solution file

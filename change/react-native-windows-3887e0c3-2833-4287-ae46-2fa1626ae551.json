@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update CLI prompt for architecture selections on Old Architecture with interactive prompts",
+  "packageName": "react-native-windows",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
