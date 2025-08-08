@@ -199,7 +199,7 @@ void UpdateUiaProperty(
   UpdateUiaProperty(provider, propId, oldData, newData);
 }
 
-void UpdateUiaAnnotationProperty(
+void UpdateUiaPropertyForAnnotation(
     winrt::IInspectable provider,
     PROPERTYID propId,
     const std::string &oldValue,
@@ -227,6 +227,32 @@ void UpdateUiaAnnotationProperty(
     UiaRaiseAutomationPropertyChangedEvent(
         spProviderSimple.get(), propId, CComVariant(oldData.c_str()), CComVariant(newData.c_str()));
   }
+}
+
+void UpdateUiaPropertiesForAnnotation(
+    winrt::IInspectable provider,
+    const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
+    const std::optional<facebook::react::AccessibilityAnnotation> &newAnnotation) noexcept {
+  // Only update if both annotations have values
+  if (!oldAnnotation.has_value() || !newAnnotation.has_value()) {
+    return;
+  }
+
+  const auto &old_annotation = oldAnnotation.value();
+  const auto &new_annotation = newAnnotation.value();
+
+  // Update all annotation properties
+  UpdateUiaPropertyForAnnotation(
+      provider, UIA_AnnotationAnnotationTypeIdPropertyId, old_annotation.typeID, new_annotation.typeID);
+
+  UpdateUiaPropertyForAnnotation(
+      provider, UIA_AnnotationAnnotationTypeNamePropertyId, old_annotation.typeName, new_annotation.typeName);
+
+  UpdateUiaPropertyForAnnotation(
+      provider, UIA_AnnotationAuthorPropertyId, old_annotation.author, new_annotation.author);
+
+  UpdateUiaPropertyForAnnotation(
+      provider, UIA_AnnotationDateTimePropertyId, old_annotation.dateTime, new_annotation.dateTime);
 }
 
 long GetLiveSetting(const std::string &liveRegion) noexcept {

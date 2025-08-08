@@ -47,11 +47,16 @@ void UpdateUiaProperty(
     const std::optional<std::string> &oldValue,
     const std::optional<std::string> &newValue) noexcept;
 
-void UpdateUiaAnnotationProperty(
+void UpdateUiaPropertyForAnnotation(
     winrt::Windows::Foundation::IInspectable provider,
     PROPERTYID propId,
     const std::string &oldTypeId,
     const std::string &newTypeId) noexcept;
+
+void UpdateUiaPropertiesForAnnotation(
+    winrt::Windows::Foundation::IInspectable provider,
+    const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
+    const std::optional<facebook::react::AccessibilityAnnotation> &newAnnotation) noexcept;
 
 long GetLiveSetting(const std::string &liveRegion) noexcept;
 
