@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "wrapped to single call - UpdateUIAPropertiesForAnnotation",
-  "packageName": "react-native-windows",
-  "email": "gsaran252000@gmail.com",
-  "dependentChangeType": "patch"
-}
