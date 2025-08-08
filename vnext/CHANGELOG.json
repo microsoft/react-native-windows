@@ -2,6 +2,42 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Aug 2025 05:25:51 GMT",
+      "version": "0.0.0-canary.982",
+      "tag": "react-native-windows_v0.0.0-canary.982",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6dff1aeab77bbbcd60d29a64ef1456b9e5ce904f",
+            "comment": "TextInput should capture mouse on mouse down"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b72b6b3ca8e243c25f4963793adfb2da45409cb7",
+            "comment": "[Fabric] Raising UIA Event if Toggle State Changes in Switch Component"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Aug 2025 05:25:45 GMT",
+      "version": "0.0.0-canary.981",
+      "tag": "react-native-windows_v0.0.0-canary.981",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dea9967bf2ce3071ee00e35d5f6fd7554d4f0222",
+            "comment": "[Fabric] Implement announceForAccessibility in AccessibilityInfo Module"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Aug 2025 05:28:00 GMT",
       "version": "0.0.0-canary.980",
       "tag": "react-native-windows_v0.0.0-canary.980",

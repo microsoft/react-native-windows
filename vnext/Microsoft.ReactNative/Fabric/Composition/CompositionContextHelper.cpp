@@ -811,7 +811,7 @@ struct CompScrollerVisual : winrt::implements<
           m_horizontal ? TTypeRedirects::InteractionSourceMode::Disabled
                        : TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
       m_visualInteractionSource.ManipulationRedirectionMode(
-          TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
+          TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadOnly);
     } else {
       m_visualInteractionSource.PositionXSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
       m_visualInteractionSource.PositionYSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
