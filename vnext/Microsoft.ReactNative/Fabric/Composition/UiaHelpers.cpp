@@ -175,6 +175,15 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, int oldV
   UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
 }
 
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, long oldValue, long newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
+
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+}
+
 void UpdateUiaProperty(
     winrt::IInspectable provider,
     PROPERTYID propId,
@@ -242,17 +251,18 @@ void UpdateUiaPropertiesForAnnotation(
   const auto &new_annotation = newAnnotation.value();
 
   // Update all annotation properties
-  UpdateUiaPropertyForAnnotation(
-      provider, UIA_AnnotationAnnotationTypeIdPropertyId, old_annotation.typeID, new_annotation.typeID);
+  UpdateUiaProperty(
+      provider,
+      UIA_AnnotationAnnotationTypeIdPropertyId,
+      GetAnnotationTypeId(old_annotation.typeID),
+      GetAnnotationTypeId(new_annotation.typeID));
 
-  UpdateUiaPropertyForAnnotation(
+  UpdateUiaProperty(
       provider, UIA_AnnotationAnnotationTypeNamePropertyId, old_annotation.typeName, new_annotation.typeName);
 
-  UpdateUiaPropertyForAnnotation(
-      provider, UIA_AnnotationAuthorPropertyId, old_annotation.author, new_annotation.author);
+  UpdateUiaProperty(provider, UIA_AnnotationAuthorPropertyId, old_annotation.author, new_annotation.author);
 
-  UpdateUiaPropertyForAnnotation(
-      provider, UIA_AnnotationDateTimePropertyId, old_annotation.dateTime, new_annotation.dateTime);
+  UpdateUiaProperty(provider, UIA_AnnotationDateTimePropertyId, old_annotation.dateTime, new_annotation.dateTime);
 }
 
 long GetLiveSetting(const std::string &liveRegion) noexcept {
