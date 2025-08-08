@@ -36,6 +36,8 @@ React Native Windows is a Microsoft-maintained implementation of React Native th
 
 ### C++ Code (.cpp, .h files)
 
+- While raising a PR don't do any changes in vnext/codegen directory, that directory should be untouched.
+
 **Style Guide**: Follow the project's `.clang-format` configuration
 - **Line length**: 120 characters maximum
 - **Indentation**: 2 spaces, no tabs
@@ -184,6 +186,8 @@ yarn change --type prerelease
 ```
 
 These commands ensure code quality, consistent formatting, and proper change tracking for the monorepo versioning system.
+
+Delete the PR branch "colpilot/fix-*" once the copilot PR is merged or closed to maintain repo hygiene.
 
 ### Native Module Development
 
