@@ -53,7 +53,6 @@ void UpdateUiaProperty(
     const std::optional<std::string> &oldValue,
     const std::optional<std::string> &newValue) noexcept;
 
-
 void UpdateUiaPropertiesForAnnotation(
     winrt::Windows::Foundation::IInspectable provider,
     const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
