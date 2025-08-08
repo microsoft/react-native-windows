@@ -28,6 +28,7 @@ import {
 } from '../../utils/telemetryHelpers';
 import * as pathHelpers from '../../utils/pathHelpers';
 import * as info from '../../utils/info';
+import {promptForArchitectureChoice} from '../../utils/architecturePrompt';
 import MSBuildTools from '../../utils/msbuildtools';
 import type {RunWindowsOptions} from './runWindowsOptions';
 import {runWindowsOptions} from './runWindowsOptions';
@@ -208,9 +209,20 @@ async function runWindowsInternal(
 
   // Warn about old architecture projects
   if (config.project.windows?.rnwConfig?.projectArch === 'old') {
-    newWarn(
-      'This project is using the React Native (for Windows) Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.',
+    const promptResult = await promptForArchitectureChoice(
+      'old architecture project',
     );
+
+    if (
+      !promptResult.shouldContinueWithOldArch &&
+      !promptResult.userCancelled
+    ) {
+      // For existing projects, we can't change the architecture automatically
+      // but we can provide guidance
+      newInfo(
+        'Note: For existing projects, you will need to manually migrate to the New Architecture. Please follow the migration guide at: https://microsoft.github.io/react-native-windows/docs/new-architecture',
+      );
+    }
   }
 
   // Get the solution file

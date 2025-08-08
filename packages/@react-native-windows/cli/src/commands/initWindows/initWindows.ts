@@ -30,6 +30,7 @@ import {
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
 import * as nameHelpers from '../../utils/nameHelpers';
+import {promptForArchitectureChoice} from '../../utils/architecturePrompt';
 import type {InitOptions} from './initWindowsOptions';
 import {initOptions} from './initWindowsOptions';
 
@@ -167,9 +168,26 @@ export class InitWindows {
     }
 
     if (this.options.template.startsWith('old')) {
-      spinner.warn(
-        `The legacy '${this.options.template}' template targets the React Native Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.`,
+      const promptResult = await promptForArchitectureChoice(
+        this.options.template,
       );
+
+      if (
+        !promptResult.shouldContinueWithOldArch &&
+        !promptResult.userCancelled
+      ) {
+        // User chose to switch to New Architecture
+        spinner.info('Switching to New Architecture template (cpp-app)...');
+        this.options.template = 'cpp-app';
+
+        // Verify the new template exists
+        if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
+          throw new CodedError(
+            'InvalidTemplateName',
+            `Unable to find New Architecture template '${this.options.template}'.`,
+          );
+        }
+      }
     }
 
     const templateConfig = this.templates.get(this.options.template)!;
