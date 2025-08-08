@@ -46,6 +46,8 @@ export async function promptForArchitectureChoice(
 
   while (attempts < maxRetries) {
     try {
+      let timeoutId: NodeJS.Timeout;
+
       const userInputPromise = prompts(
         {
           type: 'text',
@@ -54,10 +56,9 @@ export async function promptForArchitectureChoice(
             'Would you like to continue using the Old Architecture? (Y/N)',
           validate: (value: string) => {
             const normalized = value.trim().toLowerCase();
-            if (normalized === 'y' || normalized === 'n') {
-              return true;
-            }
-            return "Invalid input. Please enter 'Y' for Yes or 'N' for No.";
+            return normalized === 'y' || normalized === 'n'
+              ? true
+              : "Invalid input. Please enter 'Y' for Yes or 'N' for No.";
           },
         },
         {
@@ -67,9 +68,9 @@ export async function promptForArchitectureChoice(
         },
       );
 
-      // Timeout fallback
-      const timeoutPromise = new Promise<{ choice?: string }>((resolve) => {
-        setTimeout(() => {
+      // Timeout fallback with clearTimeout support
+      const timeoutPromise = new Promise<{choice?: string}>(resolve => {
+        timeoutId = setTimeout(() => {
           console.log(
             chalk.yellow(
               '\n⏳ No input received in 3 seconds. Proceeding with Old Architecture by default.',
@@ -80,6 +81,8 @@ export async function promptForArchitectureChoice(
       });
 
       const response = await Promise.race([userInputPromise, timeoutPromise]);
+
+      clearTimeout(timeoutId); // prevent late logging after resolution
 
       if (!response.choice) {
         // User cancelled or no input
@@ -113,7 +116,7 @@ export async function promptForArchitectureChoice(
         return {shouldContinueWithOldArch: true, userCancelled: true};
       }
 
-      // For other errors, continue to retry
+      // retry on invalid input
       attempts++;
       if (attempts < maxRetries) {
         console.log(
