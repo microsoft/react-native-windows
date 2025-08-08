@@ -166,6 +166,15 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool old
   UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
 }
 
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, int oldValue, int newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
+
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+}
+
 void UpdateUiaProperty(
     winrt::IInspectable provider,
     PROPERTYID propId,
