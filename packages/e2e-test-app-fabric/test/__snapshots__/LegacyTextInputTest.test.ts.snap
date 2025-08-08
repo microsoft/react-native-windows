@@ -8,8 +8,6 @@ exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
     "LocalizedControlType": "text",
     "Name": "onFocus
 <Log Start>",
-    "TextRangePattern.GetText": "onFocus
-<Log Start>",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -36,10 +34,6 @@ exports[`LegacyTextInputTest Click on multiline TextInput to move focus away fro
 onBlur
 onFocus
 <Log Start>",
-    "TextRangePattern.GetText": "onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -63,51 +57,6 @@ exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onFocus
-onEndEditing text: abc
-onBlur
-onSubmitEditing text: abc
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: def
-onSelectionChange range: 3,3
-onKeyPress key: f
-onChange text: de
-onSelectionChange range: 2,2
-onKeyPress key: e
-onChange text: d
-onSelectionChange range: 1,1
-onKeyPress key: d
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-    "TextRangePattern.GetText": "onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
 onChange text: 
@@ -188,20 +137,6 @@ onEndEditing text:
 onBlur
 onFocus
 <Log Start>",
-    "TextRangePattern.GetText": "onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -225,43 +160,6 @@ exports[`LegacyTextInputTest Type abc on multiline TextInput then press Enter ke
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "onSubmitEditing text: abc
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: def
-onSelectionChange range: 3,3
-onKeyPress key: f
-onChange text: de
-onSelectionChange range: 2,2
-onKeyPress key: e
-onChange text: d
-onSelectionChange range: 1,1
-onKeyPress key: d
-onChange text: 
-onSelectionChange range: 0,0
-onChange text: abc
-onSelectionChange range: 3,3
-onKeyPress key: c
-onChange text: ab
-onSelectionChange range: 2,2
-onKeyPress key: b
-onChange text: a
-onSelectionChange range: 1,1
-onKeyPress key: a
-onFocus
-onEndEditing text: 
-onBlur
-onFocus
-<Log Start>",
-    "TextRangePattern.GetText": "onSubmitEditing text: abc
 onChange text: abc
 onSelectionChange range: 3,3
 onKeyPress key: c
