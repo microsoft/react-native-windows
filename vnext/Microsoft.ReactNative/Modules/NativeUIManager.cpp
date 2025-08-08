@@ -948,9 +948,7 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
 
   if (!pViewManager->IsNativeControlWithSelfLayout()) {
     for (const auto child : shadowNode.m_children) {
-      if (child != InvalidTag && m_host->FindShadowNodeForTag(child)) {
-        SetLayoutPropsRecursive(child);
-      }
+      SetLayoutPropsRecursive(child);
     }
   }
 
