@@ -208,36 +208,6 @@ void UpdateUiaProperty(
   UpdateUiaProperty(provider, propId, oldData, newData);
 }
 
-void UpdateUiaPropertyForAnnotation(
-    winrt::IInspectable provider,
-    PROPERTYID propId,
-    const std::string &oldValue,
-    const std::string &newValue) noexcept {
-  std::string oldData = oldValue.empty() ? "" : oldValue;
-  std::string newData = newValue.empty() ? "" : newValue;
-
-  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
-
-  if (spProviderSimple == nullptr || !WasUiaPropertyAdvised(spProviderSimple, propId))
-    return;
-
-  if (oldData == newData)
-    return;
-
-  // For annotation type ID property, convert string type IDs to annotation type constants
-  if (propId == UIA_AnnotationAnnotationTypeIdPropertyId) {
-    long oldAnnotationTypeId = GetAnnotationTypeId(oldData);
-    long newAnnotationTypeId = GetAnnotationTypeId(newData);
-
-    UiaRaiseAutomationPropertyChangedEvent(
-        spProviderSimple.get(), propId, CComVariant(oldAnnotationTypeId), CComVariant(newAnnotationTypeId));
-  } else {
-    // For other annotation properties, use string comparison
-    UiaRaiseAutomationPropertyChangedEvent(
-        spProviderSimple.get(), propId, CComVariant(oldData.c_str()), CComVariant(newData.c_str()));
-  }
-}
-
 void UpdateUiaPropertiesForAnnotation(
     winrt::IInspectable provider,
     const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
