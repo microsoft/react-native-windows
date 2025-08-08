@@ -9,7 +9,7 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-class CompositionTextProvider : public winrt::implements<CompositionTextProvider, ITextProvider, ITextProvider2> {
+class CompositionTextProvider : public winrt::implements<CompositionTextProvider, ITextProvider> {
  public:
   CompositionTextProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
@@ -23,12 +23,6 @@ class CompositionTextProvider : public winrt::implements<CompositionTextProvider
   virtual HRESULT __stdcall RangeFromChild(IRawElementProviderSimple *childElement, ITextRangeProvider **pRetVal)
       override;
   virtual HRESULT __stdcall RangeFromPoint(UiaPoint point, ITextRangeProvider **pRetVal) override;
-
-  // inherited via ITextProvider2
-  virtual HRESULT __stdcall GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) override;
-  virtual HRESULT __stdcall RangeFromAnnotation(
-      IRawElementProviderSimple *annotationElement,
-      ITextRangeProvider **pRetVal) override;
 
   void EnsureTextRangeProvider();
 
