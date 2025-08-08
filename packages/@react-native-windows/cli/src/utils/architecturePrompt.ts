@@ -46,7 +46,7 @@ export async function promptForArchitectureChoice(
 
   while (attempts < maxRetries) {
     try {
-      let timeoutId: NodeJS.Timeout;
+      let timeoutId: NodeJS.Timeout | undefined;
 
       const userInputPromise = prompts(
         {
