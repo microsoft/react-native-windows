@@ -46,7 +46,7 @@ export async function promptForArchitectureChoice(
 
   while (attempts < maxRetries) {
     try {
-      const response = await prompts(
+      const userInputPromise = prompts(
         {
           type: 'text',
           name: 'choice',
@@ -66,6 +66,20 @@ export async function promptForArchitectureChoice(
           },
         },
       );
+
+      // Timeout fallback
+      const timeoutPromise = new Promise<{ choice?: string }>((resolve) => {
+        setTimeout(() => {
+          console.log(
+            chalk.yellow(
+              '\n⏳ No input received in 3 seconds. Proceeding with Old Architecture by default.',
+            ),
+          );
+          resolve({ choice: 'y' });
+        }, 3000);
+      });
+
+      const response = await Promise.race([userInputPromise, timeoutPromise]);
 
       if (!response.choice) {
         // User cancelled or no input
