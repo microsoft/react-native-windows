@@ -50,7 +50,7 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
     m_textProvider = winrt::make<CompositionTextProvider>(
                          strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                         .try_as<ITextProvider>();
+                         .try_as<ITextProvider2>();
   }
 
   if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
@@ -300,6 +300,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
+  if (patternId == UIA_TextPattern2Id &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  }
   if (patternId == UIA_AnnotationPatternId &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>() &&
       accessibilityAnnotationHasValue(props->accessibilityAnnotation)) {

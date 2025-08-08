@@ -100,7 +100,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
-  winrt::com_ptr<ITextProvider> m_textProvider;
+  winrt::com_ptr<ITextProvider2> m_textProvider;
   winrt::com_ptr<IAnnotationProvider> m_annotationProvider;
   std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
   // Non-null when this UIA node is the peer of a ContentIslandComponentView.
