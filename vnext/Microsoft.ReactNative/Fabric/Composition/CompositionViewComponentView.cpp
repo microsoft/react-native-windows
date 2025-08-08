@@ -831,6 +831,33 @@ void ComponentView::updateAccessibilityProps(
       oldViewProps.accessibilityValue.text,
       newViewProps.accessibilityValue.text);
 
+  // Handle annotation properties with null checks
+  if (oldViewProps.accessibilityAnnotation.has_value() && newViewProps.accessibilityAnnotation.has_value()) {
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaAnnotationProperty(
+        EnsureUiaProvider(),
+        UIA_AnnotationAnnotationTypeIdPropertyId,
+        oldViewProps.accessibilityAnnotation->typeID,
+        newViewProps.accessibilityAnnotation->typeID);
+
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaAnnotationProperty(
+        EnsureUiaProvider(),
+        UIA_AnnotationAnnotationTypeNamePropertyId,
+        oldViewProps.accessibilityAnnotation->typeName,
+        newViewProps.accessibilityAnnotation->typeName);
+
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaAnnotationProperty(
+        EnsureUiaProvider(),
+        UIA_AnnotationAuthorPropertyId,
+        oldViewProps.accessibilityAnnotation->author,
+        newViewProps.accessibilityAnnotation->author);
+
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaAnnotationProperty(
+        EnsureUiaProvider(),
+        UIA_AnnotationDateTimePropertyId,
+        oldViewProps.accessibilityAnnotation->dateTime,
+        newViewProps.accessibilityAnnotation->dateTime);
+  }
+
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
     auto compProvider =
