@@ -9,6 +9,7 @@
 #include <Fabric/AbiViewProps.h>
 #include "CompositionDynamicAutomationProvider.h"
 #include "RootComponentView.h"
+#include "UiaHelpers.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -78,6 +79,16 @@ void SwitchComponentView::updateProps(
       oldViewProps.thumbTintColor != newViewProps.thumbTintColor || oldViewProps.value != newViewProps.value ||
       oldViewProps.disabled != newViewProps.disabled) {
     m_visualUpdateRequired = true;
+  }
+
+  if (oldViewProps.value != newViewProps.value) {
+    if (UiaClientsAreListening()) {
+      winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+          EnsureUiaProvider(),
+          UIA_ToggleToggleStatePropertyId,
+          oldViewProps.value ? ToggleState_On : ToggleState_Off,
+          newViewProps.value ? ToggleState_On : ToggleState_Off);
+    }
   }
 
   Super::updateProps(props, oldProps);

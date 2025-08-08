@@ -32,6 +32,12 @@ void UpdateUiaProperty(
 void UpdateUiaProperty(
     winrt::Windows::Foundation::IInspectable provider,
     PROPERTYID propId,
+    int oldValue,
+    int newValue) noexcept;
+
+void UpdateUiaProperty(
+    winrt::Windows::Foundation::IInspectable provider,
+    PROPERTYID propId,
     const std::string &oldValue,
     const std::string &newValue) noexcept;
 
