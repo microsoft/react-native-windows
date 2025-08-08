@@ -29,6 +29,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WebView2.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PackageVersionDefinitions.props" />
 
   <PropertyGroup>
