@@ -99,17 +99,5 @@ HRESULT __stdcall CompositionTextProvider::RangeFromPoint(UiaPoint point, ITextR
   m_textRangeProvider.copy_to(pRetVal);
   return S_OK;
 }
-HRESULT __stdcall CompositionTextProvider::GetCaretRange(BOOL *isActive, ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
-  return S_OK;
-}
 
-HRESULT __stdcall CompositionTextProvider::RangeFromAnnotation(
-    IRawElementProviderSimple *annotationElement,
-    ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
-  return S_OK;
-}
 } // namespace winrt::Microsoft::ReactNative::implementation

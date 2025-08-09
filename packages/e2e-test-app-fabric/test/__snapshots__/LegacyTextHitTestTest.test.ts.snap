@@ -7,7 +7,6 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -31,7 +30,6 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -55,7 +53,6 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -79,7 +76,6 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -103,7 +99,6 @@ exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -127,7 +122,6 @@ exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -151,7 +145,6 @@ exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -175,7 +168,6 @@ exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
-    "TextRangePattern.GetText": "Pressed: 2 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -199,7 +191,6 @@ exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -223,7 +214,6 @@ exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -247,7 +237,6 @@ exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -271,7 +260,6 @@ exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -295,7 +283,6 @@ exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -319,7 +306,6 @@ exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
-    "TextRangePattern.GetText": "Pressed: 1 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -343,7 +329,6 @@ exports[`LegacyTextHitTestTest WrappedLTRInRTLFlowEdgeCaseNotPressable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Pressed: 0 times.",
-    "TextRangePattern.GetText": "Pressed: 0 times.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",

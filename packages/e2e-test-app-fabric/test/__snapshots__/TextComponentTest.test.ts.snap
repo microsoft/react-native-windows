@@ -7,7 +7,6 @@ exports[`Text Tests Padding can be added to Text 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "This text is indented by 10px padding on all sides.",
-    "TextRangePattern.GetText": "This text is indented by 10px padding on all sides.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -31,7 +30,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -55,7 +53,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:80,width:500,lineCount:3,fontSize:40",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -79,7 +76,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -103,7 +99,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:120,width:475,lineCount:5,fontSize:40",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -127,7 +122,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -151,7 +145,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, c
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:160,width:450,lineCount:0,fontSize:40",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -175,7 +168,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, d
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -199,7 +191,6 @@ exports[`Text Tests Text can adjust its fontsize according to its limitations, d
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
-    "TextRangePattern.GetText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -223,7 +214,6 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
-    "TextRangePattern.GetText": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -247,7 +237,6 @@ exports[`Text Tests Text can be selectable 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
-    "TextRangePattern.GetText": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -271,7 +260,6 @@ exports[`Text Tests Text can have a color 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Red color",
-    "TextRangePattern.GetText": "Red color",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -295,7 +283,6 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "This text will have a orange highlight on selection.",
-    "TextRangePattern.GetText": "This text will have a orange highlight on selection.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -319,7 +306,6 @@ exports[`Text Tests Text can have a size 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Size 23",
-    "TextRangePattern.GetText": "Size 23",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -349,21 +335,18 @@ exports[`Text Tests Text can have advanced borders 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text has customized borders.",
-        "TextRangePattern.GetText": "This text has customized borders.",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text has customized borders.",
-        "TextRangePattern.GetText": "This text has customized borders.",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text has customized borders.",
-        "TextRangePattern.GetText": "This text has customized borders.",
       },
     ],
   },
@@ -664,7 +647,6 @@ exports[`Text Tests Text can have an outer color 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
-    "TextRangePattern.GetText": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -694,7 +676,6 @@ exports[`Text Tests Text can have borders 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Sample bordered text with default styling.",
-        "TextRangePattern.GetText": "Sample bordered text with default styling.",
       },
       {
         "AutomationId": "",
@@ -703,16 +684,12 @@ exports[`Text Tests Text can have borders 1`] = `
         "Name": "Some more bordered text + a tad of CSS.
 1st nested - border specifcied but ignored.
 2nd Inside text!",
-        "TextRangePattern.GetText": "Some more bordered text + a tad of CSS.
-1st nested - border specifcied but ignored.
-2nd Inside text!",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
-        "TextRangePattern.GetText": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
       },
     ],
   },
@@ -875,7 +852,6 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Solid line-through",
-    "TextRangePattern.GetText": "Solid line-through",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -899,7 +875,6 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Solid underline",
-    "TextRangePattern.GetText": "Solid underline",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -923,7 +898,6 @@ exports[`Text Tests Text can have inline views/images 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "This text contains an inline blue view ￼ and an inline image ￼. Neat, huh?",
-    "TextRangePattern.GetText": "This text contains an inline blue view ￯﾿ﾼ and an inline image ￯﾿ﾼ. Neat, huh?",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -1001,14 +975,12 @@ exports[`Text Tests Text can have nested views 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This is the first row",
-        "TextRangePattern.GetText": "This is the first row",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This is a nested text ￼ with a Red View",
-        "TextRangePattern.GetText": "This is a nested text ￯﾿ﾼ with a Red View",
       },
     ],
   },
@@ -1094,7 +1066,6 @@ exports[`Text Tests Text can have shadows 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "Demo text shadow",
-    "TextRangePattern.GetText": "Demo text shadow",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -1118,7 +1089,6 @@ exports[`Text Tests Text can wrap 1`] = `
     "ControlType": 50020,
     "LocalizedControlType": "text",
     "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
-    "TextRangePattern.GetText": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -1147,28 +1117,24 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "The inline view below is taller than its Text parent and should be clipped.",
-        "TextRangePattern.GetText": "The inline view below is taller than its Text parent and should be clipped.",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This is an inline view￼",
-        "TextRangePattern.GetText": "This is an inline view￯﾿ﾼ",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "The inline image below is taller than its Text parent and should be clipped.",
-        "TextRangePattern.GetText": "The inline image below is taller than its Text parent and should be clipped.",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "This is an inline image￼",
-        "TextRangePattern.GetText": "This is an inline image￯﾿ﾼ",
       },
     ],
   },
