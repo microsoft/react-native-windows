@@ -212,13 +212,9 @@ void UpdateUiaPropertiesForAnnotation(
     winrt::IInspectable provider,
     const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
     const std::optional<facebook::react::AccessibilityAnnotation> &newAnnotation) noexcept {
-  // Only update if both annotations have values
-  if (!oldAnnotation.has_value() || !newAnnotation.has_value()) {
-    return;
-  }
-
-  const auto &old_annotation = oldAnnotation.value();
-  const auto &new_annotation = newAnnotation.value();
+  // if no value fall back to a default value.
+  const auto &old_annotation = oldAnnotation.value_or(facebook::react::AccessibilityAnnotation());
+  const auto &new_annotation = newAnnotation.value_or(facebook::react::AccessibilityAnnotation());
 
   // Update all annotation properties
   UpdateUiaProperty(
