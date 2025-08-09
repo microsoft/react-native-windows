@@ -43,8 +43,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.0.0-2505.2001-0e4bc3b9",
-        "contentHash": "VNSUBgaGzJ/KkK3Br0b9FORkCgKqke54hi48vG42xRACIlxN+uLFMz0hRo+KHogz+Fsn+ltXicGwQsDVpmaCMg=="
+        "resolved": "0.0.0-2507.21007-eda7aef6",
+        "contentHash": "3oyJXoPaayrtWSjBgnLFfVBrNcnvB3EJ1r2/K0yz9exmmESTTzWaCh8JlhX7fsjtMv/LpQxJOctHP0Ng2k8spQ=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -91,7 +91,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2505.2001-0e4bc3b9, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2507.21007-eda7aef6, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[1.7.250127003-experimental3, )",
           "ReactCommon": "[1.0.0, )",
