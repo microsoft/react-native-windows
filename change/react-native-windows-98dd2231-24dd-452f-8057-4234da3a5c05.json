@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Null pointer checks and validation in SetLayoutPropsRecursive to prevent crashes when shadow nodes are invalid or deleted",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
