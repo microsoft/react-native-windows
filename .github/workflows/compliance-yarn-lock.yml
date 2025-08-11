@@ -1,4 +1,4 @@
-name: Weekly yarn.lock Refresh
+name: Refresh yarn.lock
 
 on:
   workflow_dispatch:
@@ -11,9 +11,6 @@ on:
         options:
           - 0.79-stable
           - 0.78-stable
-
-  schedule:
-    - cron: '0 3 * * 1'  # Every Monday at 3am UTC
 
 jobs:
   refresh-lockfile:
@@ -59,8 +56,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "React-Native-Windows Bot"
+          git config user.email "53619745+rnbot@users.noreply.github.com"
 
           BRANCH="chore/weekly-lock-refresh-${{ matrix.branch }}"
 

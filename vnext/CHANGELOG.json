@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 09 Aug 2025 05:24:31 GMT",
+      "version": "0.0.0-canary.983",
+      "tag": "react-native-windows_v0.0.0-canary.983",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "014a1eb90414d73b369142c235de288db53421b4",
+            "comment": "Bump hermes-windows to 0.0.0-2507.21007-eda7aef6"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "74a4bd9d22d85cfdea9948a274255fa9759d6deb",
+            "comment": "Null pointer checks and validation in SetLayoutPropsRecursive to prevent crashes when shadow nodes are invalid or deleted"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Aug 2025 05:25:51 GMT",
+      "version": "0.0.0-canary.982",
+      "tag": "react-native-windows_v0.0.0-canary.982",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6dff1aeab77bbbcd60d29a64ef1456b9e5ce904f",
+            "comment": "TextInput should capture mouse on mouse down"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b72b6b3ca8e243c25f4963793adfb2da45409cb7",
+            "comment": "[Fabric] Raising UIA Event if Toggle State Changes in Switch Component"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Aug 2025 05:25:45 GMT",
       "version": "0.0.0-canary.981",
       "tag": "react-native-windows_v0.0.0-canary.981",
