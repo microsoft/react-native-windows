@@ -18,7 +18,7 @@
     "react": "^19.1.0",
     "react-native": "0.81.0-nightly-20250521-3cb70bb6a",
     "react-native-windows": "^0.0.0-canary.983",
-    "@react-native/new-app-screen": "0.80.0-nightly-20250506-3ac16dd6a"
+    "@react-native/new-app-screen": "0.81.0-nightly-20250521-3cb70bb6a"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -28,7 +28,7 @@
     "@babel/runtime": "^7.20.0",
     "@jest/globals": "^29.7.0",
     "@react-native-community/cli": "17.0.0",
-    "@react-native/metro-config": "0.80.0-nightly-20250506-3ac16dd6a",
+    "@react-native/metro-config": "0.81.0-nightly-20250521-3cb70bb6a",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.36",
