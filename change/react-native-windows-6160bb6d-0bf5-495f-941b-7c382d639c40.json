@@ -1,0 +1,7 @@
+{
+  "comment": "Initial plan to integrate RN nightly 0.81.0-nightly-20250521-3cb70bb6a",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
