@@ -175,6 +175,15 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, int oldV
   UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
 }
 
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, long oldValue, long newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
+
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+}
+
 void UpdateUiaProperty(
     winrt::IInspectable provider,
     PROPERTYID propId,
@@ -197,6 +206,29 @@ void UpdateUiaProperty(
   std::string oldData = oldValue.value_or("");
   std::string newData = newValue.value_or("");
   UpdateUiaProperty(provider, propId, oldData, newData);
+}
+
+void UpdateUiaPropertiesForAnnotation(
+    winrt::IInspectable provider,
+    const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
+    const std::optional<facebook::react::AccessibilityAnnotation> &newAnnotation) noexcept {
+  // if no value fall back to a default value.
+  const auto &old_annotation = oldAnnotation.value_or(facebook::react::AccessibilityAnnotation());
+  const auto &new_annotation = newAnnotation.value_or(facebook::react::AccessibilityAnnotation());
+
+  // Update all annotation properties
+  UpdateUiaProperty(
+      provider,
+      UIA_AnnotationAnnotationTypeIdPropertyId,
+      GetAnnotationTypeId(old_annotation.typeID),
+      GetAnnotationTypeId(new_annotation.typeID));
+
+  UpdateUiaProperty(
+      provider, UIA_AnnotationAnnotationTypeNamePropertyId, old_annotation.typeName, new_annotation.typeName);
+
+  UpdateUiaProperty(provider, UIA_AnnotationAuthorPropertyId, old_annotation.author, new_annotation.author);
+
+  UpdateUiaProperty(provider, UIA_AnnotationDateTimePropertyId, old_annotation.dateTime, new_annotation.dateTime);
 }
 
 long GetLiveSetting(const std::string &liveRegion) noexcept {
