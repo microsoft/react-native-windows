@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 21 Jul 2025 15:44:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 11 Aug 2025 15:27:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.3
+
+Mon, 11 Aug 2025 15:27:17 GMT
+
+### Patches
+
+- Remove rnw/cli dependency on rnc/cli (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.79.2
 
