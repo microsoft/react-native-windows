@@ -125,7 +125,9 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
       jsi::Function onFail,
       jsi::Function onSuccess);
 
-#pragma mark - Legacy direct manipulation APIs (for `ReactNativeElement`).
+// [windows MSVC cant handle backtick character in a preprocessor line
+#pragma mark - Legacy direct manipulation APIs (for ReactNativeElement).
+// windows]
 
   void setNativeProps(
       jsi::Runtime& rt,

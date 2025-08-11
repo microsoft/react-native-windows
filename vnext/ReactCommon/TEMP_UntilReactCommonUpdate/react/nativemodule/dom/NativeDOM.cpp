@@ -462,7 +462,9 @@ void NativeDOM::measureLayout(
        jsi::Value{rt, rect.height}});
 }
 
-#pragma mark - Legacy direct manipulation APIs (for `ReactNativeElement`).
+// [windows MSVC cant handle backtick character in a preprocessor line
+#pragma mark - Legacy direct manipulation APIs (for ReactNativeElement).
+// windows]
 
 void NativeDOM::setNativeProps(
     jsi::Runtime& rt,
