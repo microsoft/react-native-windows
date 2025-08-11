@@ -170,6 +170,8 @@ inline std::string toString(
     case AccessibilityLiveRegion::Assertive:
       return "assertive";
   }
+  // [windows] Default return for unexpected enum values
+  return "none";
 }
 
 enum class AccessibilityRole {
