@@ -1,0 +1,17 @@
+name: Auto-Set Remaining Days to 0 on Issue Closed
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  update_remaining_days:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Remaining Days to 0 in Project 183
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/orgs/microsoft/projects/183
+          github-token: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
+          field-name: "Remaining Days"
+          field-value: "0"
