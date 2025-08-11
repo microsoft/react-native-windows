@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 31 Jul 2025 09:21:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 11 Aug 2025 15:28:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.2
+
+Mon, 11 Aug 2025 15:28:21 GMT
+
+### Changes
+
+- Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer> (chpurrer@meta.com)
+- Bump @react-native-windows/cli to v0.80.0-preview.2
 
 ## 0.80.0-preview.1
 

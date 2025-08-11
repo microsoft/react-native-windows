@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 11 Aug 2025 15:28:20 GMT",
+      "version": "0.80.0-preview.2",
+      "tag": "@react-native-windows/cli_v0.80.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "71ced315c54a79b620ad5d9284a0c23c18ec7d8f",
+            "comment": "[BugFix] Open Init windows telemetry not capturing the true default template"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Jul 2025 09:21:06 GMT",
       "version": "0.80.0-preview.1",
       "tag": "@react-native-windows/cli_v0.80.0-preview.1",

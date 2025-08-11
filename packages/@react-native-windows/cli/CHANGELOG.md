@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Thu, 31 Jul 2025 09:21:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 11 Aug 2025 15:28:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.2
+
+Mon, 11 Aug 2025 15:28:20 GMT
+
+### Changes
+
+- [BugFix] Open Init windows telemetry not capturing the true default template (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.80.0-preview.1
 
