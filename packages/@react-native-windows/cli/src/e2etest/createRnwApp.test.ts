@@ -44,7 +44,7 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
   beforeAll(() => {
     // Verify the script exists in the repository
     expect(fs.existsSync(createRnwAppScript)).toBe(true);
-    
+
     // Verify we have a stable version to test
     expect(RNW_VERSION).toBeTruthy();
     expect(RNW_VERSION).not.toContain('preview');
@@ -94,13 +94,19 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
       expect(RNW_VERSION).toBeTruthy();
 
       // Mock version validation - in actual Windows CI this would call npm show
-      const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`, RNW_VERSION);
+      const versionInfo = mockNpmShow(
+        `react-native-windows@${RNW_VERSION}`,
+        RNW_VERSION,
+      );
       expect(versionInfo).toBeTruthy();
       expect(versionInfo?.version).toBe(RNW_VERSION);
     });
 
     test('should validate required dependencies for target version', () => {
-      const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`, RNW_VERSION);
+      const versionInfo = mockNpmShow(
+        `react-native-windows@${RNW_VERSION}`,
+        RNW_VERSION,
+      );
 
       // Validate that the version has the expected dependency structure
       expect(versionInfo?.devDependencies).toHaveProperty('react-native');
@@ -224,7 +230,7 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
   beforeAll(() => {
     // Verify the script exists in the repository
     expect(fs.existsSync(createRnwAppScript)).toBe(true);
-    
+
     // Verify we have a preview version to test
     expect(RNW_VERSION).toBeTruthy();
     expect(RNW_VERSION).toContain('preview');
@@ -274,13 +280,19 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
       expect(RNW_VERSION).toBeTruthy();
 
       // Mock version validation - in actual Windows CI this would call npm show
-      const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`, RNW_VERSION);
+      const versionInfo = mockNpmShow(
+        `react-native-windows@${RNW_VERSION}`,
+        RNW_VERSION,
+      );
       expect(versionInfo).toBeTruthy();
       expect(versionInfo?.version).toBe(RNW_VERSION);
     });
 
     test('should validate required dependencies for target version', () => {
-      const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`, RNW_VERSION);
+      const versionInfo = mockNpmShow(
+        `react-native-windows@${RNW_VERSION}`,
+        RNW_VERSION,
+      );
 
       // Validate that the version has the expected dependency structure
       expect(versionInfo?.devDependencies).toHaveProperty('react-native');
