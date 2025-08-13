@@ -1,6 +1,6 @@
-# React Native Windows 0.80.0-preview.2 Testing Guide
+# React Native Windows creaternwapp Testing Guide
 
-This document provides a comprehensive testing guide for validating React Native Windows 0.80.0-preview.2 functionality with both new architecture (Fabric) and old architecture (Paper/UWP).
+This document provides a comprehensive testing guide for validating React Native Windows creaternwapp functionality with both new architecture (Fabric) and old architecture (Paper/UWP).
 
 ## Prerequisites
 
@@ -15,8 +15,8 @@ This document provides a comprehensive testing guide for validating React Native
 
 #### Debug Mode
 ```bash
-# Step 1: Create new app with Fabric architecture
-creaternwapp.cmd /rnw 0.80.0-preview.2 TestAppFabric
+# Step 1: Create new app with Fabric architecture (replace VERSION with target version)
+creaternwapp.cmd /rnw VERSION TestAppFabric
 
 # Step 2: Navigate to app directory  
 cd TestAppFabric
@@ -40,8 +40,8 @@ yarn windows --release
 
 #### Debug Mode
 ```bash
-# Step 1: Create new app with UWP/Paper architecture
-creaternwapp.cmd /rnw 0.80.0-preview.2 /t old/uwp-cpp-app TestAppPaper
+# Step 1: Create new app with UWP/Paper architecture (replace VERSION with target version)
+creaternwapp.cmd /rnw VERSION /t old/uwp-cpp-app TestAppPaper
 
 # Step 2: Navigate to app directory
 cd TestAppPaper
@@ -65,7 +65,7 @@ yarn windows --release
 
 ### App Creation Validation
 - [ ] App directory is created successfully
-- [ ] package.json contains correct react-native-windows version (0.80.0-preview.2)
+- [ ] package.json contains correct react-native-windows version
 - [ ] windows directory is created with project files
 - [ ] Solution (.sln) and project files are present
 - [ ] Dependencies are installed correctly
@@ -92,7 +92,7 @@ yarn windows --release
 ## Expected Outcomes
 
 1. **Successful App Creation**: Both architectures should create functional React Native Windows apps
-2. **Version Consistency**: All apps should use exactly react-native-windows@0.80.0-preview.2
+2. **Version Consistency**: All apps should use the specified react-native-windows version
 3. **Build Success**: Both debug and release builds should complete successfully  
 4. **Runtime Functionality**: Apps should launch and display the default React Native screen
 

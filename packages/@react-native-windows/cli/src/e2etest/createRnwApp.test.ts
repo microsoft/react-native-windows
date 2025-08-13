@@ -7,8 +7,8 @@
 import fs from '@react-native-windows/fs';
 import * as path from 'path';
 
-// Specific version to test as mentioned in the issue
-const RNW_VERSION = '0.80.0-preview.2';
+// Version to test - can be set via environment variable or defaults to latest preview
+const RNW_VERSION = process.env.RNW_TEST_VERSION || '0.80.0-preview.2';
 
 // Mock NPM registry response for version check
 const mockNpmShow = (packageNameWithVersion: string) => {
@@ -26,7 +26,7 @@ const mockNpmShow = (packageNameWithVersion: string) => {
   return null;
 };
 
-describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
+describe('creaternwapp Configuration Tests', () => {
   const repoRoot = path.resolve(__dirname, '../../../../..');
   const createRnwAppScript = path.join(
     repoRoot,
@@ -76,10 +76,10 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
   });
 
   describe('Version Configuration Tests', () => {
-    test('should validate 0.80.0-preview.2 version is available', async () => {
+    test('should validate target version is available', async () => {
       // This test validates that the specified version exists in npm
       // In a real environment, this would use npm show to check the version
-      expect(RNW_VERSION).toBe('0.80.0-preview.2');
+      expect(RNW_VERSION).toBeTruthy();
 
       // Mock version validation - in actual Windows CI this would call npm show
       const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`);
@@ -87,7 +87,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
       expect(versionInfo?.version).toBe(RNW_VERSION);
     });
 
-    test('should validate required dependencies for 0.80.0-preview.2', () => {
+    test('should validate required dependencies for target version', () => {
       const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`);
 
       // Validate that the version has the expected dependency structure
