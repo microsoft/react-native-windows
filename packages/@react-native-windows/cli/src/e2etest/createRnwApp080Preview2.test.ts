@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as fs from 'fs';
+import fs from '@react-native-windows/fs';
 import * as path from 'path';
 
 // Specific version to test as mentioned in the issue
@@ -28,7 +28,10 @@ const mockNpmShow = (packageNameWithVersion: string) => {
 
 describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
   const repoRoot = path.resolve(__dirname, '../../../../..');
-  const createRnwAppScript = path.join(repoRoot, 'vnext/Scripts/creaternwapp.cmd');
+  const createRnwAppScript = path.join(
+    repoRoot,
+    'vnext/Scripts/creaternwapp.cmd',
+  );
 
   beforeAll(() => {
     // Verify the script exists in the repository
@@ -38,9 +41,9 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
   describe('Script Configuration Validation', () => {
     test('creaternwapp.cmd script should exist and be readable', () => {
       expect(fs.existsSync(createRnwAppScript)).toBe(true);
-      
+
       const scriptContent = fs.readFileSync(createRnwAppScript, 'utf8');
-      
+
       // Verify script contains expected parameters
       expect(scriptContent).toContain('/rnw');
       expect(scriptContent).toContain('/t');
@@ -50,7 +53,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
 
     test('should validate fabric template is the default', () => {
       const scriptContent = fs.readFileSync(createRnwAppScript, 'utf8');
-      
+
       // Default template should be cpp-app (fabric/new arch)
       expect(scriptContent).toContain('set RNW_TEMPLATE_TYPE=cpp-app');
     });
@@ -58,7 +61,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
     test('should validate old UWP templates are available', () => {
       const oldTemplatesDir = path.join(repoRoot, 'vnext/templates/old');
       expect(fs.existsSync(oldTemplatesDir)).toBe(true);
-      
+
       const uwpCppAppTemplate = path.join(oldTemplatesDir, 'uwp-cpp-app');
       expect(fs.existsSync(uwpCppAppTemplate)).toBe(true);
     });
@@ -66,7 +69,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
     test('should validate new fabric templates are available', () => {
       const newTemplatesDir = path.join(repoRoot, 'vnext/template');
       expect(fs.existsSync(newTemplatesDir)).toBe(true);
-      
+
       const cppAppTemplate = path.join(newTemplatesDir, 'cpp-app');
       expect(fs.existsSync(cppAppTemplate)).toBe(true);
     });
@@ -77,7 +80,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
       // This test validates that the specified version exists in npm
       // In a real environment, this would use npm show to check the version
       expect(RNW_VERSION).toBe('0.80.0-preview.2');
-      
+
       // Mock version validation - in actual Windows CI this would call npm show
       const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`);
       expect(versionInfo).toBeTruthy();
@@ -86,10 +89,12 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
 
     test('should validate required dependencies for 0.80.0-preview.2', () => {
       const versionInfo = mockNpmShow(`react-native-windows@${RNW_VERSION}`);
-      
+
       // Validate that the version has the expected dependency structure
       expect(versionInfo?.devDependencies).toHaveProperty('react-native');
-      expect(versionInfo?.dependencies).toHaveProperty('@react-native-community/cli');
+      expect(versionInfo?.dependencies).toHaveProperty(
+        '@react-native-community/cli',
+      );
     });
   });
 
@@ -98,7 +103,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
       // Test the command that would be used for new arch:
       // creaternwapp.cmd /rnw preview test-app-name
       const expectedCommand = `creaternwapp.cmd /rnw preview test-app-name`;
-      
+
       expect(expectedCommand).toContain('/rnw preview');
       expect(expectedCommand).toContain('test-app-name');
       expect(expectedCommand).not.toContain('/t'); // No template specified = default fabric
@@ -108,7 +113,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
       // Test the command that would be used for old arch:
       // creaternwapp.cmd /rnw preview /t old/uwp-cpp-app test-app-name
       const expectedCommand = `creaternwapp.cmd /rnw preview /t old/uwp-cpp-app test-app-name`;
-      
+
       expect(expectedCommand).toContain('/rnw preview');
       expect(expectedCommand).toContain('/t old/uwp-cpp-app');
       expect(expectedCommand).toContain('test-app-name');
@@ -118,7 +123,7 @@ describe('creaternwapp 0.80.0-preview.2 Configuration Tests', () => {
       // Test the commands that would be used to build apps:
       const debugCommand = 'yarn windows';
       const releaseCommand = 'yarn windows --release';
-      
+
       expect(debugCommand).toBe('yarn windows');
       expect(releaseCommand).toBe('yarn windows --release');
       expect(releaseCommand).toContain('--release');
