@@ -11,28 +11,36 @@ This document provides a comprehensive testing guide for validating React Native
 
 ## Test Scenarios
 
+The testing covers both stable and preview versions of React Native Windows:
+
+- **Stable Version**: Tests the latest stable release from npm
+- **Preview Version**: Tests the latest preview release from npm
+
 ### New Architecture (Fabric) Testing
 
 #### Debug Mode
 ```bash
-# Step 1: Create new app with Fabric architecture (replace VERSION with target version)
-creaternwapp.cmd /rnw VERSION TestAppFabric
+# Step 1: Create new app with Fabric architecture
+# For stable version:
+creaternwapp.cmd /rnw latest TestAppFabricStable
+# For preview version:
+creaternwapp.cmd /rnw preview TestAppFabricPreview
 
 # Step 2: Navigate to app directory  
-cd TestAppFabric
+cd TestAppFabric*
 
 # Step 3: Start Metro bundler
 yarn start
 
 # Step 4: In a new terminal, build and run in debug mode
-cd TestAppFabric
+cd TestAppFabric*
 yarn windows
 ```
 
 #### Release Mode
 ```bash
 # Using the same app created above, build in release mode
-cd TestAppFabric
+cd TestAppFabric*
 yarn windows --release
 ```
 
@@ -40,24 +48,27 @@ yarn windows --release
 
 #### Debug Mode
 ```bash
-# Step 1: Create new app with UWP/Paper architecture (replace VERSION with target version)
-creaternwapp.cmd /rnw VERSION /t old/uwp-cpp-app TestAppPaper
+# Step 1: Create new app with UWP/Paper architecture
+# For stable version:
+creaternwapp.cmd /rnw latest /t old/uwp-cpp-app TestAppPaperStable
+# For preview version:
+creaternwapp.cmd /rnw preview /t old/uwp-cpp-app TestAppPaperPreview
 
 # Step 2: Navigate to app directory
-cd TestAppPaper
+cd TestAppPaper*
 
 # Step 3: Start Metro bundler
 yarn start
 
 # Step 4: In a new terminal, build and run in debug mode
-cd TestAppPaper
+cd TestAppPaper*
 yarn windows
 ```
 
 #### Release Mode
 ```bash
 # Using the same app created above, build in release mode
-cd TestAppPaper
+cd TestAppPaper*
 yarn windows --release
 ```
 
@@ -91,8 +102,8 @@ yarn windows --release
 
 ## Expected Outcomes
 
-1. **Successful App Creation**: Both architectures should create functional React Native Windows apps
-2. **Version Consistency**: All apps should use the specified react-native-windows version
+1. **Successful App Creation**: Both architectures should create functional React Native Windows apps for both stable and preview versions
+2. **Version Consistency**: All apps should use the correct react-native-windows version (stable or preview as requested)
 3. **Build Success**: Both debug and release builds should complete successfully  
 4. **Runtime Functionality**: Apps should launch and display the default React Native screen
 
@@ -102,12 +113,14 @@ yarn windows --release
 - **Build Failures**: Check Visual Studio components and Windows SDK versions
 - **Version Conflicts**: Ensure clean environment and correct package versions
 - **Network Issues**: May need to configure npm/yarn registries
+- **Version Mismatch**: Verify npm registry has the expected stable/preview versions available
 
 ### Debugging Steps
 1. Check creaternwapp.cmd output for errors
 2. Verify package.json dependencies
 3. Review build logs for specific error messages
 4. Ensure all prerequisites are met
+5. Verify npm registry connectivity and version availability
 
 ## Automation Notes
 
@@ -116,6 +129,12 @@ This testing can be automated in CI/CD environments using:
 - Verdaccio for package registry testing
 - MSBuild for compilation validation
 - Automated deployment testing
+- Npm registry queries to verify version availability
+
+The automated tests now include:
+- **Stable Version Tests**: Automatically fetch and test the latest stable version from npm
+- **Preview Version Tests**: Automatically fetch and test the latest preview version from npm
+- **Version Validation**: Verify that the fetched versions exist and have correct dependencies
 
 ## Documentation
 
@@ -123,3 +142,4 @@ For additional information, see:
 - React Native Windows documentation
 - creaternwapp.cmd script source
 - Template documentation in vnext/templates/
+- NPM package versions and tags for react-native-windows
