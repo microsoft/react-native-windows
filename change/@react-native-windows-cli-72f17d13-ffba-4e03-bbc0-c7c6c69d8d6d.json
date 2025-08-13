@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Replace environment variable approach with separate stable/preview test suites",
+  "packageName": "@react-native-windows/cli",
+  "email": "198982749+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
