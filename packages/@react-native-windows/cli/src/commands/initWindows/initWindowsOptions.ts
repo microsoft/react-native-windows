@@ -54,11 +54,6 @@ export const initOptions: CommandOption[] = [
       'Shows a list with all available templates with their descriptions.',
   },
   {
-    name: '--prompt',
-    description: 'Show interactive prompts for Old Arch to New Arch switch',
-    default: true,
-  },
-  {
     name: '--no-prompt',
     description:
       'Skip interactive prompt for Old Arch to New Arch switch warning and use default choices',
