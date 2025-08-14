@@ -30,6 +30,7 @@ import {
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
 import * as nameHelpers from '../../utils/nameHelpers';
+import {showOldArchitectureWarning} from '../../utils/oldArchWarning';
 import {promptForArchitectureChoice} from '../../utils/architecturePrompt';
 import type {InitOptions} from './initWindowsOptions';
 import {initOptions} from './initWindowsOptions';
@@ -155,6 +156,7 @@ export class InitWindows {
       return;
     }
 
+    const userDidNotPassTemplate = this.options.template === undefined;
     this.options.template ??=
       (this.rnwConfig?.['init-windows']?.template as string | undefined) ??
       this.getDefaultTemplateName();
@@ -167,25 +169,30 @@ export class InitWindows {
       );
     }
 
-    if (this.options.template.startsWith('old')) {
-      const promptResult = await promptForArchitectureChoice(
-        this.options.template,
-      );
+    const isOldArchTemplate = this.options.template.startsWith('old');
+    const noPromptFlag = !!this.options.noPrompt;
 
-      if (
-        !promptResult.shouldContinueWithOldArch &&
-        !promptResult.userCancelled
-      ) {
-        // User chose to switch to New Architecture
-        spinner.info('Switching to New Architecture template (cpp-app)...');
-        this.options.template = 'cpp-app';
+    if (isOldArchTemplate) {
+      showOldArchitectureWarning();
 
-        // Verify the new template exists
-        if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
-          throw new CodedError(
-            'InvalidTemplateName',
-            `Unable to find New Architecture template '${this.options.template}'.`,
-          );
+      if (userDidNotPassTemplate && !noPromptFlag) {
+        const promptResult = await promptForArchitectureChoice();
+
+        if (
+          !promptResult.shouldContinueWithOldArch &&
+          !promptResult.userCancelled
+        ) {
+          spinner.info('Switching to New Architecture template (cpp-app)...');
+          this.options.template = 'cpp-app';
+
+          if (
+            !this.templates.has(this.options.template.replace(/[\\]/g, '/'))
+          ) {
+            throw new CodedError(
+              'InvalidTemplateName',
+              `Unable to find New Architecture template '${this.options.template}'.`,
+            );
+          }
         }
       }
     }
@@ -321,6 +328,7 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
     case 'overwrite':
     case 'telemetry':
     case 'list':
+    case 'noPrompt':
       return value === undefined ? false : value; // Return value
   }
 }
@@ -354,15 +362,31 @@ async function initWindows(
   );
 
   let initWindowsError: Error | undefined;
+
+  // Capture what was known at the start (already recorded by startTelemetrySession),
+  // and later record what actually happened.
+  const originalTemplate = options.template;
+  let finalTemplate = originalTemplate;
+  let templateChangedByPrompt = false;
+
   try {
     await initWindowsInternal(args, config, options);
   } catch (ex) {
-    initWindowsError =
-      ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    initWindowsError = ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(initWindowsError);
+  } finally {
+    // Whatever the command ended up using
+    finalTemplate = options.template;
+    templateChangedByPrompt = originalTemplate !== finalTemplate;
   }
 
-  await endTelemetrySession(initWindowsError, getExtraProps);
+  // Add extra fields so reporting can differentiate initial vs final choices
+  await endTelemetrySession(initWindowsError, async () => ({
+    ...(await getExtraProps()),
+    finalTemplate,
+    templateChangedByPrompt,
+  }));
+
   setExitProcessWithError(options.logging, initWindowsError);
 }
 

@@ -26,6 +26,7 @@ function validateOptionName(
     case 'overwrite':
     case 'telemetry':
     case 'list':
+    case 'noPrompt':
       return true;
   }
   throw new Error(
@@ -43,7 +44,8 @@ test('initOptions - validate options', () => {
     // Validate defaults
     if (
       !commandOption.name.endsWith(' [string]') &&
-      !commandOption.name.endsWith(' [number]')
+      !commandOption.name.endsWith(' [number]') &&
+      !commandOption.name.startsWith('--no-')
     ) {
       // Commander ignores defaults for flags, so leave undefined to prevent confusion
       expect(commandOption.default).toBeUndefined();
@@ -54,7 +56,13 @@ test('initOptions - validate options', () => {
     expect(commandOption.description!).toBe(commandOption.description!.trim());
 
     // Validate all command options are present in InitOptions
-    const optionName = commanderNameToOptionName(commandOption.name);
+    let optionName = commanderNameToOptionName(commandOption.name);
+
+    // Special-case fix for `--no-prompt`
+    if (commandOption.name === '--no-prompt') {
+      optionName = 'noPrompt';
+    }
+
     expect(
       validateOptionName(commandOption.name, optionName as keyof InitOptions),
     ).toBe(true);
@@ -125,4 +133,10 @@ test('nameHelpers - isValidProjectNamespace', () => {
   expect(
     nameHelpers.isValidProjectNamespace('com::company::app-name::other'),
   ).toBe(false);
+});
+
+test('--no-prompt flag exists in initOptions', () => {
+  const noPromptOption = initOptions.find(opt => opt.name === '--no-prompt');
+  expect(noPromptOption).toBeDefined();
+  expect(noPromptOption?.description).toContain('Skip interactive prompts');
 });
