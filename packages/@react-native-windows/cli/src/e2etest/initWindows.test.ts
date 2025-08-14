@@ -132,5 +132,5 @@ test('nameHelpers - isValidProjectNamespace', () => {
 test('--no-prompt flag exists in initOptions', () => {
   const promptOption = initOptions.find(opt => opt.name === '--no-prompt');
   expect(promptOption).toBeDefined();
-  expect(promptOption?.description).toContain('Skip interactive prompts');
+  expect(promptOption?.description).toContain('Skip interactive prompt');
 });
