@@ -372,7 +372,8 @@ async function initWindows(
   try {
     await initWindowsInternal(args, config, options);
   } catch (ex) {
-    initWindowsError = ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    initWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(initWindowsError);
   } finally {
     // Whatever the command ended up using

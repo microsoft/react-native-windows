@@ -5,7 +5,7 @@
  */
 
 import prompts from 'prompts';
-
+import chalk from 'chalk';
 export interface ArchitecturePromptResult {
   shouldContinueWithOldArch: boolean;
   userCancelled: boolean;
@@ -39,14 +39,29 @@ export async function promptForArchitectureChoice(): Promise<ArchitecturePromptR
 
     const normalizedChoice = response.choice.trim().toLowerCase();
     if (normalizedChoice === 'y') {
+      console.log(
+        chalk.yellow(
+          'Proceeding with Old Architecture. You can migrate later using our migration guide: https://microsoft.github.io/react-native-windows/docs/new-architecture',
+        ),
+      );
       return {shouldContinueWithOldArch: true, userCancelled: false};
     } else {
+      console.log(
+        chalk.green(
+          'Great choice! Setting up the project with New Architecture support.',
+        ),
+      );
       return {shouldContinueWithOldArch: false, userCancelled: false};
     }
   } catch (error) {
     if ((error as Error).message === 'User cancelled') {
       return {shouldContinueWithOldArch: true, userCancelled: true};
     }
+    console.log(
+      chalk.yellow(
+        'Proceeding with Old Architecture. You can migrate later using our migration guide: https://microsoft.github.io/react-native-windows/docs/new-architecture',
+      ),
+    );
     return {shouldContinueWithOldArch: true, userCancelled: false};
   }
 }
