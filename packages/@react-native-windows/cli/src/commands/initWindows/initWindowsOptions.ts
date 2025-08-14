@@ -14,7 +14,7 @@ export interface InitOptions {
   overwrite?: boolean;
   telemetry?: boolean;
   list?: boolean;
-  noPrompt?: boolean;
+  prompt?: boolean;
 }
 
 export const initOptions: CommandOption[] = [
@@ -52,6 +52,11 @@ export const initOptions: CommandOption[] = [
     name: '--list',
     description:
       'Shows a list with all available templates with their descriptions.',
+  },
+  {
+    name: '--prompt',
+    description: 'Show interactive prompts for Old Arch to New Arch switch',
+    default: true,
   },
   {
     name: '--no-prompt',

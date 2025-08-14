@@ -172,12 +172,12 @@ export class InitWindows {
     }
 
     const isOldArchTemplate = this.options.template.startsWith('old');
-    const noPromptFlag = !!this.options.noPrompt;
+    const promptFlag = this.options.prompt;
 
     if (isOldArchTemplate) {
       showOldArchitectureWarning();
 
-      if (userDidNotPassTemplate && !noPromptFlag) {
+      if (userDidNotPassTemplate && promptFlag) {
         const promptResult = await promptForArchitectureChoice();
 
         if (
@@ -321,7 +321,7 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
     case 'overwrite':
     case 'telemetry':
     case 'list':
-    case 'noPrompt':
+    case 'prompt':
       return value === undefined ? false : value; // Return value
   }
 }
