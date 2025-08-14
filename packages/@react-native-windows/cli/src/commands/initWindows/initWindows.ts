@@ -156,7 +156,9 @@ export class InitWindows {
       return;
     }
 
-    const userDidNotPassTemplate = this.options.template === undefined;
+    const userDidNotPassTemplate = !process.argv.some(arg =>
+      arg.startsWith('--template'),
+    );
     this.options.template ??=
       (this.rnwConfig?.['init-windows']?.template as string | undefined) ??
       this.getDefaultTemplateName();
@@ -184,15 +186,6 @@ export class InitWindows {
         ) {
           spinner.info('Switching to New Architecture template (cpp-app)...');
           this.options.template = 'cpp-app';
-
-          if (
-            !this.templates.has(this.options.template.replace(/[\\]/g, '/'))
-          ) {
-            throw new CodedError(
-              'InvalidTemplateName',
-              `Unable to find New Architecture template '${this.options.template}'.`,
-            );
-          }
         }
       }
     }

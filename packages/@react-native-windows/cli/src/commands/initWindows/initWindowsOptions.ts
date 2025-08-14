@@ -55,6 +55,7 @@ export const initOptions: CommandOption[] = [
   },
   {
     name: '--no-prompt',
-    description: 'Skip interactive prompts and use default choices',
+    description:
+      'Skip interactive prompt for Old Arch to New Arch switch warning and use default choices',
   },
 ];
