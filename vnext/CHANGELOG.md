@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 09 Aug 2025 05:24:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 15 Aug 2025 17:57:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.984
+
+Fri, 15 Aug 2025 17:57:23 GMT
+
+### Changes
+
+- Added UIA Event Triggers for accessibilityAnnotation Property Changes (gsaran252000@gmail.com)
 
 ## 0.0.0-canary.983
 
