@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 25 Jul 2025 05:27:19 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 06 Aug 2025 05:27:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.271
+
+Wed, 06 Aug 2025 05:27:59 GMT
+
+### Changes
+
+- Revert "Change `init-windows` default new app template to New Architecture (#…" (54227869+anupriya13@users.noreply.github.com)
+- [BugFix] Open Init windows telemetry not capturing the true default template (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.270
 

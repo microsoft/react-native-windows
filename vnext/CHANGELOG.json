@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 Aug 2025 17:57:23 GMT",
+      "version": "0.0.0-canary.984",
+      "tag": "react-native-windows_v0.0.0-canary.984",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gsaran252000@gmail.com",
+            "package": "react-native-windows",
+            "commit": "b26e704a74b8ea037ba50917cf53c6c869c6077c",
+            "comment": "Added UIA Event Triggers for accessibilityAnnotation Property Changes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Aug 2025 05:24:31 GMT",
+      "version": "0.0.0-canary.983",
+      "tag": "react-native-windows_v0.0.0-canary.983",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "014a1eb90414d73b369142c235de288db53421b4",
+            "comment": "Bump hermes-windows to 0.0.0-2507.21007-eda7aef6"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "74a4bd9d22d85cfdea9948a274255fa9759d6deb",
+            "comment": "Null pointer checks and validation in SetLayoutPropsRecursive to prevent crashes when shadow nodes are invalid or deleted"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Aug 2025 05:25:51 GMT",
+      "version": "0.0.0-canary.982",
+      "tag": "react-native-windows_v0.0.0-canary.982",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6dff1aeab77bbbcd60d29a64ef1456b9e5ce904f",
+            "comment": "TextInput should capture mouse on mouse down"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b72b6b3ca8e243c25f4963793adfb2da45409cb7",
+            "comment": "[Fabric] Raising UIA Event if Toggle State Changes in Switch Component"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Aug 2025 05:25:45 GMT",
+      "version": "0.0.0-canary.981",
+      "tag": "react-native-windows_v0.0.0-canary.981",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dea9967bf2ce3071ee00e35d5f6fd7554d4f0222",
+            "comment": "[Fabric] Implement announceForAccessibility in AccessibilityInfo Module"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Aug 2025 05:28:00 GMT",
+      "version": "0.0.0-canary.980",
+      "tag": "react-native-windows_v0.0.0-canary.980",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "270f785bd1e6b65671866b48a196a5cbc51f0ca7",
+            "comment": "Revert \"Change `init-windows` default new app template to New Architecture (#…\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.271",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 31 Jul 2025 05:23:48 GMT",
+      "version": "0.0.0-canary.979",
+      "tag": "react-native-windows_v0.0.0-canary.979",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "chpurrer@meta.com",
+            "package": "react-native-windows",
+            "commit": "6f9dbbe5fefa6df16f45f893a7bcec80f5915bf3",
+            "comment": "Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer>"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Jul 2025 05:26:13 GMT",
       "version": "0.0.0-canary.978",
       "tag": "react-native-windows_v0.0.0-canary.978",

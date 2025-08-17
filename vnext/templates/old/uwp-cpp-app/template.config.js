@@ -12,4 +12,4 @@
 
 const {makeGenerateWindowsWrapper} = require('../generateWrapper');
 
-module.exports = makeGenerateWindowsWrapper('cpp');
+module.exports = makeGenerateWindowsWrapper('cpp', true); // TODO: Remove this as the default

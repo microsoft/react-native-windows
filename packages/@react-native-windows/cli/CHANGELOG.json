@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 06 Aug 2025 05:27:59 GMT",
+      "version": "0.0.0-canary.271",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.271",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "270f785bd1e6b65671866b48a196a5cbc51f0ca7",
+            "comment": "Revert \"Change `init-windows` default new app template to New Architecture (#…\""
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "0257055031f0d00200822e454336b4ef8e42d2eb",
+            "comment": "[BugFix] Open Init windows telemetry not capturing the true default template"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Jul 2025 05:27:19 GMT",
       "version": "0.0.0-canary.270",
       "tag": "@react-native-windows/cli_v0.0.0-canary.270",

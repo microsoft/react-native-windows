@@ -24,7 +24,7 @@ export const initOptions: CommandOption[] = [
   {
     name: '--template [string]',
     description: 'Specify the template to use',
-    default: 'cpp-app',
+    default: 'old/uwp-cpp-app',
   },
   {
     name: '--name [string]',
