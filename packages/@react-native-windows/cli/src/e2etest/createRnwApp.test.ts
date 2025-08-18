@@ -6,23 +6,54 @@
 
 import fs from '@react-native-windows/fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 
 /**
- * Mock versions for testing - these represent typical stable and preview versions
- * In a real environment, these would be fetched from npm
+ * Get latest stable version from npm
  */
-const MOCK_STABLE_VERSION = '0.74.0';
-const MOCK_PREVIEW_VERSION = '0.75.0-preview.1';
+function getLatestStableVersion(): string {
+  try {
+    return execSync('npm view react-native-windows version', { encoding: 'utf8' }).trim();
+  } catch (error) {
+    throw new Error(`Could not fetch latest stable version from npm: ${error}`);
+  }
+}
+
+/**
+ * Get latest preview version from npm
+ */
+function getLatestPreviewVersion(): string | undefined {
+  try {
+    const versions = JSON.parse(execSync('npm view react-native-windows versions --json', { encoding: 'utf8' })) as string[];
+    // Preview versions usually have "preview" in the string
+    return versions.reverse().find(v => v.includes('preview'));
+  } catch (error) {
+    console.warn('Could not fetch preview versions from npm:', error);
+    return undefined;
+  }
+}
+
+const LATEST_STABLE_VERSION = getLatestStableVersion();
+const LATEST_PREVIEW_VERSION = getLatestPreviewVersion();
+
+// Ensure we have valid versions for testing
+if (!LATEST_STABLE_VERSION) {
+  throw new Error('Could not fetch latest stable version from npm');
+}
+if (!LATEST_PREVIEW_VERSION) {
+  throw new Error('Could not fetch latest preview version from npm');
+}
 
 /**
  * Mock NPM registry response for version check
  */
 const mockNpmShow = (packageNameWithVersion: string, version: string) => {
   if (packageNameWithVersion === `react-native-windows@${version}`) {
+    const rnVersion = `^${version.split('-')[0]}`;
     return {
       version: version,
       devDependencies: {
-        'react-native': version.startsWith('0.74') ? '^0.74.0' : '^0.75.0',
+        'react-native': rnVersion,
       },
       dependencies: {
         '@react-native-community/cli': '^17.0.0',
@@ -39,7 +70,7 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
     repoRoot,
     'vnext/Scripts/creaternwapp.cmd',
   );
-  const RNW_VERSION = MOCK_STABLE_VERSION;
+  const RNW_VERSION = LATEST_STABLE_VERSION;
 
   beforeAll(() => {
     // Verify the script exists in the repository
@@ -225,7 +256,7 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
     repoRoot,
     'vnext/Scripts/creaternwapp.cmd',
   );
-  const RNW_VERSION = MOCK_PREVIEW_VERSION;
+  const RNW_VERSION = LATEST_PREVIEW_VERSION;
 
   beforeAll(() => {
     // Verify the script exists in the repository
