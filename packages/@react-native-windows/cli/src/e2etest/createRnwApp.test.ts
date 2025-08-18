@@ -6,14 +6,16 @@
 
 import fs from '@react-native-windows/fs';
 import * as path from 'path';
-import { execSync } from 'child_process';
+import {execSync} from 'child_process';
 
 /**
  * Get latest stable version from npm
  */
 function getLatestStableVersion(): string {
   try {
-    return execSync('npm view react-native-windows version', { encoding: 'utf8' }).trim();
+    return execSync('npm view react-native-windows version', {
+      encoding: 'utf8',
+    }).trim();
   } catch (error) {
     throw new Error(`Could not fetch latest stable version from npm: ${error}`);
   }
@@ -24,7 +26,11 @@ function getLatestStableVersion(): string {
  */
 function getLatestPreviewVersion(): string | undefined {
   try {
-    const versions = JSON.parse(execSync('npm view react-native-windows versions --json', { encoding: 'utf8' })) as string[];
+    const versions = JSON.parse(
+      execSync('npm view react-native-windows versions --json', {
+        encoding: 'utf8',
+      }),
+    ) as string[];
     // Preview versions usually have "preview" in the string
     return versions.reverse().find(v => v.includes('preview'));
   } catch (error) {
