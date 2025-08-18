@@ -32,5 +32,10 @@ jobs:
           inputs:
             versionSpec: '${{ nodeVersion }}.x'
 
+        - script: |
+            npm config set audit false
+          displayName: Disable npm audit for Verdaccio compatibility
+          condition: and(succeeded(), eq(variables['UseVerdaccio'], 'true'))
+
         - script: yarn test
           displayName: yarn test
