@@ -14,19 +14,14 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Authenticate GitHub CLI
-        env:
-          GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
-        run: echo "${GH_TOKEN}" | gh auth login --with-token
-
-      - name: Debug - List projects linked to this issue
+      - name: Debug - List project items linked to this issue
         env:
           GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
         run: |
-          echo "🔍 Listing all projects linked to issue ${{ github.event.issue.number }}..."
+          echo "🔍 Listing all project items linked to issue ${{ github.event.issue.number }}..."
           gh issue view ${{ github.event.issue.number }} \
             --repo ${{ github.repository }} \
-            --json projectsV2 \
+            --json projectItems \
             | jq .
 
       - name: Set Remaining Days to 0 if issue is in Project 183
@@ -35,11 +30,11 @@ jobs:
         run: |
           echo "🔍 Checking if issue ${{ github.event.issue.number }} belongs to Project 183..."
 
-          # Find the project item ID for project 183 among the issue’s linked projects
+          # Get the project item ID from projectItems
           ITEM_ID=$(gh issue view ${{ github.event.issue.number }} \
             --repo ${{ github.repository }} \
-            --json projectsV2 \
-            | jq -r '.projectsV2[] | select(.number==183) | .item.id')
+            --json projectItems \
+            | jq -r '.projectItems[] | select(.project.number==183) | .id')
 
           if [ -z "$ITEM_ID" ]; then
             echo "ℹ️ Issue is not in Project 183. Nothing to update."
