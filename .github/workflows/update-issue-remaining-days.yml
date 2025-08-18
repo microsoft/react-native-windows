@@ -18,44 +18,58 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
         run: |
-          echo "🔍 Listing all project items linked to issue ${{ github.event.issue.number }}..."
+          echo "🔍 Listing all project items linked to issue #${{ github.event.issue.number }}..."
           gh issue view ${{ github.event.issue.number }} \
             --repo ${{ github.repository }} \
             --json projectItems \
             | jq .
 
-      - name: Set Remaining Days to 0 if issue is in Project 183
+      - name: Get Project Number for "React Native Planning"
         env:
           GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
         run: |
-          echo "🔍 Checking if issue ${{ github.event.issue.number }} belongs to Project 183..."
+          PROJECT_NUMBER=$(gh project list --owner microsoft --format json \
+            | jq -r '.[] | select(.title=="React Native Planning") | .number')
 
-          # Get the project item ID from projectItems
-          ITEM_ID=$(gh issue view ${{ github.event.issue.number }} \
-            --repo ${{ github.repository }} \
-            --json projectItems \
-            | jq -r '.projectItems[] | select(.project.number==183) | .id')
+          if [ -z "$PROJECT_NUMBER" ]; then
+            echo "❌ Could not find project titled 'React Native Planning'"
+            exit 1
+          fi
+
+          echo "✅ Found Project Number: $PROJECT_NUMBER"
+          echo "PROJECT_NUMBER=$PROJECT_NUMBER" >> $GITHUB_ENV
+
+      - name: Find Item ID for this issue in project
+        env:
+          GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
+        run: |
+          ITEM_ID=$(gh project item-list --owner microsoft --number $PROJECT_NUMBER --format json \
+            | jq -r ".[] | select(.content.url==\"${{ github.event.issue.html_url }}\") | .id")
 
           if [ -z "$ITEM_ID" ]; then
-            echo "ℹ️ Issue is not in Project 183. Nothing to update."
+            echo "ℹ️ Issue is not in project 'React Native Planning'. Nothing to update."
             exit 0
           fi
 
-          echo "✅ Found Project Item ID in Project 183: $ITEM_ID"
+          echo "✅ Found Project Item ID: $ITEM_ID"
+          echo "ITEM_ID=$ITEM_ID" >> $GITHUB_ENV
 
-          # Find the field ID for "Remaining Days"
-          FIELD_ID=$(gh project field-list --owner microsoft --number 183 --format json \
+      - name: Set Remaining Days to 0
+        if: env.ITEM_ID != ''
+        env:
+          GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
+        run: |
+          FIELD_ID=$(gh project field-list --owner microsoft --number $PROJECT_NUMBER --format json \
             | jq -r '.[] | select(.name=="Remaining Days") | .id')
 
           if [ -z "$FIELD_ID" ]; then
-            echo "❌ No field named 'Remaining Days' found in Project 183."
+            echo "❌ No field named 'Remaining Days' found in project 'React Native Planning'."
             exit 1
           fi
 
           echo "✅ Found Field ID for Remaining Days: $FIELD_ID"
 
-          # Update the field value to 0
-          gh project item-update --owner microsoft --number 183 \
+          gh project item-update --owner microsoft --number $PROJECT_NUMBER \
             --id "$ITEM_ID" --field-id "$FIELD_ID" --value "0"
 
           echo "🎉 Successfully set Remaining Days = 0 for issue ${{ github.event.issue.number }}"
