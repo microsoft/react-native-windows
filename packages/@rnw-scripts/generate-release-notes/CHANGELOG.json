@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/generate-release-notes",
   "entries": [
     {
+      "date": "Wed, 06 Aug 2025 05:28:00 GMT",
+      "version": "1.0.2",
+      "tag": "@rnw-scripts/generate-release-notes_v1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@rnw-scripts/generate-release-notes",
+            "commit": "16aba2428a8207e5247a808ce03a68d7ef2d42d0",
+            "comment": "Update ReadMe for Release Notes Generation Script"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Jul 2025 05:26:15 GMT",
       "version": "1.0.1",
       "tag": "@rnw-scripts/generate-release-notes_v1.0.1",

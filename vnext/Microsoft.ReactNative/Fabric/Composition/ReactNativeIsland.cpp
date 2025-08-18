@@ -40,6 +40,14 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<
+    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>>>
+ReactNativeIsland::LastFocusedReactNativeIslandProperty() noexcept {
+  static const ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<
+      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>>>
+      prop{L"ReactNative.Composition", L"ReactNativeIsland"};
+  return prop;
+}
 constexpr float loadingActivitySize = 12.0f;
 constexpr float loadingActivityHorizontalOffset = 16.0f;
 constexpr float loadingBarHeight = 36.0f;
@@ -858,6 +866,20 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
                       : winrt::Microsoft::UI::Input::FocusNavigationResult::NotMoved);
             } else {
               args.Result(winrt::Microsoft::UI::Input::FocusNavigationResult::NoFocusableElements);
+            }
+          }
+        });
+    focusController.GotFocus(
+        [weakThis = get_weak()](const auto &sender, const winrt::Microsoft::UI::Input::FocusChangedEventArgs &args) {
+          if (auto pThis = weakThis.get()) {
+            // Set the island to React context so it can be accessed by native modules
+            if (pThis->m_context && pThis->m_island) {
+              auto properties = pThis->m_context.Properties();
+              properties.Set(
+                  ReactNativeIsland::LastFocusedReactNativeIslandProperty(),
+                  winrt::Microsoft::ReactNative::ReactNonAbiValue<
+                      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>>{
+                      std::in_place, weakThis});
             }
           }
         });

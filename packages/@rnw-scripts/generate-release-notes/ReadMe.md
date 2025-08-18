@@ -29,15 +29,21 @@ or at least repo:status, repo_deployment, public_repo (for public repos)
 - Click that button to authorize the token with the organization.
 - Copy the generated token
 
-#### 2. Set env variables at root of the repo
+#### 2. Set variables as params and run "yarn release-notes"
 
 ```
-set GITHUB_TOKEN=<your-personal-access-token>
-set RELEASE_TAG=0.80.0
-set START_DATE=2025-06-01
-set END_DATE=2025-07-16
+Usage:
+  yarn release-notes --token <GITHUB_TOKEN> --start <START_DATE> --end <END_DATE> [--repo <OWNER/REPO>] [--tag <RELEASE_TAG>]
 
+Options:
+  --token       (required) GitHub personal access token.
+  --start       (required) Start date in YYYY-MM-DD.
+  --end         (required) End date in YYYY-MM-DD.
+  --repo        Repository in OWNER/REPO format. Default: microsoft/react-native-windows
+  --tag         Release tag label. Default: Unreleased. Expected: 0.80 or similar
+  --help        Show this help message.
 ```
-#### 3. Run "`yarn release-notes`" at the root of the repo
 
-#### 4. You will see a release-notes.md file generated at packages\@rnw-scripts\generate-release-notes\release_notes.md which will have all the data you need.
+#### 3. You will see a release-notes.md file generated at packages\@rnw-scripts\generate-release-notes\release_notes.md which will have all the data you need.
+
+#### 4. Verify the release notes generated from all commits section and delete the "All Commits" and "Excluded" sections after validation

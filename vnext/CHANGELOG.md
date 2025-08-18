@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 26 Jul 2025 05:26:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 15 Aug 2025 17:57:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.984
+
+Fri, 15 Aug 2025 17:57:23 GMT
+
+### Changes
+
+- Added UIA Event Triggers for accessibilityAnnotation Property Changes (gsaran252000@gmail.com)
+
+## 0.0.0-canary.983
+
+Sat, 09 Aug 2025 05:24:31 GMT
+
+### Changes
+
+- Bump hermes-windows to 0.0.0-2507.21007-eda7aef6 (74712637+iamAbhi-916@users.noreply.github.com)
+- Null pointer checks and validation in SetLayoutPropsRecursive to prevent crashes when shadow nodes are invalid or deleted (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.982
+
+Fri, 08 Aug 2025 05:25:51 GMT
+
+### Changes
+
+- TextInput should capture mouse on mouse down (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Raising UIA Event if Toggle State Changes in Switch Component (kvineeth@microsoft.com)
+
+## 0.0.0-canary.981
+
+Thu, 07 Aug 2025 05:25:45 GMT
+
+### Changes
+
+- [Fabric] Implement announceForAccessibility in AccessibilityInfo Module (kvineeth@microsoft.com)
+
+## 0.0.0-canary.980
+
+Wed, 06 Aug 2025 05:28:00 GMT
+
+### Changes
+
+- Revert "Change `init-windows` default new app template to New Architecture (#…" (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.271
+
+## 0.0.0-canary.979
+
+Thu, 31 Jul 2025 05:23:48 GMT
+
+### Changes
+
+- Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer> (chpurrer@meta.com)
 
 ## 0.0.0-canary.978
 

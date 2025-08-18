@@ -7,6 +7,8 @@
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Controls.h>
 #include <XamlUtils.h>
+#else
+#include <Fabric/Composition/ReactNativeIsland.h>
 #endif
 #include <uiautomationcore.h>
 #include <uiautomationcoreapi.h>
@@ -79,6 +81,33 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
         xaml::Automation::Peers::AutomationNotificationProcessing::ImportantMostRecent,
         hstr,
         hstr);
+#else
+    if (auto weakIslandWrapper = context.Properties().Get(
+            winrt::Microsoft::ReactNative::implementation::ReactNativeIsland::LastFocusedReactNativeIslandProperty())) {
+      if (auto weakIsland = weakIslandWrapper.Value()) {
+        if (auto reactNativeIsland = weakIsland.get()) {
+          if (auto uiaprovider = reactNativeIsland->GetUiaProvider()) {
+            if (auto rawProvider = uiaprovider.try_as<IRawElementProviderSimple>()) {
+              // Convert announcement to BSTR for UIA
+              winrt::hstring hstrAnnouncement{announcement};
+              auto bstrAnnouncement = SysAllocString(hstrAnnouncement.c_str());
+              if (bstrAnnouncement) {
+                // Raise the UIA notification event
+                HRESULT hr = UiaRaiseNotificationEvent(
+                    rawProvider.get(),
+                    NotificationKind_Other,
+                    NotificationProcessing_ImportantMostRecent,
+                    bstrAnnouncement,
+                    bstrAnnouncement);
+                // Clean up BSTRs
+                SysFreeString(bstrAnnouncement);
+              }
+            }
+          }
+        }
+      }
+    }
+
 #endif
   });
 }
