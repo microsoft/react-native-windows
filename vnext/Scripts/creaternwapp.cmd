@@ -71,16 +71,16 @@ if not "%part%"=="" (
 :loopend
 
 if %USE_VERDACCIO% equ 1 (
-  @echo creaternwapp.cmd: Setting npm to use verdaccio at http://localhost:4873
-  call npm config set registry http://localhost:4873
+  @echo creaternwapp.cmd: Setting yarn to use verdaccio at http://localhost:4873
+  call yarn config set registry http://localhost:4873
 )
 
 if %LINK_RNW% equ 1 (
   @echo creaternwapp.cmd Determining versions from local RNW repo at %RNW_ROOT%
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" devDependencies.react') do @set R_VERSION=%%a
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" devDependencies.react-native') do @set RN_VERSION=%%a
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" version') do @set RNW_VERSION=%%a
-  for /f "delims=" %%a in ('npm show "%RNW_ROOT%\vnext" dependencies.@react-native-community/cli') do @set RNCLI_VERSION=%%a
+  for /f "delims=" %%a in ('yarn info "%RNW_ROOT%\vnext" devDependencies.react --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data | Select-Object -ExpandProperty devDependencies | Select-Object -ExpandProperty react"') do @set R_VERSION=%%a
+  for /f "delims=" %%a in ('yarn info "%RNW_ROOT%\vnext" devDependencies.react-native --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data | Select-Object -ExpandProperty devDependencies | Select-Object -ExpandProperty 'react-native'"') do @set RN_VERSION=%%a
+  for /f "delims=" %%a in ('yarn info "%RNW_ROOT%\vnext" version --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data"') do @set RNW_VERSION=%%a
+  for /f "delims=" %%a in ('yarn info "%RNW_ROOT%\vnext" dependencies.@react-native-community/cli --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data | Select-Object -ExpandProperty dependencies | Select-Object -ExpandProperty '@react-native-community/cli'"') do @set RNCLI_VERSION=%%a
 )
 
 if "%RNW_VERSION%"=="" (
@@ -90,24 +90,24 @@ if "%RNW_VERSION%"=="" (
 
 if "%RN_VERSION%"=="" (
   @echo creaternwapp.cmd Determining react-native version from react-native-windows dependency
-  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% devDependencies.react-native') do @set RN_VERSION=%%a
+  for /f "delims=" %%a in ('yarn info react-native-windows@%RNW_VERSION% devDependencies.react-native --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data | Select-Object -ExpandProperty devDependencies | Select-Object -ExpandProperty 'react-native'"') do @set RN_VERSION=%%a
 )
 
 if "%RNCLI_VERSION%"=="" (
   @echo creaternwapp.cmd Determining @react-native-community/cli version from react-native-windows dependency
-  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% dependencies.@react-native-community/cli') do @set RNCLI_VERSION=%%a
+  for /f "delims=" %%a in ('yarn info react-native-windows@%RNW_VERSION% dependencies.@react-native-community/cli --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data | Select-Object -ExpandProperty dependencies | Select-Object -ExpandProperty '@react-native-community/cli'"') do @set RNCLI_VERSION=%%a
 )
 
 if "%R_VERSION%"=="" (
   @echo creaternwapp.cmd Determining react version from react-native-windows dependency
-  for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% devDependencies.react') do @set R_VERSION=%%a
+  for /f "delims=" %%a in ('yarn info react-native-windows@%RNW_VERSION% devDependencies.react --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data | Select-Object -ExpandProperty devDependencies | Select-Object -ExpandProperty react"') do @set R_VERSION=%%a
 )
 
 @echo creaternwapp.cmd Determining concrete versions for react@%R_VERSION%, react-native@%RN_VERSION%, @react-native-community/cli@%RNCLI_VERSION%, and react-native-windows@%RNW_VERSION% 
-for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% version') do @set RNW_VERSION=%%a
-for /f "delims=" %%a in ('npm show react-native@%RN_VERSION% version') do @set RN_VERSION=%%a
-for /f "delims=" %%a in ('npm show @react-native-community/cli@%RNCLI_VERSION% version') do @set RNCLI_VERSION=%%a
-for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION=%%a
+for /f "delims=" %%a in ('yarn info react-native-windows@%RNW_VERSION% version --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data"') do @set RNW_VERSION=%%a
+for /f "delims=" %%a in ('yarn info react-native@%RN_VERSION% version --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data"') do @set RN_VERSION=%%a
+for /f "delims=" %%a in ('yarn info @react-native-community/cli@%RNCLI_VERSION% version --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data"') do @set RNCLI_VERSION=%%a
+for /f "delims=" %%a in ('yarn info react@%R_VERSION% version --json ^| powershell -Command "$input | ConvertFrom-Json | Select-Object -ExpandProperty data"') do @set R_VERSION=%%a
 
 @echo creaternwapp.cmd Creating RNW app "%APP_NAME%" with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 
