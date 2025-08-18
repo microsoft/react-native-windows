@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 Aug 2025 17:57:23 GMT",
+      "version": "0.0.0-canary.984",
+      "tag": "react-native-windows_v0.0.0-canary.984",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gsaran252000@gmail.com",
+            "package": "react-native-windows",
+            "commit": "b26e704a74b8ea037ba50917cf53c6c869c6077c",
+            "comment": "Added UIA Event Triggers for accessibilityAnnotation Property Changes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Aug 2025 05:24:31 GMT",
       "version": "0.0.0-canary.983",
       "tag": "react-native-windows_v0.0.0-canary.983",
