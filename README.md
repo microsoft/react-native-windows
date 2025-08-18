@@ -1,4 +1,4 @@
-![Hero Image with Logo](https://github.com/microsoft/react-native-windows/raw/main/.github/hero2.png)
+![Hero Image with Logo](https://github.com/microsoft/react-native-windows/raw/main/.github/hero3.png)
 
 <h1 align="center"> React Native for Windows </h1>
 
