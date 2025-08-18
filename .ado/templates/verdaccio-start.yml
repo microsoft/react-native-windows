@@ -22,6 +22,7 @@ steps:
     
   - script: | 
       call npm config set registry http://localhost:4873
+      call npm config set audit false
       call yarn config set registry http://localhost:4873
       call yarn config set npmRegistryServer http://localhost:4873
       call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
