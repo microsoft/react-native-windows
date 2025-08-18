@@ -57,13 +57,10 @@ void JSExecutor::disableSamplingProfiler()  {
 }
 
 facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor::collectSamplingProfile() {
-   std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample> emptySamples;
-  
-  // Return stubbed implementation with all three required parameters
-  // Note: this needs to be updated to return 3 parameters when the new app screen API is updated to latest
-  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
-      std::string("stubbed_impl"),
-      std::move(emptySamples)); // [Windows TODO: stubbed implementation #14700]
+   return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
+    "stubbed_impl", 
+    std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{}, 
+    nullptr); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
