@@ -335,6 +335,19 @@ async function getExtraProps(): Promise<Record<string, any>> {
   return extraProps;
 }
 
+function sanitizeOptions(
+  opts: Record<string, any>,
+  sanitizer: (key: keyof InitOptions, value: any) => any,
+): Record<string, any> {
+  const sanitized: Record<string, any> = {};
+  for (const key in opts) {
+    if (Object.prototype.hasOwnProperty.call(opts, key)) {
+      sanitized[key] = sanitizer(key as keyof InitOptions, opts[key]);
+    }
+  }
+  return sanitized;
+}
+
 /**
  * The function run when calling `npx @react-native-community/cli init-windows`.
  * @param args Unprocessed args passed from react-native CLI.
@@ -356,30 +369,18 @@ async function initWindows(
 
   let initWindowsError: Error | undefined;
 
-  // Capture what was known at the start (already recorded by startTelemetrySession),
-  // and later record what actually happened.
-  const originalTemplate = options.template;
-  let finalTemplate = originalTemplate;
-  let templateChangedByPrompt = false;
-
   try {
     await initWindowsInternal(args, config, options);
   } catch (ex) {
     initWindowsError =
       ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(initWindowsError);
-  } finally {
-    // Whatever the command ended up using
-    finalTemplate = options.template;
-    templateChangedByPrompt = originalTemplate !== finalTemplate;
   }
 
-  // Add extra fields so reporting can differentiate initial vs final choices
-  await endTelemetrySession(initWindowsError, async () => ({
-    ...(await getExtraProps()),
-    finalTemplate,
-    templateChangedByPrompt,
-  }));
+  // Now, instead of custom fields, just pass the final options object
+  await endTelemetrySession(initWindowsError, getExtraProps, options, opts =>
+    sanitizeOptions(opts, optionSanitizer),
+  );
 
   setExitProcessWithError(options.logging, initWindowsError);
 }

@@ -12,7 +12,7 @@ import chalk from 'chalk';
 export function showOldArchitectureWarning(): void {
   console.log(
     chalk.yellow(
-      `⚠️ This project is using the React Native (for Windows) Old Architecture. The old architecture will begin to be removed starting with react-native-windows version 0.82.`,
+      `⚠️ This project is using the React Native (for Windows) Old Architecture. The old architecture will begin to be removed starting with react-native-windows@0.82.0.`,
     ),
   );
   console.log();

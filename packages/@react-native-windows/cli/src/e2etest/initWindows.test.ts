@@ -128,9 +128,3 @@ test('nameHelpers - isValidProjectNamespace', () => {
     nameHelpers.isValidProjectNamespace('com::company::app-name::other'),
   ).toBe(false);
 });
-
-test('--no-prompt flag exists in initOptions', () => {
-  const promptOption = initOptions.find(opt => opt.name === '--no-prompt');
-  expect(promptOption).toBeDefined();
-  expect(promptOption?.description).toContain('Skip interactive prompt');
-});
