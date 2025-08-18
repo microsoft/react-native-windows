@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "replace npm commands with yarn to solve connection issue npm 10.5.1",
+  "packageName": "react-native-windows",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
