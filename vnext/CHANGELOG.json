@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 18 Aug 2025 15:29:55 GMT",
+      "version": "0.80.0-preview.3",
+      "tag": "react-native-windows_v0.80.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2311b7de497f7375c63ec3647d3e790fc9737657",
+            "comment": "Bump hermes-windows to 0.0.0-2507.21007-eda7aef6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Aug 2025 15:28:21 GMT",
       "version": "0.80.0-preview.2",
       "tag": "react-native-windows_v0.80.0-preview.2",

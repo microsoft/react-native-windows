@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 11 Aug 2025 15:28:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 18 Aug 2025 15:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.3
+
+Mon, 18 Aug 2025 15:29:55 GMT
+
+### Changes
+
+- Bump hermes-windows to 0.0.0-2507.21007-eda7aef6 (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.80.0-preview.2
 
