@@ -1,11 +1,16 @@
+# TO-DO
+# This is not working currently as expected, we need to query graphQL APIs directly to get more data as CLI has it's limitations.
+# Future work: use gh api graphql -f query='...'
 name: Auto-Set Remaining Days to 0 on Issue Closed
 
 on:
-  issues:
-    types: [closed]
+  workflow_dispatch: 
+#  issues:
+#   types: [closed]
 
 jobs:
   update_remaining_days:
+    if: false # Ensures job won't run even if manually triggered
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
