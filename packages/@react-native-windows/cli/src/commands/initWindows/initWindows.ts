@@ -30,6 +30,8 @@ import {
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
 import * as nameHelpers from '../../utils/nameHelpers';
+import {showOldArchitectureWarning} from '../../utils/oldArchWarning';
+import {promptForArchitectureChoice} from '../../utils/architecturePrompt';
 import type {InitOptions} from './initWindowsOptions';
 import {initOptions} from './initWindowsOptions';
 
@@ -154,6 +156,9 @@ export class InitWindows {
       return;
     }
 
+    const userDidNotPassTemplate = !process.argv.some(arg =>
+      arg.startsWith('--template'),
+    );
     this.options.template ??=
       (this.rnwConfig?.['init-windows']?.template as string | undefined) ??
       this.getDefaultTemplateName();
@@ -166,10 +171,23 @@ export class InitWindows {
       );
     }
 
-    if (this.options.template.startsWith('old')) {
-      spinner.warn(
-        `The legacy '${this.options.template}' template targets the React Native Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.`,
-      );
+    const isOldArchTemplate = this.options.template.startsWith('old');
+    const promptFlag = this.options.prompt;
+
+    if (isOldArchTemplate) {
+      showOldArchitectureWarning();
+
+      if (userDidNotPassTemplate && promptFlag) {
+        const promptResult = await promptForArchitectureChoice();
+
+        if (
+          !promptResult.shouldContinueWithOldArch &&
+          !promptResult.userCancelled
+        ) {
+          spinner.info('Switching to New Architecture template (cpp-app)...');
+          this.options.template = 'cpp-app';
+        }
+      }
     }
 
     const templateConfig = this.templates.get(this.options.template)!;
@@ -303,6 +321,7 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
     case 'overwrite':
     case 'telemetry':
     case 'list':
+    case 'prompt':
       return value === undefined ? false : value; // Return value
   }
 }
@@ -314,6 +333,19 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
 async function getExtraProps(): Promise<Record<string, any>> {
   const extraProps: Record<string, any> = {};
   return extraProps;
+}
+
+function sanitizeOptions(
+  opts: Record<string, any>,
+  sanitizer: (key: keyof InitOptions, value: any) => any,
+): Record<string, any> {
+  const sanitized: Record<string, any> = {};
+  for (const key in opts) {
+    if (Object.prototype.hasOwnProperty.call(opts, key)) {
+      sanitized[key] = sanitizer(key as keyof InitOptions, opts[key]);
+    }
+  }
+  return sanitized;
 }
 
 /**
@@ -336,6 +368,7 @@ async function initWindows(
   );
 
   let initWindowsError: Error | undefined;
+
   try {
     await initWindowsInternal(args, config, options);
   } catch (ex) {
@@ -344,7 +377,11 @@ async function initWindows(
     Telemetry.trackException(initWindowsError);
   }
 
-  await endTelemetrySession(initWindowsError, getExtraProps);
+  // Now, instead of custom fields, just pass the final options object
+  await endTelemetrySession(initWindowsError, getExtraProps, options, opts =>
+    sanitizeOptions(opts, optionSanitizer),
+  );
+
   setExitProcessWithError(options.logging, initWindowsError);
 }
 
