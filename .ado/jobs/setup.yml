@@ -14,6 +14,11 @@ jobs:
     pool: {vmImage: ubuntu-latest}
 
     steps:
+      - task: UseNode@1
+        inputs:
+          version: '22.18.0'
+        displayName: 'Use Node.js 22.18.0'
+
       - template: ../templates/checkout-full.yml
         parameters:
           persistCredentials: true # Git creds needed for beachball
