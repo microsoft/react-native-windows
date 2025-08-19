@@ -33,6 +33,7 @@ import type {RunWindowsOptions} from './runWindowsOptions';
 import {runWindowsOptions} from './runWindowsOptions';
 import {autolinkWindowsInternal} from '../autolinkWindows/autolinkWindows';
 import type {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
+import {showOldArchitectureWarning} from '../../utils/oldArchWarning';
 
 /**
  * Sanitizes the given option for telemetry.
@@ -208,9 +209,7 @@ async function runWindowsInternal(
 
   // Warn about old architecture projects
   if (config.project.windows?.rnwConfig?.projectArch === 'old') {
-    newWarn(
-      'This project is using the React Native (for Windows) Old Architecture, which will eventually be deprecated. See https://microsoft.github.io/react-native-windows/docs/new-architecture for details on switching to the New Architecture.',
-    );
+    showOldArchitectureWarning();
   }
 
   // Get the solution file
