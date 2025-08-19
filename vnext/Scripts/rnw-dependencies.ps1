@@ -242,7 +242,7 @@ function CheckNode {
         Write-Verbose "Node version found: $nodeVersion";
         $major = $nodeVersion.Major;
         $minor = $nodeVersion.Minor;
-        return ($major -gt 22) -or (($major -eq 22) -and ($minor -ge 0));
+        return ($major -gt 22) -or (($major -eq 22) -and ($minor -ge 18));
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -441,7 +441,7 @@ $requirements = @(
         Name = 'Node.js (LTS, >= 22.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS "22.0.0" };
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "22.18.0" };
         HasVerboseOutput = $true;
     },
     @{
