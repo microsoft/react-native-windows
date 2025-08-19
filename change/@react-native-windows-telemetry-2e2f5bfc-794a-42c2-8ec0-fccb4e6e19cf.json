@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update CLI to show static warning for old architecture in run-windows and interactive prompt for init-windows (#15029)",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "54227869+anupriya13@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
