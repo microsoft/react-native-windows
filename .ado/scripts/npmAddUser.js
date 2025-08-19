@@ -62,12 +62,6 @@ const setEmail = child_process.spawnSync('npm', ['config', 'set', 'email', email
   shell: true
 });
 
-// Set always-auth
-child_process.spawnSync('npm', ['config', 'set', 'always-auth', 'true'], {
-  stdio: 'inherit',
-  shell: true
-});
-
 // Verify authentication
 console.log('Verifying authentication...');
 const whoami = child_process.spawnSync('npm', ['whoami', '--registry', registryUrl], {
