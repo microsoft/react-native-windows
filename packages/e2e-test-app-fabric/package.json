@@ -42,7 +42,7 @@
     "@rnx-kit/cli": "^0.16.10",
     "@rnx-kit/jest-preset": "^0.1.16",
     "@types/jest": "^29.2.2",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
@@ -53,6 +53,6 @@
     "typescript": "5.0.4"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

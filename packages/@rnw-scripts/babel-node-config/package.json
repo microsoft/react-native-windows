@@ -14,7 +14,7 @@
     "@babel/plugin-transform-private-property-in-object": "^7.22.0",
     "@babel/preset-env": "^7.22.0",
     "@babel/preset-typescript": "^7.21.0",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.0.0",
     "eslint": "^8.19.0",
     "prettier": "2.8.8"
   },
@@ -26,6 +26,6 @@
     "@babel/preset-typescript": "^7.21.0"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

@@ -36,7 +36,7 @@
     "@rnw-scripts/ts-config": "^2.0.5",
     "@types/chai": "^4.2.14",
     "@types/jest": "^29.2.2",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.0.0",
     "@types/ora": "^3.2.0",
     "@types/ws": "^7.4.0",
     "babel-jest": "^29.6.3",
@@ -49,6 +49,6 @@
     "ws": "^7.4.6"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

@@ -24,7 +24,7 @@
     "@rnw-scripts/just-task": "2.3.54",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/find-up": "^4.0.0",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.19.0",
@@ -47,6 +47,6 @@
     "lib-commonjs"
   ],
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

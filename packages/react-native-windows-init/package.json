@@ -44,7 +44,7 @@
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.0.0",
     "@types/npm-registry-fetch": "^8.0.0",
     "@types/prompts": "2.0.10",
     "@types/semver": "7.3.3",
