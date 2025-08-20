@@ -5,7 +5,7 @@
 
 #include <folly/json.h>
 #include <tracing/tracing.h>
-#include "InspectorPackagerConnection.h"
+#include "LegacyInspectorPackagerConnection.h"
 
 namespace Microsoft::ReactNative {
 

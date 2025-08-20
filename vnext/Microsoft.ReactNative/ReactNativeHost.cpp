@@ -5,13 +5,16 @@
 #include "ReactNativeHost.h"
 #include "ReactNativeHost.g.cpp"
 
+#include "Inspector/ReactInspectorThread.h"
 #include "ReactPackageBuilder.h"
 #include "RedBox.h"
 #include "TurboModulesProvider.h"
 
 #include <future/futureWinRT.h>
+#include <jsinspector-modern/InspectorFlags.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include "IReactContext.h"
+#include "ReactHost/DebuggerNotifications.h"
 #include "ReactInstanceSettings.h"
 
 #ifdef USE_FABRIC
@@ -32,6 +35,51 @@ using namespace xaml::Controls;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+class ModernInspectorHostTargetDelegate : public facebook::react::jsinspector_modern::HostTargetDelegate,
+                                          public std::enable_shared_from_this<ModernInspectorHostTargetDelegate> {
+ public:
+  ModernInspectorHostTargetDelegate(winrt::weak_ref<ReactNative::ReactNativeHost> &&reactNativeHost) noexcept
+      : m_reactNativeHost(std::move(reactNativeHost)) {}
+
+  facebook::react::jsinspector_modern::HostTargetMetadata getMetadata() override {
+    return {
+        .integrationName = "React Native Windows (Host)",
+    };
+  }
+
+  void onReload(facebook::react::jsinspector_modern::HostTargetDelegate::PageReloadRequest const &request) override {
+    if (auto reactNativeHost = m_reactNativeHost.get()) {
+      reactNativeHost.ReloadInstance();
+    }
+  }
+
+  void onSetPausedInDebuggerMessage(
+      facebook::react::jsinspector_modern::HostTargetDelegate::OverlaySetPausedInDebuggerMessageRequest const &request)
+      override {
+    if (auto reactNativeHost = m_reactNativeHost.get()) {
+      const auto instanceSettings = reactNativeHost.InstanceSettings();
+      if (instanceSettings) {
+        if (request.message.has_value()) {
+          ::Microsoft::ReactNative::DebuggerNotifications::OnShowDebuggerPausedOverlay(
+              instanceSettings.Notifications(), request.message.value(), [weakThis = weak_from_this()]() {
+                if (auto strongThis = weakThis.lock()) {
+                  if (auto reactNativeHost = strongThis->m_reactNativeHost.get()) {
+                    winrt::get_self<ReactNativeHost>(reactNativeHost)->OnDebuggerResume();
+                  }
+                }
+              });
+        } else {
+          ::Microsoft::ReactNative::DebuggerNotifications::OnHideDebuggerPausedOverlay(
+              instanceSettings.Notifications());
+        }
+      }
+    }
+  }
+
+ private:
+  winrt::weak_ref<ReactNative::ReactNativeHost> m_reactNativeHost;
+};
+
 ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactHost()} {
 #if _DEBUG
   facebook::react::InitializeLogging([](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
@@ -39,6 +87,45 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
     OutputDebugStringA(str.c_str());
   });
 #endif
+
+  auto &inspectorFlags = facebook::react::jsinspector_modern::InspectorFlags::getInstance();
+  if (inspectorFlags.getFuseboxEnabled() && !m_inspectorPageId.has_value()) {
+    m_inspectorHostDelegate = std::make_shared<ModernInspectorHostTargetDelegate>(*this);
+    m_inspectorTarget = facebook::react::jsinspector_modern::HostTarget::create(
+        *m_inspectorHostDelegate, [](std::function<void()> &&callback) {
+          ::Microsoft::ReactNative::ReactInspectorThread::Instance().Post(
+              [callback = std::move(callback)]() { callback(); });
+        });
+
+    std::weak_ptr<facebook::react::jsinspector_modern::HostTarget> weakInspectorTarget = m_inspectorTarget;
+    facebook::react::jsinspector_modern::InspectorTargetCapabilities capabilities;
+    capabilities.nativePageReloads = true;
+    capabilities.prefersFuseboxFrontend = true;
+    m_inspectorPageId = facebook::react::jsinspector_modern::getInspectorInstance().addPage(
+        "React Native Windows (Experimental)",
+        /* vm */ "",
+        [weakInspectorTarget](std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remote)
+            -> std::unique_ptr<facebook::react::jsinspector_modern::ILocalConnection> {
+          if (const auto inspectorTarget = weakInspectorTarget.lock()) {
+            // facebook::react::jsinspector_modern::HostTarget::SessionMetadata sessionMetadata;
+            // sessionMetadata.integrationName = "React Native Windows (Host)";
+            // return inspectorTarget->connect(std::move(remote), sessionMetadata);
+            return inspectorTarget->connect(std::move(remote));
+          }
+
+          // This can happen if we're about to be dealloc'd. Reject the connection.
+          return nullptr;
+        },
+        capabilities);
+  }
+}
+
+ReactNativeHost::~ReactNativeHost() noexcept {
+  if (m_inspectorPageId.has_value()) {
+    facebook::react::jsinspector_modern::getInspectorInstance().removePage(*m_inspectorPageId);
+    m_inspectorPageId.reset();
+    m_inspectorTarget.reset();
+  }
 }
 
 /*static*/ ReactNative::ReactNativeHost ReactNativeHost::FromContext(
@@ -199,6 +286,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   }
 
   reactOptions.Identity = jsBundleFile;
+  reactOptions.InspectorTarget = m_inspectorTarget.get();
   return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
 }
 
@@ -208,6 +296,15 @@ IAsyncAction ReactNativeHost::UnloadInstance() noexcept {
 
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {
   return m_reactHost.Get();
+}
+
+void ReactNativeHost::OnDebuggerResume() noexcept {
+  ::Microsoft::ReactNative::ReactInspectorThread::Instance().Post(
+      [weakInspectorTarget = std::weak_ptr(m_inspectorTarget)]() {
+        if (const auto inspectorTarget = weakInspectorTarget.lock()) {
+          inspectorTarget->sendCommand(facebook::react::jsinspector_modern::HostCommand::DebuggerResume);
+        }
+      });
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

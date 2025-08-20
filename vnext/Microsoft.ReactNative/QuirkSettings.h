@@ -65,6 +65,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
       bool value) noexcept;
 
+  static void SetUseFusebox(bool value) noexcept;
+
 #pragma endregion Public API - part of IDL interface
 };
 

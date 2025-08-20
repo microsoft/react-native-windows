@@ -364,6 +364,12 @@ std::shared_ptr<facebook::jsi::Runtime> HermesRuntimeHolder::getRuntime() noexce
   return m_jsiRuntime;
 }
 
+const std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate> &
+HermesRuntimeHolder::getSharedRuntimeTargetDelegate() {
+  // TODO: [vmoroz] create on demand using Hermes API.
+  return m_targetDelegate;
+}
+
 void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_dump_crash_data(m_runtime, fileDescriptor));
 }
@@ -403,6 +409,11 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_dump_to_file(fileName.c_str()));
 }
 
+hermes_runtime HermesRuntimeHolder::getHermesRuntime() noexcept {
+  // TODO: (@vmoroz) Implement
+  return nullptr;
+}
+
 //==============================================================================
 // HermesJSRuntime implementation
 //==============================================================================
@@ -412,6 +423,10 @@ HermesJSRuntime::HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLa
 
 facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
   return *m_holder->getRuntime();
+}
+
+facebook::react::jsinspector_modern::RuntimeTargetDelegate &HermesJSRuntime::getRuntimeTargetDelegate() {
+  return *m_holder->getSharedRuntimeTargetDelegate();
 }
 
 void HermesJSRuntime::addConsoleMessage(

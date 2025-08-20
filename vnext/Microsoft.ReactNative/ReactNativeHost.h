@@ -5,6 +5,7 @@
 
 #include "ReactNativeHost.g.h"
 
+#include <jsinspector-modern/HostTarget.h>
 #include "NativeModulesProvider.h"
 #include "ReactHost/React.h"
 #include "ReactInstanceSettings.h"
@@ -16,6 +17,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
  public: // ReactNativeHost ABI API
   ReactNativeHost() noexcept;
+  ~ReactNativeHost() noexcept;
 
   static ReactNative::ReactNativeHost FromContext(ReactNative::IReactContext const &reactContext) noexcept;
 
@@ -25,6 +27,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   // property InstanceSettings
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
+  void OnDebuggerResume() noexcept;
 
   winrt::Windows::Foundation::IAsyncAction LoadInstance() noexcept;
   winrt::Windows::Foundation::IAsyncAction ReloadInstance() noexcept;
@@ -39,6 +42,10 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   ReactNative::IReactPackageBuilder m_packageBuilder;
+
+  std::shared_ptr<facebook::react::jsinspector_modern::HostTargetDelegate> m_inspectorHostDelegate{nullptr};
+  std::shared_ptr<facebook::react::jsinspector_modern::HostTarget> m_inspectorTarget{nullptr};
+  std::optional<int32_t> m_inspectorPageId{std::nullopt};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

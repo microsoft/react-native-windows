@@ -45,12 +45,14 @@
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
+#include "Inspector/ReactInspectorThread.h"
 #include "PackagerConnection.h"
+#include "Threading/MessageDispatchQueue.h"
 
 #if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
 #include <hermes/BytecodeVersion.h>
 #endif
-#include "HermesRuntimeHolder.h"
+#include "Hermes/HermesRuntimeHolder.h"
 
 #if defined(USE_V8)
 #include <JSI/V8RuntimeHolder.h>
@@ -215,6 +217,26 @@ namespace react {
 
 namespace {
 
+// OJSIExecutor is need to override getRuntimeTargetDelegate to support the modern JSI inspector.
+class OJSIExecutor : public JSIExecutor {
+ public:
+  OJSIExecutor(
+      std::shared_ptr<jsi::Runtime> runtime,
+      std::shared_ptr<ExecutorDelegate> delegate,
+      const JSIScopedTimeoutInvoker &timeoutInvoker,
+      RuntimeInstaller runtimeInstaller,
+      std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate> targetDelegate) noexcept
+      : JSIExecutor(std::move(runtime), std::move(delegate), timeoutInvoker, std::move(runtimeInstaller)),
+        targetDelegate_(std::move(targetDelegate_)) {}
+
+  jsinspector_modern::RuntimeTargetDelegate &getRuntimeTargetDelegate() override {
+    return *targetDelegate_;
+  }
+
+ private:
+  std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate> targetDelegate_;
+};
+
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -231,7 +253,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    return std::make_unique<JSIExecutor>(
+    return std::make_unique<OJSIExecutor>(
         runtimeHolder_->getRuntime(),
         std::move(delegate),
         JSIExecutor::defaultTimeoutInvoker,
@@ -239,7 +261,8 @@ class OJSIExecutorFactory : public JSExecutorFactory {
 #ifdef ENABLE_JS_SYSTRACE_TO_ETW
           facebook::react::tracing::initializeJSHooks(runtime, isProfiling);
 #endif
-        });
+        },
+        runtimeHolder_->getSharedRuntimeTargetDelegate());
   }
 
   OJSIExecutorFactory(
@@ -373,7 +396,8 @@ InstanceImpl::InstanceImpl(
 #endif
 
   if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->EnsureHermesInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+    m_devManager->EnsureHermesInspector(
+        m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->bundleAppId);
   }
 
   // Default (common) NativeModules
@@ -483,7 +507,8 @@ InstanceImpl::InstanceImpl(
     }
   }
 
-  m_innerInstance->initializeBridge(std::move(callback), jsef, m_jsThread, m_moduleRegistry);
+  m_innerInstance->initializeBridge(
+      std::move(callback), jsef, m_jsThread, m_moduleRegistry, m_devSettings->inspectorTarget);
 
   // For RuntimeScheduler to work properly, we need to install TurboModuleManager with RuntimeSchedulerCallbackInvoker.
   // To be able to do that, we need to be able to call m_innerInstance->getRuntimeExecutor(), which we can only do after
@@ -586,6 +611,16 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
+  if (m_devSettings->inspectorTarget) {
+    auto messageDispatchQueue =
+        Mso::React::MessageDispatchQueue(::Microsoft::ReactNative::ReactInspectorThread::Instance(), nullptr);
+    messageDispatchQueue.runOnQueueSync([weakInnerInstance = std::weak_ptr(m_innerInstance)]() {
+      if (auto innerInstance = weakInnerInstance.lock()) {
+        innerInstance->unregisterFromInspector();
+      }
+    });
+  }
+
   if (shouldStartHermesInspector(*m_devSettings) && m_devSettings->jsiRuntimeHolder) {
     m_devSettings->jsiRuntimeHolder->teardown();
   }

@@ -299,6 +299,18 @@ ReactInstanceWin::ReactInstanceWin(
 }
 
 ReactInstanceWin::~ReactInstanceWin() noexcept {
+#ifdef USE_FABRIC
+  if (m_bridgelessReactInstance && m_options.InspectorTarget) {
+    auto messageDispatchQueue =
+        Mso::React::MessageDispatchQueue(::Microsoft::ReactNative::FuseboxInspectorThread::Instance(), nullptr);
+    messageDispatchQueue.runOnQueueSync([weakBridgelessReactInstance = std::weak_ptr(m_bridgelessReactInstance)]() {
+      if (auto bridgelessReactInstance = weakBridgelessReactInstance.lock()) {
+        bridgelessReactInstance->unregisterFromInspector();
+      }
+    });
+  }
+#endif
+
   std::scoped_lock lock{s_registryMutex};
   auto it = std::find(s_instanceRegistry.begin(), s_instanceRegistry.end(), this);
   if (it != s_instanceRegistry.end()) {
@@ -553,6 +565,8 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
 
   devSettings->useRuntimeScheduler = useRuntimeScheduler;
 
+  devSettings->inspectorTarget = m_options.InspectorTarget;
+
   return devSettings;
 }
 
@@ -665,15 +679,19 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
               if (devSettings->useDirectDebugger) {
                 ::Microsoft::ReactNative::GetSharedDevManager()->EnsureHermesInspector(
-                    devSettings->sourceBundleHost, devSettings->sourceBundlePort);
+                    devSettings->sourceBundleHost, devSettings->sourceBundlePort, devSettings->bundleAppId);
               }
 
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
                   devSettings, jsMessageThread, CreatePreparedScriptStore());
               auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
               jsRuntime->getRuntime();
-              m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
-                  std::move(jsRuntime), jsMessageThread, timerManager, jsErrorHandlingFunc);
+              m_bridgelessReactInstance = std::make_shared<facebook::react::ReactInstance>(
+                  std::move(jsRuntime),
+                  m_jsMessageThread.Load(),
+                  timerManager,
+                  jsErrorHandlingFunc,
+                  m_options.InpectorTarget);
 
               auto bufferedRuntimeExecutor = m_bridgelessReactInstance->getBufferedRuntimeExecutor();
               timerManager->setRuntimeExecutor(bufferedRuntimeExecutor);

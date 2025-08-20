@@ -9,9 +9,24 @@
 #include "React.h"
 #include "ReactPropertyBag.h"
 
+#include <react/featureflags/ReactNativeFeatureFlags.h>
+#include <react/featureflags/ReactNativeFeatureFlagsDefaults.h>
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 QuirkSettings::QuirkSettings() noexcept {}
+
+class QuirkSettingsReactNativeFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
+ public:
+  QuirkSettingsReactNativeFeatureFlags(bool fuseboxEnabledDebug) : m_fuseboxEnabledDebug(fuseboxEnabledDebug) {}
+
+  bool fuseboxEnabledDebug() override {
+    return m_fuseboxEnabledDebug;
+  }
+
+ private:
+  bool m_fuseboxEnabledDebug;
+};
 
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBehaviorProperty() noexcept {
   static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
@@ -119,6 +134,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseRuntimeSchedulerProperty
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
   ReactPropertyBag(settings.Properties()).Set(UseRuntimeSchedulerProperty(), value);
+}
+
+/*static*/ void QuirkSettings::SetUseFusebox(bool value) noexcept {
+  facebook::react::ReactNativeFeatureFlags::override(std::make_unique<QuirkSettingsReactNativeFeatureFlags>(value));
 }
 
 #pragma endregion IDL interface
