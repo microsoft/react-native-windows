@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Wed, 20 Aug 2025 05:26:05 GMT",
+      "version": "0.3.407",
+      "tag": "@react-native-windows/automation_v0.3.407",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.325",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Aug 2025 17:57:23 GMT",
       "version": "0.3.406",
       "tag": "@react-native-windows/automation_v0.3.406",
