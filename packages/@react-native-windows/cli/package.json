@@ -50,7 +50,7 @@
     "@types/jest": "^29.2.2",
     "@types/lodash": "^4.14.168",
     "@types/mustache": "^4.1.1",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.14.0",
     "@types/ora": "^3.2.0",
     "@types/prompts": "2.0.10",
     "@types/semver": "^7.3.3",

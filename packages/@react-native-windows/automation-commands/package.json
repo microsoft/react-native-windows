@@ -28,7 +28,7 @@
     "@rnw-scripts/just-task": "2.3.54",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/jest": "^29.2.2",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.14.0",
     "eslint": "^8.19.0",
     "prettier": "2.8.8",
     "typescript": "5.0.4"

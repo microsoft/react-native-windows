@@ -16,8 +16,8 @@ jobs:
     steps:
       - task: UseNode@1
         inputs:
-          version: '22.18.0'
-        displayName: 'Use Node.js 22.18.0'
+          version: '22.14.0'
+        displayName: 'Use Node.js 22.14.0'
 
       - template: ../templates/checkout-full.yml
         parameters:
