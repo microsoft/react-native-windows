@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 20 Aug 2025 05:26:04 GMT",
+      "version": "0.0.0-canary.272",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.272",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "48ba9d55a831e1e8e6c04994c95ba1b8a5d6f378",
+            "comment": "Update CLI to show static warning for old architecture in run-windows and interactive prompt for init-windows (#15029)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.123",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Aug 2025 05:27:59 GMT",
       "version": "0.0.0-canary.271",
       "tag": "@react-native-windows/cli_v0.0.0-canary.271",
