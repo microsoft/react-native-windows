@@ -95,6 +95,9 @@
 ; Ignore rn-tester Pods
 <PROJECT_ROOT>/packages/rn-tester/Pods/
 
+; Ignore ReactNativeTypes.js specifically
+.*/node_modules/react-native/Libraries/Renderer/shims/ReactNativeTypes.js
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 
