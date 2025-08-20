@@ -463,6 +463,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
       */
       if (instance != null) {
         // $FlowFixMe[prop-missing] - See the explanation above.
+        // $FlowFixMe[unsafe-object-assign]
         Object.assign(instance, {
           clear(): void {
             if (inputRef.current != null) {
