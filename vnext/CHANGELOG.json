@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 20 Aug 2025 05:26:05 GMT",
+      "version": "0.0.0-canary.985",
+      "tag": "react-native-windows_v0.0.0-canary.985",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.272",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Aug 2025 17:57:23 GMT",
       "version": "0.0.0-canary.984",
       "tag": "react-native-windows_v0.0.0-canary.984",
