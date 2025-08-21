@@ -146,15 +146,8 @@ task('downloadFlowTypes:fix', async () => await downloadFlowTypes(true));
 task(
   'flow-check',
   series('downloadFlowTypes', async () => {
-    const flowCmdPath = path.resolve(__dirname, '../../../node_modules/.bin/flow.cmd');
-    const result = require('child_process').spawnSync(flowCmdPath, ['check'], {
-      stdio: 'inherit',
-      timeout: 10000 // optional: 10 seconds timeout
-    });
-
-    if (result.error) {
-      console.error('Flow check failed:', result.error.message);
-      process.exit(1); // fail the task if needed
-    }
+    const flowBinPath = require.resolve('flow-bin');
+    const flowPath = path.join(path.dirname(flowBinPath), 'cli.js');
+    require('child_process').execSync(`node "${flowPath}" check`, {stdio: 'inherit'});
   }),
 );
