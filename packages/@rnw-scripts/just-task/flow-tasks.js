@@ -146,7 +146,6 @@ task('downloadFlowTypes:fix', async () => await downloadFlowTypes(true));
 task(
   'flow-check',
   series('downloadFlowTypes', async () => {
-      const flowPath = path.resolve(__dirname, '../../../node_modules/flow-bin/cli.js');
-      require('child_process').execSync(`npx "${flowPath}" check`, {stdio: 'inherit'});
+      require('child_process').execSync('npx flow check', {stdio: 'inherit'});
   }),
 );
