@@ -28,6 +28,7 @@ export interface CommandStartInfo {
 
 export interface CommandEndInfo {
   resultCode: errorUtils.CodedErrorType;
+  finalOptions?: Record<string, any>;
 }
 
 interface CommandInfo {

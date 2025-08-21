@@ -1,11 +1,16 @@
+# TO-DO
+# This is not working currently as expected, we need to query graphQL APIs directly to get more data as CLI has it's limitations.
+# Future work: use gh api graphql -f query='...'
 name: Auto-Set Remaining Days to 0 on Issue Closed
 
 on:
-  issues:
-    types: [closed]
+  workflow_dispatch: 
+#  issues:
+#   types: [closed]
 
 jobs:
   update_remaining_days:
+    if: false # Ensures job won't run even if manually triggered
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -14,53 +19,45 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Authenticate GitHub CLI
-        env:
-          GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
-        run: echo "${GH_TOKEN}" | gh auth login --with-token
-
-      - name: Debug - List projects linked to this issue
+      - name: Debug - List project items linked to this issue
         env:
           GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
         run: |
-          echo "🔍 Listing all projects linked to issue ${{ github.event.issue.number }}..."
+          echo "🔍 Listing all project items linked to issue #${{ github.event.issue.number }}..."
           gh issue view ${{ github.event.issue.number }} \
             --repo ${{ github.repository }} \
-            --json projectsV2 \
+            --json projectItems \
             | jq .
 
-      - name: Set Remaining Days to 0 if issue is in Project 183
+      - name: Update Remaining Days if issue is in "React Native Planning"
         env:
           GH_TOKEN: ${{ secrets.UPDATE_PROJECT_V2_PAT }}
         run: |
-          echo "🔍 Checking if issue ${{ github.event.issue.number }} belongs to Project 183..."
-
-          # Find the project item ID for project 183 among the issue’s linked projects
+          # Extract ITEM_ID where project title == "React Native Planning"
           ITEM_ID=$(gh issue view ${{ github.event.issue.number }} \
             --repo ${{ github.repository }} \
-            --json projectsV2 \
-            | jq -r '.projectsV2[] | select(.number==183) | .item.id')
+            --json projectItems \
+            | jq -r '.projectItems[] | select(.title=="React Native Planning") | .id')
 
           if [ -z "$ITEM_ID" ]; then
-            echo "ℹ️ Issue is not in Project 183. Nothing to update."
+            echo "ℹ️ Issue is not in project 'React Native Planning'. Nothing to update."
             exit 0
           fi
 
-          echo "✅ Found Project Item ID in Project 183: $ITEM_ID"
+          echo "✅ Found Project Item ID in 'React Native Planning': $ITEM_ID"
 
-          # Find the field ID for "Remaining Days"
-          FIELD_ID=$(gh project field-list --owner microsoft --number 183 --format json \
+          # Find the field ID for "Remaining Days" in that project
+          FIELD_ID=$(gh project field-list --owner microsoft --format json \
             | jq -r '.[] | select(.name=="Remaining Days") | .id')
 
           if [ -z "$FIELD_ID" ]; then
-            echo "❌ No field named 'Remaining Days' found in Project 183."
+            echo "❌ No field named 'Remaining Days' found."
             exit 1
           fi
 
           echo "✅ Found Field ID for Remaining Days: $FIELD_ID"
 
           # Update the field value to 0
-          gh project item-update --owner microsoft --number 183 \
-            --id "$ITEM_ID" --field-id "$FIELD_ID" --value "0"
+          gh project item-update --id "$ITEM_ID" --field-id "$FIELD_ID" --value "0"
 
-          echo "🎉 Successfully set Remaining Days = 0 for issue ${{ github.event.issue.number }}"
+          echo "🎉 Successfully set Remaining Days = 0 for issue #${{ github.event.issue.number }}"
