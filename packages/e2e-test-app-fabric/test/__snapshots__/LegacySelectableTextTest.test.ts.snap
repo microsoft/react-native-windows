@@ -2,80 +2,96 @@
 
 exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
 {
-  "AutomationId": "pressed-state",
-  "Clip": null,
-  "FlowDirection": "LeftToRight",
-  "Foreground": "#FF000000",
-  "Height": 19,
-  "HorizontalAlignment": "Stretch",
-  "Left": 0,
-  "Margin": "0,0,0,0",
-  "Padding": "0,0,0,0",
-  "Text": "Pressed: 2 times.",
-  "Top": 0,
-  "VerticalAlignment": "Stretch",
-  "Visibility": "Visible",
-  "Width": 103,
-  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 2 times.",
+    "TextRangePattern.GetText": "Pressed: 2 times.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": "0, 0, 0",
+    "Size": "103, 19",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
 exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
 {
-  "AutomationId": "pressed-state",
-  "Clip": null,
-  "FlowDirection": "LeftToRight",
-  "Foreground": "#FF000000",
-  "Height": 19,
-  "HorizontalAlignment": "Stretch",
-  "Left": 0,
-  "Margin": "0,0,0,0",
-  "Padding": "0,0,0,0",
-  "Text": "Pressed: 1 times.",
-  "Top": 0,
-  "VerticalAlignment": "Stretch",
-  "Visibility": "Visible",
-  "Width": 103,
-  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 2 times.",
+    "TextRangePattern.GetText": "Pressed: 2 times.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": "0, 0, 0",
+    "Size": "103, 19",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
 exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
 {
-  "AutomationId": "pressed-state",
-  "Clip": null,
-  "FlowDirection": "LeftToRight",
-  "Foreground": "#FF000000",
-  "Height": 19,
-  "HorizontalAlignment": "Stretch",
-  "Left": 0,
-  "Margin": "0,0,0,0",
-  "Padding": "0,0,0,0",
-  "Text": "Pressed: 1 times.",
-  "Top": 0,
-  "VerticalAlignment": "Stretch",
-  "Visibility": "Visible",
-  "Width": 103,
-  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 1 times.",
+    "TextRangePattern.GetText": "Pressed: 1 times.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": "0, 0, 0",
+    "Size": "103, 19",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
 exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
 {
-  "AutomationId": "pressed-state",
-  "Clip": null,
-  "FlowDirection": "LeftToRight",
-  "Foreground": "#FF000000",
-  "Height": 19,
-  "HorizontalAlignment": "Stretch",
-  "Left": 0,
-  "Margin": "0,0,0,0",
-  "Padding": "0,0,0,0",
-  "Text": "Pressed: 1 times.",
-  "Top": 0,
-  "VerticalAlignment": "Stretch",
-  "Visibility": "Visible",
-  "Width": 103,
-  "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 1 times.",
+    "TextRangePattern.GetText": "Pressed: 1 times.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": "0, 0, 0",
+    "Size": "103, 19",
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
