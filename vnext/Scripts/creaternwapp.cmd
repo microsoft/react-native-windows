@@ -114,7 +114,8 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 set RNCLI_TEMPLATE=
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwapp.cmd Override @react-native-community/template version
-  set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
+  for /f "tokens=1 delims=-" %%a in ("%RN_VERSION%") do @set CLEAN_RN_VERSION=%%a
+  set RNCLI_TEMPLATE=--template "@react-native-community/template@^%CLEAN_RN_VERSION%"
 )
 
 @echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
