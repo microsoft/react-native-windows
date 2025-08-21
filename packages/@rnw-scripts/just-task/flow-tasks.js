@@ -146,7 +146,8 @@ task('downloadFlowTypes:fix', async () => await downloadFlowTypes(true));
 task(
   'flow-check',
   series('downloadFlowTypes', async () => {
-    const result = require('child_process').spawnSync('npx', ['flow', 'check'], {
+    const flowCmdPath = path.resolve(__dirname, '../../../node_modules/.bin/flow.cmd');
+    const result = require('child_process').spawnSync(flowCmdPath, ['check'], {
       stdio: 'inherit',
       timeout: 10000 // optional: 10 seconds timeout
     });
