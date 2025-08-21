@@ -146,6 +146,14 @@ task('downloadFlowTypes:fix', async () => await downloadFlowTypes(true));
 task(
   'flow-check',
   series('downloadFlowTypes', async () => {
-      require('child_process').execSync('npx flow check', {stdio: 'inherit'});
+    const result = require('child_process').spawnSync('npx', ['flow', 'check'], {
+      stdio: 'inherit',
+      timeout: 10000 // optional: 10 seconds timeout
+    });
+
+    if (result.error) {
+      console.error('Flow check failed:', result.error.message);
+      process.exit(1); // fail the task if needed
+    }
   }),
 );
