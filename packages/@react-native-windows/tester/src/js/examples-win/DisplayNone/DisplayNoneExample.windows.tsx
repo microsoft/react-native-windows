@@ -32,7 +32,12 @@ export class DisplayNoneExample extends React.Component<{}> {
               testID="textbox-container"
               style={{display: this.state.displayNone ? 'none' : 'flex'}}>
               <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                style={{
+                  height: 40,
+                  borderColor: 'gray',
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                }}
                 onChangeText={text => this._handleChangeText(text)}
                 value={this.state.textState}
               />

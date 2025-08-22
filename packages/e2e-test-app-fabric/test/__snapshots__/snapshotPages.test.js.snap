@@ -11743,6 +11743,7 @@ exports[`snapshotAllPages Display:none Style 1`] = `
                 onChangeText={[Function]}
                 style={
                   {
+                    "backgroundColor": "white",
                     "borderColor": "gray",
                     "borderWidth": 1,
                     "height": 40,
