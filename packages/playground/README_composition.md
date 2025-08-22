@@ -43,7 +43,7 @@ Native code can be debugged as normal through Visual Studio.
 To debug the javascript code: 
 
 1. enable "Direct Debugger" from the `file -> options` dialog.
-1. Navigate to [edge://inspect](edge://inspect) within Microsoft Edge.  
+1. Navigate to `edge://inspect` within Microsoft Edge.  
 1. Ensure `localhost:9229` is in the list of network targets within the "Discover Network Targets" configuration.
 1. A remote target for "Hermes" should show up.  Click on "inspect"
 1. In the Microsoft Edge Devtools window that pops up, you can hit Ctrl+p and type the name of a file to set a break point in.

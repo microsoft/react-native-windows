@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Upgrade to node22",
+  "packageName": "@rnw-scripts/ts-config",
+  "email": "10109130+sharath2727@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

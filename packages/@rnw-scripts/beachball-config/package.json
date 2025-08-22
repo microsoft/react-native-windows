@@ -26,7 +26,7 @@
     "@rnw-scripts/generated-beachball-config": "0.0.0",
     "@rnw-scripts/just-task": "2.3.54",
     "@rnw-scripts/ts-config": "2.0.5",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.14.0",
     "@types/shell-quote": "^1.7.5",
     "beachball": "^2.20.0",
     "eslint": "^8.19.0",
@@ -38,6 +38,6 @@
     "lib-commonjs"
   ],
   "engines": {
-    "node": ">= 16.0.0"
+    "node": ">= 22.14.0"
   }
 }

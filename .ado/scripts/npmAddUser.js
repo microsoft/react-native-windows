@@ -2,6 +2,9 @@
 // @ts-check
 
 const child_process = require("child_process");
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
 
 const username = process.argv[2];
 const password = process.argv[3];
@@ -23,18 +26,54 @@ if (!email) {
   process.exit(1);
 }
 
-const child = child_process.exec(`npm adduser${registry? (' --registry ' + registry) :''}` );
+const registryUrl = registry || "http://localhost:4873";
 
-child.stdout.on("data", d => {
-  const data = d.toString();
-  process.stdout.write(d + "\n");
-  if (data.match(/username/i)) {
-    child.stdin.write(username + "\n");
-  } else if (data.match(/password/i)) {
-    child.stdin.write(password + "\n");
-  } else if (data.match(/email/i)) {
-    child.stdin.write(email + "\n");
-  } else if (data.match(/logged in as/i)) {
-    child.stdin.end();
-  }
+// First set the registry
+console.log(`Setting npm registry to ${registryUrl}`);
+const setRegistry = child_process.spawnSync('npm', ['config', 'set', 'registry', registryUrl], {
+  stdio: 'inherit',
+  shell: true
 });
+
+if (setRegistry.status !== 0) {
+  console.error('Failed to set registry');
+  process.exit(1);
+}
+
+// Create auth token for verdaccio
+const authString = Buffer.from(`${username}:${password}`).toString('base64');
+const registryPath = registryUrl.replace(/^https?:/, '');
+
+// Set auth in npm config
+console.log('Setting authentication...');
+const setAuth = child_process.spawnSync('npm', ['config', 'set', `${registryPath}/:_auth`, authString], {
+  stdio: 'inherit',
+  shell: true
+});
+
+if (setAuth.status !== 0) {
+  console.error('Failed to set auth');
+  process.exit(1);
+}
+
+// Set email
+const setEmail = child_process.spawnSync('npm', ['config', 'set', 'email', email], {
+  stdio: 'inherit',
+  shell: true
+});
+
+// Verify authentication
+console.log('Verifying authentication...');
+const whoami = child_process.spawnSync('npm', ['whoami', '--registry', registryUrl], {
+  encoding: 'utf8',
+  shell: true
+});
+
+if (whoami.status === 0 && whoami.stdout.trim()) {
+  console.log(`Logged in as ${whoami.stdout.trim()} on ${registryUrl}`);
+  process.exit(0);
+} else {
+  console.error('Authentication verification failed');
+  if (whoami.stderr) console.error('Error:', whoami.stderr);
+  process.exit(1);
+}

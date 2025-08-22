@@ -21,6 +21,6 @@
     "prettier": "2.8.8"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

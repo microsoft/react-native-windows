@@ -16,7 +16,8 @@ Write-Host "Starting packager"
 
 Set-Location -Path "$PSScriptRoot\..\.."
 
-Start-Process npm	-PassThru `
+$npmCmd = (Get-Command npm.cmd -ErrorAction Stop).Source
+Start-Process $npmCmd	-PassThru `
 				-NoNewWindow `
 				-WorkingDirectory "$PSScriptRoot\..\.." `
 				-ArgumentList "run start" `
