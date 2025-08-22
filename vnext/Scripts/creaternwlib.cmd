@@ -130,12 +130,10 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwlib.cmd Fixing react-native nightly issue
   pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native/new-app-screen"": "".*""', '""@react-native/new-app-screen"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   pushd example
   pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native/new-app-screen"": "".*""', '""@react-native/new-app-screen"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
   popd
 )
