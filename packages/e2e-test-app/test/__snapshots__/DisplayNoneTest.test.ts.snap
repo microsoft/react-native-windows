@@ -21,7 +21,7 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "Background": "#B3FFFFFF",
+      "Background": "#FFFFFFFF",
       "BorderBrush": "#FF808080",
       "BorderThickness": "1,1,1,1",
       "Clip": null,
@@ -57,7 +57,7 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "Background": "#80F9F9F9",
+              "Background": "#FFFFFFFF",
               "BorderBrush": "#FF808080",
               "BorderThickness": "1,1,1,1",
               "Clip": null,
@@ -224,7 +224,7 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "Background": "#B3FFFFFF",
+      "Background": "#FFFFFFFF",
       "BorderBrush": "#FF808080",
       "BorderThickness": "1,1,1,1",
       "Clip": null,
@@ -260,7 +260,7 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "Background": "#B3FFFFFF",
+              "Background": "#FFFFFFFF",
               "BorderBrush": "#FF808080",
               "BorderThickness": "1,1,1,1",
               "Clip": null,
