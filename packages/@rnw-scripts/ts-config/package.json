@@ -9,6 +9,6 @@
     "directory": "packages/@rnw-scripts/ts-config"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

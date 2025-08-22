@@ -44,7 +44,7 @@
     "@types/async": "^3.2.5",
     "@types/jest": "^29.2.2",
     "@types/lodash": "^4.14.168",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.14.0",
     "@types/ora": "^3.2.0",
     "@types/semver": "^7.3.3",
     "@types/yargs": "^16.0.0",
@@ -59,6 +59,6 @@
     "lib-commonjs"
   ],
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }
