@@ -1183,7 +1183,7 @@ TEST_P(JSITest, DecoratorTest) {
     }
 
    private:
-    std::unique_ptr<Runtime> rt_;
+    std::shared_ptr<Runtime> rt_;
     Count count_;
   };
 
@@ -1234,7 +1234,7 @@ TEST_P(JSITest, MultiDecoratorTest) {
     }
 
    private:
-    std::unique_ptr<Runtime> rt_;
+    std::shared_ptr<Runtime> rt_;
     std::tuple<Inc, Nest> tuple_;
   };
 
