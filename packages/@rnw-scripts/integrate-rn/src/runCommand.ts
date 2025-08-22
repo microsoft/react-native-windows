@@ -25,7 +25,7 @@ export default async function runCommand(
       if (err) {
         reject(err);
       } else {
-        resolve({stdout, stderr});
+        resolve({stdout: stdout.toString(), stderr: stderr.toString()});
       }
     });
   });

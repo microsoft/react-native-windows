@@ -10,7 +10,7 @@
     "directory": "packages/rn-tester"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "scripts": {
     "start": "npx @react-native-community/cli start",

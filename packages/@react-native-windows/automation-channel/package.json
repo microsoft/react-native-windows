@@ -27,7 +27,7 @@
     "@rnw-scripts/just-task": "2.3.54",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/find-up": "^4.0.0",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.14.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.2",
     "prettier": "2.8.8",
@@ -42,6 +42,6 @@
     "!packages*.lock.json"
   ],
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }
