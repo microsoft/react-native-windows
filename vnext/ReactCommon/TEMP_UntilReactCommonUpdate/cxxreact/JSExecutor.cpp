@@ -11,6 +11,7 @@
 
 #include <jsinspector-modern/ReactCdp.h>
 #include <jsinspector-modern/tracing/InstanceTracingProfile.h>
+#include <jsinspector-modern/tracing/RuntimeSamplingProfile.h>
 #include <react/timing/primitives.h>
 
 #include <array>
