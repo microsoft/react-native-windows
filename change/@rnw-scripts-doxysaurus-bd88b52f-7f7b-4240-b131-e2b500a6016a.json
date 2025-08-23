@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Upgrade to node22",
-  "packageName": "@rnw-scripts/doxysaurus",
-  "email": "10109130+sharath2727@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

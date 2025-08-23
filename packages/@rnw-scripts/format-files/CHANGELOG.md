@@ -1,8 +1,19 @@
 # Change Log - @rnw-scripts/format-files
 
-<!-- This log was last generated on Thu, 17 Jul 2025 05:27:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 23 Aug 2025 05:30:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.1.58
+
+Sat, 23 Aug 2025 05:30:42 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
 
 ## 1.1.57
 

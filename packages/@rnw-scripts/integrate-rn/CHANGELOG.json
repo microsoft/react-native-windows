@@ -2,6 +2,69 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Sat, 23 Aug 2025 05:30:43 GMT",
+      "version": "1.4.62",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.62",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.96",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.67",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.93",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.9.57",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.37",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.55",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:03 GMT",
       "version": "1.4.61",
       "tag": "@rnw-scripts/integrate-rn_v1.4.61",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump JSI to use latest version 20",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

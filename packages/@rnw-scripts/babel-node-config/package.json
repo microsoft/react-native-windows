@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/babel-node-config",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "license": "MIT",
   "main": "babel.config.js",
   "repository": {
