@@ -11,7 +11,6 @@
 
 #include <jsinspector-modern/ReactCdp.h>
 #include <jsinspector-modern/tracing/InstanceTracingProfile.h>
-#include <jsinspector-modern/tracing/RuntimeSamplingProfile.h>
 #include <react/timing/primitives.h>
 
 #include <array>
@@ -60,8 +59,7 @@ void JSExecutor::disableSamplingProfiler()  {
 facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor::collectSamplingProfile() {
    return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
     "stubbed_impl", 
-    std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{}, 
-    std::unique_ptr<facebook::react::jsinspector_modern::tracing::RawRuntimeProfile>{}); // [Windows TODO: stubbed implementation #14700]
+    {}, {}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
