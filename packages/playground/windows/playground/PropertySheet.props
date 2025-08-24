@@ -11,6 +11,7 @@
     For more advanced scenarios, and complete documentation, please see:
     https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/nuget
     -->
+    <CppLanguageStandard>stdcpp20</CppLanguageStandard>
   <PropertyGroup />
   <ItemDefinitionGroup />
 </Project>

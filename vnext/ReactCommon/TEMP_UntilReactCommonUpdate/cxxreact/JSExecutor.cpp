@@ -19,13 +19,6 @@
 
 namespace facebook::react {
 
-namespace {
-class StubRawRuntimeProfile : public jsinspector_modern::tracing::RawRuntimeProfile {
- public:
-  ~StubRawRuntimeProfile() override = default;
-};
-} // namespace
-
 std::string JSExecutor::getSyntheticBundlePath(
     uint32_t bundleId,
     const std::string& bundlePath) {
@@ -68,7 +61,7 @@ facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor:
    return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
     "stubbed_impl", 
     std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{}, 
-    std::make_unique<StubRawRuntimeProfile>()); // [Windows TODO: stubbed implementation #14700]
+    {}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
