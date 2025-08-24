@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Sat, 23 Aug 2025 05:30:42 GMT",
+      "version": "1.2.37",
+      "tag": "@rnw-scripts/eslint-config_v1.2.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:03 GMT",
       "version": "1.2.36",
       "tag": "@rnw-scripts/eslint-config_v1.2.36",

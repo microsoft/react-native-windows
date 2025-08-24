@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Sat, 23 Aug 2025 05:30:42 GMT",
+      "version": "0.4.56",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.56",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/doxysaurus",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.67",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.37",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.55",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:03 GMT",
       "version": "0.4.55",
       "tag": "@rnw-scripts/doxysaurus_v0.4.55",

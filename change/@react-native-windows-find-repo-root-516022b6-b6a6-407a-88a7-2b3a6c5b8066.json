@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade to node22",
-  "packageName": "@react-native-windows/find-repo-root",
-  "email": "10109130+sharath2727@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

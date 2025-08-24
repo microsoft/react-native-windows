@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/jest-unittest-config",
   "entries": [
     {
+      "date": "Sat, 23 Aug 2025 05:30:44 GMT",
+      "version": "1.5.12",
+      "tag": "@rnw-scripts/jest-unittest-config_v1.5.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/jest-unittest-config",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-unittest-config",
+            "comment": "Bump @rnw-scripts/babel-node-config to v2.3.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:04 GMT",
       "version": "1.5.11",
       "tag": "@rnw-scripts/jest-unittest-config_v1.5.11",

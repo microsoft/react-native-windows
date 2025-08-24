@@ -2,6 +2,45 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Sat, 23 Aug 2025 05:30:41 GMT",
+      "version": "0.0.0-canary.96",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.96",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.67",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.37",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.55",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jul 2025 05:27:01 GMT",
       "version": "0.0.0-canary.95",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.95",

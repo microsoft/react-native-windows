@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/ts-config
 
-This log was last generated on Fri, 14 Jul 2023 05:17:08 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 23 Aug 2025 05:30:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.0.6
+
+Sat, 23 Aug 2025 05:30:45 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
 
 ## 2.0.5
 
