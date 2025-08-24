@@ -11,12 +11,20 @@
 
 #include <jsinspector-modern/ReactCdp.h>
 #include <jsinspector-modern/tracing/InstanceTracingProfile.h>
+#include <jsinspector-modern/tracing/RuntimeSamplingProfile.h>
 #include <react/timing/primitives.h>
 
 #include <array>
 #include <chrono>
 
 namespace facebook::react {
+
+namespace {
+class StubRawRuntimeProfile : public jsinspector_modern::tracing::RawRuntimeProfile {
+ public:
+  ~StubRawRuntimeProfile() override = default;
+};
+} // namespace
 
 std::string JSExecutor::getSyntheticBundlePath(
     uint32_t bundleId,
@@ -59,7 +67,8 @@ void JSExecutor::disableSamplingProfiler()  {
 facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor::collectSamplingProfile() {
    return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
     "stubbed_impl", 
-    {}, {}); // [Windows TODO: stubbed implementation #14700]
+    std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{}, 
+    std::make_unique<StubRawRuntimeProfile>()); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
