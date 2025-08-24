@@ -21,6 +21,7 @@
 
   <ItemGroup Condition="'$(UseExperimentalNuget)' == 'true'">
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2PackageVersion)" />
   </ItemGroup>
   
 </Project>
