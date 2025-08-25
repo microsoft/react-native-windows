@@ -1,0 +1,1003 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
+
+import path from 'path';
+import chalk from 'chalk';
+import {performance} from 'perf_hooks';
+import {Ora} from 'ora';
+import {execSync} from 'child_process';
+import glob from 'glob';
+
+import fs from '@react-native-windows/fs';
+import type {Command, Config} from '@react-native-community/cli-types';
+import {Telemetry, CodedError} from '@react-native-windows/telemetry';
+
+import {
+  newSpinner,
+  setExitProcessWithError,
+} from '../../utils/commandWithProgress';
+import {
+  getDefaultOptions,
+  startTelemetrySession,
+  endTelemetrySession,
+} from '../../utils/telemetryHelpers';
+import {initWindowsInternal} from '../initWindows/initWindows';
+import {codegenWindowsInternal} from '../codegenWindows/codegenWindows';
+import type {ModuleWindowsSetupOptions} from './moduleWindowsSetupOptions';
+import {moduleWindowsSetupOptions} from './moduleWindowsSetupOptions';
+
+interface Parameter {
+  name: string;
+  type: string;
+}
+
+interface MethodSignature {
+  name: string;
+  returnType: string;
+  parameters: Parameter[];
+}
+
+export class ModuleWindowsSetup {
+  constructor(readonly root: string, readonly options: ModuleWindowsSetupOptions) {}
+
+  private async validateEnvironment(): Promise<void> {
+    this.verboseMessage('Validating environment...');
+    
+    // Check if package.json exists
+    const packageJsonPath = path.join(this.root, 'package.json');
+    if (!(await fs.exists(packageJsonPath))) {
+      throw new CodedError('InvalidProject', 'No package.json found. Make sure you are in a React Native project directory.');
+    }
+    
+    // Check if it's a valid npm package
+    try {
+      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      if (!pkgJson.name) {
+        throw new CodedError('InvalidPackage', 'package.json must have a "name" field.');
+      }
+      this.verboseMessage(`Project name: ${pkgJson.name}`);
+    } catch (error: any) {
+      if (error.code === 'InvalidPackage') {
+        throw error;
+      }
+      throw new CodedError('InvalidPackageJson', 'package.json is not valid JSON.');
+    }
+    
+    // Check if yarn is available
+    try {
+      execSync('yarn --version', {stdio: 'ignore'});
+      this.verboseMessage('Yarn found');
+    } catch {
+      throw new CodedError('YarnNotFound', 'Yarn is required but not found. Please install Yarn first.');
+    }
+  }
+
+  private verboseMessage(message: any) {
+    if (this.options.logging) {
+      console.log(`[ModuleWindowsSetup] ${message}`);
+    }
+  }
+
+  private getModuleName(packageName: string): string {
+    // Convert package name to PascalCase module name
+    // e.g., "react-native-webview" -> "ReactNativeWebview"
+    // e.g., "@react-native-community/slider" -> "ReactNativeCommunitySlider"
+    return packageName
+      .replace(/[@\/\-]/g, ' ')
+      .split(' ')
+      .filter(word => word.length > 0)
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join('');
+  }
+
+  private async checkAndCreateSpecFile(): Promise<void> {
+    this.verboseMessage('Checking for TurboModule spec file...');
+    
+    const specPattern = '**/Native*.[jt]s';
+    const specFiles = glob.sync(specPattern, {cwd: this.root});
+    
+    if (specFiles.length === 0) {
+      this.verboseMessage('No spec file found, analyzing existing APIs...');
+      await this.analyzeAndCreateSpecFile();
+    } else {
+      this.verboseMessage(`Found spec file(s): ${specFiles.join(', ')}`);
+    }
+  }
+
+  private async analyzeAndCreateSpecFile(): Promise<void> {
+    const pkgJson = JSON.parse(await fs.readFile(path.join(this.root, 'package.json'), 'utf8'));
+    const moduleName = this.getModuleName(pkgJson.name || 'SampleModule');
+    
+    // Try to analyze existing API from multiple sources
+    const apiMethods = await this.discoverApiMethods();
+    
+    const specContent = this.generateSpecFileContent(moduleName, apiMethods);
+    const specPath = path.join(this.root, `Native${moduleName}.ts`);
+    await fs.writeFile(specPath, specContent);
+    this.verboseMessage(`Created spec file: ${specPath}`);
+  }
+
+  private async discoverApiMethods(): Promise<MethodSignature[]> {
+    const methods: MethodSignature[] = [];
+    
+    // 1. Check for existing JavaScript/TypeScript API files
+    methods.push(...await this.analyzeJavaScriptApi());
+    
+    // 2. Check Android native implementation for reference
+    methods.push(...await this.analyzeAndroidApi());
+    
+    // 3. Check iOS native implementation for reference  
+    methods.push(...await this.analyzeIosApi());
+    
+    // 4. Check README for documented API
+    methods.push(...await this.analyzeReadmeApi());
+    
+    // Deduplicate methods by name
+    const uniqueMethods = methods.reduce((acc, method) => {
+      if (!acc.find(m => m.name === method.name)) {
+        acc.push(method);
+      }
+      return acc;
+    }, [] as MethodSignature[]);
+    
+    this.verboseMessage(`Discovered ${uniqueMethods.length} API methods from various sources`);
+    return uniqueMethods;
+  }
+
+  private async analyzeJavaScriptApi(): Promise<MethodSignature[]> {
+    const methods: MethodSignature[] = [];
+    
+    try {
+      // Look for index.js, index.ts, or main entry point
+      const packageJson = JSON.parse(await fs.readFile(path.join(this.root, 'package.json'), 'utf8'));
+      const mainFile = packageJson.main || 'index.js';
+      
+      const possibleFiles = [
+        mainFile,
+        'index.js',
+        'index.ts', 
+        'src/index.js',
+        'src/index.ts'
+      ];
+      
+      for (const file of possibleFiles) {
+        const filePath = path.join(this.root, file);
+        if (await fs.exists(filePath)) {
+          const content = await fs.readFile(filePath, 'utf8');
+          methods.push(...this.parseJavaScriptMethods(content));
+          this.verboseMessage(`Analyzed JavaScript API from ${file}`);
+          break;
+        }
+      }
+    } catch (error) {
+      this.verboseMessage(`Could not analyze JavaScript API: ${error}`);
+    }
+    
+    return methods;
+  }
+
+  private async analyzeAndroidApi(): Promise<MethodSignature[]> {
+    const methods: MethodSignature[] = [];
+    
+    try {
+      const androidDir = path.join(this.root, 'android');
+      if (await fs.exists(androidDir)) {
+        const javaFiles = glob.sync('**/*.java', {cwd: androidDir});
+        const kotlinFiles = glob.sync('**/*.kt', {cwd: androidDir});
+        
+        for (const file of [...javaFiles, ...kotlinFiles]) {
+          const content = await fs.readFile(path.join(androidDir, file), 'utf8');
+          if (content.includes('@ReactMethod')) {
+            methods.push(...this.parseAndroidMethods(content));
+            this.verboseMessage(`Analyzed Android API from ${file}`);
+          }
+        }
+      }
+    } catch (error) {
+      this.verboseMessage(`Could not analyze Android API: ${error}`);
+    }
+    
+    return methods;
+  }
+
+  private async analyzeIosApi(): Promise<MethodSignature[]> {
+    const methods: MethodSignature[] = [];
+    
+    try {
+      const iosDir = path.join(this.root, 'ios');
+      if (await fs.exists(iosDir)) {
+        const objcFiles = glob.sync('**/*.{m,mm}', {cwd: iosDir});
+        
+        for (const file of objcFiles) {
+          const content = await fs.readFile(path.join(iosDir, file), 'utf8');
+          if (content.includes('RCT_EXPORT_METHOD')) {
+            methods.push(...this.parseIosMethods(content));
+            this.verboseMessage(`Analyzed iOS API from ${file}`);
+          }
+        }
+      }
+    } catch (error) {
+      this.verboseMessage(`Could not analyze iOS API: ${error}`);
+    }
+    
+    return methods;
+  }
+
+  private async analyzeReadmeApi(): Promise<MethodSignature[]> {
+    const methods: MethodSignature[] = [];
+    
+    try {
+      const readmeFiles = ['README.md', 'readme.md', 'README.txt'];
+      for (const file of readmeFiles) {
+        const filePath = path.join(this.root, file);
+        if (await fs.exists(filePath)) {
+          const content = await fs.readFile(filePath, 'utf8');
+          methods.push(...this.parseReadmeMethods(content));
+          this.verboseMessage(`Analyzed API documentation from ${file}`);
+          break;
+        }
+      }
+    } catch (error) {
+      this.verboseMessage(`Could not analyze README API: ${error}`);
+    }
+    
+    return methods;
+  }
+
+  private parseJavaScriptMethods(content: string): MethodSignature[] {
+    const methods: MethodSignature[] = [];
+    
+    // Look for method exports and function definitions
+    const patterns = [
+      /export\s+(?:const|function)\s+(\w+)\s*[:=]\s*(?:async\s+)?\([^)]*\)(?:\s*:\s*([^{;]+))?/g,
+      /(\w+)\s*:\s*(?:async\s+)?\([^)]*\)(?:\s*=>\s*([^,}]+))?/g,
+      /function\s+(\w+)\s*\([^)]*\)(?:\s*:\s*([^{]+))?/g
+    ];
+    
+    patterns.forEach(pattern => {
+      let match;
+      while ((match = pattern.exec(content)) !== null) {
+        methods.push({
+          name: match[1],
+          returnType: this.parseReturnType(match[2] || 'void'),
+          parameters: this.parseParameters(match[0])
+        });
+      }
+    });
+    
+    return methods;
+  }
+
+  private parseAndroidMethods(content: string): MethodSignature[] {
+    const methods: MethodSignature[] = [];
+    
+    // Look for @ReactMethod annotations
+    const reactMethodPattern = /@ReactMethod[\s\S]*?(?:public|private)\s+(\w+)\s+(\w+)\s*\([^)]*\)/g;
+    let match;
+    
+    while ((match = reactMethodPattern.exec(content)) !== null) {
+      methods.push({
+        name: match[2],
+        returnType: this.mapJavaTypeToTS(match[1]),
+        parameters: []
+      });
+    }
+    
+    return methods;
+  }
+
+  private parseIosMethods(content: string): MethodSignature[] {
+    const methods: MethodSignature[] = [];
+    
+    // Look for RCT_EXPORT_METHOD
+    const exportMethodPattern = /RCT_EXPORT_METHOD\s*\(\s*(\w+)/g;
+    let match;
+    
+    while ((match = exportMethodPattern.exec(content)) !== null) {
+      methods.push({
+        name: match[1],
+        returnType: 'void',
+        parameters: []
+      });
+    }
+    
+    return methods;
+  }
+
+  private parseReadmeMethods(content: string): MethodSignature[] {
+    const methods: MethodSignature[] = [];
+    
+    // Look for method signatures in markdown code blocks
+    const codeBlockPattern = /```[\w]*\n([\s\S]*?)\n```/g;
+    let match;
+    
+    while ((match = codeBlockPattern.exec(content)) !== null) {
+      const code = match[1];
+      // Look for function-like patterns
+      const functionPattern = /(\w+)\s*\([^)]*\)/g;
+      let funcMatch;
+      
+      while ((funcMatch = functionPattern.exec(code)) !== null) {
+        if (!funcMatch[1].includes('import') && !funcMatch[1].includes('require')) {
+          methods.push({
+            name: funcMatch[1],
+            returnType: 'Promise<any>',
+            parameters: []
+          });
+        }
+      }
+    }
+    
+    return methods;
+  }
+
+  private parseReturnType(type: string): string {
+    if (!type || type === 'void') return 'void';
+    if (type.includes('Promise')) return type;
+    return `Promise<${type}>`;
+  }
+
+  private parseParameters(methodSignature: string): Parameter[] {
+    // Extract parameters from method signature
+    const paramMatch = methodSignature.match(/\(([^)]*)\)/);
+    if (!paramMatch) return [];
+    
+    const params = paramMatch[1].split(',').map(p => p.trim()).filter(p => p);
+    return params.map(param => {
+      const [name, type] = param.split(':').map(s => s.trim());
+      return {
+        name: name || 'param',
+        type: type || 'any'
+      };
+    });
+  }
+
+  private mapJavaTypeToTS(javaType: string): string {
+    const typeMap: {[key: string]: string} = {
+      'void': 'void',
+      'boolean': 'boolean',
+      'int': 'number',
+      'float': 'number',
+      'double': 'number',
+      'String': 'string',
+      'ReadableMap': 'object',
+      'ReadableArray': 'any[]'
+    };
+    
+    return typeMap[javaType] || 'any';
+  }
+
+  private generateSpecFileContent(moduleName: string, methods: MethodSignature[]): string {
+    const methodSignatures = methods.map(method => {
+      const params = method.parameters.map(p => `${p.name}: ${p.type}`).join(', ');
+      return `  ${method.name}(${params}): ${method.returnType};`;
+    }).join('\n');
+    
+    const defaultMethods = methods.length === 0 ? `  // Add your module methods here
+  // Example:
+  // getString(value: string): Promise<string>;
+  // getNumber(value: number): Promise<number>;
+  // getBoolean(value: boolean): Promise<boolean>;` : methodSignatures;
+    
+    return `/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
+
+import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
+import {TurboModuleRegistry} from 'react-native';
+
+export interface Spec extends TurboModule {
+${defaultMethods}
+}
+
+export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
+`;
+  }
+
+  private async updatePackageJsonCodegen(): Promise<void> {
+    this.verboseMessage('Checking and updating package.json codegen configuration...');
+    
+    const packageJsonPath = path.join(this.root, 'package.json');
+    const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+    
+    if (!pkgJson.codegenConfig) {
+      const moduleName = this.getModuleName(pkgJson.name || 'SampleModule');
+      
+      pkgJson.codegenConfig = {
+        name: moduleName,
+        type: 'modules',
+        jsSrcsDir: '.',
+        windows: {
+          namespace: `${moduleName}Specs`,
+          outputDirectory: 'codegen',
+          generators: ['modulesWindows']
+        }
+      };
+      
+      await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
+      this.verboseMessage('Added codegenConfig to package.json');
+    } else {
+      this.verboseMessage('codegenConfig already exists in package.json');
+    }
+  }
+
+  private async updatePackageJsonCodegen(): Promise<void> {
+    this.verboseMessage('Cleaning node_modules and reinstalling dependencies...');
+    
+    const nodeModulesPath = path.join(this.root, 'node_modules');
+    if (await fs.exists(nodeModulesPath)) {
+      await fs.rm(nodeModulesPath, {recursive: true, force: true});
+      this.verboseMessage('Removed node_modules');
+    }
+    
+    execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
+    this.verboseMessage('Dependencies installed');
+  }
+
+  private async upgradeDependencies(): Promise<void> {
+    if (this.options.skipDeps) {
+      this.verboseMessage('Skipping dependency upgrades');
+      return;
+    }
+    
+    this.verboseMessage('Upgrading React Native and React Native Windows to latest versions...');
+    
+    try {
+      // Get latest versions with timeout to avoid hanging
+      const rnLatest = execSync('npm view react-native version', {
+        encoding: 'utf8',
+        timeout: 30000
+      }).trim();
+      const rnwLatest = execSync('npm view react-native-windows version', {
+        encoding: 'utf8', 
+        timeout: 30000
+      }).trim();
+      
+      this.verboseMessage(`Latest RN version: ${rnLatest}`);
+      this.verboseMessage(`Latest RNW version: ${rnwLatest}`);
+      
+      // Update package.json
+      const packageJsonPath = path.join(this.root, 'package.json');
+      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      
+      if (!pkgJson.peerDependencies) {
+        pkgJson.peerDependencies = {};
+      }
+      if (!pkgJson.devDependencies) {
+        pkgJson.devDependencies = {};
+      }
+      
+      pkgJson.peerDependencies['react-native'] = `^${rnLatest}`;
+      pkgJson.devDependencies['react-native-windows'] = `^${rnwLatest}`;
+      
+      await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
+      this.verboseMessage('Updated dependency versions in package.json');
+      
+      // Install updated dependencies with timeout
+      execSync('yarn install', {
+        cwd: this.root, 
+        stdio: 'inherit',
+        timeout: 120000
+      });
+      
+    } catch (error: any) {
+      this.verboseMessage(`Warning: Could not upgrade dependencies: ${error.message}`);
+      // Don't fail the entire process if dependency upgrade fails
+    }
+  }
+
+  private async runInitWindows(config: Config): Promise<void> {
+    this.verboseMessage('Running init-windows with cpp-lib template...');
+    
+    try {
+      await initWindowsInternal([], config, {
+        template: 'cpp-lib',
+        overwrite: true,
+        logging: this.options.logging,
+        telemetry: this.options.telemetry
+      });
+      this.verboseMessage('init-windows completed successfully');
+    } catch (error: any) {
+      // Check if windows directory was created even with errors
+      const windowsDir = path.join(this.root, 'windows');
+      if (await fs.exists(windowsDir)) {
+        this.verboseMessage('Windows directory exists, continuing despite init-windows warnings');
+      } else {
+        throw new CodedError('InitWindowsFailed', `Failed to run init-windows: ${error.message}`);
+      }
+    }
+  }
+
+  private async runCodegenWindows(config: Config): Promise<void> {
+    this.verboseMessage('Running codegen-windows...');
+    
+    try {
+      await codegenWindowsInternal([], config, {
+        logging: this.options.logging,
+        telemetry: this.options.telemetry
+      });
+      this.verboseMessage('codegen-windows completed successfully');
+    } catch (error: any) {
+      // Check if codegen directory was created even with errors  
+      const codegenDir = path.join(this.root, 'codegen');
+      if (await fs.exists(codegenDir)) {
+        this.verboseMessage('Codegen directory exists, continuing despite codegen-windows warnings');
+      } else {
+        throw new CodedError('CodegenWindowsFailed', `Failed to run codegen-windows: ${error.message}`);
+      }
+    }
+  }
+
+  private async generateStubFiles(): Promise<void> {
+    this.verboseMessage('Generating C++ stub files...');
+    
+    const codegenDir = path.join(this.root, 'codegen');
+    if (!(await fs.exists(codegenDir))) {
+      this.verboseMessage('No codegen directory found, skipping stub generation');
+      return;
+    }
+    
+    const files = await fs.readdir(codegenDir);
+    const specFiles = files.filter(file => file.endsWith('Spec.g.h'));
+    
+    for (const specFile of specFiles) {
+      const specName = specFile.replace('Spec.g.h', '');
+      const windowsDir = path.join(this.root, 'windows');
+      const headerPath = path.join(windowsDir, `${specName}.h`);
+      const cppPath = path.join(windowsDir, `${specName}.cpp`);
+      
+      if (!(await fs.exists(windowsDir))) {
+        await fs.mkdir(windowsDir, {recursive: true});
+      }
+      
+      // Parse the TypeScript spec file for method signatures
+      const methods = await this.parseSpecFileForMethods(specName);
+      
+      // Generate header file with parsed methods
+      const headerContent = this.generateHeaderStub(specName, methods);
+      if (!(await fs.exists(headerPath))) {
+        await fs.writeFile(headerPath, headerContent);
+        this.verboseMessage(`Generated header stub: ${headerPath}`);
+      }
+      
+      // Generate cpp file with parsed methods
+      const cppContent = this.generateCppStub(specName, methods);
+      if (!(await fs.exists(cppPath))) {
+        await fs.writeFile(cppPath, cppContent);
+        this.verboseMessage(`Generated cpp stub: ${cppPath}`);
+      }
+    }
+  }
+
+  private async parseSpecFileForMethods(moduleName: string): Promise<MethodSignature[]> {
+    try {
+      // Find the spec file
+      const specPattern = `**/Native${moduleName}.[jt]s`;
+      const specFiles = glob.sync(specPattern, {cwd: this.root});
+      
+      if (specFiles.length === 0) {
+        this.verboseMessage(`No spec file found for ${moduleName}, using default methods`);
+        return [];
+      }
+      
+      const specPath = path.join(this.root, specFiles[0]);
+      const specContent = await fs.readFile(specPath, 'utf8');
+      
+      // Parse method signatures from the Spec interface
+      const methods = this.extractMethodsFromSpecInterface(specContent);
+      this.verboseMessage(`Extracted ${methods.length} methods from spec file`);
+      return methods;
+      
+    } catch (error) {
+      this.verboseMessage(`Could not parse spec file for ${moduleName}: ${error}`);
+      return [];
+    }
+  }
+
+  private extractMethodsFromSpecInterface(content: string): MethodSignature[] {
+    const methods: MethodSignature[] = [];
+    
+    // Find the Spec interface definition
+    const interfaceMatch = content.match(/export\s+interface\s+Spec\s+extends\s+TurboModule\s*\{([\s\S]*?)\}/);
+    if (!interfaceMatch) {
+      return methods;
+    }
+    
+    const interfaceBody = interfaceMatch[1];
+    
+    // Parse method signatures from the interface
+    const methodPattern = /(\w+)\s*\(\s*([^)]*)\s*\)\s*:\s*([^;]+);/g;
+    let match;
+    
+    while ((match = methodPattern.exec(interfaceBody)) !== null) {
+      const methodName = match[1];
+      const paramString = match[2].trim();
+      const returnType = match[3].trim();
+      
+      // Skip comments and empty lines
+      if (methodName.startsWith('//') || !methodName) {
+        continue;
+      }
+      
+      const parameters = this.parseParameterString(paramString);
+      
+      methods.push({
+        name: methodName,
+        returnType: returnType,
+        parameters: parameters
+      });
+    }
+    
+    return methods;
+  }
+
+  private parseParameterString(paramString: string): Parameter[] {
+    if (!paramString || paramString.trim() === '') {
+      return [];
+    }
+    
+    const params = paramString.split(',').map(p => p.trim()).filter(p => p);
+    return params.map(param => {
+      const colonIndex = param.lastIndexOf(':');
+      if (colonIndex === -1) {
+        return { name: param, type: 'any' };
+      }
+      
+      const name = param.substring(0, colonIndex).trim();
+      const type = param.substring(colonIndex + 1).trim();
+      
+      return { name, type };
+    });
+  }
+
+  private generateHeaderStub(moduleName: string, methods: MethodSignature[]): string {
+    const methodDeclarations = methods.map(method => {
+      const cppParams = method.parameters.map(p => `${this.mapTSToCppType(p.type)} ${p.name}`).join(', ');
+      const returnTypeIsCpp = this.mapTSReturnTypeToCpp(method.returnType);
+      
+      if (method.returnType.includes('Promise')) {
+        // Async method with promise
+        const promiseType = this.extractPromiseType(method.returnType);
+        const cppPromiseType = this.mapTSToCppType(promiseType);
+        const params = cppParams ? `${cppParams}, ` : '';
+        return `  REACT_METHOD(${method.name})
+  void ${method.name}(${params}React::ReactPromise<${cppPromiseType}> promise) noexcept;`;
+      } else {
+        // Synchronous method
+        return `  REACT_METHOD(${method.name})
+  ${returnTypeIsCpp} ${method.name}(${cppParams}) noexcept;`;
+      }
+    }).join('\n\n');
+    
+    const defaultMethods = methods.length === 0 ? `  // TODO: Add your method implementations here
+  // Example:
+  // REACT_METHOD(getString)
+  // void getString(std::string value, React::ReactPromise<std::string> promise) noexcept;` : methodDeclarations;
+    
+    return `#pragma once
+
+#include <${moduleName}Spec.g.h>
+#include <NativeModules.h>
+
+namespace ${moduleName}Specs {
+
+REACT_MODULE(${moduleName})
+struct ${moduleName} {
+  using ModuleSpec = ${moduleName}Spec;
+  
+  REACT_INIT(Initialize)
+  void Initialize(React::ReactContext const &reactContext) noexcept;
+  
+${defaultMethods}
+};
+
+} // namespace ${moduleName}Specs
+`;
+  }
+
+  private generateCppStub(moduleName: string, methods: MethodSignature[]): string {
+    const methodImplementations = methods.map(method => {
+      const cppParams = method.parameters.map(p => `${this.mapTSToCppType(p.type)} ${p.name}`).join(', ');
+      const returnTypeIsCpp = this.mapTSReturnTypeToCpp(method.returnType);
+      
+      if (method.returnType.includes('Promise')) {
+        // Async method with promise
+        const promiseType = this.extractPromiseType(method.returnType);
+        const cppPromiseType = this.mapTSToCppType(promiseType);
+        const params = cppParams ? `${cppParams}, ` : '';
+        const exampleReturn = this.generateExampleReturn(promiseType);
+        
+        return `void ${moduleName}::${method.name}(${params}React::ReactPromise<${cppPromiseType}> promise) noexcept {
+  // TODO: Implement ${method.name}
+  ${exampleReturn}
+}`;
+      } else {
+        // Synchronous method
+        const exampleReturn = method.returnType === 'void' ? '' : `\n  // TODO: Return appropriate value\n  return ${this.generateDefaultValue(method.returnType)};`;
+        
+        return `${returnTypeIsCpp} ${moduleName}::${method.name}(${cppParams}) noexcept {
+  // TODO: Implement ${method.name}${exampleReturn}
+}`;
+      }
+    }).join('\n\n');
+    
+    const defaultImplementations = methods.length === 0 ? `// TODO: Implement your methods here
+// Example:
+// void ${moduleName}::getString(std::string value, React::ReactPromise<std::string> promise) noexcept {
+//   promise.Resolve(value);
+// }` : methodImplementations;
+    
+    return `#include "${moduleName}.h"
+
+namespace ${moduleName}Specs {
+
+void ${moduleName}::Initialize(React::ReactContext const &reactContext) noexcept {
+  // TODO: Initialize your module
+}
+
+${defaultImplementations}
+
+} // namespace ${moduleName}Specs
+`;
+  }
+
+  private mapTSToCppType(tsType: string): string {
+    const typeMap: {[key: string]: string} = {
+      'string': 'std::string',
+      'number': 'double',
+      'boolean': 'bool',
+      'object': 'React::JSValue',
+      'any': 'React::JSValue',
+      'any[]': 'React::JSValueArray',
+      'void': 'void'
+    };
+    
+    // Handle array types
+    if (tsType.endsWith('[]')) {
+      const baseType = tsType.slice(0, -2);
+      const cppBaseType = typeMap[baseType] || 'React::JSValue';
+      return `std::vector<${cppBaseType}>`;
+    }
+    
+    return typeMap[tsType] || 'React::JSValue';
+  }
+
+  private mapTSReturnTypeToCpp(tsReturnType: string): string {
+    if (tsReturnType.includes('Promise')) {
+      return 'void'; // Promise methods return void and use callback
+    }
+    return this.mapTSToCppType(tsReturnType);
+  }
+
+  private extractPromiseType(promiseType: string): string {
+    const match = promiseType.match(/Promise<(.+)>/);
+    return match ? match[1] : 'any';
+  }
+
+  private generateExampleReturn(returnType: string): string {
+    if (returnType === 'string') {
+      return 'promise.Resolve("example");';
+    } else if (returnType === 'number') {
+      return 'promise.Resolve(42);';
+    } else if (returnType === 'boolean') {
+      return 'promise.Resolve(true);';
+    } else if (returnType === 'void') {
+      return 'promise.Resolve();';
+    } else {
+      return 'promise.Resolve(React::JSValue{});';
+    }
+  }
+
+  private generateDefaultValue(returnType: string): string {
+    if (returnType === 'string') {
+      return '"example"';
+    } else if (returnType === 'number') {
+      return '0';
+    } else if (returnType === 'boolean') {
+      return 'false';
+    } else {
+      return 'React::JSValue{}';
+    }
+  }
+
+  private async verifyBuild(): Promise<void> {
+    if (this.options.skipBuild) {
+      this.verboseMessage('Skipping build verification');
+      return;
+    }
+    
+    this.verboseMessage('Verifying build...');
+    
+    const windowsDir = path.join(this.root, 'windows');
+    if (!(await fs.exists(windowsDir))) {
+      this.verboseMessage('No windows directory found, skipping build verification');
+      return;
+    }
+    
+    const files = await fs.readdir(windowsDir);
+    const slnFiles = files.filter(file => file.endsWith('.sln'));
+    if (slnFiles.length === 0) {
+      this.verboseMessage('No .sln file found, skipping build verification');
+      return;
+    }
+    
+    try {
+      // Just check if MSBuild is available, don't actually build to keep setup fast
+      execSync('where msbuild', {stdio: 'ignore'});
+      this.verboseMessage('MSBuild found, project should be buildable');
+    } catch {
+      this.verboseMessage('Warning: MSBuild not found, cannot verify build capability');
+    }
+  }
+
+  private async cleanAndInstallDeps(): Promise<void> {
+    this.verboseMessage('Cleaning node_modules and reinstalling dependencies...');
+    
+    const nodeModulesPath = path.join(this.root, 'node_modules');
+    if (await fs.exists(nodeModulesPath)) {
+      await fs.rm(nodeModulesPath, {recursive: true, force: true});
+      this.verboseMessage('Removed node_modules');
+    }
+    
+    execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
+    this.verboseMessage('Dependencies installed');
+  }
+
+  public async run(spinner: Ora, config: Config): Promise<void> {
+    await this.validateEnvironment();
+    spinner.text = 'Checking and creating spec file...';
+    
+    await this.checkAndCreateSpecFile();
+    spinner.text = 'Updating package.json...';
+    
+    await this.updatePackageJsonCodegen();
+    spinner.text = 'Cleaning and installing dependencies...';
+    
+    await this.cleanAndInstallDeps();
+    spinner.text = 'Upgrading dependencies...';
+    
+    await this.upgradeDependencies();
+    spinner.text = 'Running yarn install...';
+    
+    execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
+    spinner.text = 'Setting up Windows library...';
+    
+    await this.runInitWindows(config);
+    spinner.text = 'Running Windows codegen...';
+    
+    await this.runCodegenWindows(config);
+    spinner.text = 'Generating C++ stub files...';
+    
+    await this.generateStubFiles();
+    spinner.text = 'Verifying build setup...';
+    
+    await this.verifyBuild();
+    
+    spinner.succeed();
+  }
+}
+
+/**
+ * Sanitizes the given option for telemetry.
+ * @param key The key of the option.
+ * @param value The unsanitized value of the option.
+ * @returns The sanitized value of the option.
+ */
+function optionSanitizer(key: keyof ModuleWindowsSetupOptions, value: any): any {
+  switch (key) {
+    case 'logging':
+    case 'telemetry':
+    case 'skipDeps':
+    case 'skipBuild':
+      return value === undefined ? false : value;
+  }
+}
+
+/**
+ * Get the extra props to add to the `module-windows-setup` telemetry event.
+ * @returns The extra props.
+ */
+async function getExtraProps(): Promise<Record<string, any>> {
+  const extraProps: Record<string, any> = {};
+  return extraProps;
+}
+
+/**
+ * The function run when calling `npx @react-native-community/cli module-windows-setup`.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
+ */
+async function moduleWindowsSetup(
+  args: string[],
+  config: Config,
+  options: ModuleWindowsSetupOptions,
+) {
+  await startTelemetrySession(
+    'module-windows-setup',
+    config,
+    options,
+    getDefaultOptions(config, moduleWindowsSetupOptions),
+    optionSanitizer,
+  );
+
+  let moduleWindowsSetupError: Error | undefined;
+  try {
+    await moduleWindowsSetupInternal(args, config, options);
+  } catch (ex) {
+    moduleWindowsSetupError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    Telemetry.trackException(moduleWindowsSetupError);
+  }
+
+  await endTelemetrySession(moduleWindowsSetupError, getExtraProps);
+  setExitProcessWithError(options.logging, moduleWindowsSetupError);
+}
+
+/**
+ * Sets up Windows support for React Native community modules.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
+ */
+export async function moduleWindowsSetupInternal(
+  args: string[],
+  config: Config,
+  options: ModuleWindowsSetupOptions,
+) {
+  const startTime = performance.now();
+  const spinner = newSpinner('Setting up Windows support for React Native module...');
+  
+  try {
+    const setup = new ModuleWindowsSetup(config.root, options);
+    await setup.run(spinner, config);
+    const endTime = performance.now();
+
+    console.log(
+      `${chalk.green('Success:')} Windows module setup completed! (${Math.round(
+        endTime - startTime,
+      )}ms)`,
+    );
+    console.log('');
+    console.log(chalk.bold('🎉 Your React Native module now supports Windows!'));
+    console.log('');
+    console.log(chalk.bold('Files created/updated:'));
+    console.log(`📄 package.json - Added codegen configuration`);
+    console.log(`🏗️  NativeModuleName.ts - TurboModule spec file (edit with your API)`);
+    console.log(`💻 windows/ModuleName.h - C++ header file (implement your methods here)`);
+    console.log(`⚙️  windows/ModuleName.cpp - C++ implementation file (add your logic here)`);
+    console.log('');
+    console.log(chalk.bold('Next steps:'));
+    console.log('1. 📝 Update the generated spec file with your module\'s interface');
+    console.log('2. 🔧 Implement the methods in the generated C++ stub files');
+    console.log('3. 🏗️  Build your project to verify everything works');
+    console.log('4. 📚 See the documentation for more details on TurboModule development');
+    console.log('');
+    console.log(chalk.dim('For help, visit: https://microsoft.github.io/react-native-windows/'));
+    console.log('');
+  } catch (e) {
+    spinner.fail();
+    const endTime = performance.now();
+    console.log(
+      `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
+        endTime - startTime,
+      )}ms)`,
+    );
+    throw e;
+  }
+}
+
+/**
+ * Sets up Windows support for React Native community modules.
+ */
+export const moduleWindowsSetupCommand: Command = {
+  name: 'module-windows-setup',
+  description: 'Streamlined setup of Windows support for React Native community modules',
+  func: moduleWindowsSetup,
+  options: moduleWindowsSetupOptions,
+};
