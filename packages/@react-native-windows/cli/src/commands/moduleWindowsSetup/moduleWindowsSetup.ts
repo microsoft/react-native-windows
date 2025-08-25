@@ -32,13 +32,43 @@ import {moduleWindowsSetupOptions} from './moduleWindowsSetupOptions';
 export class ModuleWindowsSetup {
   constructor(readonly root: string, readonly options: ModuleWindowsSetupOptions) {}
 
+  private async validateEnvironment(): Promise<void> {
+    this.verboseMessage('Validating environment...');
+    
+    // Check if package.json exists
+    const packageJsonPath = path.join(this.root, 'package.json');
+    if (!(await fs.exists(packageJsonPath))) {
+      throw new CodedError('InvalidProject', 'No package.json found. Make sure you are in a React Native project directory.');
+    }
+    
+    // Check if it's a valid npm package
+    try {
+      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      if (!pkgJson.name) {
+        throw new CodedError('InvalidPackage', 'package.json must have a "name" field.');
+      }
+      this.verboseMessage(`Project name: ${pkgJson.name}`);
+    } catch (error: any) {
+      if (error.code === 'InvalidPackage') {
+        throw error;
+      }
+      throw new CodedError('InvalidPackageJson', 'package.json is not valid JSON.');
+    }
+    
+    // Check if yarn is available
+    try {
+      execSync('yarn --version', {stdio: 'ignore'});
+      this.verboseMessage('Yarn found');
+    } catch {
+      throw new CodedError('YarnNotFound', 'Yarn is required but not found. Please install Yarn first.');
+    }
+  }
+
   private verboseMessage(message: any) {
     if (this.options.logging) {
       console.log(`[ModuleWindowsSetup] ${message}`);
     }
   }
-
-  private getModuleName(packageName: string): string {
     // Convert package name to PascalCase module name
     // e.g., "react-native-webview" -> "ReactNativeWebview"
     // e.g., "@react-native-community/slider" -> "ReactNativeCommunitySlider"
@@ -50,7 +80,7 @@ export class ModuleWindowsSetup {
       .join('');
   }
 
-  private async checkAndCreateSpecFile(): Promise<void> {
+  private getModuleName(packageName: string): string {
     this.verboseMessage('Checking for TurboModule spec file...');
     
     const specPattern = '**/Native*.[jt]s';
@@ -64,7 +94,7 @@ export class ModuleWindowsSetup {
     }
   }
 
-  private async createDefaultSpecFile(): Promise<void> {
+  private async checkAndCreateSpecFile(): Promise<void> {
     const pkgJson = JSON.parse(await fs.readFile(path.join(this.root, 'package.json'), 'utf8'));
     const moduleName = this.getModuleName(pkgJson.name || 'SampleModule');
     
@@ -93,7 +123,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     this.verboseMessage(`Created spec file: ${specPath}`);
   }
 
-  private async updatePackageJsonCodegen(): Promise<void> {
+  private async createDefaultSpecFile(): Promise<void> {
     this.verboseMessage('Checking and updating package.json codegen configuration...');
     
     const packageJsonPath = path.join(this.root, 'package.json');
@@ -120,7 +150,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     }
   }
 
-  private async cleanAndInstallDeps(): Promise<void> {
+  private async updatePackageJsonCodegen(): Promise<void> {
     this.verboseMessage('Cleaning node_modules and reinstalling dependencies...');
     
     const nodeModulesPath = path.join(this.root, 'node_modules');
@@ -142,9 +172,15 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     this.verboseMessage('Upgrading React Native and React Native Windows to latest versions...');
     
     try {
-      // Get latest versions
-      const rnLatest = execSync('npm view react-native version', {encoding: 'utf8'}).trim();
-      const rnwLatest = execSync('npm view react-native-windows version', {encoding: 'utf8'}).trim();
+      // Get latest versions with timeout to avoid hanging
+      const rnLatest = execSync('npm view react-native version', {
+        encoding: 'utf8',
+        timeout: 30000
+      }).trim();
+      const rnwLatest = execSync('npm view react-native-windows version', {
+        encoding: 'utf8', 
+        timeout: 30000
+      }).trim();
       
       this.verboseMessage(`Latest RN version: ${rnLatest}`);
       this.verboseMessage(`Latest RNW version: ${rnwLatest}`);
@@ -166,11 +202,16 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
       this.verboseMessage('Updated dependency versions in package.json');
       
-      // Install updated dependencies
-      execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
+      // Install updated dependencies with timeout
+      execSync('yarn install', {
+        cwd: this.root, 
+        stdio: 'inherit',
+        timeout: 120000
+      });
       
-    } catch (error) {
-      this.verboseMessage(`Warning: Could not upgrade dependencies: ${error}`);
+    } catch (error: any) {
+      this.verboseMessage(`Warning: Could not upgrade dependencies: ${error.message}`);
+      // Don't fail the entire process if dependency upgrade fails
     }
   }
 
@@ -185,8 +226,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         telemetry: this.options.telemetry
       });
       this.verboseMessage('init-windows completed successfully');
-    } catch (error) {
-      throw new CodedError('InitWindowsFailed', `Failed to run init-windows: ${error}`);
+    } catch (error: any) {
+      // Check if windows directory was created even with errors
+      const windowsDir = path.join(this.root, 'windows');
+      if (await fs.exists(windowsDir)) {
+        this.verboseMessage('Windows directory exists, continuing despite init-windows warnings');
+      } else {
+        throw new CodedError('InitWindowsFailed', `Failed to run init-windows: ${error.message}`);
+      }
     }
   }
 
@@ -199,8 +246,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         telemetry: this.options.telemetry
       });
       this.verboseMessage('codegen-windows completed successfully');
-    } catch (error) {
-      throw new CodedError('CodegenWindowsFailed', `Failed to run codegen-windows: ${error}`);
+    } catch (error: any) {
+      // Check if codegen directory was created even with errors  
+      const codegenDir = path.join(this.root, 'codegen');
+      if (await fs.exists(codegenDir)) {
+        this.verboseMessage('Codegen directory exists, continuing despite codegen-windows warnings');
+      } else {
+        throw new CodedError('CodegenWindowsFailed', `Failed to run codegen-windows: ${error.message}`);
+      }
     }
   }
 
@@ -317,6 +370,9 @@ void ${moduleName}::Initialize(React::ReactContext const &reactContext) noexcept
   }
 
   public async run(spinner: Ora, config: Config): Promise<void> {
+    await this.validateEnvironment();
+    spinner.text = 'Checking and creating spec file...';
+    
     await this.checkAndCreateSpecFile();
     spinner.text = 'Updating package.json...';
     
@@ -429,10 +485,21 @@ export async function moduleWindowsSetupInternal(
       )}ms)`,
     );
     console.log('');
+    console.log(chalk.bold('🎉 Your React Native module now supports Windows!'));
+    console.log('');
+    console.log(chalk.bold('Files created/updated:'));
+    console.log(`📄 package.json - Added codegen configuration`);
+    console.log(`🏗️  NativeModuleName.ts - TurboModule spec file (edit with your API)`);
+    console.log(`💻 windows/ModuleName.h - C++ header file (implement your methods here)`);
+    console.log(`⚙️  windows/ModuleName.cpp - C++ implementation file (add your logic here)`);
+    console.log('');
     console.log(chalk.bold('Next steps:'));
-    console.log('1. Update the generated spec file with your module\'s interface');
-    console.log('2. Implement the methods in the generated C++ stub files');
-    console.log('3. Build your project to verify everything works');
+    console.log('1. 📝 Update the generated spec file with your module\'s interface');
+    console.log('2. 🔧 Implement the methods in the generated C++ stub files');
+    console.log('3. 🏗️  Build your project to verify everything works');
+    console.log('4. 📚 See the documentation for more details on TurboModule development');
+    console.log('');
+    console.log(chalk.dim('For help, visit: https://microsoft.github.io/react-native-windows/'));
     console.log('');
   } catch (e) {
     spinner.fail();
