@@ -11,9 +11,4 @@
     For more advanced scenarios, and complete documentation, please see:
     https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/nuget
     -->
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-    </ClCompile>
-  </ItemDefinitionGroup>
 </Project>

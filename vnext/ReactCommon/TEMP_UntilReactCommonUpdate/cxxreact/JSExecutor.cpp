@@ -61,7 +61,7 @@ facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile JSExecutor:
    return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
     "stubbed_impl", 
     std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{}, 
-    {}); // [Windows TODO: stubbed implementation #14700]
+    std::unique_ptr<facebook::react::jsinspector_modern::tracing::RawRuntimeProfile>{}); // [Windows TODO: stubbed implementation #14700]
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
