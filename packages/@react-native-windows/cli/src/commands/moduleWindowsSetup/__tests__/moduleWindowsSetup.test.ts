@@ -46,6 +46,82 @@ describe('ModuleWindowsSetup', () => {
     });
   });
 
+  describe('extractMethodsFromSpecInterface', () => {
+    it('should parse method signatures from TypeScript interface', () => {
+      const setup = new ModuleWindowsSetup('/test', mockOptions);
+      const extractMethods = (setup as any).extractMethodsFromSpecInterface.bind(setup);
+      
+      const specContent = `
+export interface Spec extends TurboModule {
+  getString(value: string): Promise<string>;
+  getNumber(count: number): Promise<number>;
+  getBool(): Promise<boolean>;
+  syncMethod(data: object): void;
+}`;
+      
+      const methods = extractMethods(specContent);
+      
+      expect(methods).toHaveLength(4);
+      expect(methods[0]).toEqual({
+        name: 'getString',
+        returnType: 'Promise<string>',
+        parameters: [{ name: 'value', type: 'string' }]
+      });
+      expect(methods[1]).toEqual({
+        name: 'getNumber',
+        returnType: 'Promise<number>',
+        parameters: [{ name: 'count', type: 'number' }]
+      });
+      expect(methods[2]).toEqual({
+        name: 'getBool',
+        returnType: 'Promise<boolean>',
+        parameters: []
+      });
+      expect(methods[3]).toEqual({
+        name: 'syncMethod',
+        returnType: 'void',
+        parameters: [{ name: 'data', type: 'object' }]
+      });
+    });
+
+    it('should handle complex parameter types', () => {
+      const setup = new ModuleWindowsSetup('/test', mockOptions);
+      const extractMethods = (setup as any).extractMethodsFromSpecInterface.bind(setup);
+      
+      const specContent = `
+export interface Spec extends TurboModule {
+  complexMethod(
+    config: {
+      url: string;
+      timeout?: number;
+    },
+    callback: (result: any) => void
+  ): Promise<any>;
+}`;
+      
+      const methods = extractMethods(specContent);
+      
+      expect(methods).toHaveLength(1);
+      expect(methods[0].name).toBe('complexMethod');
+      expect(methods[0].parameters).toHaveLength(2);
+    });
+  });
+
+  describe('mapTSToCppType', () => {
+    it('should map TypeScript types to C++ types correctly', () => {
+      const setup = new ModuleWindowsSetup('/test', mockOptions);
+      const mapTsToCpp = (setup as any).mapTSToCppType.bind(setup);
+      
+      expect(mapTsToCpp('string')).toBe('std::string');
+      expect(mapTsToCpp('number')).toBe('double');
+      expect(mapTsToCpp('boolean')).toBe('bool');
+      expect(mapTsToCpp('object')).toBe('React::JSValue');
+      expect(mapTsToCpp('any')).toBe('React::JSValue');
+      expect(mapTsToCpp('string[]')).toBe('std::vector<std::string>');
+      expect(mapTsToCpp('number[]')).toBe('std::vector<double>');
+    });
+  });
+
   describe('constructor', () => {
     it('should create instance with correct root and options', () => {
       const root = '/test/project';
