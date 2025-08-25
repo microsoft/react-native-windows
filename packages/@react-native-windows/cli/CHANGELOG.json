@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 25 Aug 2025 15:28:19 GMT",
+      "version": "0.80.0-preview.3",
+      "tag": "@react-native-windows/cli_v0.80.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "68e8fc0c03ee80bc310822ed5c4b5797f16be81e",
+            "comment": "Update CLI to show static warning for old architecture in run-windows and interactive prompt for init-windows (#15029)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.80.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Aug 2025 15:28:20 GMT",
       "version": "0.80.0-preview.2",
       "tag": "@react-native-windows/cli_v0.80.0-preview.2",

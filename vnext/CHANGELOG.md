@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 18 Aug 2025 15:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 25 Aug 2025 15:28:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.4
+
+Mon, 25 Aug 2025 15:28:20 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.80.0-preview.3
 
 ## 0.80.0-preview.3
 
