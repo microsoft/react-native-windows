@@ -78,6 +78,7 @@
       <DisableSpecificWarnings>4715;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessToFile>false</PreprocessToFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -206,9 +207,12 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\basePrimitives.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\TextInputState.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\BaseTextInputProps.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textlayoutmanager\TextLayoutManager.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx\react\renderer\imagemanager\ImageRequestParams.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\conversions.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\CullingContext.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\sliceChildShadowNodeViewPairs.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\ShadowViewNodePair.h" />
