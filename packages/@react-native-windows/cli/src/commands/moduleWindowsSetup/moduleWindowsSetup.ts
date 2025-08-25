@@ -96,11 +96,31 @@ import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboMo
 
 export interface Spec extends TurboModule {
   // Add your module methods here
-  // Example:
+  // Example methods for different types:
+  
+  // Simple string method
   // +getString: (input: string) => string;
+  
+  // Number method
   // +getNumber: (input: number) => number;
-  // +getPromise: (error: boolean) => Promise<string>;
-  // +getCallback: (callback: (value: string) => void) => void;
+  
+  // Boolean method
+  // +getBool: (input: boolean) => boolean;
+  
+  // Promise-based async method
+  // +getStringAsync: (input: string) => Promise<string>;
+  
+  // Callback method
+  // +getStringWithCallback: (input: string, callback: (result: string) => void) => void;
+  
+  // Method with no parameters
+  // +doSomething: () => void;
+  
+  // Method that returns constants
+  // +getConstants: () => {|
+  //   SOME_CONSTANT: string;
+  //   ANOTHER_CONSTANT: number;
+  // |};
 }
 
 export default (TurboModuleRegistry.getEnforcing<Spec>('${moduleName}'): Spec);
@@ -246,6 +266,251 @@ export default (TurboModuleRegistry.getEnforcing<Spec>('${moduleName}'): Spec);
     }
   }
 
+  private async generateCppStubs(spinner: Ora): Promise<void> {
+    const verbose = this.options.logging;
+
+    // Find the generated spec file
+    const packageJsonPath = path.join(this.root, 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
+    if (!packageJson.codegenConfig) {
+      spinner.info('No codegenConfig found - skipping C++ stub generation');
+      return;
+    }
+
+    const codegenOutputDir =
+      packageJson.codegenConfig.windows?.outputDirectory ?? 'codegen';
+    const moduleName = this.options.name || packageJson.name;
+    const specFileName = `Native${moduleName}Spec.g.h`;
+    const specFilePath = path.join(this.root, codegenOutputDir, specFileName);
+
+    if (!fs.existsSync(specFilePath)) {
+      spinner.warn(`Generated spec file not found: ${specFilePath}`);
+      return;
+    }
+
+    // Read the spec file to extract method signatures
+    const specContent = fs.readFileSync(specFilePath, 'utf8');
+    this.verboseMessage(`Reading spec file: ${specFilePath}`, verbose);
+
+    // Parse method signatures from REACT_SHOW_METHOD_SPEC_ERRORS
+    const methodMatches = specContent.matchAll(
+      /REACT_SHOW_METHOD_SPEC_ERRORS\(\s*\d+,\s*"([^"]+)",\s*"([^"]*REACT_(?:SYNC_)?METHOD\([^)]+\)[^\n]*)/g,
+    );
+
+    const methods: Array<{name: string; signature: string}> = [];
+    for (const match of methodMatches) {
+      const methodName = match[1];
+      const methodLine = match[2];
+
+      // Extract the actual method signature
+      const signatureMatch = methodLine.match(
+        /REACT_(?:SYNC_)?METHOD\([^)]+\)\s*([^{]*)/,
+      );
+      if (signatureMatch) {
+        methods.push({
+          name: methodName,
+          signature: signatureMatch[1].trim().replace(/\s+/g, ' '),
+        });
+      }
+    }
+
+    // Parse constant methods from REACT_SHOW_CONSTANT_SPEC_ERRORS
+    const constantMatches = specContent.matchAll(
+      /REACT_SHOW_CONSTANT_SPEC_ERRORS\(\s*\d+,\s*"([^"]+)",\s*"([^"]*REACT_GET_CONSTANTS\([^)]+\)[^\n]*)/g,
+    );
+
+    for (const match of constantMatches) {
+      const constantName = match[1];
+      const constantLine = match[2];
+
+      // Extract the actual constant method signature
+      const signatureMatch = constantLine.match(
+        /REACT_GET_CONSTANTS\([^)]+\)\s*([^{]*)/,
+      );
+      if (signatureMatch) {
+        methods.push({
+          name: constantName.replace('_Constants', ''),
+          signature: signatureMatch[1].trim().replace(/\s+/g, ' '),
+        });
+      }
+    }
+
+    if (methods.length === 0) {
+      spinner.info('No methods found in spec file to generate stubs for');
+      return;
+    }
+
+    this.verboseMessage(
+      `Found ${methods.length} methods to generate stubs for`,
+      verbose,
+    );
+
+    // Create C++ implementation file
+    const namespace =
+      packageJson.codegenConfig.windows?.namespace || `${moduleName}Codegen`;
+    const headerFileName = `${moduleName}Module.h`;
+    const implFileName = `${moduleName}Module.cpp`;
+
+    // Generate header file
+    const headerContent = this.generateHeaderFile(
+      moduleName,
+      namespace,
+      methods,
+    );
+    const headerPath = path.join(this.root, 'windows', headerFileName);
+
+    // Generate implementation file
+    const implContent = this.generateImplementationFile(
+      moduleName,
+      namespace,
+      methods,
+    );
+    const implPath = path.join(this.root, 'windows', implFileName);
+
+    // Ensure windows directory exists
+    const windowsDir = path.join(this.root, 'windows');
+    if (!fs.existsSync(windowsDir)) {
+      fs.mkdirSync(windowsDir, {recursive: true});
+    }
+
+    // Write files (only if they don't exist to avoid overwriting user changes)
+    if (!fs.existsSync(headerPath)) {
+      fs.writeFileSync(headerPath, headerContent);
+      this.verboseMessage(`Created header file: ${headerPath}`, verbose);
+      spinner.info(
+        `Created header stub: ${path.relative(this.root, headerPath)}`,
+      );
+    } else {
+      spinner.info(
+        `Header file already exists: ${path.relative(this.root, headerPath)}`,
+      );
+    }
+
+    if (!fs.existsSync(implPath)) {
+      fs.writeFileSync(implPath, implContent);
+      this.verboseMessage(`Created implementation file: ${implPath}`, verbose);
+      spinner.info(
+        `Created implementation stub: ${path.relative(this.root, implPath)}`,
+      );
+    } else {
+      spinner.info(
+        `Implementation file already exists: ${path.relative(
+          this.root,
+          implPath,
+        )}`,
+      );
+    }
+  }
+
+  private generateHeaderFile(
+    moduleName: string,
+    namespace: string,
+    methods: Array<{name: string; signature: string}>,
+  ): string {
+    const className = `${moduleName}Module`;
+    const specClassName = `${moduleName}Spec`;
+
+    return `#pragma once
+
+#include "NativeModules.h"
+#include "${moduleName}Spec.g.h"
+
+namespace ${namespace}
+{
+    REACT_MODULE(${className})
+    struct ${className}
+    {
+        using ModuleSpec = ${specClassName};
+
+        REACT_INIT(Initialize)
+        void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+${methods
+  .map(
+    method => `        REACT_METHOD(${method.name})
+        ${method.signature};`,
+  )
+  .join('\n\n')}
+
+    private:
+        winrt::Microsoft::ReactNative::ReactContext m_reactContext{nullptr};
+    };
+}
+`;
+  }
+
+  private generateImplementationFile(
+    moduleName: string,
+    namespace: string,
+    methods: Array<{name: string; signature: string}>,
+  ): string {
+    const className = `${moduleName}Module`;
+    const headerFileName = `${moduleName}Module.h`;
+
+    const implementations = methods
+      .map(method => {
+        const signature = method.signature.replace(' noexcept', '');
+        return `${signature} noexcept
+{
+    // TODO: Implement ${method.name}
+    ${this.generateDefaultReturnValue(method.signature)}
+}`;
+      })
+      .join('\n\n');
+
+    return `#include "pch.h"
+#include "${headerFileName}"
+
+namespace ${namespace}
+{
+    void ${className}::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept
+    {
+        m_reactContext = reactContext;
+    }
+
+${implementations}
+
+}
+`;
+  }
+
+  private generateDefaultReturnValue(signature: string): string {
+    if (signature.includes('void ')) {
+      return '// No return value needed';
+    } else if (signature.includes('bool ')) {
+      return 'return false;';
+    } else if (signature.includes('double ') || signature.includes('int ')) {
+      return 'return 0;';
+    } else if (signature.includes('std::string ')) {
+      return 'return "";';
+    } else if (signature.includes('Promise<')) {
+      const promiseMatch = signature.match(
+        /([^\s]+)\s+\w+\s*\([^)]*Promise<([^>]+)>/,
+      );
+      if (promiseMatch) {
+        return `// promise.resolve(${this.getDefaultValueForType(
+          promiseMatch[2],
+        )});`;
+      }
+      return '// promise.resolve(...);';
+    } else {
+      return '// return default_value;';
+    }
+  }
+
+  private getDefaultValueForType(type: string): string {
+    if (type.includes('string')) return '""';
+    if (type.includes('bool')) return 'false';
+    if (
+      type.includes('number') ||
+      type.includes('double') ||
+      type.includes('int')
+    )
+      return '0';
+    return 'default_value';
+  }
+
   public async run(spinner: Ora) {
     const verbose = this.options.logging;
 
@@ -320,10 +585,9 @@ export default (TurboModuleRegistry.getEnforcing<Spec>('${moduleName}'): Spec);
       );
     }
 
-    // Step 9: Add C++ stub methods (this will be implemented in next iteration)
+    // Step 9: Add C++ stub methods
     spinner.text = 'Generating C++ stub implementations...';
-    // TODO: Implement C++ stub generation
-    spinner.info('C++ stub generation completed (placeholder)');
+    await this.generateCppStubs(spinner);
 
     // Step 10: Build solution (optional - can be done manually)
     spinner.succeed('Module Windows setup completed successfully!');
