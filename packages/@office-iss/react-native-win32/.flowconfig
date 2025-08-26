@@ -42,9 +42,6 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
 
-; Ignore Renderer shims that have flow typing issues
-<PROJECT_ROOT>/Libraries/Renderer/shims/.*
-
 <PROJECT_ROOT>/IntegrationTests/ImageCachePolicyTest.js
 <PROJECT_ROOT>/IntegrationTests/LayoutEventsTest.js
 <PROJECT_ROOT>/IntegrationTests/IntegrationTestsApp.js
@@ -100,11 +97,6 @@
 
 ; Ignore rn-tester Pods
 <PROJECT_ROOT>/packages/rn-tester/Pods/
-
-; Ignore files that depend on Renderer shims
-<PROJECT_ROOT>/src/private/webapis/dom/nodes/ReactNativeElement.js
-<PROJECT_ROOT>/src/private/webapis/dom/nodes/internals/NodeInternals.js
-<PROJECT_ROOT>/src/private/webapis/dom/nodes/specs/NativeDOM.js
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
