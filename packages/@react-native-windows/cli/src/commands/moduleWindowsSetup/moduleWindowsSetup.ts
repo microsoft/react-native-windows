@@ -53,7 +53,7 @@ export class ModuleWindowsSetup {
     const packageJsonPath = path.join(this.root, 'package.json');
     if (!(await fs.exists(packageJsonPath))) {
       throw new CodedError(
-        'InvalidProject',
+        'NoPackageJson',
         'No package.json found. Make sure you are in a React Native project directory.',
       );
     }
@@ -63,17 +63,17 @@ export class ModuleWindowsSetup {
       const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
       if (!pkgJson.name) {
         throw new CodedError(
-          'InvalidPackage',
+          'NoProjectName',
           'package.json must have a "name" field.',
         );
       }
       this.verboseMessage(`Project name: ${pkgJson.name}`);
     } catch (error: any) {
-      if (error.code === 'InvalidPackage') {
+      if (error.code === 'NoProjectName') {
         throw error;
       }
       throw new CodedError(
-        'InvalidPackageJson',
+        'NoPackageJson',
         'package.json is not valid JSON.',
       );
     }
@@ -84,7 +84,7 @@ export class ModuleWindowsSetup {
       this.verboseMessage('Yarn found');
     } catch {
       throw new CodedError(
-        'YarnNotFound',
+        'Unknown',
         'Yarn is required but not found. Please install Yarn first.',
       );
     }
@@ -469,19 +469,20 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     }
   }
 
-  private async updatePackageJsonCodegen(): Promise<void> {
-    this.verboseMessage(
-      'Cleaning node_modules and reinstalling dependencies...',
-    );
 
-    const nodeModulesPath = path.join(this.root, 'node_modules');
-    if (await fs.exists(nodeModulesPath)) {
-      await fs.rm(nodeModulesPath, {recursive: true, force: true});
-      this.verboseMessage('Removed node_modules');
+  private async removeDirectoryRecursive(dirPath: string): Promise<void> {
+    const entries = await fs.readdir(dirPath, {withFileTypes: true});
+    
+    for (const entry of entries) {
+      const fullPath = path.join(dirPath, entry.name);
+      if (entry.isDirectory()) {
+        await this.removeDirectoryRecursive(fullPath);
+      } else {
+        await fs.unlink(fullPath);
+      }
     }
-
-    execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
-    this.verboseMessage('Dependencies installed');
+    
+    await fs.rmdir(dirPath);
   }
 
   private async upgradeDependencies(): Promise<void> {
@@ -559,7 +560,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         );
       } else {
         throw new CodedError(
-          'InitWindowsFailed',
+          'Unknown',
           `Failed to run init-windows: ${error.message}`,
         );
       }
@@ -584,7 +585,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         );
       } else {
         throw new CodedError(
-          'CodegenWindowsFailed',
+          'InvalidCodegenConfig',
           `Failed to run codegen-windows: ${error.message}`,
         );
       }
@@ -939,7 +940,7 @@ ${defaultImplementations}
 
     const nodeModulesPath = path.join(this.root, 'node_modules');
     if (await fs.exists(nodeModulesPath)) {
-      await fs.rm(nodeModulesPath, {recursive: true, force: true});
+      await this.removeDirectoryRecursive(nodeModulesPath);
       this.verboseMessage('Removed node_modules');
     }
 
