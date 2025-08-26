@@ -101,6 +101,11 @@
 ; Ignore rn-tester Pods
 <PROJECT_ROOT>/packages/rn-tester/Pods/
 
+; Ignore files that depend on Renderer shims
+<PROJECT_ROOT>/src/private/webapis/dom/nodes/ReactNativeElement.js
+<PROJECT_ROOT>/src/private/webapis/dom/nodes/internals/NodeInternals.js
+<PROJECT_ROOT>/src/private/webapis/dom/nodes/specs/NativeDOM.js
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
