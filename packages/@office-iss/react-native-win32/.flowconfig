@@ -42,6 +42,9 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
 
+; Ignore Renderer shims that have flow typing issues
+<PROJECT_ROOT>/Libraries/Renderer/shims/.*
+
 <PROJECT_ROOT>/IntegrationTests/ImageCachePolicyTest.js
 <PROJECT_ROOT>/IntegrationTests/LayoutEventsTest.js
 <PROJECT_ROOT>/IntegrationTests/IntegrationTestsApp.js
