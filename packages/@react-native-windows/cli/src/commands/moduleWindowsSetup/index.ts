@@ -4,5 +4,8 @@
  * @format
  */
 
-export {moduleWindowsSetupCommand, moduleWindowsSetupInternal} from './moduleWindowsSetup';
+export {
+  moduleWindowsSetupCommand,
+  moduleWindowsSetupInternal,
+} from './moduleWindowsSetup';
 export type {ModuleWindowsSetupOptions} from './moduleWindowsSetupOptions';
