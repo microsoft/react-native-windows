@@ -391,6 +391,13 @@
       "baseHash": "7a14c3d42ba7442848bd90329f6d31bda323c6d4"
     },
     {
+      "type": "copy",
+      "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.js",
+      "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
+      "baseHash": "4e0c2fba71006410b3effa3979aea91e0f711144",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "src-win/Libraries/Settings/Settings.win32.js",
       "baseFile": "packages/react-native/Libraries/Settings/Settings.js",
