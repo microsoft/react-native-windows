@@ -111,13 +111,6 @@
       "issue": 13587
     },
     {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/tracing/RuntimeSamplingProfile.h",
-      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/tracing/RuntimeSamplingProfile.h",
-      "baseHash": "5f96ad4d68bdbfac8e2e072e773434fea20d0a5b",
-      "issue": 15082
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/Utf8.h",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
