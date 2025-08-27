@@ -144,8 +144,9 @@ async function postInstall(config = {}, options = {}) {
 module.exports = {
   name: 'React Native Windows Application (New Arch, WinAppSDK, C++)',
   description:
-    "[Preview] A RNW app using RN's New Architecture, built in C++ and targeting WinAppSDK.",
+    "A RNW app using RN's New Architecture, built in C++ and targeting WinAppSDK.",
   preInstall,
   getFileMappings,
   postInstall,
+  isDefault: true,
 };
