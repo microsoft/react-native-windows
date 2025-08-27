@@ -18,14 +18,29 @@ CompositionTextRangeProvider::CompositionTextRangeProvider(
 }
 
 HRESULT __stdcall CompositionTextRangeProvider::Clone(ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  auto clone = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(m_view.view().as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get());
+  *pRetVal = clone.detach();
   return S_OK;
 }
 
 HRESULT __stdcall CompositionTextRangeProvider::Compare(ITextRangeProvider *range, BOOL *pRetVal) {
-  // no-op
-  *pRetVal = false;
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  if (range == nullptr) {
+    *pRetVal = FALSE;
+    return S_OK;
+  }
+
+  // Try to cast to our type , considering provider only supports a single range per view
+  auto other = dynamic_cast<CompositionTextRangeProvider *>(range);
+  if (other && other->m_view.view() == m_view.view()) {
+    *pRetVal = TRUE;
+  } else {
+    *pRetVal = FALSE;
+  }
   return S_OK;
 }
 
@@ -34,7 +49,10 @@ HRESULT __stdcall CompositionTextRangeProvider::CompareEndpoints(
     ITextRangeProvider *targetRange,
     TextPatternRangeEndpoint targetEndpoint,
     int *pRetVal) {
-  // no-op
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  // For a single-range provider, always equal:
   *pRetVal = 0;
   return S_OK;
 }
@@ -98,13 +116,13 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
       textTransform = props->textAttributes.textTransform.value();
     }
     if (fontVariant == facebook::react::FontVariant::SmallCaps) {
-      return CapStyle_SmallCap;
+      pRetVal->lVal = CapStyle_SmallCap;
     } else if (textTransform == facebook::react::TextTransform::Capitalize) {
-      return CapStyle_Titling;
+      pRetVal->lVal = CapStyle_Titling;
     } else if (textTransform == facebook::react::TextTransform::Lowercase) {
-      return CapStyle_None;
+      pRetVal->lVal = CapStyle_None;
     } else if (textTransform == facebook::react::TextTransform::Uppercase) {
-      return CapStyle_AllCap;
+      pRetVal->lVal = CapStyle_AllCap;
     }
   } else if (attributeId == UIA_FontNameAttributeId) {
     pRetVal->vt = VT_BSTR;
@@ -281,6 +299,8 @@ HRESULT __stdcall CompositionTextRangeProvider::ScrollIntoView(BOOL alignToTop) 
   // no-op
   return S_OK;
 }
+
+// All the below methods should be implemented once the selection comes for paragraph and TextInput
 
 HRESULT __stdcall CompositionTextRangeProvider::AddToSelection() {
   // no-op
