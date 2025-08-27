@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 27 Aug 2025 05:26:00 GMT",
+      "version": "0.0.0-canary.274",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.274",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "080621232388d2a36fc85f5b967b197d03e825ab",
+            "comment": "Replace environment variable approach with separate stable/preview test suites"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ae3d6462fdd1614ac75189a7f743be4beffb4ca6",
+            "comment": "Reapply \"Change `init-windows` default new app template to New Architecture\" (#14985)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Aug 2025 05:30:40 GMT",
       "version": "0.0.0-canary.273",
       "tag": "@react-native-windows/cli_v0.0.0-canary.273",
