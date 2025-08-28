@@ -98,9 +98,6 @@
 ; Ignore rn-tester Pods
 <PROJECT_ROOT>/packages/rn-tester/Pods/
 
-; Ignore React Native Types shim
-.*/react-native-win32/Libraries/Renderer/shims/ReactNativeTypes.js
-
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
