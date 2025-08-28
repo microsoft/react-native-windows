@@ -42,8 +42,8 @@ interface MethodSignature {
 
 export class ModuleWindowsSetup {
   private actualModuleName?: string;
-  private root: string;
-  private options: ModuleWindowsSetupOptions;
+  public root: string;
+  public options: ModuleWindowsSetupOptions;
 
   constructor(root: string, options: ModuleWindowsSetupOptions) {
     this.root = root;
@@ -890,7 +890,9 @@ ${defaultMethods}
           const exampleReturn =
             method.returnType === 'void'
               ? ''
-              : `\n  // TODO: Return appropriate value\n  return ${this.generateDefaultValue(method.returnType)};`;
+              : `\n  // TODO: Return appropriate value\n  return ${this.generateDefaultValue(
+                  method.returnType,
+                )};`;
 
           return `${returnTypeIsCpp} ${moduleName}::${method.name}(${cppParams}) noexcept {
   // TODO: Implement ${method.name}${exampleReturn}
