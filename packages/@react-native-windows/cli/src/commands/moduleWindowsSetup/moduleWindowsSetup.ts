@@ -111,15 +111,66 @@ export class ModuleWindowsSetup {
   private async checkAndCreateSpecFile(): Promise<void> {
     this.verboseMessage('Checking for TurboModule spec file...');
 
-    const specPattern = '**/Native*.[jt]s';
-    const specFiles = glob.sync(specPattern, {cwd: this.root});
+    // Look for spec files in common locations, excluding node_modules
+    const specPatterns = [
+      'Native*.[jt]s',
+      'src/**/Native*.[jt]s', 
+      'lib/**/Native*.[jt]s',
+      'js/**/Native*.[jt]s',
+      'ts/**/Native*.[jt]s'
+    ];
+    
+    const specFiles: string[] = [];
+    for (const pattern of specPatterns) {
+      const matches = glob.sync(pattern, {
+        cwd: this.root,
+        ignore: ['**/node_modules/**', '**/build/**', '**/dist/**']
+      });
+      specFiles.push(...matches);
+    }
 
-    if (specFiles.length === 0) {
-      this.verboseMessage('No spec file found, analyzing existing APIs...');
+    // Remove duplicates and filter for actual TurboModule specs
+    const uniqueSpecFiles = Array.from(new Set(specFiles));
+    const validSpecFiles = await this.filterValidSpecFiles(uniqueSpecFiles);
+
+    if (validSpecFiles.length === 0) {
+      this.verboseMessage('No valid TurboModule spec file found, analyzing existing APIs...');
       await this.analyzeAndCreateSpecFile();
     } else {
-      this.verboseMessage(`Found spec file(s): ${specFiles.join(', ')}`);
+      this.verboseMessage(`Found valid spec file(s): ${validSpecFiles.join(', ')}`);
     }
+  }
+
+  private async filterValidSpecFiles(specFiles: string[]): Promise<string[]> {
+    const validFiles: string[] = [];
+    
+    for (const file of specFiles) {
+      try {
+        const filePath = path.join(this.root, file);
+        if (await fs.exists(filePath)) {
+          const content = await fs.readFile(filePath, 'utf8');
+          
+          // Check if it's a valid TurboModule spec file
+          if (this.isValidTurboModuleSpec(content)) {
+            validFiles.push(file);
+          }
+        }
+      } catch (error) {
+        this.verboseMessage(`Could not read spec file ${file}: ${error}`);
+      }
+    }
+    
+    return validFiles;
+  }
+
+  private isValidTurboModuleSpec(content: string): boolean {
+    // Check for TurboModule indicators
+    return (
+      content.includes('TurboModule') && 
+      (content.includes('export interface Spec') || 
+       content.includes('extends TurboModule') ||
+       content.includes('TurboModuleRegistry'))
+    );
   }
 
   private async analyzeAndCreateSpecFile(): Promise<void> {
