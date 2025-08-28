@@ -149,7 +149,7 @@ export class ModuleWindowsSetup {
     // e.g., "react-native-webview" -> "ReactNativeWebview"
     // e.g., "@react-native-community/slider" -> "ReactNativeCommunitySlider"
     return packageName
-      .replace(/[@\/\-]/g, ' ')
+      .replace(/[@/-]/g, ' ')
       .split(' ')
       .filter(word => word.length > 0)
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
@@ -813,7 +813,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
             specFiles = await this.filterValidSpecFiles(matches);
             if (specFiles.length > 0) {
               this.verboseMessage(
-                `Found spec files with pattern "${pattern}": ${specFiles.join(', ')}`,
+                `Found spec files with pattern "${pattern}": ${specFiles.join(
+                  ', ',
+                )}`,
               );
               break;
             }
@@ -836,7 +838,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       // Parse method signatures from the Spec interface
       const methods = this.extractMethodsFromSpecInterface(specContent);
       this.verboseMessage(
-        `Extracted ${methods.length} methods from spec file: ${methods.map(m => m.name).join(', ')}`,
+        `Extracted ${methods.length} methods from spec file: ${methods
+          .map(m => m.name)
+          .join(', ')}`,
       );
       return methods;
     } catch (error) {
