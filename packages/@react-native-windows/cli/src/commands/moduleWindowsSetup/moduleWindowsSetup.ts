@@ -128,6 +128,16 @@ export class ModuleWindowsSetup {
     return this.getModuleName(packageName);
   }
 
+  public async getFinalModuleName(): Promise<string> {
+    try {
+      const packageJsonPath = path.join(this.root, 'package.json');
+      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      return this.getActualModuleName(pkgJson.name || 'SampleModule');
+    } catch {
+      return 'SampleModule';
+    }
+  }
+
   private verboseMessage(message: any) {
     if (this.options.logging) {
       console.log(`[ModuleWindowsSetup] ${message}`);
@@ -1281,6 +1291,9 @@ export async function moduleWindowsSetupInternal(
     await setup.run(spinner, config);
     const endTime = performance.now();
 
+    // Get the actual module name for display
+    const moduleName = await setup.getFinalModuleName();
+
     console.log(
       `${chalk.green('Success:')} Windows module setup completed! (${Math.round(
         endTime - startTime,
@@ -1294,13 +1307,13 @@ export async function moduleWindowsSetupInternal(
     console.log(chalk.bold('Files created/updated:'));
     console.log(`📄 package.json - Added codegen configuration`);
     console.log(
-      `🏗️  NativeModuleName.ts - TurboModule spec file (edit with your API)`,
+      `🏗️  Native${moduleName}.ts - TurboModule spec file (edit with your API)`,
     );
     console.log(
-      `💻 windows/ModuleName.h - C++ header file (implement your methods here)`,
+      `💻 windows/${moduleName}.h - C++ header file (implement your methods here)`,
     );
     console.log(
-      `⚙️  windows/ModuleName.cpp - C++ implementation file (add your logic here)`,
+      `⚙️  windows/${moduleName}.cpp - C++ implementation file (add your logic here)`,
     );
     console.log('');
     console.log(chalk.bold('Next steps:'));
