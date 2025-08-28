@@ -42,6 +42,7 @@ interface MethodSignature {
 
 export class ModuleWindowsSetup {
   private actualModuleName?: string;
+  private discoveredSpecFiles: string[] = [];
   public root: string;
   public options: ModuleWindowsSetupOptions;
 
@@ -179,6 +180,8 @@ export class ModuleWindowsSetup {
       this.verboseMessage(
         `Found valid spec file(s): ${validSpecFiles.join(', ')}`,
       );
+      // Store the discovered spec files for later use
+      this.discoveredSpecFiles = validSpecFiles;
       // Extract the actual module name from the existing spec file
       await this.extractModuleNameFromExistingSpec(validSpecFiles[0]);
     }
@@ -702,18 +705,16 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       const methods = await this.parseSpecFileForMethods(specName);
 
       // Generate header file with parsed methods
-      const headerContent = this.generateHeaderStub(specName, methods);
-      if (!(await fs.exists(headerPath))) {
-        await fs.writeFile(headerPath, headerContent);
-        this.verboseMessage(`Generated header stub: ${headerPath}`);
-      }
+      const headerContent = await this.generateHeaderStub(specName, methods);
+      // Always write the header file to ensure it has the correct methods from the spec
+      await fs.writeFile(headerPath, headerContent);
+      this.verboseMessage(`Generated header stub: ${headerPath} with ${methods.length} methods`);
 
       // Generate cpp file with parsed methods
-      const cppContent = this.generateCppStub(specName, methods);
-      if (!(await fs.exists(cppPath))) {
-        await fs.writeFile(cppPath, cppContent);
-        this.verboseMessage(`Generated cpp stub: ${cppPath}`);
-      }
+      const cppContent = await this.generateCppStub(specName, methods);
+      // Always write the cpp file to ensure it has the correct methods from the spec
+      await fs.writeFile(cppPath, cppContent);
+      this.verboseMessage(`Generated cpp stub: ${cppPath} with ${methods.length} methods`);
     }
   }
 
@@ -721,9 +722,36 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     moduleName: string,
   ): Promise<MethodSignature[]> {
     try {
-      // Find the spec file
-      const specPattern = `**/Native${moduleName}.[jt]s`;
-      const specFiles = glob.sync(specPattern, {cwd: this.root});
+      // First, try to use the previously discovered spec files
+      let specFiles = this.discoveredSpecFiles;
+      
+      // If no discovered spec files, try to find them again with broader patterns
+      if (specFiles.length === 0) {
+        this.verboseMessage(`Searching for spec files for module: ${moduleName}`);
+        
+        // Try multiple patterns to find the spec file
+        const patterns = [
+          `**/Native${moduleName}.[jt]s`,
+          `**/Native*${moduleName}*.[jt]s`,
+          `**/Native*.[jt]s`,
+          `src/**/Native*.[jt]s`,
+          `lib/**/Native*.[jt]s`,
+        ];
+        
+        for (const pattern of patterns) {
+          const matches = glob.sync(pattern, {
+            cwd: this.root,
+            ignore: ['**/node_modules/**', '**/build/**', '**/dist/**'],
+          });
+          if (matches.length > 0) {
+            specFiles = await this.filterValidSpecFiles(matches);
+            if (specFiles.length > 0) {
+              this.verboseMessage(`Found spec files with pattern "${pattern}": ${specFiles.join(', ')}`);
+              break;
+            }
+          }
+        }
+      }
 
       if (specFiles.length === 0) {
         this.verboseMessage(
@@ -732,12 +760,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         return [];
       }
 
+      // Use the first valid spec file
       const specPath = path.join(this.root, specFiles[0]);
+      this.verboseMessage(`Reading spec file: ${specPath}`);
       const specContent = await fs.readFile(specPath, 'utf8');
 
       // Parse method signatures from the Spec interface
       const methods = this.extractMethodsFromSpecInterface(specContent);
-      this.verboseMessage(`Extracted ${methods.length} methods from spec file`);
+      this.verboseMessage(`Extracted ${methods.length} methods from spec file: ${methods.map(m => m.name).join(', ')}`);
       return methods;
     } catch (error) {
       this.verboseMessage(
@@ -808,10 +838,28 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     });
   }
 
-  private generateHeaderStub(
+  private async getNamespaceInfo(): Promise<{namespace: string, codegenNamespace: string}> {
+    try {
+      const packageJsonPath = path.join(this.root, 'package.json');
+      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      const actualModuleName = this.getActualModuleName(pkgJson.name || 'SampleModule');
+      
+      // Create reasonable namespace from package name
+      const namespace = this.getModuleName(pkgJson.name || 'SampleModule');
+      const codegenNamespace = `${namespace}Codegen`;
+      
+      return { namespace, codegenNamespace };
+    } catch (error) {
+      // Fallback
+      return { namespace: 'ReactNativeWebview', codegenNamespace: 'ReactNativeWebviewCodegen' };
+    }
+  }
+
+  private async generateHeaderStub(
     moduleName: string,
     methods: MethodSignature[],
-  ): string {
+  ): Promise<string> {
+    const {namespace, codegenNamespace} = await this.getNamespaceInfo();
     const methodDeclarations = methods
       .map(method => {
         const cppParams = method.parameters
@@ -844,29 +892,43 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
     return `#pragma once
 
-#include <${moduleName}Spec.g.h>
-#include <NativeModules.h>
+#include "pch.h"
+#include "resource.h"
 
-namespace ${moduleName}Specs {
+#if __has_include("codegen/Native${moduleName}DataTypes.g.h")
+  #include "codegen/Native${moduleName}DataTypes.g.h"
+#endif
+#include "codegen/Native${moduleName}Spec.g.h"
+
+#include "NativeModules.h"
+
+namespace winrt::${namespace}
+{
+
+// See https://microsoft.github.io/react-native-windows/docs/native-platform for help writing native modules
 
 REACT_MODULE(${moduleName})
-struct ${moduleName} {
-  using ModuleSpec = ${moduleName}Spec;
-  
+struct ${moduleName}
+{
+  using ModuleSpec = ${codegenNamespace}::${moduleName}Spec;
+
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
-  
+
 ${defaultMethods}
+
+private:
+  React::ReactContext m_context;
 };
 
-} // namespace ${moduleName}Specs
-`;
+} // namespace winrt::${namespace}`;
   }
 
-  private generateCppStub(
+  private async generateCppStub(
     moduleName: string,
     methods: MethodSignature[],
-  ): string {
+  ): Promise<string> {
+    const {namespace} = await this.getNamespaceInfo();
     const methodImplementations = methods
       .map(method => {
         const cppParams = method.parameters
@@ -912,15 +974,15 @@ ${defaultMethods}
 
     return `#include "${moduleName}.h"
 
-namespace ${moduleName}Specs {
+namespace winrt::${namespace} {
 
 void ${moduleName}::Initialize(React::ReactContext const &reactContext) noexcept {
-  // TODO: Initialize your module
+  m_context = reactContext;
 }
 
 ${defaultImplementations}
 
-} // namespace ${moduleName}Specs
+} // namespace winrt::${namespace}
 `;
   }
 
@@ -933,6 +995,9 @@ ${defaultImplementations}
       any: 'React::JSValue',
       'any[]': 'React::JSValueArray',
       void: 'void',
+      Double: 'double', // React Native codegen type
+      Int32: 'int32_t', // React Native codegen type
+      Float: 'float', // React Native codegen type
     };
 
     // Handle array types
