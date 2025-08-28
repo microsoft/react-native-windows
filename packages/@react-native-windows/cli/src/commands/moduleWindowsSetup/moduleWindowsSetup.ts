@@ -921,7 +921,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
       // Create reasonable namespace from package name
       const namespace = this.getModuleName(pkgJson.name || 'SampleModule');
-      const codegenNamespace = `${namespace}Codegen`;
+      const codegenNamespace = `${actualModuleName}Codegen`;
 
       return {namespace, codegenNamespace};
     } catch (error) {
