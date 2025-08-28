@@ -438,12 +438,14 @@ void HermesJSRuntime::disableSamplingProfiler() {
   return; // [Windows TODO: stubbed implementation #14700]
 }
 
-facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesJSRuntime::collectSamplingProfile() {
-  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
-      "stubbed_impl",
-      std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{},
-      nullptr); // [Windows TODO: stubbed implementation #14700]
-}
+// windows commneted as RuntimeSamplingProfile picks incorrect header ( new-app-screen/RuntimeSamplingProfile.h)
+// instead of (react_native/RuntimeSamplingProfile.h)
+// facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesJSRuntime::collectSamplingProfile() {
+//   return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
+//       "stubbed_impl",
+//       std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{},
+//       nullptr); // [Windows TODO: stubbed implementation #14700]
+// }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(
     facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
