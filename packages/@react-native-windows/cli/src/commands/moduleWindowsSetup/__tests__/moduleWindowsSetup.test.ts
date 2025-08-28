@@ -170,4 +170,84 @@ export interface Spec extends TurboModule {
       consoleSpy.mockRestore();
     });
   });
+
+  describe('removeOldArchWindowsDirectory', () => {
+    const fs = require('@react-native-windows/fs');
+    const glob = require('glob');
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should skip removal if windows directory does not exist', async () => {
+      fs.exists.mockResolvedValue(false);
+      const setup = new ModuleWindowsSetup('/test', {logging: true});
+
+      await (setup as any).removeOldArchWindowsDirectory();
+
+      expect(fs.exists).toHaveBeenCalledWith('/test/windows');
+      expect(glob.sync).not.toHaveBeenCalled();
+      expect(fs.rmdir).not.toHaveBeenCalled();
+    });
+
+    it('should keep new architecture windows directory', async () => {
+      fs.exists.mockResolvedValue(true);
+      glob.sync.mockReturnValue([]); // No old arch files found
+      const setup = new ModuleWindowsSetup('/test', {logging: true});
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+
+      await (setup as any).removeOldArchWindowsDirectory();
+
+      expect(fs.exists).toHaveBeenCalledWith('/test/windows');
+      expect(glob.sync).toHaveBeenCalled();
+      expect(fs.rmdir).not.toHaveBeenCalled();
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          'Windows directory appears to be new architecture',
+        ),
+      );
+      consoleSpy.mockRestore();
+    });
+
+    it('should remove old architecture windows directory', async () => {
+      fs.exists.mockResolvedValue(true);
+      glob.sync.mockReturnValueOnce(['ReactNativeModule.cpp']); // Found old arch file
+      fs.rmdir.mockResolvedValue(undefined);
+      const setup = new ModuleWindowsSetup('/test', {logging: true});
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+
+      await (setup as any).removeOldArchWindowsDirectory();
+
+      expect(fs.exists).toHaveBeenCalledWith('/test/windows');
+      expect(glob.sync).toHaveBeenCalled();
+      expect(fs.rmdir).toHaveBeenCalledWith('/test/windows', {recursive: true});
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Removing old architecture windows directory'),
+      );
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          'Old architecture windows directory removed successfully',
+        ),
+      );
+      consoleSpy.mockRestore();
+    });
+
+    it('should handle removal errors gracefully', async () => {
+      fs.exists.mockResolvedValue(true);
+      glob.sync.mockReturnValueOnce(['pch.h']); // Found old arch file
+      fs.rmdir.mockRejectedValue(new Error('Permission denied'));
+      const setup = new ModuleWindowsSetup('/test', {logging: true});
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+
+      await (setup as any).removeOldArchWindowsDirectory();
+
+      expect(fs.rmdir).toHaveBeenCalledWith('/test/windows', {recursive: true});
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          'Warning: Could not remove old windows directory',
+        ),
+      );
+      consoleSpy.mockRestore();
+    });
+  });
 });

@@ -625,6 +625,56 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     }
   }
 
+  private async removeOldArchWindowsDirectory(): Promise<void> {
+    const windowsDir = path.join(this.root, 'windows');
+
+    if (await fs.exists(windowsDir)) {
+      this.verboseMessage(
+        "Found existing windows directory, checking if it's old architecture...",
+      );
+
+      try {
+        // Check if this looks like an old architecture windows directory
+        // Old arch typically has specific files/structure that differ from new arch
+        const oldArchIndicators = [
+          'ReactNativeModule.cpp',
+          'ReactNativeModule.h',
+          'pch.h',
+          'packages.config',
+          '*.vcxproj',
+        ];
+
+        let hasOldArchFiles = false;
+        for (const indicator of oldArchIndicators) {
+          const matches = glob.sync(indicator, {cwd: windowsDir});
+          if (matches.length > 0) {
+            hasOldArchFiles = true;
+            this.verboseMessage(`Found old architecture file: ${matches[0]}`);
+            break;
+          }
+        }
+
+        if (hasOldArchFiles) {
+          this.verboseMessage('Removing old architecture windows directory...');
+          await fs.rmdir(windowsDir, {recursive: true});
+          this.verboseMessage(
+            'Old architecture windows directory removed successfully',
+          );
+        } else {
+          this.verboseMessage(
+            'Windows directory appears to be new architecture, keeping it',
+          );
+        }
+      } catch (error: any) {
+        this.verboseMessage(
+          `Warning: Could not remove old windows directory: ${error.message}`,
+        );
+        // Don't fail the entire process if we can't remove the old directory
+        // The overwrite flag in init-windows should handle most conflicts
+      }
+    }
+  }
+
   private async runInitWindows(config: Config): Promise<void> {
     this.verboseMessage('Running init-windows with cpp-lib template...');
 
@@ -708,13 +758,17 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       const headerContent = await this.generateHeaderStub(specName, methods);
       // Always write the header file to ensure it has the correct methods from the spec
       await fs.writeFile(headerPath, headerContent);
-      this.verboseMessage(`Generated header stub: ${headerPath} with ${methods.length} methods`);
+      this.verboseMessage(
+        `Generated header stub: ${headerPath} with ${methods.length} methods`,
+      );
 
       // Generate cpp file with parsed methods
       const cppContent = await this.generateCppStub(specName, methods);
       // Always write the cpp file to ensure it has the correct methods from the spec
       await fs.writeFile(cppPath, cppContent);
-      this.verboseMessage(`Generated cpp stub: ${cppPath} with ${methods.length} methods`);
+      this.verboseMessage(
+        `Generated cpp stub: ${cppPath} with ${methods.length} methods`,
+      );
     }
   }
 
@@ -724,11 +778,13 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     try {
       // First, try to use the previously discovered spec files
       let specFiles = this.discoveredSpecFiles;
-      
+
       // If no discovered spec files, try to find them again with broader patterns
       if (specFiles.length === 0) {
-        this.verboseMessage(`Searching for spec files for module: ${moduleName}`);
-        
+        this.verboseMessage(
+          `Searching for spec files for module: ${moduleName}`,
+        );
+
         // Try multiple patterns to find the spec file
         const patterns = [
           `**/Native${moduleName}.[jt]s`,
@@ -737,7 +793,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
           `src/**/Native*.[jt]s`,
           `lib/**/Native*.[jt]s`,
         ];
-        
+
         for (const pattern of patterns) {
           const matches = glob.sync(pattern, {
             cwd: this.root,
@@ -746,7 +802,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
           if (matches.length > 0) {
             specFiles = await this.filterValidSpecFiles(matches);
             if (specFiles.length > 0) {
-              this.verboseMessage(`Found spec files with pattern "${pattern}": ${specFiles.join(', ')}`);
+              this.verboseMessage(
+                `Found spec files with pattern "${pattern}": ${specFiles.join(', ')}`,
+              );
               break;
             }
           }
@@ -767,7 +825,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
       // Parse method signatures from the Spec interface
       const methods = this.extractMethodsFromSpecInterface(specContent);
-      this.verboseMessage(`Extracted ${methods.length} methods from spec file: ${methods.map(m => m.name).join(', ')}`);
+      this.verboseMessage(
+        `Extracted ${methods.length} methods from spec file: ${methods.map(m => m.name).join(', ')}`,
+      );
       return methods;
     } catch (error) {
       this.verboseMessage(
@@ -838,20 +898,28 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     });
   }
 
-  private async getNamespaceInfo(): Promise<{namespace: string, codegenNamespace: string}> {
+  private async getNamespaceInfo(): Promise<{
+    namespace: string;
+    codegenNamespace: string;
+  }> {
     try {
       const packageJsonPath = path.join(this.root, 'package.json');
       const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
-      const actualModuleName = this.getActualModuleName(pkgJson.name || 'SampleModule');
-      
+      const actualModuleName = this.getActualModuleName(
+        pkgJson.name || 'SampleModule',
+      );
+
       // Create reasonable namespace from package name
       const namespace = this.getModuleName(pkgJson.name || 'SampleModule');
       const codegenNamespace = `${namespace}Codegen`;
-      
-      return { namespace, codegenNamespace };
+
+      return {namespace, codegenNamespace};
     } catch (error) {
       // Fallback
-      return { namespace: 'ReactNativeWebview', codegenNamespace: 'ReactNativeWebviewCodegen' };
+      return {
+        namespace: 'ReactNativeWebview',
+        codegenNamespace: 'ReactNativeWebviewCodegen',
+      };
     }
   }
 
@@ -1112,6 +1180,9 @@ ${defaultImplementations}
     spinner.text = 'Upgrading dependencies...';
 
     await this.upgradeDependencies();
+    spinner.text = 'Checking for old architecture Windows directory...';
+
+    await this.removeOldArchWindowsDirectory();
     spinner.text = 'Setting up Windows library...';
 
     await this.runInitWindows(config);
