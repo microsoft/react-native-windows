@@ -41,10 +41,79 @@ interface MethodSignature {
 }
 
 export class ModuleWindowsSetup {
-  constructor(
-    readonly root: string,
-    readonly options: ModuleWindowsSetupOptions,
-  ) {}
+  private actualModuleName?: string;
+
+  private async validateEnvironment(): Promise<void> {
+    this.verboseMessage('Validating environment...');
+
+    // Check if package.json exists
+    const packageJsonPath = path.join(this.root, 'package.json');
+    if (!(await fs.exists(packageJsonPath))) {
+      throw new CodedError(
+        'NoPackageJson',
+        'No package.json found. Make sure you are in a React Native project directory.',
+      );
+    }
+
+    // Check if it's a valid npm package
+    try {
+      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      if (!pkgJson.name) {
+        throw new CodedError(
+          'NoProjectName',
+          'package.json must have a "name" field.',
+        );
+      }
+      this.verboseMessage(`Project name: ${pkgJson.name}`);
+    } catch (error: any) {
+      if (error.code === 'NoProjectName') {
+        throw error;
+      }
+      throw new CodedError(
+        'NoPackageJson',
+        'package.json is not valid JSON.',
+      );
+    }
+
+    // Check if yarn is available
+    try {
+      execSync('yarn --version', {stdio: 'ignore'});
+      this.verboseMessage('Yarn found');
+    } catch {
+      throw new CodedError(
+        'Unknown',
+        'Yarn is required but not found. Please install Yarn first.',
+      );
+    }
+  }
+
+  private async extractModuleNameFromExistingSpec(specFilePath: string): Promise<void> {
+    try {
+      const fullPath = path.join(this.root, specFilePath);
+      const content = await fs.readFile(fullPath, 'utf8');
+      
+      // Extract the module name from TurboModuleRegistry.getEnforcing<Spec>('ModuleName')
+      const exportMatch = content.match(/TurboModuleRegistry\.getEnforcing<Spec>\(['"`]([^'"`]+)['"`]\)/);
+      if (exportMatch) {
+        this.actualModuleName = exportMatch[1];
+        this.verboseMessage(`Extracted actual module name: ${this.actualModuleName}`);
+      } else {
+        this.verboseMessage('Could not extract module name from spec file, using package name conversion');
+      }
+    } catch (error) {
+      this.verboseMessage(`Error reading spec file: ${error}`);
+    }
+  }
+
+  private getActualModuleName(packageName: string): string {
+    // If we extracted the actual module name from an existing spec, use that
+    if (this.actualModuleName) {
+      return this.actualModuleName;
+    }
+    
+    // Otherwise, fall back to the package name conversion
+    return this.getModuleName(packageName);
+  }
 
   private async validateEnvironment(): Promise<void> {
     this.verboseMessage('Validating environment...');
@@ -138,6 +207,8 @@ export class ModuleWindowsSetup {
       await this.analyzeAndCreateSpecFile();
     } else {
       this.verboseMessage(`Found valid spec file(s): ${validSpecFiles.join(', ')}`);
+      // Extract the actual module name from the existing spec file
+      await this.extractModuleNameFromExistingSpec(validSpecFiles[0]);
     }
   }
 
@@ -177,7 +248,7 @@ export class ModuleWindowsSetup {
     const pkgJson = JSON.parse(
       await fs.readFile(path.join(this.root, 'package.json'), 'utf8'),
     );
-    const moduleName = this.getModuleName(pkgJson.name || 'SampleModule');
+    const moduleName = this.getActualModuleName(pkgJson.name || 'SampleModule');
 
     // Try to analyze existing API from multiple sources
     const apiMethods = await this.discoverApiMethods();
@@ -500,7 +571,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
 
     if (!pkgJson.codegenConfig) {
-      const moduleName = this.getModuleName(pkgJson.name || 'SampleModule');
+      const moduleName = this.getActualModuleName(pkgJson.name || 'SampleModule');
 
       pkgJson.codegenConfig = {
         name: moduleName,
@@ -514,7 +585,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       };
 
       await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
-      this.verboseMessage('Added codegenConfig to package.json');
+      this.verboseMessage(`Added codegenConfig to package.json with module name: ${moduleName}`);
     } else {
       this.verboseMessage('codegenConfig already exists in package.json');
     }
