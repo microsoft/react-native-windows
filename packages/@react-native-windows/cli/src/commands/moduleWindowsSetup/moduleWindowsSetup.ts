@@ -42,6 +42,13 @@ interface MethodSignature {
 
 export class ModuleWindowsSetup {
   private actualModuleName?: string;
+  private root: string;
+  private options: ModuleWindowsSetupOptions;
+
+  constructor(root: string, options: ModuleWindowsSetupOptions) {
+    this.root = root;
+    this.options = options;
+  }
 
   private async validateEnvironment(): Promise<void> {
     this.verboseMessage('Validating environment...');
@@ -69,10 +76,7 @@ export class ModuleWindowsSetup {
       if (error.code === 'NoProjectName') {
         throw error;
       }
-      throw new CodedError(
-        'NoPackageJson',
-        'package.json is not valid JSON.',
-      );
+      throw new CodedError('NoPackageJson', 'package.json is not valid JSON.');
     }
 
     // Check if yarn is available
@@ -87,18 +91,26 @@ export class ModuleWindowsSetup {
     }
   }
 
-  private async extractModuleNameFromExistingSpec(specFilePath: string): Promise<void> {
+  private async extractModuleNameFromExistingSpec(
+    specFilePath: string,
+  ): Promise<void> {
     try {
       const fullPath = path.join(this.root, specFilePath);
       const content = await fs.readFile(fullPath, 'utf8');
-      
+
       // Extract the module name from TurboModuleRegistry.getEnforcing<Spec>('ModuleName')
-      const exportMatch = content.match(/TurboModuleRegistry\.getEnforcing<Spec>\(['"`]([^'"`]+)['"`]\)/);
+      const exportMatch = content.match(
+        /TurboModuleRegistry\.getEnforcing<Spec>\(['"`]([^'"`]+)['"`]\)/,
+      );
       if (exportMatch) {
         this.actualModuleName = exportMatch[1];
-        this.verboseMessage(`Extracted actual module name: ${this.actualModuleName}`);
+        this.verboseMessage(
+          `Extracted actual module name: ${this.actualModuleName}`,
+        );
       } else {
-        this.verboseMessage('Could not extract module name from spec file, using package name conversion');
+        this.verboseMessage(
+          'Could not extract module name from spec file, using package name conversion',
+        );
       }
     } catch (error) {
       this.verboseMessage(`Error reading spec file: ${error}`);
@@ -110,53 +122,9 @@ export class ModuleWindowsSetup {
     if (this.actualModuleName) {
       return this.actualModuleName;
     }
-    
+
     // Otherwise, fall back to the package name conversion
     return this.getModuleName(packageName);
-  }
-
-  private async validateEnvironment(): Promise<void> {
-    this.verboseMessage('Validating environment...');
-
-    // Check if package.json exists
-    const packageJsonPath = path.join(this.root, 'package.json');
-    if (!(await fs.exists(packageJsonPath))) {
-      throw new CodedError(
-        'NoPackageJson',
-        'No package.json found. Make sure you are in a React Native project directory.',
-      );
-    }
-
-    // Check if it's a valid npm package
-    try {
-      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
-      if (!pkgJson.name) {
-        throw new CodedError(
-          'NoProjectName',
-          'package.json must have a "name" field.',
-        );
-      }
-      this.verboseMessage(`Project name: ${pkgJson.name}`);
-    } catch (error: any) {
-      if (error.code === 'NoProjectName') {
-        throw error;
-      }
-      throw new CodedError(
-        'NoPackageJson',
-        'package.json is not valid JSON.',
-      );
-    }
-
-    // Check if yarn is available
-    try {
-      execSync('yarn --version', {stdio: 'ignore'});
-      this.verboseMessage('Yarn found');
-    } catch {
-      throw new CodedError(
-        'Unknown',
-        'Yarn is required but not found. Please install Yarn first.',
-      );
-    }
   }
 
   private verboseMessage(message: any) {
@@ -183,17 +151,17 @@ export class ModuleWindowsSetup {
     // Look for spec files in common locations, excluding node_modules
     const specPatterns = [
       'Native*.[jt]s',
-      'src/**/Native*.[jt]s', 
+      'src/**/Native*.[jt]s',
       'lib/**/Native*.[jt]s',
       'js/**/Native*.[jt]s',
-      'ts/**/Native*.[jt]s'
+      'ts/**/Native*.[jt]s',
     ];
-    
+
     const specFiles: string[] = [];
     for (const pattern of specPatterns) {
       const matches = glob.sync(pattern, {
         cwd: this.root,
-        ignore: ['**/node_modules/**', '**/build/**', '**/dist/**']
+        ignore: ['**/node_modules/**', '**/build/**', '**/dist/**'],
       });
       specFiles.push(...matches);
     }
@@ -203,10 +171,14 @@ export class ModuleWindowsSetup {
     const validSpecFiles = await this.filterValidSpecFiles(uniqueSpecFiles);
 
     if (validSpecFiles.length === 0) {
-      this.verboseMessage('No valid TurboModule spec file found, analyzing existing APIs...');
+      this.verboseMessage(
+        'No valid TurboModule spec file found, analyzing existing APIs...',
+      );
       await this.analyzeAndCreateSpecFile();
     } else {
-      this.verboseMessage(`Found valid spec file(s): ${validSpecFiles.join(', ')}`);
+      this.verboseMessage(
+        `Found valid spec file(s): ${validSpecFiles.join(', ')}`,
+      );
       // Extract the actual module name from the existing spec file
       await this.extractModuleNameFromExistingSpec(validSpecFiles[0]);
     }
@@ -214,13 +186,13 @@ export class ModuleWindowsSetup {
 
   private async filterValidSpecFiles(specFiles: string[]): Promise<string[]> {
     const validFiles: string[] = [];
-    
+
     for (const file of specFiles) {
       try {
         const filePath = path.join(this.root, file);
         if (await fs.exists(filePath)) {
           const content = await fs.readFile(filePath, 'utf8');
-          
+
           // Check if it's a valid TurboModule spec file
           if (this.isValidTurboModuleSpec(content)) {
             validFiles.push(file);
@@ -230,17 +202,17 @@ export class ModuleWindowsSetup {
         this.verboseMessage(`Could not read spec file ${file}: ${error}`);
       }
     }
-    
+
     return validFiles;
   }
 
   private isValidTurboModuleSpec(content: string): boolean {
     // Check for TurboModule indicators
     return (
-      content.includes('TurboModule') && 
-      (content.includes('export interface Spec') || 
-       content.includes('extends TurboModule') ||
-       content.includes('TurboModuleRegistry'))
+      content.includes('TurboModule') &&
+      (content.includes('export interface Spec') ||
+        content.includes('extends TurboModule') ||
+        content.includes('TurboModuleRegistry'))
     );
   }
 
@@ -571,7 +543,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
 
     if (!pkgJson.codegenConfig) {
-      const moduleName = this.getActualModuleName(pkgJson.name || 'SampleModule');
+      const moduleName = this.getActualModuleName(
+        pkgJson.name || 'SampleModule',
+      );
 
       pkgJson.codegenConfig = {
         name: moduleName,
@@ -585,26 +559,12 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       };
 
       await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
-      this.verboseMessage(`Added codegenConfig to package.json with module name: ${moduleName}`);
+      this.verboseMessage(
+        `Added codegenConfig to package.json with module name: ${moduleName}`,
+      );
     } else {
       this.verboseMessage('codegenConfig already exists in package.json');
     }
-  }
-
-
-  private async removeDirectoryRecursive(dirPath: string): Promise<void> {
-    const entries = await fs.readdir(dirPath, {withFileTypes: true});
-    
-    for (const entry of entries) {
-      const fullPath = path.join(dirPath, entry.name);
-      if (entry.isDirectory()) {
-        await this.removeDirectoryRecursive(fullPath);
-      } else {
-        await fs.unlink(fullPath);
-      }
-    }
-    
-    await fs.rmdir(dirPath);
   }
 
   private async upgradeDependencies(): Promise<void> {
@@ -1056,18 +1016,19 @@ ${defaultImplementations}
   }
 
   private async cleanAndInstallDeps(): Promise<void> {
-    this.verboseMessage(
-      'Cleaning node_modules and reinstalling dependencies...',
-    );
+    this.verboseMessage('Installing dependencies...');
 
-    const nodeModulesPath = path.join(this.root, 'node_modules');
-    if (await fs.exists(nodeModulesPath)) {
-      await this.removeDirectoryRecursive(nodeModulesPath);
-      this.verboseMessage('Removed node_modules');
+    // Skip node_modules cleaning as it can cause permission issues on Windows
+    // and yarn install will handle dependency updates anyway
+    try {
+      execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
+      this.verboseMessage('Dependencies installed');
+    } catch (error: any) {
+      throw new CodedError(
+        'Unknown',
+        `Failed to install dependencies: ${error.message}`,
+      );
     }
-
-    execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
-    this.verboseMessage('Dependencies installed');
   }
 
   public async run(spinner: Ora, config: Config): Promise<void> {
@@ -1078,15 +1039,12 @@ ${defaultImplementations}
     spinner.text = 'Updating package.json...';
 
     await this.updatePackageJsonCodegen();
-    spinner.text = 'Cleaning and installing dependencies...';
+    spinner.text = 'Installing dependencies...';
 
     await this.cleanAndInstallDeps();
     spinner.text = 'Upgrading dependencies...';
 
     await this.upgradeDependencies();
-    spinner.text = 'Running yarn install...';
-
-    execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
     spinner.text = 'Setting up Windows library...';
 
     await this.runInitWindows(config);
