@@ -79,6 +79,7 @@
       <PreprocessToFile>false</PreprocessToFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ShowIncludes>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -149,7 +150,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopReporter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\fusebox\FuseboxTracer.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
@@ -243,20 +244,11 @@
   </PropertyGroup>
   <Target Name="DownloadNodeApiJsi" BeforeTargets="PrepareForBuild" Inputs="$(NodeApiJsiZipFile)" Outputs="$(NodeApiJsiZipFile)">
     <Message Text="Downloading node-api-jsi..." Importance="High" />
-    <DownloadFile
-      SourceUrl="https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip"
-      DestinationFileName="$(NodeApiJsiZipFile)"
-      DestinationFolder="$(NodeApiJsiZipDir)"
-      Retries="10" />
+    <DownloadFile SourceUrl="https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip" DestinationFileName="$(NodeApiJsiZipFile)" DestinationFolder="$(NodeApiJsiZipDir)" Retries="10" />
   </Target>
   <Target Name="UnzipNodeApiJsi" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi">
-    <Message Text="Unzipping node-api-jsi to $([MSBuild]::NormalizePath($(NodeApiJsiDir)..))." Importance="High"
-      Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" />
-    <Unzip
-      Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')"
-      SourceFiles="$(NodeApiJsiZipFile)"
-      DestinationFolder="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))"
-      OverwriteReadOnlyFiles="true" />
+    <Message Text="Unzipping node-api-jsi to $([MSBuild]::NormalizePath($(NodeApiJsiDir)..))." Importance="High" Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" />
+    <Unzip Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" SourceFiles="$(NodeApiJsiZipFile)" DestinationFolder="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi" Inputs="$(NodeApiJsiZipFile)" Outputs="$(CGManifestFile)">
     <PropertyGroup>
@@ -277,10 +269,7 @@
 }</CGManifestText>
     </PropertyGroup>
     <Message Text="Generating $(CGManifestFile)." Importance="High" />
-    <WriteLinesToFile
-      File="$(CGManifestFile)"
-      Overwrite="true"
-      Lines="$(CGManifestText)" />
+    <WriteLinesToFile File="$(CGManifestFile)" Overwrite="true" Lines="$(CGManifestText)" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(ReactNativeDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
