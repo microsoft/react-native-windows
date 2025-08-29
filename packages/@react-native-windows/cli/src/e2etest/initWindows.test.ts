@@ -27,6 +27,7 @@ function validateOptionName(
     case 'telemetry':
     case 'list':
     case 'prompt':
+    case 'example':
       return true;
   }
   throw new Error(
