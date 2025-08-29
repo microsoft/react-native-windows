@@ -840,11 +840,12 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     for (const specFile of specFiles) {
       const specName = specFile.replace('Spec.g.h', '');
       const windowsDir = path.join(this.root, 'windows');
-      const headerPath = path.join(windowsDir, `${specName}.h`);
-      const cppPath = path.join(windowsDir, `${specName}.cpp`);
+      const moduleDir = path.join(windowsDir, specName);
+      const headerPath = path.join(moduleDir, `${specName}.h`);
+      const cppPath = path.join(moduleDir, `${specName}.cpp`);
 
-      if (!(await fs.exists(windowsDir))) {
-        await fs.mkdir(windowsDir, {recursive: true});
+      if (!(await fs.exists(moduleDir))) {
+        await fs.mkdir(moduleDir, {recursive: true});
       }
 
       // Parse method signatures from codegen files first, then fallback to TypeScript spec files
@@ -1701,10 +1702,10 @@ export async function moduleWindowsSetupInternal(
       `🏗️  Native${moduleName}.ts - TurboModule spec file (edit with your API)`,
     );
     console.log(
-      `💻 windows/${moduleName}.h - C++ header file (implement your methods here)`,
+      `💻 windows/${moduleName}/${moduleName}.h - C++ header file (implement your methods here)`,
     );
     console.log(
-      `⚙️  windows/${moduleName}.cpp - C++ implementation file (add your logic here)`,
+      `⚙️  windows/${moduleName}/${moduleName}.cpp - C++ implementation file (add your logic here)`,
     );
     console.log('');
     console.log(chalk.bold('Next steps:'));
