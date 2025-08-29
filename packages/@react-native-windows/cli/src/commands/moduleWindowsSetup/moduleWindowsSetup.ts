@@ -43,6 +43,7 @@ interface MethodSignature {
 export class ModuleWindowsSetup {
   private actualModuleName?: string;
   private discoveredSpecFiles: string[] = [];
+  private actualProjectPath?: string;
   public root: string;
   public options: ModuleWindowsSetupOptions;
 
@@ -136,6 +137,22 @@ export class ModuleWindowsSetup {
     } catch {
       return 'SampleModule';
     }
+  }
+
+  public getActualProjectPaths(): {headerPath: string, cppPath: string} {
+    if (this.actualProjectPath) {
+      return {
+        headerPath: `${this.actualProjectPath}.h`,
+        cppPath: `${this.actualProjectPath}.cpp`
+      };
+    }
+    
+    // Fallback to getFinalModuleName for backward compatibility
+    const moduleName = this.actualModuleName || 'SampleModule';
+    return {
+      headerPath: `windows/${moduleName}/${moduleName}.h`,
+      cppPath: `windows/${moduleName}/${moduleName}.cpp`
+    };
   }
 
   private verboseMessage(message: any) {
@@ -837,18 +854,63 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       this.verboseMessage(`Error reading codegen directory contents: ${error}`);
     }
 
-    for (const specFile of specFiles) {
-      const specName = specFile.replace('Spec.g.h', '');
-      const windowsDir = path.join(this.root, 'windows');
-      const moduleDir = path.join(windowsDir, specName);
-      const headerPath = path.join(moduleDir, `${specName}.h`);
-      const cppPath = path.join(moduleDir, `${specName}.cpp`);
-
-      if (!(await fs.exists(moduleDir))) {
+    // Find the actual Windows project directory created by init-windows
+    const windowsDir = path.join(this.root, 'windows');
+    const actualModuleName = await this.getFinalModuleName();
+    
+    // Look for existing Windows project directory (created by init-windows)
+    let moduleDir = path.join(windowsDir, actualModuleName);
+    
+    // If the expected directory doesn't exist, find any existing project directory
+    if (!(await fs.exists(moduleDir))) {
+      this.verboseMessage(`Expected directory ${moduleDir} not found, searching for existing Windows project directory...`);
+      
+      try {
+        const windowsDirContents = await fs.readdir(windowsDir);
+        const projectDirs = [];
+        
+        for (const item of windowsDirContents) {
+          const itemPath = path.join(windowsDir, item);
+          const stats = await fs.stat(itemPath);
+          
+          if (stats.isDirectory() && !item.startsWith('.') && 
+              item !== 'ExperimentalFeatures.props' && 
+              !item.endsWith('.sln')) {
+            // Check if this directory contains typical project files
+            const possibleHeaderFile = path.join(itemPath, `${item}.h`);
+            const possibleCppFile = path.join(itemPath, `${item}.cpp`);
+            if (await fs.exists(possibleHeaderFile) || await fs.exists(possibleCppFile)) {
+              projectDirs.push(item);
+            }
+          }
+        }
+        
+        if (projectDirs.length > 0) {
+          const existingProjectName = projectDirs[0];
+          moduleDir = path.join(windowsDir, existingProjectName);
+          this.verboseMessage(`Found existing Windows project directory: ${moduleDir}`);
+        } else {
+          this.verboseMessage(`No existing project directory found, creating: ${moduleDir}`);
+          await fs.mkdir(moduleDir, {recursive: true});
+        }
+      } catch (error) {
+        this.verboseMessage(`Error searching for Windows project directory: ${error}`);
         await fs.mkdir(moduleDir, {recursive: true});
       }
+    }
+    
+    // Use the project directory name for file names
+    const projectName = path.basename(moduleDir);
+    
+    // Store the actual project path for the success message
+    this.actualProjectPath = path.join('windows', projectName, projectName);
+
+    for (const specFile of specFiles) {
+      const headerPath = path.join(moduleDir, `${projectName}.h`);
+      const cppPath = path.join(moduleDir, `${projectName}.cpp`);
 
       // Parse method signatures from codegen files first, then fallback to TypeScript spec files
+      const specName = specFile.replace('Spec.g.h', '');
       const methods = await this.parseSpecFileForMethods(specName, codegenDir);
 
       if (methods.length === 0) {
@@ -861,16 +923,16 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         );
       }
 
-      // Generate header file with parsed methods
-      const headerContent = await this.generateHeaderStub(specName, methods);
+      // Generate header file with parsed methods using the project name
+      const headerContent = await this.generateHeaderStub(projectName, methods);
       // Always write the header file to ensure it has the correct methods from the spec
       await fs.writeFile(headerPath, headerContent);
       this.verboseMessage(
         `Generated header stub: ${headerPath} with ${methods.length} methods`,
       );
 
-      // Generate cpp file with parsed methods
-      const cppContent = await this.generateCppStub(specName, methods);
+      // Generate cpp file with parsed methods using the project name
+      const cppContent = await this.generateCppStub(projectName, methods);
       // Always write the cpp file to ensure it has the correct methods from the spec
       await fs.writeFile(cppPath, cppContent);
       this.verboseMessage(
@@ -1683,8 +1745,9 @@ export async function moduleWindowsSetupInternal(
     await setup.run(spinner, config);
     const endTime = performance.now();
 
-    // Get the actual module name for display
+    // Get the actual module name and project paths for display
     const moduleName = await setup.getFinalModuleName();
+    const projectPaths = setup.getActualProjectPaths();
 
     console.log(
       `${chalk.green('Success:')} Windows module setup completed! (${Math.round(
@@ -1702,10 +1765,10 @@ export async function moduleWindowsSetupInternal(
       `🏗️  Native${moduleName}.ts - TurboModule spec file (edit with your API)`,
     );
     console.log(
-      `💻 windows/${moduleName}/${moduleName}.h - C++ header file (implement your methods here)`,
+      `💻 ${projectPaths.headerPath} - C++ header file (implement your methods here)`,
     );
     console.log(
-      `⚙️  windows/${moduleName}/${moduleName}.cpp - C++ implementation file (add your logic here)`,
+      `⚙️  ${projectPaths.cppPath} - C++ implementation file (add your logic here)`,
     );
     console.log('');
     console.log(chalk.bold('Next steps:'));
