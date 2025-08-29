@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory);$(NodeApiJsiDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory);$(NodeApiJsiDir)src</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -736,4 +736,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release'">
+    <ClCompile>
+      <ShowIncludes>true</ShowIncludes>
+    </ClCompile>
+  </ItemDefinitionGroup>
 </Project>
