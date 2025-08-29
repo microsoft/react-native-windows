@@ -67,6 +67,9 @@ Here are the options that `npx @react-native-community/cli init-windows` takes:
 | `--namespace`         | string     | The native project namespace, expressed using dots as separators, i.e. `Level1.Level2.Level3`. Defaults to the same as name |
 | `--overwrite`         | boolean    | Overwrite any existing files without prompting  |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
+| `--list`              | boolean    | Shows a list with all available templates with their descriptions |
+| `--no-prompt`         | boolean    | Skip any interactive prompts and use default choices |
+| `--no-example`        | boolean    | Skip creating the example app directory          |
 | `-h`, `--help`        | boolean    | Display help for command                         |
 
 ## `run-windows`
