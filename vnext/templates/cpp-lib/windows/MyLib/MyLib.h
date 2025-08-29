@@ -6,12 +6,14 @@
 #if __has_include("codegen/Native{{ pascalName }}DataTypes.g.h")
   #include "codegen/Native{{ pascalName }}DataTypes.g.h"
 #endif
-// TODO: Update this include to match your actual TurboModule name
-// For example, if your module is named 'MyCustomModule', use:
-// #include "codegen/NativeMyCustomModuleSpec.g.h"
+{{#hasExistingSpecFiles}}
+#include "codegen/{{ firstSpecFile }}"
+{{/hasExistingSpecFiles}}
+{{^hasExistingSpecFiles}}
 #if __has_include("codegen/Native{{ pascalName }}Spec.g.h")
   #include "codegen/Native{{ pascalName }}Spec.g.h"
 #endif
+{{/hasExistingSpecFiles}}
 
 #include "NativeModules.h"
 
@@ -23,16 +25,14 @@ namespace winrt::{{ namespaceCpp }}
 REACT_MODULE({{ pascalName }})
 struct {{ pascalName }}
 {
-  // TODO: Update this to match your actual TurboModule spec name
-  // For example, if your module is named 'MyCustomModule', use:
-  // using ModuleSpec = {{ namespaceCpp }}Codegen::MyCustomModuleSpec;
-#ifdef __has_include
+{{#hasExistingSpecFiles}}
+  using ModuleSpec = {{ namespaceCpp }}Codegen::{{ firstSpecName }};
+{{/hasExistingSpecFiles}}
+{{^hasExistingSpecFiles}}
 #if __has_include("codegen/Native{{ pascalName }}Spec.g.h")
   using ModuleSpec = {{ namespaceCpp }}Codegen::{{ pascalName }}Spec;
 #endif
-#else
-  using ModuleSpec = {{ namespaceCpp }}Codegen::{{ pascalName }}Spec;
-#endif
+{{/hasExistingSpecFiles}}
 
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
