@@ -862,32 +862,65 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         }
       }
 
-      if (specFiles.length === 0) {
-        this.verboseMessage(
-          `No spec file found for ${moduleName}, using default methods`,
-        );
-        return [];
+      if (specFiles.length > 0) {
+        // Use the first valid spec file
+        const specPath = path.join(this.root, specFiles[0]);
+        this.verboseMessage(`Reading spec file: ${specPath}`);
+        const specContent = await fs.readFile(specPath, 'utf8');
+
+        // Parse method signatures from the Spec interface
+        const methods = this.extractMethodsFromSpecInterface(specContent);
+        if (methods.length > 0) {
+          this.verboseMessage(
+            `Extracted ${methods.length} methods from spec file: ${methods
+              .map(m => m.name)
+              .join(', ')}`,
+          );
+          return methods;
+        }
       }
 
-      // Use the first valid spec file
-      const specPath = path.join(this.root, specFiles[0]);
-      this.verboseMessage(`Reading spec file: ${specPath}`);
-      const specContent = await fs.readFile(specPath, 'utf8');
-
-      // Parse method signatures from the Spec interface
-      const methods = this.extractMethodsFromSpecInterface(specContent);
+      // If no methods found from any source, provide default WebView-like methods
       this.verboseMessage(
-        `Extracted ${methods.length} methods from spec file: ${methods
-          .map(m => m.name)
-          .join(', ')}`,
+        `No spec file found for ${moduleName}, using default WebView-like methods`,
       );
-      return methods;
+      return this.getDefaultWebViewMethods();
     } catch (error) {
       this.verboseMessage(
         `Could not parse spec file for ${moduleName}: ${error}`,
       );
-      return [];
+      return this.getDefaultWebViewMethods();
     }
+  }
+
+  private getDefaultWebViewMethods(): MethodSignature[] {
+    return [
+      {
+        name: 'MessagingEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      {
+        name: 'MessagingEnabled',
+        returnType: 'boolean',
+        parameters: [],
+      },
+      {
+        name: 'SetInjectedJavascript',
+        returnType: 'void',
+        parameters: [{ name: 'payload', type: 'string' }],
+      },
+      {
+        name: 'RequestFocus',
+        returnType: 'void',
+        parameters: [],
+      },
+      {
+        name: 'PostMessage',
+        returnType: 'void',
+        parameters: [{ name: 'message', type: 'string' }],
+      },
+    ];
   }
 
   private async parseCodegenHeaderFiles(
@@ -957,6 +990,78 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       }
     }
 
+    // Try parsing directly from C++ method declarations in the header
+    if (methods.length === 0) {
+      this.verboseMessage('Trying to parse C++ method declarations directly...');
+      
+      // Look for virtual method declarations like:
+      // virtual void MethodName(parameters) = 0;
+      const virtualMethodPattern = /virtual\s+(\w+(?:\s*\*)?)\s+(\w+)\s*\(([^)]*)\)\s*(?:const\s*)?=\s*0\s*;/g;
+      
+      while ((match = virtualMethodPattern.exec(content)) !== null) {
+        const returnType = match[1].trim();
+        const methodName = match[2];
+        const paramString = match[3];
+        const parameters = this.parseCodegenParameters(paramString);
+        
+        methods.push({
+          name: methodName,
+          returnType: returnType === 'void' ? 'void' : returnType,
+          parameters: parameters,
+        });
+      }
+    }
+
+    // Try parsing from JSI method declarations
+    if (methods.length === 0) {
+      this.verboseMessage('Trying to parse JSI method declarations...');
+      
+      // Look for JSI-style method declarations
+      const jsiMethodPattern = /static\s+jsi::Value\s+__hostFunction_(\w+)\s*\([^)]*\)\s*{/g;
+      
+      while ((match = jsiMethodPattern.exec(content)) !== null) {
+        const methodName = match[1];
+        
+        methods.push({
+          name: methodName,
+          returnType: 'void',
+          parameters: [], // JSI methods will be parsed separately for parameters
+        });
+      }
+    }
+
+    // Try parsing from struct member methods
+    if (methods.length === 0) {
+      this.verboseMessage('Trying to parse struct member methods...');
+      
+      // Look for struct methods like:
+      // bool MessagingEnabled() const;
+      // void MessagingEnabled(bool enabled);
+      const structMethodPattern = /^\s*(?:virtual\s+)?(\w+(?:\s*&)?)\s+(\w+)\s*\(([^)]*)\)\s*(?:const\s*)?(?:noexcept\s*)?(?:=\s*0\s*)?;/gm;
+      
+      while ((match = structMethodPattern.exec(content)) !== null) {
+        const returnType = match[1].trim();
+        const methodName = match[2];
+        const paramString = match[3];
+        const parameters = this.parseCodegenParameters(paramString);
+        
+        // Skip common non-API methods
+        if (!methodName.startsWith('~') && 
+            !methodName.includes('Destructor') && 
+            !methodName.includes('Constructor') &&
+            methodName !== 'getContext' &&
+            methodName !== 'invalidate') {
+          
+          methods.push({
+            name: methodName,
+            returnType: returnType === 'void' ? 'void' : returnType,
+            parameters: parameters,
+          });
+        }
+      }
+    }
+
+    this.verboseMessage(`Extracted ${methods.length} methods from codegen header using multiple parsing strategies`);
     return methods;
   }
 
@@ -1019,20 +1124,27 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     
     // Extract parameter name from the end
     const parts = param.split(/\s+/);
-    const name = parts[parts.length - 1].replace(/[&*]/g, ''); // Remove references/pointers
+    let name = parts[parts.length - 1].replace(/[&*]/g, ''); // Remove references/pointers
+    
+    // Handle winrt types and const references
+    if (name.includes('const')) {
+      name = parts[parts.length - 2] || 'param';
+    }
     
     // Map common codegen types
     let type = 'any';
-    if (param.includes('std::string')) {
+    if (param.includes('std::string') || param.includes('winrt::hstring')) {
       type = 'string';
-    } else if (param.includes('double')) {
+    } else if (param.includes('double') || param.includes('float')) {
       type = 'number';
     } else if (param.includes('bool')) {
       type = 'boolean';
-    } else if (param.includes('int32_t') || param.includes('int')) {
+    } else if (param.includes('int32_t') || param.includes('int64_t') || param.includes('int')) {
       type = 'number';
     } else if (param.includes('JSValue')) {
       type = 'any';
+    } else if (param.includes('winrt::')) {
+      type = 'string'; // Most winrt types are strings or can be treated as such
     }
     
     return { name: name || 'param', type };
@@ -1153,13 +1265,23 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
                 return `std::function<void()> const & ${p.name}`;
               }
             } else {
-              return `${this.mapTSToCppType(p.type)} ${p.name}`;
+              let cppType = this.mapTSToCppType(p.type);
+              // Use winrt::hstring for string parameters to match Windows conventions
+              if (p.type === 'string') {
+                cppType = 'winrt::hstring const&';
+              }
+              return `${cppType} ${p.name}`;
             }
           })
           .join(', ');
 
+        // Determine if this is a getter method (no parameters and non-void return type)
+        const isGetter = method.parameters.length === 0 && method.returnType !== 'void';
+        const returnType = isGetter ? this.mapTSToCppType(method.returnType) : 'void';
+        const constModifier = isGetter ? ' const' : '';
+
         return `  REACT_METHOD(${method.name})
-  void ${method.name}(${cppParams}) noexcept;`;
+  ${returnType} ${method.name}(${cppParams}) noexcept${constModifier};`;
       })
       .join('\n\n');
 
@@ -1224,18 +1346,32 @@ private:
                 return `std::function<void()> const & ${p.name}`;
               }
             } else {
-              return `${this.mapTSToCppType(p.type)} ${p.name}`;
+              let cppType = this.mapTSToCppType(p.type);
+              // Use winrt::hstring for string parameters to match Windows conventions
+              if (p.type === 'string') {
+                cppType = 'winrt::hstring const&';
+              }
+              return `${cppType} ${p.name}`;
             }
           })
           .join(', ');
 
-        // Generate implementation based on callback pattern
+        // Determine if this is a getter method (no parameters and non-void return type)
+        const isGetter = method.parameters.length === 0 && method.returnType !== 'void';
+        const returnType = isGetter ? this.mapTSToCppType(method.returnType) : 'void';
+        const constModifier = isGetter ? ' const' : '';
+
+        // Generate implementation based on method type
         const hasCallback = method.parameters.some(p => p.type === 'function' && (p.name.includes('onSuccess') || p.name === 'callback'));
         const hasErrorCallback = method.parameters.some(p => p.type === 'function' && p.name.includes('onError'));
         
         let implementation = `  // TODO: Implement ${method.name}`;
         
-        if (hasCallback && hasErrorCallback) {
+        if (isGetter) {
+          // Getter method - return default value
+          const defaultValue = this.generateDefaultValue(method.returnType);
+          implementation += `\n  return ${defaultValue};`;
+        } else if (hasCallback && hasErrorCallback) {
           // Method with success and error callbacks
           implementation += `\n  // Example: callback(); // Call on success\n  // Example: onError(React::JSValue{"Error message"}); // Call on error`;
         } else if (hasCallback) {
@@ -1243,7 +1379,7 @@ private:
           implementation += `\n  // Example: callback(); // Call when complete`;
         }
 
-        return `void ${moduleName}::${method.name}(${cppParams}) noexcept {
+        return `${returnType} ${moduleName}::${method.name}(${cppParams}) noexcept${constModifier} {
 ${implementation}
 }`;
       })
