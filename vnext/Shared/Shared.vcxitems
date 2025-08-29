@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory);$(NodeApiJsiDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory);$(NodeApiJsiDir)src</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
