@@ -86,6 +86,6 @@
   "promoteRelease": true,
   "windowsOnly": true,
   "engines": {
-    "node": ">= 22"
+    "node": ">= 20"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement module-windows-setup command for streamlined RNW community module integration",
+  "packageName": "react-native-windows",
+  "email": "54227869+anupriya13@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

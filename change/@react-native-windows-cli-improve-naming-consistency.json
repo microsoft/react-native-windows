@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Improve module-windows-setup naming consistency for existing spec files",
+  "packageName": "@react-native-windows/cli",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

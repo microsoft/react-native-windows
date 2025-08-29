@@ -17,6 +17,7 @@ import * as pathHelpers from './utils/pathHelpers';
 import {autolinkCommand} from './commands/autolinkWindows/autolinkWindows';
 import {codegenCommand} from './commands/codegenWindows/codegenWindows';
 import {initCommand} from './commands/initWindows/initWindows';
+import {moduleWindowsSetupCommand} from './commands/moduleWindowsSetup/moduleWindowsSetup';
 import {runWindowsCommand} from './commands/runWindows/runWindows';
 import {dependencyConfigWindows} from './commands/config/dependencyConfig';
 import {projectConfigWindows} from './commands/config/projectConfig';
@@ -98,6 +99,7 @@ export const commands = [
   autolinkCommand,
   codegenCommand,
   initCommand,
+  moduleWindowsSetupCommand,
   runWindowsCommand,
 ];
 export const dependencyConfig = dependencyConfigWindows;
