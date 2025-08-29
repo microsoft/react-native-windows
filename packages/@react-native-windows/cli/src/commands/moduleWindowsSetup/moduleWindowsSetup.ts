@@ -765,10 +765,37 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
   private async generateStubFiles(): Promise<void> {
     this.verboseMessage('Generating C++ stub files...');
 
-    const codegenDir = path.join(this.root, 'codegen');
+    // Look for codegen directory in multiple possible locations
+    let codegenDir = path.join(this.root, 'codegen');
+    let codegenLocation = 'root';
+    
+    if (!(await fs.exists(codegenDir))) {
+      // Try looking in windows directory
+      const windowsDir = path.join(this.root, 'windows');
+      if (await fs.exists(windowsDir)) {
+        const windowsSubdirs = await fs.readdir(windowsDir);
+        // Look for subdirectories that might contain codegen
+        for (const subdir of windowsSubdirs) {
+          const subdirPath = path.join(windowsDir, subdir);
+          const stats = await fs.stat(subdirPath);
+          if (stats.isDirectory()) {
+            const possibleCodegenDir = path.join(subdirPath, 'codegen');
+            if (await fs.exists(possibleCodegenDir)) {
+              codegenDir = possibleCodegenDir;
+              codegenLocation = `windows/${subdir}`;
+              this.verboseMessage(`Found codegen directory at: ${codegenDir}`);
+              break;
+            }
+          }
+        }
+      }
+    } else {
+      this.verboseMessage(`Found codegen directory at: ${codegenDir}`);
+    }
+
     if (!(await fs.exists(codegenDir))) {
       this.verboseMessage(
-        'No codegen directory found, skipping stub generation',
+        'No codegen directory found in root or windows subdirectories, skipping stub generation',
       );
       return;
     }
@@ -783,7 +810,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       return;
     }
 
-    this.verboseMessage(`Found ${specFiles.length} codegen spec file(s): ${specFiles.join(', ')}`);
+    this.verboseMessage(`Found ${specFiles.length} codegen spec file(s) in ${codegenLocation}: ${specFiles.join(', ')}`);
 
     for (const specFile of specFiles) {
       const specName = specFile.replace('Spec.g.h', '');
@@ -796,7 +823,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       }
 
       // Parse method signatures from codegen files first, then fallback to TypeScript spec files
-      const methods = await this.parseSpecFileForMethods(specName);
+      const methods = await this.parseSpecFileForMethods(specName, codegenDir);
 
       if (methods.length === 0) {
         this.verboseMessage(
@@ -828,12 +855,13 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
   private async parseSpecFileForMethods(
     moduleName: string,
+    codegenDir?: string,
   ): Promise<MethodSignature[]> {
     try {
       // First, try to read from codegen C++ header files
-      const codegenDir = path.join(this.root, 'codegen');
-      if (await fs.exists(codegenDir)) {
-        const methods = await this.parseCodegenHeaderFiles(codegenDir, moduleName);
+      const actualCodegenDir = codegenDir || path.join(this.root, 'codegen');
+      if (await fs.exists(actualCodegenDir)) {
+        const methods = await this.parseCodegenHeaderFiles(actualCodegenDir, moduleName);
         if (methods.length > 0) {
           this.verboseMessage(
             `Extracted ${methods.length} methods from codegen files: ${methods
