@@ -609,9 +609,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       return;
     }
 
-    this.verboseMessage(
-      'Upgrading React Native and React Native Windows to latest versions...',
-    );
+    // this.verboseMessage(
+    //   'Upgrading React Native and React Native Windows to latest versions...',
+    // );
 
     try {
       // Suppress deprecation warnings to clean up output
