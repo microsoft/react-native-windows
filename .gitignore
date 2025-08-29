@@ -194,3 +194,6 @@ nul
 
 # midgard-yarn-strict
 .store*/*
+
+# Codegen directory should not be committed in PRs
+vnext/codegen/
