@@ -144,6 +144,29 @@ export class ModuleWindowsSetup {
     }
   }
 
+  private async removeDirectoryRecursively(dirPath: string): Promise<void> {
+    try {
+      const stats = await fs.stat(dirPath);
+      if (stats.isDirectory()) {
+        const files = await fs.readdir(dirPath);
+        await Promise.all(
+          files.map(async file => {
+            const filePath = path.join(dirPath, file);
+            await this.removeDirectoryRecursively(filePath);
+          }),
+        );
+        await fs.rmdir(dirPath);
+      } else {
+        await fs.unlink(dirPath);
+      }
+    } catch (error: any) {
+      // Ignore errors if file/directory doesn't exist
+      if (error.code !== 'ENOENT') {
+        throw error;
+      }
+    }
+  }
+
   private getModuleName(packageName: string): string {
     // Convert package name to PascalCase module name
     // e.g., "react-native-webview" -> "ReactNativeWebview"
@@ -648,7 +671,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         // If windows_old already exists, remove it first
         if (await fs.exists(windowsOldDir)) {
           this.verboseMessage('Removing existing windows_old directory...');
-          await fs.rmdir(windowsOldDir, {recursive: true});
+          await this.removeDirectoryRecursively(windowsOldDir);
         }
 
         // Rename windows to windows_old
