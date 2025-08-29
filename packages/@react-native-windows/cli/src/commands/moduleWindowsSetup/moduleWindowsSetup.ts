@@ -895,6 +895,51 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
   private getDefaultWebViewMethods(): MethodSignature[] {
     return [
+      // Navigation methods
+      {
+        name: 'GoBack',
+        returnType: 'void',
+        parameters: [],
+      },
+      {
+        name: 'GoForward',
+        returnType: 'void',
+        parameters: [],
+      },
+      {
+        name: 'Reload',
+        returnType: 'void',
+        parameters: [],
+      },
+      {
+        name: 'StopLoading',
+        returnType: 'void',
+        parameters: [],
+      },
+      {
+        name: 'LoadUrl',
+        returnType: 'void',
+        parameters: [{ name: 'url', type: 'string' }],
+      },
+      
+      // JavaScript injection and messaging
+      {
+        name: 'InjectJavaScript',
+        returnType: 'void',
+        parameters: [{ name: 'script', type: 'string' }],
+      },
+      {
+        name: 'SetInjectedJavaScript',
+        returnType: 'void',
+        parameters: [{ name: 'script', type: 'string' }],
+      },
+      {
+        name: 'PostMessage',
+        returnType: 'void',
+        parameters: [{ name: 'message', type: 'string' }],
+      },
+      
+      // Messaging configuration
       {
         name: 'MessagingEnabled',
         returnType: 'void',
@@ -905,20 +950,225 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         returnType: 'boolean',
         parameters: [],
       },
-      {
-        name: 'SetInjectedJavascript',
-        returnType: 'void',
-        parameters: [{ name: 'payload', type: 'string' }],
-      },
+      
+      // Focus and interaction
       {
         name: 'RequestFocus',
         returnType: 'void',
         parameters: [],
       },
       {
-        name: 'PostMessage',
+        name: 'ClearFocus',
         returnType: 'void',
-        parameters: [{ name: 'message', type: 'string' }],
+        parameters: [],
+      },
+      
+      // Content and cache management
+      {
+        name: 'ClearCache',
+        returnType: 'void',
+        parameters: [{ name: 'includeDiskFiles', type: 'boolean' }],
+      },
+      {
+        name: 'ClearHistory',
+        returnType: 'void',
+        parameters: [],
+      },
+      {
+        name: 'ClearFormData',
+        returnType: 'void',
+        parameters: [],
+      },
+      
+      // State queries
+      {
+        name: 'CanGoBack',
+        returnType: 'Promise<boolean>',
+        parameters: [],
+      },
+      {
+        name: 'CanGoForward',
+        returnType: 'Promise<boolean>',
+        parameters: [],
+      },
+      
+      // File upload support
+      {
+        name: 'IsFileUploadSupported',
+        returnType: 'Promise<boolean>',
+        parameters: [],
+      },
+      
+      // Load with request
+      {
+        name: 'ShouldStartLoadWithLockIdentifier',
+        returnType: 'void',
+        parameters: [
+          { name: 'shouldStart', type: 'boolean' },
+          { name: 'lockIdentifier', type: 'double' }
+        ],
+      },
+      
+      // Zoom and scaling
+      {
+        name: 'SetZoomControlsEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      {
+        name: 'SetDisplayZoomControls',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // User agent
+      {
+        name: 'SetUserAgent',
+        returnType: 'void',
+        parameters: [{ name: 'userAgent', type: 'string' }],
+      },
+      
+      // Developer tools
+      {
+        name: 'SetWebContentsDebuggingEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // Download handling
+      {
+        name: 'OnDownloadStart',
+        returnType: 'void',
+        parameters: [
+          { name: 'url', type: 'string' },
+          { name: 'userAgent', type: 'string' },
+          { name: 'contentDisposition', type: 'string' },
+          { name: 'mimetype', type: 'string' },
+          { name: 'contentLength', type: 'double' }
+        ],
+      },
+      
+      // Custom scheme handling
+      {
+        name: 'SetUrlSchemeHandler',
+        returnType: 'void',
+        parameters: [
+          { name: 'scheme', type: 'string' },
+          { name: 'handler', type: 'string' }
+        ],
+      },
+      
+      // Cookie management
+      {
+        name: 'SetCookieEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      {
+        name: 'SetThirdPartyCookiesEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // DOM storage
+      {
+        name: 'SetDomStorageEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // Database
+      {
+        name: 'SetDatabaseEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // Geolocation
+      {
+        name: 'SetGeolocationEnabled',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // Mixed content mode
+      {
+        name: 'SetMixedContentMode',
+        returnType: 'void',
+        parameters: [{ name: 'mode', type: 'string' }],
+      },
+      
+      // Hardware acceleration
+      {
+        name: 'SetLayerType',
+        returnType: 'void',
+        parameters: [{ name: 'layerType', type: 'string' }],
+      },
+      
+      // Text selection and interaction
+      {
+        name: 'SetTextZoom',
+        returnType: 'void',
+        parameters: [{ name: 'textZoom', type: 'double' }],
+      },
+      {
+        name: 'SetAllowsLinkPreview',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // Content blocking
+      {
+        name: 'SetContentBlockers',
+        returnType: 'void',
+        parameters: [{ name: 'blockers', type: 'string' }],
+      },
+      
+      // SSL error handling
+      {
+        name: 'SetIgnoreSSLErrors',
+        returnType: 'void',
+        parameters: [{ name: 'ignore', type: 'boolean' }],
+      },
+      
+      // Window features
+      {
+        name: 'SetJavaScriptCanOpenWindowsAutomatically',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      {
+        name: 'SetMultipleWindowsSupported',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // Print support
+      {
+        name: 'Print',
+        returnType: 'void',
+        parameters: [],
+      },
+      
+      // Incognito mode
+      {
+        name: 'SetIncognito',
+        returnType: 'void',
+        parameters: [{ name: 'enabled', type: 'boolean' }],
+      },
+      
+      // Cache mode
+      {
+        name: 'SetCacheMode',
+        returnType: 'void',
+        parameters: [{ name: 'mode', type: 'string' }],
+      },
+      
+      // Application name for user agent
+      {
+        name: 'SetApplicationNameForUserAgent',
+        returnType: 'void',
+        parameters: [{ name: 'applicationName', type: 'string' }],
       },
     ];
   }
