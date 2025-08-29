@@ -779,6 +779,31 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     }
   }
 
+  private async getProjectDirectoryFromCodegenConfig(): Promise<string | null> {
+    try {
+      const packageJsonPath = path.join(this.root, 'package.json');
+      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      
+      if (pkgJson.codegenConfig?.windows?.outputDirectory) {
+        const outputDirectory = pkgJson.codegenConfig.windows.outputDirectory;
+        this.verboseMessage(`Found codegenConfig.windows.outputDirectory: ${outputDirectory}`);
+        
+        // Extract project directory from outputDirectory path
+        // E.g., "windows/ReactNativeWebview/codegen" -> "ReactNativeWebview"
+        const parts = outputDirectory.split('/');
+        if (parts.length >= 2 && parts[0] === 'windows') {
+          const projectDir = parts[1];
+          this.verboseMessage(`Extracted project directory from outputDirectory: ${projectDir}`);
+          return projectDir;
+        }
+      }
+    } catch (error) {
+      this.verboseMessage(`Error reading package.json codegenConfig: ${error}`);
+    }
+    
+    return null;
+  }
+
   private async generateStubFiles(): Promise<void> {
     this.verboseMessage('Generating C++ stub files...');
 
@@ -854,53 +879,77 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       this.verboseMessage(`Error reading codegen directory contents: ${error}`);
     }
 
-    // Find the actual Windows project directory created by init-windows
+    // First try to get project directory from package.json codegenConfig
     const windowsDir = path.join(this.root, 'windows');
-    const actualModuleName = await this.getFinalModuleName();
+    let projectName = await this.getProjectDirectoryFromCodegenConfig();
+    let moduleDir: string;
     
-    // Look for existing Windows project directory (created by init-windows)
-    let moduleDir = path.join(windowsDir, actualModuleName);
-    
-    // If the expected directory doesn't exist, find any existing project directory
-    if (!(await fs.exists(moduleDir))) {
-      this.verboseMessage(`Expected directory ${moduleDir} not found, searching for existing Windows project directory...`);
+    if (projectName) {
+      moduleDir = path.join(windowsDir, projectName);
+      this.verboseMessage(`Using project directory from codegenConfig: ${moduleDir}`);
       
-      try {
-        const windowsDirContents = await fs.readdir(windowsDir);
-        const projectDirs = [];
-        
-        for (const item of windowsDirContents) {
-          const itemPath = path.join(windowsDir, item);
-          const stats = await fs.stat(itemPath);
-          
-          if (stats.isDirectory() && !item.startsWith('.') && 
-              item !== 'ExperimentalFeatures.props' && 
-              !item.endsWith('.sln')) {
-            // Check if this directory contains typical project files
-            const possibleHeaderFile = path.join(itemPath, `${item}.h`);
-            const possibleCppFile = path.join(itemPath, `${item}.cpp`);
-            if (await fs.exists(possibleHeaderFile) || await fs.exists(possibleCppFile)) {
-              projectDirs.push(item);
-            }
-          }
-        }
-        
-        if (projectDirs.length > 0) {
-          const existingProjectName = projectDirs[0];
-          moduleDir = path.join(windowsDir, existingProjectName);
-          this.verboseMessage(`Found existing Windows project directory: ${moduleDir}`);
-        } else {
-          this.verboseMessage(`No existing project directory found, creating: ${moduleDir}`);
-          await fs.mkdir(moduleDir, {recursive: true});
-        }
-      } catch (error) {
-        this.verboseMessage(`Error searching for Windows project directory: ${error}`);
-        await fs.mkdir(moduleDir, {recursive: true});
+      // Verify the directory exists
+      if (!(await fs.exists(moduleDir))) {
+        this.verboseMessage(`Project directory from codegenConfig does not exist: ${moduleDir}`);
+        projectName = null; // Fall back to search
       }
     }
     
-    // Use the project directory name for file names
-    const projectName = path.basename(moduleDir);
+    // If no project directory from codegenConfig or it doesn't exist, search for existing directory
+    if (!projectName) {
+      this.verboseMessage('Searching for existing Windows project directory...');
+      const actualModuleName = await this.getFinalModuleName();
+      moduleDir = path.join(windowsDir, actualModuleName);
+      
+      // If the expected directory doesn't exist, find any existing project directory
+      if (!(await fs.exists(moduleDir))) {
+        this.verboseMessage(`Expected directory ${moduleDir} not found, searching for existing Windows project directory...`);
+        
+        try {
+          const windowsDirContents = await fs.readdir(windowsDir);
+          const projectDirs = [];
+          
+          for (const item of windowsDirContents) {
+            const itemPath = path.join(windowsDir, item);
+            const stats = await fs.stat(itemPath);
+            
+            if (stats.isDirectory() && !item.startsWith('.') && 
+                item !== 'ExperimentalFeatures.props' && 
+                !item.endsWith('.sln')) {
+              // Check if this directory contains typical project files
+              const possibleHeaderFile = path.join(itemPath, `${item}.h`);
+              const possibleCppFile = path.join(itemPath, `${item}.cpp`);
+              if (await fs.exists(possibleHeaderFile) || await fs.exists(possibleCppFile)) {
+                projectDirs.push(item);
+              }
+            }
+          }
+          
+          if (projectDirs.length > 0) {
+            projectName = projectDirs[0];
+            moduleDir = path.join(windowsDir, projectName);
+            this.verboseMessage(`Found existing Windows project directory: ${moduleDir}`);
+          } else {
+            this.verboseMessage(`No existing project directory found, using actualModuleName: ${actualModuleName}`);
+            projectName = actualModuleName;
+            moduleDir = path.join(windowsDir, projectName);
+            await fs.mkdir(moduleDir, {recursive: true});
+          }
+        } catch (error) {
+          this.verboseMessage(`Error searching for Windows project directory: ${error}`);
+          projectName = actualModuleName;
+          moduleDir = path.join(windowsDir, projectName);
+          await fs.mkdir(moduleDir, {recursive: true});
+        }
+      } else {
+        projectName = actualModuleName;
+      }
+    }
+    
+    // Use the determined project directory name for file names
+    if (!projectName) {
+      projectName = path.basename(moduleDir);
+    }
     
     // Store the actual project path for the success message
     this.actualProjectPath = path.join('windows', projectName, projectName);
