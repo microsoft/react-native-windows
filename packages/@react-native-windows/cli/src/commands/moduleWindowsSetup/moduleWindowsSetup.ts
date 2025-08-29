@@ -883,7 +883,8 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     const windowsDir = path.join(this.root, 'windows');
     let projectName = await this.getProjectDirectoryFromCodegenConfig();
     let moduleDir: string;
-    
+    moduleDir = windowsDir;
+
     if (projectName) {
       moduleDir = path.join(windowsDir, projectName);
       this.verboseMessage(`Using project directory from codegenConfig: ${moduleDir}`);
