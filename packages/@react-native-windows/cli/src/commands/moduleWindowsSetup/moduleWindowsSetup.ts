@@ -689,7 +689,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     this.verboseMessage('Running init-windows with cpp-lib template...');
 
     try {
-      await initWindowsInternal([], config, {
+      // Create a modified config with the correct root directory
+      // The original config might point to an example directory instead of the package root
+      const modifiedConfig: Config = {
+        ...config,
+        root: this.root, // Use our validated package root instead of config.root
+      };
+
+      await initWindowsInternal([], modifiedConfig, {
         template: 'cpp-lib',
         overwrite: true,
         logging: this.options.logging,
@@ -716,7 +723,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     this.verboseMessage('Running codegen-windows...');
 
     try {
-      await codegenWindowsInternal([], config, {
+      // Create a modified config with the correct root directory
+      // The original config might point to an example directory instead of the package root
+      const modifiedConfig: Config = {
+        ...config,
+        root: this.root, // Use our validated package root instead of config.root
+      };
+
+      await codegenWindowsInternal([], modifiedConfig, {
         logging: this.options.logging,
         telemetry: this.options.telemetry,
       });
