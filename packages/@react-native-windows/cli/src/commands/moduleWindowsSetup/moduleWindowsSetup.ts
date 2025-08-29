@@ -1402,31 +1402,7 @@ ${defaultImplementations}
     return typeMap[tsType] || 'React::JSValue';
   }
 
-  private mapTSReturnTypeToCpp(tsReturnType: string): string {
-    if (tsReturnType.includes('Promise')) {
-      return 'void'; // Promise methods return void and use callback
-    }
-    return this.mapTSToCppType(tsReturnType);
-  }
 
-  private extractPromiseType(promiseType: string): string {
-    const match = promiseType.match(/Promise<(.+)>/);
-    return match ? match[1] : 'any';
-  }
-
-  private generateExampleReturn(returnType: string): string {
-    if (returnType === 'string') {
-      return 'promise.Resolve("example");';
-    } else if (returnType === 'number') {
-      return 'promise.Resolve(42);';
-    } else if (returnType === 'boolean') {
-      return 'promise.Resolve(true);';
-    } else if (returnType === 'void') {
-      return 'promise.Resolve();';
-    } else {
-      return 'promise.Resolve(React::JSValue{});';
-    }
-  }
 
   private generateDefaultValue(returnType: string): string {
     if (returnType === 'string') {
