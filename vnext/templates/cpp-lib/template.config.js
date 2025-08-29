@@ -101,6 +101,7 @@ async function getFileMappings(config = {}, options = {}) {
 
     name: projectName,
     pascalName: templateUtils.pascalCase(projectName),
+    moduleName: libOptions?.moduleName ?? templateUtils.generateDefaultModuleName(projectName),
     namespace: namespace,
     namespaceCpp: namespaceCpp,
 
@@ -197,6 +198,7 @@ async function postInstall(config = {}, options = {}) {
     'MyLib';
   const namespace = libOptions?.namespace ?? projectName;
   const namespaceCpp = namespace.replace(/\./g, '::');
+  const moduleName = libOptions?.moduleName ?? templateUtils.generateDefaultModuleName(projectName);
 
   // Update package.json codegen
   await templateUtils.updateProjectPackageJson(
@@ -204,6 +206,9 @@ async function postInstall(config = {}, options = {}) {
     libOptions,
     {
       codegenConfig: {
+        name: moduleName,
+        type: 'modules',
+        jsSrcsDir: 'src',
         windows: {
           namespace: namespaceCpp + 'Codegen',
           outputDirectory: `windows/${projectName}/codegen`,

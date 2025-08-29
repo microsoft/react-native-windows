@@ -72,6 +72,24 @@ function pascalCase(str) {
   return camelCase[0].toUpperCase() + camelCase.substr(1);
 }
 
+function generateDefaultModuleName(projectName) {
+  // Convert project names like "react-native-webview" to "RNCWebviewModule"
+  // or "my-awesome-library" to "MyAwesomeLibraryModule"
+  
+  // Remove common prefixes
+  let cleanName = projectName;
+  if (cleanName.startsWith('react-native-')) {
+    cleanName = cleanName.substring('react-native-'.length);
+    // For react-native- prefixed packages, use RNC prefix
+    const pascalCleanName = pascalCase(cleanName);
+    return `RNC${pascalCleanName}Module`;
+  }
+  
+  // For other packages, just add Module suffix
+  const pascalCleanName = pascalCase(cleanName);
+  return `${pascalCleanName}Module`;
+}
+
 async function replaceInFile(
   config = {},
   options = {},
@@ -133,6 +151,7 @@ async function updateProjectPackageJson(
         name: options.name,
         namespace: options.namespace,
         template: options.template,
+        moduleName: options.moduleName,
       },
     };
   }
@@ -157,6 +176,7 @@ module.exports = {
   getWindowsProjectConfig,
   getWindowsDependencyConfig,
   pascalCase,
+  generateDefaultModuleName,
   replaceInFile,
   runNpmInstall,
   updateProjectPackageJson,

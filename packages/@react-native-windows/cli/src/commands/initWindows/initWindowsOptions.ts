@@ -11,6 +11,7 @@ export interface InitOptions {
   template?: string;
   name?: string;
   namespace?: string;
+  moduleName?: string;
   overwrite?: boolean;
   telemetry?: boolean;
   list?: boolean;
@@ -37,6 +38,12 @@ export const initOptions: CommandOption[] = [
     name: '--namespace [string]',
     description:
       "The native project namespace expressed using dots as separators, i.e. 'Level1.Level2.Level3'. Defaults to the same as name",
+    default: undefined,
+  },
+  {
+    name: '--module-name [string]',
+    description:
+      'The TurboModule name for code generation. This determines the name of generated codegen files. Defaults to a cleaned version of the project name',
     default: undefined,
   },
   {

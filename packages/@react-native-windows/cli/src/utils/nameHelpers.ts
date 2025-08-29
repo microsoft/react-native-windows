@@ -41,3 +41,25 @@ export function isValidProjectNamespace(namespace: string): boolean {
 export function cleanNamespace(str: string): string {
   return str.split(/[.:]+/).map(cleanName).join('.');
 }
+
+export function isValidModuleName(name: string): boolean {
+  // Module names should be valid C++ identifiers
+  // They can contain letters, numbers, and underscores, but cannot start with a number
+  if (name.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
+    return true;
+  }
+  return false;
+}
+
+export function cleanModuleName(str: string): string {
+  // Clean module name to be a valid C++ identifier
+  // Remove any invalid characters and ensure it starts with a letter
+  str = str.replace(/[^a-zA-Z0-9_]/g, ''); // Remove invalid chars
+  if (str.length > 0 && str[0].match(/[0-9]/)) {
+    str = 'Module' + str; // Prefix with 'Module' if it starts with a number
+  }
+  if (str.length === 0) {
+    str = 'Module'; // Default fallback
+  }
+  return str;
+}

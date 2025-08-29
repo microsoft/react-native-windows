@@ -250,6 +250,35 @@ export class InitWindows {
       );
     }
 
+    // Check if there's a passed-in module name and if it's valid
+    if (
+      this.options.moduleName &&
+      !nameHelpers.isValidModuleName(this.options.moduleName)
+    ) {
+      throw new CodedError(
+        'InvalidModuleName',
+        `The specified module name '${this.options.moduleName}' is not a valid identifier`,
+      );
+    }
+
+    // If no module name is provided, check previously used module name or generate a default one
+    if (!this.options.moduleName) {
+      const templateUtils = require('../../../../vnext/templates/templateUtils');
+      const savedModuleName = this.rnwConfig?.['init-windows']?.moduleName as string | undefined;
+      const defaultModuleName = savedModuleName ?? templateUtils.generateDefaultModuleName(this.options.name);
+      this.options.moduleName = nameHelpers.isValidModuleName(defaultModuleName)
+        ? defaultModuleName
+        : nameHelpers.cleanModuleName(defaultModuleName);
+    }
+
+    // Final check that the module name is valid
+    if (!nameHelpers.isValidModuleName(this.options.moduleName)) {
+      throw new CodedError(
+        'InvalidModuleName',
+        `The module name '${this.options.moduleName}' is not a valid identifier`,
+      );
+    }
+
     if (templateConfig.preInstall) {
       spinner.info(`Running ${this.options.template} preInstall()...`);
       await templateConfig.preInstall(this.config, this.options);
@@ -315,6 +344,7 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
   switch (key) {
     case 'name':
     case 'namespace':
+    case 'moduleName':
       return value === undefined ? false : true; // Strip PII
     case 'logging':
     case 'template':
