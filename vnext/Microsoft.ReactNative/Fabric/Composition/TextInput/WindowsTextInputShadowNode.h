@@ -4,14 +4,14 @@
 #pragma once
 
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
+#include "WindowsTextInputEventEmitter.h"
+#include "WindowsTextInputProps.h"
+#include "WindowsTextInputState.h"
 
 #include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
-#include "WindowsTextInputEventEmitter.h"
-#include "WindowsTextInputProps.h"
 
 #include <react/renderer/attributedstring/AttributedString.h>
-#include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/utils/ContextContainer.h>
 
@@ -26,7 +26,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
                                              WindowsTextInputComponentName,
                                              WindowsTextInputProps,
                                              WindowsTextInputEventEmitter,
-                                             TextInputState> {
+                                             WindowsTextInputState> {
  public:
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 
