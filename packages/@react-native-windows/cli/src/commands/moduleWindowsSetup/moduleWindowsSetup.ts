@@ -776,6 +776,15 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     const files = await fs.readdir(codegenDir);
     const specFiles = files.filter(file => file.endsWith('Spec.g.h'));
 
+    if (specFiles.length === 0) {
+      this.verboseMessage(
+        'No Spec.g.h files found in codegen directory. This typically means the TurboModule spec file needs to be created or codegen needs to be run.',
+      );
+      return;
+    }
+
+    this.verboseMessage(`Found ${specFiles.length} codegen spec file(s): ${specFiles.join(', ')}`);
+
     for (const specFile of specFiles) {
       const specName = specFile.replace('Spec.g.h', '');
       const windowsDir = path.join(this.root, 'windows');
@@ -786,8 +795,18 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         await fs.mkdir(windowsDir, {recursive: true});
       }
 
-      // Parse the TypeScript spec file for method signatures
+      // Parse method signatures from codegen files first, then fallback to TypeScript spec files
       const methods = await this.parseSpecFileForMethods(specName);
+
+      if (methods.length === 0) {
+        this.verboseMessage(
+          `No methods found for ${specName}. The generated files will contain empty stubs with TODO comments.`,
+        );
+      } else {
+        this.verboseMessage(
+          `Found ${methods.length} methods from ${specName}: ${methods.map(m => m.name).join(', ')}`,
+        );
+      }
 
       // Generate header file with parsed methods
       const headerContent = await this.generateHeaderStub(specName, methods);
