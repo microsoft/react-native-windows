@@ -614,14 +614,21 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     );
 
     try {
+      // Suppress deprecation warnings to clean up output
+      const env = {
+        ...process.env,
+        NODE_NO_WARNINGS: '1',
+      };
       // Get latest versions with timeout to avoid hanging
       const rnLatest = execSync('npm view react-native version', {
         encoding: 'utf8',
         timeout: 30000,
+        env,
       }).trim();
       const rnwLatest = execSync('npm view react-native-windows version', {
         encoding: 'utf8',
         timeout: 30000,
+        env,
       }).trim();
 
       this.verboseMessage(`Latest RN version: ${rnLatest}`);
@@ -1188,7 +1195,12 @@ ${defaultImplementations}
     // Skip node_modules cleaning as it can cause permission issues on Windows
     // and yarn install will handle dependency updates anyway
     try {
-      execSync('yarn install', {cwd: this.root, stdio: 'inherit'});
+      // Suppress deprecation warnings to clean up output
+      const env = {
+        ...process.env,
+        NODE_NO_WARNINGS: '1',
+      };
+      execSync('yarn install', {cwd: this.root, stdio: 'inherit', env});
       this.verboseMessage('Dependencies installed');
     } catch (error: any) {
       throw new CodedError(
@@ -1303,6 +1315,12 @@ export async function moduleWindowsSetupInternal(
   config: Config,
   options: ModuleWindowsSetupOptions,
 ) {
+  // Suppress Node.js deprecation warnings to clean up output
+  const originalNoWarnings = process.env.NODE_NO_WARNINGS;
+  if (!options.logging) {
+    process.env.NODE_NO_WARNINGS = '1';
+  }
+
   const startTime = performance.now();
   const spinner = newSpinner(
     'Setting up Windows support for React Native module...',
@@ -1363,6 +1381,13 @@ export async function moduleWindowsSetupInternal(
       )}ms)`,
     );
     throw e;
+  } finally {
+    // Restore original NODE_NO_WARNINGS setting
+    if (originalNoWarnings !== undefined) {
+      process.env.NODE_NO_WARNINGS = originalNoWarnings;
+    } else {
+      delete process.env.NODE_NO_WARNINGS;
+    }
   }
 }
 
