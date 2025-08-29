@@ -769,25 +769,42 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     let codegenDir = path.join(this.root, 'codegen');
     let codegenLocation = 'root';
     
+    this.verboseMessage(`Searching for codegen directory at: ${codegenDir}`);
+    
     if (!(await fs.exists(codegenDir))) {
+      this.verboseMessage('Codegen directory not found in root, checking windows subdirectories...');
+      
       // Try looking in windows directory
       const windowsDir = path.join(this.root, 'windows');
+      this.verboseMessage(`Checking windows directory: ${windowsDir}`);
+      
       if (await fs.exists(windowsDir)) {
         const windowsSubdirs = await fs.readdir(windowsDir);
+        this.verboseMessage(`Found windows subdirectories: ${windowsSubdirs.join(', ')}`);
+        
         // Look for subdirectories that might contain codegen
         for (const subdir of windowsSubdirs) {
           const subdirPath = path.join(windowsDir, subdir);
-          const stats = await fs.stat(subdirPath);
-          if (stats.isDirectory()) {
-            const possibleCodegenDir = path.join(subdirPath, 'codegen');
-            if (await fs.exists(possibleCodegenDir)) {
-              codegenDir = possibleCodegenDir;
-              codegenLocation = `windows/${subdir}`;
-              this.verboseMessage(`Found codegen directory at: ${codegenDir}`);
-              break;
+          try {
+            const stats = await fs.stat(subdirPath);
+            if (stats.isDirectory()) {
+              const possibleCodegenDir = path.join(subdirPath, 'codegen');
+              this.verboseMessage(`Checking possible codegen directory: ${possibleCodegenDir}`);
+              
+              if (await fs.exists(possibleCodegenDir)) {
+                codegenDir = possibleCodegenDir;
+                codegenLocation = `windows/${subdir}`;
+                this.verboseMessage(`Found codegen directory at: ${codegenDir}`);
+                break;
+              }
             }
+          } catch (error) {
+            this.verboseMessage(`Error checking subdirectory ${subdirPath}: ${error}`);
+            continue;
           }
         }
+      } else {
+        this.verboseMessage('Windows directory does not exist');
       }
     } else {
       this.verboseMessage(`Found codegen directory at: ${codegenDir}`);
@@ -811,6 +828,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     }
 
     this.verboseMessage(`Found ${specFiles.length} codegen spec file(s) in ${codegenLocation}: ${specFiles.join(', ')}`);
+
+    // Read directory contents for debugging
+    try {
+      const allFiles = await fs.readdir(codegenDir);
+      this.verboseMessage(`All files in codegen directory: ${allFiles.join(', ')}`);
+    } catch (error) {
+      this.verboseMessage(`Error reading codegen directory contents: ${error}`);
+    }
 
     for (const specFile of specFiles) {
       const specName = specFile.replace('Spec.g.h', '');
@@ -954,17 +979,30 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       
       for (const specFile of specFiles) {
         const specPath = path.join(codegenDir, specFile);
-        const content = await fs.readFile(specPath, 'utf8');
+        this.verboseMessage(`Reading codegen file: ${specPath}`);
         
-        // Extract methods from the codegen C++ header
-        const methods = this.extractMethodsFromCodegenHeader(content);
-        if (methods.length > 0) {
-          this.verboseMessage(`Parsed ${methods.length} methods from ${specFile}`);
-          return methods;
+        try {
+          const content = await fs.readFile(specPath, 'utf8');
+          this.verboseMessage(`Successfully read ${content.length} characters from ${specFile}`);
+          
+          // Show first few lines for debugging
+          const firstLines = content.split('\n').slice(0, 10).join('\n');
+          this.verboseMessage(`First 10 lines of ${specFile}:\n${firstLines}`);
+          
+          // Extract methods from the codegen C++ header
+          const methods = this.extractMethodsFromCodegenHeader(content);
+          if (methods.length > 0) {
+            this.verboseMessage(`Parsed ${methods.length} methods from ${specFile}: ${methods.map(m => m.name).join(', ')}`);
+            return methods;
+          } else {
+            this.verboseMessage(`No methods extracted from ${specFile}`);
+          }
+        } catch (readError) {
+          this.verboseMessage(`Error reading file ${specPath}: ${readError}`);
         }
       }
       
-      this.verboseMessage('No methods found in codegen files');
+      this.verboseMessage('No methods found in any codegen files');
       return [];
     } catch (error) {
       this.verboseMessage(`Error parsing codegen files: ${error}`);
@@ -1541,6 +1579,11 @@ ${defaultImplementations}
     spinner.text = 'Running Windows codegen...';
 
     await this.runCodegenWindows(config);
+    
+    // Wait a bit for codegen files to be fully written to disk
+    this.verboseMessage('Waiting for codegen files to be written...');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     spinner.text = 'Generating C++ stub files...';
 
     await this.generateStubFiles();
