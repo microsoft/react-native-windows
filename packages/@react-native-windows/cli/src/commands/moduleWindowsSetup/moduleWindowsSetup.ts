@@ -635,51 +635,32 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     }
   }
 
-  private async removeOldArchWindowsDirectory(): Promise<void> {
+  private async handleExistingWindowsDirectory(): Promise<void> {
     const windowsDir = path.join(this.root, 'windows');
+    const windowsOldDir = path.join(this.root, 'windows_old');
 
     if (await fs.exists(windowsDir)) {
       this.verboseMessage(
-        "Found existing windows directory, checking if it's old architecture...",
+        'Found existing windows directory, renaming to windows_old...',
       );
 
       try {
-        // Check if this looks like an old architecture windows directory
-        // Old arch typically has specific files/structure that differ from new arch
-        const oldArchIndicators = [
-          'ReactNativeModule.cpp',
-          'ReactNativeModule.h',
-          'pch.h',
-          'packages.config',
-          '*.vcxproj',
-        ];
-
-        let hasOldArchFiles = false;
-        for (const indicator of oldArchIndicators) {
-          const matches = glob.sync(indicator, {cwd: windowsDir});
-          if (matches.length > 0) {
-            hasOldArchFiles = true;
-            this.verboseMessage(`Found old architecture file: ${matches[0]}`);
-            break;
-          }
+        // If windows_old already exists, remove it first
+        if (await fs.exists(windowsOldDir)) {
+          this.verboseMessage('Removing existing windows_old directory...');
+          await fs.rmdir(windowsOldDir, {recursive: true});
         }
 
-        if (hasOldArchFiles) {
-          this.verboseMessage('Removing old architecture windows directory...');
-          await fs.rmdir(windowsDir, {recursive: true});
-          this.verboseMessage(
-            'Old architecture windows directory removed successfully',
-          );
-        } else {
-          this.verboseMessage(
-            'Windows directory appears to be new architecture, keeping it',
-          );
-        }
+        // Rename windows to windows_old
+        await fs.rename(windowsDir, windowsOldDir);
+        this.verboseMessage(
+          'Successfully renamed windows directory to windows_old',
+        );
       } catch (error: any) {
         this.verboseMessage(
-          `Warning: Could not remove old windows directory: ${error.message}`,
+          `Warning: Could not rename windows directory: ${error.message}`,
         );
-        // Don't fail the entire process if we can't remove the old directory
+        // Don't fail the entire process if we can't rename the directory
         // The overwrite flag in init-windows should handle most conflicts
       }
     }
@@ -1208,9 +1189,9 @@ ${defaultImplementations}
     spinner.text = 'Upgrading dependencies...';
 
     await this.upgradeDependencies();
-    spinner.text = 'Checking for old architecture Windows directory...';
+    spinner.text = 'Handling existing Windows directory...';
 
-    await this.removeOldArchWindowsDirectory();
+    await this.handleExistingWindowsDirectory();
     spinner.text = 'Setting up Windows library...';
 
     await this.runInitWindows(config);
