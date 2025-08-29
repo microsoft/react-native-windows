@@ -29,7 +29,7 @@ function resolveArgs(config = {}, options = {}) {
 
   const exampleProjectPath = path.join(projectRoot, 'example');
 
-  const exExists = existsSync(exampleProjectPath);
+  const exExists = existsSync(exampleProjectPath) && options.example !== false;
   const exProjectConfig = exExists
     ? templateUtils.getWindowsProjectConfig(exampleProjectPath)
     : null;

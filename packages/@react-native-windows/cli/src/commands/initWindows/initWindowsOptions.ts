@@ -15,6 +15,7 @@ export interface InitOptions {
   telemetry?: boolean;
   list?: boolean;
   prompt?: boolean;
+  example?: boolean;
 }
 
 export const initOptions: CommandOption[] = [
@@ -56,5 +57,9 @@ export const initOptions: CommandOption[] = [
   {
     name: '--no-prompt',
     description: 'Skip any interactive prompts and use default choices.',
+  },
+  {
+    name: '--no-example',
+    description: 'Skip creating the example app directory.',
   },
 ];
