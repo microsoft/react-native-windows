@@ -811,7 +811,21 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     moduleName: string,
   ): Promise<MethodSignature[]> {
     try {
-      // First, try to use the previously discovered spec files
+      // First, try to read from codegen C++ header files
+      const codegenDir = path.join(this.root, 'codegen');
+      if (await fs.exists(codegenDir)) {
+        const methods = await this.parseCodegenHeaderFiles(codegenDir, moduleName);
+        if (methods.length > 0) {
+          this.verboseMessage(
+            `Extracted ${methods.length} methods from codegen files: ${methods
+              .map(m => m.name)
+              .join(', ')}`,
+          );
+          return methods;
+        }
+      }
+
+      // Fallback to TypeScript spec files if no codegen files found
       let specFiles = this.discoveredSpecFiles;
 
       // If no discovered spec files, try to find them again with broader patterns
@@ -874,6 +888,164 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       );
       return [];
     }
+  }
+
+  private async parseCodegenHeaderFiles(
+    codegenDir: string, 
+    moduleName: string
+  ): Promise<MethodSignature[]> {
+    try {
+      this.verboseMessage(`Looking for codegen files in: ${codegenDir}`);
+      
+      const files = await fs.readdir(codegenDir);
+      const specFiles = files.filter(file => file.endsWith('Spec.g.h'));
+      
+      this.verboseMessage(`Found codegen spec files: ${specFiles.join(', ')}`);
+      
+      for (const specFile of specFiles) {
+        const specPath = path.join(codegenDir, specFile);
+        const content = await fs.readFile(specPath, 'utf8');
+        
+        // Extract methods from the codegen C++ header
+        const methods = this.extractMethodsFromCodegenHeader(content);
+        if (methods.length > 0) {
+          this.verboseMessage(`Parsed ${methods.length} methods from ${specFile}`);
+          return methods;
+        }
+      }
+      
+      this.verboseMessage('No methods found in codegen files');
+      return [];
+    } catch (error) {
+      this.verboseMessage(`Error parsing codegen files: ${error}`);
+      return [];
+    }
+  }
+
+  private extractMethodsFromCodegenHeader(content: string): MethodSignature[] {
+    const methods: MethodSignature[] = [];
+
+    // Parse from REACT_SHOW_METHOD_SPEC_ERRORS sections which contain the exact method signatures
+    const errorSectionPattern = /REACT_SHOW_METHOD_SPEC_ERRORS\s*\(\s*\d+,\s*"([^"]+)",\s*"[^"]*REACT_METHOD\(([^)]+)\)\s+(?:static\s+)?void\s+(\w+)\s*\(([^)]*)\)[^"]*"/g;
+    
+    let match;
+    while ((match = errorSectionPattern.exec(content)) !== null) {
+      const methodName = match[1]; // Method name from first parameter
+      const parameters = this.parseCodegenParameters(match[4]); // Parameters from method signature
+      
+      methods.push({
+        name: methodName,
+        returnType: 'void', // Codegen methods are typically void with callbacks or promises
+        parameters: parameters,
+      });
+    }
+
+    // Also try to parse from the methods tuple for additional methods
+    if (methods.length === 0) {
+      const methodsTuplePattern = /Method<([^>]+)>\{\s*(\d+),\s*L"([^"]+)"\s*\}/g;
+      
+      while ((match = methodsTuplePattern.exec(content)) !== null) {
+        const signature = match[1]; // Method signature type
+        const methodName = match[3]; // Method name
+        const parameters = this.parseCodegenSignature(signature);
+        
+        methods.push({
+          name: methodName,
+          returnType: 'void',
+          parameters: parameters,
+        });
+      }
+    }
+
+    return methods;
+  }
+
+  private parseCodegenParameters(paramString: string): Parameter[] {
+    if (!paramString || paramString.trim() === '') {
+      return [];
+    }
+
+    const params: Parameter[] = [];
+    
+    // Split parameters carefully, handling nested templates like std::function<void(bool)>
+    const cleanParamString = paramString.trim();
+    let current = '';
+    let depth = 0;
+    let inString = false;
+    
+    for (let i = 0; i < cleanParamString.length; i++) {
+      const char = cleanParamString[i];
+      
+      if (char === '"' && cleanParamString[i-1] !== '\\') {
+        inString = !inString;
+      } else if (!inString) {
+        if (char === '<' || char === '(') {
+          depth++;
+        } else if (char === '>' || char === ')') {
+          depth--;
+        } else if (char === ',' && depth === 0) {
+          if (current.trim()) {
+            params.push(this.parseCodegenParameter(current.trim()));
+          }
+          current = '';
+          continue;
+        }
+      }
+      
+      current += char;
+    }
+    
+    if (current.trim()) {
+      params.push(this.parseCodegenParameter(current.trim()));
+    }
+    
+    return params;
+  }
+
+  private parseCodegenParameter(param: string): Parameter {
+    // Handle common codegen parameter patterns
+    param = param.trim();
+    
+    // std::function<void(type)> const & callback -> callback parameter
+    if (param.includes('std::function')) {
+      if (param.includes('onSuccess') || param.includes('callback')) {
+        return { name: 'callback', type: 'function' };
+      } else if (param.includes('onError')) {
+        return { name: 'onError', type: 'function' };
+      } else {
+        return { name: 'callback', type: 'function' };
+      }
+    }
+    
+    // Extract parameter name from the end
+    const parts = param.split(/\s+/);
+    const name = parts[parts.length - 1].replace(/[&*]/g, ''); // Remove references/pointers
+    
+    // Map common codegen types
+    let type = 'any';
+    if (param.includes('std::string')) {
+      type = 'string';
+    } else if (param.includes('double')) {
+      type = 'number';
+    } else if (param.includes('bool')) {
+      type = 'boolean';
+    } else if (param.includes('int32_t') || param.includes('int')) {
+      type = 'number';
+    } else if (param.includes('JSValue')) {
+      type = 'any';
+    }
+    
+    return { name: name || 'param', type };
+  }
+
+  private parseCodegenSignature(signature: string): Parameter[] {
+    // Parse Method<void(...)> signature to extract parameters
+    const paramMatch = signature.match(/void\s*\(([^)]*)\)/);
+    if (!paramMatch) {
+      return [];
+    }
+    
+    return this.parseCodegenParameters(paramMatch[1]);
   }
 
   private extractMethodsFromSpecInterface(content: string): MethodSignature[] {
@@ -970,22 +1142,24 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     const methodDeclarations = methods
       .map(method => {
         const cppParams = method.parameters
-          .map(p => `${this.mapTSToCppType(p.type)} ${p.name}`)
+          .map(p => {
+            if (p.type === 'function') {
+              // Handle callback functions from codegen
+              if (p.name.includes('onSuccess') || p.name === 'callback') {
+                return `std::function<void()> const & ${p.name}`;
+              } else if (p.name.includes('onError')) {
+                return `std::function<void(::React::JSValue const &)> const & ${p.name}`;
+              } else {
+                return `std::function<void()> const & ${p.name}`;
+              }
+            } else {
+              return `${this.mapTSToCppType(p.type)} ${p.name}`;
+            }
+          })
           .join(', ');
-        const returnTypeIsCpp = this.mapTSReturnTypeToCpp(method.returnType);
 
-        if (method.returnType.includes('Promise')) {
-          // Async method with promise
-          const promiseType = this.extractPromiseType(method.returnType);
-          const cppPromiseType = this.mapTSToCppType(promiseType);
-          const params = cppParams ? `${cppParams}, ` : '';
-          return `  REACT_METHOD(${method.name})
-  void ${method.name}(${params}React::ReactPromise<${cppPromiseType}> promise) noexcept;`;
-        } else {
-          // Synchronous method
-          return `  REACT_METHOD(${method.name})
-  ${returnTypeIsCpp} ${method.name}(${cppParams}) noexcept;`;
-        }
+        return `  REACT_METHOD(${method.name})
+  void ${method.name}(${cppParams}) noexcept;`;
       })
       .join('\n\n');
 
@@ -994,7 +1168,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         ? `  // TODO: Add your method implementations here
   // Example:
   // REACT_METHOD(getString)
-  // void getString(std::string value, React::ReactPromise<std::string> promise) noexcept;`
+  // void getString(std::string value, std::function<void(std::string)> const & callback) noexcept;`
         : methodDeclarations;
 
     return `#pragma once
@@ -1039,34 +1213,39 @@ private:
     const methodImplementations = methods
       .map(method => {
         const cppParams = method.parameters
-          .map(p => `${this.mapTSToCppType(p.type)} ${p.name}`)
+          .map(p => {
+            if (p.type === 'function') {
+              // Handle callback functions from codegen
+              if (p.name.includes('onSuccess') || p.name === 'callback') {
+                return `std::function<void()> const & ${p.name}`;
+              } else if (p.name.includes('onError')) {
+                return `std::function<void(::React::JSValue const &)> const & ${p.name}`;
+              } else {
+                return `std::function<void()> const & ${p.name}`;
+              }
+            } else {
+              return `${this.mapTSToCppType(p.type)} ${p.name}`;
+            }
+          })
           .join(', ');
-        const returnTypeIsCpp = this.mapTSReturnTypeToCpp(method.returnType);
 
-        if (method.returnType.includes('Promise')) {
-          // Async method with promise
-          const promiseType = this.extractPromiseType(method.returnType);
-          const cppPromiseType = this.mapTSToCppType(promiseType);
-          const params = cppParams ? `${cppParams}, ` : '';
-          const exampleReturn = this.generateExampleReturn(promiseType);
-
-          return `void ${moduleName}::${method.name}(${params}React::ReactPromise<${cppPromiseType}> promise) noexcept {
-  // TODO: Implement ${method.name}
-  ${exampleReturn}
-}`;
-        } else {
-          // Synchronous method
-          const exampleReturn =
-            method.returnType === 'void'
-              ? ''
-              : `\n  // TODO: Return appropriate value\n  return ${this.generateDefaultValue(
-                  method.returnType,
-                )};`;
-
-          return `${returnTypeIsCpp} ${moduleName}::${method.name}(${cppParams}) noexcept {
-  // TODO: Implement ${method.name}${exampleReturn}
-}`;
+        // Generate implementation based on callback pattern
+        const hasCallback = method.parameters.some(p => p.type === 'function' && (p.name.includes('onSuccess') || p.name === 'callback'));
+        const hasErrorCallback = method.parameters.some(p => p.type === 'function' && p.name.includes('onError'));
+        
+        let implementation = `  // TODO: Implement ${method.name}`;
+        
+        if (hasCallback && hasErrorCallback) {
+          // Method with success and error callbacks
+          implementation += `\n  // Example: callback(); // Call on success\n  // Example: onError(React::JSValue{"Error message"}); // Call on error`;
+        } else if (hasCallback) {
+          // Method with just callback
+          implementation += `\n  // Example: callback(); // Call when complete`;
         }
+
+        return `void ${moduleName}::${method.name}(${cppParams}) noexcept {
+${implementation}
+}`;
       })
       .join('\n\n');
 
@@ -1074,8 +1253,8 @@ private:
       methods.length === 0
         ? `// TODO: Implement your methods here
 // Example:
-// void ${moduleName}::getString(std::string value, React::ReactPromise<std::string> promise) noexcept {
-//   promise.Resolve(value);
+// void ${moduleName}::getString(std::string value, std::function<void(std::string)> const & callback) noexcept {
+//   callback("Hello " + value);
 // }`
         : methodImplementations;
 
