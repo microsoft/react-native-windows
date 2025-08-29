@@ -782,7 +782,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
   private async getProjectDirectoryFromCodegenConfig(): Promise<string | null> {
     try {
       const packageJsonPath = path.join(this.root, 'package.json');
-      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      const pkgJson: any = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
       
       if (pkgJson.codegenConfig?.windows?.outputDirectory) {
         const outputDirectory = pkgJson.codegenConfig.windows.outputDirectory;
@@ -1694,7 +1694,7 @@ ${defaultImplementations}
     
     // Wait a bit for codegen files to be fully written to disk
     this.verboseMessage('Waiting for codegen files to be written...');
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise<void>(resolve => setTimeout(resolve, 1000));
     
     spinner.text = 'Generating C++ stub files...';
 
