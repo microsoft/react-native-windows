@@ -650,10 +650,10 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     //     stdio: 'inherit',
     //     timeout: 120000,
     //   });
-    // } catch (error: any) {
-    //   this.verboseMessage(
-    //     `Warning: Could not upgrade dependencies: ${error.message}`,
-    //   );
+    } catch (error: any) {
+      this.verboseMessage(
+        `Warning: Could not upgrade dependencies: ${error.message}`,
+      );
       // Don't fail the entire process if dependency upgrade fails
     }
   }
