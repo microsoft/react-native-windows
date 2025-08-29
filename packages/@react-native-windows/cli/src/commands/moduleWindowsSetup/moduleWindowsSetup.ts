@@ -605,32 +605,32 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       this.verboseMessage(`Latest RNW version: ${rnwLatest}`);
 
       // Update package.json
-      const packageJsonPath = path.join(this.root, 'package.json');
-      const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+    //   const packageJsonPath = path.join(this.root, 'package.json');
+    //   const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
 
-      if (!pkgJson.peerDependencies) {
-        pkgJson.peerDependencies = {};
-      }
-      if (!pkgJson.devDependencies) {
-        pkgJson.devDependencies = {};
-      }
+    //   if (!pkgJson.peerDependencies) {
+    //     pkgJson.peerDependencies = {};
+    //   }
+    //   if (!pkgJson.devDependencies) {
+    //     pkgJson.devDependencies = {};
+    //   }
 
-      pkgJson.peerDependencies['react-native'] = `^${rnLatest}`;
-      pkgJson.devDependencies['react-native-windows'] = `^${rnwLatest}`;
+    //   pkgJson.peerDependencies['react-native'] = `^${rnLatest}`;
+    //   pkgJson.devDependencies['react-native-windows'] = `^${rnwLatest}`;
 
-      await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
-      this.verboseMessage('Updated dependency versions in package.json');
+    //   await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
+    //   this.verboseMessage('Updated dependency versions in package.json');
 
-      // Install updated dependencies with timeout
-      execSync('yarn install', {
-        cwd: this.root,
-        stdio: 'inherit',
-        timeout: 120000,
-      });
-    } catch (error: any) {
-      this.verboseMessage(
-        `Warning: Could not upgrade dependencies: ${error.message}`,
-      );
+    //   // Install updated dependencies with timeout
+    //   execSync('yarn install', {
+    //     cwd: this.root,
+    //     stdio: 'inherit',
+    //     timeout: 120000,
+    //   });
+    // } catch (error: any) {
+    //   this.verboseMessage(
+    //     `Warning: Could not upgrade dependencies: ${error.message}`,
+    //   );
       // Don't fail the entire process if dependency upgrade fails
     }
   }
