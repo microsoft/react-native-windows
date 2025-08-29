@@ -139,19 +139,19 @@ export class ModuleWindowsSetup {
     }
   }
 
-  public getActualProjectPaths(): {headerPath: string, cppPath: string} {
+  public getActualProjectPaths(): {headerPath: string; cppPath: string} {
     if (this.actualProjectPath) {
       return {
         headerPath: `${this.actualProjectPath}.h`,
-        cppPath: `${this.actualProjectPath}.cpp`
+        cppPath: `${this.actualProjectPath}.cpp`,
       };
     }
-    
+
     // Fallback to getFinalModuleName for backward compatibility
     const moduleName = this.actualModuleName || 'SampleModule';
     return {
       headerPath: `windows/${moduleName}/${moduleName}.h`,
-      cppPath: `windows/${moduleName}/${moduleName}.cpp`
+      cppPath: `windows/${moduleName}/${moduleName}.cpp`,
     };
   }
 
@@ -652,28 +652,28 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       this.verboseMessage(`Latest RNW version: ${rnwLatest}`);
 
       // Update package.json
-    //   const packageJsonPath = path.join(this.root, 'package.json');
-    //   const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      //   const packageJsonPath = path.join(this.root, 'package.json');
+      //   const pkgJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
 
-    //   if (!pkgJson.peerDependencies) {
-    //     pkgJson.peerDependencies = {};
-    //   }
-    //   if (!pkgJson.devDependencies) {
-    //     pkgJson.devDependencies = {};
-    //   }
+      //   if (!pkgJson.peerDependencies) {
+      //     pkgJson.peerDependencies = {};
+      //   }
+      //   if (!pkgJson.devDependencies) {
+      //     pkgJson.devDependencies = {};
+      //   }
 
-    //   pkgJson.peerDependencies['react-native'] = `^${rnLatest}`;
-    //   pkgJson.devDependencies['react-native-windows'] = `^${rnwLatest}`;
+      //   pkgJson.peerDependencies['react-native'] = `^${rnLatest}`;
+      //   pkgJson.devDependencies['react-native-windows'] = `^${rnwLatest}`;
 
-    //   await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
-    //   this.verboseMessage('Updated dependency versions in package.json');
+      //   await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
+      //   this.verboseMessage('Updated dependency versions in package.json');
 
-    //   // Install updated dependencies with timeout
-    //   execSync('yarn install', {
-    //     cwd: this.root,
-    //     stdio: 'inherit',
-    //     timeout: 120000,
-    //   });
+      //   // Install updated dependencies with timeout
+      //   execSync('yarn install', {
+      //     cwd: this.root,
+      //     stdio: 'inherit',
+      //     timeout: 120000,
+      //   });
     } catch (error: any) {
       this.verboseMessage(
         `Warning: Could not upgrade dependencies: ${error.message}`,
@@ -782,25 +782,31 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
   private async getProjectDirectoryFromCodegenConfig(): Promise<string | null> {
     try {
       const packageJsonPath = path.join(this.root, 'package.json');
-      const pkgJson: any = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
-      
+      const pkgJson: any = JSON.parse(
+        await fs.readFile(packageJsonPath, 'utf8'),
+      );
+
       if (pkgJson.codegenConfig?.windows?.outputDirectory) {
         const outputDirectory = pkgJson.codegenConfig.windows.outputDirectory;
-        this.verboseMessage(`Found codegenConfig.windows.outputDirectory: ${outputDirectory}`);
-        
+        this.verboseMessage(
+          `Found codegenConfig.windows.outputDirectory: ${outputDirectory}`,
+        );
+
         // Extract project directory from outputDirectory path
         // E.g., "windows/ReactNativeWebview/codegen" -> "ReactNativeWebview"
         const parts = outputDirectory.split('/');
         if (parts.length >= 2 && parts[0] === 'windows') {
           const projectDir = parts[1];
-          this.verboseMessage(`Extracted project directory from outputDirectory: ${projectDir}`);
+          this.verboseMessage(
+            `Extracted project directory from outputDirectory: ${projectDir}`,
+          );
           return projectDir;
         }
       }
     } catch (error) {
       this.verboseMessage(`Error reading package.json codegenConfig: ${error}`);
     }
-    
+
     return null;
   }
 
@@ -810,20 +816,24 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     // Look for codegen directory in multiple possible locations
     let codegenDir = path.join(this.root, 'codegen');
     let codegenLocation = 'root';
-    
+
     this.verboseMessage(`Searching for codegen directory at: ${codegenDir}`);
-    
+
     if (!(await fs.exists(codegenDir))) {
-      this.verboseMessage('Codegen directory not found in root, checking windows subdirectories...');
-      
+      this.verboseMessage(
+        'Codegen directory not found in root, checking windows subdirectories...',
+      );
+
       // Try looking in windows directory
       const windowsDir = path.join(this.root, 'windows');
       this.verboseMessage(`Checking windows directory: ${windowsDir}`);
-      
+
       if (await fs.exists(windowsDir)) {
         const windowsSubdirs = await fs.readdir(windowsDir);
-        this.verboseMessage(`Found windows subdirectories: ${windowsSubdirs.join(', ')}`);
-        
+        this.verboseMessage(
+          `Found windows subdirectories: ${windowsSubdirs.join(', ')}`,
+        );
+
         // Look for subdirectories that might contain codegen
         for (const subdir of windowsSubdirs) {
           const subdirPath = path.join(windowsDir, subdir);
@@ -831,17 +841,23 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
             const stats = await fs.stat(subdirPath);
             if (stats.isDirectory()) {
               const possibleCodegenDir = path.join(subdirPath, 'codegen');
-              this.verboseMessage(`Checking possible codegen directory: ${possibleCodegenDir}`);
-              
+              this.verboseMessage(
+                `Checking possible codegen directory: ${possibleCodegenDir}`,
+              );
+
               if (await fs.exists(possibleCodegenDir)) {
                 codegenDir = possibleCodegenDir;
                 codegenLocation = `windows/${subdir}`;
-                this.verboseMessage(`Found codegen directory at: ${codegenDir}`);
+                this.verboseMessage(
+                  `Found codegen directory at: ${codegenDir}`,
+                );
                 break;
               }
             }
           } catch (error) {
-            this.verboseMessage(`Error checking subdirectory ${subdirPath}: ${error}`);
+            this.verboseMessage(
+              `Error checking subdirectory ${subdirPath}: ${error}`,
+            );
             continue;
           }
         }
@@ -869,12 +885,18 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       return;
     }
 
-    this.verboseMessage(`Found ${specFiles.length} codegen spec file(s) in ${codegenLocation}: ${specFiles.join(', ')}`);
+    this.verboseMessage(
+      `Found ${
+        specFiles.length
+      } codegen spec file(s) in ${codegenLocation}: ${specFiles.join(', ')}`,
+    );
 
     // Read directory contents for debugging
     try {
       const allFiles = await fs.readdir(codegenDir);
-      this.verboseMessage(`All files in codegen directory: ${allFiles.join(', ')}`);
+      this.verboseMessage(
+        `All files in codegen directory: ${allFiles.join(', ')}`,
+      );
     } catch (error) {
       this.verboseMessage(`Error reading codegen directory contents: ${error}`);
     }
@@ -887,57 +909,77 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
     if (projectName) {
       moduleDir = path.join(windowsDir, projectName);
-      this.verboseMessage(`Using project directory from codegenConfig: ${moduleDir}`);
-      
+      this.verboseMessage(
+        `Using project directory from codegenConfig: ${moduleDir}`,
+      );
+
       // Verify the directory exists
       if (!(await fs.exists(moduleDir))) {
-        this.verboseMessage(`Project directory from codegenConfig does not exist: ${moduleDir}`);
+        this.verboseMessage(
+          `Project directory from codegenConfig does not exist: ${moduleDir}`,
+        );
         projectName = null; // Fall back to search
       }
     }
-    
+
     // If no project directory from codegenConfig or it doesn't exist, search for existing directory
     if (!projectName) {
-      this.verboseMessage('Searching for existing Windows project directory...');
+      this.verboseMessage(
+        'Searching for existing Windows project directory...',
+      );
       const actualModuleName = await this.getFinalModuleName();
       moduleDir = path.join(windowsDir, actualModuleName);
-      
+
       // If the expected directory doesn't exist, find any existing project directory
       if (!(await fs.exists(moduleDir))) {
-        this.verboseMessage(`Expected directory ${moduleDir} not found, searching for existing Windows project directory...`);
-        
+        this.verboseMessage(
+          `Expected directory ${moduleDir} not found, searching for existing Windows project directory...`,
+        );
+
         try {
           const windowsDirContents = await fs.readdir(windowsDir);
           const projectDirs = [];
-          
+
           for (const item of windowsDirContents) {
             const itemPath = path.join(windowsDir, item);
             const stats = await fs.stat(itemPath);
-            
-            if (stats.isDirectory() && !item.startsWith('.') && 
-                item !== 'ExperimentalFeatures.props' && 
-                !item.endsWith('.sln')) {
+
+            if (
+              stats.isDirectory() &&
+              !item.startsWith('.') &&
+              item !== 'ExperimentalFeatures.props' &&
+              !item.endsWith('.sln')
+            ) {
               // Check if this directory contains typical project files
               const possibleHeaderFile = path.join(itemPath, `${item}.h`);
               const possibleCppFile = path.join(itemPath, `${item}.cpp`);
-              if (await fs.exists(possibleHeaderFile) || await fs.exists(possibleCppFile)) {
+              if (
+                (await fs.exists(possibleHeaderFile)) ||
+                (await fs.exists(possibleCppFile))
+              ) {
                 projectDirs.push(item);
               }
             }
           }
-          
+
           if (projectDirs.length > 0) {
             projectName = projectDirs[0];
             moduleDir = path.join(windowsDir, projectName);
-            this.verboseMessage(`Found existing Windows project directory: ${moduleDir}`);
+            this.verboseMessage(
+              `Found existing Windows project directory: ${moduleDir}`,
+            );
           } else {
-            this.verboseMessage(`No existing project directory found, using actualModuleName: ${actualModuleName}`);
+            this.verboseMessage(
+              `No existing project directory found, using actualModuleName: ${actualModuleName}`,
+            );
             projectName = actualModuleName;
             moduleDir = path.join(windowsDir, projectName);
             await fs.mkdir(moduleDir, {recursive: true});
           }
         } catch (error) {
-          this.verboseMessage(`Error searching for Windows project directory: ${error}`);
+          this.verboseMessage(
+            `Error searching for Windows project directory: ${error}`,
+          );
           projectName = actualModuleName;
           moduleDir = path.join(windowsDir, projectName);
           await fs.mkdir(moduleDir, {recursive: true});
@@ -946,12 +988,12 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         projectName = actualModuleName;
       }
     }
-    
+
     // Use the determined project directory name for file names
     if (!projectName) {
       projectName = path.basename(moduleDir);
     }
-    
+
     // Store the actual project path for the success message
     this.actualProjectPath = path.join('windows', projectName, projectName);
 
@@ -969,7 +1011,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
         );
       } else {
         this.verboseMessage(
-          `Found ${methods.length} methods from ${specName}: ${methods.map(m => m.name).join(', ')}`,
+          `Found ${methods.length} methods from ${specName}: ${methods
+            .map(m => m.name)
+            .join(', ')}`,
         );
       }
 
@@ -999,7 +1043,10 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       // First, try to read from codegen C++ header files
       const actualCodegenDir = codegenDir || path.join(this.root, 'codegen');
       if (await fs.exists(actualCodegenDir)) {
-        const methods = await this.parseCodegenHeaderFiles(actualCodegenDir, moduleName);
+        const methods = await this.parseCodegenHeaderFiles(
+          actualCodegenDir,
+          moduleName,
+        );
         if (methods.length > 0) {
           this.verboseMessage(
             `Extracted ${methods.length} methods from codegen files: ${methods
@@ -1079,33 +1126,39 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
   }
 
   private async parseCodegenHeaderFiles(
-    codegenDir: string, 
-    moduleName: string
+    codegenDir: string,
+    moduleName: string,
   ): Promise<MethodSignature[]> {
     try {
       this.verboseMessage(`Looking for codegen files in: ${codegenDir}`);
-      
+
       const files = await fs.readdir(codegenDir);
       const specFiles = files.filter(file => file.endsWith('Spec.g.h'));
-      
+
       this.verboseMessage(`Found codegen spec files: ${specFiles.join(', ')}`);
-      
+
       for (const specFile of specFiles) {
         const specPath = path.join(codegenDir, specFile);
         this.verboseMessage(`Reading codegen file: ${specPath}`);
-        
+
         try {
           const content = await fs.readFile(specPath, 'utf8');
-          this.verboseMessage(`Successfully read ${content.length} characters from ${specFile}`);
-          
+          this.verboseMessage(
+            `Successfully read ${content.length} characters from ${specFile}`,
+          );
+
           // Show first few lines for debugging
           const firstLines = content.split('\n').slice(0, 10).join('\n');
           this.verboseMessage(`First 10 lines of ${specFile}:\n${firstLines}`);
-          
+
           // Extract methods from the codegen C++ header
           const methods = this.extractMethodsFromCodegenHeader(content);
           if (methods.length > 0) {
-            this.verboseMessage(`Parsed ${methods.length} methods from ${specFile}: ${methods.map(m => m.name).join(', ')}`);
+            this.verboseMessage(
+              `Parsed ${methods.length} methods from ${specFile}: ${methods
+                .map(m => m.name)
+                .join(', ')}`,
+            );
             return methods;
           } else {
             this.verboseMessage(`No methods extracted from ${specFile}`);
@@ -1114,7 +1167,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
           this.verboseMessage(`Error reading file ${specPath}: ${readError}`);
         }
       }
-      
+
       this.verboseMessage('No methods found in any codegen files');
       return [];
     } catch (error) {
@@ -1127,13 +1180,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     const methods: MethodSignature[] = [];
 
     // Parse from REACT_SHOW_METHOD_SPEC_ERRORS sections which contain the exact method signatures
-    const errorSectionPattern = /REACT_SHOW_METHOD_SPEC_ERRORS\s*\(\s*\d+,\s*"([^"]+)",\s*"[^"]*REACT_METHOD\(([^)]+)\)\s+(?:static\s+)?void\s+(\w+)\s*\(([^)]*)\)[^"]*"/g;
-    
+    const errorSectionPattern =
+      /REACT_SHOW_METHOD_SPEC_ERRORS\s*\(\s*\d+,\s*"([^"]+)",\s*"[^"]*REACT_METHOD\(([^)]+)\)\s+(?:static\s+)?void\s+(\w+)\s*\(([^)]*)\)[^"]*"/g;
+
     let match;
     while ((match = errorSectionPattern.exec(content)) !== null) {
       const methodName = match[1]; // Method name from first parameter
       const parameters = this.parseCodegenParameters(match[4]); // Parameters from method signature
-      
+
       methods.push({
         name: methodName,
         returnType: 'void', // Codegen methods are typically void with callbacks or promises
@@ -1143,13 +1197,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
     // Also try to parse from the methods tuple for additional methods
     if (methods.length === 0) {
-      const methodsTuplePattern = /Method<([^>]+)>\{\s*(\d+),\s*L"([^"]+)"\s*\}/g;
-      
+      const methodsTuplePattern =
+        /Method<([^>]+)>\{\s*(\d+),\s*L"([^"]+)"\s*\}/g;
+
       while ((match = methodsTuplePattern.exec(content)) !== null) {
         const signature = match[1]; // Method signature type
         const methodName = match[3]; // Method name
         const parameters = this.parseCodegenSignature(signature);
-        
+
         methods.push({
           name: methodName,
           returnType: 'void',
@@ -1160,18 +1215,21 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
     // Try parsing directly from C++ method declarations in the header
     if (methods.length === 0) {
-      this.verboseMessage('Trying to parse C++ method declarations directly...');
-      
+      this.verboseMessage(
+        'Trying to parse C++ method declarations directly...',
+      );
+
       // Look for virtual method declarations like:
       // virtual void MethodName(parameters) = 0;
-      const virtualMethodPattern = /virtual\s+(\w+(?:\s*\*)?)\s+(\w+)\s*\(([^)]*)\)\s*(?:const\s*)?=\s*0\s*;/g;
-      
+      const virtualMethodPattern =
+        /virtual\s+(\w+(?:\s*\*)?)\s+(\w+)\s*\(([^)]*)\)\s*(?:const\s*)?=\s*0\s*;/g;
+
       while ((match = virtualMethodPattern.exec(content)) !== null) {
         const returnType = match[1].trim();
         const methodName = match[2];
         const paramString = match[3];
         const parameters = this.parseCodegenParameters(paramString);
-        
+
         methods.push({
           name: methodName,
           returnType: returnType === 'void' ? 'void' : returnType,
@@ -1183,13 +1241,14 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     // Try parsing from JSI method declarations
     if (methods.length === 0) {
       this.verboseMessage('Trying to parse JSI method declarations...');
-      
+
       // Look for JSI-style method declarations
-      const jsiMethodPattern = /static\s+jsi::Value\s+__hostFunction_(\w+)\s*\([^)]*\)\s*{/g;
-      
+      const jsiMethodPattern =
+        /static\s+jsi::Value\s+__hostFunction_(\w+)\s*\([^)]*\)\s*{/g;
+
       while ((match = jsiMethodPattern.exec(content)) !== null) {
         const methodName = match[1];
-        
+
         methods.push({
           name: methodName,
           returnType: 'void',
@@ -1201,25 +1260,27 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     // Try parsing from struct member methods
     if (methods.length === 0) {
       this.verboseMessage('Trying to parse struct member methods...');
-      
+
       // Look for struct methods like:
       // bool MessagingEnabled() const;
       // void MessagingEnabled(bool enabled);
-      const structMethodPattern = /^\s*(?:virtual\s+)?(\w+(?:\s*&)?)\s+(\w+)\s*\(([^)]*)\)\s*(?:const\s*)?(?:noexcept\s*)?(?:=\s*0\s*)?;/gm;
-      
+      const structMethodPattern =
+        /^\s*(?:virtual\s+)?(\w+(?:\s*&)?)\s+(\w+)\s*\(([^)]*)\)\s*(?:const\s*)?(?:noexcept\s*)?(?:=\s*0\s*)?;/gm;
+
       while ((match = structMethodPattern.exec(content)) !== null) {
         const returnType = match[1].trim();
         const methodName = match[2];
         const paramString = match[3];
         const parameters = this.parseCodegenParameters(paramString);
-        
+
         // Skip common non-API methods
-        if (!methodName.startsWith('~') && 
-            !methodName.includes('Destructor') && 
-            !methodName.includes('Constructor') &&
-            methodName !== 'getContext' &&
-            methodName !== 'invalidate') {
-          
+        if (
+          !methodName.startsWith('~') &&
+          !methodName.includes('Destructor') &&
+          !methodName.includes('Constructor') &&
+          methodName !== 'getContext' &&
+          methodName !== 'invalidate'
+        ) {
           methods.push({
             name: methodName,
             returnType: returnType === 'void' ? 'void' : returnType,
@@ -1229,7 +1290,9 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       }
     }
 
-    this.verboseMessage(`Extracted ${methods.length} methods from codegen header using multiple parsing strategies`);
+    this.verboseMessage(
+      `Extracted ${methods.length} methods from codegen header using multiple parsing strategies`,
+    );
     return methods;
   }
 
@@ -1239,17 +1302,17 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     }
 
     const params: Parameter[] = [];
-    
+
     // Split parameters carefully, handling nested templates like std::function<void(bool)>
     const cleanParamString = paramString.trim();
     let current = '';
     let depth = 0;
     let inString = false;
-    
+
     for (let i = 0; i < cleanParamString.length; i++) {
       const char = cleanParamString[i];
-      
-      if (char === '"' && cleanParamString[i-1] !== '\\') {
+
+      if (char === '"' && cleanParamString[i - 1] !== '\\') {
         inString = !inString;
       } else if (!inString) {
         if (char === '<' || char === '(') {
@@ -1264,41 +1327,41 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
           continue;
         }
       }
-      
+
       current += char;
     }
-    
+
     if (current.trim()) {
       params.push(this.parseCodegenParameter(current.trim()));
     }
-    
+
     return params;
   }
 
   private parseCodegenParameter(param: string): Parameter {
     // Handle common codegen parameter patterns
     param = param.trim();
-    
+
     // std::function<void(type)> const & callback -> callback parameter
     if (param.includes('std::function')) {
       if (param.includes('onSuccess') || param.includes('callback')) {
-        return { name: 'callback', type: 'function' };
+        return {name: 'callback', type: 'function'};
       } else if (param.includes('onError')) {
-        return { name: 'onError', type: 'function' };
+        return {name: 'onError', type: 'function'};
       } else {
-        return { name: 'callback', type: 'function' };
+        return {name: 'callback', type: 'function'};
       }
     }
-    
+
     // Extract parameter name from the end
     const parts = param.split(/\s+/);
     let name = parts[parts.length - 1].replace(/[&*]/g, ''); // Remove references/pointers
-    
+
     // Handle winrt types and const references
     if (name.includes('const')) {
       name = parts[parts.length - 2] || 'param';
     }
-    
+
     // Map common codegen types
     let type = 'any';
     if (param.includes('std::string') || param.includes('winrt::hstring')) {
@@ -1307,15 +1370,19 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
       type = 'number';
     } else if (param.includes('bool')) {
       type = 'boolean';
-    } else if (param.includes('int32_t') || param.includes('int64_t') || param.includes('int')) {
+    } else if (
+      param.includes('int32_t') ||
+      param.includes('int64_t') ||
+      param.includes('int')
+    ) {
       type = 'number';
     } else if (param.includes('JSValue')) {
       type = 'any';
     } else if (param.includes('winrt::')) {
       type = 'string'; // Most winrt types are strings or can be treated as such
     }
-    
-    return { name: name || 'param', type };
+
+    return {name: name || 'param', type};
   }
 
   private parseCodegenSignature(signature: string): Parameter[] {
@@ -1324,7 +1391,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
     if (!paramMatch) {
       return [];
     }
-    
+
     return this.parseCodegenParameters(paramMatch[1]);
   }
 
@@ -1444,8 +1511,11 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
           .join(', ');
 
         // Determine if this is a getter method (no parameters and non-void return type)
-        const isGetter = method.parameters.length === 0 && method.returnType !== 'void';
-        const returnType = isGetter ? this.mapTSToCppType(method.returnType) : 'void';
+        const isGetter =
+          method.parameters.length === 0 && method.returnType !== 'void';
+        const returnType = isGetter
+          ? this.mapTSToCppType(method.returnType)
+          : 'void';
         const constModifier = isGetter ? ' const' : '';
 
         return `  REACT_METHOD(${method.name})
@@ -1525,16 +1595,25 @@ private:
           .join(', ');
 
         // Determine if this is a getter method (no parameters and non-void return type)
-        const isGetter = method.parameters.length === 0 && method.returnType !== 'void';
-        const returnType = isGetter ? this.mapTSToCppType(method.returnType) : 'void';
+        const isGetter =
+          method.parameters.length === 0 && method.returnType !== 'void';
+        const returnType = isGetter
+          ? this.mapTSToCppType(method.returnType)
+          : 'void';
         const constModifier = isGetter ? ' const' : '';
 
         // Generate implementation based on method type
-        const hasCallback = method.parameters.some(p => p.type === 'function' && (p.name.includes('onSuccess') || p.name === 'callback'));
-        const hasErrorCallback = method.parameters.some(p => p.type === 'function' && p.name.includes('onError'));
-        
+        const hasCallback = method.parameters.some(
+          p =>
+            p.type === 'function' &&
+            (p.name.includes('onSuccess') || p.name === 'callback'),
+        );
+        const hasErrorCallback = method.parameters.some(
+          p => p.type === 'function' && p.name.includes('onError'),
+        );
+
         let implementation = `  // TODO: Implement ${method.name}`;
-        
+
         if (isGetter) {
           // Getter method - return default value
           const defaultValue = this.generateDefaultValue(method.returnType);
@@ -1599,8 +1678,6 @@ ${defaultImplementations}
 
     return typeMap[tsType] || 'React::JSValue';
   }
-
-
 
   private generateDefaultValue(returnType: string): string {
     if (returnType === 'string') {
@@ -1692,11 +1769,11 @@ ${defaultImplementations}
     spinner.text = 'Running Windows codegen...';
 
     await this.runCodegenWindows(config);
-    
+
     // Wait a bit for codegen files to be fully written to disk
     this.verboseMessage('Waiting for codegen files to be written...');
     await new Promise<void>(resolve => setTimeout(resolve, 1000));
-    
+
     spinner.text = 'Generating C++ stub files...';
 
     await this.generateStubFiles();
