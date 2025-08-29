@@ -21,7 +21,8 @@ HRESULT __stdcall CompositionTextRangeProvider::Clone(ITextRangeProvider **pRetV
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  auto clone = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(m_view.view().as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get());
+  auto clone = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(
+      m_view.view().as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get());
   *pRetVal = clone.detach();
   return S_OK;
 }
