@@ -20,6 +20,7 @@
   <Target Name="CompileHermesBytecode" AfterTargets="MakeBundle" Condition="'$(UseBundle)' == 'true' AND '$(UseHermes)' == 'true'">
     <Message Importance="High" Text="Running [$(HermesCompilerCommand) -emit-binary -out $(BundleOutputFile).hbc $(BundleOutputFile) $(HermesCompilerFlags) -output-source-map] to precompile bundle file." />
     <Exec Command='$(HermesCompilerCommand) -emit-binary -out "$(BundleOutputFile).hbc" "$(BundleOutputFile)" $(HermesCompilerFlags) -output-source-map' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
+    <Delete Files="$(BundleOutputFile)" />
     <Move SourceFiles="$(BundleOutputFile).hbc" DestinationFiles="$(BundleOutputFile)" />
     <Move SourceFiles="$(BundleOutputFile).hbc.map" DestinationFiles="$(HermesSourceMap)" />
     <Exec Command='node "$(ReactNativeDir)\scripts\compose-source-maps.js" "$(PackagerSourceMap)" "$(HermesSourceMap)" -o "$(BundleSourceMap)"' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
