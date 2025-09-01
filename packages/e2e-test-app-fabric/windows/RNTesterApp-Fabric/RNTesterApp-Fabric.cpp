@@ -464,9 +464,14 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     winrt::com_ptr<ITextRangeProvider> textRangePattern;
     hr = textPattern->get_DocumentRange(textRangePattern.put());
     if (SUCCEEDED(hr) && textRangePattern) {
-      textRangePattern->GetText(20, &text);
-      if (SUCCEEDED(hr)) {
-        InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
+      // Clone the text range provider before accessing its methods to avoid hangs
+      winrt::com_ptr<ITextRangeProvider> clonedTextRange;
+      hr = textRangePattern->Clone(clonedTextRange.put());
+      if (SUCCEEDED(hr) && clonedTextRange) {
+        hr = clonedTextRange->GetText(20, &text);
+        if (SUCCEEDED(hr)) {
+          InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
+        }
       }
     }
   }

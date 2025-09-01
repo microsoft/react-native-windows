@@ -18,8 +18,18 @@ CompositionTextRangeProvider::CompositionTextRangeProvider(
 }
 
 HRESULT __stdcall CompositionTextRangeProvider::Clone(ITextRangeProvider **pRetVal) {
-  // no-op
-  *pRetVal = nullptr;
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  auto strongView = m_view.view();
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  // Create a new instance of CompositionTextRangeProvider with the same view and parent provider
+  auto clonedProvider = winrt::make<CompositionTextRangeProvider>(
+      strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get());
+
+  *pRetVal = clonedProvider.detach();
   return S_OK;
 }
 
