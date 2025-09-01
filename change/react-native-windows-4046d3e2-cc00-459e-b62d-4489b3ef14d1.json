@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Fix for Text and TextInput focus issue with screen readers.",
+  "packageName": "react-native-windows",
+  "email": "kvineeth@microsoft.com",
+  "dependentChangeType": "patch"
+}
