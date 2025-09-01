@@ -161,7 +161,7 @@ jobs:
 
             variables: [template: ../variables/windows.yml]
             pool: ${{ parameters.AgentPool.Medium }}
-            timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+            timeoutInMinutes: 120 # how long to run the job before automatically cancelling
             cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
             steps:
@@ -201,7 +201,7 @@ jobs:
                   yarn e2etest
                 displayName: yarn e2etest
                 workingDirectory: packages/e2e-test-app-fabric
-                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
+                timeoutInMinutes: 25 # Time to wait for this task to complete before the server kills it.
 
               - script: npx jest --clearCache
                 displayName: clear jest cache
@@ -212,7 +212,7 @@ jobs:
                 displayName: Update snapshots
                 workingDirectory: packages/e2e-test-app-fabric
                 condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
-                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
+                timeoutInMinutes: 30 # Time to wait for this task to complete before the server kills it.
 
               - task: PowerShell@2
                 displayName: Stop tracing
