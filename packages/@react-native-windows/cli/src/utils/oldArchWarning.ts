@@ -30,7 +30,7 @@ export function showOldArchitectureWarning(): void {
   console.log();
   console.log(
     chalk.blue(
-      '🔗 View the list of properties not yet supported in Fabric: https://microsoft.github.io/react-native-windows/docs/new-arch-props/missingProps',
+      '🔗 View the list of properties not yet supported in Fabric: https://microsoft.github.io/react-native-windows/docs/new-arch-missingProps',
     ),
   );
   console.log();
