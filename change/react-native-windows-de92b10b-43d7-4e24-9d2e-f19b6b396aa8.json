@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Reapply \"Change `init-windows` default new app template to New Architecture\" (#14985)",
-  "packageName": "react-native-windows",
-  "email": "54227869+anupriya13@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

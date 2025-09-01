@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Sep 2025 15:26:05 GMT",
+      "version": "0.80.0-preview.5",
+      "tag": "react-native-windows_v0.80.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bfd8cddb021ba85c6382567fc39d315d812c5d08",
+            "comment": "Reapply \"Change `init-windows` default new app template to New Architecture\" (#14985)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.80.0-preview.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Aug 2025 15:28:20 GMT",
       "version": "0.80.0-preview.4",
       "tag": "react-native-windows_v0.80.0-preview.4",

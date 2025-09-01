@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 25 Aug 2025 15:28:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 01 Sep 2025 15:26:05 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.5
+
+Mon, 01 Sep 2025 15:26:05 GMT
+
+### Changes
+
+- Reapply "Change `init-windows` default new app template to New Architecture" (#14985) (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.80.0-preview.4
 
 ## 0.80.0-preview.4
 

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 01 Sep 2025 15:26:05 GMT",
+      "version": "0.80.0-preview.4",
+      "tag": "@react-native-windows/cli_v0.80.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "bfd8cddb021ba85c6382567fc39d315d812c5d08",
+            "comment": "Reapply \"Change `init-windows` default new app template to New Architecture\" (#14985)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Aug 2025 15:28:19 GMT",
       "version": "0.80.0-preview.3",
       "tag": "@react-native-windows/cli_v0.80.0-preview.3",
