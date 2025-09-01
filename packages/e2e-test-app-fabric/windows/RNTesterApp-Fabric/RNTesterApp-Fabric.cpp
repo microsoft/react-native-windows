@@ -230,6 +230,26 @@ void InsertNumberValueIfNotDefault(
   }
 }
 
+void InsertNumberValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    double value,
+    double defaultValue = 0.0f) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
+void InsertNumberValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    long value,
+    long defaultValue = 0) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
 void InsertIntValueIfNotDefault(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
@@ -365,6 +385,8 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL selectionRequired;
   BSTR text = nullptr;
   BOOL horizontallyScrollable;
+  VARIANT varFontAttr;
+  VariantInit(&varFontAttr);
   BSTR annotationAuthor = nullptr;
   BSTR annotationTypeName = nullptr;
   BSTR annotationDateTime = nullptr;
@@ -464,9 +486,38 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     winrt::com_ptr<ITextRangeProvider> textRangePattern;
     hr = textPattern->get_DocumentRange(textRangePattern.put());
     if (SUCCEEDED(hr) && textRangePattern) {
-      textRangePattern->GetText(20, &text);
-      if (SUCCEEDED(hr)) {
-        InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
+      // Clone the text range before accessing its methods
+      winrt::com_ptr<ITextRangeProvider> clonedTextRange;
+      hr = textRangePattern->Clone(clonedTextRange.put());
+      if (SUCCEEDED(hr) && clonedTextRange) {
+        hr = clonedTextRange->GetText(20, &text);
+        if (SUCCEEDED(hr)) {
+          InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
+        }
+        hr = clonedTextRange->GetAttributeValue(UIA_FontSizeAttributeId, &varFontAttr);
+        if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_R8) {
+          InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontSize", varFontAttr.dblVal);
+        }
+        hr = clonedTextRange->GetAttributeValue(UIA_FontNameAttributeId, &varFontAttr);
+        if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BSTR) {
+          InsertStringValueIfNotEmpty(result, L"TextRangePattern.fontName", varFontAttr.bstrVal);
+        }
+        hr = clonedTextRange->GetAttributeValue(UIA_FontWeightAttributeId, &varFontAttr);
+        if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
+          InsertNumberValueIfNotDefault(result, L"TextRangePattern.fontWeight", varFontAttr.lVal);
+        }
+        hr = clonedTextRange->GetAttributeValue(UIA_IsReadOnlyAttributeId, &varFontAttr);
+        if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_BOOL) {
+          InsertBooleanValueIfNotDefault(result, L"TextRangePattern.readOnly", varFontAttr.boolVal);
+        }
+        hr = clonedTextRange->GetAttributeValue(UIA_BackgroundColorAttributeId, &varFontAttr);
+        if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
+          InsertNumberValueIfNotDefault(result, L"TextRangePattern.backgroundColor", varFontAttr.lVal);
+        }
+        hr = clonedTextRange->GetAttributeValue(UIA_CapStyleAttributeId, &varFontAttr);
+        if (SUCCEEDED(hr) && varFontAttr.vt == VARENUM::VT_I4) {
+          InsertIntValueIfNotDefault(result, L"TextRangePattern.capStyleAttr", varFontAttr.lVal);
+        }
       }
     }
   }
@@ -503,6 +554,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     }
   }
 
+  VariantClear(&varFontAttr);
   ::SysFreeString(text);
   ::SysFreeString(value);
 }
