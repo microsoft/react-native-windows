@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 02 Sep 2025 05:24:07 GMT",
+      "version": "0.0.0-canary.275",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.275",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "78c399c369f4b3a5b3e265fee723ad941a5e6cbc",
+            "comment": "Remove Prompt from CLI for switching to new arch."
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Aug 2025 05:26:00 GMT",
       "version": "0.0.0-canary.274",
       "tag": "@react-native-windows/cli_v0.0.0-canary.274",

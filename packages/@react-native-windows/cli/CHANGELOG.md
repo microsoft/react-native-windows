@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Wed, 27 Aug 2025 05:26:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 02 Sep 2025 05:24:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.275
+
+Tue, 02 Sep 2025 05:24:07 GMT
+
+### Changes
+
+- Remove Prompt from CLI for switching to new arch. (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.0.0-canary.274
 

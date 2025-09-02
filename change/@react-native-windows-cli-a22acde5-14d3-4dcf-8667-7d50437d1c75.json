@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove Prompt from CLI for switching to new arch.",
-  "packageName": "@react-native-windows/cli",
-  "email": "54227869+anupriya13@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
