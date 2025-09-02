@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Sep 2025 05:24:07 GMT",
+      "version": "0.0.0-canary.988",
+      "tag": "react-native-windows_v0.0.0-canary.988",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3e8db0cd192b74a23ad8ba4bcac922e04abec808",
+            "comment": "[Fabric] Fix for Text and TextInput focus issue with screen readers."
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.275",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Aug 2025 05:26:00 GMT",
       "version": "0.0.0-canary.987",
       "tag": "react-native-windows_v0.0.0-canary.987",
