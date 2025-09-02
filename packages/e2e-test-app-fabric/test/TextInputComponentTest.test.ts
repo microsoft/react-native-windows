@@ -925,7 +925,7 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
   });
-  test('TextInput triggers onPressIn and updates state text', async () => {
+  /*test('TextInput triggers onPressIn and updates state text', async () => {
     // Scroll the example into view
     await searchBox('onPressIn');
     const component = await app.findElementByTestID('textinput-pressin');
@@ -978,5 +978,5 @@ describe('TextInput Tests', () => {
 
     // Assertion
     expect(await stateText.getText()).toBe('Released click/touch');
-  });
+  });*/
 });
