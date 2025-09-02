@@ -36,7 +36,6 @@ struct DOMSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(, Callback<double, double, double, double, double, double>) noexcept>{16, L"measure"},
       Method<void(, Callback<double, double, double, double>) noexcept>{17, L"measureInWindow"},
       Method<void(, , Callback<>, Callback<double, double, double, double>) noexcept>{18, L"measureLayout"},
-      Method<void(, ) noexcept>{19, L"setNativeProps"},
   };
 
   template <class TModule>
@@ -138,11 +137,6 @@ struct DOMSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "measureLayout",
           "    REACT_METHOD(measureLayout) void measureLayout( nativeElementReference,  relativeNode, std::function<void()> const & onFail, std::function<void(double, double, double, double)> const & onSuccess) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(measureLayout) static void measureLayout( nativeElementReference,  relativeNode, std::function<void()> const & onFail, std::function<void(double, double, double, double)> const & onSuccess) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          19,
-          "setNativeProps",
-          "    REACT_METHOD(setNativeProps) void setNativeProps( nativeElementReference,  updatePayload) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(setNativeProps) static void setNativeProps( nativeElementReference,  updatePayload) noexcept { /* implementation */ }\n");
   }
 };
 

@@ -34,12 +34,6 @@
     <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">true</RestoreForceEvaluate>
   </PropertyGroup>
 
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-    </ClCompile>
-  </ItemDefinitionGroup>
-
   <!-- User overrides -->
   <Import Project="$(MSBuildThisFileDirectory)Directory.Build.local.props" Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.local.props')" />
 

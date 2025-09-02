@@ -26,7 +26,6 @@ struct IntersectionObserverSpec_NativeIntersectionObserverEntry {
 
 struct IntersectionObserverSpec_NativeIntersectionObserverObserveOptions {
     double intersectionObserverId;
-    std::optional<> rootShadowNode;
      targetShadowNode;
     std::vector<double> thresholds;
     std::optional<std::vector<double>> rootThresholds;
@@ -49,7 +48,6 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserve
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"intersectionObserverId", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::intersectionObserverId},
-        {L"rootShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::rootShadowNode},
         {L"targetShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::targetShadowNode},
         {L"thresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::thresholds},
         {L"rootThresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::rootThresholds},
@@ -61,11 +59,9 @@ struct IntersectionObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
   static constexpr auto methods = std::tuple{
       Method<void(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions) noexcept>{0, L"observe"},
       Method<void(double, ) noexcept>{1, L"unobserve"},
-      SyncMethod<(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions) noexcept>{2, L"observeV2"},
-      Method<void(double, ) noexcept>{3, L"unobserveV2"},
-      Method<void(Callback<>) noexcept>{4, L"connect"},
-      Method<void() noexcept>{5, L"disconnect"},
-      SyncMethod<std::vector<IntersectionObserverSpec_NativeIntersectionObserverEntry>() noexcept>{6, L"takeRecords"},
+      Method<void(Callback<>) noexcept>{2, L"connect"},
+      Method<void() noexcept>{3, L"disconnect"},
+      SyncMethod<std::vector<IntersectionObserverSpec_NativeIntersectionObserverEntry>() noexcept>{4, L"takeRecords"},
   };
 
   template <class TModule>
@@ -84,26 +80,16 @@ struct IntersectionObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
           "    REACT_METHOD(unobserve) static void unobserve(double intersectionObserverId,  targetShadowNode) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
-          "observeV2",
-          "    REACT_SYNC_METHOD(observeV2)  observeV2(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions && options) noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(observeV2) static  observeV2(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions && options) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          3,
-          "unobserveV2",
-          "    REACT_METHOD(unobserveV2) void unobserveV2(double intersectionObserverId,  token) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(unobserveV2) static void unobserveV2(double intersectionObserverId,  token) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
           "connect",
           "    REACT_METHOD(connect) void connect(std::function<void()> const & notifyIntersectionObserversCallback) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(connect) static void connect(std::function<void()> const & notifyIntersectionObserversCallback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          5,
+          3,
           "disconnect",
           "    REACT_METHOD(disconnect) void disconnect() noexcept { /* implementation */ }\n"
           "    REACT_METHOD(disconnect) static void disconnect() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          6,
+          4,
           "takeRecords",
           "    REACT_SYNC_METHOD(takeRecords) std::vector<IntersectionObserverSpec_NativeIntersectionObserverEntry> takeRecords() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(takeRecords) static std::vector<IntersectionObserverSpec_NativeIntersectionObserverEntry> takeRecords() noexcept { /* implementation */ }\n");
