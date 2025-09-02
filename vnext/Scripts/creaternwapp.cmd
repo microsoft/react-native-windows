@@ -115,11 +115,12 @@ set RNCLI_TEMPLATE=
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwapp.cmd Override @react-native-community/template version
   REM Do not change, this makes sure we always get a nightly template when still consuming a nightly RN and NOT a later "stable" template that may have been released
-  set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
+  REM set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
+  set RNCLI_TEMPLATE=--template "@react-native-community/template@0.80.0-nightly-2025523-eb796ac"
 )
 
-@echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% !RNCLI_TEMPLATE! --verbose --skip-install --install-pods false --skip-git-init true
-call npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% !RNCLI_TEMPLATE! --verbose --skip-install --install-pods false --skip-git-init true
+@echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
+call npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwapp.cmd: Unable to create base RN app project
@@ -142,7 +143,7 @@ call yarn install
 @echo creaternwapp.cmd: Creating commit to save current state
 if not exist ".git\" call git init .
 call git add .
-call git commit -m "npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true"
+call git commit -m "npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true"
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting yarn to use verdaccio at http://localhost:4873
@@ -173,8 +174,8 @@ call yarn install
 call git add .
 call git commit -m "add rnw dependency"
 
-@echo creaternwapp.cmd Running init-windows with: npx --yes @react-native-community/cli@latest init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-call npx --yes @react-native-community/cli@latest init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
+@echo creaternwapp.cmd Running init-windows with: npx --yes @react-native-community/cli@%RNCLI_VERSION% init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
+call npx --yes @react-native-community/cli@%RNCLI_VERSION% init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
 
 @echo creaternwapp.cmd Done, see new %RNW_TEMPLATE_TYPE% project in %CD% with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 
