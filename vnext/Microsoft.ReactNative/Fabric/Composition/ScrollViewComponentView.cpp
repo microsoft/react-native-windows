@@ -1394,7 +1394,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
               ->onScrollEndDrag(scrollMetrics);
 
-          // Transition to momentum scrolling
+          // Transition to momentum scrolling only if there's potential for momentum
+          // (i.e., only if the scroll view can continue scrolling in either direction)
           if (m_isScrolling && !m_isScrollingFromInertia) {
             m_isScrollingFromInertia = true;
             std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
