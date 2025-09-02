@@ -161,6 +161,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double m_scrollEventThrottle{0.0};
   bool m_allowNextScrollNoMatterWhat{false};
   std::chrono::steady_clock::time_point m_lastScrollEventTime{};
+  std::chrono::steady_clock::time_point m_lastScrollPositionTime{};
+  winrt::Windows::Foundation::Numerics::float3 m_lastScrollPosition{};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 };
 

@@ -1323,6 +1323,34 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
             m_allowNextScrollNoMatterWhat = false;
           }
         }
+
+        // Track scroll position and time for momentum end detection
+        auto currentPosition = args.Position();
+        if (m_isScrollingFromInertia) {
+          // Check if we have previous position data to compare
+          if (m_lastScrollPositionTime != std::chrono::steady_clock::time_point{}) {
+            auto timeSinceLastPosition =
+                std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastScrollPositionTime).count();
+            auto positionDelta = std::abs(currentPosition.x - m_lastScrollPosition.x) +
+                std::abs(currentPosition.y - m_lastScrollPosition.y);
+
+            // If position hasn't changed significantly in the last 150ms, momentum has ended
+            if (timeSinceLastPosition > 150 && positionDelta < 0.5f) {
+              m_isScrolling = false;
+              m_isScrollingFromInertia = false;
+
+              auto eventEmitter = GetEventEmitter();
+              if (eventEmitter) {
+                auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+                std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+                    ->onMomentumScrollEnd(scrollMetrics);
+              }
+            }
+          }
+        }
+
+        m_lastScrollPosition = currentPosition;
+        m_lastScrollPositionTime = now;
       });
 
   m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
@@ -1332,6 +1360,20 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
         m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
+
+        // Mark that we're scrolling and reset inertia flag
+        m_isScrolling = true;
+        if (m_isScrollingFromInertia) {
+          // If user interrupts momentum scrolling with a new drag, end momentum first
+          auto eventEmitter = GetEventEmitter();
+          if (eventEmitter) {
+            auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+                ->onMomentumScrollEnd(scrollMetrics);
+          }
+        }
+        m_isScrollingFromInertia = false;
+
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
           auto scrollMetrics = getScrollMetrics(eventEmitter, args);
@@ -1351,6 +1393,13 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           auto scrollMetrics = getScrollMetrics(eventEmitter, args);
           std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
               ->onScrollEndDrag(scrollMetrics);
+
+          // Transition to momentum scrolling
+          if (m_isScrolling && !m_isScrollingFromInertia) {
+            m_isScrollingFromInertia = true;
+            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+                ->onMomentumScrollBegin(scrollMetrics);
+          }
         }
       });
 
