@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 27 Aug 2025 05:26:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 02 Sep 2025 05:24:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.988
+
+Tue, 02 Sep 2025 05:24:07 GMT
+
+### Changes
+
+- [Fabric] Fix for Text and TextInput focus issue with screen readers. (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.275
 
 ## 0.0.0-canary.987
 
