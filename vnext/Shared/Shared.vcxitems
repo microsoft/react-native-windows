@@ -242,6 +242,16 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+	<ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+	<ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlHost.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
@@ -352,6 +362,16 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.h">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+	<ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.h">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+	<ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlHost.h">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\DynamicReader.cpp">
@@ -717,6 +737,7 @@
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\UriImageManager.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />
 	<Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl" />
+	<Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />
@@ -731,5 +752,8 @@
     <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\V8Api.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+  <Page Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\App.xaml" />
   </ItemGroup>
 </Project>
