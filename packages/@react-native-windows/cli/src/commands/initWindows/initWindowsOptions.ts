@@ -14,7 +14,6 @@ export interface InitOptions {
   overwrite?: boolean;
   telemetry?: boolean;
   list?: boolean;
-  prompt?: boolean;
 }
 
 export const initOptions: CommandOption[] = [
@@ -52,9 +51,5 @@ export const initOptions: CommandOption[] = [
     name: '--list',
     description:
       'Shows a list with all available templates with their descriptions.',
-  },
-  {
-    name: '--no-prompt',
-    description: 'Skip any interactive prompts and use default choices.',
   },
 ];

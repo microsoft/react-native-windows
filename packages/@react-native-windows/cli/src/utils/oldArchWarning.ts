@@ -28,4 +28,16 @@ export function showOldArchitectureWarning(): void {
     ),
   );
   console.log();
+  console.log(
+    chalk.blue(
+      '🔗 View the list of properties not yet supported in Fabric: https://microsoft.github.io/react-native-windows/docs/new-arch-missingProps',
+    ),
+  );
+  console.log();
+  console.log(
+    chalk.blue(
+      '💬 If you encounter missing properties, please open an issue: https://github.com/microsoft/react-native-windows/issues',
+    ),
+  );
+  console.log();
 }

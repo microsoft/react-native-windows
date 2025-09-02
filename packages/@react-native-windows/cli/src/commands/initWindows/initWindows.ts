@@ -31,7 +31,6 @@ import {
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
 import * as nameHelpers from '../../utils/nameHelpers';
 import {showOldArchitectureWarning} from '../../utils/oldArchWarning';
-import {promptForArchitectureChoice} from '../../utils/architecturePrompt';
 import type {InitOptions} from './initWindowsOptions';
 import {initOptions} from './initWindowsOptions';
 
@@ -156,9 +155,6 @@ export class InitWindows {
       return;
     }
 
-    const userDidNotPassTemplate = !process.argv.some(arg =>
-      arg.startsWith('--template'),
-    );
     this.options.template ??=
       (this.rnwConfig?.['init-windows']?.template as string | undefined) ??
       this.getDefaultTemplateName();
@@ -172,22 +168,9 @@ export class InitWindows {
     }
 
     const isOldArchTemplate = this.options.template.startsWith('old');
-    const promptFlag = this.options.prompt;
 
     if (isOldArchTemplate) {
       showOldArchitectureWarning();
-
-      if (userDidNotPassTemplate && promptFlag) {
-        const promptResult = await promptForArchitectureChoice();
-
-        if (
-          !promptResult.shouldContinueWithOldArch &&
-          !promptResult.userCancelled
-        ) {
-          spinner.info('Switching to New Architecture template (cpp-app)...');
-          this.options.template = 'cpp-app';
-        }
-      }
     }
 
     const templateConfig = this.templates.get(this.options.template)!;
@@ -321,7 +304,6 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
     case 'overwrite':
     case 'telemetry':
     case 'list':
-    case 'prompt':
       return value === undefined ? false : value; // Return value
   }
 }
