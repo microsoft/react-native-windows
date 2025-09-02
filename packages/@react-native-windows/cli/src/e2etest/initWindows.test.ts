@@ -26,7 +26,6 @@ function validateOptionName(
     case 'overwrite':
     case 'telemetry':
     case 'list':
-    case 'prompt':
       return true;
   }
   throw new Error(
@@ -56,7 +55,6 @@ test('initOptions - validate options', () => {
 
     // Validate all command options are present in InitOptions
     const optionName = commanderNameToOptionName(commandOption.name);
-
     expect(
       validateOptionName(commandOption.name, optionName as keyof InitOptions),
     ).toBe(true);
