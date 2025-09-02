@@ -113,9 +113,9 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 
 set RNCLI_TEMPLATE=
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
-    for /f "tokens=1 delims=-" %%a in ("%RN_VERSION%") do (
-        set "RNCLI_TEMPLATE=--template @react-native-community/template@^%%a"
-    )
+  @echo creaternwapp.cmd Override @react-native-community/template version
+  REM Do not change, this makes sure we always get a nightly template when still consuming a nightly RN and NOT a later "stable" template that may have been released
+  set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
 )
 
 @echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@latest init %APP_NAME% --version %RN_VERSION% !RNCLI_TEMPLATE! --verbose --skip-install --install-pods false --skip-git-init true
