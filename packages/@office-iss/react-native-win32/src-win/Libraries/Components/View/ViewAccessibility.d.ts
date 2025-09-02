@@ -402,6 +402,7 @@ export type AccessibilityAnnotationInfo = Readonly<{
   author?: string;
   dateTime?: string;
   target?: string;
+  replyCount?: number;
 }>;
 
 // [Win32]
