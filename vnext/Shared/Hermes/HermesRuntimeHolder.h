@@ -111,7 +111,7 @@ EXTERN_C_END
 
 namespace facebook::hermes {
 
-hermes_api_vtable getHermesApiVTable() {
+inline hermes_api_vtable getHermesApiVTable() {
   // TODO: Implement loading from DLL.
   static hermes_api_vtable vtable = nullptr;
   return vtable;
@@ -343,7 +343,6 @@ class HermesJSRuntime final : public facebook::react::JSRuntime {
       std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState> previouslyExportedState,
       const facebook::react::jsinspector_modern::ExecutionContextDescription &executionContextDescription,
       facebook::react::RuntimeExecutor runtimeExecutor) override;
-  
 
   facebook::react::jsinspector_modern::RuntimeTargetDelegate &getRuntimeTargetDelegate() override;
 

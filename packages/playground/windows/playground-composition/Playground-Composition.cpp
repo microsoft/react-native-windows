@@ -140,6 +140,7 @@ struct WindowData {
 
   winrt::Microsoft::ReactNative::ReactNativeHost Host() noexcept {
     if (!m_host) {
+      winrt::Microsoft::ReactNative::QuirkSettings::SetUseFusebox(true);
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
       m_host.InstanceSettings(InstanceSettings());
     }
@@ -635,8 +636,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
 int RunPlayground(int showCmd, bool /*useWebDebugger*/) {
+  // Enable Fusebox as the very first thing
+  winrt::Microsoft::ReactNative::QuirkSettings::SetUseFusebox(true);
+  
   constexpr PCWSTR appName = L"React Native Playground (Composition)";
-
+  
   auto windowData = std::make_unique<WindowData>();
   HWND hwnd = CreateWindow(
       c_windowClassName,
@@ -673,6 +677,9 @@ int RunPlayground(int showCmd, bool /*useWebDebugger*/) {
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+  // Enable Fusebox as the very first thing
+  winrt::Microsoft::ReactNative::QuirkSettings::SetUseFusebox(true);
+  
   // Island-support: Call init_apartment to initialize COM and WinRT for the thread.
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 

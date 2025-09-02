@@ -321,6 +321,7 @@ void DevSupportManager::EnsureHermesInspector(
     if (inspectorFlags.getFuseboxEnabled()) {
       m_fuseboxInspectorPackagerConnection = std::make_unique<jsinspector_modern::InspectorPackagerConnection>(
           inspectorUrl,
+          deviceName,
           packageName,
           std::make_unique<Microsoft::ReactNative::ReactInspectorPackagerConnectionDelegate>());
       m_fuseboxInspectorPackagerConnection->connect();

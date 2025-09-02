@@ -34,8 +34,8 @@ struct LoadNetworkResourceRequest {
 
 struct ReadStreamParams {
   StreamID handle;
-  std::optional<size_t> size; // [Windows #13587]
-  std::optional<size_t> offset; // [Windows #13587]
+  std::optional<unsigned long> size;
+  std::optional<unsigned long> offset;
 };
 
 struct NetworkResource {
@@ -236,7 +236,7 @@ class NetworkIOAgent {
    * Stream IDs are strings of an incrementing integer, unique within each
    * NewtworkIOAgent instance. This stores the next one to use.
    */
-  size_t nextStreamId_{0}; // [Windows #13587]
+  unsigned long nextStreamId_{0};
 
   /**
    * Begin loading an HTTP resource, delegating platform-specific

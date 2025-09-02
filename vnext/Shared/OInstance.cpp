@@ -228,8 +228,8 @@ class OJSIExecutor : public JSIExecutor {
       std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate> targetDelegate) noexcept
       : JSIExecutor(std::move(runtime), std::move(delegate), timeoutInvoker, std::move(runtimeInstaller)),
         targetDelegate_(std::move(targetDelegate_)) {}
-
-  jsinspector_modern::RuntimeTargetDelegate &getRuntimeTargetDelegate() override {
+  // cant override from base class JSIExecutor as its not part of the JSIExecutor interface.
+  jsinspector_modern::RuntimeTargetDelegate &getRuntimeTargetDelegate() {
     return *targetDelegate_;
   }
 

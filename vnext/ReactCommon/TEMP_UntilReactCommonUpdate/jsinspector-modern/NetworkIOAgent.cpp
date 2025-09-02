@@ -9,7 +9,6 @@
 #include "InspectorFlags.h"
 
 #include "Base64.h"
-#include "CdpJson.h"
 #include "Utf8.h"
 
 #include <jsinspector-modern/network/NetworkReporter.h>
@@ -20,7 +19,7 @@
 
 namespace facebook::react::jsinspector_modern {
 
-static constexpr size_t DEFAULT_BYTES_PER_READ = // [Windows #13587]
+static constexpr long DEFAULT_BYTES_PER_READ =
     1048576; // 1MB (Chrome v112 default)
 
 // https://github.com/chromium/chromium/blob/128.0.6593.1/content/browser/devtools/devtools_io_context.cc#L71-L73
@@ -32,7 +31,7 @@ static constexpr std::array kTextMIMETypePrefixes{
     "application/javascript" // Not in Chromium but emitted by Metro
 };
 
-namespace {
+// namespace { [Windows #13587]
 
 struct InitStreamResult {
   uint32_t httpStatusCode;
@@ -45,7 +44,6 @@ using StreamInitCallback =
     std::function<void(std::variant<InitStreamError, InitStreamResult>)>;
 using IOReadCallback =
     std::function<void(std::variant<IOReadError, IOReadResult>)>;
-} // [Windows #13587]
 
 /**
  * Private class owning state and implementing the listener for a particular
@@ -87,7 +85,7 @@ class Stream : public NetworkRequestListener,
    * \param callback Will be called using the executor passed to create()
    * with the result of the read, or an error string.
    */
-  void read(size_t maxBytesToRead, const IOReadCallback& callback) { // [Windows #13587]
+  void read(long maxBytesToRead, const IOReadCallback& callback) {
     pendingReadRequests_.emplace_back(
         std::make_tuple(maxBytesToRead, callback));
     processPending();
@@ -209,7 +207,7 @@ class Stream : public NetworkRequestListener,
     }
   }
 
-  IOReadResult respond(size_t maxBytesToRead) { // [Windows #13587]
+  IOReadResult respond(long maxBytesToRead) {
     std::vector<char> buffer(maxBytesToRead);
     data_.read(buffer.data(), maxBytesToRead);
     auto bytesRead = data_.gcount();
@@ -254,7 +252,7 @@ class Stream : public NetworkRequestListener,
   size_t bytesReceived_{0}; // [Windows #13587]
   std::optional<std::function<void()>> cancelFunction_{std::nullopt};
   std::unique_ptr<StreamInitCallback> initCb_;
-  std::vector<std::tuple<size_t /* bytesToRead */, IOReadCallback>> // [Windows #13587]
+  std::vector<std::tuple<long /* bytesToRead */, IOReadCallback>>
       pendingReadRequests_;
 };
 // } // namespace [Windows #13587]
@@ -304,7 +302,7 @@ bool NetworkIOAgent::handleRequest(
 void NetworkIOAgent::handleLoadNetworkResource(
     const cdp::PreparsedRequest& req,
     LoadNetworkResourceDelegate& delegate) {
-  cdp::RequestId requestId = req.id; // [Windows #13587]
+  long long requestId = req.id;
 
   LoadNetworkResourceRequest params;
 
@@ -390,7 +388,7 @@ void NetworkIOAgent::handleLoadNetworkResource(
 }
 
 void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
-  cdp::RequestId requestId = req.id; // [Windows #13587]
+  long long requestId = req.id;
   if (!req.params.isObject()) {
     frontendChannel_(cdp::jsonError(
         requestId,
@@ -406,9 +404,9 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
         "Invalid params: handle is missing or not a string."));
     return;
   }
-  std::optional<size_t> size = std::nullopt; // [Windows #13587]
+  std::optional<int64_t> size = std::nullopt; // [Windows #13587]
   if ((req.params.count("size") != 0u) && req.params.at("size").isInt()) {
-    size = static_cast<size_t>(req.params.at("size").asInt()); // [Windows #13587]
+    size = req.params.at("size").asInt();
   }
 
   auto streamId = req.params.at("handle").asString();
@@ -421,7 +419,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
     return;
   } else {
     it->second->read(
-        size ? *size : DEFAULT_BYTES_PER_READ,
+        size ? static_cast<unsigned long>(*size) : DEFAULT_BYTES_PER_READ, // [Windows #13587]
         [requestId,
          frontendChannel = frontendChannel_,
          streamId,
@@ -442,7 +440,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
 }
 
 void NetworkIOAgent::handleIoClose(const cdp::PreparsedRequest& req) {
-  cdp::RequestId requestId = req.id; // [Windows #13587]
+  long long requestId = req.id;
   if (!req.params.isObject()) {
     frontendChannel_(cdp::jsonError(
         requestId,

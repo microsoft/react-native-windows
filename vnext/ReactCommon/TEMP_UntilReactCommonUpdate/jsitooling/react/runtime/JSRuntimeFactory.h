@@ -32,7 +32,7 @@ class JSRuntime : public jsinspector_modern::RuntimeTargetDelegate {
    * this JSRuntime. This reference must remain valid for the duration of the
    * JSRuntime's lifetime.
    */
-  // virtual jsinspector_modern::RuntimeTargetDelegate& getRuntimeTargetDelegate();
+  virtual jsinspector_modern::RuntimeTargetDelegate& getRuntimeTargetDelegate();
 
   /**
    * Run initialize work that must happen on the runtime's JS thread. Used for

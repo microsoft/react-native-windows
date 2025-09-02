@@ -89,13 +89,35 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
 #endif
 
   auto &inspectorFlags = facebook::react::jsinspector_modern::InspectorFlags::getInstance();
+  
+  // Debug fusebox flag
+  if (inspectorFlags.getFuseboxEnabled()) {
+    OutputDebugStringA("ReactNativeHost: Fusebox is ENABLED\n");
+  } else {
+    OutputDebugStringA("ReactNativeHost: Fusebox is DISABLED - InspectorTarget will be null!\n");
+  }
+  
+  // Debug inspector page ID
+  if (!m_inspectorPageId.has_value()) {
+    OutputDebugStringA("ReactNativeHost: No existing inspector page ID\n");
+  } else {
+    OutputDebugStringA("ReactNativeHost: Inspector page ID already exists\n");
+  }
+  
   if (inspectorFlags.getFuseboxEnabled() && !m_inspectorPageId.has_value()) {
+    OutputDebugStringA("ReactNativeHost: Creating inspector target...\n");
     m_inspectorHostDelegate = std::make_shared<ModernInspectorHostTargetDelegate>(*this);
     m_inspectorTarget = facebook::react::jsinspector_modern::HostTarget::create(
         *m_inspectorHostDelegate, [](std::function<void()> &&callback) {
           ::Microsoft::ReactNative::ReactInspectorThread::Instance().Post(
               [callback = std::move(callback)]() { callback(); });
         });
+
+    if (m_inspectorTarget) {
+      OutputDebugStringA("ReactNativeHost: Inspector target created successfully\n");
+    } else {
+      OutputDebugStringA("ReactNativeHost: Failed to create inspector target!\n");
+    }
 
     std::weak_ptr<facebook::react::jsinspector_modern::HostTarget> weakInspectorTarget = m_inspectorTarget;
     facebook::react::jsinspector_modern::InspectorTargetCapabilities capabilities;
@@ -117,6 +139,14 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
           return nullptr;
         },
         capabilities);
+        
+    if (m_inspectorPageId.has_value()) {
+      OutputDebugStringA("ReactNativeHost: Inspector page added successfully\n");
+    } else {
+      OutputDebugStringA("ReactNativeHost: Failed to add inspector page\n");
+    }
+  } else {
+    OutputDebugStringA("ReactNativeHost: Skipping inspector creation - conditions not met\n");
   }
 }
 

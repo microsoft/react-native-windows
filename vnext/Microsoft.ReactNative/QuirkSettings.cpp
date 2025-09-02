@@ -20,7 +20,8 @@ class QuirkSettingsReactNativeFeatureFlags : public facebook::react::ReactNative
  public:
   QuirkSettingsReactNativeFeatureFlags(bool fuseboxEnabledDebug) : m_fuseboxEnabledDebug(fuseboxEnabledDebug) {}
 
-  bool fuseboxEnabledDebug() override {
+  // base class ReactNativeFeatureFlagsDefaults has no virtual func fuseboxEnabledDebug
+  bool fuseboxEnabledDebug() {
     return m_fuseboxEnabledDebug;
   }
 

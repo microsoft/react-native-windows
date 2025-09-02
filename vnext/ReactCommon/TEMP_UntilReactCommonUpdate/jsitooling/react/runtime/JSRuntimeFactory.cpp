@@ -42,4 +42,12 @@ JSIRuntimeHolder::createAgentDelegate(
       std::move(frontendChannel), sessionState, runtime_->description());
 }
 
+//windows base implementation needed as getRuntimeTargetDelegate is not pure virtual
+jsinspector_modern::RuntimeTargetDelegate& JSRuntime::getRuntimeTargetDelegate() {
+  if (!runtimeTargetDelegate_) {
+    runtimeTargetDelegate_.emplace("JSRuntime");
+  }
+  return *runtimeTargetDelegate_;
+}
+
 } // namespace facebook::react
