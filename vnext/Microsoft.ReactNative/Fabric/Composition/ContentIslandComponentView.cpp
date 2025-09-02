@@ -178,14 +178,14 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
 void ContentIslandComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
+  //assert(false);
   base_type::MountChildComponentView(childComponentView, index);
 }
 
 void ContentIslandComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
+  //assert(false);
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
