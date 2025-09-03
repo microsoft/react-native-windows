@@ -265,6 +265,12 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
         args.AutomationProvider(nullptr);
         args.Handled(true);
       });
+
+  if (m_uiaProvider)
+  {
+    auto providerImpl = m_uiaProvider.as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    providerImpl->SetChildSiteLink(m_childSiteLink);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

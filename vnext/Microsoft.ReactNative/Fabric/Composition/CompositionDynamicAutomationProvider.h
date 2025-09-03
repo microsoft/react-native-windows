@@ -98,6 +98,10 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
 
+  void SetChildSiteLink(winrt::Microsoft::UI::Content::ChildSiteLink childSiteLink) {
+    m_childSiteLink = childSiteLink;
+  }
+
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   winrt::com_ptr<ITextProvider2> m_textProvider;
