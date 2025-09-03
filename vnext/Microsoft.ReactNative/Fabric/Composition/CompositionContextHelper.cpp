@@ -1308,6 +1308,8 @@ struct CompScrollerVisual : winrt::implements<
   SnapAlignment m_snapToAlignment{SnapAlignment::Start};
   bool m_inertia{false};
   bool m_custom{false};
+  bool m_interacting{false};
+  int m_interactionRequestId{-1};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
   winrt::Windows::Foundation::Numerics::float3 m_currentPosition;
   winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
