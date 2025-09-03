@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 03 Sep 2025 05:22:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.296
+
+Wed, 03 Sep 2025 05:22:57 GMT
+
+### Changes
+
+- Add reply count prop to AccessibilityAnnotationInfo (mmaring@microsoft.com)
 
 ## 0.0.0-canary.295
 

@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 03 Sep 2025 05:22:57 GMT",
+      "version": "0.0.0-canary.296",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.296",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "mmaring@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "dca862a71a36a4c8147bb0d26376bdf59afba232",
+            "comment": "Add reply count prop to AccessibilityAnnotationInfo"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Aug 2025 05:30:39 GMT",
       "version": "0.0.0-canary.295",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.295",
