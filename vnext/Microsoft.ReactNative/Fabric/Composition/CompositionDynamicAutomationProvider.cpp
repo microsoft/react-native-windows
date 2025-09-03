@@ -1009,7 +1009,24 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Expand() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
+  // Get current state before changing
+  ExpandCollapseState oldState;
+  auto result = get_ExpandCollapseState(&oldState);
+  if (FAILED(result))
+    return result;
+
   DispatchAccessibilityAction(m_view, "expand");
+
+  // Raise UIA event if clients are listening
+  if (UiaClientsAreListening()) {
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        static_cast<winrt::Windows::Foundation::IInspectable>(*this),
+        UIA_ExpandCollapseExpandCollapseStatePropertyId,
+        static_cast<int>(oldState),
+        static_cast<int>(ExpandCollapseState_Expanded));
+  }
+
   return S_OK;
 }
 
@@ -1018,7 +1035,24 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Collapse() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
+  // Get current state before changing
+  ExpandCollapseState oldState;
+  auto result = get_ExpandCollapseState(&oldState);
+  if (FAILED(result))
+    return result;
+
   DispatchAccessibilityAction(m_view, "collapse");
+
+  // Raise UIA event if clients are listening
+  if (UiaClientsAreListening()) {
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        static_cast<winrt::Windows::Foundation::IInspectable>(*this),
+        UIA_ExpandCollapseExpandCollapseStatePropertyId,
+        static_cast<int>(oldState),
+        static_cast<int>(ExpandCollapseState_Collapsed));
+  }
+
   return S_OK;
 }
 
