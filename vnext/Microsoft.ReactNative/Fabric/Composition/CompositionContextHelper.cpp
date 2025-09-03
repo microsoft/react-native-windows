@@ -720,7 +720,7 @@ struct CompScrollerVisual : winrt::implements<
       // and the interaction was user-driven (requestId == 0), fire end-drag here.
       // Note: if the interactionRequestId was non-zero it was caused by a Try* call
       // (programmatic), so we should not fire onScrollEndDrag.
-      if (m_outer->m_interacting && m_outer->m_interactionRequestId == 0) {
+      if (m_outer->m_interacting && args.RequestId() == 0) {
         m_outer->FireScrollEndDrag({sender.Position().x, sender.Position().y});
       }
 
@@ -728,7 +728,6 @@ struct CompScrollerVisual : winrt::implements<
       m_outer->m_custom = false;
       m_outer->m_inertia = false;
       m_outer->m_interacting = false;
-      m_outer->m_interactionRequestId = -1;
     }
     void InertiaStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
@@ -737,15 +736,15 @@ struct CompScrollerVisual : winrt::implements<
       m_outer->m_inertia = true;
       m_outer->m_currentPosition = args.NaturalRestingPosition();
 
-      // If we were interacting and that interaction was user-driven (requestId == 0),
-      // fire ScrollEndDrag here (Interacting -> Inertia caused by user lift).
-      if (m_outer->m_interacting && m_outer->m_interactionRequestId == 0) {
-        m_outer->FireScrollEndDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
+      if (!m_outer->m_interacting && args.RequestId() == 0) {
+        m_outer->FireScrollBeginDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
       }
 
-      // Clear interacting flag to avoid double-firing in Idle
-      m_outer->m_interacting = false;
-      m_outer->m_interactionRequestId = -1;
+      // If interaction was user-driven (requestId == 0),
+      // fire ScrollEndDrag here (Interacting -> Inertia caused by user lift).
+      if (m_outer->m_interacting && args.RequestId() == 0) {
+        m_outer->FireScrollEndDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
+      }
 
       // Fire momentum scroll begin when we enter inertia (user or programmatic)
       m_outer->FireScrollMomentumBegin({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
@@ -755,7 +754,6 @@ struct CompScrollerVisual : winrt::implements<
         typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {
       // Mark that we're now interacting and remember the requestId (user manipulations => 0)
       m_outer->m_interacting = true;
-      m_outer->m_interactionRequestId = args.RequestId(); // requestId for this state change
 
       // Fire when the user starts dragging the object
       m_outer->FireScrollBeginDrag({sender.Position().x, sender.Position().y});
@@ -766,6 +764,10 @@ struct CompScrollerVisual : winrt::implements<
     void ValuesChanged(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerValuesChangedArgs args) noexcept {
+      if (!m_outer->m_interacting && args.RequestId() == 0) {
+        m_outer->FireScrollBeginDrag({args.Position().x, args.Position().y});
+      }
+      m_outer->m_interacting = true;
       m_outer->m_currentPosition = args.Position();
       m_outer->FireScrollPositionChanged({args.Position().x, args.Position().y});
     }
@@ -839,7 +841,7 @@ struct CompScrollerVisual : winrt::implements<
           m_horizontal ? TTypeRedirects::InteractionSourceMode::Disabled
                        : TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
       m_visualInteractionSource.ManipulationRedirectionMode(
-          TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadOnly);
+          TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
     } else {
       m_visualInteractionSource.PositionXSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
       m_visualInteractionSource.PositionYSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
@@ -1309,7 +1311,6 @@ struct CompScrollerVisual : winrt::implements<
   bool m_inertia{false};
   bool m_custom{false};
   bool m_interacting{false};
-  int m_interactionRequestId{-1};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
   winrt::Windows::Foundation::Numerics::float3 m_currentPosition;
   winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
