@@ -711,12 +711,24 @@ struct CompScrollerVisual : winrt::implements<
     void IdleStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerIdleStateEnteredArgs args) noexcept {
+      // If we were in inertia and are now idle, momentum has ended
       if (m_outer->m_inertia) {
-        // We were in inertia and now we're idle, so momentum scrolling has ended
         m_outer->FireScrollMomentumEnd({sender.Position().x, sender.Position().y});
       }
+
+      // If we were interacting but never entered inertia (Interacting -> Idle),
+      // and the interaction was user-driven (requestId == 0), fire end-drag here.
+      // Note: if the interactionRequestId was non-zero it was caused by a Try* call
+      // (programmatic), so we should not fire onScrollEndDrag.
+      if (m_outer->m_interacting && m_outer->m_interactionRequestId == 0) {
+        m_outer->FireScrollEndDrag({sender.Position().x, sender.Position().y});
+      }
+
+      // Clear state flags
       m_outer->m_custom = false;
       m_outer->m_inertia = false;
+      m_outer->m_interacting = false;
+      m_outer->m_interactionRequestId = -1;
     }
     void InertiaStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
@@ -724,17 +736,27 @@ struct CompScrollerVisual : winrt::implements<
       m_outer->m_custom = false;
       m_outer->m_inertia = true;
       m_outer->m_currentPosition = args.NaturalRestingPosition();
-      // When the user stops interacting with the object, tracker can go into two paths:
-      // 1. tracker goes into idle state immediately
-      // 2. tracker has just started gliding into Inertia state
-      // Fire ScrollEndDrag
-      m_outer->FireScrollEndDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
-      // Fire momentum scroll begin when we enter inertia
+
+      // If we were interacting and that interaction was user-driven (requestId == 0),
+      // fire ScrollEndDrag here (Interacting -> Inertia caused by user lift).
+      if (m_outer->m_interacting && m_outer->m_interactionRequestId == 0) {
+        m_outer->FireScrollEndDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
+      }
+
+      // Clear interacting flag to avoid double-firing in Idle
+      m_outer->m_interacting = false;
+      m_outer->m_interactionRequestId = -1;
+
+      // Fire momentum scroll begin when we enter inertia (user or programmatic)
       m_outer->FireScrollMomentumBegin({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
     }
     void InteractingStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {
+      // Mark that we're now interacting and remember the requestId (user manipulations => 0)
+      m_outer->m_interacting = true;
+      m_outer->m_interactionRequestId = args.RequestId(); // requestId for this state change
+
       // Fire when the user starts dragging the object
       m_outer->FireScrollBeginDrag({sender.Position().x, sender.Position().y});
     }
