@@ -1515,7 +1515,19 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
   }
 
   // Give the JS thread time to finish executing
-  m_jsMessageThread.Load()->runOnQueueSync([]() {});
+  // Check if we're already on the JS thread to avoid deadlock
+  auto jsMessageThread = m_jsMessageThread.Load();
+  if (auto messageDispatchQueue = std::dynamic_pointer_cast<Mso::React::MessageDispatchQueue>(jsMessageThread)) {
+    // Use the DispatchQueue's HasThreadAccess to check if we're on the JS thread
+    if (!messageDispatchQueue->DispatchQueue().HasThreadAccess()) {
+      jsMessageThread->runOnQueueSync([]() {});
+    }
+    // If we're already on the JS thread, no need for synchronous call as it would deadlock
+  } else {
+    // For other MessageQueueThread implementations, keep the original behavior
+    // This maintains compatibility while fixing the deadlock for MessageDispatchQueue
+    jsMessageThread->runOnQueueSync([]() {});
+  }
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
