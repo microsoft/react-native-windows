@@ -418,8 +418,8 @@ void ReactRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept
   }
 
   if (m_reactViewHost) {
-    UninitRootView();
     m_reactViewHost->DetachViewInstance();
+    UninitRootView();
   }
 
   m_reactViewHost = viewHost;
