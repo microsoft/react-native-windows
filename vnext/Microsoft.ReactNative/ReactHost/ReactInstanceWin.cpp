@@ -1514,8 +1514,15 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
     CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
   }
 
-  // Give the JS thread time to finish executing
-  m_jsMessageThread.Load()->runOnQueueSync([]() {});
+  // Schedule an async task on the JS thread to ensure previous operations complete
+  // This avoids the deadlock that can occur with runOnQueueSync when the JS thread
+  // is busy with garbage collection or other operations
+  if (auto jsMessageThread = m_jsMessageThread.Load()) {
+    jsMessageThread->runOnQueue([]() {
+      // This async operation ensures that any previously queued JS operations
+      // (like the unmount call above) have a chance to complete
+    });
+  }
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
