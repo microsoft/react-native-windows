@@ -286,6 +286,7 @@ class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatur
  public:
   bool enableBridgelessArchitecture() override {
 #ifdef USE_FABRIC
+    OutputDebugStringA("ReactNativeWindowsFeatureFlags::enableBridgelessArchitecture() called\n");
     return true;
 #else
     return false;
@@ -294,6 +295,17 @@ class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatur
 
   bool enableCppPropsIteratorSetter() override {
     return true;
+  }
+
+  bool fuseboxEnabledRelease() override {
+    // log when called 
+    OutputDebugStringA("ReactNativeWindowsFeatureFlags::fuseboxEnabledRelease() called\n");
+    return true;  // Enable Fusebox (modern CDP backend) by default for React Native Windows
+  }
+
+  bool fuseboxNetworkInspectionEnabled() override {
+     OutputDebugStringA("ReactNativeWindowsFeatureFlags::fuseboxNetworkInspectionEnabled() called\n");
+    return true;  // Enable network inspection support in Fusebox
   }
 };
 
