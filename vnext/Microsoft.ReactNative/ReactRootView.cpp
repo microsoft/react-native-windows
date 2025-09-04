@@ -202,7 +202,35 @@ void ReactRootView::UninitRootView() noexcept {
 
   if (m_isJSViewAttached) {
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-      reactInstance->DetachRootView(this, false);
+      // Check if we're already on the UI queue to avoid deadlock
+      if (m_uiQueue.HasThreadAccess()) {
+        // Capture necessary data before clearing state
+        auto rootTag = GetTag();
+        auto context = m_context;
+
+        // Schedule DetachRootView asynchronously to avoid deadlock when called from UI thread
+        m_uiQueue.Post([rootTag, context, reactInstance]() noexcept {
+          if (reactInstance->State() != Mso::React::ReactInstanceState::HasError) {
+            folly::dynamic params = folly::dynamic::array(rootTag);
+
+#ifdef USE_FABRIC
+            // For Fabric, we need to check if web debugger is enabled
+            bool useFabric = false; // Assuming false for now since original call used false
+            if (useFabric && !context->SettingsSnapshot().UseWebDebugger()) {
+              auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+                  winrt::Microsoft::ReactNative::ReactPropertyBag(context->Properties()));
+              uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
+            } else
+#endif
+            {
+              context->CallJSFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
+            }
+            // Note: We intentionally omit the runOnQueueSync call here to avoid deadlock
+          }
+        });
+      } else {
+        reactInstance->DetachRootView(this, false);
+      }
     }
   }
 
