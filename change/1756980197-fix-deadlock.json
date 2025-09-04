@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix deadlock in ReactInstanceWin::DetachRootView by replacing sync call with async",
+  "packageName": "react-native-windows",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
