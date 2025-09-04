@@ -215,8 +215,10 @@ void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewH
   m_reactViewHost = value;
 
   if (m_reactViewHost) {
+    OutputDebugStringA("ReactNativeIsland::ReactViewHost() - Attaching view instance\n");
     auto viewInstance = winrt::make<CompositionReactViewInstance>(this->get_weak());
     m_reactViewHost.AttachViewInstance(viewInstance);
+    OutputDebugStringA("ReactNativeIsland::ReactViewHost() - View instance attached\n");
   }
 }
 
@@ -725,16 +727,25 @@ Composition::Experimental::IDrawingSurfaceBrush ReactNativeIsland::CreateLoading
 }
 
 void ReactNativeIsland::ShowInstanceLoading() noexcept {
+  OutputDebugStringA("ReactNativeIsland::ShowInstanceLoading() - START\n");
+  
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle()))
     return;
 
   if (m_loadingVisual)
     return;
 
+  OutputDebugStringA("ReactNativeIsland::ShowInstanceLoading() - Getting composition context\n");
   auto compContext =
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
 
+  if (!compContext) {
+    OutputDebugStringA("ReactNativeIsland::ShowInstanceLoading() - ERROR: compContext is NULL - skipping loading UI\n");
+    return;
+  }
+
+  OutputDebugStringA("ReactNativeIsland::ShowInstanceLoading() - Creating sprite visual\n");
   m_loadingVisual = compContext.CreateSpriteVisual();
 
   auto foregroundBrush = compContext.CreateColorBrush({255, 255, 255, 255});
@@ -747,6 +758,7 @@ void ReactNativeIsland::ShowInstanceLoading() noexcept {
   UpdateLoadingVisualSize();
 
   InternalRootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
+  OutputDebugStringA("ReactNativeIsland::ShowInstanceLoading() - COMPLETE\n");
 }
 
 void ReactNativeIsland::InitTextScaleMultiplier() noexcept {

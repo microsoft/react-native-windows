@@ -64,11 +64,6 @@ namespace Microsoft.ReactNative
         "By default `react-native-windows` will use the new RuntimeScheduler."
         "Setting this to false will revert the behavior to previous scheduling logic.")
     static void SetUseRuntimeScheduler(ReactInstanceSettings settings, Boolean value);
-
-    DOC_STRING(
-        "By default `react-native-windows` uses the legacy inspector packager connection protocol."
-        "Setting this to true to enable the modern \"Fusebox\" debugging functionality.")
-    static void SetUseFusebox(Boolean value);
   }
 
 } // namespace Microsoft.ReactNative
