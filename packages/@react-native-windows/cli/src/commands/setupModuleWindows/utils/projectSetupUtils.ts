@@ -7,6 +7,7 @@
 import type {Config} from '@react-native-community/cli-types';
 import fs from '@react-native-windows/fs';
 import path from 'path';
+import {Ora} from 'ora';
 
 import {initWindowsInternal} from '../../initWindows/initWindows';
 import {codegenWindowsInternal} from '../../codegenWindows/codegenWindows';
@@ -17,11 +18,8 @@ export async function runInitWindows(
   root: string,
   config: Config,
   options: SetupModuleWindowsOptions,
+  spinner: Ora,
 ): Promise<void> {
-  if (options.logging) {
-    console.log('[SetupModuleWindows] Running init-windows...');
-  }
-
   // Handle problematic example directory for cpp-lib template
   const exampleDir = path.join(root, 'example');
   const examplePackageJson = path.join(exampleDir, 'package.json');
@@ -51,13 +49,18 @@ export async function runInitWindows(
       root: root,
     };
 
-    await initWindowsInternal([], modifiedConfig, {
-      template: options.template || 'cpp-lib',
-      logging: options.logging,
-      telemetry: options.telemetry,
-      overwrite: true,
-      namespace: '',
-    });
+    await initWindowsInternal(
+      [],
+      modifiedConfig,
+      {
+        template: options.template || 'cpp-lib',
+        logging: false, // Disable internal logging to avoid conflicts with spinner
+        telemetry: options.telemetry,
+        overwrite: true,
+        namespace: '',
+      },
+      spinner,
+    );
 
     if (options.logging) {
       console.log('[SetupModuleWindows] init-windows completed successfully');
@@ -93,21 +96,24 @@ export async function runCodegenWindows(
   root: string,
   config: Config,
   options: SetupModuleWindowsOptions,
+  spinner: Ora,
 ): Promise<void> {
-  if (options.logging) {
-    console.log('[SetupModuleWindows] Running codegen-windows...');
-  }
-
   try {
     const modifiedConfig: Config = {
       ...config,
       root: root,
     };
 
-    await codegenWindowsInternal([], modifiedConfig, {
-      logging: options.logging,
-      telemetry: options.telemetry,
-    });
+    await codegenWindowsInternal(
+      [],
+      modifiedConfig,
+      {
+        logging: false, // Disable internal logging to avoid conflicts with spinner
+        telemetry: options.telemetry,
+      },
+      spinner,
+    );
+
     if (options.logging) {
       console.log(
         '[SetupModuleWindows] codegen-windows completed successfully',

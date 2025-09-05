@@ -103,10 +103,10 @@ export class SetupModuleWindows {
     await updatePackageJsonCodegen(this.root, this.options.logging ?? false);
 
     spinner.text = 'Running init-windows...';
-    await runInitWindows(this.root, config, this.options);
+    await runInitWindows(this.root, config, this.options, spinner);
 
     spinner.text = 'Running codegen-windows...';
-    await runCodegenWindows(this.root, config, this.options);
+    await runCodegenWindows(this.root, config, this.options, spinner);
 
     spinner.text = 'Generating C++ stub files...';
     const {actualProjectPath} = await generateStubFiles(
