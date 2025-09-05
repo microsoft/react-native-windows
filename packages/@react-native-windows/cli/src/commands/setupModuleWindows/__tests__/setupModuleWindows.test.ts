@@ -13,6 +13,9 @@ jest.mock('@react-native-windows/fs');
 jest.mock('glob');
 jest.mock('child_process');
 
+// Type the mocked fs module
+const mockedFs = fs as jest.Mocked<typeof fs>;
+
 describe('SetupModuleWindows', () => {
   const mockOptions: SetupModuleWindowsOptions = {
     logging: false,
@@ -131,8 +134,8 @@ describe('SetupModuleWindows', () => {
       const glob = require('glob');
       glob.sync.mockReturnValue(['NativeTestModule.ts']);
       
-      fs.exists.mockResolvedValue(true);
-      fs.readFile.mockResolvedValue(`
+      mockedFs.exists.mockResolvedValue(true);
+      mockedFs.readFile.mockResolvedValue(`
         import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
         import {TurboModuleRegistry} from 'react-native';
 
