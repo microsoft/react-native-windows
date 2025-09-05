@@ -20,8 +20,6 @@ describe('SetupModuleWindows', () => {
   const mockOptions: SetupModuleWindowsOptions = {
     logging: false,
     telemetry: false,
-    skipDeps: false,
-    skipBuild: false,
     template: 'cpp-lib',
   };
 
@@ -61,8 +59,6 @@ describe('SetupModuleWindows', () => {
       const options = {
         logging: true,
         telemetry: true,
-        skipDeps: true,
-        skipBuild: true,
         template: 'cpp-app' as const,
       };
 
@@ -122,18 +118,18 @@ describe('SetupModuleWindows', () => {
     it('should throw error if no spec file exists', async () => {
       const glob = require('glob');
       glob.sync.mockReturnValue([]);
-      
+
       const setup = new SetupModuleWindows('/test', {logging: true});
 
       await expect((setup as any).checkForExistingSpec()).rejects.toThrow(
-        'Create Spec File - TurboModule spec file not found. Please create a TurboModule spec file before running setup-module-windows.'
+        'Create Spec File - TurboModule spec file not found. Please create a TurboModule spec file before running setup-module-windows.',
       );
     });
 
     it('should accept valid TurboModule spec files', async () => {
       const glob = require('glob');
       glob.sync.mockReturnValue(['NativeTestModule.ts']);
-      
+
       mockedFs.exists.mockResolvedValue(true);
       mockedFs.readFile.mockResolvedValue(`
         import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
@@ -148,7 +144,9 @@ describe('SetupModuleWindows', () => {
 
       const setup = new SetupModuleWindows('/test', {logging: true});
 
-      await expect((setup as any).checkForExistingSpec()).resolves.toBeUndefined();
+      await expect(
+        (setup as any).checkForExistingSpec(),
+      ).resolves.toBeUndefined();
     });
   });
 });
