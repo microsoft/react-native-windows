@@ -48,7 +48,29 @@ export async function runInitWindows(
     console.log('[SetupModuleWindows] Running init-windows...');
   }
 
+  const fs = require('@react-native-windows/fs');
+  const path = require('path');
+  
+  // Handle problematic example directory for cpp-lib template
+  const exampleDir = path.join(root, 'example');
+  const examplePackageJson = path.join(exampleDir, 'package.json');
+  let temporarilyRenamed = false;
+  let tempExampleDir = '';
+
   try {
+    // If using cpp-lib template and example directory exists but doesn't have a proper package.json,
+    // temporarily rename it to avoid template processing issues
+    if ((options.template || 'cpp-lib') === 'cpp-lib' && 
+        await fs.exists(exampleDir) && 
+        !await fs.exists(examplePackageJson)) {
+      tempExampleDir = path.join(root, 'example.temp.setup-module-windows');
+      await fs.rename(exampleDir, tempExampleDir);
+      temporarilyRenamed = true;
+      if (options.logging) {
+        console.log('[SetupModuleWindows] Temporarily renamed example directory to avoid conflicts');
+      }
+    }
+
     const modifiedConfig: Config = {
       ...config,
       root: root,
@@ -61,6 +83,7 @@ export async function runInitWindows(
       overwrite: false,
       namespace: '',
     });
+    
     if (options.logging) {
       console.log('[SetupModuleWindows] init-windows completed successfully');
     }
@@ -69,6 +92,22 @@ export async function runInitWindows(
       console.log('[SetupModuleWindows] init-windows failed:', error.message);
     }
     throw error;
+  } finally {
+    // Restore the temporarily renamed example directory
+    if (temporarilyRenamed && tempExampleDir) {
+      try {
+        if (await fs.exists(tempExampleDir)) {
+          await fs.rename(tempExampleDir, exampleDir);
+          if (options.logging) {
+            console.log('[SetupModuleWindows] Restored example directory');
+          }
+        }
+      } catch (restoreError: any) {
+        if (options.logging) {
+          console.log('[SetupModuleWindows] Warning: Failed to restore example directory:', restoreError.message);
+        }
+      }
+    }
   }
 }
 
