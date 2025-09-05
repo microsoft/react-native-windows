@@ -835,6 +835,26 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaPropertiesForAnnotation(
       EnsureUiaProvider(), oldViewProps.accessibilityAnnotation, newViewProps.accessibilityAnnotation);
 
+  // Handle expand/collapse state changes
+  if (oldViewProps.accessibilityState.has_value() != newViewProps.accessibilityState.has_value() ||
+      (oldViewProps.accessibilityState.has_value() && newViewProps.accessibilityState.has_value() &&
+       oldViewProps.accessibilityState->expanded != newViewProps.accessibilityState->expanded)) {
+    auto oldExpanded =
+        oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->expanded.has_value()
+        ? oldViewProps.accessibilityState->expanded.value()
+        : false;
+    auto newExpanded =
+        newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->expanded.has_value()
+        ? newViewProps.accessibilityState->expanded.value()
+        : false;
+
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        EnsureUiaProvider(),
+        UIA_ExpandCollapseExpandCollapseStatePropertyId,
+        static_cast<int>(winrt::Microsoft::ReactNative::implementation::GetExpandCollapseState(oldExpanded)),
+        static_cast<int>(winrt::Microsoft::ReactNative::implementation::GetExpandCollapseState(newExpanded)));
+  }
+
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
     auto compProvider =
