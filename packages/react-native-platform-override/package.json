@@ -73,7 +73,7 @@
     "react-native": "*"
   },
   "engines": {
-    "node": ">= 22"
+    "node": ">= 20"
   },
   "files": [
     "bin.js",
