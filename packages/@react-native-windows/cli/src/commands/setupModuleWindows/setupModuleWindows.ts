@@ -27,7 +27,6 @@ import {
   updatePackageJsonCodegen,
 } from './utils/moduleNameUtils';
 import {
-  cleanAndInstallDeps,
   runInitWindows,
   runCodegenWindows,
   getActualProjectPaths,
@@ -96,9 +95,6 @@ export class SetupModuleWindows {
     // Now begin the Windows setup process
     spinner.text = 'Updating package.json with codegen configuration...';
     await updatePackageJsonCodegen(this.root, this.options.logging ?? false);
-
-    spinner.text = 'Installing dependencies...';
-    await cleanAndInstallDeps(this.root, this.options.logging ?? false);
 
     spinner.text = 'Running init-windows...';
     await runInitWindows(this.root, config, this.options);

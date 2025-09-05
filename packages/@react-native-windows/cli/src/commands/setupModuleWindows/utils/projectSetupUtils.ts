@@ -4,7 +4,6 @@
  * @format
  */
 
-import {execSync} from 'child_process';
 import type {Config} from '@react-native-community/cli-types';
 import fs from '@react-native-windows/fs';
 import path from 'path';
@@ -13,34 +12,6 @@ import {initWindowsInternal} from '../../initWindows/initWindows';
 import {codegenWindowsInternal} from '../../codegenWindows/codegenWindows';
 import type {SetupModuleWindowsOptions} from '../setupModuleWindowsOptions';
 import {getActualModuleName} from './moduleNameUtils';
-
-export async function cleanAndInstallDeps(
-  root: string,
-  logging: boolean,
-): Promise<void> {
-  if (logging) {
-    console.log('[SetupModuleWindows] Cleaning and installing dependencies...');
-  }
-
-  try {
-    // Clean install to ensure fresh dependencies
-    execSync('yarn install --check-files', {
-      cwd: root,
-      stdio: logging ? 'inherit' : 'ignore',
-    });
-    if (logging) {
-      console.log('[SetupModuleWindows] Dependencies installed successfully');
-    }
-  } catch (error: any) {
-    if (logging) {
-      console.log(
-        '[SetupModuleWindows] Failed to install dependencies:',
-        error.message,
-      );
-    }
-    throw error;
-  }
-}
 
 export async function runInitWindows(
   root: string,
