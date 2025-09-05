@@ -21,7 +21,10 @@ import {
 } from '../../utils/telemetryHelpers';
 import type {SetupModuleWindowsOptions} from './setupModuleWindowsOptions';
 import {setupModuleWindowsOptions} from './setupModuleWindowsOptions';
-import {validateEnvironment, checkForExistingSpec} from './utils/validationUtils';
+import {
+  validateEnvironment,
+  checkForExistingSpec,
+} from './utils/validationUtils';
 import {
   getFinalModuleName,
   updatePackageJsonCodegen,
@@ -39,7 +42,10 @@ import {generateStubFiles} from './utils/templateGenerationUtils';
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-function optionSanitizer(key: keyof SetupModuleWindowsOptions, value: any): any {
+function optionSanitizer(
+  key: keyof SetupModuleWindowsOptions,
+  value: any,
+): any {
   // Do not add a default case here.
   // Strings risking PII should just return true if present, false otherwise.
   // All others should return the value (or false if undefined).
@@ -114,9 +120,12 @@ export class SetupModuleWindows {
 
     // Print success message with helpful information
     const paths = this.getActualProjectPaths();
-    
+
     // Get the actual module name from the project path
-    const moduleName = await getFinalModuleName(this.root, this.actualModuleName);
+    const moduleName = await getFinalModuleName(
+      this.root,
+      this.actualModuleName,
+    );
     let displayModuleName = moduleName;
     if (this.actualProjectPath) {
       // Extract the module name from the actual project path
@@ -142,7 +151,9 @@ export class SetupModuleWindows {
     );
 
     console.log(
-      `\n${chalk.blue('Learn More:')} https://microsoft.github.io/react-native-windows/docs/native-platform`,
+      `\n${chalk.blue(
+        'Learn More:',
+      )} https://microsoft.github.io/react-native-windows/docs/native-platform`,
     );
   }
 }

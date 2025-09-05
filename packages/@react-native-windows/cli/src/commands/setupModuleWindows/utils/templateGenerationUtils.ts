@@ -26,7 +26,7 @@ export async function generateStubFiles(
   // First, find the actual Windows project directory that was created by init-windows
   const windowsDir = path.join(root, 'windows');
   let actualProjectName = '';
-  
+
   try {
     const windowsDirContents = await fs.readdir(windowsDir);
     const projectDirs = [];
@@ -72,32 +72,46 @@ export async function generateStubFiles(
   // Look for codegen directory - try multiple possible locations
   let codegenDir = path.join(root, 'codegen');
   let foundCodegen = false;
-  
+
   // Check root level first
   if (await fs.exists(codegenDir)) {
     foundCodegen = true;
     if (logging) {
-      console.log(`[SetupModuleWindows] Found codegen directory at: ${codegenDir}`);
+      console.log(
+        `[SetupModuleWindows] Found codegen directory at: ${codegenDir}`,
+      );
     }
-  } 
+  }
   // Check inside Windows project directory
   else if (actualProjectName) {
-    const projectCodegenDir = path.join(windowsDir, actualProjectName, 'codegen');
+    const projectCodegenDir = path.join(
+      windowsDir,
+      actualProjectName,
+      'codegen',
+    );
     if (await fs.exists(projectCodegenDir)) {
       codegenDir = projectCodegenDir;
       foundCodegen = true;
       if (logging) {
-        console.log(`[SetupModuleWindows] Found codegen directory at: ${codegenDir}`);
+        console.log(
+          `[SetupModuleWindows] Found codegen directory at: ${codegenDir}`,
+        );
       }
     }
     // Also check with different casing (Codegen vs codegen)
     else {
-      const projectCodegenDirAlt = path.join(windowsDir, actualProjectName, 'Codegen');
+      const projectCodegenDirAlt = path.join(
+        windowsDir,
+        actualProjectName,
+        'Codegen',
+      );
       if (await fs.exists(projectCodegenDirAlt)) {
         codegenDir = projectCodegenDirAlt;
         foundCodegen = true;
         if (logging) {
-          console.log(`[SetupModuleWindows] Found codegen directory at: ${codegenDir}`);
+          console.log(
+            `[SetupModuleWindows] Found codegen directory at: ${codegenDir}`,
+          );
         }
       }
     }
@@ -117,14 +131,18 @@ export async function generateStubFiles(
 
   if (specFiles.length === 0) {
     if (logging) {
-      console.log('[SetupModuleWindows] No Spec.g.h files found in codegen directory');
+      console.log(
+        '[SetupModuleWindows] No Spec.g.h files found in codegen directory',
+      );
     }
     return {};
   }
 
   if (logging) {
     console.log(
-      `[SetupModuleWindows] Found ${specFiles.length} codegen spec file(s): ${specFiles.join(', ')}`,
+      `[SetupModuleWindows] Found ${
+        specFiles.length
+      } codegen spec file(s): ${specFiles.join(', ')}`,
     );
   }
 
@@ -148,7 +166,7 @@ export async function generateStubFiles(
     projectName = moduleName;
     moduleDir = path.join(windowsDir, moduleName);
     actualProjectPath = path.join('windows', moduleName, moduleName);
-    
+
     if (!(await fs.exists(moduleDir))) {
       await fs.mkdir(moduleDir, {recursive: true});
     }
@@ -164,13 +182,17 @@ export async function generateStubFiles(
   const headerContent = await generateHeaderStub(projectName, methods);
   await fs.writeFile(headerPath, headerContent);
   if (logging) {
-    console.log(`[SetupModuleWindows] Generated header stub: ${headerPath} with ${methods.length} methods`);
+    console.log(
+      `[SetupModuleWindows] Generated header stub: ${headerPath} with ${methods.length} methods`,
+    );
   }
 
   const cppContent = await generateCppStub(projectName, methods);
   await fs.writeFile(cppPath, cppContent);
   if (logging) {
-    console.log(`[SetupModuleWindows] Generated cpp stub: ${cppPath} with ${methods.length} methods`);
+    console.log(
+      `[SetupModuleWindows] Generated cpp stub: ${cppPath} with ${methods.length} methods`,
+    );
   }
 
   return {actualProjectPath};
@@ -189,10 +211,14 @@ async function parseMethodsFromCodegen(
       const content = await fs.readFile(specPath, 'utf8');
       const fileMethods = extractMethodsFromCodegenHeader(content, logging);
       methods.push(...fileMethods);
-      
+
       if (logging) {
         console.log(
-          `[SetupModuleWindows] Extracted ${fileMethods.length} methods from ${specFile}: ${fileMethods.map(m => m.name).join(', ')}`,
+          `[SetupModuleWindows] Extracted ${
+            fileMethods.length
+          } methods from ${specFile}: ${fileMethods
+            .map(m => m.name)
+            .join(', ')}`,
         );
       }
     } catch (error) {
@@ -205,7 +231,10 @@ async function parseMethodsFromCodegen(
   return methods;
 }
 
-function extractMethodsFromCodegenHeader(content: string, logging?: boolean): MethodSignature[] {
+function extractMethodsFromCodegenHeader(
+  content: string,
+  logging?: boolean,
+): MethodSignature[] {
   const methods: MethodSignature[] = [];
 
   // Parse from REACT_SHOW_METHOD_SPEC_ERRORS sections which contain the exact method signatures
@@ -217,9 +246,11 @@ function extractMethodsFromCodegenHeader(content: string, logging?: boolean): Me
   while ((match = errorSectionPattern.exec(content)) !== null) {
     const methodName = match[1]; // Method name from first parameter
     const fullMethodSignature = match[2]; // Full method signature string
-    
+
     // Extract parameters from the full method signature
-    const methodMatch = fullMethodSignature.match(/REACT_METHOD\([^)]+\)\s+(?:static\s+)?void\s+\w+\s*\(([^]*)\)/);
+    const methodMatch = fullMethodSignature.match(
+      /REACT_METHOD\([^)]+\)\s+(?:static\s+)?void\s+\w+\s*\(([^]*)\)/,
+    );
     if (methodMatch) {
       // Need to carefully parse the parameters, handling nested parentheses
       const parametersString = methodMatch[1];
@@ -230,17 +261,18 @@ function extractMethodsFromCodegenHeader(content: string, logging?: boolean): Me
         returnType: 'void', // Codegen methods are typically void with callbacks or promises
         parameters: parameters,
       });
-      
+
       if (logging) {
-        console.log(`[SetupModuleWindows] Parsed method ${methodName} with parameters: ${parametersString}`);
+        console.log(
+          `[SetupModuleWindows] Parsed method ${methodName} with parameters: ${parametersString}`,
+        );
       }
     }
   }
 
   // Also try to parse from the methods tuple for additional methods
   if (methods.length === 0) {
-    const methodsTuplePattern =
-      /Method<([^>]+)>\{\s*(\d+),\s*L"([^"]+)"\s*\}/g;
+    const methodsTuplePattern = /Method<([^>]+)>\{\s*(\d+),\s*L"([^"]+)"\s*\}/g;
 
     while ((match = methodsTuplePattern.exec(content)) !== null) {
       const signature = match[1]; // Method signature type
@@ -258,7 +290,9 @@ function extractMethodsFromCodegenHeader(content: string, logging?: boolean): Me
   // Try parsing directly from C++ method declarations in the header
   if (methods.length === 0) {
     if (logging) {
-      console.log('[SetupModuleWindows] Trying to parse C++ method declarations directly...');
+      console.log(
+        '[SetupModuleWindows] Trying to parse C++ method declarations directly...',
+      );
     }
 
     // Look for virtual method declarations like:
@@ -289,22 +323,24 @@ function extractMethodsFromCodegenHeader(content: string, logging?: boolean): Me
   return methods;
 }
 
-function parseComplexParameters(paramString: string): {name: string; type: string; fullType?: string}[] {
+function parseComplexParameters(
+  paramString: string,
+): {name: string; type: string; fullType?: string}[] {
   if (!paramString || paramString.trim() === '') {
     return [];
   }
 
   const params: {name: string; type: string; fullType?: string}[] = [];
-  
+
   // Handle complex parameter parsing with nested parentheses
   let current = '';
   let depth = 0;
   let inString = false;
   let i = 0;
-  
+
   while (i < paramString.length) {
     const char = paramString[i];
-    
+
     if (char === '"' && (i === 0 || paramString[i - 1] !== '\\')) {
       inString = !inString;
     } else if (!inString) {
@@ -321,19 +357,21 @@ function parseComplexParameters(paramString: string): {name: string; type: strin
         continue;
       }
     }
-    
+
     current += char;
     i++;
   }
-  
+
   if (current.trim()) {
     params.push(parseCodegenParameter(current.trim()));
   }
-  
+
   return params;
 }
 
-function parseCodegenParameters(paramString: string): {name: string; type: string; fullType?: string}[] {
+function parseCodegenParameters(
+  paramString: string,
+): {name: string; type: string; fullType?: string}[] {
   if (!paramString || paramString.trim() === '') {
     return [];
   }
@@ -375,7 +413,11 @@ function parseCodegenParameters(paramString: string): {name: string; type: strin
   return params;
 }
 
-function parseCodegenParameter(param: string): {name: string; type: string; fullType?: string} {
+function parseCodegenParameter(param: string): {
+  name: string;
+  type: string;
+  fullType?: string;
+} {
   // Handle common codegen parameter patterns
   param = param.trim();
 
@@ -384,17 +426,17 @@ function parseCodegenParameter(param: string): {name: string; type: string; full
     // Extract the function name from the end
     const parts = param.split(/\s+/);
     let name = parts[parts.length - 1].replace(/[&*]/g, '');
-    
+
     // If name contains 'const', get the previous part
     if (name.includes('const')) {
       name = parts[parts.length - 2] || 'callback';
     }
-    
+
     // Preserve the full function type for accurate generation
     return {
-      name: name || 'callback', 
+      name: name || 'callback',
       type: 'function',
-      fullType: param
+      fullType: param,
     };
   }
 
@@ -430,7 +472,9 @@ function parseCodegenParameter(param: string): {name: string; type: string; full
   return {name: name || 'param', type, fullType: param};
 }
 
-function parseCodegenSignature(signature: string): {name: string; type: string; fullType?: string}[] {
+function parseCodegenSignature(
+  signature: string,
+): {name: string; type: string; fullType?: string}[] {
   // Parse Method<void(...)> signature to extract parameters
   const paramMatch = signature.match(/void\s*\(([^)]*)\)/);
   if (!paramMatch) {
@@ -476,7 +520,10 @@ function generateDefaultValue(returnType: string): string {
   }
 }
 
-async function generateHeaderStub(moduleName: string, methods: MethodSignature[]): Promise<string> {
+async function generateHeaderStub(
+  moduleName: string,
+  methods: MethodSignature[],
+): Promise<string> {
   const namespace = `${moduleName}Specs`;
   const codegenNamespace = `${moduleName}Codegen`;
 
@@ -515,9 +562,7 @@ async function generateHeaderStub(moduleName: string, methods: MethodSignature[]
       // Determine if this is a getter method (no parameters and non-void return type)
       const isGetter =
         method.parameters.length === 0 && method.returnType !== 'void';
-      const returnType = isGetter
-        ? mapTSToCppType(method.returnType)
-        : 'void';
+      const returnType = isGetter ? mapTSToCppType(method.returnType) : 'void';
       const constModifier = isGetter ? ' const' : '';
 
       return `  REACT_METHOD(${method.name})
@@ -526,7 +571,9 @@ async function generateHeaderStub(moduleName: string, methods: MethodSignature[]
     .join('\n\n');
 
   // Combine hello world with parsed methods
-  const allMethodDeclarations = methodDeclarations ? [helloWorldMethod, methodDeclarations].join('\n\n') : helloWorldMethod;
+  const allMethodDeclarations = methodDeclarations
+    ? [helloWorldMethod, methodDeclarations].join('\n\n')
+    : helloWorldMethod;
 
   const defaultMethods = allMethodDeclarations;
 
@@ -564,7 +611,10 @@ private:
 } // namespace winrt::${namespace}`;
 }
 
-async function generateCppStub(moduleName: string, methods: MethodSignature[]): Promise<string> {
+async function generateCppStub(
+  moduleName: string,
+  methods: MethodSignature[],
+): Promise<string> {
   const namespace = `${moduleName}Specs`;
 
   // Add hello world implementation first
@@ -585,7 +635,10 @@ async function generateCppStub(moduleName: string, methods: MethodSignature[]): 
             // Handle callback functions from codegen
             if (p.name.includes('onSuccess') || p.name === 'callback') {
               return `std::function<void()> const & ${p.name}`;
-            } else if (p.name.includes('onError') || p.name.includes('reject')) {
+            } else if (
+              p.name.includes('onError') ||
+              p.name.includes('reject')
+            ) {
               return `std::function<void(::React::JSValue const &)> const & ${p.name}`;
             } else {
               return `std::function<void()> const & ${p.name}`;
@@ -604,9 +657,7 @@ async function generateCppStub(moduleName: string, methods: MethodSignature[]): 
       // Determine if this is a getter method (no parameters and non-void return type)
       const isGetter =
         method.parameters.length === 0 && method.returnType !== 'void';
-      const returnType = isGetter
-        ? mapTSToCppType(method.returnType)
-        : 'void';
+      const returnType = isGetter ? mapTSToCppType(method.returnType) : 'void';
       const constModifier = isGetter ? ' const' : '';
 
       // Generate implementation based on method type
@@ -616,7 +667,9 @@ async function generateCppStub(moduleName: string, methods: MethodSignature[]): 
           (p.name.includes('onSuccess') || p.name === 'callback'),
       );
       const hasErrorCallback = method.parameters.some(
-        p => p.type === 'function' && (p.name.includes('onError') || p.name.includes('reject')),
+        p =>
+          p.type === 'function' &&
+          (p.name.includes('onError') || p.name.includes('reject')),
       );
 
       let implementation = `  // TODO: Implement ${method.name}`;
@@ -640,7 +693,9 @@ ${implementation}
     .join('\n\n');
 
   // Combine hello world with parsed method implementations
-  const allImplementations = methodImplementations ? [helloWorldImplementation, methodImplementations].join('\n\n') : helloWorldImplementation;
+  const allImplementations = methodImplementations
+    ? [helloWorldImplementation, methodImplementations].join('\n\n')
+    : helloWorldImplementation;
 
   return `#include "${moduleName}.h"
 

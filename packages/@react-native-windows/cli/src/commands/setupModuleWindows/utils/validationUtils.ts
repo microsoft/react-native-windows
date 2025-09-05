@@ -99,7 +99,9 @@ export async function checkForExistingSpec(
   } else {
     if (logging) {
       console.log(
-        `[SetupModuleWindows] Found valid spec file(s): ${validSpecFiles.join(', ')}`,
+        `[SetupModuleWindows] Found valid spec file(s): ${validSpecFiles.join(
+          ', ',
+        )}`,
       );
     }
     const actualModuleName = await extractModuleNameFromExistingSpec(

@@ -76,9 +76,7 @@ export async function updatePackageJsonCodegen(
 
     await fs.writeFile(packageJsonPath, JSON.stringify(pkgJson, null, 2));
     if (logging) {
-      console.log(
-        '[SetupModuleWindows] Added codegenConfig to package.json',
-      );
+      console.log('[SetupModuleWindows] Added codegenConfig to package.json');
     }
   } else {
     if (logging) {

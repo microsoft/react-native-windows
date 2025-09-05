@@ -31,14 +31,18 @@ export async function runInitWindows(
   try {
     // If using cpp-lib template and example directory exists but doesn't have a proper package.json,
     // temporarily rename it to avoid template processing issues
-    if ((options.template || 'cpp-lib') === 'cpp-lib' && 
-        await fs.exists(exampleDir) && 
-        !await fs.exists(examplePackageJson)) {
+    if (
+      (options.template || 'cpp-lib') === 'cpp-lib' &&
+      (await fs.exists(exampleDir)) &&
+      !(await fs.exists(examplePackageJson))
+    ) {
       tempExampleDir = path.join(root, 'example.temp.setup-module-windows');
       await fs.rename(exampleDir, tempExampleDir);
       temporarilyRenamed = true;
       if (options.logging) {
-        console.log('[SetupModuleWindows] Temporarily renamed example directory to avoid conflicts');
+        console.log(
+          '[SetupModuleWindows] Temporarily renamed example directory to avoid conflicts',
+        );
       }
     }
 
@@ -54,7 +58,7 @@ export async function runInitWindows(
       overwrite: true,
       namespace: '',
     });
-    
+
     if (options.logging) {
       console.log('[SetupModuleWindows] init-windows completed successfully');
     }
@@ -75,7 +79,10 @@ export async function runInitWindows(
         }
       } catch (restoreError: any) {
         if (options.logging) {
-          console.log('[SetupModuleWindows] Warning: Failed to restore example directory:', restoreError.message);
+          console.log(
+            '[SetupModuleWindows] Warning: Failed to restore example directory:',
+            restoreError.message,
+          );
         }
       }
     }
@@ -102,7 +109,9 @@ export async function runCodegenWindows(
       telemetry: options.telemetry,
     });
     if (options.logging) {
-      console.log('[SetupModuleWindows] codegen-windows completed successfully');
+      console.log(
+        '[SetupModuleWindows] codegen-windows completed successfully',
+      );
     }
   } catch (error: any) {
     // Check if codegen directory was created even with errors
