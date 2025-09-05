@@ -1514,15 +1514,13 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
     CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
   }
 
-  // Schedule an async task on the JS thread to ensure previous operations complete
-  // This avoids the deadlock that can occur with runOnQueueSync when the JS thread
-  // is busy with garbage collection or other operations
-  if (auto jsMessageThread = m_jsMessageThread.Load()) {
-    jsMessageThread->runOnQueue([]() {
-      // This async operation ensures that any previously queued JS operations
-      // (like the unmount call above) have a chance to complete
-    });
+  // QUIRK: Legacy sync behavior can be re-enabled via EnableSyncDetachRootView option
+  // The sync call was removed to prevent deadlocks with Hermes GC operations
+  if (m_options.EnableSyncDetachRootView) {
+    // Legacy behavior: wait for JS thread to finish executing (can cause deadlocks)
+    m_jsMessageThread.Load()->runOnQueueSync([]() {});
   }
+  // Default behavior: no synchronization call to prevent deadlocks
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(

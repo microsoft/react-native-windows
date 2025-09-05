@@ -251,6 +251,12 @@ struct ReactOptions {
   //! It is not safe to expose to Custom Function. Add this flag so we can turn it off for Custom Function.
   bool EnableNativePerformanceNow{true};
 
+  //! QUIRK: Enable synchronous wait in DetachRootView for JS thread completion.
+  //! This flag re-enables the legacy runOnQueueSync call that can cause deadlocks
+  //! with Hermes GC. Only enable if removal of sync behavior breaks your application.
+  //! Default: false (sync call is disabled to prevent deadlocks)
+  bool EnableSyncDetachRootView{false};
+
   ReactDevOptions DeveloperSettings = {};
 
   //! This controls the availability of various developer support functionality including
