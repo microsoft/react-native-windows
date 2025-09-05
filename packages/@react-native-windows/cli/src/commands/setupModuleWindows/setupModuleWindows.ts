@@ -474,10 +474,10 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
 
     const methods = await this.getHelloWorldMethods();
     const moduleName = await this.getFinalModuleName();
-    
+
     const windowsDir = path.join(this.root, 'windows');
     const moduleDir = path.join(windowsDir, moduleName);
-    
+
     // Ensure module directory exists
     await fs.mkdir(moduleDir, {recursive: true});
 
@@ -570,7 +570,11 @@ export default TurboModuleRegistry.getEnforcing<Spec>('${moduleName}');
           .join(', ');
 
         return `  REACT_METHOD(${method.name})
-  void ${method.name}(${cppParams}${cppParams ? ', ' : ''}React::ReactPromise<${this.mapTSReturnTypeToCpp(method.returnType)}> promise) noexcept;`;
+  void ${method.name}(${cppParams}${
+          cppParams ? ', ' : ''
+        }React::ReactPromise<${this.mapTSReturnTypeToCpp(
+          method.returnType,
+        )}> promise) noexcept;`;
       })
       .join('\n\n');
 
@@ -623,7 +627,11 @@ private:
 
         const implementation = this.generateMethodImplementation(method);
 
-        return `void ${moduleName}::${method.name}(${cppParams}${cppParams ? ', ' : ''}React::ReactPromise<${this.mapTSReturnTypeToCpp(method.returnType)}> promise) noexcept {
+        return `void ${moduleName}::${method.name}(${cppParams}${
+          cppParams ? ', ' : ''
+        }React::ReactPromise<${this.mapTSReturnTypeToCpp(
+          method.returnType,
+        )}> promise) noexcept {
 ${implementation}
 }`;
       })
@@ -720,7 +728,7 @@ ${methodImplementations}
   private generateDefaultValue(returnType: string): string {
     const promiseMatch = returnType.match(/Promise<(.+)>/);
     const innerType = promiseMatch ? promiseMatch[1] : returnType;
-    
+
     if (innerType === 'string') {
       return '"example"';
     } else if (innerType === 'number') {
@@ -922,9 +930,7 @@ export async function setupModuleWindowsInternal(
     console.log('• isModuleReady() - Example boolean return method');
     console.log('');
     console.log(chalk.bold('Next steps:'));
-    console.log(
-      "1. 📝 Test the Hello World methods or add your module's API",
-    );
+    console.log("1. 📝 Test the Hello World methods or add your module's API");
     console.log('2. 🔧 Implement your specific business logic');
     console.log('3. 🏗️  Build your project to verify everything works');
     console.log(

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add setup-module-windows command to streamline RNW community module integration with Hello World examples",
+  "packageName": "@react-native-windows/cli",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}

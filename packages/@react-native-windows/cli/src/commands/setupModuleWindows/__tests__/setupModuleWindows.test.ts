@@ -84,7 +84,7 @@ describe('SetupModuleWindows', () => {
       const setup = new SetupModuleWindows('/test', mockOptions);
       // Set internal actualProjectPath for testing
       (setup as any).actualProjectPath = 'windows/TestModule/TestModule';
-      
+
       const paths = setup.getActualProjectPaths();
 
       expect(paths.headerPath).toBe('windows/TestModule/TestModule.h');
@@ -93,7 +93,7 @@ describe('SetupModuleWindows', () => {
 
     it('should return fallback paths when actualProjectPath is not set', () => {
       const setup = new SetupModuleWindows('/test', mockOptions);
-      
+
       const paths = setup.getActualProjectPaths();
 
       expect(paths.headerPath).toBe('windows/SampleModule/SampleModule.h');
@@ -104,16 +104,22 @@ describe('SetupModuleWindows', () => {
   describe('Hello World spec generation', () => {
     it('should generate correct Hello World spec content', () => {
       const setup = new SetupModuleWindows('/test', mockOptions);
-      const generateMethod = (setup as any).generateHelloWorldSpecFileContent.bind(setup);
+      const generateMethod = (
+        setup as any
+      ).generateHelloWorldSpecFileContent.bind(setup);
 
       const content = generateMethod('TestModule');
 
       expect(content).toContain('export interface Spec extends TurboModule');
       expect(content).toContain('sayHello(name: string): Promise<string>');
-      expect(content).toContain('multiply(a: number, b: number): Promise<number>');
+      expect(content).toContain(
+        'multiply(a: number, b: number): Promise<number>',
+      );
       expect(content).toContain('getRandomNumber(): Promise<number>');
       expect(content).toContain('isModuleReady(): Promise<boolean>');
-      expect(content).toContain("TurboModuleRegistry.getEnforcing<Spec>('TestModule')");
+      expect(content).toContain(
+        "TurboModuleRegistry.getEnforcing<Spec>('TestModule')",
+      );
       expect(content).toContain('// Hello World method');
       expect(content).toContain('// Reference multiply function');
     });
@@ -145,7 +151,9 @@ describe('SetupModuleWindows', () => {
   describe('method implementation generation', () => {
     it('should generate correct Hello World implementation', () => {
       const setup = new SetupModuleWindows('/test', mockOptions);
-      const generateImpl = (setup as any).generateMethodImplementation.bind(setup);
+      const generateImpl = (setup as any).generateMethodImplementation.bind(
+        setup,
+      );
 
       const helloImpl = generateImpl({
         name: 'sayHello',
@@ -155,12 +163,16 @@ describe('SetupModuleWindows', () => {
 
       expect(helloImpl).toContain('std::string greeting = "Hello, " + name');
       expect(helloImpl).toContain('promise.Resolve(greeting)');
-      expect(helloImpl).toContain('promise.Reject(React::ReactError{e.what()})');
+      expect(helloImpl).toContain(
+        'promise.Reject(React::ReactError{e.what()})',
+      );
     });
 
     it('should generate correct multiply implementation', () => {
       const setup = new SetupModuleWindows('/test', mockOptions);
-      const generateImpl = (setup as any).generateMethodImplementation.bind(setup);
+      const generateImpl = (setup as any).generateMethodImplementation.bind(
+        setup,
+      );
 
       const multiplyImpl = generateImpl({
         name: 'multiply',
