@@ -11,7 +11,7 @@ import {getFinalModuleName} from './moduleNameUtils';
 interface MethodSignature {
   name: string;
   returnType: string;
-  parameters: {name: string; type: string}[];
+  parameters: {name: string; type: string; fullType?: string}[];
 }
 
 export async function generateStubFiles(
@@ -166,19 +166,32 @@ function extractMethodsFromCodegenHeader(content: string, logging?: boolean): Me
   const methods: MethodSignature[] = [];
 
   // Parse from REACT_SHOW_METHOD_SPEC_ERRORS sections which contain the exact method signatures
+  // Use a more sophisticated pattern to handle nested parentheses and function callbacks
   const errorSectionPattern =
-    /REACT_SHOW_METHOD_SPEC_ERRORS\s*\(\s*\d+,\s*"([^"]+)",\s*"[^"]*REACT_METHOD\(([^)]+)\)\s+(?:static\s+)?void\s+(\w+)\s*\(([^)]*)\)[^"]*"/g;
+    /REACT_SHOW_METHOD_SPEC_ERRORS\s*\(\s*\d+,\s*"([^"]+)",\s*"([^"]*)"/g;
 
   let match;
   while ((match = errorSectionPattern.exec(content)) !== null) {
     const methodName = match[1]; // Method name from first parameter
-    const parameters = parseCodegenParameters(match[4]); // Parameters from method signature
+    const fullMethodSignature = match[2]; // Full method signature string
+    
+    // Extract parameters from the full method signature
+    const methodMatch = fullMethodSignature.match(/REACT_METHOD\([^)]+\)\s+(?:static\s+)?void\s+\w+\s*\(([^]*)\)/);
+    if (methodMatch) {
+      // Need to carefully parse the parameters, handling nested parentheses
+      const parametersString = methodMatch[1];
+      const parameters = parseComplexParameters(parametersString);
 
-    methods.push({
-      name: methodName,
-      returnType: 'void', // Codegen methods are typically void with callbacks or promises
-      parameters: parameters,
-    });
+      methods.push({
+        name: methodName,
+        returnType: 'void', // Codegen methods are typically void with callbacks or promises
+        parameters: parameters,
+      });
+      
+      if (logging) {
+        console.log(`[SetupModuleWindows] Parsed method ${methodName} with parameters: ${parametersString}`);
+      }
+    }
   }
 
   // Also try to parse from the methods tuple for additional methods
@@ -233,12 +246,56 @@ function extractMethodsFromCodegenHeader(content: string, logging?: boolean): Me
   return methods;
 }
 
-function parseCodegenParameters(paramString: string): {name: string; type: string}[] {
+function parseComplexParameters(paramString: string): {name: string; type: string; fullType?: string}[] {
   if (!paramString || paramString.trim() === '') {
     return [];
   }
 
-  const params: {name: string; type: string}[] = [];
+  const params: {name: string; type: string; fullType?: string}[] = [];
+  
+  // Handle complex parameter parsing with nested parentheses
+  let current = '';
+  let depth = 0;
+  let inString = false;
+  let i = 0;
+  
+  while (i < paramString.length) {
+    const char = paramString[i];
+    
+    if (char === '"' && (i === 0 || paramString[i - 1] !== '\\')) {
+      inString = !inString;
+    } else if (!inString) {
+      if (char === '<' || char === '(') {
+        depth++;
+      } else if (char === '>' || char === ')') {
+        depth--;
+      } else if (char === ',' && depth === 0) {
+        if (current.trim()) {
+          params.push(parseCodegenParameter(current.trim()));
+        }
+        current = '';
+        i++;
+        continue;
+      }
+    }
+    
+    current += char;
+    i++;
+  }
+  
+  if (current.trim()) {
+    params.push(parseCodegenParameter(current.trim()));
+  }
+  
+  return params;
+}
+
+function parseCodegenParameters(paramString: string): {name: string; type: string; fullType?: string}[] {
+  if (!paramString || paramString.trim() === '') {
+    return [];
+  }
+
+  const params: {name: string; type: string; fullType?: string}[] = [];
 
   // Split parameters carefully, handling nested templates like std::function<void(bool)>
   const cleanParamString = paramString.trim();
@@ -275,19 +332,27 @@ function parseCodegenParameters(paramString: string): {name: string; type: strin
   return params;
 }
 
-function parseCodegenParameter(param: string): {name: string; type: string} {
+function parseCodegenParameter(param: string): {name: string; type: string; fullType?: string} {
   // Handle common codegen parameter patterns
   param = param.trim();
 
   // std::function<void(type)> const & callback -> callback parameter
   if (param.includes('std::function')) {
-    if (param.includes('onSuccess') || param.includes('callback')) {
-      return {name: 'callback', type: 'function'};
-    } else if (param.includes('onError')) {
-      return {name: 'onError', type: 'function'};
-    } else {
-      return {name: 'callback', type: 'function'};
+    // Extract the function name from the end
+    const parts = param.split(/\s+/);
+    let name = parts[parts.length - 1].replace(/[&*]/g, '');
+    
+    // If name contains 'const', get the previous part
+    if (name.includes('const')) {
+      name = parts[parts.length - 2] || 'callback';
     }
+    
+    // Preserve the full function type for accurate generation
+    return {
+      name: name || 'callback', 
+      type: 'function',
+      fullType: param
+    };
   }
 
   // Extract parameter name from the end
@@ -319,10 +384,10 @@ function parseCodegenParameter(param: string): {name: string; type: string} {
     type = 'string'; // Most winrt types are strings or can be treated as such
   }
 
-  return {name: name || 'param', type};
+  return {name: name || 'param', type, fullType: param};
 }
 
-function parseCodegenSignature(signature: string): {name: string; type: string}[] {
+function parseCodegenSignature(signature: string): {name: string; type: string; fullType?: string}[] {
   // Parse Method<void(...)> signature to extract parameters
   const paramMatch = signature.match(/void\s*\(([^)]*)\)/);
   if (!paramMatch) {
@@ -381,6 +446,10 @@ async function generateHeaderStub(moduleName: string, methods: MethodSignature[]
       const cppParams = method.parameters
         .map(p => {
           if (p.type === 'function') {
+            // Use the full type if available, otherwise fallback to simplified version
+            if (p.fullType) {
+              return p.fullType;
+            }
             // Handle callback functions from codegen
             if (p.name.includes('onSuccess') || p.name === 'callback') {
               return `std::function<void()> const & ${p.name}`;
@@ -466,6 +535,10 @@ async function generateCppStub(moduleName: string, methods: MethodSignature[]): 
       const cppParams = method.parameters
         .map(p => {
           if (p.type === 'function') {
+            // Use the full type if available, otherwise fallback to simplified version
+            if (p.fullType) {
+              return p.fullType;
+            }
             // Handle callback functions from codegen
             if (p.name.includes('onSuccess') || p.name === 'callback') {
               return `std::function<void()> const & ${p.name}`;
