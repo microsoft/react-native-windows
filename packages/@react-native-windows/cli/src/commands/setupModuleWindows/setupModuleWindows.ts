@@ -29,20 +29,20 @@ import {codegenWindowsInternal} from '../codegenWindows/codegenWindows';
 import type {SetupModuleWindowsOptions} from './setupModuleWindowsOptions';
 import {setupModuleWindowsOptions} from './setupModuleWindowsOptions';
 
-interface Parameter {
-  name: string;
-  type: string;
-}
+// Placeholder interfaces for future TurboModule spec parsing
+// interface Parameter {
+//   name: string;
+//   type: string;
+// }
 
-interface MethodSignature {
-  name: string;
-  returnType: string;
-  parameters: Parameter[];
-}
+// interface MethodSignature {
+//   name: string;
+//   returnType: string;
+//   parameters: Parameter[];
+// }
 
 export class SetupModuleWindows {
   private actualModuleName?: string;
-  private discoveredSpecFiles: string[] = [];
   private actualProjectPath?: string;
   public root: string;
   public options: SetupModuleWindowsOptions;
@@ -145,7 +145,6 @@ export class SetupModuleWindows {
       this.verboseMessage(
         `Found valid spec file(s): ${validSpecFiles.join(', ')}`,
       );
-      this.discoveredSpecFiles = validSpecFiles;
       await this.extractModuleNameFromExistingSpec(validSpecFiles[0]);
     }
   }
@@ -651,8 +650,7 @@ export async function setupModuleWindowsInternal(
     await setup.run(spinner, config);
     const endTime = performance.now();
 
-    // Get the actual module name and project paths for display
-    const moduleName = await setup.getFinalModuleName();
+    // Get project paths for display
     const projectPaths = setup.getActualProjectPaths();
 
     console.log(
