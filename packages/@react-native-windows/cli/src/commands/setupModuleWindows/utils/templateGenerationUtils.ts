@@ -23,9 +23,87 @@ export async function generateStubFiles(
     console.log('[SetupModuleWindows] Generating C++ stub files...');
   }
 
-  // Look for codegen directory
+  // First, find the actual Windows project directory that was created by init-windows
+  const windowsDir = path.join(root, 'windows');
+  let actualProjectName = '';
+  
+  try {
+    const windowsDirContents = await fs.readdir(windowsDir);
+    const projectDirs = [];
+
+    for (const item of windowsDirContents) {
+      const itemPath = path.join(windowsDir, item);
+      const stats = await fs.stat(itemPath);
+
+      if (
+        stats.isDirectory() &&
+        !item.startsWith('.') &&
+        item !== 'ExperimentalFeatures.props' &&
+        !item.endsWith('.sln')
+      ) {
+        // Check if this directory contains typical project files
+        const possibleHeaderFile = path.join(itemPath, `${item}.h`);
+        const possibleCppFile = path.join(itemPath, `${item}.cpp`);
+        if (
+          (await fs.exists(possibleHeaderFile)) ||
+          (await fs.exists(possibleCppFile))
+        ) {
+          projectDirs.push(item);
+        }
+      }
+    }
+
+    if (projectDirs.length > 0) {
+      actualProjectName = projectDirs[0];
+      if (logging) {
+        console.log(
+          `[SetupModuleWindows] Found Windows project directory: ${actualProjectName}`,
+        );
+      }
+    }
+  } catch (error) {
+    if (logging) {
+      console.log(
+        `[SetupModuleWindows] Error searching for Windows project directory: ${error}`,
+      );
+    }
+  }
+
+  // Look for codegen directory - try multiple possible locations
   let codegenDir = path.join(root, 'codegen');
-  if (!(await fs.exists(codegenDir))) {
+  let foundCodegen = false;
+  
+  // Check root level first
+  if (await fs.exists(codegenDir)) {
+    foundCodegen = true;
+    if (logging) {
+      console.log(`[SetupModuleWindows] Found codegen directory at: ${codegenDir}`);
+    }
+  } 
+  // Check inside Windows project directory
+  else if (actualProjectName) {
+    const projectCodegenDir = path.join(windowsDir, actualProjectName, 'codegen');
+    if (await fs.exists(projectCodegenDir)) {
+      codegenDir = projectCodegenDir;
+      foundCodegen = true;
+      if (logging) {
+        console.log(`[SetupModuleWindows] Found codegen directory at: ${codegenDir}`);
+      }
+    }
+    // Also check with different casing (Codegen vs codegen)
+    else {
+      const projectCodegenDirAlt = path.join(windowsDir, actualProjectName, 'Codegen');
+      if (await fs.exists(projectCodegenDirAlt)) {
+        codegenDir = projectCodegenDirAlt;
+        foundCodegen = true;
+        if (logging) {
+          console.log(`[SetupModuleWindows] Found codegen directory at: ${codegenDir}`);
+        }
+      }
+    }
+  }
+
+  if (!foundCodegen) {
     if (logging) {
       console.log(
         '[SetupModuleWindows] No codegen directory found, skipping stub generation',
@@ -50,66 +128,31 @@ export async function generateStubFiles(
     );
   }
 
-  const windowsDir = path.join(root, 'windows');
-  const moduleName = await getFinalModuleName(root, actualModuleName);
-  let moduleDir = path.join(windowsDir, moduleName);
+  // Use the actual project name we found, or fall back to calculated module name
+  let projectName = actualProjectName;
   let actualProjectPath: string | undefined;
+  let moduleDir: string;
 
-  // If the expected directory doesn't exist, find any existing project directory
-  if (!(await fs.exists(moduleDir))) {
-    try {
-      const windowsDirContents = await fs.readdir(windowsDir);
-      const projectDirs = [];
-
-      for (const item of windowsDirContents) {
-        const itemPath = path.join(windowsDir, item);
-        const stats = await fs.stat(itemPath);
-
-        if (
-          stats.isDirectory() &&
-          !item.startsWith('.') &&
-          item !== 'ExperimentalFeatures.props' &&
-          !item.endsWith('.sln')
-        ) {
-          // Check if this directory contains typical project files
-          const possibleHeaderFile = path.join(itemPath, `${item}.h`);
-          const possibleCppFile = path.join(itemPath, `${item}.cpp`);
-          if (
-            (await fs.exists(possibleHeaderFile)) ||
-            (await fs.exists(possibleCppFile))
-          ) {
-            projectDirs.push(item);
-          }
-        }
-      }
-
-      if (projectDirs.length > 0) {
-        const projectName = projectDirs[0];
-        moduleDir = path.join(windowsDir, projectName);
-        actualProjectPath = path.join('windows', projectName, projectName);
-        if (logging) {
-          console.log(
-            `[SetupModuleWindows] Found existing Windows project directory: ${moduleDir}`,
-          );
-        }
-      } else {
-        await fs.mkdir(moduleDir, {recursive: true});
-        actualProjectPath = path.join('windows', moduleName, moduleName);
-      }
-    } catch (error) {
-      if (logging) {
-        console.log(
-          `[SetupModuleWindows] Error searching for Windows project directory: ${error}`,
-        );
-      }
-      await fs.mkdir(moduleDir, {recursive: true});
-      actualProjectPath = path.join('windows', moduleName, moduleName);
+  if (projectName) {
+    // Use the actual project directory that was found
+    moduleDir = path.join(windowsDir, projectName);
+    actualProjectPath = path.join('windows', projectName, projectName);
+    if (logging) {
+      console.log(
+        `[SetupModuleWindows] Using existing Windows project directory: ${moduleDir}`,
+      );
     }
   } else {
+    // Fall back to calculated module name if no project directory was found
+    const moduleName = await getFinalModuleName(root, actualModuleName);
+    projectName = moduleName;
+    moduleDir = path.join(windowsDir, moduleName);
     actualProjectPath = path.join('windows', moduleName, moduleName);
+    
+    if (!(await fs.exists(moduleDir))) {
+      await fs.mkdir(moduleDir, {recursive: true});
+    }
   }
-
-  const projectName = path.basename(moduleDir);
 
   // Parse methods from codegen files
   const methods = await parseMethodsFromCodegen(codegenDir, specFiles, logging);

@@ -113,18 +113,26 @@ export class SetupModuleWindows {
     spinner.succeed();
 
     // Print success message with helpful information
-    const moduleName = await getFinalModuleName(this.root, this.actualModuleName);
     const paths = this.getActualProjectPaths();
+    
+    // Get the actual module name from the project path
+    const moduleName = await getFinalModuleName(this.root, this.actualModuleName);
+    let displayModuleName = moduleName;
+    if (this.actualProjectPath) {
+      // Extract the module name from the actual project path
+      const pathParts = this.actualProjectPath.split(/[/\\]/);
+      displayModuleName = pathParts[pathParts.length - 1]; // Get the last part (file name without extension)
+    }
 
     console.log(
       `\n${chalk.green('Success!')} Windows module setup completed.\n`,
     );
 
-    console.log(`${chalk.bold('Module Name:')} ${moduleName}`);
+    console.log(`${chalk.bold('Module Name:')} ${displayModuleName}`);
     console.log(`${chalk.bold('Generated Files:')}`);
     console.log(`  • ${paths.headerPath}`);
     console.log(`  • ${paths.cppPath}`);
-    console.log(`  • codegen/Native${moduleName}Spec.g.h`);
+    console.log(`  • codegen/Native${displayModuleName}Spec.g.h`);
 
     console.log(`\n${chalk.bold('Next Steps:')}`);
     console.log('1. Implement your module methods in the generated C++ files');
