@@ -63,6 +63,7 @@ async function getExtraProps(): Promise<Record<string, any>> {
 
 export class SetupModuleWindows {
   private actualModuleName?: string;
+  private actualProjectPath?: string;
   public root: string;
   public options: SetupModuleWindowsOptions;
 
@@ -72,6 +73,13 @@ export class SetupModuleWindows {
   }
 
   public getActualProjectPaths(): {headerPath: string; cppPath: string} {
+    // Use the actual project path if available, otherwise fall back to calculated path
+    if (this.actualProjectPath) {
+      return {
+        headerPath: `${this.actualProjectPath}.h`,
+        cppPath: `${this.actualProjectPath}.cpp`,
+      };
+    }
     return getActualProjectPaths(this.root, this.actualModuleName);
   }
 
@@ -99,11 +107,12 @@ export class SetupModuleWindows {
     await runCodegenWindows(this.root, config, this.options);
 
     spinner.text = 'Generating C++ stub files...';
-    await generateStubFiles(
+    const {actualProjectPath} = await generateStubFiles(
       this.root,
       this.actualModuleName,
       this.options.logging ?? false,
     );
+    this.actualProjectPath = actualProjectPath;
 
     spinner.succeed();
 
