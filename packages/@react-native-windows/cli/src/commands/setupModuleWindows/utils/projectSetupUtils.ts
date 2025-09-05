@@ -80,7 +80,7 @@ export async function runInitWindows(
       template: options.template || 'cpp-lib',
       logging: options.logging,
       telemetry: options.telemetry,
-      overwrite: false,
+      overwrite: true,
       namespace: '',
     });
     
