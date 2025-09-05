@@ -182,7 +182,6 @@ After running the command, verify:
    
    For **cpp-app**:
    ```bash
-   ls -la windows/*.xaml                # XAML files
    ls -la windows/ModuleName/           # Module subdirectory
    ls -la windows/*.sln                 # Solution file
    ```
@@ -242,8 +241,6 @@ test-module/
 ├── package.json (updated)
 ├── NativeTestModule.ts (spec file)
 ├── windows/
-│   ├── App.xaml
-│   ├── MainWindow.xaml
 │   ├── TestModule/
 │   │   ├── TestModule.h
 │   │   └── TestModule.cpp
