@@ -6,6 +6,8 @@
 
 import {execSync} from 'child_process';
 import type {Config} from '@react-native-community/cli-types';
+import fs from '@react-native-windows/fs';
+import path from 'path';
 
 import {initWindowsInternal} from '../../initWindows/initWindows';
 import {codegenWindowsInternal} from '../../codegenWindows/codegenWindows';
@@ -48,9 +50,6 @@ export async function runInitWindows(
     console.log('[SetupModuleWindows] Running init-windows...');
   }
 
-  const fs = require('@react-native-windows/fs');
-  const path = require('path');
-  
   // Handle problematic example directory for cpp-lib template
   const exampleDir = path.join(root, 'example');
   const examplePackageJson = path.join(exampleDir, 'package.json');
@@ -135,8 +134,6 @@ export async function runCodegenWindows(
     }
   } catch (error: any) {
     // Check if codegen directory was created even with errors
-    const fs = require('@react-native-windows/fs');
-    const path = require('path');
     const codegenDir = path.join(root, 'codegen');
     if (await fs.exists(codegenDir)) {
       if (options.logging) {
@@ -160,9 +157,6 @@ export function getActualProjectPaths(
   root: string,
   actualModuleName?: string,
 ): {headerPath: string; cppPath: string} {
-  const path = require('path');
-  const fs = require('@react-native-windows/fs');
-  
   // If we have an actual module name, use it
   if (actualModuleName) {
     return {
