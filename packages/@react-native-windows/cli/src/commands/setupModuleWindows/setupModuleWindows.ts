@@ -21,18 +21,18 @@ import {
 } from '../../utils/telemetryHelpers';
 import type {SetupModuleWindowsOptions} from './setupModuleWindowsOptions';
 import {setupModuleWindowsOptions} from './setupModuleWindowsOptions';
-import {validateEnvironment, checkForExistingSpec} from './validationUtils';
+import {validateEnvironment, checkForExistingSpec} from './utils/validationUtils';
 import {
   getFinalModuleName,
   updatePackageJsonCodegen,
-} from './moduleNameUtils';
+} from './utils/moduleNameUtils';
 import {
   cleanAndInstallDeps,
   runInitWindows,
   runCodegenWindows,
   getActualProjectPaths,
-} from './projectSetupUtils';
-import {generateStubFiles} from './templateGenerationUtils';
+} from './utils/projectSetupUtils';
+import {generateStubFiles} from './utils/templateGenerationUtils';
 
 /**
  * Sanitizes the given option for telemetry.

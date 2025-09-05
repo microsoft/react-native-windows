@@ -7,9 +7,9 @@
 import {execSync} from 'child_process';
 import type {Config} from '@react-native-community/cli-types';
 
-import {initWindowsInternal} from '../initWindows/initWindows';
-import {codegenWindowsInternal} from '../codegenWindows/codegenWindows';
-import type {SetupModuleWindowsOptions} from './setupModuleWindowsOptions';
+import {initWindowsInternal} from '../../initWindows/initWindows';
+import {codegenWindowsInternal} from '../../codegenWindows/codegenWindows';
+import type {SetupModuleWindowsOptions} from '../setupModuleWindowsOptions';
 
 export async function cleanAndInstallDeps(
   root: string,

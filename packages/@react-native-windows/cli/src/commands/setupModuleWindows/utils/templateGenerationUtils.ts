@@ -372,6 +372,10 @@ async function generateHeaderStub(moduleName: string, methods: MethodSignature[]
   const namespace = `${moduleName}Specs`;
   const codegenNamespace = `${moduleName}Codegen`;
 
+  // Add hello world method first
+  const helloWorldMethod = `  REACT_METHOD(helloWorld)
+  void helloWorld() noexcept;`;
+
   const methodDeclarations = methods
     .map(method => {
       const cppParams = method.parameters
@@ -409,13 +413,10 @@ async function generateHeaderStub(moduleName: string, methods: MethodSignature[]
     })
     .join('\n\n');
 
-  const defaultMethods =
-    methods.length === 0
-      ? `  // TODO: Add your method implementations here
-  // Example:
-  // REACT_METHOD(getString)
-  // void getString(std::string value, std::function<void(std::string)> const & callback) noexcept;`
-      : methodDeclarations;
+  // Combine hello world with parsed methods
+  const allMethodDeclarations = methodDeclarations ? [helloWorldMethod, methodDeclarations].join('\n\n') : helloWorldMethod;
+
+  const defaultMethods = allMethodDeclarations;
 
   return `#pragma once
 
@@ -453,6 +454,12 @@ private:
 
 async function generateCppStub(moduleName: string, methods: MethodSignature[]): Promise<string> {
   const namespace = `${moduleName}Specs`;
+
+  // Add hello world implementation first
+  const helloWorldImplementation = `void ${moduleName}::helloWorld() noexcept {
+  // Log a welcome message using Windows console
+  OutputDebugStringA("Hello, world! Welcome to the ${moduleName} module!\\n");
+}`;
 
   const methodImplementations = methods
     .map(method => {
@@ -516,14 +523,8 @@ ${implementation}
     })
     .join('\n\n');
 
-  const defaultImplementations =
-    methods.length === 0
-      ? `// TODO: Implement your methods here
-// Example:
-// void ${moduleName}::getString(std::string value, std::function<void(std::string)> const & callback) noexcept {
-//   callback("Hello " + value);
-// }`
-      : methodImplementations;
+  // Combine hello world with parsed method implementations
+  const allImplementations = methodImplementations ? [helloWorldImplementation, methodImplementations].join('\n\n') : helloWorldImplementation;
 
   return `#include "${moduleName}.h"
 
@@ -533,7 +534,7 @@ void ${moduleName}::Initialize(React::ReactContext const &reactContext) noexcept
   m_context = reactContext;
 }
 
-${defaultImplementations}
+${allImplementations}
 
 } // namespace winrt::${namespace}
 `;
