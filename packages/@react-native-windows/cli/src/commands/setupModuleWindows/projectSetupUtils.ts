@@ -10,7 +10,6 @@ import type {Config} from '@react-native-community/cli-types';
 import {initWindowsInternal} from '../initWindows/initWindows';
 import {codegenWindowsInternal} from '../codegenWindows/codegenWindows';
 import type {SetupModuleWindowsOptions} from './setupModuleWindowsOptions';
-import {getFinalModuleName} from './moduleNameUtils';
 
 export async function cleanAndInstallDeps(
   root: string,

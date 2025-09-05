@@ -5,7 +5,6 @@
  */
 
 import chalk from 'chalk';
-import {performance} from 'perf_hooks';
 import {Ora} from 'ora';
 
 import type {Command, Config} from '@react-native-community/cli-types';
@@ -26,7 +25,6 @@ import {validateEnvironment, checkForExistingSpec} from './validationUtils';
 import {
   getFinalModuleName,
   updatePackageJsonCodegen,
-  getActualModuleName,
 } from './moduleNameUtils';
 import {
   cleanAndInstallDeps,
@@ -36,9 +34,35 @@ import {
 } from './projectSetupUtils';
 import {generateStubFiles} from './templateGenerationUtils';
 
+/**
+ * Sanitizes the given option for telemetry.
+ * @param key The key of the option.
+ * @param value The unsanitized value of the option.
+ * @returns The sanitized value of the option.
+ */
+function optionSanitizer(key: keyof SetupModuleWindowsOptions, value: any): any {
+  // Do not add a default case here.
+  // Strings risking PII should just return true if present, false otherwise.
+  // All others should return the value (or false if undefined).
+  switch (key) {
+    case 'logging':
+    case 'telemetry':
+    case 'template':
+      return value === undefined ? false : value; // Return value
+  }
+}
+
+/**
+ * Get the extra props to add to the `setup-module-windows` telemetry event.
+ * @returns The extra props.
+ */
+async function getExtraProps(): Promise<Record<string, any>> {
+  const extraProps: Record<string, any> = {};
+  return extraProps;
+}
+
 export class SetupModuleWindows {
   private actualModuleName?: string;
-  private actualProjectPath?: string;
   public root: string;
   public options: SetupModuleWindowsOptions;
 
@@ -52,21 +76,21 @@ export class SetupModuleWindows {
   }
 
   public async run(spinner: Ora, config: Config): Promise<void> {
-    await validateEnvironment(this.root, this.options.logging);
+    await validateEnvironment(this.root, this.options.logging ?? false);
     spinner.text = 'Checking for TurboModule spec file...';
 
-    const {validSpecFiles, actualModuleName} = await checkForExistingSpec(
+    const {actualModuleName} = await checkForExistingSpec(
       this.root,
-      this.options.logging,
+      this.options.logging ?? false,
     );
     this.actualModuleName = actualModuleName;
 
     // Now begin the Windows setup process
     spinner.text = 'Updating package.json with codegen configuration...';
-    await updatePackageJsonCodegen(this.root, this.options.logging);
+    await updatePackageJsonCodegen(this.root, this.options.logging ?? false);
 
     spinner.text = 'Installing dependencies...';
-    await cleanAndInstallDeps(this.root, this.options.logging);
+    await cleanAndInstallDeps(this.root, this.options.logging ?? false);
 
     spinner.text = 'Running init-windows...';
     await runInitWindows(this.root, config, this.options);
@@ -75,12 +99,11 @@ export class SetupModuleWindows {
     await runCodegenWindows(this.root, config, this.options);
 
     spinner.text = 'Generating C++ stub files...';
-    const {actualProjectPath} = await generateStubFiles(
+    await generateStubFiles(
       this.root,
       this.actualModuleName,
-      this.options.logging,
+      this.options.logging ?? false,
     );
-    this.actualProjectPath = actualProjectPath;
 
     spinner.succeed();
 
@@ -119,49 +142,25 @@ export async function setupModuleWindows(
   config: Config,
   options: SetupModuleWindowsOptions,
 ) {
-  const startTime = performance.now();
-  const telemetrySession = startTelemetrySession('setupModuleWindows');
+  await startTelemetrySession(
+    'setup-module-windows',
+    config,
+    options,
+    getDefaultOptions(config, setupModuleWindowsOptions),
+    optionSanitizer,
+  );
 
-  // Suppress Node.js deprecation warnings during this command
-  const originalNoWarnings = process.env.NODE_NO_WARNINGS;
-  process.env.NODE_NO_WARNINGS = '1';
-
+  let setupModuleWindowsError: Error | undefined;
   try {
-    const spinner = newSpinner('Setting up Windows module...');
-
-    const setupModule = new SetupModuleWindows(config.root, {
-      ...getDefaultOptions(args),
-      ...options,
-    });
-
-    await setupModule.run(spinner, config);
-
-    const endTime = performance.now();
-
-    Telemetry.client?.trackEvent({
-      name: 'setup-module-windows',
-      properties: {
-        durationInMs: endTime - startTime,
-        template: options.template || 'cpp-lib',
-      },
-    });
-  } catch (e) {
-    if (!options.telemetry) {
-      console.log(
-        `Telemetry is disabled. The following error will not be sent to Microsoft: ${e}`,
-      );
-    }
-    Telemetry.client?.trackException({exception: e as Error});
-    setExitProcessWithError(e);
-  } finally {
-    endTelemetrySession(telemetrySession);
-    // Restore original NODE_NO_WARNINGS setting
-    if (originalNoWarnings !== undefined) {
-      process.env.NODE_NO_WARNINGS = originalNoWarnings;
-    } else {
-      delete process.env.NODE_NO_WARNINGS;
-    }
+    await setupModuleWindowsInternal(args, config, options);
+  } catch (ex) {
+    setupModuleWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    Telemetry.trackException(setupModuleWindowsError);
   }
+
+  await endTelemetrySession(setupModuleWindowsError, getExtraProps);
+  setExitProcessWithError(options.logging, setupModuleWindowsError);
 }
 
 /**
@@ -172,7 +171,27 @@ export async function setupModuleWindowsInternal(
   config: Config,
   options: SetupModuleWindowsOptions,
 ): Promise<void> {
-  await setupModuleWindows(args, config, options);
+  // Suppress Node.js deprecation warnings during this command
+  const originalNoWarnings = process.env.NODE_NO_WARNINGS;
+  process.env.NODE_NO_WARNINGS = '1';
+
+  try {
+    const spinner = newSpinner('Setting up Windows module...');
+
+    const setupModule = new SetupModuleWindows(config.root, {
+      ...getDefaultOptions(config, setupModuleWindowsOptions),
+      ...options,
+    });
+
+    await setupModule.run(spinner, config);
+  } finally {
+    // Restore original NODE_NO_WARNINGS setting
+    if (originalNoWarnings !== undefined) {
+      process.env.NODE_NO_WARNINGS = originalNoWarnings;
+    } else {
+      delete process.env.NODE_NO_WARNINGS;
+    }
+  }
 }
 
 /**
