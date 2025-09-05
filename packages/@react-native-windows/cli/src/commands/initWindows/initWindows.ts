@@ -372,42 +372,32 @@ async function initWindows(
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
- * @param existingSpinner Optional existing spinner to use instead of creating a new one.
  */
 export async function initWindowsInternal(
   args: string[],
   config: Config,
   options: InitOptions,
-  existingSpinner?: Ora,
 ) {
   const startTime = performance.now();
-  const spinner = existingSpinner || newSpinner('Running init-windows...');
-  const shouldLog = !existingSpinner; // Only log completion messages if we created our own spinner
-
+  const spinner = newSpinner('Running init-windows...');
   try {
     const codegen = new InitWindows(config, options);
     await codegen.run(spinner);
     const endTime = performance.now();
 
-    if (shouldLog) {
-      console.log(
-        `${chalk.green('Success:')} init-windows completed. (${Math.round(
-          endTime - startTime,
-        )}ms)`,
-      );
-    }
+    console.log(
+      `${chalk.green('Success:')} init-windows completed. (${Math.round(
+        endTime - startTime,
+      )}ms)`,
+    );
   } catch (e) {
-    if (!existingSpinner) {
-      spinner.fail();
-    }
+    spinner.fail();
     const endTime = performance.now();
-    if (shouldLog) {
-      console.log(
-        `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
-          endTime - startTime,
-        )}ms)`,
-      );
-    }
+    console.log(
+      `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
+        endTime - startTime,
+      )}ms)`,
+    );
     throw e;
   }
 }
