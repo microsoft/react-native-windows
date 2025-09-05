@@ -1,7 +1,0 @@
-{
-    "type": "patch",
-    "comment": "Fix Narrator announcements for expand/collapse state changes by moving UIA property events from action handlers to updateAccessibilityProps to ensure notifications occur regardless of how state changes are triggered",
-    "packageName": "react-native-windows",
-    "email": "copilot@github.com",
-    "dependentChangeType": "patch"
-}
