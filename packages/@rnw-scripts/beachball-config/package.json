@@ -38,6 +38,6 @@
     "lib-commonjs"
   ],
   "engines": {
-    "node": ">= 22"
+    "node": ">= 22.14.0"
   }
 }
