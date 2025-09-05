@@ -12,8 +12,6 @@ yarn react-native setup-module-windows [options]
 
 - `--logging`: Enable verbose output logging
 - `--no-telemetry`: Disable telemetry tracking
-- `--skip-deps`: Skip dependency upgrades (use current versions)
-- `--skip-build`: Skip final build verification step
 - `--template <template>`: Project template (cpp-lib or cpp-app), defaults to cpp-lib
 
 ## What it does
@@ -24,14 +22,11 @@ The command performs the following steps automatically:
 
 2. **Package.json Updates**: Adds or updates the `codegenConfig` section in package.json with proper Windows codegen configuration.
 
-3. **Dependency Management**: 
-   - Installs dependencies using yarn
+3. **Windows Library Setup**: Runs `init-windows --template <template>` to create the Windows-specific project structure. Supports both `cpp-lib` (default) and `cpp-app` templates.
 
-4. **Windows Library Setup**: Runs `init-windows --template <template>` to create the Windows-specific project structure. Supports both `cpp-lib` (default) and `cpp-app` templates.
+4. **Code Generation**: Runs `codegen-windows` to generate C++ spec files from TypeScript/JavaScript specs.
 
-5. **Code Generation**: Runs `codegen-windows` to generate C++ spec files from TypeScript/JavaScript specs.
-
-6. **C++ Stub Generation**: Creates C++ header (.h) and implementation (.cpp) stub files with:
+5. **C++ Stub Generation**: Creates C++ header (.h) and implementation (.cpp) stub files with:
    - Proper method signatures matching the TypeScript spec
    - Reference multiply function as commented example (from cpp-lib template)
    - Hello World `sayHello` function to verify module functionality
@@ -171,16 +166,6 @@ yarn react-native setup-module-windows --template cpp-app
 With verbose logging:
 ```bash
 yarn react-native setup-module-windows --logging
-```
-
-Skip dependency upgrades:
-```bash
-yarn react-native setup-module-windows --skip-deps
-```
-
-Skip build verification:
-```bash
-yarn react-native setup-module-windows --skip-build
 ```
 
 ## Error Messages

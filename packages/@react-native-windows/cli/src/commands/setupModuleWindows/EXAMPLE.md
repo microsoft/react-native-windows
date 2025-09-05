@@ -57,8 +57,6 @@ yarn react-native setup-module-windows --template cpp-app --logging
 [SetupModuleWindows] Found valid spec file(s): NativeReactNativeWebview.ts
 [SetupModuleWindows] Extracted actual module name: ReactNativeWebview
 [SetupModuleWindows] Added codegenConfig to package.json with module name: ReactNativeWebview
-[SetupModuleWindows] Installing dependencies...
-[SetupModuleWindows] Dependencies installed
 [SetupModuleWindows] Running init-windows with cpp-lib template...
 [SetupModuleWindows] init-windows completed successfully
 [SetupModuleWindows] Running codegen-windows...
@@ -221,14 +219,8 @@ yarn react-native setup-module-windows --template cpp-lib
 # Verbose logging
 yarn react-native setup-module-windows --logging
 
-# Skip dependency upgrades
-yarn react-native setup-module-windows --skip-deps
-
-# Skip build verification
-yarn react-native setup-module-windows --skip-build
-
 # Combine options
-yarn react-native setup-module-windows --template cpp-app --logging --skip-deps
+yarn react-native setup-module-windows --template cpp-app --logging
 ```
 
 ## Error Handling
