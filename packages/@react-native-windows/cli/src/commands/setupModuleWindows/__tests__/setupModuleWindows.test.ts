@@ -6,6 +6,7 @@
 
 import {SetupModuleWindows} from '../setupModuleWindows';
 import type {SetupModuleWindowsOptions} from '../setupModuleWindowsOptions';
+import fs from '@react-native-windows/fs';
 
 // Mock dependencies
 jest.mock('@react-native-windows/fs');
@@ -111,8 +112,6 @@ describe('SetupModuleWindows', () => {
   });
 
   describe('spec file validation', () => {
-    const fs = require('@react-native-windows/fs');
-
     beforeEach(() => {
       jest.clearAllMocks();
     });

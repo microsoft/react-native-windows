@@ -12,6 +12,7 @@ import path from 'path';
 import {initWindowsInternal} from '../../initWindows/initWindows';
 import {codegenWindowsInternal} from '../../codegenWindows/codegenWindows';
 import type {SetupModuleWindowsOptions} from '../setupModuleWindowsOptions';
+import {getActualModuleName} from './moduleNameUtils';
 
 export async function cleanAndInstallDeps(
   root: string,
@@ -168,7 +169,6 @@ export function getActualProjectPaths(
   // Otherwise, derive from package name
   const packageJsonPath = path.join(root, 'package.json');
   const pkgJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-  const {getActualModuleName} = require('./moduleNameUtils');
   const moduleName = getActualModuleName(pkgJson.name || 'SampleModule');
 
   return {
