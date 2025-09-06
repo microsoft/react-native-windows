@@ -1085,7 +1085,6 @@ void WindowsTextInputComponentView::updateCursorColor(
   } else if (foregroundColor) {
     // Extra Caution if Background color is present
     const auto &props = windowsTextInputProps();
-
     auto fgWindows = (*foregroundColor).AsWindowsColor();
     int fgBrightness = (fgWindows.R * 299 + fgWindows.G * 587 + fgWindows.B * 114) / 1000;
 
@@ -1094,15 +1093,13 @@ void WindowsTextInputComponentView::updateCursorColor(
       auto bgWindows = (*props.backgroundColor).AsWindowsColor();
       int bgBrightness = (bgWindows.R * 299 + bgWindows.G * 587 + bgWindows.B * 114) / 1000;
       if (bgBrightness > 186) {
-        // Use opaque black caret (construct via host helper to match facebook::react::Color)
+        // Use opaque black caret
         m_caretVisual.Brush(theme()->Brush(defaultCaretColor));
         return;
       }
     }
 
     m_caretVisual.Brush(theme()->Brush(*foregroundColor));
-  } else if (!theme()->IsEmpty()) {
-    m_caretVisual.Brush(theme()->PlatformBrush("TextControlForeground"));
   } else {
     m_caretVisual.Brush(theme()->Brush(defaultCaretColor));
   }
