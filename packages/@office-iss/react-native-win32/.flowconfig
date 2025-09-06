@@ -31,6 +31,7 @@
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
+<PROJECT_ROOT>/Libraries/Renderer/shims/ReactNativeTypes.js
 <PROJECT_ROOT>/Libraries/StyleSheet/PlatformColorValueTypes.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js

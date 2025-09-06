@@ -11,12 +11,16 @@
  */
 
 import type {
+  // $FlowFixMe[missing-export] TODO(@rubennorte) - Missing export from react-native
   // $FlowFixMe[nonstrict-import] TODO(@rubennorte)
   HostInstance as PublicInstance,
+  // $FlowFixMe[missing-export] TODO(@rubennorte) - Missing export from react-native
   // $FlowFixMe[nonstrict-import] TODO(@rubennorte)
   MeasureOnSuccessCallback,
+  // $FlowFixMe[missing-export] TODO(@rubennorte) - Missing export from react-native
   // $FlowFixMe[nonstrict-import] TODO(@rubennorte)
   PublicRootInstance,
+  // $FlowFixMe[missing-export] TODO(@rubennorte) - Missing export from react-native
   // $FlowFixMe[nonstrict-import] TODO(@rubennorte)
   PublicTextInstance,
 } from 'react-native';

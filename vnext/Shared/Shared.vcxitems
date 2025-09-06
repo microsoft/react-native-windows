@@ -736,9 +736,4 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release'">
-    <ClCompile>
-      <ShowIncludes>true</ShowIncludes>
-    </ClCompile>
-  </ItemDefinitionGroup>
 </Project>
