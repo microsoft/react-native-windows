@@ -19,6 +19,7 @@ import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import StyleSheet, {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
+import {cloneElement} from 'react';
 
 type AndroidProps = $ReadOnly<{
   nextFocusDown?: ?number,
@@ -396,7 +397,7 @@ class TouchableHighlightImpl extends React.Component<
         onMouseEnter={this.props.onMouseEnter} // [Windows]
         onMouseLeave={this.props.onMouseLeave} // [Windows]
         {...eventHandlersWithoutBlurAndFocus}>
-        {React.cloneElement(child, {
+        {cloneElement(child, {
           style: StyleSheet.compose(
             child.props.style,
             this.state.extraStyles?.child,
@@ -433,9 +434,13 @@ class TouchableHighlightImpl extends React.Component<
 const TouchableHighlight: component(
   ref?: React.RefSetter<React.ElementRef<typeof View>>,
   ...props: $ReadOnly<Omit<TouchableHighlightProps, 'hostRef'>>
-) = React.forwardRef((props, hostRef) => (
-  <TouchableHighlightImpl {...props} hostRef={hostRef} />
-));
+) = ({
+  ref: hostRef,
+  ...props
+}: {
+  ref?: React.RefSetter<React.ElementRef<typeof View>>,
+  ...$ReadOnly<Omit<TouchableHighlightProps, 'hostRef'>>,
+}) => <TouchableHighlightImpl {...props} hostRef={hostRef} />;
 
 TouchableHighlight.displayName = 'TouchableHighlight';
 
