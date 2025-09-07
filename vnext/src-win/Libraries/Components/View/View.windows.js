@@ -443,7 +443,11 @@ function View(props: PropsWithRef): React.Node {
     if (computedAccessible !== undefined) {
       processedProps.accessible = computedAccessible;
     }
-    // Windows]
+
+    //Windows add ref to processedProps
+    if (ref !== undefined) {
+      processedProps.ref = ref;
+    }
 
     actualView = <ViewNativeComponent {...processedProps} />;
   } else {
