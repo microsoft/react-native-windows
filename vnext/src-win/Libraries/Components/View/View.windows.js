@@ -135,7 +135,7 @@ function View(props: PropsWithRef): React.Node {
       }
     }
 
-    // [Windows - Process Windows-specific accessibility properties
+    // Windows accessibility properties
     if (ariaLevel !== undefined) {
       processedProps.accessibilityLevel = ariaLevel;
     } else if (accessibilityLevel !== undefined) {
@@ -160,7 +160,7 @@ function View(props: PropsWithRef): React.Node {
       processedProps.accessibilitySetSize = accessibilitySetSize;
     }
 
-    // Process Windows-specific basic properties
+    // Windows base properties
     if (focusable !== undefined) {
       processedProps.focusable = tabIndex !== undefined ? !tabIndex : focusable;
     } else if (tabIndex !== undefined) {
