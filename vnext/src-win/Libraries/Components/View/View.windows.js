@@ -105,6 +105,7 @@ function View(props: PropsWithRef): React.Node {
     importantForAccessibility,
     nativeID,
     tabIndex,
+    ref,
     ...otherProps
   } = props;
 
@@ -513,7 +514,7 @@ function View(props: PropsWithRef): React.Node {
               accessibilityValue={_accessibilityValue}
               importantForAccessibility={computedImportantForAccessibility}
               nativeID={id ?? nativeID}
-              ref={forwardedRef}
+              ref={ref}
               onKeyDown={_keyDown}
               onKeyDownCapture={_keyDownCapture}
               onKeyUp={_keyUp}

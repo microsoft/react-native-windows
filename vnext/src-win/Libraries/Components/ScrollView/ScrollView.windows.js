@@ -1169,6 +1169,7 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
       // they are callable from the ref.
 
       // $FlowFixMe[prop-missing] - Known issue with appending custom methods.
+      // $FlowFixMe[unsafe-object-assign] - Using Object.assign to append methods to native instance
       const publicInstance: PublicScrollViewInstance = Object.assign(
         nativeInstance,
         {
