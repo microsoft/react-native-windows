@@ -85,6 +85,27 @@ function View(props: PropsWithRef): React.Node {
       'aria-valuemin': ariaValueMin,
       'aria-valuenow': ariaValueNow,
       'aria-valuetext': ariaValueText,
+      // [Windows aria properties
+      'aria-level': ariaLevel,
+      'aria-description': ariaDescription,
+      'aria-posinset': ariaPosinset,
+      'aria-setsize': ariaSetsize,
+      'aria-multiselectable': ariaMultiselectable,
+      'aria-required': ariaRequired,
+      'aria-readonly': ariaReadOnly,
+      // Windows]
+      // [Windows accessibility properties
+      accessibilityLevel,
+      accessibilityDescription,
+      accessibilityPosInSet,
+      accessibilitySetSize,
+      // Windows]
+      // [Windows - base props
+      focusable,
+      disabled,
+      importantForAccessibility,
+      nativeID,
+      // Windows]
       id,
       tabIndex,
       ...otherProps
@@ -114,6 +135,51 @@ function View(props: PropsWithRef): React.Node {
       }
     }
 
+    // [Windows - Process Windows-specific accessibility properties
+    if (ariaLevel !== undefined) {
+      processedProps.accessibilityLevel = ariaLevel;
+    } else if (accessibilityLevel !== undefined) {
+      processedProps.accessibilityLevel = accessibilityLevel;
+    }
+
+    if (ariaDescription !== undefined) {
+      processedProps.accessibilityDescription = ariaDescription;
+    } else if (accessibilityDescription !== undefined) {
+      processedProps.accessibilityDescription = accessibilityDescription;
+    }
+
+    if (ariaPosinset !== undefined) {
+      processedProps.accessibilityPosInSet = ariaPosinset;
+    } else if (accessibilityPosInSet !== undefined) {
+      processedProps.accessibilityPosInSet = accessibilityPosInSet;
+    }
+
+    if (ariaSetsize !== undefined) {
+      processedProps.accessibilitySetSize = ariaSetsize;
+    } else if (accessibilitySetSize !== undefined) {
+      processedProps.accessibilitySetSize = accessibilitySetSize;
+    }
+
+    // Process Windows-specific basic properties
+    if (focusable !== undefined) {
+      processedProps.focusable = tabIndex !== undefined ? !tabIndex : focusable;
+    } else if (tabIndex !== undefined) {
+      processedProps.focusable = !tabIndex;
+    }
+
+    if (disabled !== undefined) {
+      processedProps.disabled = disabled;
+    }
+
+    if (importantForAccessibility !== undefined) {
+      processedProps.importantForAccessibility = importantForAccessibility;
+    }
+
+    if (nativeID !== undefined) {
+      processedProps.nativeID = nativeID;
+    }
+    // Windows]
+
     if (id !== undefined) {
       processedProps.nativeID = id;
     }
@@ -128,7 +194,10 @@ function View(props: PropsWithRef): React.Node {
       ariaChecked != null ||
       ariaDisabled != null ||
       ariaExpanded != null ||
-      ariaSelected != null
+      ariaSelected != null ||
+      ariaReadOnly != null || // Windows
+      ariaMultiselectable != null || // Windows
+      ariaRequired != null // Windows
     ) {
       processedProps.accessibilityState = {
         busy: ariaBusy ?? accessibilityState?.busy,
@@ -136,6 +205,10 @@ function View(props: PropsWithRef): React.Node {
         disabled: ariaDisabled ?? accessibilityState?.disabled,
         expanded: ariaExpanded ?? accessibilityState?.expanded,
         selected: ariaSelected ?? accessibilityState?.selected,
+        readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+        multiselectable:
+          ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+        required: ariaRequired ?? accessibilityState?.required, // Windows
       };
     }
 
@@ -153,6 +226,81 @@ function View(props: PropsWithRef): React.Node {
         text: ariaValueText ?? accessibilityValue?.text,
       };
     }
+
+    // [Windows key event processing and accessible property
+    if (otherProps.keyDownEvents || otherProps.onKeyDown) {
+      processedProps.onKeyDown = event => {
+        if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+          for (const el of otherProps.keyDownEvents) {
+            if (
+              event.nativeEvent.code === el.code &&
+              el.handledEventPhase === 3
+            ) {
+              event.stopPropagation();
+            }
+          }
+        }
+        otherProps.onKeyDown && otherProps.onKeyDown(event);
+      };
+    }
+
+    if (otherProps.keyUpEvents || otherProps.onKeyUp) {
+      processedProps.onKeyUp = event => {
+        if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+          for (const el of otherProps.keyUpEvents) {
+            if (
+              event.nativeEvent.code === el.code &&
+              el.handledEventPhase === 3
+            ) {
+              event.stopPropagation();
+            }
+          }
+        }
+        otherProps.onKeyUp && otherProps.onKeyUp(event);
+      };
+    }
+
+    if (otherProps.keyDownEvents || otherProps.onKeyDownCapture) {
+      processedProps.onKeyDownCapture = event => {
+        if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+          for (const el of otherProps.keyDownEvents) {
+            if (
+              event.nativeEvent.code === el.code &&
+              el.handledEventPhase === 1
+            ) {
+              event.stopPropagation();
+            }
+          }
+        }
+        otherProps.onKeyDownCapture && otherProps.onKeyDownCapture(event);
+      };
+    }
+
+    if (otherProps.keyUpEvents || otherProps.onKeyUpCapture) {
+      processedProps.onKeyUpCapture = event => {
+        if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+          for (const el of otherProps.keyUpEvents) {
+            if (
+              event.nativeEvent.code === el.code &&
+              el.handledEventPhase === 1
+            ) {
+              event.stopPropagation();
+            }
+          }
+        }
+        otherProps.onKeyUpCapture && otherProps.onKeyUpCapture(event);
+      };
+    }
+
+    // Windows accessible property
+    const computedAccessible =
+      processedProps.importantForAccessibility === 'no-hide-descendants'
+        ? false
+        : otherProps.accessible;
+    if (computedAccessible !== undefined) {
+      processedProps.accessible = computedAccessible;
+    }
+    // Windows]
 
     actualView = <ViewNativeComponent {...processedProps} />;
   } else {
