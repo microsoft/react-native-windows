@@ -1009,7 +1009,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Expand() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   DispatchAccessibilityAction(m_view, "expand");
+
   return S_OK;
 }
 
@@ -1018,7 +1020,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Collapse() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   DispatchAccessibilityAction(m_view, "collapse");
+
   return S_OK;
 }
 
