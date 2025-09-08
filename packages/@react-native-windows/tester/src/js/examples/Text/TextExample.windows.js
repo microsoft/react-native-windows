@@ -1767,7 +1767,7 @@ const examples = [
             return <TextInlineView.ChangeInnerViewSize />;
           },
         },
-        TextInlineViewsExample,
+        ...TextSharedExamples,
       ]
     : []),
   // Windows]
