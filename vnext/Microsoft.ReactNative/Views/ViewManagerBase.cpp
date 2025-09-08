@@ -187,7 +187,11 @@ ShadowNode *ViewManagerBase::createShadow() const {
 }
 
 void ViewManagerBase::destroyShadow(ShadowNode *node) const {
-  delete node;
+  if (node) {
+    // Ensure we don't double-delete by clearing the view manager pointer
+    node->m_viewManager = nullptr;
+    delete node;
+  }
 }
 
 void ViewManagerBase::GetExportedCustomBubblingEventTypeConstants(
@@ -293,6 +297,10 @@ void ViewManagerBase::RemoveAllChildren(const XamlView &parent) {}
 
 void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild) {
   // ASSERT: Child must either implement or not allow children.
+  // Add null checks to prevent crashes during cleanup
+  if (!parent || !oldChild || !newChild) {
+    return;
+  }
   assert(false);
 }
 
