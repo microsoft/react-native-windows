@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 01 Sep 2025 15:26:05 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 08 Sep 2025 15:27:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.5
+
+Mon, 08 Sep 2025 15:27:28 GMT
+
+### Changes
+
+- Remove Prompt from CLI for switching to new arch. (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.80.0-preview.4
 

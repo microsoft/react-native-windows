@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 01 Sep 2025 15:26:05 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 08 Sep 2025 15:27:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.6
+
+Mon, 08 Sep 2025 15:27:28 GMT
+
+### Changes
+
+- [Fabric] Fix for Text and TextInput focus issue with screen readers. (kvineeth@microsoft.com)
+- [Fabric] Implement announceForAccessibility in AccessibilityInfo Module (kvineeth@microsoft.com)
+- [Fabric] Raising UIA Event if Toggle State Changes in Switch Component (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.80.0-preview.5
 
 ## 0.80.0-preview.5
 

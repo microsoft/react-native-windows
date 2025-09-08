@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 08 Sep 2025 15:27:28 GMT",
+      "version": "0.80.0-preview.5",
+      "tag": "@react-native-windows/cli_v0.80.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "9bc8710875a06cd7edef48bf79660e6c4006f76b",
+            "comment": "Remove Prompt from CLI for switching to new arch."
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Sep 2025 15:26:05 GMT",
       "version": "0.80.0-preview.4",
       "tag": "@react-native-windows/cli_v0.80.0-preview.4",

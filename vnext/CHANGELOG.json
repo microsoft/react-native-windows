@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Sep 2025 15:27:28 GMT",
+      "version": "0.80.0-preview.6",
+      "tag": "react-native-windows_v0.80.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b9f6a7139a1664b0e2dd49c5654a52050f39ba1",
+            "comment": "[Fabric] Fix for Text and TextInput focus issue with screen readers."
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b9f6a7139a1664b0e2dd49c5654a52050f39ba1",
+            "comment": "[Fabric] Implement announceForAccessibility in AccessibilityInfo Module"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b9f6a7139a1664b0e2dd49c5654a52050f39ba1",
+            "comment": "[Fabric] Raising UIA Event if Toggle State Changes in Switch Component"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.80.0-preview.5",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Sep 2025 15:26:05 GMT",
       "version": "0.80.0-preview.5",
       "tag": "react-native-windows_v0.80.0-preview.5",
