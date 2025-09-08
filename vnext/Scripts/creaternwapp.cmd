@@ -116,6 +116,7 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwapp.cmd Override @react-native-community/template version
   REM Do not change, this makes sure we always get a nightly template when still consuming a nightly RN and NOT a later "stable" template that may have been released
   REM set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
+  REM Windows we need to manually update this with every integration #15124
   set RNCLI_TEMPLATE=--template "@react-native-community/template@0.80.0-nightly-2025523-eb796ac"
 )
 

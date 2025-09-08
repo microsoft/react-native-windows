@@ -160,6 +160,13 @@
       "issue": 14204
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/ParagraphShadowNode.windows.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/ParagraphShadowNode.cpp",
+      "baseHash": "4b4811c43b33fc389a35838aa4a54e29251b2681",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h",
