@@ -39,7 +39,7 @@ void ShadowNodeBase::createView(const winrt::Microsoft::ReactNative::JSValueObje
   if (!viewManager) {
     return;
   }
-  
+
   m_view = viewManager->CreateView(this->m_tag, props);
 
   if (g_HasActualSizeProperty == TriBit::Undefined) {

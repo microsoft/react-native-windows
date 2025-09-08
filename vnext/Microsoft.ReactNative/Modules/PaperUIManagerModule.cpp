@@ -505,11 +505,11 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     if (m_nodesBeingDropped.find(tag) != m_nodesBeingDropped.end()) {
       return;
     }
-    
+
     if (auto node = m_nodeRegistry.findNode(tag)) {
       // Mark this node as being dropped
       m_nodesBeingDropped.insert(tag);
-      
+
       node->onDropViewInstance();
 
       m_nativeUIManager->RemoveView(*node, removeChildren);
@@ -529,7 +529,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       if (!zombieView) {
         m_nodeRegistry.removeNode(tag);
       }
-      
+
       // Remove from tracking set
       m_nodesBeingDropped.erase(tag);
     }
