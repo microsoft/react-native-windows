@@ -12,7 +12,7 @@ import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 import RNTesterText from '../../components/RNTesterText';
 import {useTheme} from '../../components/RNTesterTheme';
-import {View} from 'react-native';
+import {View, Platform} from 'react-native';
 
 function InlineView(props: {
   textAlign: 'auto' | 'left' | 'right' | 'center' | 'justify',
@@ -77,12 +77,14 @@ export default [
     name: 'emptyText',
     render: EmptyTextExample,
   },
-  {
+  // [Windows - TextInlineViewsExample contains Views nested in Text which is not supported in Paper
+  ...(Platform.OS !== 'windows' ? [{
     title: 'TextInlineViewsExample',
     name: 'inlineViews',
     description:
       'Shows how inline views are rendered when text is subject to alignment.',
     expect: 'The red box should align correctly with the rest of the text.',
     render: TextInlineViewsExample,
-  },
+  }] : []),
+  // Windows]
 ] as $ReadOnlyArray<RNTesterModuleExample>;
