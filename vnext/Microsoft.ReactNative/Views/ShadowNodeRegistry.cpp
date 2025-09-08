@@ -16,7 +16,7 @@ void ShadowNodeDeleter::operator()(ShadowNode *node) {
     node->m_viewManager = nullptr;
     viewManager->destroyShadow(node);
   }
-}git
+}
 
 void ShadowNodeRegistry::addRootView(std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&root, int64_t rootViewTag) {
   m_roots.insert(rootViewTag);
