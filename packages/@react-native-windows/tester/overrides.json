@@ -115,6 +115,13 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/Text/TextSharedExamples.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Text/TextSharedExamples.js",
+      "baseHash": "083863d1623d7df3205850e0fd760054bcd771ad",
+      "issue": 15125
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
       "baseHash": "ed91ff793aa3c1305d75f795be74adcffe540edb",
