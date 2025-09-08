@@ -490,7 +490,7 @@ function View(props: PropsWithRef): React.Node {
       <TextAncestor.Consumer>
         {consumerHasTextAncestor => {
           invariant(
-            !consumerHasTextAncestor,
+            !hasTextAncestor,
             'Nesting of <View> within <Text> is not currently supported.',
           );
           return (
