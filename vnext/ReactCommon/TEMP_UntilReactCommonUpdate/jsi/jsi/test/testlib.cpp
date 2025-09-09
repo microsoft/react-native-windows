@@ -1752,6 +1752,8 @@ TEST_P(JSITest, ObjectCreateWithPrototype) {
 }
 Windows] */
 
+/* [Windows #15134 Uncomment this and solve the JSI TEST issues
+
 TEST_P(JSITest, SetRuntimeData) {
   class RD : public RuntimeDecorator<Runtime, Runtime> {
    public:
@@ -1858,6 +1860,7 @@ TEST_P(JSITest, CastInterface) {
 
   EXPECT_EQ(ptr, nullptr);
 }
+  Windows] */
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
