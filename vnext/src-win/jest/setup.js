@@ -507,4 +507,3 @@ jest
     __esModule: true,
     default: jest.fn().mockReturnValue('light'),
   }));
-  
