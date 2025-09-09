@@ -1339,6 +1339,32 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
         }
       });
 
+  m_scrollMomentumBeginRevoker = m_scrollVisual.ScrollMomentumBegin(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onMomentumScrollBegin(scrollMetrics);
+        }
+      });
+
+  m_scrollMomentumEndRevoker = m_scrollVisual.ScrollMomentumEnd(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onMomentumScrollEnd(scrollMetrics);
+        }
+      });
+
   return visual;
 }
 
