@@ -1516,7 +1516,9 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
 
   // QUIRK: Legacy sync behavior can be re-enabled via EnableSyncDetachRootView option
   // The sync call was removed to prevent deadlocks with Hermes GC operations
-  if (m_options.EnableSyncDetachRootView) {
+  bool useSyncCall = winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRunOnQueueSync(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
+  if (useSyncCall) {
     // Legacy behavior: wait for JS thread to finish executing (can cause deadlocks)
     m_jsMessageThread.Load()->runOnQueueSync([]() {});
   }

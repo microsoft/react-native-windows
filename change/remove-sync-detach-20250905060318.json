@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove sync call from DetachRootView to fix deadlock, add quirk option to re-enable if needed",
-  "packageName": "@rnw-dependencies",
-  "email": "noreply@microsoft.com",
-  "dependentChangeType": "patch"
-}
