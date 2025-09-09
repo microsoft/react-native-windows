@@ -30,6 +30,7 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
   static bool GetSuppressWindowFocusOnViewFocus(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
   static bool GetUseRuntimeScheduler(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+  static bool GetUseRunOnQueueSync(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
   static bool GetEnableFabric(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
@@ -64,6 +65,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
   static void SetUseRuntimeScheduler(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
       bool value) noexcept;
+
+  static void SetUseRunOnQueueSync(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
 
 #pragma endregion Public API - part of IDL interface
 };
