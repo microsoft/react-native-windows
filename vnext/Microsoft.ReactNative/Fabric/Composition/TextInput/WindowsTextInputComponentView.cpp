@@ -8,6 +8,7 @@
 #include <AutoDraw.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
+#include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
@@ -341,8 +342,9 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
           int r = GetRValue(selectionColor);
           int g = GetGValue(selectionColor);
           int b = GetBValue(selectionColor);
-          int brightness = (r * 299 + g * 587 + b * 114) / 1000;
-          return brightness > 125 ? RGB(0, 0, 0) : RGB(255, 255, 255);
+          int brightness = ::Microsoft::ReactNative::CalculateColorBrightness(r, g, b);
+          return brightness > ::Microsoft::ReactNative::kCaretSelectionBrightnessThreshold ? RGB(0, 0, 0)
+                                                                                           : RGB(255, 255, 255);
         }
         break;
 
@@ -1078,31 +1080,9 @@ std::string WindowsTextInputComponentView::DefaultHelpText() const noexcept {
 void WindowsTextInputComponentView::updateCursorColor(
     const facebook::react::SharedColor &cursorColor,
     const facebook::react::SharedColor &foregroundColor) noexcept {
-  const auto defaultCaretColor =
-      facebook::react::hostPlatformColorFromRGBA(0, 0, 0, 0xFF); // Default caret color is black
-  if (cursorColor) {
-    m_caretVisual.Brush(theme()->Brush(*cursorColor));
-  } else if (foregroundColor) {
-    // Extra Caution if Background color is present
-    const auto &props = windowsTextInputProps();
-    auto fgWindows = (*foregroundColor).AsWindowsColor();
-    int fgBrightness = (fgWindows.R * 299 + fgWindows.G * 587 + fgWindows.B * 114) / 1000;
-
-    // If foreground is very light and background is also very light, force black caret.
-    if (fgBrightness > 240 && facebook::react::isColorMeaningful(props.backgroundColor)) {
-      auto bgWindows = (*props.backgroundColor).AsWindowsColor();
-      int bgBrightness = (bgWindows.R * 299 + bgWindows.G * 587 + bgWindows.B * 114) / 1000;
-      if (bgBrightness > 186) {
-        // Use opaque black caret
-        m_caretVisual.Brush(theme()->Brush(defaultCaretColor));
-        return;
-      }
-    }
-
-    m_caretVisual.Brush(theme()->Brush(*foregroundColor));
-  } else {
-    m_caretVisual.Brush(theme()->Brush(defaultCaretColor));
-  }
+  const auto &props = windowsTextInputProps();
+  auto caretColor = ::Microsoft::ReactNative::GetCaretColor(cursorColor, foregroundColor, props.backgroundColor);
+  m_caretVisual.Brush(theme()->Brush(*caretColor));
 }
 
 void WindowsTextInputComponentView::updateProps(
