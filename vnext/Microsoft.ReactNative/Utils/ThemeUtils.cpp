@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <Utils/ThemeUtils.h>
 
+#include <react/renderer/graphics/Color.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
 #include <winuser.h>
 
