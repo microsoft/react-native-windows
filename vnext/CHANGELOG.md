@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 02 Sep 2025 05:24:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 09 Sep 2025 05:26:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.989
+
+Tue, 09 Sep 2025 05:26:26 GMT
+
+### Changes
+
+- adding UIA event handler changes for navigator (protikbiswas100@microsoft.com)
 
 ## 0.0.0-canary.988
 
