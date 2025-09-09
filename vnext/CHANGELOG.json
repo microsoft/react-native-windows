@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Sep 2025 05:26:26 GMT",
+      "version": "0.0.0-canary.989",
+      "tag": "react-native-windows_v0.0.0-canary.989",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "42d0d8ca07312c26471036a6be2093dd6f2e6faa",
+            "comment": "adding UIA event handler changes for navigator"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Sep 2025 05:24:07 GMT",
       "version": "0.0.0-canary.988",
       "tag": "react-native-windows_v0.0.0-canary.988",
