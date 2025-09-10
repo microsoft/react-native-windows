@@ -23,6 +23,7 @@ using DebuggingOverlayComponentDescriptor = ConcreteComponentDescriptor<Debuggin
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;
 using SwitchComponentDescriptor = ConcreteComponentDescriptor<SwitchShadowNode>;
 using UnimplementedNativeViewComponentDescriptor = ConcreteComponentDescriptor<UnimplementedNativeViewShadowNode>;
+using XamlHostComponentDescriptor = ConcreteComponentDescriptor<XamlHostShadowNode>;
 
 void rnwcore_registerComponentDescriptorsFromCodegen(
   std::shared_ptr<const ComponentDescriptorProviderRegistry> registry);
