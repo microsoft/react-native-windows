@@ -28,7 +28,7 @@ import useAndroidRippleForView, {
   type PressableAndroidRippleConfig,
 } from './useAndroidRippleForView';
 import * as React from 'react';
-import {useMemo, useRef, useState} from 'react';
+import {memo, useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
 
@@ -211,10 +211,13 @@ type Instance = React.ElementRef<typeof View>;
  * Component used to build display components that should respond to whether the
  * component is currently pressed or not.
  */
-function Pressable(
-  props: PressableProps,
-  forwardedRef: React.RefSetter<Instance>,
-): React.Node {
+function Pressable({
+  ref: forwardedRef,
+  ...props
+}: {
+  ref?: React.RefSetter<Instance>,
+  ...PressableProps,
+}): React.Node {
   const {
     accessible,
     accessibilityState,
@@ -398,7 +401,7 @@ function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
   return [pressed || forcePressed, setPressed];
 }
 
-const MemoedPressable = React.memo(React.forwardRef(Pressable));
+const MemoedPressable = memo(Pressable);
 MemoedPressable.displayName = 'Pressable';
 
 export default (MemoedPressable: component(

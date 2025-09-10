@@ -32,7 +32,7 @@ class AbiComponentDescriptor : public facebook::react::ComponentDescriptor {
   std::shared_ptr<facebook::react::ShadowNode> createShadowNode(
       const facebook::react::ShadowNodeFragment &fragment,
       facebook::react::ShadowNodeFamily::Shared const &family) const override;
-  facebook::react::ShadowNode::Unshared cloneShadowNode(
+  std::shared_ptr<facebook::react::ShadowNode> cloneShadowNode(
       const facebook::react::ShadowNode &sourceShadowNode,
       const facebook::react::ShadowNodeFragment &fragment) const override;
 

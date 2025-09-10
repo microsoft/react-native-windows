@@ -15049,7 +15049,6 @@ exports[`snapshotAllPages FlatList 2`] = `
     </View>
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -15629,7 +15628,6 @@ exports[`snapshotAllPages FlatList 3`] = `
     </View>
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -16523,7 +16521,6 @@ exports[`snapshotAllPages FlatList 4`] = `
       </View>
     </View>
     <RCTScrollView
-      accessible={true}
       automaticallyAdjustContentInsets={false}
       contentInset={
         {
@@ -17396,7 +17393,6 @@ exports[`snapshotAllPages FlatList 5`] = `
     </View>
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -18171,7 +18167,6 @@ exports[`snapshotAllPages FlatList 6`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -18941,7 +18936,6 @@ exports[`snapshotAllPages FlatList 7`] = `
 >
   <RCTScrollView
     ItemSeparatorComponent={[Function]}
-    accessible={true}
     data={
       [
         "Pizza",
@@ -20448,7 +20442,6 @@ exports[`snapshotAllPages FlatList 10`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -21239,7 +21232,6 @@ exports[`snapshotAllPages FlatList 11`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -22030,7 +22022,6 @@ exports[`snapshotAllPages FlatList 12`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -22892,7 +22883,6 @@ exports[`snapshotAllPages FlatList 13`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -23761,7 +23751,6 @@ exports[`snapshotAllPages FlatList 14`] = `
     }
   />
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -24552,7 +24541,6 @@ exports[`snapshotAllPages FlatList 15`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -71457,9 +71445,7 @@ exports[`snapshotAllPages Text 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 23`] = `<Text />`;
-
-exports[`snapshotAllPages Text 24`] = `
+exports[`snapshotAllPages Text 23`] = `
 <View>
   <Text
     style={
@@ -71557,7 +71543,7 @@ exports[`snapshotAllPages Text 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 25`] = `
+exports[`snapshotAllPages Text 24`] = `
 <View
   testID="text-background-color"
 >
@@ -71661,7 +71647,7 @@ exports[`snapshotAllPages Text 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 26`] = `
+exports[`snapshotAllPages Text 25`] = `
 [
   <View
     style={
@@ -71732,7 +71718,7 @@ exports[`snapshotAllPages Text 26`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 27`] = `
+exports[`snapshotAllPages Text 26`] = `
 <View
   testID="number-of-lines"
 >
@@ -71837,7 +71823,7 @@ exports[`snapshotAllPages Text 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 28`] = `
+exports[`snapshotAllPages Text 27`] = `
 [
   <Text
     style={
@@ -71905,7 +71891,7 @@ exports[`snapshotAllPages Text 28`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 29`] = `
+exports[`snapshotAllPages Text 28`] = `
 <View
   testID="max-font-size-multiplier"
 >
@@ -71960,7 +71946,7 @@ exports[`snapshotAllPages Text 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 30`] = `
+exports[`snapshotAllPages Text 29`] = `
 <Text
   selectable={true}
   style={
@@ -71977,7 +71963,7 @@ exports[`snapshotAllPages Text 30`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 31`] = `
+exports[`snapshotAllPages Text 30`] = `
 <Text
   selectable={true}
   selectionColor="orange"
@@ -71995,7 +71981,7 @@ exports[`snapshotAllPages Text 31`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 32`] = `
+exports[`snapshotAllPages Text 31`] = `
 <Text
   style={
     [
@@ -72019,7 +72005,7 @@ exports[`snapshotAllPages Text 32`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 33`] = `
+exports[`snapshotAllPages Text 32`] = `
 [
   <Text
     numberOfLines={1}
@@ -72087,7 +72073,7 @@ exports[`snapshotAllPages Text 33`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 34`] = `
+exports[`snapshotAllPages Text 33`] = `
 <View
   testID="font-variants"
 >
@@ -72198,7 +72184,7 @@ exports[`snapshotAllPages Text 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 35`] = `
+exports[`snapshotAllPages Text 34`] = `
 [
   <View
     style={
@@ -72310,7 +72296,7 @@ exports[`snapshotAllPages Text 35`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 36`] = `
+exports[`snapshotAllPages Text 35`] = `
 <View
   testID="text-transform"
 >
@@ -72570,7 +72556,7 @@ exports[`snapshotAllPages Text 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 37`] = `
+exports[`snapshotAllPages Text 36`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
@@ -72640,7 +72626,7 @@ exports[`snapshotAllPages Text 37`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 38`] = `
+exports[`snapshotAllPages Text 37`] = `
 <View>
   <Text
     style={
@@ -73062,7 +73048,7 @@ exports[`snapshotAllPages Text 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 39`] = `
+exports[`snapshotAllPages Text 38`] = `
 <View>
   <Text
     style={
@@ -73081,7 +73067,7 @@ exports[`snapshotAllPages Text 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 39`] = `
 <View>
   <Text
     style={
@@ -73150,7 +73136,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 40`] = `
 <View>
   <Text
     style={
@@ -73175,7 +73161,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
@@ -73194,6 +73180,23 @@ exports[`snapshotAllPages Text 42`] = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   </Text>
 </View>
+`;
+
+exports[`snapshotAllPages Text 42`] = `
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      {
+        "borderColor": "#005dffff",
+        "borderWidth": 1,
+      },
+    ]
+  }
+  testID="empty-text"
+/>
 `;
 
 exports[`snapshotAllPages Text 43`] = `

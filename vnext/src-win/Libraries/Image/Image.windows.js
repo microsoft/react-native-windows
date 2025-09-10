@@ -8,8 +8,10 @@
  * @format
  */
 
+import type {HostInstance} from '../../src/private/types/HostInstance';
 import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
 import type {RootTag} from '../Types/RootTagTypes';
+import type {ImageProps} from './ImageProps';
 import type {AbstractImageIOS, ImageIOS} from './ImageTypes.flow';
 import type {ImageSize} from './NativeImageLoaderAndroid';
 
@@ -107,7 +109,13 @@ async function queryCache(
  *
  * See https://reactnative.dev/docs/image
  */
-let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
+let BaseImage: AbstractImageIOS = ({
+  ref: forwardedRef,
+  ...props
+}: {
+  ref?: React.RefSetter<HostInstance>,
+  ...ImageProps,
+}) => {
   const source = getImageSourcesFromImageProps(props) || {
     uri: undefined,
     width: undefined,
@@ -214,28 +222,30 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
   } else {
     return (
       <ImageAnalyticsTagContext.Consumer>
-        {analyticTag => (
-          <ImageViewNativeComponent
-            accessibilityState={_accessibilityState}
-            {...restProps}
-            accessible={props.alt !== undefined ? true : props.accessible}
-            accessibilityLabel={accessibilityLabel ?? props.alt}
-            accessibilityLevel={accessibilityLevel} // Windows
-            accessibilityPosInSet={accessibilityPosInSet} // Windows
-            accessibilitySetSize={accessibilitySetSize} // Windows
-            ref={actualRef}
-            style={style}
-            resizeMode={resizeMode}
-            tintColor={tintColor}
-            source={sources}
-            internal_analyticTag={analyticTag}
-          />
-        )}
+        {analyticTag => {
+          return (
+            <ImageViewNativeComponent
+              accessibilityState={_accessibilityState}
+              {...restProps}
+              accessible={props.alt !== undefined ? true : props.accessible}
+              accessibilityLabel={accessibilityLabel ?? props.alt}
+              accessibilityLevel={accessibilityLevel} // Windows
+              accessibilityPosInSet={accessibilityPosInSet} // Windows
+              accessibilitySetSize={accessibilitySetSize} // Windows
+              ref={actualRef}
+              style={style}
+              resizeMode={resizeMode}
+              tintColor={tintColor}
+              source={sources}
+              internal_analyticTag={analyticTag}
+            />
+          );
+        }}
       </ImageAnalyticsTagContext.Consumer>
     );
+    // Windows]
   }
-  // Windows]
-});
+};
 
 const imageComponentDecorator = unstable_getImageComponentDecorator();
 if (imageComponentDecorator != null) {

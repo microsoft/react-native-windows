@@ -7,7 +7,6 @@ exports[`Button Tests Buttons can be disabled 1`] = `
     "ControlType": 50000,
     "IsEnabled": false,
     "LocalizedControlType": "button",
-    "Name": "Press to submit your application!",
     "__Children": [
       {
         "AutomationId": "",
@@ -22,7 +21,6 @@ exports[`Button Tests Buttons can be disabled 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "disabled_button",
     },
     "__Children": [
@@ -156,7 +154,6 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
-    "Name": "Press to submit your application!",
     "__Children": [
       {
         "AutomationId": "",
@@ -170,7 +167,6 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "accessibilityLabel_button",
     },
     "__Children": [
@@ -305,7 +301,6 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
     "HelpText": "Submit Button",
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
-    "Name": "Press to submit your application!",
     "__Children": [
       {
         "AutomationId": "",
@@ -319,7 +314,6 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "accessibility_props",
     },
     "__Children": [
@@ -435,7 +429,6 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
     "ControlType": 50000,
     "IsEnabled": false,
     "LocalizedControlType": "button",
-    "Name": "Press to submit your application!",
     "__Children": [
       {
         "AutomationId": "",
@@ -450,7 +443,6 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "accessibilityState_button",
     },
     "__Children": [
@@ -584,7 +576,6 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
-    "Name": "Press to cancel your application!",
     "__Children": [
       {
         "AutomationId": "",
@@ -598,7 +589,6 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to cancel your application!",
       "TestId": "cancel_button",
     },
     "__Children": [
@@ -731,7 +721,6 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "accessible_false_button",
     },
     "__Children": [
@@ -847,7 +836,6 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
-    "Name": "Press to submit your application!",
     "__Children": [
       {
         "AutomationId": "",
@@ -861,7 +849,6 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "focusable_false_button",
     },
     "__Children": [
@@ -976,7 +963,6 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "accessible_focusable_false_button",
     },
     "__Children": [
@@ -1097,7 +1083,6 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
-        "Name": "Press to cancel your application!",
         "__Children": [
           {
             "AutomationId": "",
@@ -1113,7 +1098,6 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
-        "Name": "Press to submit your application!",
         "__Children": [
           {
             "AutomationId": "",
@@ -1135,7 +1119,6 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
       {
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {
-          "AccessibilityLabel": "Press to cancel your application!",
           "TestId": "two_cancel_button",
         },
         "__Children": [
@@ -1152,7 +1135,6 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
       {
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {
-          "AccessibilityLabel": "Press to submit your application!",
           "TestId": "two_submit_button",
         },
         "__Children": [
@@ -1425,7 +1407,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
-        "Name": "Press to cancel your application!",
         "__Children": [
           {
             "AutomationId": "",
@@ -1441,7 +1422,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
-        "Name": "Press to save your application!",
         "__Children": [
           {
             "AutomationId": "",
@@ -1457,7 +1437,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "ControlType": 50000,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
-        "Name": "Press to submit your application!",
         "__Children": [
           {
             "AutomationId": "",
@@ -1479,7 +1458,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
       {
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {
-          "AccessibilityLabel": "Press to cancel your application!",
           "TestId": "three_cancel_button",
         },
         "__Children": [
@@ -1496,7 +1474,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
       {
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {
-          "AccessibilityLabel": "Press to save your application!",
           "TestId": "three_save_button",
         },
         "__Children": [
@@ -1513,7 +1490,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
       {
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {
-          "AccessibilityLabel": "Press to submit your application!",
           "TestId": "three_submit_button",
         },
         "__Children": [
@@ -1898,7 +1874,6 @@ exports[`Button Tests Buttons have default styling 1`] = `
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
-    "Name": "Press to submit your application!",
     "__Children": [
       {
         "AutomationId": "",
@@ -1912,7 +1887,6 @@ exports[`Button Tests Buttons have default styling 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "Press to submit your application!",
       "TestId": "button_default_styling",
     },
     "__Children": [

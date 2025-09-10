@@ -31,6 +31,7 @@
 <PROJECT_ROOT>/Libraries/Image/resolveAssetSource.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Renderer/shims/ReactNativeTypes.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
@@ -94,6 +95,7 @@
 
 ; Ignore rn-tester Pods
 <PROJECT_ROOT>/packages/rn-tester/Pods/
+
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
@@ -169,4 +171,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.269.1
+^0.271.0
