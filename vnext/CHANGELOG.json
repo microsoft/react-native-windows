@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Sep 2025 05:26:20 GMT",
+      "version": "0.0.0-canary.990",
+      "tag": "react-native-windows_v0.0.0-canary.990",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "copilot@github.com",
+            "package": "react-native-windows",
+            "commit": "eecbc1804362327bb6b1108f455bda1b6b70f6de",
+            "comment": "Fix deadlock in ReactInstanceWin::DetachRootView by replacing sync call with async"
+          },
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "34d1771bd47980c0b5c05172eb63e6f7cab89299",
+            "comment": "Implement onMomentumScrollEnd and onMomentumScrollBegin for Fabric ScrollView"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Sep 2025 05:26:26 GMT",
       "version": "0.0.0-canary.989",
       "tag": "react-native-windows_v0.0.0-canary.989",

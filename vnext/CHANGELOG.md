@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 09 Sep 2025 05:26:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 10 Sep 2025 05:26:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.990
+
+Wed, 10 Sep 2025 05:26:20 GMT
+
+### Changes
+
+- Fix deadlock in ReactInstanceWin::DetachRootView by replacing sync call with async (copilot@github.com)
+- Implement onMomentumScrollEnd and onMomentumScrollBegin for Fabric ScrollView (198982749+Copilot@users.noreply.github.com)
 
 ## 0.0.0-canary.989
 
