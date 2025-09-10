@@ -10,7 +10,6 @@
 namespace Microsoft::ReactNative {
 
 void ShadowNodeDeleter::operator()(ShadowNode *node) {
-  
   if (node && node->m_viewManager) {
     // Clear the view manager pointer to prevent double deletion
     auto viewManager = node->m_viewManager;
