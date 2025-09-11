@@ -41,6 +41,21 @@ int CalculateColorBrightness(int r, int g, int b) noexcept {
       kColorBrightnessDivisor;
 }
 
+bool isColorMeaningful(const facebook::react::SharedColor &color) noexcept {
+#ifdef USE_FABRIC
+  return facebook::react::isColorMeaningful(color);
+#else
+  // For PAPER builds, check if color exists and has meaningful alpha
+  if (!color) {
+    return false;
+  }
+  
+  // Check if the color has a meaningful alpha value (not fully transparent)
+  // Use m_color directly to avoid calling ResolvePlatformColor (Fabric-only function)
+  return color->m_color.A > 0;
+#endif
+}
+
 facebook::react::SharedColor GetCaretColor(
     const facebook::react::SharedColor &cursorColor,
     const facebook::react::SharedColor &foregroundColor,
@@ -56,7 +71,7 @@ facebook::react::SharedColor GetCaretColor(
     int fgBrightness = CalculateColorBrightness(fgWindows);
 
     // If foreground is very light and background is also very light, force black caret.
-    if (fgBrightness > kCaretLightForegroundThreshold && facebook::react::isColorMeaningful(backgroundColor)) {
+    if (fgBrightness > kCaretLightForegroundThreshold && Microsoft::ReactNative::isColorMeaningful(backgroundColor)) {
       auto bgWindows = (*backgroundColor).AsWindowsColor();
       int bgBrightness = CalculateColorBrightness(bgWindows);
       if (bgBrightness > kCaretLightBackgroundThreshold) {
