@@ -4,22 +4,16 @@
   <!-- This import will noop when customer code is built. This import is here to help building the bits in the react-native-windows repository. -->
   <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
-  <!--Allow implicitly restoring NuGet dependencies in C++ projects using the Visual Studio IDE.-->
-  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
-    <!--
-      Ensure restoring of PackageReference dependencies.
-    -->
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" Condition="@(PackageReference->Count()) &gt; 0" />
-
-    <!--
-      Ensure restoring of packages.config dependencies.
-
-      RestoreProjectStyle=PackagesConfig    - Required to use the packages.config mechanism
-      RestorePackagesConfig=true            - Required to use the packages.config mechanism
-      RestoreUseStaticGraphEvaluation=false - Override setting from Directory.Build.props
-    -->
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;RestoreUseStaticGraphEvaluation=false" />
-  </Target>
+  <!--
+    Note: Removed implicit NuGet restore calls from BeforeResolveReferences target.
+    
+    Calling the restore target during Visual Studio builds can cause deadlocks because:
+    1. It accesses UI thread-bound components without proper JTF synchronization
+    2. It violates the restore/build contract (restore must complete before build starts)
+    3. Network calls during restore on UI thread cause performance issues and potential deadlocks
+    
+    Visual Studio will handle NuGet package restoration automatically through its own mechanisms.
+  -->
 
   <!-- This ensures NuGet restores use the nuget config's feed and not any pre-installed files. -->
   <PropertyGroup>

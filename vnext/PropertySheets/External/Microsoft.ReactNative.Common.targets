@@ -14,21 +14,15 @@
   </Target>
 
   <!-- Should match entry in $(ReactNativeWindowsDir)vnext\Directory.Build.targets -->
-  <!--Allow implicitly restoring NuGet dependencies in C++ projects using the Visual Studio IDE.-->
-  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
-    <!--
-      Ensure restoring of PackageReference dependencies.
-    -->
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
-
-    <!--
-      Ensure restoring of packages.config dependencies.
-
-      RestoreProjectStyle=PackagesConfig    - Required to use the packages.config mechanism
-      RestorePackagesConfig=true            - Required to use the packages.config mechanism
-      RestoreUseStaticGraphEvaluation=false - Override setting from Microsoft.ReactNative.Common.props
-    -->
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;RestoreUseStaticGraphEvaluation=false" />
-  </Target>
+  <!--
+    Note: Removed implicit NuGet restore calls from BeforeResolveReferences target.
+    
+    Calling the restore target during Visual Studio builds can cause deadlocks because:
+    1. It accesses UI thread-bound components without proper JTF synchronization
+    2. It violates the restore/build contract (restore must complete before build starts)
+    3. Network calls during restore on UI thread cause performance issues and potential deadlocks
+    
+    Visual Studio will handle NuGet package restoration automatically through its own mechanisms.
+  -->
 
 </Project>
