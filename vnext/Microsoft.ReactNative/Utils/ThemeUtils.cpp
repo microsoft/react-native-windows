@@ -4,6 +4,8 @@
 #include "pch.h"
 #include <Utils/ThemeUtils.h>
 
+#include <react/renderer/graphics/Color.h>
+#include <react/renderer/graphics/HostPlatformColor.h>
 #include <winuser.h>
 
 namespace Microsoft::ReactNative {
@@ -28,6 +30,60 @@ bool IsInHighContrastWin32() noexcept {
   }
 
   return false;
+}
+
+int CalculateColorBrightness(const winrt::Windows::UI::Color &color) noexcept {
+  return CalculateColorBrightness(color.R, color.G, color.B);
+}
+
+int CalculateColorBrightness(int r, int g, int b) noexcept {
+  return (r * kColorBrightnessRedWeight + g * kColorBrightnessGreenWeight + b * kColorBrightnessBlueWeight) /
+      kColorBrightnessDivisor;
+}
+
+bool isColorMeaningful(const facebook::react::SharedColor &color) noexcept {
+#ifdef USE_FABRIC
+  return facebook::react::isColorMeaningful(color);
+#else
+  // For PAPER builds, check if color exists and has meaningful alpha
+  if (!color) {
+    return false;
+  }
+  
+  // Check if the color has a meaningful alpha value (not fully transparent)
+  // Use m_color directly to avoid calling ResolvePlatformColor (Fabric-only function)
+  return color->m_color.A > 0;
+#endif
+}
+
+facebook::react::SharedColor GetCaretColor(
+    const facebook::react::SharedColor &cursorColor,
+    const facebook::react::SharedColor &foregroundColor,
+    const facebook::react::SharedColor &backgroundColor) noexcept {
+  const auto defaultCaretColor =
+      facebook::react::hostPlatformColorFromRGBA(0, 0, 0, 0xFF); // Default caret color is black
+
+  if (cursorColor) {
+    return cursorColor;
+  } else if (foregroundColor) {
+    // Extra Caution if Background color is present
+    auto fgWindows = (*foregroundColor).AsWindowsColor();
+    int fgBrightness = CalculateColorBrightness(fgWindows);
+
+    // If foreground is very light and background is also very light, force black caret.
+    if (fgBrightness > kCaretLightForegroundThreshold && Microsoft::ReactNative::isColorMeaningful(backgroundColor)) {
+      auto bgWindows = (*backgroundColor).AsWindowsColor();
+      int bgBrightness = CalculateColorBrightness(bgWindows);
+      if (bgBrightness > kCaretLightBackgroundThreshold) {
+        // Use opaque black caret
+        return defaultCaretColor;
+      }
+    }
+
+    return foregroundColor;
+  } else {
+    return defaultCaretColor;
+  }
 }
 
 } // namespace Microsoft::ReactNative

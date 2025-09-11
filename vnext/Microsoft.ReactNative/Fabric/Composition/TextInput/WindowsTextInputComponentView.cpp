@@ -8,8 +8,10 @@
 #include <AutoDraw.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
+#include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
+#include <react/renderer/graphics/HostPlatformColor.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
 #include <unicode.h>
@@ -340,8 +342,9 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
           int r = GetRValue(selectionColor);
           int g = GetGValue(selectionColor);
           int b = GetBValue(selectionColor);
-          int brightness = (r * 299 + g * 587 + b * 114) / 1000;
-          return brightness > 125 ? RGB(0, 0, 0) : RGB(255, 255, 255);
+          int brightness = ::Microsoft::ReactNative::CalculateColorBrightness(r, g, b);
+          return brightness > ::Microsoft::ReactNative::kCaretSelectionBrightnessThreshold ? RGB(0, 0, 0)
+                                                                                           : RGB(255, 255, 255);
         }
         break;
 
@@ -1077,13 +1080,9 @@ std::string WindowsTextInputComponentView::DefaultHelpText() const noexcept {
 void WindowsTextInputComponentView::updateCursorColor(
     const facebook::react::SharedColor &cursorColor,
     const facebook::react::SharedColor &foregroundColor) noexcept {
-  if (cursorColor) {
-    m_caretVisual.Brush(theme()->Brush(*cursorColor));
-  } else if (foregroundColor) {
-    m_caretVisual.Brush(theme()->Brush(*foregroundColor));
-  } else {
-    m_caretVisual.Brush(theme()->PlatformBrush("TextControlForeground"));
-  }
+  const auto &props = windowsTextInputProps();
+  auto caretColor = ::Microsoft::ReactNative::GetCaretColor(cursorColor, foregroundColor, props.backgroundColor);
+  m_caretVisual.Brush(theme()->Brush(*caretColor));
 }
 
 void WindowsTextInputComponentView::updateProps(
@@ -1595,6 +1594,8 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
 void WindowsTextInputComponentView::ShowCaret(bool show) noexcept {
   ensureVisual();
+  const auto &props = windowsTextInputProps();
+  updateCursorColor(props.cursorColor, props.textAttributes.foregroundColor);
   m_caretVisual.IsVisible(show);
 }
 
