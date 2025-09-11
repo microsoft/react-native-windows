@@ -1006,10 +1006,7 @@ void WindowsTextInputComponentView::updateProps(
       oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight ||
       !facebook::react::floatEquality(
           oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
-      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily ||
-      !facebook::react::floatEquality(
-          oldTextInputProps.textAttributes.maxFontSizeMultiplier,
-          newTextInputProps.textAttributes.maxFontSizeMultiplier)) {
+      oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
@@ -1373,10 +1370,7 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
       (std::isnan(props.textAttributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
                                                  : props.textAttributes.fontSize);
 
-  // Apply maxFontSizeMultiplier if specified
-  auto maxFontSizeMultiplier = windowsTextInputProps().textAttributes.maxFontSizeMultiplier;
-  fontSize *=
-      (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, m_fontSizeMultiplier) : m_fontSizeMultiplier;
+  fontSize *= m_fontSizeMultiplier;
 
   // TODO get fontSize from props.textAttributes, or defaultTextAttributes, or fragment?
   cfNew.dwMask |= CFM_SIZE;

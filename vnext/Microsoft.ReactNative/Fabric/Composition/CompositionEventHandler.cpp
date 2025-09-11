@@ -778,6 +778,7 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Pointer:
             type = winrt::Windows::UI::Core::CoreCursorType::Hand;
             break;
+            /*
           case facebook::react::Cursor::Help:
             type = winrt::Windows::UI::Core::CoreCursorType::Help;
             break;
@@ -811,6 +812,7 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Crosshair:
             type = winrt::Windows::UI::Core::CoreCursorType::Cross;
             break;
+            */
           default:
             break;
         }
@@ -841,6 +843,7 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Pointer:
             idc = IDC_HAND;
             break;
+            /*
           case facebook::react::Cursor::Help:
             idc = IDC_HELP;
             break;
@@ -874,6 +877,7 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Crosshair:
             idc = IDC_CROSS;
             break;
+            */
           default:
             break;
         }

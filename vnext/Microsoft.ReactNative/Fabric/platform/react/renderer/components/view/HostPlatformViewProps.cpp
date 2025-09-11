@@ -40,19 +40,19 @@ HostPlatformViewProps::HostPlatformViewProps(
               ? sourceProps.accessibilitySetSize
               : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)),
       accessibilityLevel(
-          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+          CoreFeatures::enablePropIteratorSetter
               ? sourceProps.accessibilityLevel
               : convertRawProp(context, rawProps, "accessibilityLevel", sourceProps.accessibilityLevel, 0)),
       accessibilityItemType(
-          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+          CoreFeatures::enablePropIteratorSetter
               ? sourceProps.accessibilityItemType
               : convertRawProp(context, rawProps, "accessibilityItemType", sourceProps.accessibilityItemType, {})),
       accessibilityAccessKey(
-          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+          CoreFeatures::enablePropIteratorSetter
               ? sourceProps.accessibilityAccessKey
               : convertRawProp(context, rawProps, "accessibilityAccessKey", sourceProps.accessibilityAccessKey, {})),
       accessibilityDescription(
-          ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.accessibilityDescription
+          CoreFeatures::enablePropIteratorSetter ? sourceProps.accessibilityDescription
                                                                   : convertRawProp(
                                                                         context,
                                                                         rawProps,

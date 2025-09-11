@@ -28,7 +28,6 @@ class HostPlatformViewProps : public BaseViewProps {
   int accessibilitySetSize{0};
   std::string accessibilityLiveRegion{"none"};
   int accessibilityLevel{0};
-  std::optional<AccessibilityAnnotation> accessibilityAnnotation{};
   std::optional<std::string> accessibilityItemType{};
   std::optional<std::string> accessibilityAccessKey{};
   std::optional<std::string> accessibilityDescription{};
