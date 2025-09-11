@@ -14,6 +14,7 @@ import {NativeSyntheticEvent} from '../../Types/CoreEventTypes';
  */
 export interface AccessibilityProps
   extends AccessibilityPropsAndroid,
+    AccessibilityPropsWindows,
     AccessibilityPropsIOS {
   /**
    * When true, indicates that the view is an accessibility element.

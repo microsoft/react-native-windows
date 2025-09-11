@@ -229,6 +229,13 @@ const View: React.AbstractComponent<
 
     // Windows]
 
+    const computedImportantForAccessibility =
+      ariaHidden === true ||
+      importantForAccessibility === 'no-hide-descendants' ||
+      accessibilityElementsHidden === true
+        ? 'no-hide-descendants'
+        : importantForAccessibility;
+
     return (
       // [Windows
       // In core this is a TextAncestor.Provider value={false} See
@@ -261,11 +268,7 @@ const View: React.AbstractComponent<
               }
               accessibilityLabelledBy={_accessibilityLabelledBy}
               accessibilityValue={_accessibilityValue}
-              importantForAccessibility={
-                ariaHidden === true
-                  ? 'no-hide-descendants'
-                  : importantForAccessibility
-              }
+              importantForAccessibility={computedImportantForAccessibility}
               nativeID={id ?? nativeID}
               style={style}
               // $FlowFixMe[incompatible-type]
