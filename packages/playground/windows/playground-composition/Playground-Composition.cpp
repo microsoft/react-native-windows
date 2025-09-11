@@ -140,11 +140,10 @@ struct WindowData {
 
   winrt::Microsoft::ReactNative::ReactNativeHost Host() noexcept {
     if (!m_host) {
-      winrt::Microsoft::ReactNative::QuirkSettings::SetUseFusebox(true);
+      OutputDebugStringA("Playground: Creating ReactNativeHost with debugger support\n");
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
-      m_host.InstanceSettings(InstanceSettings());
+      OutputDebugStringA("Playground: ReactNativeHost created with debugging enabled\n");
     }
-
     return m_host;
   }
   winrt::Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept {
@@ -207,6 +206,7 @@ struct WindowData {
             }
 
             if (windowData->m_useLiftedComposition) {
+              OutputDebugStringA("Playground: Setting up lifted composition\n");
               // By setting the compositor here we opt into using the new architecture.
               winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
                   InstanceSettings(), g_liftedCompositor);
@@ -265,8 +265,11 @@ struct WindowData {
               m_compRootView.Arrange(constraints, {0, 0});
 
               m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+              OutputDebugStringA("Playground: Lifted composition setup complete\n");
+
 
             } else if (!m_target) {
+              OutputDebugStringA("Playground: Setting up system composition\n");
               // General users of RNW should never set CompositionContext - this is an advanced usage to inject another
               // composition implementation. By using the SystemCompositionContextHelper here, React Native Windows will
               // use System Visuals for its tree.
@@ -277,6 +280,7 @@ struct WindowData {
                           L"ReactNative.Composition", L"CompositionContext"},
                       winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::
                           CreateContext(g_compositor));
+              OutputDebugStringA("Playground: CompositionContext set\n");
 
               auto interop = g_compositor.as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>();
               winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
@@ -304,14 +308,48 @@ struct WindowData {
               contraints.MaximumSize =
                   contraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
               m_compRootView.Arrange(contraints, {0, 0});
+              OutputDebugStringA("Playground: System composition setup complete\n");
             }
           }
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
+          OutputDebugStringA("Playground: About to ReloadInstance\n");
           host.ReloadInstance();
+          OutputDebugStringA("Playground: ReloadInstance complete\n");
 
-          m_compRootView.ReactViewHost(
-              winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+          // Verify composition context is ready before assigning ReactViewHost
+          OutputDebugStringA("Playground: Verifying composition context is available\n");
+          if (windowData->m_useLiftedComposition) {
+            auto compositor = winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(InstanceSettings().Properties());
+            if (compositor) {
+              OutputDebugStringA("Playground: Lifted compositor verified - context ready\n");
+            } else {
+              OutputDebugStringA("Playground: WARNING - Lifted compositor not found\n");
+            }
+          }
+
+
+          OutputDebugStringA("Playground: About to assign ReactViewHost (potential crash point)\n");
+          try {
+            auto viewHost = winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions);
+            OutputDebugStringA("Playground: ViewHost created successfully\n");
+            
+            m_compRootView.ReactViewHost(viewHost);
+            
+            OutputDebugStringA("Playground: ReactViewHost assigned successfully\n");
+          } catch (winrt::hresult_error const& ex) {
+            OutputDebugStringA("Playground: EXCEPTION during ReactViewHost assignment - hresult_error\n");
+            char buffer[256];
+            sprintf_s(buffer, "Playground: Exception HRESULT: 0x%08X\n", static_cast<uint32_t>(ex.code()));
+            OutputDebugStringA(buffer);
+          } catch (std::exception const& ex) {
+            OutputDebugStringA("Playground: EXCEPTION during ReactViewHost assignment - std::exception\n");
+            OutputDebugStringA("Playground: Exception: ");
+            OutputDebugStringA(ex.what());
+            OutputDebugStringA("\n");
+          } catch (...) {
+            OutputDebugStringA("Playground: EXCEPTION during ReactViewHost assignment - unknown exception\n");
+          }
         }
 
         break;
@@ -636,8 +674,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
 int RunPlayground(int showCmd, bool /*useWebDebugger*/) {
-  // Enable Fusebox as the very first thing
-  winrt::Microsoft::ReactNative::QuirkSettings::SetUseFusebox(true);
+  OutputDebugStringA("Playground: RunPlayground starting\n");
   
   constexpr PCWSTR appName = L"React Native Playground (Composition)";
   
@@ -677,11 +714,12 @@ int RunPlayground(int showCmd, bool /*useWebDebugger*/) {
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
-  // Enable Fusebox as the very first thing
-  winrt::Microsoft::ReactNative::QuirkSettings::SetUseFusebox(true);
+  OutputDebugStringA("Playground: WinMain starting\n");
   
   // Island-support: Call init_apartment to initialize COM and WinRT for the thread.
+  OutputDebugStringA("Playground: About to init_apartment\n");
   winrt::init_apartment(winrt::apartment_type::single_threaded);
+  OutputDebugStringA("Playground: init_apartment completed\n");
 
   WNDCLASSEXW wcex = {};
   wcex.cbSize = sizeof(WNDCLASSEX);
