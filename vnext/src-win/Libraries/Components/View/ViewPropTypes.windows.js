@@ -505,6 +505,8 @@ type WindowsViewProps = $ReadOnly<{|
   'aria-posinset'?: ?number,
   accessibilitySetSize?: ?number,
   'aria-setsize'?: ?number,
+  accessibilityDescription?: ?string,
+  'aria-description'?: ?string,
 
   /**
    * Specifies if the control should show System focus visuals

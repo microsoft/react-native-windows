@@ -1398,6 +1398,793 @@ class TextExample extends React.Component<
   }
 }
 
+function TextBorderExample(props: {}): React.Node {
+  return (
+    <View testID={'text-border'} accessible accessibilityLabel="Border Example">
+      <Text style={styles.borderedTextSimple}>
+        Sample bordered text with default styling.
+      </Text>
+
+      <Text style={styles.borderedText}>
+        Some more bordered text + a tad of CSS.{'\n'}
+        <Text style={{borderColor: 'red', borderWidth: 5}}>
+          1st nested - border specifcied but ignored.{'\n'}
+          <Text style={{borderColor: 'yellow', borderWidth: 4}}>
+            2nd Inside text!
+          </Text>
+        </Text>
+      </Text>
+
+      <Text>
+        This text is{' '}
+        <Text style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
+          outlined{' '}
+        </Text>
+        and laid out within the normal text run, so will wrap etc as normal
+        text.
+      </Text>
+    </View>
+  );
+}
+
+function AdvancedBordersExample(props: {}): React.Node {
+  return (
+    <View
+      testID={'advanced-borders'}
+      accessible
+      accessibilityLabel="Advanced Border Example">
+      <Text
+        style={{
+          borderColor: 'red',
+          borderWidth: 1,
+          borderBottomWidth: 5,
+          borderRightWidth: 10,
+          borderTopWidth: 15,
+          borderLeftWidth: 20,
+          borderBottomRightRadius: 1,
+          borderBottomLeftRadius: 3,
+          borderTopRightRadius: 5,
+          borderTopLeftRadius: 7,
+        }}>
+        This text has customized borders.
+      </Text>
+      <Text
+        style={{
+          borderColor: 'blue',
+          borderWidth: 1,
+          borderBottomWidth: 5,
+          borderEndWidth: 10,
+          borderTopWidth: 15,
+          borderStartWidth: 20,
+          borderBottomEndRadius: 1,
+          borderBottomStartRadius: 3,
+          borderTopEndRadius: 5,
+          borderTopStartRadius: 7,
+        }}>
+        This text has customized borders.
+      </Text>
+      <Text
+        style={{
+          borderColor: 'green',
+          borderWidth: 1,
+          borderRadius: 3,
+        }}>
+        This text has customized borders.
+      </Text>
+    </View>
+  );
+}
+
+function TextOpacityExample(props: {}): React.Node {
+  return (
+    <View testID={'text-opacity'}>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.1,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.2,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.3,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.4,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.5,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.6,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.7,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.8,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.9,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 1,
+        }}>
+        This text has customized opacity.
+      </Text>
+    </View>
+  );
+}
+
+const examples = [
+  {
+    title: 'Background Color and Border Width',
+    name: 'background-border-width',
+    render(): React.Node {
+      return (
+        <View testID="background-border-width">
+          <RNTesterText
+            style={{
+              backgroundColor: '#F000F0',
+              padding: 10,
+            }}>
+            Text with background color only
+          </RNTesterText>
+          <RNTesterText
+            style={{
+              backgroundColor: '#F000F0',
+              borderRadius: 10,
+              padding: 10,
+              marginTop: 10,
+            }}>
+            Text with background color and uniform borderRadii
+          </RNTesterText>
+          <RNTesterText
+            style={{
+              backgroundColor: '#F000F0',
+              borderTopRightRadius: 10,
+              borderTopLeftRadius: 20,
+              borderBottomRightRadius: 20,
+              borderBottomLeftRadius: 10,
+              padding: 10,
+              marginTop: 10,
+            }}>
+            Text with background color and non-uniform borders
+          </RNTesterText>
+          <RNTesterText
+            style={{
+              borderWidth: 1,
+              borderColor: 'red',
+              borderTopRightRadius: 10,
+              borderTopLeftRadius: 20,
+              borderBottomRightRadius: 20,
+              borderBottomLeftRadius: 10,
+              padding: 10,
+              marginTop: 10,
+            }}>
+            Text with borderWidth
+          </RNTesterText>
+          <RNTesterText
+            style={{
+              backgroundColor: '#00AA00',
+              borderWidth: 2,
+              borderColor: 'blue',
+              borderRadius: 10,
+              padding: 10,
+              marginTop: 10,
+            }}>
+            Text with background AND borderWidth
+          </RNTesterText>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Dynamic Font Size Adjustment',
+    name: 'ajustingFontSize',
+    render(): React.Node {
+      return <AdjustingFontSize />;
+    },
+  },
+  {
+    title: 'Font Size Adjustment with Dynamic Layout',
+    name: 'textAdjustsDynamicLayout',
+    render(): React.Node {
+      return <TextAdjustsDynamicLayoutExample />;
+    },
+  },
+  {
+    title: 'Wrap',
+    name: 'wrap',
+    render(): React.Node {
+      return (
+        <RNTesterText style={styles.wrappedText} testID={'text-wrap'}>
+          The text should wrap if it goes on multiple lines. See, this is going
+          to the next line.
+        </RNTesterText>
+      );
+    },
+  },
+  {
+    title: 'Hyphenation',
+    name: 'hyphenation',
+    render(): React.Node {
+      return <HyphenationExample />;
+    },
+  },
+  {
+    title: 'Padding',
+    name: 'padding',
+    render(): React.Node {
+      return (
+        <RNTesterText style={{padding: 10}} testID={'text-padding'}>
+          This text is indented by 10px padding on all sides.
+        </RNTesterText>
+      );
+    },
+  },
+  {
+    title: 'Text metrics legend',
+    name: 'textMetricLegend',
+    render(): React.Node {
+      return <TextLegend />;
+    },
+  },
+  {
+    title: 'Font Family',
+    name: 'fontFamily',
+    render(): React.Node {
+      return <FontFamilyExample />;
+    },
+  },
+  {
+    title: 'Android Material Design Fonts',
+    name: 'androidMaterialDesignFonts',
+    render(): React.Node {
+      return <AndroidMaterialDesignFonts />;
+    },
+  },
+  {
+    title: 'Custom Fonts',
+    name: 'customFonts',
+    render(): React.Node {
+      return <CustomFontsExample />;
+    },
+  },
+  {
+    title: 'Font Size',
+    name: 'fontSize',
+    render(): React.Node {
+      return (
+        <>
+          <RNTesterText style={{fontSize: 23}} testID={'text-size'}>
+            Size 23
+          </RNTesterText>
+          <RNTesterText style={{fontSize: 8}}>Size 8</RNTesterText>
+        </>
+      );
+    },
+  },
+  {
+    title: 'Color',
+    name: 'color',
+    render(): React.Node {
+      return (
+        <>
+          <Text style={{color: 'red'}} testID={'text-color'}>
+            Red color
+          </Text>
+          <Text style={{color: 'blue'}}>Blue color</Text>
+        </>
+      );
+    },
+  },
+  {
+    title: 'Font Weight',
+    name: 'fontWeight',
+    render(): React.Node {
+      return <FontWeightExample />;
+    },
+  },
+  {
+    title: 'Font Style',
+    name: 'fontStyle',
+    render(): React.Node {
+      return (
+        <>
+          <RNTesterText style={{fontStyle: 'italic'}}>
+            Move fast and be italic
+          </RNTesterText>
+          <RNTesterText style={{fontStyle: 'normal'}}>
+            Move fast and be normal
+          </RNTesterText>
+        </>
+      );
+    },
+  },
+  {
+    title: 'Font Style and Weight',
+    name: 'fontStyleAndWeight',
+    render(): React.Node {
+      return (
+        <RNTesterText style={{fontStyle: 'italic', fontWeight: 'bold'}}>
+          Move fast and be both bold and italic
+        </RNTesterText>
+      );
+    },
+  },
+  {
+    title: 'Text Decoration',
+    name: 'textDecoration',
+    render(): React.Node {
+      return <TextDecorationExample />;
+    },
+  },
+  {
+    title: 'Nested',
+    name: 'nested',
+    render(): React.Node {
+      return <NestedExample />;
+    },
+  },
+  {
+    title: 'Text Align',
+    name: 'textAlign',
+    render(): React.Node {
+      return <TextAlignExample />;
+    },
+  },
+  {
+    title: 'Unicode',
+    name: 'unicode',
+    render(): React.Node {
+      return <UnicodeExample />;
+    },
+  },
+  {
+    title: 'Spaces',
+    name: 'spaces',
+    render(): React.Node {
+      return (
+        <RNTesterText>
+          A {'generated'} {'string'} and some &nbsp;&nbsp;&nbsp; spaces
+        </RNTesterText>
+      );
+    },
+  },
+  {
+    title: 'Line Height',
+    name: 'lineHeight',
+    render(): React.Node {
+      return <LineHeightExample />;
+    },
+  },
+  {
+    title: 'Letter Spacing',
+    name: 'letterSpacing',
+    render(): React.Node {
+      return <LetterSpacingExample />;
+    },
+  },
+  {
+    title: 'Empty Text',
+    name: 'emptyText',
+    render(): React.Node {
+      return <Text />;
+    },
+  },
+  {
+    title: 'Toggling Attributes',
+    name: 'togglingAttributes',
+    render(): React.Node {
+      return <AttributeToggler />;
+    },
+  },
+  {
+    title: 'backgroundColor attribute',
+    name: 'backgroundColorAttribute',
+    render(): React.Node {
+      return <BackgroundColorExample />;
+    },
+  },
+  {
+    title: 'containerBackgroundColor attribute',
+    name: 'containerBackgroundColorAttribute',
+    render(): React.Node {
+      return <ContainerBackgroundColorExample />;
+    },
+  },
+  {
+    title: 'numberOfLines attribute',
+    name: 'numberOfLines',
+    render(): React.Node {
+      return <NumberOfLinesExample />;
+    },
+  },
+  {
+    title: 'allowFontScaling attribute',
+    name: 'allowFontScaling',
+    render(): React.Node {
+      return <AllowFontScalingExample />;
+    },
+  },
+  {
+    title: 'selectable attribute',
+    name: 'selectable',
+    render(): React.Node {
+      return (
+        <RNTesterText selectable testID={'text-selectable'}>
+          This text is selectable if you click-and-hold, and will offer the
+          native Android selection menus.
+        </RNTesterText>
+      );
+    },
+  },
+  {
+    title: 'selectionColor attribute',
+    name: 'selectionColor',
+    render(): React.Node {
+      return (
+        <RNTesterText
+          selectable
+          selectionColor="orange"
+          testID={'text-selection-color'}>
+          This text will have a orange highlight on selection.
+        </RNTesterText>
+      );
+    },
+  },
+  // [Windows - Paper doesn't support Views in Text while Fabric does
+  ...(global.RN$Bridgeless === true
+    ? [
+        {
+          title: 'Inline views',
+          name: 'inlineViewsBasic',
+          render(): React.Node {
+            return <TextInlineView.Basic />;
+          },
+        },
+        {
+          title: 'Inline views with multiple nested texts',
+          name: 'inlineViewsMultiple',
+          render(): React.Node {
+            return <TextInlineView.NestedTexts />;
+          },
+        },
+        {
+          title: 'Inline image/view clipped by <Text>',
+          name: 'inlineViewsClipped',
+          render(): React.Node {
+            return <TextInlineView.ClippedByText />;
+          },
+        },
+        {
+          title: 'Relayout inline image',
+          name: 'relayoutInlineImage',
+          render(): React.Node {
+            return <TextInlineView.ChangeImageSize />;
+          },
+        },
+        {
+          title: 'Relayout inline view',
+          name: 'relayoutInlineView',
+          render(): React.Node {
+            return <TextInlineView.ChangeViewSize />;
+          },
+        },
+        {
+          title: 'Relayout nested inline view',
+          name: 'relayoutNestedInlineView',
+          render(): React.Node {
+            return <TextInlineView.ChangeInnerViewSize />;
+          },
+        },
+        TextInlineViewsExample,
+      ]
+    : []),
+  // Windows]
+  {
+    title: 'Text shadow',
+    name: 'textShadow',
+    render(): React.Node {
+      return <TextShadowExample />;
+    },
+  },
+  {
+    title: 'Ellipsize mode',
+    name: 'ellipsizeMode',
+    render(): React.Node {
+      return <EllipsizeModeExample />;
+    },
+  },
+  {
+    title: 'Font variants',
+    name: 'fontVariants',
+    render(): React.Node {
+      return <FontVariantsExample />;
+    },
+  },
+  {
+    title: 'Include Font Padding',
+    name: 'includeFontPadding',
+    render(): React.Node {
+      return <IncludeFontPaddingExample />;
+    },
+  },
+  {
+    title: 'Text Transform',
+    name: 'textTransform',
+    render(): React.Node {
+      return <TextTransformExample />;
+    },
+  },
+  /* [Windows
+    Emoji gets rendered on windows which causes issues with e2e tests.
+    It seems they can't deal with the character properly which makes them always fail]
+  {
+    title: 'Substring Emoji (should only see "test")',
+    name: 'substringEmoji',
+    render(): React.Node {
+      return <RNTesterText>{'test🙃'.substring(0, 5)}</RNTesterText>;
+    },
+  },
+*/
+  {
+    title: 'Text linkify',
+    name: 'textLinkify',
+    render(): React.Node {
+      return <TextLinkifyExample />;
+    },
+  },
+  {
+    title: "Text `alignItems: 'baseline'` style",
+    name: 'alignItemsBaseline',
+    render(): React.Node {
+      return <TextBaseLineLayoutExample />;
+    },
+  },
+  {
+    title: 'Selectable Text',
+    name: 'selectableText',
+    render(): React.Node {
+      return (
+        <View>
+          <RNTesterText style={{userSelect: 'auto'}}>
+            Text element is selectable
+          </RNTesterText>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Text alignment',
+    name: 'textAlignment',
+    render(): React.Node {
+      return (
+        <View>
+          <RNTesterText
+            style={{textAlignVertical: 'top', borderWidth: 1, height: 75}}>
+            Text element aligned to the top via textAlignVertical
+          </RNTesterText>
+          <RNTesterText
+            style={{verticalAlign: 'top', borderWidth: 1, height: 75}}>
+            Text element aligned to the top via verticalAlign
+          </RNTesterText>
+          <RNTesterText
+            style={{textAlignVertical: 'center', borderWidth: 1, height: 75}}>
+            Text element aligned to the middle via textAlignVertical
+          </RNTesterText>
+          <RNTesterText
+            style={{verticalAlign: 'middle', borderWidth: 1, height: 75}}>
+            Text element aligned to the middle via verticalAlign
+          </RNTesterText>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Clipping',
+    name: 'clipping',
+    render: function (): React.Node {
+      return (
+        <View>
+          <RNTesterText
+            testID="text-clipping"
+            style={{
+              borderRadius: 50,
+              padding: 0,
+              borderColor: 'red',
+              borderWidth: 5,
+              overflow: 'hidden',
+              fontSize: 16,
+            }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </RNTesterText>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Box Shadow',
+    name: 'boxShadow',
+    render: function (): React.Node {
+      return (
+        <View>
+          <RNTesterText
+            testID="text-box-shadow"
+            style={{
+              borderRadius: 10,
+              boxShadow: '0 0 10px red',
+            }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </RNTesterText>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Customized Accessibility',
+    name: 'textAccessibility',
+    render: function (): React.Node {
+      return (
+        <View accessible={true} testID={'text-accessibility'}>
+          <Text
+            nativeID="text-accessibility"
+            accessibilityLabel="This text has customized accessibility"
+            accessibilityHint="Text"
+            accessibilityPosInSet={1}
+            accessibilitySetSize={1}
+            accessibilityLiveRegion="polite">
+            This text has customized accessibility.
+          </Text>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Text with Border',
+    name: 'textBorder',
+    render: function (): React.Node {
+      return <TextBorderExample />;
+    },
+  },
+  {
+    title: 'Text with Advanced Borders',
+    name: 'advancedBorders',
+    render: function (): React.Node {
+      return <AdvancedBordersExample />;
+    },
+  },
+  {
+    title: 'Opacity',
+    name: 'textOpacity',
+    render: function (): React.Node {
+      return <TextOpacityExample />;
+    },
+  },
+  {
+    title: 'Height and Width',
+    name: 'textDimensions',
+    render: function (): React.Node {
+      return (
+        <View accessible={true} testID="text-height-width">
+          <Text style={{height: 100, width: 100}}>
+            This text has customized dimensions.
+          </Text>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'AdjustFontSize according to the Width, Height and LinesCount',
+    name: 'adjustFontSizeToFit',
+    render: function (): React.Node {
+      return (
+        <View>
+          <RNTesterText
+            style={{
+              width: 500,
+              height: 100,
+              fontSize: 20,
+              backgroundColor: 'lightcoral',
+              padding: 10,
+              marginBottom: 10,
+            }}
+            testID="text-adjustfontsizetofit-default-a">
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
+          </RNTesterText>
+          <RNTesterText
+            adjustsFontSizeToFit
+            style={{
+              width: 500,
+              height: 100,
+              fontSize: 20,
+              backgroundColor: 'lightcoral',
+              padding: 10,
+              marginBottom: 10,
+            }}
+            testID="text-adjustfontsizetofit-default-b">
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Ut enim ad minim veniam.With AdjustFontSize width: 800, height: 100, fontSize: 20`}
+          </RNTesterText>
+          {[
+            {width: 500, height: 80, lineCount: 3},
+            {width: 475, height: 120, lineCount: 5},
+            {width: 450, height: 160, lineCount: 0},
+          ].map((item, index) => (
+            <React.Fragment key={index}>
+              <RNTesterText
+                testID={`text-adjustfontsizetofit-${index}-a`}
+                numberOfLines={item.lineCount}
+                adjustsFontSizeToFit
+                style={{
+                  width: item.width,
+                  height: item.height,
+                  fontSize: 40,
+                  backgroundColor: '#A0C782',
+                  padding: 10,
+                  marginBottom: 10,
+                }}>
+                {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. With AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
+              </RNTesterText>
+              <RNTesterText
+                testID={`text-adjustfontsizetofit-${index}-b`}
+                numberOfLines={item.lineCount}
+                style={{
+                  width: item.width,
+                  height: item.height,
+                  fontSize: 40,
+                  backgroundColor: 'lightblue',
+                  padding: 10,
+                  marginBottom: 10,
+                }}>
+                {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Without AdjustFontSize height:${item.height},width:${item.width},lineCount:${item.lineCount},fontSize:40`}
+              </RNTesterText>
+            </React.Fragment>
+          ))}
+        </View>
+      );
+    },
+  },
+];
+
 const styles = StyleSheet.create({
   backgroundColorText: {
     left: 5,

@@ -62,6 +62,8 @@ export class TextInputTestPage extends React.Component<
           style={{height: 80}}
           placeholder="MultiLine"
           multiline={true}
+          spellCheck={false}
+          autoCorrect={false}
         />
         <TextInput
           testID="auto-caps-textinput-field"

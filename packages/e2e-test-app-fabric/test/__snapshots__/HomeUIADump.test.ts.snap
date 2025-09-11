@@ -13,6 +13,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "APIs",
+        "TextRangePattern.GetText": "APIs",
       },
     ],
   },
@@ -113,12 +114,14 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Accessibility",
+        "TextRangePattern.GetText": "Accessibility",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Examples of using Accessibility APIs.",
+        "TextRangePattern.GetText": "Examples of using Accessibility APIs.",
       },
       {
         "AutomationId": "",
@@ -258,12 +261,14 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Accessibility Windows",
+        "TextRangePattern.GetText": "Accessibility Windows",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Usage of accessibility properties.",
+        "TextRangePattern.GetText": "Usage of accessibility properties.",
       },
       {
         "AutomationId": "",
@@ -403,12 +408,14 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "AccessibilityInfo",
+        "TextRangePattern.GetText": "AccessibilityInfo",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Examples of using AccessibilityInfo APIs.",
+        "TextRangePattern.GetText": "Examples of using AccessibilityInfo APIs.",
       },
       {
         "AutomationId": "",
@@ -548,12 +555,14 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "ActivityIndicator",
+        "TextRangePattern.GetText": "ActivityIndicator",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Animated loading indicators.",
+        "TextRangePattern.GetText": "Animated loading indicators.",
       },
       {
         "AutomationId": "",
@@ -693,12 +702,14 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Alerts",
+        "TextRangePattern.GetText": "Alerts",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Alerts display a concise and informative message and prompt the user to make a decision.",
+        "TextRangePattern.GetText": "Alerts display a concise and informative message and prompt the user to make a decision.",
       },
       {
         "AutomationId": "",
@@ -838,12 +849,14 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Animated - Gratuitous App",
+        "TextRangePattern.GetText": "Animated - Gratuitous App",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
+        "TextRangePattern.GetText": "Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
       },
       {
         "AutomationId": "",
@@ -983,12 +996,14 @@ exports[`Home UIA Tree Dump Animated 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Animated",
+        "TextRangePattern.GetText": "Animated",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Library designed to make animations fluid, powerful, and painless to build and maintain.",
+        "TextRangePattern.GetText": "Library designed to make animations fluid, powerful, and painless to build and maintain.",
       },
       {
         "AutomationId": "",
@@ -1128,12 +1143,14 @@ exports[`Home UIA Tree Dump AppState 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "AppState",
+        "TextRangePattern.GetText": "AppState",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "app background status",
+        "TextRangePattern.GetText": "app background status",
       },
       {
         "AutomationId": "",
@@ -1273,12 +1290,14 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Appearance",
+        "TextRangePattern.GetText": "Appearance",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Light and dark user interface examples.",
+        "TextRangePattern.GetText": "Light and dark user interface examples.",
       },
       {
         "AutomationId": "",
@@ -1418,12 +1437,14 @@ exports[`Home UIA Tree Dump Border 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Border",
+        "TextRangePattern.GetText": "Border",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Demonstrates some of the border styles available to Views.",
+        "TextRangePattern.GetText": "Demonstrates some of the border styles available to Views.",
       },
       {
         "AutomationId": "",
@@ -1563,12 +1584,14 @@ exports[`Home UIA Tree Dump Button 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Button",
+        "TextRangePattern.GetText": "Button",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Simple React Native button component.",
+        "TextRangePattern.GetText": "Simple React Native button component.",
       },
       {
         "AutomationId": "",
@@ -1707,6 +1730,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Components",
+        "TextRangePattern.GetText": "Components",
       },
     ],
   },
@@ -1847,12 +1871,14 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Composition Bugs Example",
+        "TextRangePattern.GetText": "Composition Bugs Example",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "See bugs in UI.Composition driven native animations",
+        "TextRangePattern.GetText": "See bugs in UI.Composition driven native animations",
       },
       {
         "AutomationId": "",
@@ -1992,12 +2018,14 @@ exports[`Home UIA Tree Dump Crash 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Crash",
+        "TextRangePattern.GetText": "Crash",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Crash examples.",
+        "TextRangePattern.GetText": "Crash examples.",
       },
       {
         "AutomationId": "",
@@ -2137,12 +2165,14 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Cxx TurboModule",
+        "TextRangePattern.GetText": "Cxx TurboModule",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Usage of Cxx TurboModule",
+        "TextRangePattern.GetText": "Usage of Cxx TurboModule",
       },
       {
         "AutomationId": "",
@@ -2282,12 +2312,14 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "DevSettings",
+        "TextRangePattern.GetText": "DevSettings",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Customize the development settings",
+        "TextRangePattern.GetText": "Customize the development settings",
       },
       {
         "AutomationId": "",
@@ -2427,12 +2459,14 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Dimensions",
+        "TextRangePattern.GetText": "Dimensions",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Dimensions of the viewport",
+        "TextRangePattern.GetText": "Dimensions of the viewport",
       },
       {
         "AutomationId": "",
@@ -2512,7 +2546,76 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "938, 20",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Display: contents 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Display: contents",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Display: contents Demonstrates various ways display: contents may be used in the tree",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Display: contents",
+        "TextRangePattern.GetText": "Display: contents",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Demonstrates various ways display: contents may be used in the tree",
+        "TextRangePattern.GetText": "Demonstrates various ways display: contents may be used in the tree",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Display: contents Demonstrates various ways display: contents may be used in the tree",
+      "TestId": "Display: contents",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Display: contents",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "135, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "135, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2572,12 +2675,14 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Display:none Style",
+        "TextRangePattern.GetText": "Display:none Style",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Style prop which will collapse the element in XAML tree.",
+        "TextRangePattern.GetText": "Style prop which will collapse the element in XAML tree.",
       },
       {
         "AutomationId": "",
@@ -2657,7 +2762,76 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "938, 20",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Drawing Island Example",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Drawing Island Example Sample Fabric Native Component that contains a custom ContentIsland",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Drawing Island Example",
+        "TextRangePattern.GetText": "Drawing Island Example",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sample Fabric Native Component that contains a custom ContentIsland",
+        "TextRangePattern.GetText": "Sample Fabric Native Component that contains a custom ContentIsland",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Drawing Island Example Sample Fabric Native Component that contains a custom ContentIsland",
+      "TestId": "Drawing Island Example",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Drawing Island Example",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "190, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "190, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2717,12 +2891,14 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Fabric Native Component",
+        "TextRangePattern.GetText": "Fabric Native Component",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Sample Fabric Native Component that sizes based on max desired size of native XAML contained within",
+        "TextRangePattern.GetText": "Sample Fabric Native Component that sizes based on max desired size of native XAML contained within",
       },
       {
         "AutomationId": "",
@@ -2862,12 +3038,14 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Fabric Native Component Yoga",
+        "TextRangePattern.GetText": "Fabric Native Component Yoga",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Sample Fabric Native Component that places native XAML inside a container sized by yoga",
+        "TextRangePattern.GetText": "Sample Fabric Native Component that places native XAML inside a container sized by yoga",
       },
       {
         "AutomationId": "",
@@ -3007,12 +3185,14 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Fast Path Texts",
+        "TextRangePattern.GetText": "Fast Path Texts",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Examples of performant fast path texts, turn on IsTextPerformanceVisualizationEnabled to visualize examples",
+        "TextRangePattern.GetText": "Examples of performant fast path texts, turn on IsTextPerformanceVisualizationEnabled to visualize examples",
       },
       {
         "AutomationId": "",
@@ -3092,7 +3272,76 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "938, 20",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Filter 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Filter",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Filter A set of graphical effects that can be applied to a view.",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Filter",
+        "TextRangePattern.GetText": "Filter",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "A set of graphical effects that can be applied to a view.",
+        "TextRangePattern.GetText": "A set of graphical effects that can be applied to a view.",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Filter A set of graphical effects that can be applied to a view.",
+      "TestId": "Filter",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Filter",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "40, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "40, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3152,12 +3401,14 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "FlatList",
+        "TextRangePattern.GetText": "FlatList",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Performant, scrollable list of data.",
+        "TextRangePattern.GetText": "Performant, scrollable list of data.",
       },
       {
         "AutomationId": "",
@@ -3297,12 +3548,14 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Flyout",
+        "TextRangePattern.GetText": "Flyout",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Displays content on top of existing content, within the bounds of the application window.",
+        "TextRangePattern.GetText": "Displays content on top of existing content, within the bounds of the application window.",
       },
       {
         "AutomationId": "",
@@ -3442,12 +3695,14 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Glyph UWP",
+        "TextRangePattern.GetText": "Glyph UWP",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Usage of Glyph control.",
+        "TextRangePattern.GetText": "Usage of Glyph control.",
       },
       {
         "AutomationId": "",
@@ -3587,12 +3842,14 @@ exports[`Home UIA Tree Dump Image 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Image",
+        "TextRangePattern.GetText": "Image",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Base component for displaying different types of images.",
+        "TextRangePattern.GetText": "Base component for displaying different types of images.",
       },
       {
         "AutomationId": "",
@@ -3732,12 +3989,14 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Keyboard",
+        "TextRangePattern.GetText": "Keyboard",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Demonstrates usage of the "Keyboard" static API",
+        "TextRangePattern.GetText": "Demonstrates usage of the "Keyboard" static API",
       },
       {
         "AutomationId": "",
@@ -3877,12 +4136,14 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Keyboard",
+        "TextRangePattern.GetText": "Keyboard",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Demonstrates usage of the "Keyboard" static API",
+        "TextRangePattern.GetText": "Demonstrates usage of the "Keyboard" static API",
       },
       {
         "AutomationId": "",
@@ -4022,12 +4283,14 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Keyboard Focus Example",
+        "TextRangePattern.GetText": "Keyboard Focus Example",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Demo of keyboard focus.",
+        "TextRangePattern.GetText": "Demo of keyboard focus.",
       },
       {
         "AutomationId": "",
@@ -4167,12 +4430,14 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Keyboard extension Example",
+        "TextRangePattern.GetText": "Keyboard extension Example",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Demo of keyboard properties.",
+        "TextRangePattern.GetText": "Demo of keyboard properties.",
       },
       {
         "AutomationId": "",
@@ -4312,12 +4577,14 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Layout - Flexbox",
+        "TextRangePattern.GetText": "Layout - Flexbox",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Examples of using the flexbox API to layout views.",
+        "TextRangePattern.GetText": "Examples of using the flexbox API to layout views.",
       },
       {
         "AutomationId": "",
@@ -4457,12 +4724,14 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Layout Events",
+        "TextRangePattern.GetText": "Layout Events",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Examples that show how Layout events can be used to measure view size and position.",
+        "TextRangePattern.GetText": "Examples that show how Layout events can be used to measure view size and position.",
       },
       {
         "AutomationId": "",
@@ -4602,12 +4871,14 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Legacy Native Module",
+        "TextRangePattern.GetText": "Legacy Native Module",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Usage of legacy Native Module",
+        "TextRangePattern.GetText": "Usage of legacy Native Module",
       },
       {
         "AutomationId": "",
@@ -4747,12 +5018,14 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "LegacyControlStyleTest",
+        "TextRangePattern.GetText": "LegacyControlStyleTest",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Legacy e2e test for Control Styles",
+        "TextRangePattern.GetText": "Legacy e2e test for Control Styles",
       },
       {
         "AutomationId": "",
@@ -4892,12 +5165,14 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "LegacyImageTest",
+        "TextRangePattern.GetText": "LegacyImageTest",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Legacy e2e test for Image",
+        "TextRangePattern.GetText": "Legacy e2e test for Image",
       },
       {
         "AutomationId": "",
@@ -5037,12 +5312,14 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "LegacyLoginTest",
+        "TextRangePattern.GetText": "LegacyLoginTest",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Legacy e2e test for TextInput with password",
+        "TextRangePattern.GetText": "Legacy e2e test for TextInput with password",
       },
       {
         "AutomationId": "",
@@ -5182,12 +5459,14 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "LegacySelectableTextTest",
+        "TextRangePattern.GetText": "LegacySelectableTextTest",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Legacy e2e test for selectable Text hit testing",
+        "TextRangePattern.GetText": "Legacy e2e test for selectable Text hit testing",
       },
       {
         "AutomationId": "",
@@ -5327,12 +5606,14 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "LegacyTextHitTestTest",
+        "TextRangePattern.GetText": "LegacyTextHitTestTest",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Legacy e2e test for Text hit testing",
+        "TextRangePattern.GetText": "Legacy e2e test for Text hit testing",
       },
       {
         "AutomationId": "",
@@ -5472,12 +5753,14 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "LegacyTextInputTest",
+        "TextRangePattern.GetText": "LegacyTextInputTest",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Legacy e2e test for TextInput",
+        "TextRangePattern.GetText": "Legacy e2e test for TextInput",
       },
       {
         "AutomationId": "",
@@ -5617,12 +5900,14 @@ exports[`Home UIA Tree Dump Linking 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Linking",
+        "TextRangePattern.GetText": "Linking",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Shows how to use Linking to open URLs.",
+        "TextRangePattern.GetText": "Shows how to use Linking to open URLs.",
       },
       {
         "AutomationId": "",
@@ -5762,12 +6047,14 @@ exports[`Home UIA Tree Dump Modal 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Modal",
+        "TextRangePattern.GetText": "Modal",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Component for presenting modal views.",
+        "TextRangePattern.GetText": "Component for presenting modal views.",
       },
       {
         "AutomationId": "",
@@ -5907,12 +6194,14 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Mouse Click Events",
+        "TextRangePattern.GetText": "Mouse Click Events",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Tests that mouse click events work on intended components",
+        "TextRangePattern.GetText": "Tests that mouse click events work on intended components",
       },
       {
         "AutomationId": "",
@@ -6052,12 +6341,14 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Mouse Events",
+        "TextRangePattern.GetText": "Mouse Events",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Tests that mouse events can be observed",
+        "TextRangePattern.GetText": "Tests that mouse events can be observed",
       },
       {
         "AutomationId": "",
@@ -6137,7 +6428,76 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "938, 20",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Moving Light Example 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Moving Light Example",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Moving Light Example Sample Custom Fabric Native Component",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Moving Light Example",
+        "TextRangePattern.GetText": "Moving Light Example",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sample Custom Fabric Native Component",
+        "TextRangePattern.GetText": "Sample Custom Fabric Native Component",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Moving Light Example Sample Custom Fabric Native Component",
+      "TestId": "Moving Light Example",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Moving Light Example",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "177, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "177, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6197,12 +6557,14 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Native Animated Example",
+        "TextRangePattern.GetText": "Native Animated Example",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Test out Native Animations",
+        "TextRangePattern.GetText": "Test out Native Animations",
       },
       {
         "AutomationId": "",
@@ -6342,12 +6704,14 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "New App Screen",
+        "TextRangePattern.GetText": "New App Screen",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Displays the content of the new app screen",
+        "TextRangePattern.GetText": "Displays the content of the new app screen",
       },
       {
         "AutomationId": "",
@@ -6487,12 +6851,14 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "PanResponder Sample",
+        "TextRangePattern.GetText": "PanResponder Sample",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Shows the Use of PanResponder to provide basic gesture handling",
+        "TextRangePattern.GetText": "Shows the Use of PanResponder to provide basic gesture handling",
       },
       {
         "AutomationId": "",
@@ -6632,12 +6998,14 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Performance API Examples",
+        "TextRangePattern.GetText": "Performance API Examples",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Shows the performance API provided in React Native",
+        "TextRangePattern.GetText": "Shows the performance API provided in React Native",
       },
       {
         "AutomationId": "",
@@ -6777,12 +7145,14 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Performance Comparison Examples",
+        "TextRangePattern.GetText": "Performance Comparison Examples",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Compare performance with bad and good examples. Use React DevTools to highlight re-renders is recommended.",
+        "TextRangePattern.GetText": "Compare performance with bad and good examples. Use React DevTools to highlight re-renders is recommended.",
       },
       {
         "AutomationId": "",
@@ -6862,7 +7232,76 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "938, 20",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump PixelRatio 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "PixelRatio",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "PixelRatio Gives access to device's pixel density and font scale",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "PixelRatio",
+        "TextRangePattern.GetText": "PixelRatio",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Gives access to device's pixel density and font scale",
+        "TextRangePattern.GetText": "Gives access to device's pixel density and font scale",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "PixelRatio Gives access to device's pixel density and font scale",
+      "TestId": "PixelRatio",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "PixelRatio",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "78, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "78, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6922,12 +7361,14 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "PlatformColor",
+        "TextRangePattern.GetText": "PlatformColor",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Examples that show how PlatformColors may be used in an app.",
+        "TextRangePattern.GetText": "Examples that show how PlatformColors may be used in an app.",
       },
       {
         "AutomationId": "",
@@ -7067,12 +7508,14 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Pointer Events",
+        "TextRangePattern.GetText": "Pointer Events",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
+        "TextRangePattern.GetText": "Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
       },
       {
         "AutomationId": "",
@@ -7212,12 +7655,14 @@ exports[`Home UIA Tree Dump Popup 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Popup",
+        "TextRangePattern.GetText": "Popup",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Displays content on top of existing content, within the bounds of the application window.",
+        "TextRangePattern.GetText": "Displays content on top of existing content, within the bounds of the application window.",
       },
       {
         "AutomationId": "",
@@ -7357,12 +7802,14 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Pressable",
+        "TextRangePattern.GetText": "Pressable",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Component for making views pressable.",
+        "TextRangePattern.GetText": "Component for making views pressable.",
       },
       {
         "AutomationId": "",
@@ -7502,12 +7949,14 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "RTLExample",
+        "TextRangePattern.GetText": "RTLExample",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Examples to show how to apply components to RTL layout.",
+        "TextRangePattern.GetText": "Examples to show how to apply components to RTL layout.",
       },
       {
         "AutomationId": "",
@@ -7647,12 +8096,14 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "ScrollView",
+        "TextRangePattern.GetText": "ScrollView",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Component that enables scrolling through child components",
+        "TextRangePattern.GetText": "Component that enables scrolling through child components",
       },
       {
         "AutomationId": "",
@@ -7792,12 +8243,14 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "ScrollViewAnimated",
+        "TextRangePattern.GetText": "ScrollViewAnimated",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Component that is animated when ScrollView is offset.",
+        "TextRangePattern.GetText": "Component that is animated when ScrollView is offset.",
       },
       {
         "AutomationId": "",
@@ -7937,12 +8390,14 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "ScrollViewSimpleExample",
+        "TextRangePattern.GetText": "ScrollViewSimpleExample",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Component that enables scrolling through child components.",
+        "TextRangePattern.GetText": "Component that enables scrolling through child components.",
       },
       {
         "AutomationId": "",
@@ -8077,6 +8532,7 @@ exports[`Home UIA Tree Dump Search Bar 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Search...",
+    "TextRangePattern.GetText": "Search...",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -8191,12 +8647,14 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "SectionList",
+        "TextRangePattern.GetText": "SectionList",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Performant, scrollable list of data.",
+        "TextRangePattern.GetText": "Performant, scrollable list of data.",
       },
       {
         "AutomationId": "",
@@ -8336,12 +8794,14 @@ exports[`Home UIA Tree Dump Share 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Share",
+        "TextRangePattern.GetText": "Share",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Share data with other Apps.",
+        "TextRangePattern.GetText": "Share data with other Apps.",
       },
       {
         "AutomationId": "",
@@ -8481,12 +8941,14 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "SwipeableCard",
+        "TextRangePattern.GetText": "SwipeableCard",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
+        "TextRangePattern.GetText": "Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
       },
       {
         "AutomationId": "",
@@ -8626,12 +9088,14 @@ exports[`Home UIA Tree Dump Switch 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Switch",
+        "TextRangePattern.GetText": "Switch",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Native boolean input",
+        "TextRangePattern.GetText": "Native boolean input",
       },
       {
         "AutomationId": "",
@@ -8771,12 +9235,14 @@ exports[`Home UIA Tree Dump Text 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Text",
+        "TextRangePattern.GetText": "Text",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Base component for rendering styled text.",
+        "TextRangePattern.GetText": "Base component for rendering styled text.",
       },
       {
         "AutomationId": "",
@@ -8916,12 +9382,14 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "TextInput",
+        "TextRangePattern.GetText": "TextInput",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Single and multi-line text inputs.",
+        "TextRangePattern.GetText": "Single and multi-line text inputs.",
       },
       {
         "AutomationId": "",
@@ -9061,12 +9529,14 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "TextInputs with key prop",
+        "TextRangePattern.GetText": "TextInputs with key prop",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Periodically render large number of TextInputs with key prop without a Runtime Error",
+        "TextRangePattern.GetText": "Periodically render large number of TextInputs with key prop without a Runtime Error",
       },
       {
         "AutomationId": "",
@@ -9206,12 +9676,14 @@ exports[`Home UIA Tree Dump Timers 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Timers",
+        "TextRangePattern.GetText": "Timers",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "A demonstration of Timers in React Native.",
+        "TextRangePattern.GetText": "A demonstration of Timers in React Native.",
       },
       {
         "AutomationId": "",
@@ -9351,12 +9823,14 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Touchable* and onPress",
+        "TextRangePattern.GetText": "Touchable* and onPress",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Touchable and onPress examples.",
+        "TextRangePattern.GetText": "Touchable and onPress examples.",
       },
       {
         "AutomationId": "",
@@ -9496,12 +9970,14 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "TransferProperties",
+        "TextRangePattern.GetText": "TransferProperties",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Some tests that change the backing XAML element to see if transfer properties is working.",
+        "TextRangePattern.GetText": "Some tests that change the backing XAML element to see if transfer properties is working.",
       },
       {
         "AutomationId": "",
@@ -9641,12 +10117,14 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Transforms",
+        "TextRangePattern.GetText": "Transforms",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "View transforms",
+        "TextRangePattern.GetText": "View transforms",
       },
       {
         "AutomationId": "",
@@ -9786,12 +10264,14 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "TransparentHitTestExample",
+        "TextRangePattern.GetText": "TransparentHitTestExample",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Transparent view receiving touch events",
+        "TextRangePattern.GetText": "Transparent view receiving touch events",
       },
       {
         "AutomationId": "",
@@ -9931,12 +10411,14 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "TurboModule",
+        "TextRangePattern.GetText": "TurboModule",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Usage of TurboModule",
+        "TextRangePattern.GetText": "Usage of TurboModule",
       },
       {
         "AutomationId": "",
@@ -10076,12 +10558,14 @@ exports[`Home UIA Tree Dump View 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "View",
+        "TextRangePattern.GetText": "View",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Basic building block of all UI, examples that demonstrate some of the many styles available.",
+        "TextRangePattern.GetText": "Basic building block of all UI, examples that demonstrate some of the many styles available.",
       },
       {
         "AutomationId": "",
@@ -10221,12 +10705,14 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "WebSocket",
+        "TextRangePattern.GetText": "WebSocket",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "WebSocket API",
+        "TextRangePattern.GetText": "WebSocket API",
       },
       {
         "AutomationId": "",
@@ -10366,12 +10852,14 @@ exports[`Home UIA Tree Dump XAML 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "XAML",
+        "TextRangePattern.GetText": "XAML",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Usage of react-native-xaml controls",
+        "TextRangePattern.GetText": "Usage of react-native-xaml controls",
       },
       {
         "AutomationId": "",
@@ -10511,12 +10999,14 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "XMLHttpRequest",
+        "TextRangePattern.GetText": "XMLHttpRequest",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Example that demonstrates upload and download requests using XMLHttpRequest.",
+        "TextRangePattern.GetText": "Example that demonstrates upload and download requests using XMLHttpRequest.",
       },
       {
         "AutomationId": "",
@@ -10596,43 +11086,88 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "938, 20",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Xaml WinUI3 (Experimental, for Fabric)",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Xaml WinUI3 (Experimental, for Fabric) Requires UseExperimentalWinUI3 - Xaml content that works in Fabric",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Xaml WinUI3 (Experimental, for Fabric)",
+        "TextRangePattern.GetText": "Xaml WinUI3 (Experimental, for Fabric)",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Requires UseExperimentalWinUI3 - Xaml content that works in Fabric",
+        "TextRangePattern.GetText": "Requires UseExperimentalWinUI3 - Xaml content that works in Fabric",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Xaml WinUI3 (Experimental, for Fabric) Requires UseExperimentalWinUI3 - Xaml content that works in Fabric",
+      "TestId": "Xaml WinUI3 (Experimental, for Fabric)",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Xaml WinUI3 (Experimental, for Fabric)",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "305, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "305, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "15, 69, 0",
-        "Size": "65, 19",
+        "Offset": "16, 45, 0",
+        "Size": "934, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "853, 69, 0",
-        "Size": "22, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "22, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "901, 69, 0",
-        "Size": "52, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "52, 19",
+            "Size": "934, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
