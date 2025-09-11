@@ -33,6 +33,10 @@
 #include <Fabric/Composition/UriImageManager.h>
 #endif
 
+namespace facebook::react::jsinspector_modern {
+class HostTarget;
+} // namespace facebook::react::jsinspector_modern
+
 namespace Mso::React {
 
 // Forward declarations
@@ -347,6 +351,9 @@ struct ReactOptions {
   //! The callback is called when IReactInstance is destroyed and must not be used anymore.
   //! It is called from the native queue.
   OnReactInstanceDestroyedCallback OnInstanceDestroyed;
+
+  //! The HostTarget instance for Fusebox
+  facebook::react::jsinspector_modern::HostTarget *InspectorTarget;
 };
 
 //! IReactHost manages a ReactNative instance.

@@ -66,6 +66,7 @@
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
 #include <react/threading/MessageQueueThreadImpl.h>
+#include "Inspector/ReactInspectorThread.h"
 #endif
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -299,6 +300,18 @@ ReactInstanceWin::ReactInstanceWin(
 }
 
 ReactInstanceWin::~ReactInstanceWin() noexcept {
+#ifdef USE_FABRIC
+  if (m_bridgelessReactInstance && m_options.InspectorTarget) {
+    auto messageDispatchQueue =
+        Mso::React::MessageDispatchQueue(::Microsoft::ReactNative::ReactInspectorThread::Instance(), nullptr);
+    messageDispatchQueue.runOnQueueSync([weakBridgelessReactInstance = std::weak_ptr(m_bridgelessReactInstance)]() {
+      if (auto bridgelessReactInstance = weakBridgelessReactInstance.lock()) {
+        bridgelessReactInstance->unregisterFromInspector();
+      }
+    });
+  }
+#endif
+
   std::scoped_lock lock{s_registryMutex};
   auto it = std::find(s_instanceRegistry.begin(), s_instanceRegistry.end(), this);
   if (it != s_instanceRegistry.end()) {
@@ -553,6 +566,8 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
 
   devSettings->useRuntimeScheduler = useRuntimeScheduler;
 
+  devSettings->inspectorTarget = m_options.InspectorTarget;
+
   return devSettings;
 }
 
@@ -665,15 +680,27 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
               if (devSettings->useDirectDebugger) {
                 ::Microsoft::ReactNative::GetSharedDevManager()->EnsureHermesInspector(
-                    devSettings->sourceBundleHost, devSettings->sourceBundlePort);
+                    devSettings->sourceBundleHost, devSettings->sourceBundlePort, devSettings->bundleAppId);
               }
 
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
                   devSettings, jsMessageThread, CreatePreparedScriptStore());
               auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
               jsRuntime->getRuntime();
-              m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
-                  std::move(jsRuntime), jsMessageThread, timerManager, jsErrorHandlingFunc);
+              
+              // Check InspectorTarget before creating ReactInstance
+              if (m_options.InspectorTarget) {
+                OutputDebugStringA("ReactInstanceWin: InspectorTarget is NOT null\n");
+              } else {
+                OutputDebugStringA("ReactInstanceWin: InspectorTarget IS NULL\n");
+              }
+              
+              m_bridgelessReactInstance = std::make_shared<facebook::react::ReactInstance>(
+                  std::move(jsRuntime),
+                  jsMessageThread,
+                  timerManager,
+                  jsErrorHandlingFunc,
+                  m_options.InspectorTarget);
 
               auto bufferedRuntimeExecutor = m_bridgelessReactInstance->getBufferedRuntimeExecutor();
               timerManager->setRuntimeExecutor(bufferedRuntimeExecutor);
@@ -695,6 +722,10 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
 
             facebook::react::ReactInstance::JSRuntimeFlags options;
+            
+            // Add logging before initializeRuntime
+            OutputDebugStringA("ReactInstanceWin: About to call initializeRuntime\n");
+            
             m_bridgelessReactInstance->initializeRuntime(
                 options,
                 [=, onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext](
@@ -749,6 +780,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             LoadJSBundlesBridgeless(devSettings);
             SetupHMRClient();
 
+            OutputDebugStringA("ReactInstanceWin: initializeRuntime call completed\n");
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
             OnErrorWithMessage("ReactInstanceWin: Failed to create React Instance.");
