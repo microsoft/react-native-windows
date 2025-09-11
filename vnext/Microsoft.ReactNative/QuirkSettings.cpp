@@ -9,9 +9,6 @@
 #include "React.h"
 #include "ReactPropertyBag.h"
 
-#include <react/featureflags/ReactNativeFeatureFlags.h>
-#include <react/featureflags/ReactNativeFeatureFlagsDefaults.h>
-
 namespace winrt::Microsoft::ReactNative::implementation {
 
 QuirkSettings::QuirkSettings() noexcept {}

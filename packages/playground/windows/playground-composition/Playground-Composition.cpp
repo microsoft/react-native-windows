@@ -142,6 +142,7 @@ struct WindowData {
     if (!m_host) {
       OutputDebugStringA("Playground: Creating ReactNativeHost with debugger support\n");
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
+      m_host.InstanceSettings(InstanceSettings());
       OutputDebugStringA("Playground: ReactNativeHost created with debugging enabled\n");
     }
     return m_host;
@@ -267,7 +268,6 @@ struct WindowData {
               m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
               OutputDebugStringA("Playground: Lifted composition setup complete\n");
 
-
             } else if (!m_target) {
               OutputDebugStringA("Playground: Setting up system composition\n");
               // General users of RNW should never set CompositionContext - this is an advanced usage to inject another
@@ -320,7 +320,8 @@ struct WindowData {
           // Verify composition context is ready before assigning ReactViewHost
           OutputDebugStringA("Playground: Verifying composition context is available\n");
           if (windowData->m_useLiftedComposition) {
-            auto compositor = winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(InstanceSettings().Properties());
+            auto compositor = winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(
+                InstanceSettings().Properties());
             if (compositor) {
               OutputDebugStringA("Playground: Lifted compositor verified - context ready\n");
             } else {
@@ -328,29 +329,11 @@ struct WindowData {
             }
           }
 
-
-          OutputDebugStringA("Playground: About to assign ReactViewHost (potential crash point)\n");
-          try {
-            auto viewHost = winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions);
-            OutputDebugStringA("Playground: ViewHost created successfully\n");
-            
-            m_compRootView.ReactViewHost(viewHost);
-            
-            OutputDebugStringA("Playground: ReactViewHost assigned successfully\n");
-          } catch (winrt::hresult_error const& ex) {
-            OutputDebugStringA("Playground: EXCEPTION during ReactViewHost assignment - hresult_error\n");
-            char buffer[256];
-            sprintf_s(buffer, "Playground: Exception HRESULT: 0x%08X\n", static_cast<uint32_t>(ex.code()));
-            OutputDebugStringA(buffer);
-          } catch (std::exception const& ex) {
-            OutputDebugStringA("Playground: EXCEPTION during ReactViewHost assignment - std::exception\n");
-            OutputDebugStringA("Playground: Exception: ");
-            OutputDebugStringA(ex.what());
-            OutputDebugStringA("\n");
-          } catch (...) {
-            OutputDebugStringA("Playground: EXCEPTION during ReactViewHost assignment - unknown exception\n");
-          }
+          m_compRootView.ReactViewHost(
+              winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+          OutputDebugStringA("Playground: ReactViewHost assigned successfully\n");
         }
+          
 
         break;
       }

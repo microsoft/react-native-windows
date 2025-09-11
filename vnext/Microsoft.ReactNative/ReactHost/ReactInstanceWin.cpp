@@ -697,7 +697,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               
               m_bridgelessReactInstance = std::make_shared<facebook::react::ReactInstance>(
                   std::move(jsRuntime),
-                  m_jsMessageThread.Load(),
+                  jsMessageThread,
                   timerManager,
                   jsErrorHandlingFunc,
                   m_options.InspectorTarget);
@@ -730,86 +730,55 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 options,
                 [=, onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext](
                     facebook::jsi::Runtime &runtime) {
-                  
-                  OutputDebugStringA("ReactInstanceWin: Inside initializeRuntime lambda\n");
-                  
-                  try {
-                    OutputDebugStringA("ReactInstanceWin: Getting logging callback\n");
-                    auto loggingHook = GetLoggingCallback();
-                    
-                    OutputDebugStringA("ReactInstanceWin: Creating logger\n");
-                    auto logger = [loggingHook](
-                                      const std::string &message, unsigned int logLevel) {
-                      if (loggingHook)
-                        loggingHook(static_cast<facebook::react::RCTLogLevel>(logLevel), message.c_str());
-                    };
-                    
-                    OutputDebugStringA("ReactInstanceWin: Binding native logger\n");
-                    facebook::react::bindNativeLogger(runtime, logger);
-                    
-                    OutputDebugStringA("ReactInstanceWin: Creating turbo module manager\n");
-                    auto turboModuleManager =
-                        std::make_shared<facebook::react::TurboModuleManager>(m_options.TurboModuleProvider, callInvoker);
+                  auto logger = [loggingHook = GetLoggingCallback()](
+                                    const std::string &message, unsigned int logLevel) {
+                    if (loggingHook)
+                      loggingHook(static_cast<facebook::react::RCTLogLevel>(logLevel), message.c_str());
+                  };
+                  facebook::react::bindNativeLogger(runtime, logger);
 
-                    OutputDebugStringA("ReactInstanceWin: Creating binding lambda\n");
-                    auto binding =
-                        [turboModuleManager](const std::string &name) -> std::shared_ptr<facebook::react::TurboModule> {
-                      return turboModuleManager->getModule(name);
-                    };
+                  auto turboModuleManager =
+                      std::make_shared<facebook::react::TurboModuleManager>(m_options.TurboModuleProvider, callInvoker);
 
-                    // Use a legacy native module binding that always returns null
-                    // This means that calls to NativeModules.XXX will always return null, rather than crashing on access
-                    OutputDebugStringA("ReactInstanceWin: Creating legacy native module binding\n");
-                    auto legacyNativeModuleBinding =
-                        [](const std::string & /*name*/) -> std::shared_ptr<facebook::react::TurboModule> {
-                      return nullptr;
-                    };
+                  auto binding =
+                      [turboModuleManager](const std::string &name) -> std::shared_ptr<facebook::react::TurboModule> {
+                    return turboModuleManager->getModule(name);
+                  };
 
-                    OutputDebugStringA("ReactInstanceWin: Installing TurboModuleBinding\n");
-                    facebook::react::TurboModuleBinding::install(
-                        runtime,
-                        std::function(binding),
-                        std::function(legacyNativeModuleBinding),
-                        m_options.TurboModuleProvider->LongLivedObjectCollection());
+                  // Use a legacy native module binding that always returns null
+                  // This means that calls to NativeModules.XXX will always return null, rather than crashing on access
+                  auto legacyNativeModuleBinding =
+                      [](const std::string & /*name*/) -> std::shared_ptr<facebook::react::TurboModule> {
+                    return nullptr;
+                  };
 
-                    OutputDebugStringA("ReactInstanceWin: Getting component descriptor registry\n");
-                    auto componentDescriptorRegistry =
-                        Microsoft::ReactNative::WindowsComponentDescriptorRegistry::FromProperties(
-                            winrt::Microsoft::ReactNative::ReactPropertyBag(m_options.Properties));
-                            
-                    OutputDebugStringA("ReactInstanceWin: Creating hasComponentProvider\n");
-                    auto hasComponentProvider = [componentDescriptorRegistry](const std::string &name) -> bool {
-                      return componentDescriptorRegistry->hasComponentProvider(
-                          facebook::react::componentNameByReactViewName(name));
-                    };
-                    
-                    OutputDebugStringA("ReactInstanceWin: Binding hasComponentProvider\n");
-                    facebook::react::bindHasComponentProvider(runtime, std::move(hasComponentProvider));
+                  facebook::react::TurboModuleBinding::install(
+                      runtime,
+                      std::function(binding),
+                      std::function(legacyNativeModuleBinding),
+                      m_options.TurboModuleProvider->LongLivedObjectCollection());
 
-                    OutputDebugStringA("ReactInstanceWin: Initializing eager modules\n");
-                    // init TurboModule
-                    for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
-                      turboModuleManager->getModule(moduleName);
-                    }
+                  auto componentDescriptorRegistry =
+                      Microsoft::ReactNative::WindowsComponentDescriptorRegistry::FromProperties(
+                          winrt::Microsoft::ReactNative::ReactPropertyBag(m_options.Properties));
+                  auto hasComponentProvider = [componentDescriptorRegistry](const std::string &name) -> bool {
+                    return componentDescriptorRegistry->hasComponentProvider(
+                        facebook::react::componentNameByReactViewName(name));
+                  };
+                  facebook::react::bindHasComponentProvider(runtime, std::move(hasComponentProvider));
 
-                    OutputDebugStringA("ReactInstanceWin: Calling onCreated callback\n");
-                    if (onCreated) {
-                      onCreated.Get()->Invoke(reactContext);
-                    }
-                    
-                    OutputDebugStringA("ReactInstanceWin: initializeRuntime lambda completed successfully\n");
-                    
-                  } catch (const std::exception &e) {
-                    std::string error = "ReactInstanceWin: Exception in initializeRuntime lambda: ";
-                    error += e.what();
-                    error += "\n";
-                    OutputDebugStringA(error.c_str());
-                    throw;
-                  } catch (...) {
-                    OutputDebugStringA("ReactInstanceWin: Unknown exception in initializeRuntime lambda\n");
-                    throw;
+                  // init TurboModule
+                  for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
+                    turboModuleManager->getModule(moduleName);
+                  }
+
+                  if (onCreated) {
+                    onCreated.Get()->Invoke(reactContext);
                   }
                 });
+
+            LoadJSBundlesBridgeless(devSettings);
+            SetupHMRClient();
 
             OutputDebugStringA("ReactInstanceWin: initializeRuntime call completed\n");
           } catch (std::exception &e) {
