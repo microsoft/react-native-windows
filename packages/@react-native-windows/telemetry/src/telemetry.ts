@@ -369,7 +369,7 @@ export class Telemetry {
     // Populate Part A extensions
     telemetryItem.ext = {};
     telemetryItem.ext.device = {
-      id: Telemetry.commonProperties.deviceId,
+      localId: Telemetry.commonProperties.deviceId,
       deviceClass: Telemetry.commonProperties.deviceClass,
     };
     telemetryItem.ext.os = {
@@ -394,6 +394,7 @@ export class Telemetry {
         isCliTest: Telemetry.commonProperties.isTest,
         sessionId: Telemetry.commonProperties.sessionId,
         commandName: Telemetry.commonProperties.commandName,
+        localId: Telemetry.commonProperties.deviceId,
       },
       // Set project and versions props, belonging to Part B.
       project: Telemetry.projectProp,
