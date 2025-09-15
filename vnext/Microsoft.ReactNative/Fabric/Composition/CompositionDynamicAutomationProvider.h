@@ -102,6 +102,10 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
     m_childSiteLink = childSiteLink;
   }
 
+  // If this object is for a ChildSiteLink, returns the ChildSiteLink's automation provider.
+  // This will be a provider object from the hosted framework (for example, WinUI).
+  winrt::IUnknown TryGetChildSiteLinkAutomationProvider();
+
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   winrt::com_ptr<ITextProvider2> m_textProvider;

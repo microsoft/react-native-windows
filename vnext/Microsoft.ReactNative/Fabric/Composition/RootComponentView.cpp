@@ -11,6 +11,7 @@
 #include "CompositionRootAutomationProvider.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
+#include "CompositionDynamicAutomationProvider.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -275,7 +276,7 @@ facebook::react::Point RootComponentView::getClientOffset() const noexcept {
   return {};
 }
 
-winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {
+winrt::IUnknown RootComponentView::UiaProviderFromPoint(const POINT &ptPixels, const POINT &ptScreen) noexcept {
   facebook::react::Point ptDips{
       static_cast<facebook::react::Float>(ptPixels.x) / m_layoutMetrics.pointScaleFactor,
       static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor};
@@ -295,7 +296,37 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
   if (view == nullptr)
     return nullptr;
 
-  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+  auto uiaProvider = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+
+  // HACKHACK: It's ugly to have the RootComponentView know about the CompositionDynamicAutomationProvider type.
+  // HACKHACK: Can we clean this up?
+  auto dynamicProvider = uiaProvider.try_as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+  if (dynamicProvider) {
+    if (auto childProvider = dynamicProvider->TryGetChildSiteLinkAutomationProvider()) {
+      // childProvider is the the automation provider from the ChildSiteLink.  In the case of WinUI, this
+      // is a pointer to WinUI's internal CUIAHostWindow object.
+      // It seems odd, but even though this node doesn't behave as a fragment root in our case (the real fragment root
+      // is the RootComponentView's UIA provider), we still use its IRawElementProviderFragmentRoot -- just so
+      // we can do the ElementProviderFromPoint call.  (this was recommended by the team who did the initial
+      // architecture work).
+      if (auto fragmentRoot = childProvider.try_as<IRawElementProviderFragmentRoot>())
+      {
+        com_ptr<IRawElementProviderFragment> frag;
+        fragmentRoot->ElementProviderFromPoint(
+            ptScreen.x,   // Note since we're going through IRawElementProviderFragment the coordinates are in screen space.
+            ptScreen.y,
+            frag.put());
+        // In the case of WinUI, frag is now the UIA provider for the specific WinUI element that was hit.
+        // (A Microsoft_UI_Xaml!CUIAWrapper object)
+        if (frag)
+        {
+          return frag.as<winrt::IUnknown>();
+        }
+      }
+    }
+  }
+
+  return uiaProvider;
 }
 
 float RootComponentView::FontSizeMultiplier() const noexcept {

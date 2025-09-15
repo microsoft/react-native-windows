@@ -51,6 +51,9 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
       ReactCompositionViewComponentBuilder *builder);
   ~ContentIslandComponentView() noexcept;
 
+  virtual facebook::react::Tag
+  hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents = false) const noexcept override;
+
  private:
   void OnMounted() noexcept;
   void OnUnmounted() noexcept;

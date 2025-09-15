@@ -273,4 +273,23 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
   }
 }
 
+facebook::react::Tag ContentIslandComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
+  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+
+  // This is similar to ViewComponentView::hitTest, but we don't want to hit test the children of this node,
+  // because the child ComponentView is kind of a dummy representation of the XamlElement and doesn't do anything.
+  // So, we just hit test the ContentIsland itself to make the UIA ElementProviderFromPoint call work.
+  // TODO: Will this cause a problem -- does this function need to do something different for non-UIA scenarios?
+  if (ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+    localPt = ptLocal;
+    return Tag();
+  }
+
+  return -1;
+}
+
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

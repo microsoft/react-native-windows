@@ -1104,6 +1104,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelected(BOOL *pRe
   return S_OK;
 }
 
+winrt::IUnknown CompositionDynamicAutomationProvider::TryGetChildSiteLinkAutomationProvider() {
+  if (m_childSiteLink) {
+    return m_childSiteLink.AutomationProvider().as<winrt::IUnknown>();
+  }
+  return nullptr;
+}
+
 IRawElementProviderSimple *findSelectionContainer(winrt::Microsoft::ReactNative::ComponentView current) {
   if (!current)
     return nullptr;
