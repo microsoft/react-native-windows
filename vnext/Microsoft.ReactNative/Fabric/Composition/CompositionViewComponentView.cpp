@@ -1003,11 +1003,11 @@ std::string ComponentView::DefaultControlType() const noexcept {
 }
 
 std::string ComponentView::DefaultAccessibleName() const noexcept {
-  return "";
+  return "DefaultAccessString";
 }
 
 std::string ComponentView::DefaultHelpText() const noexcept {
-  return "";
+  return "DefaultHelpString";
 }
 
 facebook::react::SharedViewProps ViewComponentView::defaultProps() noexcept {

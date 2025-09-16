@@ -64,9 +64,11 @@ void ContentIslandComponentView::OnMounted() noexcept {
   // We configure automation even if there's no UIA client at this point, because it's possible the first UIA
   // request we'll get will be for a child of this island calling upward in the UIA tree.
   ConfigureChildSiteLinkAutomation();
+  OutputDebugString(L"Configure childsite Connected");
 
   if (m_islandToConnect) {
     m_childSiteLink.Connect(m_islandToConnect);
+    OutputDebugString(L"ChildSiteLinK Connected");
     m_islandToConnect = nullptr;
   }
 
@@ -83,6 +85,25 @@ void ContentIslandComponentView::OnMounted() noexcept {
         }));
     view = view.Parent();
   }
+}
+
+facebook::react::Tag ContentIslandComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
+  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+
+  // This is similar to ViewComponentView::hitTest, but we don't want to hit test the children of this node,
+  // because the child ComponentView is kind of a dummy representation of the XamlElement and doesn't do anything.
+  // So, we just hit test the ContentIsland itself to make the UIA ElementProviderFromPoint call work.
+  // TODO: Will this cause a problem -- does this function need to do something different for non-UIA scenarios?
+  if (ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+    localPt = ptLocal;
+    return Tag();
+  }
+
+  return -1;
 }
 
 void ContentIslandComponentView::OnUnmounted() noexcept {
@@ -115,6 +136,7 @@ winrt::IInspectable ContentIslandComponentView::EnsureUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
         *get_strong(), m_childSiteLink);
+    OutputDebugString(L"[EnsureUiaProvider] Created CompositionDynamicAutomationProvider\n");
   }
   return m_uiaProvider;
 }
@@ -196,6 +218,7 @@ void ContentIslandComponentView::updateLayoutMetrics(
     m_childSiteLink.ActualSize({layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
     ParentLayoutChanged();
   }
+
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
@@ -203,8 +226,10 @@ void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::Co
   if (m_childSiteLink) {
     m_islandToConnect = nullptr;
     m_childSiteLink.Connect(contentIsland);
+    OutputDebugString(L"1-ChildSiteLink connected to XamlIsland\n");
   } else {
     m_islandToConnect = contentIsland;
+    OutputDebugString(L"2-ChildSiteLink connected to XamlIsland\n");
   }
 }
 
@@ -217,7 +242,7 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
   // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
   // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
   m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FragmentBased);
-
+  //OutputDebugString(L"[ContentIsland] AutomationOption set to FragmentBased\n");
   // These events are raised in response to the child ContentIsland asking for providers.
   // For example, the ContentIsland.FragmentRootAutomationProvider property will return
   // the provider we provide here in FragmentRootAutomationProviderRequested.
@@ -231,10 +256,20 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
           const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
         // The child island's fragment tree doesn't have its own fragment root.
         // Here's how we can provide the correct fragment root to the child's UIA logic.
+       // OutputDebugString(L"[ContentIsland] FragmentRootAutomationProviderRequested entered\n");
         winrt::com_ptr<IRawElementProviderFragmentRoot> fragmentRoot{nullptr};
         auto uiaProvider = this->EnsureUiaProvider();
+       // OutputDebugString(L"[UIA] FragmentRootAutomationProviderRequested uiaprovider: ");
+
+        OutputDebugString(std::to_wstring(reinterpret_cast<uintptr_t>(winrt::get_abi(uiaProvider))).c_str());
+        OutputDebugString(L"\n");
+
         uiaProvider.as<IRawElementProviderFragment>()->get_FragmentRoot(fragmentRoot.put());
+        OutputDebugString(L"[UIA] FragmentRoot pointer: ");
+        OutputDebugString(std::to_wstring(reinterpret_cast<uintptr_t>(fragmentRoot.get())).c_str());
+        OutputDebugString(L"\n");
         args.AutomationProvider(fragmentRoot.as<IInspectable>());
+        OutputDebugString(L"[ContentIsland] FragmentRootAutomationProviderRequested handled\n");
         args.Handled(true);
       });
 
@@ -242,8 +277,14 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
       [this](
           const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
           const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        OutputDebugString(L"[ContentIsland] ParentAutomationProviderRequested entered\n");
         auto uiaProvider = this->EnsureUiaProvider();
+        OutputDebugString(L"[UIA] ParentAutomationProviderRequested uiaprovider: ");
+
+        OutputDebugString(std::to_wstring(reinterpret_cast<uintptr_t>(winrt::get_abi(uiaProvider))).c_str());
+        OutputDebugString(L"\n");
         args.AutomationProvider(uiaProvider);
+        OutputDebugString(L"[ContentIsland] ParentAutomationProviderRequested handled\n");
         args.Handled(true);
       });
 
@@ -251,7 +292,9 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
       [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
         // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
+        OutputDebugString(L"[ContentIsland] NextSiblingAutomationProviderRequested entered\n");
         args.AutomationProvider(nullptr);
+        OutputDebugString(L"[ContentIsland] m_nextSiblingAutomationProviderRequestedToken handled\n");
         args.Handled(true);
       });
 
@@ -259,9 +302,17 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
       [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
         // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
+        OutputDebugString(L"[ContentIsland] PreviousSiblingAutomationProviderRequested entered\n");
         args.AutomationProvider(nullptr);
+        OutputDebugString(L"[ContentIsland] m_previousSiblingAutomationProviderRequestedToken handled\n");
         args.Handled(true);
       });
+
+  if (m_uiaProvider) {
+    auto providerImpl =
+        m_uiaProvider.as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    providerImpl->SetChildSiteLink(m_childSiteLink);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
