@@ -46,11 +46,9 @@ constexpr wchar_t s_moduleNameW[] = L"WebSocketModule";
 
 msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::WebSocketTurboModule>();
 
-
 } // anonymous namespace
 
 namespace Microsoft::React {
-
 
 #pragma region WebSocketTurboModule
 

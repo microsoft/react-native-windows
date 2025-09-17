@@ -9,7 +9,4 @@
 // Windows API
 #include <winrt/Windows.Foundation.h>
 
-namespace Microsoft::React {
-
-
-} // namespace Microsoft::React
+namespace Microsoft::React {} // namespace Microsoft::React
