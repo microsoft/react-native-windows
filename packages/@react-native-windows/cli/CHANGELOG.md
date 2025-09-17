@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 02 Sep 2025 05:24:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 17 Sep 2025 05:27:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.276
+
+Wed, 17 Sep 2025 05:27:16 GMT
+
+### Changes
+
+- Upgrade dotnet version (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.275
 
