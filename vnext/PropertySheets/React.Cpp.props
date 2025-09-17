@@ -65,7 +65,7 @@
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>JSI_VERSION=19;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=20;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         To address the crash on the first call to std::mutex::lock.
         See: https://github.com/microsoft/STL/wiki/Changelog#vs-2022-1710
@@ -160,6 +160,10 @@
         $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\components\view\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\cxx\react\renderer\components\text;
+        $(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\utils\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>

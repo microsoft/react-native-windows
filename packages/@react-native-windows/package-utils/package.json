@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/package-utils",
-  "version": "0.0.0-canary.91",
+  "version": "0.0.0-canary.93",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,17 +16,17 @@
     "directory": "packages/@react-native-windows/package-utils"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.94",
-    "@react-native-windows/fs": "^0.0.0-canary.65",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.96",
+    "@react-native-windows/fs": "^0.0.0-canary.67",
     "get-monorepo-packages": "^1.2.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.36",
-    "@rnw-scripts/just-task": "2.3.53",
-    "@rnw-scripts/ts-config": "2.0.5",
+    "@rnw-scripts/eslint-config": "1.2.37",
+    "@rnw-scripts/just-task": "2.3.55",
+    "@rnw-scripts/ts-config": "2.0.6",
     "@types/lodash": "^4.14.168",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.14.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.19.0",
@@ -49,6 +49,6 @@
     "lib-commonjs"
   ],
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

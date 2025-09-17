@@ -1,8 +1,29 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-<!-- This log was last generated on Fri, 30 May 2025 05:24:58 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 23 Aug 2025 05:30:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.1.62
+
+Sat, 23 Aug 2025 05:30:45 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.67
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+
+## 1.1.61
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.66
+- Bump @rnw-scripts/just-task to v2.3.54
 
 ## 1.1.60
 

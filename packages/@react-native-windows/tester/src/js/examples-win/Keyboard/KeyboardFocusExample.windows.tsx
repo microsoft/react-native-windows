@@ -60,11 +60,9 @@ interface IKeyboardFocusComponentState {
 const pickerRef = React.createRef<Picker<string>>();
 const viewWindowsRef = React.createRef<ViewWindows>();
 const textInputRef = React.createRef<TextInput>();
-const textInputRef2 = React.createRef<any>();
-const touchableHighlightRef =
-  React.createRef<React.ElementRef<typeof TouchableHighlight>>();
-const touchableOpacityRef =
-  React.createRef<React.ElementRef<typeof TouchableOpacity>>();
+const textInputRef2 = React.createRef<TextInput>();
+const touchableHighlightRef = React.createRef<View>();
+const touchableOpacityRef = React.createRef<View>();
 const touchableWithoutFeedbackRef = React.createRef<TouchableWithoutFeedback>();
 
 class KeyboardFocusExample extends React.Component<
@@ -182,35 +180,32 @@ class KeyboardFocusExample extends React.Component<
   };
 
   private readonly _selectionChanged = (selected: string) => {
+    this.setState({selected}); // Update selected state
+
     switch (selected) {
       case 'View':
-        viewWindowsRef.current && viewWindowsRef.current.focus();
+        viewWindowsRef.current?.focus();
         break;
       case 'Picker':
         // pickerRef.current && pickerRef.current.focus();
         break;
       case 'TextInput':
-        textInputRef.current && textInputRef.current.focus();
-        if (textInputRef.current) {
-          textInputRef.current.focus();
-          setTimeout(() => {
-            textInputRef2.current && textInputRef2.current.blur();
-          }, 10000);
-        }
+        textInputRef.current?.focus();
+        setTimeout(() => {
+          textInputRef2.current?.blur();
+        }, 10000);
         break;
       case 'TextInput2':
-        if (textInputRef2.current) {
-          textInputRef2.current.focus();
-          setTimeout(() => {
-            textInputRef2.current && textInputRef2.current.blur();
-          }, 10000);
-        }
+        textInputRef2.current?.focus();
+        setTimeout(() => {
+          textInputRef2.current?.blur();
+        }, 10000);
         break;
       case 'TouchableHighlight':
-        touchableHighlightRef.current && touchableHighlightRef.current.focus();
+        (touchableHighlightRef.current as any)?.focus?.();
         break;
       case 'TouchableOpacity':
-        touchableOpacityRef.current && touchableOpacityRef.current.focus();
+        (touchableOpacityRef.current as any)?.focus?.();
         break;
       case 'TouchableWithoutFeedback':
         // TouchableWithoutFeedback doesn't have a focus method, since it doesn't have NativeMethodsMixin applied

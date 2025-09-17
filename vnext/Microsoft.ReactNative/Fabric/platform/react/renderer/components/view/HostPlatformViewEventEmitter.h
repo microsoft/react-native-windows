@@ -39,6 +39,7 @@ class HostPlatformViewEventEmitter : public BaseViewEventEmitter {
 #pragma mark - Touch Events
 
   virtual void onPressIn(GestureResponderEvent event) const;
+  virtual void onPressOut(GestureResponderEvent event) const;
 };
 
 } // namespace facebook::react

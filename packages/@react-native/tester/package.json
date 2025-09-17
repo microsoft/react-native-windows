@@ -10,7 +10,7 @@
     "directory": "packages/rn-tester"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "scripts": {
     "start": "npx @react-native-community/cli start",
@@ -26,13 +26,13 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/popup-menu-android": "0.80.0-nightly-20250317-fc7385c1e",
+    "@react-native/popup-menu-android": "0.80.0-nightly-20250506-3ac16dd6a",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "19.0.0",
+    "react": "19.1.0",
     "react-native": "*"
   },
   "codegenConfig": {

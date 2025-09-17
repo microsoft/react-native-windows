@@ -16,6 +16,7 @@ import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
   AccessibilityState,
+  AccessibilityValue, // Windows
 } from './View/ViewAccessibility';
 
 import StyleSheet, {type ColorValue} from '../StyleSheet/StyleSheet';
@@ -42,7 +43,7 @@ export type ButtonProps = $ReadOnly<{
     Handler to be called when the user taps the button. The first function
     argument is an event in form of [GestureResponderEvent](pressevent).
    */
-  onPress: (event?: GestureResponderEvent) => mixed,
+  onPress?: (event?: GestureResponderEvent) => mixed,
 
   /**
     If `true`, doesn't play system sound on touch.
@@ -154,6 +155,7 @@ export type ButtonProps = $ReadOnly<{
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   onAccessibilityTap?: ?() => void, // Windows
   accessibilityState?: ?AccessibilityState,
+  accessibilityValue?: ?AccessibilityValue, // Windows
 
   /**
    * alias for accessibilityState
@@ -168,6 +170,15 @@ export type ButtonProps = $ReadOnly<{
   'aria-readonly'?: ?boolean, // Windows
   'aria-multiselectable'?: ?boolean, // Windows
   'aria-required'?: ?boolean, // Windows
+
+  /**
+   * alias for accessibilityValue
+   * It represents textual description of a component's value, or for range-based components, such as sliders and progress bars.
+   */
+  'aria-valuemax'?: ?AccessibilityValue['max'],
+  'aria-valuemin'?: ?AccessibilityValue['min'],
+  'aria-valuenow'?: ?AccessibilityValue['now'],
+  'aria-valuetext'?: ?AccessibilityValue['text'],
 
   /**
    * [Android] Controlling if a view fires accessibility events and if it is reported to accessibility services.
@@ -308,6 +319,7 @@ const Button: component(
   const {
     accessibilityLabel,
     accessibilityState,
+    accessibilityValue, // Windows
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
     'aria-disabled': ariaDisabled,
@@ -317,6 +329,10 @@ const Button: component(
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
+    'aria-valuemax': ariaValueMax, // Windows
+    'aria-valuemin': ariaValueMin, // Windows
+    'aria-valuenow': ariaValueNow, // Windows
+    'aria-valuetext': ariaValueText, // Windows
     importantForAccessibility,
     color,
     onPress,
@@ -366,6 +382,15 @@ const Button: component(
       ? {..._accessibilityState, disabled}
       : _accessibilityState;
 
+  // [Windows
+  let _accessibilityValue = {
+    max: ariaValueMax ?? accessibilityValue?.max,
+    min: ariaValueMin ?? accessibilityValue?.min,
+    now: ariaValueNow ?? accessibilityValue?.now,
+    text: ariaValueText ?? accessibilityValue?.text,
+  };
+  // Windows]
+
   if (disabled) {
     buttonStyles.push(styles.buttonDisabled);
     textStyles.push(styles.textDisabled);
@@ -393,6 +418,7 @@ const Button: component(
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"
         accessibilityState={_accessibilityState}
+        accessibilityValue={_accessibilityValue} // Windows
         onAccessibilityTap={onAccessibilityTap} // Windows
         importantForAccessibility={_importantForAccessibility}
         hasTVPreferredFocus={hasTVPreferredFocus}

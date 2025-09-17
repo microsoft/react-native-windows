@@ -11,15 +11,13 @@
 'use strict';
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
-import type {ImageProps} from 'react-native/Libraries/Image/ImageProps';
-import type {LayoutChangeEvent} from 'react-native/Libraries/Types/CoreEventTypes';
+import type {ImageProps, LayoutChangeEvent} from 'react-native';
 
 import RNTesterButton from '../../components/RNTesterButton';
 import RNTesterText from '../../components/RNTesterText';
 import ImageCapInsetsExample from './ImageCapInsetsExample';
 import React from 'react';
 import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
-import * as ReactNativeFeatureFlags from 'react-native/src/private/featureflags/ReactNativeFeatureFlags';
 
 const IMAGE1 =
   'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png';
@@ -2173,7 +2171,6 @@ exports.examples = [
             accessibilityLabel="This is an accessibility label"
             accessibilityRole="image"
             accessibilityValue={{text: '50%'}}
-            importantForAccessibility="no-hide-descendants"
             testID="image-accessibility-properties"
             accessible
           />

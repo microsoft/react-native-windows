@@ -276,9 +276,9 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
 {
   "Automation Tree": {
     "AutomationId": "Selectable item 1",
-    "ControlType": 50026,
+    "ControlType": 50000,
     "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
+    "LocalizedControlType": "button",
     "Name": "Selectable item 1",
     "SelectionItemPattern.IsSelected": true,
     "__Children": [

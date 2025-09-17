@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/doxysaurus",
-  "version": "0.4.54",
+  "version": "0.4.56",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "doxysaurus": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.65",
+    "@react-native-windows/fs": "^0.0.0-canary.67",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "chalk": "^4.1.0",
@@ -33,15 +33,15 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "1.2.36",
-    "@rnw-scripts/jest-unittest-config": "1.5.11",
-    "@rnw-scripts/just-task": "2.3.53",
-    "@rnw-scripts/ts-config": "2.0.5",
+    "@rnw-scripts/eslint-config": "1.2.37",
+    "@rnw-scripts/jest-unittest-config": "1.5.12",
+    "@rnw-scripts/just-task": "2.3.55",
+    "@rnw-scripts/ts-config": "2.0.6",
     "@types/chalk": "^2.2.0",
     "@types/github-slugger": "^1.3.0",
     "@types/jest": "^29.2.2",
     "@types/mustache": "^4.1.1",
-    "@types/node": "^18.0.0",
+    "@types/node": "^22.14.0",
     "@types/xml2js": "^0.4.8",
     "@types/yargs": "^16.0.0",
     "babel-jest": "^29.6.3",
@@ -56,6 +56,6 @@
     "templates"
   ],
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

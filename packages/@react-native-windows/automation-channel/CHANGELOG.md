@@ -1,8 +1,185 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Fri, 27 Jun 2025 05:23:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 10 Sep 2025 05:26:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.330
+
+Wed, 10 Sep 2025 05:26:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.990
+
+## 0.12.329
+
+Tue, 09 Sep 2025 05:26:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.989
+
+## 0.12.328
+
+Tue, 02 Sep 2025 05:24:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.988
+
+## 0.12.327
+
+Wed, 27 Aug 2025 05:26:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.987
+
+## 0.12.326
+
+Sat, 23 Aug 2025 05:30:40 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+- Bump react-native-windows to v0.0.0-canary.986
+
+## 0.12.325
+
+Wed, 20 Aug 2025 05:26:05 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.985
+
+## 0.12.324
+
+Fri, 15 Aug 2025 17:57:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.984
+
+## 0.12.323
+
+Sat, 09 Aug 2025 05:24:31 GMT
+
+### Patches
+
+- Bump hermes-windows to 0.0.0-2507.21007-eda7aef6 (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.983
+
+## 0.12.322
+
+Fri, 08 Aug 2025 05:25:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.982
+
+## 0.12.321
+
+Thu, 07 Aug 2025 05:25:46 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.981
+
+## 0.12.320
+
+Wed, 06 Aug 2025 05:28:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.980
+
+## 0.12.319
+
+Thu, 31 Jul 2025 05:23:48 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.979
+
+## 0.12.318
+
+Sat, 26 Jul 2025 05:26:14 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250506-3ac16dd6a (54227869+anupriya13@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.978
+
+## 0.12.317
+
+Fri, 25 Jul 2025 05:27:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.977
+
+## 0.12.316
+
+Sat, 19 Jul 2025 05:26:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.976
+
+## 0.12.315
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.54
+- Bump react-native-windows to v0.0.0-canary.975
+
+## 0.12.314
+
+Wed, 16 Jul 2025 05:26:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.974
+
+## 0.12.313
+
+Tue, 15 Jul 2025 05:27:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.973
+
+## 0.12.312
+
+Fri, 04 Jul 2025 05:21:22 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.972
+
+## 0.12.311
+
+Thu, 03 Jul 2025 05:24:24 GMT
+
+### Patches
+
+- intergrate rn 0.80.0-nightly-20250414-70cdf12c4 (satkh@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.971
+
+## 0.12.310
+
+Tue, 01 Jul 2025 05:24:44 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.970
 
 ## 0.12.309
 

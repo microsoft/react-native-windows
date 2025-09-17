@@ -17,6 +17,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct AnimatedModuleSpec_EndResult {
     bool finished;
     std::optional<double> value;
+    std::optional<double> offset;
 };
 
 struct AnimatedModuleSpec_EventMapping {
@@ -29,6 +30,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AnimatedModuleSpec_
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"finished", &AnimatedModuleSpec_EndResult::finished},
         {L"value", &AnimatedModuleSpec_EndResult::value},
+        {L"offset", &AnimatedModuleSpec_EndResult::offset},
     };
     return fieldMap;
 }

@@ -1,8 +1,30 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 23 Aug 2025 05:30:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.4.56
+
+Sat, 23 Aug 2025 05:30:42 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.67
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-unittest-config to v1.5.12
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+
+## 0.4.55
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.66
+- Bump @rnw-scripts/just-task to v2.3.54
 
 ## 0.4.54
 

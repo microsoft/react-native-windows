@@ -11,7 +11,7 @@ steps:
     - task: NodeTool@0
       displayName: Set Node Version
       inputs:
-        versionSpec: '18.x'
+        versionSpec: '22.x'
 
   - script: if not exist %APPDATA%\npm (mkdir %APPDATA%\npm)
     displayName: Ensure npm directory for npx commands

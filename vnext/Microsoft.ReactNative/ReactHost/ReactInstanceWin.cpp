@@ -1504,8 +1504,15 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
     CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
   }
 
-  // Give the JS thread time to finish executing
-  m_jsMessageThread.Load()->runOnQueueSync([]() {});
+  // QUIRK: Legacy sync behavior can be re-enabled via EnableSyncDetachRootView option
+  // The sync call was removed to prevent deadlocks with Hermes GC operations
+  bool useSyncCall = winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRunOnQueueSync(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
+  if (useSyncCall) {
+    // Legacy behavior: wait for JS thread to finish executing (can cause deadlocks)
+    m_jsMessageThread.Load()->runOnQueueSync([]() {});
+  }
+  // Default behavior: no synchronization call to prevent deadlocks
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(

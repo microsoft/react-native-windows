@@ -107,8 +107,7 @@ const View: component(
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
 
-    let _accessibilityState;
-    if (
+    const _accessibilityState =
       accessibilityState != null ||
       ariaBusy != null ||
       ariaChecked != null ||
@@ -118,34 +117,32 @@ const View: component(
       ariaReadOnly != null || // Windows
       ariaMultiselectable != null || // Windows
       ariaRequired != null // Windows
-    ) {
-      _accessibilityState = {
-        busy: ariaBusy ?? accessibilityState?.busy,
-        checked: ariaChecked ?? accessibilityState?.checked,
-        disabled: ariaDisabled ?? accessibilityState?.disabled,
-        expanded: ariaExpanded ?? accessibilityState?.expanded,
-        selected: ariaSelected ?? accessibilityState?.selected,
-        readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
-        multiselectable:
-          ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
-        required: ariaRequired ?? accessibilityState?.required, // Windows
-      };
-    }
-    let _accessibilityValue;
-    if (
+        ? {
+            busy: ariaBusy ?? accessibilityState?.busy,
+            checked: ariaChecked ?? accessibilityState?.checked,
+            disabled: ariaDisabled ?? accessibilityState?.disabled,
+            expanded: ariaExpanded ?? accessibilityState?.expanded,
+            selected: ariaSelected ?? accessibilityState?.selected,
+            readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+            multiselectable:
+              ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+            required: ariaRequired ?? accessibilityState?.required, // Windows
+          }
+        : undefined;
+
+    const _accessibilityValue =
       accessibilityValue != null ||
       ariaValueMax != null ||
       ariaValueMin != null ||
       ariaValueNow != null ||
       ariaValueText != null
-    ) {
-      _accessibilityValue = {
-        max: ariaValueMax ?? accessibilityValue?.max,
-        min: ariaValueMin ?? accessibilityValue?.min,
-        now: ariaValueNow ?? accessibilityValue?.now,
-        text: ariaValueText ?? accessibilityValue?.text,
-      };
-    }
+        ? {
+            max: ariaValueMax ?? accessibilityValue?.max,
+            min: ariaValueMin ?? accessibilityValue?.min,
+            now: ariaValueNow ?? accessibilityValue?.now,
+            text: ariaValueText ?? accessibilityValue?.text,
+          }
+        : undefined;
 
     const _keyDown =
       otherProps.keyDownEvents || otherProps.onKeyDown
@@ -244,6 +241,13 @@ const View: component(
       );
     }
 
+    const computedImportantForAccessibility =
+      ariaHidden === true ||
+      importantForAccessibility === 'no-hide-descendants' ||
+      accessibilityElementsHidden === true
+        ? 'no-hide-descendants'
+        : importantForAccessibility;
+
     const actualView = (
       <ViewNativeComponent
         {...otherProps}
@@ -261,11 +265,7 @@ const View: component(
         accessibilityElementsHidden={ariaHidden ?? accessibilityElementsHidden}
         accessibilityLabelledBy={_accessibilityLabelledBy}
         accessibilityValue={_accessibilityValue}
-        importantForAccessibility={
-          ariaHidden === true
-            ? 'no-hide-descendants'
-            : importantForAccessibility
-        }
+        importantForAccessibility={computedImportantForAccessibility}
         nativeID={id ?? nativeID}
         ref={forwardedRef}
         onKeyDown={_keyDown}
@@ -274,11 +274,7 @@ const View: component(
         onKeyUpCapture={_keyUpCapture}
         // [Windows
         accessible={_accessible}
-        children={
-          importantForAccessibility === 'no-hide-descendants'
-            ? childrenWithImportantForAccessibility(otherProps.children)
-            : otherProps.children
-        }
+        children={otherProps.children}
         // Windows]
       />
     );
@@ -319,11 +315,7 @@ const View: component(
                 }
                 accessibilityLabelledBy={_accessibilityLabelledBy}
                 accessibilityValue={_accessibilityValue}
-                importantForAccessibility={
-                  ariaHidden === true
-                    ? 'no-hide-descendants'
-                    : importantForAccessibility
-                }
+                importantForAccessibility={computedImportantForAccessibility}
                 nativeID={id ?? nativeID}
                 ref={forwardedRef}
                 onKeyDown={_keyDown}
@@ -333,7 +325,7 @@ const View: component(
                 // [Windows
                 accessible={_accessible}
                 children={
-                  importantForAccessibility === 'no-hide-descendants'
+                  computedImportantForAccessibility === 'no-hide-descendants'
                     ? childrenWithImportantForAccessibility(otherProps.children)
                     : otherProps.children
                 }

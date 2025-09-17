@@ -259,6 +259,13 @@ export default class Bootstrap extends React.Component<{}, any> {
               }}
             />
             <TextInput
+              style={styles.input}
+              placeholder="OnPressOut..."
+              onPressOut={event => {
+                Alert.alert('Released!');
+              }}
+            />
+            <TextInput
               placeholder="Single line with selection color"
               cursorColor="#00FF00"
               selectionColor="yellow"
@@ -294,6 +301,22 @@ export default class Bootstrap extends React.Component<{}, any> {
                 'autoFocus: false - This input will NOT be focused automatically'
               }
               autoFocus={false}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                {height: 50, borderColor: '#bd1cddff', borderWidth: 2},
+              ]}
+              multiline={true}
+              placeholder="onScroll..."
+              scrollEnabled={true}
+              onScroll={event => {
+                Alert.alert(
+                  `onScroll event: ${JSON.stringify(
+                    event.nativeEvent.contentOffset,
+                  )}`,
+                );
+              }}
             />
 
             <KeyboardAvoidingView

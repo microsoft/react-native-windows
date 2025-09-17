@@ -1,0 +1,50 @@
+{
+  "name": "@rnw-scripts/generate-release-notes",
+  "entries": [
+    {
+      "date": "Sat, 23 Aug 2025 05:30:43 GMT",
+      "version": "1.0.3",
+      "tag": "@rnw-scripts/generate-release-notes_v1.0.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/generate-release-notes",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Aug 2025 05:28:00 GMT",
+      "version": "1.0.2",
+      "tag": "@rnw-scripts/generate-release-notes_v1.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@rnw-scripts/generate-release-notes",
+            "commit": "16aba2428a8207e5247a808ce03a68d7ef2d42d0",
+            "comment": "Update ReadMe for Release Notes Generation Script"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Jul 2025 05:26:15 GMT",
+      "version": "1.0.1",
+      "tag": "@rnw-scripts/generate-release-notes_v1.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "copilot@example.com",
+            "package": "@rnw-scripts/generate-release-notes",
+            "commit": "4f7ec119652c62b183151cee3a4ebc7afaf0d289",
+            "comment": "Add a new \"yarn release-notes\" script to generate release notes"
+          }
+        ]
+      }
+    }
+  ]
+}

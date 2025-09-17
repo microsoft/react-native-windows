@@ -88,9 +88,9 @@ $wingetver = "1.7.11261";
 $vsver = "17.11.0";
 
 # The exact .NET SDK version to check for
-$dotnetver = "6.0";
+$dotnetver = "8.0";
 # Version name of the winget package
-$wingetDotNetVer = "6";
+$wingetDotNetVer = "8";
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -242,7 +242,7 @@ function CheckNode {
         Write-Verbose "Node version found: $nodeVersion";
         $major = $nodeVersion.Major;
         $minor = $nodeVersion.Minor;
-        return ($major -gt 18) -or (($major -eq 18) -and ($minor -ge 18));
+        return ($major -gt 22) -or (($major -eq 22) -and ($minor -ge 14));
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -438,10 +438,10 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 18.18)';
+        Name = 'Node.js (LTS, >= 22.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.18.0" };
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "22.14.0" };
         HasVerboseOutput = $true;
     },
     @{

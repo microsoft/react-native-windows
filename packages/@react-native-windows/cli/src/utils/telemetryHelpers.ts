@@ -151,6 +151,8 @@ export async function startTelemetrySession(
 export async function endTelemetrySession(
   error?: Error,
   getExtraProps?: () => Promise<Record<string, any>>,
+  finalOptions?: Record<string, any>,
+  optionSanitizer?: (opts: Record<string, any>) => Record<string, any>,
 ) {
   if (!Telemetry.isEnabled()) {
     // Bail early so don't waste time here
@@ -166,8 +168,13 @@ export async function endTelemetrySession(
       error instanceof CodedError ? (error as CodedError).type : 'Unknown';
   }
 
-  Telemetry.endCommand(
-    endInfo,
-    getExtraProps ? await getExtraProps() : undefined,
-  );
+  // Get extra properties
+  const extraProps = getExtraProps ? await getExtraProps() : undefined;
+
+  // Sanitize and attach finalOptions if provided
+  if (finalOptions && optionSanitizer) {
+    endInfo.finalOptions = optionSanitizer(finalOptions);
+  }
+
+  Telemetry.endCommand(endInfo, extraProps);
 }

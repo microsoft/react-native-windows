@@ -66,12 +66,10 @@ class AttachmentInlineObject : public winrt::implements<AttachmentInlineObject, 
   float m_height;
 };
 
-TextLayoutManager::TextLayoutManager(const ContextContainer::Shared &contextContainer)
-    : contextContainer_(contextContainer),
-      textMeasureCache_(kSimpleThreadSafeCacheSizeCap),
-      lineMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
+TextLayoutManager::TextLayoutManager(const std::shared_ptr<const ContextContainer> &contextContainer)
+    : contextContainer_(contextContainer), textMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
 
-WindowsTextLayoutManager::WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer)
+WindowsTextLayoutManager::WindowsTextLayoutManager(const std::shared_ptr<const ContextContainer> &contextContainer)
     : TextLayoutManager(contextContainer) {}
 
 void WindowsTextLayoutManager::GetTextLayout(
@@ -438,96 +436,6 @@ Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTra
   }
 
   return Microsoft::ReactNative::TextTransform::Undefined;
-}
-
-LinesMeasurements TextLayoutManager::measureLines(
-    const AttributedStringBox &attributedStringBox,
-    const ParagraphAttributes &paragraphAttributes,
-    const Size &size) const {
-  LinesMeasurements lineMeasurements{};
-
-  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-  TextMeasurement::Attachments attachments;
-  WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
-
-  if (spTextLayout) {
-    std::vector<DWRITE_LINE_METRICS> lineMetrics;
-    uint32_t actualLineCount;
-    spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
-    lineMetrics.resize(static_cast<size_t>(actualLineCount));
-    winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
-    uint32_t startRange = 0;
-    const auto count = (paragraphAttributes.maximumNumberOfLines > 0)
-        ? std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount)
-        : actualLineCount;
-    for (uint32_t i = 0; i < count; ++i) {
-      UINT32 actualHitTestCount = 0;
-      spTextLayout->HitTestTextRange(
-          startRange,
-          lineMetrics[i].length,
-          0, // x
-          0, // y
-          NULL,
-          0, // metrics count
-          &actualHitTestCount);
-
-      // Allocate enough room to return all hit-test metrics.
-      std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
-      spTextLayout->HitTestTextRange(
-          startRange,
-          lineMetrics[i].length,
-          0, // x
-          0, // y
-          &hitTestMetrics[0],
-          static_cast<UINT32>(hitTestMetrics.size()),
-          &actualHitTestCount);
-
-      float width = 0;
-      for (auto tm : hitTestMetrics) {
-        width += tm.width;
-      }
-
-      std::string str;
-      const auto &attributedString = attributedStringBox.getValue();
-      for (const auto &fragment : attributedString.getFragments()) {
-        str = str +
-            winrt::to_string(Microsoft::ReactNative::TransformableText::TransformText(
-                winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
-                ConvertTextTransform(fragment.textAttributes.textTransform)));
-      }
-
-      lineMeasurements.emplace_back(LineMeasurement(
-          str.substr(startRange, lineMetrics[i].length),
-          {{hitTestMetrics[0].left, hitTestMetrics[0].top}, // origin
-           {width, lineMetrics[i].height}},
-          0.0f, // TODO descender
-          0.0f, // TODO: capHeight
-          0.0f, // TODO ascender
-          0.0f // TODO: xHeight
-          ));
-
-      startRange += lineMetrics[i].length;
-    }
-  }
-
-  return lineMeasurements;
-}
-
-Float TextLayoutManager::baseline(
-    const AttributedStringBox &attributedStringBox,
-    const ParagraphAttributes &paragraphAttributes,
-    const Size &size) const {
-  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-  TextMeasurement::Attachments attachments;
-  WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
-  if (!spTextLayout) {
-    return 0;
-  }
-
-  DWRITE_TEXT_METRICS metrics;
-  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-  return metrics.height *
-      0.8f; // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
 }
 
 winrt::hstring WindowsTextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {

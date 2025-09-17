@@ -31,6 +31,13 @@ namespace Microsoft.ReactNative.Composition.Experimental
     SwitchThumb,
   };
 
+  enum SnapAlignment
+  {
+    Start,
+    Center,
+    End,
+  };
+
   [webhosthidden]
   [uuid("172def51-9e1a-4e3c-841a-e5a470065acc")] // uuid needed for empty interfaces
   [version(0)]
@@ -111,6 +118,8 @@ namespace Microsoft.ReactNative.Composition.Experimental
     event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollPositionChanged;
     event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollBeginDrag;
 	  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollEndDrag;
+    event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumBegin;
+    event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumEnd;
     void ContentSize(Windows.Foundation.Numerics.Vector2 size);
     Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
     void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
@@ -120,7 +129,7 @@ namespace Microsoft.ReactNative.Composition.Experimental
     void SetMaximumZoomScale(Single maximumZoomScale);
     void SetMinimumZoomScale(Single minimumZoomScale);
     Boolean Horizontal;
-    void SetSnapPoints(Boolean snapToStart, Boolean snapToEnd, Windows.Foundation.Collections.IVectorView<Single> offsets);
+    void SetSnapPoints(Boolean snapToStart, Boolean snapToEnd, Windows.Foundation.Collections.IVectorView<Single> offsets, SnapAlignment snapToAlignment);
   }
 
   [webhosthidden]

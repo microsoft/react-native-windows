@@ -1,8 +1,54 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Sat, 21 Jun 2025 05:21:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 03 Sep 2025 05:22:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.296
+
+Wed, 03 Sep 2025 05:22:57 GMT
+
+### Changes
+
+- Add reply count prop to AccessibilityAnnotationInfo (mmaring@microsoft.com)
+
+## 0.0.0-canary.295
+
+Sat, 23 Aug 2025 05:30:39 GMT
+
+### Changes
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.41
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump react-native-platform-override to v1.9.57
+
+## 0.0.0-canary.294
+
+Sat, 26 Jul 2025 05:26:13 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250506-3ac16dd6a (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.293
+
+Thu, 17 Jul 2025 05:27:00 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.54
+- Bump react-native-platform-override to v1.9.56
+
+## 0.0.0-canary.292
+
+Thu, 03 Jul 2025 05:24:24 GMT
+
+### Changes
+
+- intergrate rn 0.80.0-nightly-20250414-70cdf12c4 (satkh@microsoft.com)
 
 ## 0.0.0-canary.291
 

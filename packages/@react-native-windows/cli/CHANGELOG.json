@@ -2,6 +2,231 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 02 Sep 2025 05:24:07 GMT",
+      "version": "0.0.0-canary.275",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.275",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "78c399c369f4b3a5b3e265fee723ad941a5e6cbc",
+            "comment": "Remove Prompt from CLI for switching to new arch."
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Aug 2025 05:26:00 GMT",
+      "version": "0.0.0-canary.274",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.274",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "080621232388d2a36fc85f5b967b197d03e825ab",
+            "comment": "Replace environment variable approach with separate stable/preview test suites"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ae3d6462fdd1614ac75189a7f743be4beffb4ca6",
+            "comment": "Reapply \"Change `init-windows` default new app template to New Architecture\" (#14985)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Aug 2025 05:30:40 GMT",
+      "version": "0.0.0-canary.273",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.273",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.125",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.67",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.93",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.124",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.37",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.55",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Aug 2025 05:26:04 GMT",
+      "version": "0.0.0-canary.272",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.272",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "48ba9d55a831e1e8e6c04994c95ba1b8a5d6f378",
+            "comment": "Update CLI to show static warning for old architecture in run-windows and interactive prompt for init-windows (#15029)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.123",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Aug 2025 05:27:59 GMT",
+      "version": "0.0.0-canary.271",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.271",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "270f785bd1e6b65671866b48a196a5cbc51f0ca7",
+            "comment": "Revert \"Change `init-windows` default new app template to New Architecture (#…\""
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "0257055031f0d00200822e454336b4ef8e42d2eb",
+            "comment": "[BugFix] Open Init windows telemetry not capturing the true default template"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Jul 2025 05:27:19 GMT",
+      "version": "0.0.0-canary.270",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.270",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "satkh@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "16a63e7072e934305df21b8331b60754382b9973",
+            "comment": "Enable Console Logging for playground Apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Jul 2025 05:27:01 GMT",
+      "version": "0.0.0-canary.269",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.269",
+      "comments": {
+        "none": [
+          {
+            "author": "chpurrer@meta.com",
+            "package": "@react-native-windows/cli",
+            "commit": "af04d4d517f95d7773e4744edf2cef42fa0870c8",
+            "comment": "[react-native-windows] Use new LongLivedObject.h header namespace"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Jul 2025 05:27:01 GMT",
+      "version": "0.0.0-canary.269",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.269",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.124",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.66",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.92",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.122",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.54",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Jul 2025 05:27:20 GMT",
+      "version": "0.0.0-canary.268",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.268",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.121",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Jun 2025 05:21:53 GMT",
       "version": "0.0.0-canary.267",
       "tag": "@react-native-windows/cli_v0.0.0-canary.267",

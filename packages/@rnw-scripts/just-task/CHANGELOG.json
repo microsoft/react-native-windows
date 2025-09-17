@@ -2,6 +2,69 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Sat, 23 Aug 2025 05:30:44 GMT",
+      "version": "2.3.55",
+      "tag": "@rnw-scripts/just-task_v2.3.55",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "8d0845243469a6c9901f4a48f701a8ddf907af7f",
+            "comment": "Upgrade to node22"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.4.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.37",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Jul 2025 05:27:05 GMT",
+      "version": "2.3.54",
+      "tag": "@rnw-scripts/just-task_v2.3.54",
+      "comments": {
+        "none": [
+          {
+            "author": "chpurrer@meta.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "af04d4d517f95d7773e4744edf2cef42fa0870c8",
+            "comment": "[react-native-windows] Use new LongLivedObject.h header namespace"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Jul 2025 05:27:01 GMT",
+      "version": "2.3.54",
+      "tag": "@rnw-scripts/just-task_v2.3.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "b4ad43a0d79d39aae1c1ecf91d3a0089c0e334ec",
+            "comment": "Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 May 2025 05:25:03 GMT",
       "version": "2.3.53",
       "tag": "@rnw-scripts/just-task_v2.3.53",

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Tue, 27 Feb 2024 06:18:01 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 23 Aug 2025 05:30:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.3
+
+Sat, 23 Aug 2025 05:30:42 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
 
 ## 2.3.2
 

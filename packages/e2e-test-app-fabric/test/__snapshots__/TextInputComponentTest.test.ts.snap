@@ -333,7 +333,7 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
   "Visual Tree": {
     "Comment": "textinput-cursorColor",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -394,22 +394,100 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
 exports[`TextInput Tests TextInput triggers onPressIn and updates state text 1`] = `
 {
   "Automation Tree": {
-    "AutomationId": "textinput-press",
+    "AutomationId": "textinput-pressin",
     "ControlType": 50004,
-    "HelpText": "Click inside the box to observe events being fired.",
+    "HelpText": "OnPressIn test.",
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "Name": "Click inside the box to observe events being fired.",
-    "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+    "Name": "OnPressIn test.",
+    "TextRangePattern.GetText": "OnPressIn test.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
     "_Props": {
-      "TestId": "textinput-press",
+      "TestId": "textinput-pressin",
     },
   },
   "Visual Tree": {
-    "Comment": "textinput-press",
+    "Comment": "textinput-pressin",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInput triggers onPressOut and updates state text 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-pressout",
+    "ControlType": 50004,
+    "HelpText": "OnPressOut test.",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "OnPressOut test.",
+    "TextRangePattern.GetText": "OnPressOut test.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-pressout",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-pressout",
     "Offset": "0, 0, 0",
     "Size": "916, 30",
     "Visual Type": "SpriteVisual",
@@ -950,7 +1028,7 @@ exports[`TextInput Tests TextInputs can autogrow 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autogrow",
     "Offset": "0, 0, 0",
-    "Size": "300, 131",
+    "Size": "300, 130",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1080,12 +1158,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 32",
+        "Size": "916, 33",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 32",
+            "Size": "916, 33",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1605,7 +1683,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
   "Visual Tree": {
     "Comment": "textinput-not-editable",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1758,7 +1836,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1908,7 +1986,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit-2",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2913,7 +2991,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = 
   "Visual Tree": {
     "Comment": "textinput-return-done",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3381,7 +3459,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
   "Visual Tree": {
     "Comment": "textinput-return-send",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3615,7 +3693,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 
   "Visual Tree": {
     "Comment": "textinput-letterspacing-2",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3693,7 +3771,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 
   "Visual Tree": {
     "Comment": "textinput-letterspacing-9",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4099,7 +4177,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawable props not s
   "Visual Tree": {
     "Comment": "textinput-inline-images-3",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4177,7 +4255,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
   "Visual Tree": {
     "Comment": "textinput-inline-images-2",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4255,7 +4333,7 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "textinput-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4548,22 +4626,22 @@ exports[`TextInput Tests TextInputs can propagate events 1`] = `
 exports[`TextInput Tests TextInputs can register press events 1`] = `
 {
   "Automation Tree": {
-    "AutomationId": "textinput-press",
+    "AutomationId": "textinput-pressin",
     "ControlType": 50004,
-    "HelpText": "Click inside the box to observe events being fired.",
+    "HelpText": "OnPressIn test.",
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "Name": "Click inside the box to observe events being fired.",
-    "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+    "Name": "OnPressIn test.",
+    "TextRangePattern.GetText": "OnPressIn test.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
     "_Props": {
-      "TestId": "textinput-press",
+      "TestId": "textinput-pressin",
     },
   },
   "Visual Tree": {
-    "Comment": "textinput-press",
+    "Comment": "textinput-pressin",
     "Offset": "0, 0, 0",
     "Size": "916, 30",
     "Visual Type": "SpriteVisual",
@@ -4945,7 +5023,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
   "Visual Tree": {
     "Comment": "textinput-readonly-false",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5023,7 +5101,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
   "Visual Tree": {
     "Comment": "textinput-readyonly",
     "Offset": "0, 0, 0",
-    "Size": "916, 29",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5407,7 +5485,7 @@ exports[`TextInput Tests TextInputs have a custom text color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5485,7 +5563,7 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-underline-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5563,7 +5641,7 @@ exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = 
   "Visual Tree": {
     "Comment": "textinput-default-placeholder-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5718,7 +5796,7 @@ exports[`TextInput Tests TextInputs have a default underline color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-default-underline-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5873,7 +5951,7 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
   "Visual Tree": {
     "Comment": "textinput-password-placeholder",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5968,12 +6046,12 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 33",
+        "Size": "916, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 33",
+            "Size": "916, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
