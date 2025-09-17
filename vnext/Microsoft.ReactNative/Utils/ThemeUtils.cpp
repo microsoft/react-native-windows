@@ -4,8 +4,10 @@
 #include "pch.h"
 #include <Utils/ThemeUtils.h>
 
+#ifdef USE_FABRIC
 #include <react/renderer/graphics/Color.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
+#endif
 #include <winuser.h>
 
 namespace Microsoft::ReactNative {
@@ -41,19 +43,9 @@ int CalculateColorBrightness(int r, int g, int b) noexcept {
       kColorBrightnessDivisor;
 }
 
-bool isColorMeaningful(const facebook::react::SharedColor &color) noexcept {
 #ifdef USE_FABRIC
+bool isColorMeaningful(const facebook::react::SharedColor &color) noexcept {
   return facebook::react::isColorMeaningful(color);
-#else
-  // For PAPER builds, check if color exists and has meaningful alpha
-  if (!color) {
-    return false;
-  }
-  
-  // Check if the color has a meaningful alpha value (not fully transparent)
-  // Use m_color directly to avoid calling ResolvePlatformColor (Fabric-only function)
-  return color->m_color.A > 0;
-#endif
 }
 
 facebook::react::SharedColor GetCaretColor(
@@ -85,5 +77,6 @@ facebook::react::SharedColor GetCaretColor(
     return defaultCaretColor;
   }
 }
+#endif
 
 } // namespace Microsoft::ReactNative

@@ -8,11 +8,13 @@
 #include <AutoDraw.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
-#include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
-#include <react/renderer/graphics/HostPlatformColor.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
+#ifdef USE_FABRIC
+#include <Utils/ThemeUtils.h>
+#include <react/renderer/graphics/HostPlatformColor.h>
+#endif
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -1080,9 +1082,19 @@ std::string WindowsTextInputComponentView::DefaultHelpText() const noexcept {
 void WindowsTextInputComponentView::updateCursorColor(
     const facebook::react::SharedColor &cursorColor,
     const facebook::react::SharedColor &foregroundColor) noexcept {
+#ifdef USE_FABRIC
   const auto &props = windowsTextInputProps();
   auto caretColor = ::Microsoft::ReactNative::GetCaretColor(cursorColor, foregroundColor, props.backgroundColor);
   m_caretVisual.Brush(theme()->Brush(*caretColor));
+#else
+  if (cursorColor) {
+    m_caretVisual.Brush(theme()->Brush(*cursorColor));
+  } else if (foregroundColor) {
+    m_caretVisual.Brush(theme()->Brush(*foregroundColor));
+  } else {
+    m_caretVisual.Brush(theme()->PlatformBrush("TextControlForeground"));
+  }
+#endif
 }
 
 void WindowsTextInputComponentView::updateProps(
@@ -1594,8 +1606,11 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
 void WindowsTextInputComponentView::ShowCaret(bool show) noexcept {
   ensureVisual();
+#ifdef USE_FABRIC
+  // Only update cursor color for Fabric builds
   const auto &props = windowsTextInputProps();
   updateCursorColor(props.cursorColor, props.textAttributes.foregroundColor);
+#endif
   m_caretVisual.IsVisible(show);
 }
 
