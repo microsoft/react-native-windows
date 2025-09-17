@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade dotnet version",
-  "packageName": "@react-native-windows/cli",
-  "email": "10109130+sharath2727@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
