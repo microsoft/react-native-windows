@@ -53,12 +53,12 @@ HostPlatformViewProps::HostPlatformViewProps(
               : convertRawProp(context, rawProps, "accessibilityAccessKey", sourceProps.accessibilityAccessKey, {})),
       accessibilityDescription(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.accessibilityDescription
-                                                                  : convertRawProp(
-                                                                        context,
-                                                                        rawProps,
-                                                                        "accessibilityDescription",
-                                                                        sourceProps.accessibilityDescription,
-                                                                        {})),
+                                                 : convertRawProp(
+                                                       context,
+                                                       rawProps,
+                                                       "accessibilityDescription",
+                                                       sourceProps.accessibilityDescription,
+                                                       {})),
       accessibilityLiveRegion(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.accessibilityLiveRegion
                                                  : convertRawProp(

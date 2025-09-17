@@ -96,7 +96,7 @@ void TextLayoutManager::GetTextLayout(
       layoutConstraints.maximumSize.height, // The height of the layout box.
       spTextLayout.put() // The IDWriteTextLayout interface pointer.
       ));
-      
+
   // Apply max width constraint and ellipsis trimming to ensure consistency with rendering
   DWRITE_TEXT_METRICS metrics;
   winrt::check_hresult(spTextLayout->GetMetrics(&metrics));

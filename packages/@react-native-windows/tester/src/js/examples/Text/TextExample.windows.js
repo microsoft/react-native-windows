@@ -2270,54 +2270,6 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
   );
 }
 
-const examples = [
-  {
-    title: 'Basic text',
-    render: function (): JSX.Element {
-      return <TextExample />;
-    },
-  },
-  {
-    platform: 'android',
-    title: "Text `alignItems: 'baseline'` style",
-    render: function (): React.Node {
-      return <TextBaseLineLayoutExample />;
-    },
-  },
-  {
-    title: 'Selectable Text',
-    render: function (): React.Node {
-      return (
-        <View>
-          <Text style={{userSelect: 'auto'}}>Text element is selectable</Text>
-        </View>
-      );
-    },
-  },
-  {
-    title: 'Text alignment',
-    render: function (): React.Node {
-      return (
-        <View>
-          <Text style={{textAlignVertical: 'top', borderWidth: 1, height: 75}}>
-            Text element aligned to the top via textAlignVertical
-          </Text>
-          <Text style={{verticalAlign: 'top', borderWidth: 1, height: 75}}>
-            Text element aligned to the top via verticalAlign
-          </Text>
-          <Text
-            style={{textAlignVertical: 'center', borderWidth: 1, height: 75}}>
-            Text element aligned to the middle via textAlignVertical
-          </Text>
-          <Text style={{verticalAlign: 'middle', borderWidth: 1, height: 75}}>
-            Text element aligned to the middle via verticalAlign
-          </Text>
-        </View>
-      );
-    },
-  },
-];
-
 module.exports = ({
   title: 'Text',
   documentationURL: 'https://reactnative.dev/docs/text',
