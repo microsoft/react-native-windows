@@ -12,20 +12,20 @@
     See https://microsoft.github.io/react-native-windows/docs/win10-compat
   -->
   <PropertyGroup Label="Globals" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)'=='' Or '$(WindowsTargetPlatformVersion)'=='10.0.0.0'">10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)'=='' Or '$(WindowsTargetPlatformVersion)'=='10.0.0.0'">10.0.22621.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion Condition="'$(WindowsTargetPlatformMinVersion)'=='' Or '$(WindowsTargetPlatformMinVersion)'=='10.0.0.0'">10.0.17763.0</WindowsTargetPlatformMinVersion>
 
     <!-- WinAppSDK/Composition projects have higher version requirements. -->
-    <WindowsTargetPlatformVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformVersion)', '10.0.22000.0'))">10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformVersion)', '10.0.22621.0'))">10.0.22621.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformMinVersion)', '10.0.18362.0'))">10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Globals" Condition="'$(MSBuildProjectExtension)' == '.csproj' Or '$(MSBuildProjectExtension)' == '.wapproj'">
-    <TargetPlatformVersion Condition="'$(TargetPlatformVersion)'==''">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition="'$(TargetPlatformVersion)'==''">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion Condition="'$(TargetPlatformMinVersion)'==''">10.0.17763.0</TargetPlatformMinVersion>
 
     <!-- WinAppSDK/Composition projects have higher version requirements. -->
-    <TargetPlatformVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformVersion)', '10.0.22000.0'))">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformVersion)', '110.0.22621.0'))">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformMinVersion)', '10.0.17763.0'))">10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
