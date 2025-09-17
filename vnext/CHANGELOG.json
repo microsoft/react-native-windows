@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Sep 2025 05:27:16 GMT",
+      "version": "0.0.0-canary.991",
+      "tag": "react-native-windows_v0.0.0-canary.991",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7c73e0c0bfe556b20085bb98d2bd35c28a0764e1",
+            "comment": "Upgrade dotnet version"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.276",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Sep 2025 05:26:20 GMT",
+      "version": "0.0.0-canary.990",
+      "tag": "react-native-windows_v0.0.0-canary.990",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "copilot@github.com",
+            "package": "react-native-windows",
+            "commit": "eecbc1804362327bb6b1108f455bda1b6b70f6de",
+            "comment": "Fix deadlock in ReactInstanceWin::DetachRootView by replacing sync call with async"
+          },
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "34d1771bd47980c0b5c05172eb63e6f7cab89299",
+            "comment": "Implement onMomentumScrollEnd and onMomentumScrollBegin for Fabric ScrollView"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Sep 2025 05:26:26 GMT",
+      "version": "0.0.0-canary.989",
+      "tag": "react-native-windows_v0.0.0-canary.989",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "42d0d8ca07312c26471036a6be2093dd6f2e6faa",
+            "comment": "adding UIA event handler changes for navigator"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Sep 2025 05:24:07 GMT",
       "version": "0.0.0-canary.988",
       "tag": "react-native-windows_v0.0.0-canary.988",
