@@ -1,7 +1,7 @@
 {
-  "type": "none",
+  "type": "prerelease",
   "comment": "Fix to retrieve deviceId",
   "packageName": "@react-native-windows/telemetry",
   "email": "hmalothu@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
