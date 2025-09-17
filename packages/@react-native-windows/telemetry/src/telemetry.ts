@@ -396,7 +396,6 @@ export class Telemetry {
         isCliTest: Telemetry.commonProperties.isTest,
         sessionId: Telemetry.commonProperties.sessionId,
         commandName: Telemetry.commonProperties.commandName,
-        localId: Telemetry.commonProperties.deviceId,
       },
       // Set project and versions props, belonging to Part B.
       project: Telemetry.projectProp,
