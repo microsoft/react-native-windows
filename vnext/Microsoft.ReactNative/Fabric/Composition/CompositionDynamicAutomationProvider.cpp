@@ -68,11 +68,19 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
     IRawElementProviderFragment **pRetVal) {
+
+  OutputDebugString(L"[UIA] Navigate returning provider instance: ");
+  OutputDebugString(std::to_wstring(reinterpret_cast<uintptr_t>(this)).c_str());
+  OutputDebugString(L"\n");
+
   if (pRetVal == nullptr)
     return E_POINTER;
 
   if (m_childSiteLink) {
     if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
+      OutputDebugString(L"[UIA] Navigate returning provider instance - 2: ");
+      OutputDebugString(std::to_wstring(reinterpret_cast<uintptr_t>(this)).c_str());
+      OutputDebugString(L"\n");
       auto fragment = m_childSiteLink.AutomationProvider().try_as<IRawElementProviderFragment>();
       *pRetVal = fragment.detach();
       return S_OK;
@@ -114,6 +122,18 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetRuntimeId(SAFEARRAY *
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_BoundingRectangle(UiaRect *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+
+  OutputDebugString(L"[UIA] get_BoundingRectangle called: ");
+
+  if (m_childSiteLink == nullptr) {
+    OutputDebugString(L"[UIA] m_childSiteLink is nullptr — using fallback RNW bounds\n");
+    OutputDebugString(std::to_wstring(reinterpret_cast<uintptr_t>(this)).c_str());
+    OutputDebugString(L"\n");
+  } else {
+    OutputDebugString(L"[UIA] m_childSiteLink is valid — expected to use XamlIsland bounds\n");
+    OutputDebugString(std::to_wstring(reinterpret_cast<uintptr_t>(this)).c_str());
+    OutputDebugString(L"\n");
+  }
 
   auto hr = UiaGetBoundingRectangleHelper(m_view, *pRetVal);
   if (FAILED(hr))
@@ -159,6 +179,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetEmbeddedFragmentRoots
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::SetFocus(void) {
   return UiaSetFocusHelper(m_view);
+}
+
+winrt::IUnknown CompositionDynamicAutomationProvider::TryGetChildSiteLinkAutomationProvider() {
+  if (m_childSiteLink) {
+    return m_childSiteLink.AutomationProvider().as<winrt::IUnknown>();
+  }
+  return nullptr;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) {

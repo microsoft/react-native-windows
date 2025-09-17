@@ -6,8 +6,9 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
+import {View, SafeAreaView, StatusBar, useColorScheme, ScrollView} from 'react-native';
 import {NewAppScreen} from '@react-native/new-app-screen';
+import XamlHost from 'react-native-windows/Libraries/Components/Xaml/XamlHost';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -18,8 +19,9 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor="transparent"
         translucent
-      />
-      <NewAppScreen />
+          />
+          <XamlHost label="sharath3" style={{ height:200, borderWidth: 2, borderColor: 'yellow' }} />
+          <NewAppScreen />
     </SafeAreaView>
   );
 }
