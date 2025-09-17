@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 02 Sep 2025 05:24:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 17 Sep 2025 05:27:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.991
+
+Wed, 17 Sep 2025 05:27:16 GMT
+
+### Changes
+
+- Upgrade dotnet version (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.276
+
+## 0.0.0-canary.990
+
+Wed, 10 Sep 2025 05:26:20 GMT
+
+### Changes
+
+- Fix deadlock in ReactInstanceWin::DetachRootView by replacing sync call with async (copilot@github.com)
+- Implement onMomentumScrollEnd and onMomentumScrollBegin for Fabric ScrollView (198982749+Copilot@users.noreply.github.com)
+
+## 0.0.0-canary.989
+
+Tue, 09 Sep 2025 05:26:26 GMT
+
+### Changes
+
+- adding UIA event handler changes for navigator (protikbiswas100@microsoft.com)
 
 ## 0.0.0-canary.988
 

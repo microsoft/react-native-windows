@@ -77,6 +77,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseRuntimeSchedulerProperty
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseRunOnQueueSyncProperty() noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings", L"UseRunOnQueueSync"};
+
+  return propId;
+}
+
 #pragma region IDL interface
 
 /*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(
@@ -121,6 +127,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseRuntimeSchedulerProperty
   ReactPropertyBag(settings.Properties()).Set(UseRuntimeSchedulerProperty(), value);
 }
 
+/*static*/ void QuirkSettings::SetUseRunOnQueueSync(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+  ReactPropertyBag(settings.Properties()).Set(UseRunOnQueueSyncProperty(), value);
+}
+
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -151,6 +163,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseRuntimeSchedulerProperty
 
 /*static*/ bool QuirkSettings::GetUseRuntimeScheduler(ReactPropertyBag properties) noexcept {
   return properties.Get(UseRuntimeSchedulerProperty()).value_or(true);
+}
+
+/*static*/ bool QuirkSettings::GetUseRunOnQueueSync(ReactPropertyBag properties) noexcept {
+  return properties.Get(UseRunOnQueueSyncProperty()).value_or(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
