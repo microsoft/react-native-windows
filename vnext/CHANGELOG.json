@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Sep 2025 05:34:35 GMT",
+      "version": "0.0.0-canary.992",
+      "tag": "react-native-windows_v0.0.0-canary.992",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "56e79f5918548b6a7c510faf429ee877804ba566",
+            "comment": "Remove legacy cxxmodules"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Sep 2025 05:27:16 GMT",
       "version": "0.0.0-canary.991",
       "tag": "react-native-windows_v0.0.0-canary.991",
