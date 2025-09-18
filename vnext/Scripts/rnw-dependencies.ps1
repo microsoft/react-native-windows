@@ -1,5 +1,3 @@
-$VerbosePreference = 'Continue'
-
 # Troubleshoot RNW dependencies
 param(
     [switch]$Install = $false,
@@ -14,6 +12,7 @@ param(
     [switch]$Enterprise = $false
 )
 
+$VerbosePreference = 'Continue';
 $ShellInvocation = ($PSCmdlet.MyInvocation.BoundParameters -ne $null);
 
 $Verbose = $false
