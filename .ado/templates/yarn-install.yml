@@ -22,4 +22,4 @@ steps:
     - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
 
-  - script: npx -y yarn-fix-bin-cmds@1.0.3 --path vnext\node_modules\.bin
+  - script: npx -y yarn-fix-bin-cmds@1.0.3 --path vnext/node_modules/.bin
