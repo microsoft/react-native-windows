@@ -1,3 +1,4 @@
+$VerbosePreference = 'Continue'
 
 # Troubleshoot RNW dependencies
 param(
@@ -13,6 +14,7 @@ param(
     [switch]$Enterprise = $false
 )
 
+$VerbosePreference = 'Continue';
 $ShellInvocation = ($PSCmdlet.MyInvocation.BoundParameters -ne $null);
 
 $Verbose = $false
@@ -95,10 +97,12 @@ $wingetDotNetVer = "6";
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
     $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive;
-} else {
+}
+else {
     if ($PSCommandPath) {
         $drive = (Resolve-Path $PSCommandPath).Drive;
-    } else {
+    }
+    else {
         $drive = (Resolve-Path $env:SystemDrive).Drive;
     }
 }
@@ -119,7 +123,7 @@ function Get-VSPathPropertyForEachInstall {
     param(
         [string]$VsWhere,
         [string]$PathProperty,
-        [string[]]$ExtraArgs =@()
+        [string[]]$ExtraArgs = @()
     )
 
     [String[]]$output = & $VsWhere -version $vsver -property $PathProperty $ExtraArgs;
@@ -215,7 +219,8 @@ function InstallVS {
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
             WinGetInstall Microsoft.VisualStudio.2022.Enterprise
-        } else {
+        }
+        else {
             WinGetInstall Microsoft.VisualStudio.2022.Community
         }
 
@@ -243,7 +248,8 @@ function CheckNode {
         $major = $nodeVersion.Major;
         $minor = $nodeVersion.Minor;
         return ($major -gt 18) -or (($major -eq 18) -and ($minor -ge 18));
-    } catch { Write-Debug $_ }
+    }
+    catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
     return $false;
@@ -257,7 +263,8 @@ function CheckYarn {
             Write-Verbose "Yarn version found: $yarnVersion";
             return $true;
         }
-    } catch { Write-Debug $_ }
+    }
+    catch { Write-Debug $_ }
 
     Write-Verbose "Yarn not found.";
     return $false;
@@ -372,11 +379,12 @@ function CheckDotNetCore {
             if ($sdks -ne $null) {
                 Write-Verbose ".NET SDKs found:";
                 $sdks | ForEach { Write-Verbose "  $_" };
-                $validSDKs = $sdks | Where-Object { $_ -like  "$dotnetver.*"};
+                $validSDKs = $sdks | Where-Object { $_ -like "$dotnetver.*" };
                 return ($validSDKs -ne $null) -and ($validSDKs.Length -ge 1);
             }
         }
-    } catch { Write-Debug $_ }
+    }
+    catch { Write-Debug $_ }
 
     Write-Verbose ".NET not found.";
     return $false;
@@ -386,78 +394,78 @@ $requiredFreeSpaceGB = 15;
 
 $requirements = @(
     @{
-        Id=[CheckId]::FreeSpace;
-        Name = "Free space on current drive > $requiredFreeSpaceGB GB";
-        Tags = @('appDev');
-        Valid = { $drive.Free/1GB -gt $requiredFreeSpaceGB; }
+        Id               = [CheckId]::FreeSpace;
+        Name             = "Free space on current drive > $requiredFreeSpaceGB GB";
+        Tags             = @('appDev');
+        Valid            = { $drive.Free / 1GB -gt $requiredFreeSpaceGB; }
         HasVerboseOutput = $true;
-        Optional = $true; # this requirement is fuzzy
+        Optional         = $true; # this requirement is fuzzy
     },
     @{
-        Id=[CheckId]::InstalledMemory;
-        Name = "Installed memory >= 16 GB";
-        Tags = @('appDev');
-        Valid = { (Get-CimInstance -ClassName win32_computersystem).TotalPhysicalMemory -gt 15GB; }
+        Id               = [CheckId]::InstalledMemory;
+        Name             = "Installed memory >= 16 GB";
+        Tags             = @('appDev');
+        Valid            = { (Get-CimInstance -ClassName win32_computersystem).TotalPhysicalMemory -gt 15GB; }
         HasVerboseOutput = $true;
-        Optional = $true;
+        Optional         = $true;
     },
     @{
-        Id=[CheckId]::WindowsVersion;
-        Name = 'Windows version >= 10.0.17763.0';
-        Tags = @('appDev');
+        Id    = [CheckId]::WindowsVersion;
+        Name  = 'Windows version >= 10.0.17763.0';
+        Tags  = @('appDev');
         Valid = { ($v.Major -eq 10 -and $v.Minor -eq 0 -and $v.Build -ge 16299); }
     },
     @{
-        Id=[CheckId]::DeveloperMode;
-        Name = 'Developer mode is on';
-        Tags = @('appDev');
-        Valid = { try { (Get-WindowsDeveloperLicense).IsValid } catch { $false }; }
+        Id      = [CheckId]::DeveloperMode;
+        Name    = 'Developer mode is on';
+        Tags    = @('appDev');
+        Valid   = { try { (Get-WindowsDeveloperLicense).IsValid } catch { $false }; }
         Install = { EnableDevMode };
     },
     @{
-        Id=[CheckId]::LongPath;
-        Name = 'Long path support is enabled';
-        Tags = @('appDev');
-        Valid = { try { (Get-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled).LongPathsEnabled -eq 1} catch { $false }; }
-        Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord;  };
+        Id      = [CheckId]::LongPath;
+        Name    = 'Long path support is enabled';
+        Tags    = @('appDev');
+        Valid   = { try { (Get-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled).LongPathsEnabled -eq 1 } catch { $false }; }
+        Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord; };
     },
     @{
-        Id=[CheckId]::git;
-        Name = 'Git';
-        Tags = @('rnwDev');
-        Valid = { try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false }; }
+        Id      = [CheckId]::git;
+        Name    = 'Git';
+        Tags    = @('rnwDev');
+        Valid   = { try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false }; }
         Install = { WinGetInstall Microsoft.Git };
     },
     @{
-        Id=[CheckId]::VSUWP;
-        Name = "Visual Studio 2022 (>= $vsver) & req. components";
-        Tags = @('appDev', 'vs2022');
-        Valid = { CheckVS; }
-        Install = { InstallVS };
+        Id               = [CheckId]::VSUWP;
+        Name             = "Visual Studio 2022 (>= $vsver) & req. components";
+        Tags             = @('appDev', 'vs2022');
+        Valid            = { CheckVS; }
+        Install          = { InstallVS };
         HasVerboseOutput = $true;
     },
     @{
-        Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 18.18)';
-        Tags = @('appDev');
-        Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.18.0" };
+        Id               = [CheckId]::Node;
+        Name             = 'Node.js (LTS, >= 18.18)';
+        Tags             = @('appDev');
+        Valid            = { CheckNode; }
+        Install          = { WinGetInstall OpenJS.NodeJS.LTS "18.18.0" };
         HasVerboseOutput = $true;
     },
     @{
-        Id=[CheckId]::Yarn;
-        Name = 'Yarn';
-        Tags = @('appDev');
-        Valid = { CheckYarn }
-        Install = { WinGetInstall Yarn.Yarn };
+        Id               = [CheckId]::Yarn;
+        Name             = 'Yarn';
+        Tags             = @('appDev');
+        Valid            = { CheckYarn }
+        Install          = { WinGetInstall Yarn.Yarn };
         HasVerboseOutput = $true;
     },
     @{
-        Id=[CheckId]::WinAppDriver;
-        Name = 'WinAppDriver (>= 1.2.1)';
-        Tags = @('rnwDev');
-        Valid = { CheckWinAppDriver; }
-        Install = {
+        Id               = [CheckId]::WinAppDriver;
+        Name             = 'WinAppDriver (>= 1.2.1)';
+        Tags             = @('rnwDev');
+        Valid            = { CheckWinAppDriver; }
+        Install          = {
             $ProgressPreference = 'Ignore';
             $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
             Write-Verbose "Downloading WinAppDriver from $url";
@@ -465,55 +473,56 @@ $requirements = @(
             & $env:TEMP\WindowsApplicationDriver.msi /q
         };
         HasVerboseOutput = $true;
-        Optional = $true;
+        Optional         = $true;
     },
     @{
-        Id=[CheckId]::MSBuildLogViewer;
-        Name = "MSBuild Structured Log Viewer";
-        Tags = @('rnwDev');
-        Valid = { ( cmd "/c assoc .binlog 2>nul" ) -ne $null; }
-        Install = {
+        Id       = [CheckId]::MSBuildLogViewer;
+        Name     = "MSBuild Structured Log Viewer";
+        Tags     = @('rnwDev');
+        Valid    = { ( cmd "/c assoc .binlog 2>nul" ) -ne $null; }
+        Install  = {
             WinGetInstall KirillOsenkov.MSBuildStructuredLogViewer;
             $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\StructuredLogViewer.exe -Recurse | select FullName | Sort-Object -Property FullName -Descending | Select-Object -First 1
             cmd /c "assoc .binlog=MSBuildLog >nul";
             cmd /c "ftype MSBuildLog=$($slv.FullName) %1 >nul";
-         };
-         Optional = $true;
+        };
+        Optional = $true;
     },
     @{
         # Install the Windows ADK (Assessment and Deployment Kit) to install the wpt (Windows Performance Toolkit) so we can use wpr (Windows Performance Recorder) for performance analysis
-        Id=[CheckId]::WindowsADK;
-        Name = 'Windows ADK';
-        Tags = @('buildLab');
-        Valid = { (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe"); };
-        Install = { WinGetInstall Microsoft.WindowsADK };
+        Id       = [CheckId]::WindowsADK;
+        Name     = 'Windows ADK';
+        Tags     = @('buildLab');
+        Valid    = { (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe"); };
+        Install  = { WinGetInstall Microsoft.WindowsADK };
         Optional = $true;
     },
     @{
-        Id=[CheckId]::RNWClone;
-        Name = "React-Native-Windows clone";
-        Tags = @('clone');
-        Valid = { try {
-            Test-Path -Path react-native-windows
-            } catch { $false }; }
-        Install = { & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git };
+        Id       = [CheckId]::RNWClone;
+        Name     = "React-Native-Windows clone";
+        Tags     = @('clone');
+        Valid    = { try {
+                Test-Path -Path react-native-windows
+            }
+            catch { $false }; }
+        Install  = { & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git };
         Optional = $true;
     },
     @{
-        Id=[CheckId]::CppWinRTVSIX;
-        Name = "C++/WinRT VSIX package";
-        Tags = @('rnwDev');
-        Valid = { CheckCppWinRT_VSIX; };
-        Install = { InstallCppWinRT_VSIX };
+        Id               = [CheckId]::CppWinRTVSIX;
+        Name             = "C++/WinRT VSIX package";
+        Tags             = @('rnwDev');
+        Valid            = { CheckCppWinRT_VSIX; };
+        Install          = { InstallCppWinRT_VSIX };
         HasVerboseOutput = $true;
-        Optional = $true;
+        Optional         = $true;
     },
     @{
-        ID=[CheckId]::DotNetCore;
-        Name = ".NET SDK (LTS, = $dotnetver)";
-        Tags = @('appDev');
-        Valid = { CheckDotNetCore; };
-        Install = { WinGetInstall Microsoft.DotNet.SDK.$wingetDotNetVer };
+        ID               = [CheckId]::DotNetCore;
+        Name             = ".NET SDK (LTS, = $dotnetver)";
+        Tags             = @('appDev');
+        Valid            = { CheckDotNetCore; };
+        Install          = { WinGetInstall Microsoft.DotNet.SDK.$wingetDotNetVer };
         HasVerboseOutput = $true;
     }
 );
@@ -533,7 +542,7 @@ function EnsureWinGetForInstall {
             Write-Verbose "WinGet found in PATH.";
             Write-Verbose "Validating WinGet version...";
             $wingetverfound = & winget -v;
-            if ([System.Version]$wingetverfound.Substring(1) -ge [System.Version]$wingetver ){
+            if ([System.Version]$wingetverfound.Substring(1) -ge [System.Version]$wingetver ) {
                 Write-Verbose "WinGet version found: $wingetverfound";
                 return;
             }
@@ -541,7 +550,8 @@ function EnsureWinGetForInstall {
         InstallWinGet;
         $installedwingetver = & winget -v;
         Write-Verbose "WinGet version installed: $installedwingetver";
-    } catch { Write-Debug $_ }
+    }
+    catch { Write-Debug $_ }
 }
 
 function WinGetInstall {
@@ -554,11 +564,12 @@ function WinGetInstall {
     if ($packageVersion -ne "") {
         Write-Verbose "Executing `winget install `"$wingetPackage`" --version `"$packageVersion`"";
         & winget install "$wingetPackage" --version "$packageVersion" --accept-source-agreements --accept-package-agreements
-    } else {
+    }
+    else {
         Write-Verbose "Executing `winget install `"$wingetPackage`"";
         & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
     }
- }
+}
 
 function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
@@ -573,14 +584,10 @@ if (!($NoPrompt) -and !(IsElevated)) {
 $NeedsRerun = 0;
 $Installed = 0;
 $filteredRequirements = New-Object System.Collections.Generic.List[object];
-foreach ($req in $requirements)
-{
-    if ($Check -eq [CheckId]::All -or $req.Id -eq $Check)
-    {
-        foreach ($tag in $req.Tags)
-        {
-            if ($tagsToInclude.Contains($tag))
-            {
+foreach ($req in $requirements) {
+    if ($Check -eq [CheckId]::All -or $req.Id -eq $Check) {
+        foreach ($tag in $req.Tags) {
+            if ($tagsToInclude.Contains($tag)) {
                 $filteredRequirements.Add($req);
                 break;
             }
@@ -589,14 +596,11 @@ foreach ($req in $requirements)
 }
 
 if ($ListChecks) {
-    foreach ($req in $filteredRequirements)
-    {
-        if ($req.Optional)
-        {
+    foreach ($req in $filteredRequirements) {
+        if ($req.Optional) {
             Write-Host -NoNewline Optional;
         }
-        else
-        {
+        else {
             Write-Host -NoNewline Required;
         }
         Write-Host -NoNewline ": ";
@@ -611,12 +615,11 @@ if (Test-Path $MarkerFile) {
     Remove-Item $MarkerFile;
 }
 
-foreach ($req in $filteredRequirements)
-{
+foreach ($req in $filteredRequirements) {
     Write-Host -NoNewline "Checking $($req.Name) ";
     $resultPad = 60 - $req.Name.Length;
 
-    if ($req.HasVerboseOutput -and -$Verbose) {
+    if ($req.HasVerboseOutput -and - $Verbose) {
         # This makes sure the verbose output is one line lower
         Write-Host "";
         $resultPad = 70;
@@ -625,7 +628,8 @@ foreach ($req in $filteredRequirements)
     $valid = $false;
     try {
         $valid = Invoke-Command $req.Valid;
-    } catch {
+    }
+    catch {
         Write-Warning "There was a problem checking for $($req.Name). Re-run with -Debug for details."
         Write-Debug $_
     }
@@ -650,7 +654,8 @@ foreach ($req in $filteredRequirements)
                     $Installed++;
                     continue; # go to the next item
 
-                } catch {
+                }
+                catch {
                     Write-Warning "There was a problem trying to install $($req.Name). Re-run with -Debug for details."
                     Write-Debug $_
                 }
@@ -658,7 +663,8 @@ foreach ($req in $filteredRequirements)
         }
         # If we got here, the req needed to be installed but wasn't
         $NeedsRerun += !($req.Optional); # don't let failures from optional components fail the script
-    } else {
+    }
+    else {
         Write-Host -ForegroundColor Green " OK".PadLeft($resultPad);
     }
 }
@@ -671,12 +677,14 @@ if ($Installed -ne 0) {
 if ($NeedsRerun -ne 0) {
     if ($Verbose) {
         Write-Warning "Some dependencies are not met. Re-run with -Install to install them.";
-    } else {
+    }
+    else {
         Write-Warning "Some dependencies are not met. Re-run with -Verbose for details, or use -Install to install them.";
     }
     if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
     exit 1;
-} else {
+}
+else {
     Write-Host "All mandatory requirements met.";
     $Tags | Out-File $MarkerFile;
     if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
