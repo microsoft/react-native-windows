@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 17 Sep 2025 05:27:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 18 Sep 2025 05:34:35 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.992
+
+Thu, 18 Sep 2025 05:34:35 GMT
+
+### Changes
+
+- Remove legacy cxxmodules (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.991
 
