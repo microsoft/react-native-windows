@@ -1,3 +1,4 @@
+$VerbosePreference = 'Continue'
 
 # Troubleshoot RNW dependencies
 param(
