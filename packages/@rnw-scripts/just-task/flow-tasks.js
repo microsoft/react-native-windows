@@ -127,10 +127,6 @@ task('downloadFlowTypes:fix', async () => await downloadFlowTypes(true));
 task(
   'flow-check',
   series('downloadFlowTypes', async () => {
-    const flowBinPath = require.resolve('flow-bin');
-    const flowPath = path.join(path.dirname(flowBinPath), 'cli.js');
-    require('child_process').execSync(`node "${flowPath}" check`, {
-      stdio: 'inherit',
-    });
+    require('child_process').execSync('npx flow check', {stdio: 'inherit'});
   }),
 );

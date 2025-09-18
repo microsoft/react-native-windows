@@ -257,7 +257,9 @@ const View: React.AbstractComponent<
               }
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
               accessibilityLevel={ariaLevel ?? accessibilityLevel}
-              accessibilityDescription={ariaDescription ?? accessibilityDescription}
+              accessibilityDescription={
+                ariaDescription ?? accessibilityDescription
+              }
               accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
               accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
               focusable={_focusable}

@@ -11,7 +11,7 @@
     "doc": "doxysaurus --config vnext/doxysaurus.json",
     "format": "format-files -i -style=file",
     "format:verify": "format-files -i -style=file -verify",
-    "postinstall": "yarn build",
+    "postinstall": "npx -y yarn-fix-bin-cmds --path vnext\\node_modules\\.bin && yarn build",
     "spellcheck": "npx cspell",
     "test": "lage test --verbose",
     "validate-overrides": "react-native-platform-override validate"
