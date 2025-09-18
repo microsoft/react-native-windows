@@ -5,7 +5,9 @@ parameters:
     values:
         - ManagedImage
         - HostedImage
-
+  - name: fixupCommands
+    type: boolean
+    default: true
 steps:
   - ${{ if eq(parameters.agentImage, 'HostedImage') }}:
     - task: NodeTool@0
@@ -16,6 +18,7 @@ steps:
   - template: yarn-install.yml
     parameters:
       agentImage: ${{ parameters.agentImage }}
+      fixupCommands: ${{ parameters.fixupCommands }}
 
   - script: yarn build
     displayName: yarn build
