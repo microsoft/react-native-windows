@@ -369,7 +369,7 @@ function verifyTestCommandTelemetryProcessor(
       const expectedLocalId = TelemetryTest.getCommonProperty('deviceId');
       expect(envelope.ext?.device?.localId).toBeDefined();
       expect(envelope.ext?.device?.localId).toBe(expectedLocalId);
-      expect(commonProperties.localId).toBe(expectedLocalId); // Only if you know it's set in the event, not in static commonProperties
+      expect(commonProperties.device?.localId).toBe(expectedLocalId); // Only if you know it's set in the event, not in static commonProperties
 
       // Verify versions info
       const versions = properties!.versions;
