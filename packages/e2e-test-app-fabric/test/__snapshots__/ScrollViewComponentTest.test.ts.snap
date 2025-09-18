@@ -2,40 +2,280 @@
 
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom button 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "scroll_to_bottom_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Scroll to bottom",
+        "TextRangePattern.GetText": "Scroll to bottom",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "scroll_to_bottom_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(204, 204, 204, 255)",
+    },
+    "Comment": "scroll_to_bottom_button",
+    "Offset": "0, 0, 0",
+    "Size": "906, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "402, 5, 0",
+        "Size": "102, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "102, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "scroll_to_end_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Scroll to end",
+        "TextRangePattern.GetText": "Scroll to end",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "scroll_to_end_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(204, 204, 204, 255)",
+    },
+    "Comment": "scroll_to_end_button",
+    "Offset": "0, 0, 0",
+    "Size": "906, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "414, 5, 0",
+        "Size": "78, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "78, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "scroll_to_start_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Scroll to start",
+        "TextRangePattern.GetText": "Scroll to start",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "scroll_to_start_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(204, 204, 204, 255)",
+    },
+    "Comment": "scroll_to_start_button",
+    "Offset": "0, 0, 0",
+    "Size": "906, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "412, 5, 0",
+        "Size": "82, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "82, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "scroll_to_top_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Scroll to top",
+        "TextRangePattern.GetText": "Scroll to top",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "scroll_to_top_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(204, 204, 204, 255)",
+    },
+    "Comment": "scroll_to_top_button",
+    "Offset": "0, 0, 0",
+    "Size": "906, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "415, 5, 0",
+        "Size": "76, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "76, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "flash_scroll_indicators_button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Flash scroll indicators",
+        "TextRangePattern.GetText": "Flash scroll indicators",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "flash_scroll_indicators_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(204, 204, 204, 255)",
+    },
+    "Comment": "flash_scroll_indicators_button",
+    "Offset": "0, 0, 0",
+    "Size": "906, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "387, 5, 0",
+        "Size": "132, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "132, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
