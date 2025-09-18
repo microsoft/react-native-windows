@@ -96,7 +96,11 @@ std::vector<std::shared_ptr<TP_WORK>> ThreadPoolSchedulerWin::s_trackedThreadPoo
 ThreadPoolSchedulerWin::ThreadPoolSchedulerWin(uint32_t maxThreads) noexcept
     : m_threadPoolWork{::CreateThreadpoolWork(WorkCallback, this, nullptr), ThreadPoolWorkDeleter{}},
       m_maxThreads{maxThreads == 0 ? MaxConcurrentThreads : maxThreads} {
-  TrackThreadPoolWork(m_threadPoolWork);
+  // Validate that thread pool work was created successfully
+  // If it failed, m_threadPoolWork will be null and Post() will handle this gracefully
+  if (m_threadPoolWork) {
+    TrackThreadPoolWork(m_threadPoolWork);
+  }
 }
 
 ThreadPoolSchedulerWin::~ThreadPoolSchedulerWin() noexcept {
@@ -153,7 +157,14 @@ void ThreadPoolSchedulerWin::Post() noexcept {
   } while (!m_usedThreads.compare_exchange_weak(
       usedThreads, usedThreads + 1, std::memory_order_release, std::memory_order_relaxed));
 
-  ::SubmitThreadpoolWork(m_threadPoolWork.get());
+  // Guard against calling SubmitThreadpoolWork with a null or invalid handle
+  // This can happen during destruction or if CreateThreadpoolWork failed
+  if (m_threadPoolWork && m_threadPoolWork.get()) {
+    ::SubmitThreadpoolWork(m_threadPoolWork.get());
+  } else {
+    // If we can't submit work, decrement the used threads counter to maintain consistency
+    --m_usedThreads;
+  }
 }
 
 void ThreadPoolSchedulerWin::Shutdown() noexcept {
@@ -163,7 +174,10 @@ void ThreadPoolSchedulerWin::Shutdown() noexcept {
 void ThreadPoolSchedulerWin::AwaitTermination() noexcept {
   // Avoid deadlock when the dispatch queue and ThreadPoolSchedulerWin are released from inside of a task.
   if (ThreadPoolSchedulerWinContext::CurrentScheduler() != this) {
-    ::WaitForThreadpoolWorkCallbacks(m_threadPoolWork.get(), false);
+    // Only wait for callbacks if we have a valid thread pool work handle
+    if (m_threadPoolWork && m_threadPoolWork.get()) {
+      ::WaitForThreadpoolWorkCallbacks(m_threadPoolWork.get(), false);
+    }
   }
 }
 
@@ -184,7 +198,10 @@ void ThreadPoolSchedulerWin::WaitForThreadPoolWorkCompletion() noexcept {
     tpWorkToTrack = std::move(s_trackedThreadPoolWork);
   }
   for (std::shared_ptr<TP_WORK> &tpWork : tpWorkToTrack) {
-    ::WaitForThreadpoolWorkCallbacks(tpWork.get(), false);
+    // Only wait for callbacks if we have a valid thread pool work handle
+    if (tpWork && tpWork.get()) {
+      ::WaitForThreadpoolWorkCallbacks(tpWork.get(), false);
+    }
   }
 }
 
