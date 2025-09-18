@@ -6,8 +6,6 @@
 
 #include <IReactInstance.h>
 #include <UI.Xaml.Media.h>
-#include <cxxreact/CxxModule.h>
-#include <folly/dynamic.h>
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
 #include "EventAnimationDriver.h"

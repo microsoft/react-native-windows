@@ -272,16 +272,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\NetworkPropertyIds.cpp" />
@@ -441,7 +433,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h" />
@@ -474,11 +465,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Logging.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\I18nModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h" />

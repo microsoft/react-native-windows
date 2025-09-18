@@ -9,11 +9,6 @@
 #include <Modules/CxxModuleUtilities.h>
 #include <ReactPropertyBag.h>
 
-// React Native
-#include <cxxreact/Instance.h>
-#include <cxxreact/JsArgumentHelpers.h>
-
-using facebook::react::Instance;
 using folly::dynamic;
 using std::function;
 using std::shared_ptr;
@@ -32,7 +27,6 @@ namespace {
 using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
-constexpr char s_moduleName[] = "Networking";
 constexpr wchar_t s_moduleNameW[] = L"Networking";
 
 // React event names
@@ -51,66 +45,6 @@ constexpr wchar_t receivedDataProgressW[] = L"didReceiveNetworkDataProgress";
 constexpr wchar_t receivedDataW[] = L"didReceiveNetworkData";
 
 msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::HttpTurboModule>();
-
-static void SetUpHttpResource(
-    shared_ptr<IHttpResource> resource,
-    weak_ptr<Instance> weakReactInstance,
-    IInspectable &inspectableProperties) {
-  resource->SetOnRequestSuccess([weakReactInstance](int64_t requestId) {
-    auto args = dynamic::array(requestId);
-
-    SendEvent(weakReactInstance, completedResponse, std::move(args));
-  });
-
-  resource->SetOnResponse([weakReactInstance](int64_t requestId, IHttpResource::Response &&response) {
-    dynamic headers = dynamic::object();
-    for (auto &header : response.Headers) {
-      headers[header.first] = header.second;
-    }
-
-    // TODO: Test response content.
-    dynamic args = dynamic::array(requestId, response.StatusCode, headers, response.Url);
-
-    SendEvent(weakReactInstance, receivedResponse, std::move(args));
-  });
-
-  resource->SetOnData([weakReactInstance](int64_t requestId, string &&responseData) {
-    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
-  });
-
-  // Explicitly declaring function type to avoid type inference ambiguity.
-  function<void(int64_t, msrn::JSValueObject &&)> onDataDynamic =
-      [weakReactInstance](int64_t requestId, msrn::JSValueObject &&responseData) {
-        auto responseDynamic = Microsoft::React::Modules::ToDynamic(msrn::JSValue{std::move(responseData)});
-        SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseDynamic)));
-      };
-  resource->SetOnData(std::move(onDataDynamic));
-
-  resource->SetOnIncrementalData(
-      [weakReactInstance](int64_t requestId, string &&responseData, int64_t progress, int64_t total) {
-        SendEvent(
-            weakReactInstance,
-            receivedIncrementalData,
-            dynamic::array(requestId, std::move(responseData), progress, total));
-      });
-
-  resource->SetOnDataProgress([weakReactInstance](int64_t requestId, int64_t progress, int64_t total) {
-    SendEvent(weakReactInstance, receivedDataProgress, dynamic::array(requestId, progress, total));
-  });
-
-  resource->SetOnResponseComplete([weakReactInstance](int64_t requestId) {
-    SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
-  });
-
-  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message, bool isTimeout) {
-    dynamic args = dynamic::array(requestId, std::move(message));
-    if (isTimeout) {
-      args.push_back(true);
-    }
-
-    SendEvent(weakReactInstance, completedResponse, std::move(args));
-  });
-}
 
 } // namespace
 
@@ -211,112 +145,6 @@ void HttpTurboModule::RemoveListeners(double count) noexcept { /*NOOP*/
 }
 
 #pragma endregion HttpTurboModule
-
-#pragma region HttpModule
-
-HttpModule::HttpModule(IInspectable const &inspectableProperties) noexcept
-    : m_holder{std::make_shared<ModuleHolder>()},
-      m_inspectableProperties{inspectableProperties},
-      m_resource{IHttpResource::Make(inspectableProperties)} {
-  m_holder->Module = this;
-}
-
-HttpModule::~HttpModule() noexcept /*override*/ {
-  m_holder->Module = nullptr;
-}
-
-#pragma region CxxModule
-
-string HttpModule::getName() /*override*/ {
-  return s_moduleName;
-}
-
-std::map<string, dynamic> HttpModule::getConstants() {
-  return {};
-}
-
-// clang-format off
-std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
-  // See CxxNativeModule::lazyInit()
-  SetUpHttpResource(m_resource, getInstance(), m_inspectableProperties);
-
-  return
-  {
-    {
-      "sendRequest",
-      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback cxxCallback)
-      {
-        auto holder = weakHolder.lock();
-        if (!holder) {
-          return;
-        }
-
-        holder->Module->m_requestId++;
-
-        auto params = facebook::xplat::jsArgAsObject(args, 0);
-        IHttpResource::Headers headers;
-        for (auto& header : params["headers"].items()) {
-          headers.emplace(header.first.getString(), header.second.getString());
-        }
-
-        holder->Module->m_resource->SendRequest(
-          params["method"].asString(),
-          params["url"].asString(),
-          holder->Module->m_requestId,
-          std::move(headers),
-          Modules::ToJSValue(params["data"]).MoveObject(),
-          params["responseType"].asString(),
-          params["incrementalUpdates"].asBool(),
-          static_cast<int64_t>(params["timeout"].asDouble()),
-          params["withCredentials"].asBool(),
-          [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
-            cxxCallback({requestId});
-          }
-        );
-      }
-    },
-    {
-      "abortRequest",
-      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
-      {
-        auto holder = weakHolder.lock();
-        if (!holder)
-        {
-          return;
-        }
-
-        holder->Module->m_resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
-      }
-    },
-    {
-      "clearCookies",
-      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
-      {
-        auto holder = weakHolder.lock();
-        if (!holder)
-        {
-          return;
-        }
-
-        holder->Module->m_resource->ClearCookies();
-      }
-    }
-  };
-}
-// clang-format on
-
-#pragma endregion CxxModule
-
-#pragma endregion HttpModule
-
-/*extern*/ const char *GetHttpModuleName() noexcept {
-  return s_moduleName;
-}
-
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-    IInspectable const &inspectableProperties) noexcept {
-  return std::make_unique<HttpModule>(inspectableProperties);
-}
 
 /*extern*/ const wchar_t *GetHttpTurboModuleName() noexcept {
   return s_moduleNameW;
