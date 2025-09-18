@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix INVALID_PARAMETER crash in ThreadPoolSchedulerWin::Post by adding null handle checks",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}
