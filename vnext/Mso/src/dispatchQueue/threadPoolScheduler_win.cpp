@@ -153,7 +153,13 @@ void ThreadPoolSchedulerWin::Post() noexcept {
   } while (!m_usedThreads.compare_exchange_weak(
       usedThreads, usedThreads + 1, std::memory_order_release, std::memory_order_relaxed));
 
-  ::SubmitThreadpoolWork(m_threadPoolWork.get());
+  // Guard against invalid TP_WORK handle to prevent INVALID_PARAMETER crash
+  if (m_threadPoolWork.get() != nullptr) {
+    ::SubmitThreadpoolWork(m_threadPoolWork.get());
+  } else {
+    // Revert the thread count increment if we can't submit work
+    --m_usedThreads;
+  }
 }
 
 void ThreadPoolSchedulerWin::Shutdown() noexcept {
@@ -163,7 +169,10 @@ void ThreadPoolSchedulerWin::Shutdown() noexcept {
 void ThreadPoolSchedulerWin::AwaitTermination() noexcept {
   // Avoid deadlock when the dispatch queue and ThreadPoolSchedulerWin are released from inside of a task.
   if (ThreadPoolSchedulerWinContext::CurrentScheduler() != this) {
-    ::WaitForThreadpoolWorkCallbacks(m_threadPoolWork.get(), false);
+    // Guard against invalid TP_WORK handle
+    if (m_threadPoolWork.get() != nullptr) {
+      ::WaitForThreadpoolWorkCallbacks(m_threadPoolWork.get(), false);
+    }
   }
 }
 
@@ -184,13 +193,16 @@ void ThreadPoolSchedulerWin::WaitForThreadPoolWorkCompletion() noexcept {
     tpWorkToTrack = std::move(s_trackedThreadPoolWork);
   }
   for (std::shared_ptr<TP_WORK> &tpWork : tpWorkToTrack) {
-    ::WaitForThreadpoolWorkCallbacks(tpWork.get(), false);
+    // Guard against invalid TP_WORK handle
+    if (tpWork.get() != nullptr) {
+      ::WaitForThreadpoolWorkCallbacks(tpWork.get(), false);
+    }
   }
 }
 
 void ThreadPoolSchedulerWin::TrackThreadPoolWork(const std::shared_ptr<TP_WORK> &tpWork) noexcept {
   std::scoped_lock lock{s_threadPoolWorkMutex};
-  if (s_enableThreadPoolWorkTracking) {
+  if (s_enableThreadPoolWorkTracking && tpWork != nullptr) {
     s_trackedThreadPoolWork.push_back(tpWork);
   }
 }
