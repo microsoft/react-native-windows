@@ -1001,20 +1001,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
         "Name": "Current Number of Accessibility Taps: 0",
         "TextRangePattern.GetText": "Current Number of Accessibility Taps: 0",
       },
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "This sub-view should not have an accessibility value. It's control type does not support the value pattern.",
-            "TextRangePattern.GetText": "This sub-view should not have an accessibility value. It's control type does not support the value pattern.",
-          },
-        ],
-      },
     ],
   },
   "Component Tree": {
@@ -2113,8 +2099,8 @@ exports[`View Tests Views can have insets 1`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
-        "Name": "inset 5",
-        "TextRangePattern.GetText": "inset 5",
+        "Name": "inset 10",
+        "TextRangePattern.GetText": "inset 10",
       },
       {
         "AutomationId": "",
@@ -2850,18 +2836,21 @@ exports[`View Tests Views can have layout conformance 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Unset",
+        "TextRangePattern.GetText": "Unset",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Classic",
+        "TextRangePattern.GetText": "Classic",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Strict",
+        "TextRangePattern.GetText": "Strict",
       },
     ],
   },

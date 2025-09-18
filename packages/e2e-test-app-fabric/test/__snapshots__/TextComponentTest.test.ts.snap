@@ -18,7 +18,7 @@ exports[`Text Tests Padding can be added to Text 1`] = `
   "Visual Tree": {
     "Comment": "text-padding",
     "Offset": "0, 0, 0",
-    "Size": "916, 40",
+    "Size": "834, 40",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -222,8 +222,8 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
     "AutomationId": "text-one-line",
     "ControlType": 50020,
     "LocalizedControlType": "text",
-    "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
-    "TextRangePattern.GetText": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
+    "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
+    "TextRangePattern.GetText": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -234,7 +234,7 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
   "Visual Tree": {
     "Comment": "text-one-line",
     "Offset": "0, 0, 0",
-    "Size": "300, 20",
+    "Size": "834, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -258,7 +258,7 @@ exports[`Text Tests Text can be selectable 1`] = `
   "Visual Tree": {
     "Comment": "text-selectable",
     "Offset": "0, 0, 0",
-    "Size": "916, 19",
+    "Size": "834, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -282,7 +282,7 @@ exports[`Text Tests Text can have a color 1`] = `
   "Visual Tree": {
     "Comment": "text-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 19",
+    "Size": "834, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -306,7 +306,7 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
   "Visual Tree": {
     "Comment": "text-selection-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "834, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -330,7 +330,7 @@ exports[`Text Tests Text can have a size 1`] = `
   "Visual Tree": {
     "Comment": "text-size",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "834, 31",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -675,7 +675,7 @@ exports[`Text Tests Text can have an outer color 1`] = `
   "Visual Tree": {
     "Comment": "text-outer-color",
     "Offset": "0, 0, 0",
-    "Size": "834, 20",
+    "Size": "834, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -886,7 +886,7 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
   "Visual Tree": {
     "Comment": "text-decoration-solid-linethru",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "834, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -910,7 +910,7 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
   "Visual Tree": {
     "Comment": "text-decoration-underline",
     "Offset": "0, 0, 0",
-    "Size": "834, 20",
+    "Size": "834, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1105,7 +1105,7 @@ exports[`Text Tests Text can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "text-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 27",
+    "Size": "834, 28",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1117,8 +1117,8 @@ exports[`Text Tests Text can wrap 1`] = `
     "AutomationId": "text-wrap",
     "ControlType": 50020,
     "LocalizedControlType": "text",
-    "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
-    "TextRangePattern.GetText": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
+    "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
+    "TextRangePattern.GetText": "The text should wrap if it goes on multiple lines. See, this is going to the next line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -1129,7 +1129,7 @@ exports[`Text Tests Text can wrap 1`] = `
   "Visual Tree": {
     "Comment": "text-wrap",
     "Offset": "0, 0, 0",
-    "Size": "300, 39",
+    "Size": "834, 169",
     "Visual Type": "SpriteVisual",
   },
 }
