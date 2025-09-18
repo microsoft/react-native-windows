@@ -7,7 +7,6 @@
 
 #include <InstanceManager.h>
 #include <NativeModules.h>
-#include <cxxreact/CxxModule.h>
 #include <cxxreact/MessageQueueThread.h>
 
 #include <chrono>
@@ -61,60 +60,6 @@ class TimerQueue {
   // This vector is maintained as a max heap, where the front Timer has the
   // smallest due time.
   std::vector<Timer> m_timerVector;
-};
-
-// Helper class which implements createTimer, deleteTimer and setSendIdleEvents
-// for actual TimingModule Example:
-//           Timing timing;
-//           timing.createTimer(instance, id, duration, jsScheduleTime, repeat);
-//           timing.delete(id);
-class TimingHelper : public std::enable_shared_from_this<TimingHelper> {
- public:
-  TimingHelper(const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread)
-      : m_nativeThread(nativeThread) {}
-  ~TimingHelper();
-  void createTimer(
-      std::weak_ptr<facebook::react::Instance> instance,
-      uint64_t id,
-      double duration,
-      double jsSchedulingTime,
-      bool repeat) noexcept;
-  void deleteTimer(uint64_t id) noexcept;
-  void setSendIdleEvents(bool sendIdleEvents) noexcept;
-
- private:
-  static VOID CALLBACK
-  ThreadpoolTimerCallback(PTP_CALLBACK_INSTANCE Instance, PVOID Parameter, PTP_TIMER Timer) noexcept;
-  void OnTimerRaised() noexcept;
-  void SetInstance(std::weak_ptr<facebook::react::Instance> instance) noexcept;
-  void SetKernelTimer(DateTime dueTime) noexcept;
-  void InitializeKernelTimer() noexcept;
-  void TimersChanged() noexcept;
-  void StopKernelTimer() noexcept;
-  bool KernelTimerIsAboutToFire() noexcept;
-  TimerQueue m_timerQueue;
-  PTP_TIMER m_threadpoolTimer = NULL;
-  DateTime m_dueTime;
-
-  std::weak_ptr<facebook::react::Instance> m_wkInstance;
-  std::weak_ptr<facebook::react::MessageQueueThread> m_nativeThread;
-};
-
-// Native timing module class. It communicates with JS side to manage timers.
-// Example:
-//           // On JS side
-//           const {Timing} = require('NativeModules');
-//           Timing.createTimer(id, duration || 0, Date.now(), /* recurring */
-//           false); Timing.deleteTimer(timerID);
-class TimingModule : public facebook::xplat::module::CxxModule {
- public:
-  TimingModule(std::shared_ptr<TimingHelper> &&timing);
-  std::string getName() override;
-  virtual std::map<std::string, folly::dynamic> getConstants() noexcept override;
-  virtual std::vector<Method> getMethods() noexcept override;
-
- private:
-  std::shared_ptr<TimingHelper> m_timing;
 };
 
 REACT_MODULE(Timing)
