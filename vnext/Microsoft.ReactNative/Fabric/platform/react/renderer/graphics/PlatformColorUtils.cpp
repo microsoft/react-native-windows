@@ -3,11 +3,13 @@
 
 #include "PlatformColorUtils.h"
 #include <UI.Xaml.Media.h>
+#include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #ifndef CORE_ABI
 #include <XamlUtils.h>
 #endif // CORE_ABI
 #include <winrt/Windows.UI.ViewManagement.h>
+#include <winuser.h>
 
 namespace facebook::react {
 
@@ -140,6 +142,37 @@ winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &s
 
   // Default to transparent color
   return {};
+}
+
+winrt::Windows::UI::Color GetTextInputPlaceholderColor(
+    bool isFocused,
+    const winrt::Windows::UI::Color &backgroundColor) {
+  // In high contrast mode, always use system GrayText for accessibility
+  HIGHCONTRAST hcInfo = {};
+  if (SystemParametersInfo(SPI_GETHIGHCONTRAST, 0, &hcInfo, 0) && (hcInfo.dwFlags & HCF_HIGHCONTRASTON)) {
+    auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
+    return uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::GrayText);
+  }
+
+  // If no background color provided, use WinUI3 semantic colors as fallback
+  if (backgroundColor.A == 0) {
+    if (isFocused) {
+      return ResolvePlatformColor({"TextFillColorSecondary"});
+    } else {
+      return ResolvePlatformColor({"TextFillColorDisabled"});
+    }
+  }
+
+  // Use ITU-R BT.601 luminance calculation to determine background brightness
+  bool isLightBackground = Microsoft::ReactNative::IsColorLight(backgroundColor);
+
+  if (isLightBackground) {
+    return isFocused ? facebook::react::SharedColor{0xFF606060} : // Darker gray for focused state
+        facebook::react::SharedColor{0xFF999999}; // Medium gray for unfocused state
+  } else {
+    return isFocused ? facebook::react::SharedColor{0xFFC0C0C0} : // Light gray for focused state
+        facebook::react::SharedColor{0xFF909090}; // Medium gray for unfocused state
+  }
 }
 
 } // namespace facebook::react
