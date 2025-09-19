@@ -85,6 +85,11 @@ class TextLayoutManager {
 
  private:
   static winrt::hstring GetTransformedText(AttributedStringBox const &attributedStringBox);
+  static void GetTextLayout(
+      AttributedStringBox attributedString,
+      ParagraphAttributes paragraphAttributes,
+      Size size,
+      winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
 
   ContextContainer::Shared m_contextContainer;
 #pragma warning(push)

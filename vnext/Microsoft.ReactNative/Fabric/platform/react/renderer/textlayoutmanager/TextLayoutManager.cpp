@@ -19,7 +19,7 @@ namespace facebook::react {
 void TextLayoutManager::GetTextLayout(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
-    LayoutConstraints layoutConstraints,
+    Size size,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
   if (attributedStringBox.getValue().isEmpty())
     return;
@@ -92,8 +92,8 @@ void TextLayoutManager::GetTextLayout(
       str.c_str(), // The string to be laid out and formatted.
       static_cast<UINT32>(str.size()), // The length of the string.
       spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-      layoutConstraints.maximumSize.width, // The width of the layout box.
-      layoutConstraints.maximumSize.height, // The height of the layout box.
+      size.width, // The width of the layout box.
+      size.height, // The height of the layout box.
       spTextLayout.put() // The IDWriteTextLayout interface pointer.
       ));
 
@@ -101,8 +101,8 @@ void TextLayoutManager::GetTextLayout(
   DWRITE_TEXT_METRICS metrics;
   winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
 
-  if (metrics.width > layoutConstraints.maximumSize.width) {
-    spTextLayout->SetMaxWidth(layoutConstraints.maximumSize.width);
+  if (metrics.width > size.width) {
+    spTextLayout->SetMaxWidth(size.width);
   }
 
   // Apply DWRITE_TRIMMING for ellipsizeMode
@@ -160,6 +160,17 @@ void TextLayoutManager::GetTextLayout(
 
     position += length;
   }
+}
+
+void TextLayoutManager::GetTextLayout(
+    AttributedStringBox attributedStringBox,
+    ParagraphAttributes paragraphAttributes,
+    LayoutConstraints layoutConstraints,
+    winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
+  if (attributedStringBox.getValue().isEmpty())
+    return;
+
+  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout);
 }
 
 // measure entire text (inluding attachments)
@@ -225,25 +236,6 @@ TextMeasurement TextLayoutManager::measureCachedSpannableById(
   return {};
 }
 
-LinesMeasurements TextLayoutManager::measureLines(
-    AttributedString attributedString,
-    ParagraphAttributes paragraphAttributes,
-    Size size) const {
-  assert(false);
-  return {};
-}
-
-std::shared_ptr<void> TextLayoutManager::getHostTextStorage(
-    AttributedString attributedString,
-    ParagraphAttributes paragraphAttributes,
-    LayoutConstraints layoutConstraints) const {
-  return nullptr;
-}
-
-void *TextLayoutManager::getNativeTextLayoutManager() const {
-  return (void *)this;
-}
-
 Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTransform> const &transform) {
   if (transform) {
     switch (transform.value()) {
@@ -259,8 +251,90 @@ Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTra
         break;
     }
   }
-
   return Microsoft::ReactNative::TextTransform::Undefined;
+}
+
+LinesMeasurements TextLayoutManager::measureLines(
+    AttributedString attributedString,
+    ParagraphAttributes paragraphAttributes,
+    Size size) const {
+  LinesMeasurements lineMeasurements{};
+
+  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+
+  GetTextLayout(AttributedStringBox(attributedString), paragraphAttributes, size, spTextLayout);
+
+  if (spTextLayout) {
+    std::vector<DWRITE_LINE_METRICS> lineMetrics;
+    uint32_t actualLineCount;
+    spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
+    lineMetrics.resize(static_cast<size_t>(actualLineCount));
+    winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
+    uint32_t startRange = 0;
+    const auto count = (paragraphAttributes.maximumNumberOfLines > 0)
+        ? std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount)
+        : actualLineCount;
+    for (uint32_t i = 0; i < count; ++i) {
+      UINT32 actualHitTestCount = 0;
+      spTextLayout->HitTestTextRange(
+          startRange,
+          lineMetrics[i].length,
+          0, // x
+          0, // y
+          NULL,
+          0, // metrics count
+          &actualHitTestCount);
+
+      // Allocate enough room to return all hit-test metrics.
+      std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
+      spTextLayout->HitTestTextRange(
+          startRange,
+          lineMetrics[i].length,
+          0, // x
+          0, // y
+          &hitTestMetrics[0],
+          static_cast<UINT32>(hitTestMetrics.size()),
+          &actualHitTestCount);
+
+      float width = 0;
+      for (auto tm : hitTestMetrics) {
+        width += tm.width;
+      }
+
+      std::string str;
+      for (const auto &fragment : attributedString.getFragments()) {
+        str = str +
+            winrt::to_string(Microsoft::ReactNative::TransformableText::TransformText(
+                winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
+                ConvertTextTransform(fragment.textAttributes.textTransform)));
+      }
+
+      lineMeasurements.emplace_back(LineMeasurement(
+          str.substr(startRange, lineMetrics[i].length),
+          {{hitTestMetrics[0].left, hitTestMetrics[0].top}, // origin
+           {width, lineMetrics[i].height}},
+          0.0f, // TODO descender
+          0.0f, // TODO: capHeight
+          0.0f, // TODO ascender
+          0.0f // TODO: xHeight
+          ));
+
+      startRange += lineMetrics[i].length;
+    }
+  }
+
+  return lineMeasurements;
+}
+
+std::shared_ptr<void> TextLayoutManager::getHostTextStorage(
+    AttributedString attributedString,
+    ParagraphAttributes paragraphAttributes,
+    LayoutConstraints layoutConstraints) const {
+  return nullptr;
+}
+
+void *TextLayoutManager::getNativeTextLayoutManager() const {
+  return (void *)this;
 }
 
 winrt::hstring TextLayoutManager::GetTransformedText(AttributedStringBox const &attributedStringBox) {
