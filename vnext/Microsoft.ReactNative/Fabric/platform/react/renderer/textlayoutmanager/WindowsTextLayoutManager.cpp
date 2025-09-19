@@ -80,6 +80,12 @@ void WindowsTextLayoutManager::GetTextLayout(
     TextMeasurement::Attachments &attachments) noexcept {
   const auto &attributedString = attributedStringBox.getValue();
   auto fragments = attributedString.getFragments();
+
+  // Check if fragments is empty to avoid out-of-bounds access
+  if (fragments.empty()) {
+    return;
+  }
+
   auto outerFragment = fragments[0];
 
   DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
