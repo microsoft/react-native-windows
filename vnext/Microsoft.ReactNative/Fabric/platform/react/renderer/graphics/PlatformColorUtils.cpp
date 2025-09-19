@@ -167,11 +167,11 @@ winrt::Windows::UI::Color GetTextInputPlaceholderColor(
   bool isLightBackground = Microsoft::ReactNative::IsColorLight(backgroundColor);
 
   if (isLightBackground) {
-    return isFocused ? facebook::react::SharedColor{0xFF606060} : // Darker gray for focused state
-        facebook::react::SharedColor{0xFF999999}; // Medium gray for unfocused state
+    return isFocused ? winrt::Windows::UI::Color{0xFF, 0x60, 0x60, 0x60} : // Darker gray for focused state
+        winrt::Windows::UI::Color{0xFF, 0x99, 0x99, 0x99}; // Medium gray for unfocused state
   } else {
-    return isFocused ? facebook::react::SharedColor{0xFFC0C0C0} : // Light gray for focused state
-        facebook::react::SharedColor{0xFF909090}; // Medium gray for unfocused state
+    return isFocused ? winrt::Windows::UI::Color{0xFF, 0xC0, 0xC0, 0xC0} : // Light gray for focused state
+        winrt::Windows::UI::Color{0xFF, 0x90, 0x90, 0x90}; // Medium gray for unfocused state
   }
 }
 
