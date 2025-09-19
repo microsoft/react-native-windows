@@ -358,6 +358,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL isSelected;
   BOOL multipleSelection;
   BOOL selectionRequired;
+  BSTR text = nullptr;
 
   // Dump IValueProvider Information
   IValueProvider *valuePattern;
@@ -446,6 +447,21 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     selectionPattern->Release();
   }
 
+  // Dump ITextRangeProvider Information
+  winrt::com_ptr<ITextProvider> textPattern;
+  hr = pTarget->GetCurrentPattern(UIA_TextPatternId, reinterpret_cast<IUnknown **>(textPattern.put()));
+  if (SUCCEEDED(hr) && textPattern) {
+    winrt::com_ptr<ITextRangeProvider> textRangePattern;
+    hr = textPattern->get_DocumentRange(textRangePattern.put());
+    if (SUCCEEDED(hr) && textRangePattern) {
+      textRangePattern->GetText(20, &text);
+      if (SUCCEEDED(hr)) {
+        InsertStringValueIfNotEmpty(result, L"TextRangePattern.GetText", text);
+      }
+    }
+  }
+
+  ::SysFreeString(text);
   ::SysFreeString(value);
 }
 
@@ -464,6 +480,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int sizeOfSet = 0;
   LiveSetting liveSetting = LiveSetting::Off;
   BSTR itemStatus;
+  BSTR description = nullptr;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -481,6 +498,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     pTarget4->get_CurrentLiveSetting(&liveSetting);
     pTarget4->Release();
   }
+  IUIAutomationElement6 *pTarget6;
+  hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement6), reinterpret_cast<void **>(&pTarget6));
+  if (SUCCEEDED(hr) && pTarget6) {
+    pTarget6->get_CurrentFullDescription(&description);
+  }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
   InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
@@ -493,6 +515,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
   InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
   InsertStringValueIfNotEmpty(result, L"ItemStatus", itemStatus);
+  InsertStringValueIfNotEmpty(result, L"Description", description);
   DumpUIAPatternInfo(pTarget, result);
 
   IUIAutomationElement *pChild;
@@ -513,6 +536,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   ::SysFreeString(localizedControlType);
   ::SysFreeString(name);
   ::SysFreeString(itemStatus);
+  ::SysFreeString(description);
   return result;
 }
 

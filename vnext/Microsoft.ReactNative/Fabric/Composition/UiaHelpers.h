@@ -2,6 +2,7 @@
 
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
 
@@ -22,13 +23,35 @@ HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView 
 
 HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexcept;
 
-void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool oldValue, bool newValue) noexcept;
+void UpdateUiaProperty(
+    winrt::Windows::Foundation::IInspectable provider,
+    PROPERTYID propId,
+    bool oldValue,
+    bool newValue) noexcept;
 
 void UpdateUiaProperty(
-    winrt::IInspectable provider,
+    winrt::Windows::Foundation::IInspectable provider,
+    PROPERTYID propId,
+    int oldValue,
+    int newValue) noexcept;
+
+void UpdateUiaProperty(
+    winrt::Windows::Foundation::IInspectable provider,
+    PROPERTYID propId,
+    long oldValue,
+    long newValue) noexcept;
+
+void UpdateUiaProperty(
+    winrt::Windows::Foundation::IInspectable provider,
     PROPERTYID propId,
     const std::string &oldValue,
     const std::string &newValue) noexcept;
+
+void UpdateUiaProperty(
+    winrt::Windows::Foundation::IInspectable provider,
+    PROPERTYID propId,
+    const std::optional<std::string> &oldValue,
+    const std::optional<std::string> &newValue) noexcept;
 
 long GetLiveSetting(const std::string &liveRegion) noexcept;
 
@@ -41,4 +64,6 @@ void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider
 void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept;
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
+
+TextDecorationLineStyle GetTextDecorationLineStyle(facebook::react::TextDecorationStyle style) noexcept;
 } // namespace winrt::Microsoft::ReactNative::implementation

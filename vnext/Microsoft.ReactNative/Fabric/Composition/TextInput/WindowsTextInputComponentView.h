@@ -97,6 +97,7 @@ struct WindowsTextInputComponentView
   void UpdateText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
+  std::pair<float, float> GetContentSize() const noexcept;
   std::string GetTextFromRichEdit() const noexcept;
   void updateCursorColor(
       const facebook::react::SharedColor &cursorColor,
@@ -109,6 +110,10 @@ struct WindowsTextInputComponentView
   void autoCapitalizeOnUpdateProps(
       const std::string &previousCapitalizationType,
       const std::string &newcapitalizationType) noexcept;
+
+  void updateLetterSpacing(float letterSpacing) noexcept;
+  void updateAutoCorrect(bool value) noexcept;
+  void updateSpellCheck(bool value) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};

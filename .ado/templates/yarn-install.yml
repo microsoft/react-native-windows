@@ -8,6 +8,9 @@ parameters:
   values:
       - ManagedImage
       - HostedImage
+- name: fixupCommands
+  type: boolean
+  default: true
 
 steps:
   # When using our own images, prefer the machine-installed version of
@@ -21,3 +24,6 @@ steps:
   - ${{ else }}:
     - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
+
+  - ${{ if eq(parameters.fixupCommands, true) }}:
+    - script: npx -y yarn-fix-bin-cmds@1.0.3 --path vnext/node_modules/.bin

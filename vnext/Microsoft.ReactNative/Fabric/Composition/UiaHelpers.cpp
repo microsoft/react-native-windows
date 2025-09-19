@@ -166,6 +166,24 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool old
   UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
 }
 
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, int oldValue, int newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
+
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+}
+
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, long oldValue, long newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
+
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+}
+
 void UpdateUiaProperty(
     winrt::IInspectable provider,
     PROPERTYID propId,
@@ -178,6 +196,16 @@ void UpdateUiaProperty(
 
   UiaRaiseAutomationPropertyChangedEvent(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
+}
+
+void UpdateUiaProperty(
+    winrt::IInspectable provider,
+    PROPERTYID propId,
+    const std::optional<std::string> &oldValue,
+    const std::optional<std::string> &newValue) noexcept {
+  std::string oldData = oldValue.value_or("");
+  std::string newData = newValue.value_or("");
+  UpdateUiaProperty(provider, propId, oldData, newData);
 }
 
 long GetLiveSetting(const std::string &liveRegion) noexcept {
@@ -252,6 +280,20 @@ ToggleState GetToggleState(const std::optional<facebook::react::AccessibilitySta
     }
   }
   return ToggleState::ToggleState_Off;
+}
+
+TextDecorationLineStyle GetTextDecorationLineStyle(facebook::react::TextDecorationStyle style) noexcept {
+  if (style == facebook::react::TextDecorationStyle::Dashed) {
+    return TextDecorationLineStyle_Dash;
+  } else if (style == facebook::react::TextDecorationStyle::Dotted) {
+    return TextDecorationLineStyle_Dot;
+  } else if (style == facebook::react::TextDecorationStyle::Double) {
+    return TextDecorationLineStyle_Double;
+  } else if (style == facebook::react::TextDecorationStyle::Solid) {
+    return TextDecorationLineStyle_Single;
+  } else {
+    return TextDecorationLineStyle_Single;
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -1,3 +1,4 @@
+
 # Troubleshoot RNW dependencies
 param(
     [switch]$Install = $false,
@@ -65,16 +66,12 @@ $vsComponents = @('Microsoft.Component.MSBuild',
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
-    'Microsoft.VisualStudio.Component.Windows10SDK.19041');
+    'Microsoft.VisualStudio.Component.Windows10SDK.19041',
+    'Microsoft.VisualStudio.Component.Windows11SDK.22621');
 
 # UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
 if (!($tagsToInclude.Contains('buildLab'))) {
     $vsComponents += 'Microsoft.VisualStudio.ComponentGroup.UWP.VC';
-}
-
-# Windows11SDK is only needed for the more experimental composition projects using newer WinAppSDK versions
-if ($tagsToInclude.Contains('rnwDev')) {
-    $vsComponents += 'Microsoft.VisualStudio.Component.Windows11SDK.22000';
 }
 
 $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
@@ -83,14 +80,17 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
 
 $vsAll = ($vsComponents + $vsWorkloads);
 
+# The minimum winget version to check for
+$wingetver = "1.7.11261";
+
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
 $vsver = "17.11.0";
 
 # The exact .NET SDK version to check for
-$dotnetver = "6.0";
+$dotnetver = "8.0";
 # Version name of the winget package
-$wingetDotNetVer = "6";
+$wingetDotNetVer = "8";
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -127,7 +127,7 @@ function Get-VSPathPropertyForEachInstall {
         [String[]]$paths = ($output | Where-Object { (Test-Path $_) });
         return $paths;
     }
-    
+
     return $null;
 }
 
@@ -187,26 +187,26 @@ function GetVSChannelAndProduct {
     param(
         [string]$VsWhere
     )
-    
+
     if ($VsWhere) {
         $channelId = & $VsWhere -version $vsver -property channelId;
         $productId = & $VsWhere -version $vsver -property productId;
-        
+
         # Channel/product not found, check one more time for pre-release
         if (($channelId -eq $null) -or ($productId -eq $null)) {
             $channelId = & $VsWhere -version $vsver -property channelId -prerelease;
             $productId = & $VsWhere -version $vsver -property productId -prerelease;
         }
-        
+
         return $channelId, $productId;
     }
-    
+
     return $null, $null;
 }
 
 function InstallVS {
     $vsWhere = Get-VSWhere;
-    
+
     $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
 
     if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
@@ -223,7 +223,7 @@ function InstallVS {
 
         $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
     }
-    
+
     # Final check before attempting install
     if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
         throw "Unable to find or install a compatible version of Visual Studio >= ($vsver).";
@@ -240,8 +240,9 @@ function CheckNode {
     try {
         $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
         Write-Verbose "Node version found: $nodeVersion";
-        $v = $nodeVersion.Major;
-        return ($v -ge 18) -and (($v % 2) -eq 0);
+        $major = $nodeVersion.Major;
+        $minor = $nodeVersion.Minor;
+        return ($major -gt 22) -or (($major -eq 22) -and ($minor -ge 14));
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -331,7 +332,7 @@ function InstallCppWinRT_VSIX {
     $url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/CppWinRTTeam/vsextensions/cppwinrt101804264/2.0.210304.5/vspackage";
     Write-Verbose "Downloading CppWinRT VSIX from $url";
     Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\Microsoft.Windows.CppWinRT.vsix;
-    
+
     $vsWhere = Get-VSWhere;
     if ($vsWhere -eq $null) {
         return;
@@ -437,10 +438,10 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 18.0)';
+        Name = 'Node.js (LTS, >= 22.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.16.1" };
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "22.14.0" };
         HasVerboseOutput = $true;
     },
     @{
@@ -517,18 +518,30 @@ $requirements = @(
     }
 );
 
+function InstallWinGet {
+    Write-Verbose "Updating WinGet version...";
+    Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile "$env:TEMP\winget.msixbundle";
+    Add-AppPackage -ForceApplicationShutdown $env:TEMP\winget.msixbundle;
+    Remove-Item $env:TEMP\winget.msixbundle;
+}
+
 function EnsureWinGetForInstall {
     Write-Verbose "Checking for WinGet...";
     try {
         # Check if winget.exe is in PATH
         if (Get-Command "winget.exe" -CommandType Application -ErrorAction Ignore) {
             Write-Verbose "WinGet found in PATH.";
-            return;
+            Write-Verbose "Validating WinGet version...";
+            $wingetverfound = & winget -v;
+            if ([System.Version]$wingetverfound.Substring(1) -ge [System.Version]$wingetver ){
+                Write-Verbose "WinGet version found: $wingetverfound";
+                return;
+            }
         }
+        InstallWinGet;
+        $installedwingetver = & winget -v;
+        Write-Verbose "WinGet version installed: $installedwingetver";
     } catch { Write-Debug $_ }
-
-    Write-Host "WinGet is required to install dependencies. See https://learn.microsoft.com/en-us/windows/package-manager/winget/ for more information.";
-    throw "WinGet needed to install.";
 }
 
 function WinGetInstall {
@@ -546,7 +559,7 @@ function WinGetInstall {
         & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
     }
  }
- 
+
 function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
 }

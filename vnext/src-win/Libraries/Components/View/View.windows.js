@@ -38,6 +38,7 @@ const View: React.AbstractComponent<
       accessibilityLabel,
       accessibilityLabelledBy,
       accessibilityLevel, // Windows
+      accessibilityDescription, //Windows
       accessibilityLiveRegion,
       accessibilityPosInSet, // Windows
       accessibilitySetSize, // Windows
@@ -49,6 +50,7 @@ const View: React.AbstractComponent<
       'aria-expanded': ariaExpanded,
       'aria-multiselectable': ariaMultiselectable, // Windows
       'aria-required': ariaRequired, // Windows
+      'aria-description': ariaDescription, //Windows
       'aria-hidden': ariaHidden,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
@@ -227,6 +229,13 @@ const View: React.AbstractComponent<
 
     // Windows]
 
+    const computedImportantForAccessibility =
+      ariaHidden === true ||
+      importantForAccessibility === 'no-hide-descendants' ||
+      accessibilityElementsHidden === true
+        ? 'no-hide-descendants'
+        : importantForAccessibility;
+
     return (
       // [Windows
       // In core this is a TextAncestor.Provider value={false} See
@@ -248,6 +257,9 @@ const View: React.AbstractComponent<
               }
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
               accessibilityLevel={ariaLevel ?? accessibilityLevel}
+              accessibilityDescription={
+                ariaDescription ?? accessibilityDescription
+              }
               accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
               accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
               focusable={_focusable}
@@ -258,11 +270,7 @@ const View: React.AbstractComponent<
               }
               accessibilityLabelledBy={_accessibilityLabelledBy}
               accessibilityValue={_accessibilityValue}
-              importantForAccessibility={
-                ariaHidden === true
-                  ? 'no-hide-descendants'
-                  : importantForAccessibility
-              }
+              importantForAccessibility={computedImportantForAccessibility}
               nativeID={id ?? nativeID}
               style={style}
               // $FlowFixMe[incompatible-type]

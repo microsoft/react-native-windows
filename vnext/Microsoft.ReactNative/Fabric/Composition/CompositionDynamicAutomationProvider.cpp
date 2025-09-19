@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionTextRangeProvider.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
@@ -25,6 +27,13 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
+  }
+
+  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
+    m_textProvider = winrt::make<CompositionTextProvider>(
+                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                         .try_as<ITextProvider2>();
   }
 }
 
@@ -251,6 +260,17 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
       props->accessibilityState->selected.has_value()) {
     *pRetVal = static_cast<ISelectionItemProvider *>(this);
     AddRef();
+  }
+
+  if (patternId == UIA_TextPatternId &&
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
+  }
+
+  if (patternId == UIA_TextPattern2Id &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   return S_OK;
@@ -527,6 +547,29 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
           : SysAllocString(L"");
       break;
     }
+    case UIA_LevelPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = props->accessibilityLevel;
+      break;
+    }
+    case UIA_AccessKeyPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto accessKey = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAccessKey.value_or(""));
+      pRetVal->bstrVal = SysAllocString(accessKey.c_str());
+      break;
+    }
+    case UIA_ItemTypePropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto itemtype = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityItemType.value_or(""));
+      pRetVal->bstrVal = SysAllocString(itemtype.c_str());
+      break;
+    }
+    case UIA_FullDescriptionPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto desc = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityDescription.value_or(""));
+      pRetVal->bstrVal = SysAllocString(desc.c_str());
+      break;
+    }
   }
 
   return hr;
@@ -769,7 +812,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Expand() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   DispatchAccessibilityAction(m_view, "expand");
+
   return S_OK;
 }
 
@@ -778,7 +823,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Collapse() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   DispatchAccessibilityAction(m_view, "collapse");
+
   return S_OK;
 }
 

@@ -14,5 +14,5 @@ export const HealthCheckList = [
   [true, 'VSUWP', 'Visual Studio 2022 (>= 17.11.0) & req. components'],
   [true, 'Node', 'Node.js (LTS, >= 18.0)'],
   [true, 'Yarn', 'Yarn'],
-  [true, 'DotNetCore', '.NET SDK (LTS, = 6.0)'],
+  [true, 'DotNetCore', '.NET SDK (LTS, = 8.0)'],
 ];
