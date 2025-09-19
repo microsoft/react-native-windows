@@ -14,7 +14,7 @@
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
 import React from 'react';
-const {
+import {
   LayoutAnimation,
   Platform,
   /*Image,*/
@@ -25,7 +25,7 @@ const {
   TextStyle,
   TouchableWithoutFeedback,
   View,
-} = require('react-native');
+} from 'react-native';
 
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
@@ -1396,160 +1396,6 @@ class TextExample extends React.Component<
       </RNTesterPage>
     );
   }
-}
-
-function TextBorderExample(props: {}): React.Node {
-  return (
-    <View testID={'text-border'} accessible accessibilityLabel="Border Example">
-      <Text style={styles.borderedTextSimple}>
-        Sample bordered text with default styling.
-      </Text>
-
-      <Text style={styles.borderedText}>
-        Some more bordered text + a tad of CSS.{'\n'}
-        <Text style={{borderColor: 'red', borderWidth: 5}}>
-          1st nested - border specifcied but ignored.{'\n'}
-          <Text style={{borderColor: 'yellow', borderWidth: 4}}>
-            2nd Inside text!
-          </Text>
-        </Text>
-      </Text>
-
-      <Text>
-        This text is{' '}
-        <Text style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
-          outlined{' '}
-        </Text>
-        and laid out within the normal text run, so will wrap etc as normal
-        text.
-      </Text>
-    </View>
-  );
-}
-
-function AdvancedBordersExample(props: {}): React.Node {
-  return (
-    <View
-      testID={'advanced-borders'}
-      accessible
-      accessibilityLabel="Advanced Border Example">
-      <Text
-        style={{
-          borderColor: 'red',
-          borderWidth: 1,
-          borderBottomWidth: 5,
-          borderRightWidth: 10,
-          borderTopWidth: 15,
-          borderLeftWidth: 20,
-          borderBottomRightRadius: 1,
-          borderBottomLeftRadius: 3,
-          borderTopRightRadius: 5,
-          borderTopLeftRadius: 7,
-        }}>
-        This text has customized borders.
-      </Text>
-      <Text
-        style={{
-          borderColor: 'blue',
-          borderWidth: 1,
-          borderBottomWidth: 5,
-          borderEndWidth: 10,
-          borderTopWidth: 15,
-          borderStartWidth: 20,
-          borderBottomEndRadius: 1,
-          borderBottomStartRadius: 3,
-          borderTopEndRadius: 5,
-          borderTopStartRadius: 7,
-        }}>
-        This text has customized borders.
-      </Text>
-      <Text
-        style={{
-          borderColor: 'green',
-          borderWidth: 1,
-          borderRadius: 3,
-        }}>
-        This text has customized borders.
-      </Text>
-    </View>
-  );
-}
-
-function TextOpacityExample(props: {}): React.Node {
-  return (
-    <View testID={'text-opacity'}>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.1,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.2,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.3,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.4,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.5,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.6,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.7,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.8,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 0.9,
-        }}>
-        This text has customized opacity.
-      </Text>
-      <Text
-        style={{
-          backgroundColor: 'black',
-          opacity: 1,
-        }}>
-        This text has customized opacity.
-      </Text>
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({
