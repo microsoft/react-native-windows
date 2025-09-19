@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "adding nullptr check before destroyShadow calls",
-  "packageName": "react-native-windows",
-  "email": "protikbiswas100@microsoft.com",
-  "dependentChangeType": "patch"
-}

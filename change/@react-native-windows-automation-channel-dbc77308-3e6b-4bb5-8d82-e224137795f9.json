@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
