@@ -12,7 +12,6 @@ param(
     [switch]$Enterprise = $false
 )
 
-$VerbosePreference = 'Continue';
 $ShellInvocation = ($PSCmdlet.MyInvocation.BoundParameters -ne $null);
 
 $Verbose = $false
