@@ -105,11 +105,17 @@
 ../node_modules/
 
 [libs]
+<<<<<<< Upstream
+flow-typed/
+packages/react-native/interface.js
+packages/react-native/flow/
+=======
 interface.js
 flow/
 ../node_modules/.flow/flow-typed/
 ../node_modules/react-native/src/types
 src/types/
+>>>>>>> Override
 
 [options]
 enums=true
@@ -138,6 +144,8 @@ module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\|xml\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
+
+module.system.haste.module_ref_prefix=m#
 
 react.runtime=automatic
 
@@ -171,4 +179,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.271.0
+^0.272.2

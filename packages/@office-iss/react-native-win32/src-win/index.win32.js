@@ -4,8 +4,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+<<<<<<< Upstream
+ * @flow strict-local
+ * @format
+=======
  * @format
  * @flow
+>>>>>>> Override
  */
 
 // flowlint unsafe-getters-setters:off

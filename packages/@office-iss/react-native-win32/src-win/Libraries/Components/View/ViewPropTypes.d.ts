@@ -8,6 +8,19 @@
  */
 
 import type * as React from 'react';
+<<<<<<< Upstream
+import {Insets} from '../../../types/public/Insets';
+import {GestureResponderHandlers} from '../../../types/public/ReactNativeRenderer';
+import {StyleProp} from '../../StyleSheet/StyleSheet';
+import {ViewStyle} from '../../StyleSheet/StyleSheetTypes';
+import {
+  BlurEvent,
+  FocusEvent,
+  LayoutChangeEvent,
+  PointerEvents,
+} from '../../Types/CoreEventTypes';
+import {Touchable} from '../Touchable/Touchable';
+=======
 import {Insets} from 'react-native/types/public/Insets';
 import {GestureResponderHandlers} from 'react-native/types/public/ReactNativeRenderer';
 import {StyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
@@ -19,6 +32,7 @@ import {
   PointerEvents,
 } from 'react-native/Libraries/Types/CoreEventTypes';
 import {Touchable} from 'react-native/Libraries/Components/Touchable/Touchable';
+>>>>>>> Override
 import {AccessibilityProps} from './ViewAccessibility';
 
 export interface TVViewPropsIOS {
@@ -81,6 +95,20 @@ export interface ViewPropsIOS extends TVViewPropsIOS {
 }
 
 export interface ViewPropsAndroid {
+  /**
+   * Callback that is called when the view is blurred.
+   *
+   * Note: This will only be called if the view is focusable.
+   */
+  onBlur?: ((e: BlurEvent) => void) | null | undefined;
+
+  /**
+   * Callback that is called when the view is focused.
+   *
+   * Note: This will only be called if the view is focusable.
+   */
+  onFocus?: ((e: FocusEvent) => void) | null | undefined;
+
   /**
    * Whether this view should render itself (and all of its children) into a single hardware texture on the GPU.
    *

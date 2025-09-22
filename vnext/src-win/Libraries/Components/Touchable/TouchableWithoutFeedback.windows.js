@@ -168,6 +168,9 @@ const PASSTHROUGH_PROPS = [
   'onFocus',
   'onLayout',
   'testID',
+<<<<<<< Upstream
+] as const;
+=======
   'accessibilityPosInSet', // [Windows]
   'accessibilitySetSize', // [Windows]
   'onAccessibilityTap', // [Windows]
@@ -176,6 +179,7 @@ const PASSTHROUGH_PROPS = [
   'tabIndex', // [Windows]
   'tooltip', // [Windows]
 ];
+>>>>>>> Override
 
 /**
  * Do not use unless you have a very good reason.

@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 'use strict';
@@ -631,6 +631,9 @@ const VectorDrawableExample = () => {
   );
 };
 
+<<<<<<< Upstream
+function CacheControlExample(): React.Node {
+=======
 const AccessibilityActions = () => {
   const [accessibilityLabel, setAccessibilityLabel] =
     React.useState('Initial Label');
@@ -733,6 +736,7 @@ const ImageFunctionsExample = () => {
 };
 
 function CacheControlAndroidExample(): React.Node {
+>>>>>>> Override
   const [reload, setReload] = useState(0);
 
   const onReload = () => {
@@ -1307,6 +1311,8 @@ exports.examples = [
   },
   {
     title: 'Cache Policy',
+<<<<<<< Upstream
+=======
     description:
       ('First image has never been loaded before and is instructed not to load unless in cache.' +
         'Placeholder image from above will stay. Second image is the same but forced to load regardless of' +
@@ -1337,14 +1343,14 @@ exports.examples = [
   },
   {
     title: 'Cache Policy',
+>>>>>>> Override
     description: `- First image will be loaded and cached.
 - Second image is the same but will be reloaded if re-rendered as the cache policy is set to reload.
-- Third image will never be loaded as the cache policy is set to only-if-cached and the image has not been loaded before.
-  `,
+- Third image will try to load from the cache first and only use the network if the cached version is unavailable.
+- Fourth image will never be loaded as the cache policy is set to only-if-cached and the image has not been loaded before.`,
     render: function (): React.Node {
-      return <CacheControlAndroidExample />;
+      return <CacheControlExample />;
     },
-    platform: 'android',
   },
   {
     title: 'Borders',

@@ -4,14 +4,16 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+import type {TextLayoutLine} from 'react-native/Libraries/Types/CoreEventTypes';
 
 import RNTesterText from '../../components/RNTesterText';
 import {useTheme} from '../../components/RNTesterTheme';
+import {useState} from 'react';
 import {View} from 'react-native';
 
 function InlineView(props: {
@@ -71,12 +73,72 @@ function EmptyTextExample(): React.Node {
   );
 }
 
+<<<<<<< Upstream
+function TextAndLayoutLinesJSON({
+  testID,
+  ellipsizeMode,
+}: $ReadOnly<{
+  testID: string,
+  ellipsizeMode: 'head' | 'tail' | 'middle' | 'clip',
+}>): React.Node {
+  const [lines, setLines] = useState<?(TextLayoutLine[])>();
+
+  return (
+    <View testID={testID}>
+      <RNTesterText variant="label">{ellipsizeMode}</RNTesterText>
+      <RNTesterText
+        numberOfLines={1}
+        ellipsizeMode={ellipsizeMode}
+        onTextLayout={ev => setLines(ev.nativeEvent.lines)}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat
+        molestie nunc non tristique.
+      </RNTesterText>
+      <RNTesterText style={{fontSize: 8, fontFamily: 'monospace'}}>
+        {JSON.stringify(lines, null, 2)}
+      </RNTesterText>
+    </View>
+  );
+}
+
+function NumberOfLinesTextLayoutExample(): React.Node {
+  return (
+    <View style={{rowGap: 20}}>
+      <TextAndLayoutLinesJSON ellipsizeMode="tail" testID="tail-layout" />
+      <TextAndLayoutLinesJSON ellipsizeMode="head" testID="head-layout" />
+      <TextAndLayoutLinesJSON ellipsizeMode="middle" testID="middle-layout" />
+      <TextAndLayoutLinesJSON ellipsizeMode="clip" testID="clip-layout" />
+    </View>
+  );
+}
+
+export default [
+=======
 const examples = [
+>>>>>>> Override
   {
     title: 'Empty Text',
     name: 'emptyText',
     render: EmptyTextExample,
   },
+<<<<<<< Upstream
+  {
+    title: 'TextInlineViewsExample',
+    name: 'inlineViews',
+    description:
+      'Shows how inline views are rendered when text is subject to alignment.',
+    expect: 'The red box should align correctly with the rest of the text.',
+    render: TextInlineViewsExample,
+  },
+  {
+    title: 'numberOfLines with onTextLayout',
+    name: 'numberOfLinesLayout',
+    description:
+      'Shows the behavior of numberOfLines and ellipsizeMode in conjunction with the onTextLayout event',
+    scrollable: true,
+    render: NumberOfLinesTextLayoutExample,
+  },
+] as $ReadOnlyArray<RNTesterModuleExample>;
+=======
   // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
   // Paper mode doesn't support Views nested in Text
   ...(global.RN$Bridgeless === true
@@ -95,3 +157,4 @@ const examples = [
 ];
 
 export default examples;
+>>>>>>> Override
