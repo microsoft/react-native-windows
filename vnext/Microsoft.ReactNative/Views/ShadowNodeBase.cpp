@@ -28,11 +28,19 @@ ViewManagerBase *ShadowNodeBase::GetViewManager() const {
 }
 
 void ShadowNodeBase::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
-  GetViewManager()->UpdateProperties(this, props);
+  auto viewManager = GetViewManager();
+  if (viewManager) {
+    viewManager->UpdateProperties(this, props);
+  }
 }
 
 void ShadowNodeBase::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
-  m_view = GetViewManager()->CreateView(this->m_tag, props);
+  auto viewManager = GetViewManager();
+  if (!viewManager) {
+    return;
+  }
+
+  m_view = viewManager->CreateView(this->m_tag, props);
 
   if (g_HasActualSizeProperty == TriBit::Undefined) {
     if (auto uielement = m_view.try_as<xaml::UIElement>()) {
@@ -49,23 +57,38 @@ bool ShadowNodeBase::NeedsForceLayout() {
 void ShadowNodeBase::dispatchCommand(
     const std::string &commandId,
     winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
-  GetViewManager()->DispatchCommand(GetView(), commandId, std::move(commandArgs));
+  auto viewManager = GetViewManager();
+  if (viewManager) {
+    viewManager->DispatchCommand(GetView(), commandId, std::move(commandArgs));
+  }
 }
 
 void ShadowNodeBase::removeAllChildren() {
-  GetViewManager()->RemoveAllChildren(GetView());
+  auto viewManager = GetViewManager();
+  if (viewManager) {
+    viewManager->RemoveAllChildren(GetView());
+  }
 }
 
 void ShadowNodeBase::AddView(ShadowNode &child, int64_t index) {
-  this->GetViewManager()->AddView(GetView(), static_cast<ShadowNodeBase &>(child).GetView(), index);
+  auto viewManager = GetViewManager();
+  if (viewManager) {
+    viewManager->AddView(GetView(), static_cast<ShadowNodeBase &>(child).GetView(), index);
+  }
 }
 
 void ShadowNodeBase::RemoveChildAt(int64_t indexToRemove) {
-  GetViewManager()->RemoveChildAt(GetView(), indexToRemove);
+  auto viewManager = GetViewManager();
+  if (viewManager) {
+    viewManager->RemoveChildAt(GetView(), indexToRemove);
+  }
 }
 
 void ShadowNodeBase::onDropViewInstance() {
-  GetViewManager()->OnDropViewInstance(m_view);
+  auto viewManager = GetViewManager();
+  if (viewManager) {
+    viewManager->OnDropViewInstance(m_view);
+  }
   m_handledKeyboardEventHandler = nullptr;
 }
 
@@ -81,7 +104,12 @@ void ShadowNodeBase::ReplaceView(XamlView view) {
 }
 
 void ShadowNodeBase::ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) {
-  GetViewManager()->ReplaceChild(m_view, oldChildView, newChildView);
+  // Add safety checks to prevent crashes during cleanup
+  auto viewManager = GetViewManager();
+  if (!viewManager || !m_view || !oldChildView || !newChildView) {
+    return;
+  }
+  viewManager->ReplaceChild(m_view, oldChildView, newChildView);
 }
 
 void ShadowNodeBase::ReparentView(XamlView view) {

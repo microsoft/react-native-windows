@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.80.0-nightly-20250506-3ac16dd6a",
+  "baseVersion": "0.81.0-nightly-20250521-3cb70bb6a",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
       "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
-      "baseHash": "d39ad505e22d525b00b8f63165ce2c2bbcc86152"
+      "baseHash": "eb604f3c06468e8aaa2671985a772b26f666e5de"
     },
     {
       "type": "patch",

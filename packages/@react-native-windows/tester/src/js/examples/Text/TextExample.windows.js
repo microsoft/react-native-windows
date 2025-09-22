@@ -18,7 +18,8 @@ import type {RNTesterModule} from '../../types/RNTesterTypes';
 import RNTesterText from '../../components/RNTesterText';
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
-import TextInlineViewsExample from './TextInlineViewsExample';
+import TextSharedExamples from './TextSharedExamples';
+
 const TextInlineView = require('../../components/TextInlineView');
 const React = require('react');
 const {
@@ -1654,13 +1655,6 @@ const examples = [
     },
   },
   {
-    title: 'Empty Text',
-    name: 'emptyText',
-    render(): React.Node {
-      return <Text />;
-    },
-  },
-  {
     title: 'Toggling Attributes',
     name: 'togglingAttributes',
     render(): React.Node {
@@ -1773,7 +1767,7 @@ const examples = [
             return <TextInlineView.ChangeInnerViewSize />;
           },
         },
-        TextInlineViewsExample,
+        ...TextSharedExamples,
       ]
     : []),
   // Windows]
@@ -1918,6 +1912,7 @@ const examples = [
       );
     },
   },
+  ...TextSharedExamples,
   {
     title: 'Customized Accessibility',
     name: 'textAccessibility',
