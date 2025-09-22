@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removing Platform brush instead using proper caret brush",
-  "packageName": "react-native-windows",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "patch"
-}

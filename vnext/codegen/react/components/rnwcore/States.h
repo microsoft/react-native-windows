@@ -8,7 +8,7 @@
  */
 #pragma once
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
 #include <folly/dynamic.h>
 #endif
 
@@ -18,7 +18,7 @@ class ActivityIndicatorViewState {
 public:
   ActivityIndicatorViewState() = default;
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
   ActivityIndicatorViewState(ActivityIndicatorViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
@@ -30,7 +30,7 @@ class AndroidDrawerLayoutState {
 public:
   AndroidDrawerLayoutState() = default;
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
   AndroidDrawerLayoutState(AndroidDrawerLayoutState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
@@ -42,7 +42,7 @@ class AndroidSwipeRefreshLayoutState {
 public:
   AndroidSwipeRefreshLayoutState() = default;
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
   AndroidSwipeRefreshLayoutState(AndroidSwipeRefreshLayoutState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
@@ -54,7 +54,7 @@ class DebuggingOverlayState {
 public:
   DebuggingOverlayState() = default;
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
   DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
@@ -66,7 +66,7 @@ class PullToRefreshViewState {
 public:
   PullToRefreshViewState() = default;
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
   PullToRefreshViewState(PullToRefreshViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
@@ -78,7 +78,7 @@ class SwitchState {
 public:
   SwitchState() = default;
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
   SwitchState(SwitchState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
@@ -90,7 +90,7 @@ class UnimplementedNativeViewState {
 public:
   UnimplementedNativeViewState() = default;
 
-#ifdef ANDROID
+#ifdef RN_SERIALIZABLE_STATE
   UnimplementedNativeViewState(UnimplementedNativeViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};

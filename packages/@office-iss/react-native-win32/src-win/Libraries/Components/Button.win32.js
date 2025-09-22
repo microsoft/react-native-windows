@@ -291,7 +291,7 @@ type ButtonRef = React.ElementRef<typeof Touchable>;
 const Button: component(
   ref?: React.RefSetter<ButtonRef>,
   ...props: ButtonProps
-) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
+) = ({ref, ...props}: {ref?: React.RefSetter<ButtonRef>, ...ButtonProps}) => {
   // Win32
   const {
     accessibilityLabel,
@@ -400,7 +400,7 @@ const Button: component(
       </View>
     </Touchable>
   );
-});
+};
 
 Button.displayName = 'Button';
 

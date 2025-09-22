@@ -31,6 +31,7 @@
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
+<PROJECT_ROOT>/Libraries/Renderer/shims/ReactNativeTypes.js
 <PROJECT_ROOT>/Libraries/StyleSheet/PlatformColorValueTypes.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
@@ -48,6 +49,7 @@
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
+
 
 ; Ignore react-native-windows' build output. Flow is not compiled with long path support and after running unittests these folders have long paths
 .*/node_modules/react-native-windows/build/.*
@@ -174,4 +176,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.269.1
+^0.271.0

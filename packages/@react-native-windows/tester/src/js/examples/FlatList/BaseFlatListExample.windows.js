@@ -67,48 +67,42 @@ type Props = {
   children?: ?React.Node,
 };
 
-const BaseFlatListExample = React.forwardRef(
-  // $FlowFixMe[incompatible-call]
-  (
-    props: Props,
-    ref:
-      | ((null | FlatList<string>) => mixed)
-      | {current: null | FlatList<string>, ...},
-  ) => {
-    return (
-      <View style={styles.container}>
-        {props.testOutput != null ? (
-          <View testID="test_container" style={styles.testContainer}>
-            <Text style={styles.output} numberOfLines={1} testID="output">
-              {props.testOutput}
-            </Text>
-            {props.onTest != null ? (
-              <Button
-                testID="start_test"
-                onPress={props.onTest}
-                title={props.testLabel ?? 'Test'}
-              />
-            ) : null}
-          </View>
-        ) : null}
-        {props.children}
-        <FlatList
-          {...props.exampleProps}
-          // $FlowFixMe[incompatible-type]
-          ref={ref}
-          testID="flat_list"
-          // $FlowFixMe[incompatible-type]
-          data={DATA}
-          keyExtractor={(item, index) => item + index}
-          style={styles.list}
-          // $FlowFixMe[incompatible-type-arg]
-          renderItem={Item}
-          accessible
-        />
-      </View>
-    );
-  },
-);
+const BaseFlatListExample: component(
+  ref: React.RefSetter<FlatList<string>>,
+  ...props: Props
+) = ({ref, ...props}: {ref: React.RefSetter<FlatList<string>>, ...Props}) => {
+  return (
+    <View style={styles.container}>
+      {props.testOutput != null ? (
+        <View testID="test_container" style={styles.testContainer}>
+          <Text style={styles.output} numberOfLines={1} testID="output">
+            {props.testOutput}
+          </Text>
+          {props.onTest != null ? (
+            <Button
+              testID="start_test"
+              onPress={props.onTest}
+              title={props.testLabel ?? 'Test'}
+            />
+          ) : null}
+        </View>
+      ) : null}
+      {props.children}
+      <FlatList
+        {...props.exampleProps}
+        // $FlowFixMe[incompatible-type]
+        ref={ref}
+        testID="flat_list"
+        // $FlowFixMe[incompatible-type]
+        data={DATA}
+        keyExtractor={(item, index) => item + index}
+        style={styles.list}
+        // $FlowFixMe[incompatible-type-arg]
+        renderItem={Item}
+      />
+    </View>
+  );
+};
 
 export default (BaseFlatListExample: React.AbstractComponent<
   Props,
