@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 22 Sep 2025 15:31:50 GMT",
+      "version": "0.74.10",
+      "tag": "@office-iss/react-native-win32_v0.74.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "Bump flow-bin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Apr 2025 15:24:30 GMT",
       "version": "0.74.9",
       "tag": "@office-iss/react-native-win32_v0.74.9",

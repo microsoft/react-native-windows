@@ -2,6 +2,119 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Sep 2025 15:31:50 GMT",
+      "version": "0.74.47",
+      "tag": "react-native-windows_v0.74.47",
+      "comments": {
+        "patch": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "updated ellipsis to respect tail and clip behaviour , for head , middle follow defaulty tail behaviour"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "PointerEvent fixes"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "Implementation of adjustFontSizeToFit for Text in Fabric"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "[Fabric] Fix for Text and TextInput focus issue with screen readers."
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "TextInput should capture mouse on mouse down"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "[Fabric] Implement maxFontSizeMultiplier in Text Input"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "[Fabric] Implementation of accessibilityDescription"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "Implement SpellCheck and AutoCorrect for TextInput"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "updated adjustsFontSizeToFit textlayout to nullptr"
+          },
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "adding UIA event handler changes for navigator"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "[Fabric] Raising UIA Event if Toggle State Changes in Switch Component"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "Changes for updating accessibilityValue prop in UIA"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "ITextProvider Implementation"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "Added fix for AutoFocus"
+          },
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "[Fabric] Implement onContentSizeChange in TextInput"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.12",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "919860a4f95c8a8b29bfa079475e5c76208c011d",
+            "comment": "Added support for selectionColor for textInput"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 May 2025 02:20:43 GMT",
       "version": "0.74.46",
       "tag": "react-native-windows_v0.74.46",

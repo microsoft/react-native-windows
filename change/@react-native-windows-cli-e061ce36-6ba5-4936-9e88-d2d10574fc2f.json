@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Upgrade dotnet version",
-  "packageName": "@react-native-windows/cli",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

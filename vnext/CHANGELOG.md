@@ -1,8 +1,31 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 29 May 2025 02:20:43 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Sep 2025 15:31:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.47
+
+Mon, 22 Sep 2025 15:31:50 GMT
+
+### Patches
+
+- updated ellipsis to respect tail and clip behaviour , for head , middle follow defaulty tail behaviour (74712637+iamAbhi-916@users.noreply.github.com)
+- PointerEvent fixes (30809111+acoates-ms@users.noreply.github.com)
+- Implementation of adjustFontSizeToFit for Text in Fabric (kvineeth@microsoft.com)
+- [Fabric] Fix for Text and TextInput focus issue with screen readers. (kvineeth@microsoft.com)
+- TextInput should capture mouse on mouse down (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement maxFontSizeMultiplier in Text Input (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implementation of accessibilityDescription (kvineeth@microsoft.com)
+- Implement SpellCheck and AutoCorrect for TextInput (54227869+anupriya13@users.noreply.github.com)
+- updated adjustsFontSizeToFit textlayout to nullptr (74712637+iamAbhi-916@users.noreply.github.com)
+- adding UIA event handler changes for navigator (protikbiswas100@microsoft.com)
+- [Fabric] Raising UIA Event if Toggle State Changes in Switch Component (kvineeth@microsoft.com)
+- Changes for updating accessibilityValue prop in UIA (kvineeth@microsoft.com)
+- ITextProvider Implementation (34109996+chiaramooney@users.noreply.github.com)
+- Added fix for AutoFocus (hmalothu@microsoft.com)
+- [Fabric] Implement onContentSizeChange in TextInput (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.12
 
 ## 0.74.46
 
