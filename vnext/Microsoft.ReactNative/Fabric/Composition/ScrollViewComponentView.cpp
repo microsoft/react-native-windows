@@ -1056,14 +1056,14 @@ bool ScrollViewComponentView::scrollToStart(bool animate) noexcept {
 
 bool ScrollViewComponentView::pageUp(bool animate) noexcept {
   if (std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->horizontal) {
-    return scrollLeft(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
+    return scrollLeft(m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor, animate);
   }
   return scrollUp(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
 }
 
 bool ScrollViewComponentView::pageDown(bool animate) noexcept {
   if (std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->horizontal) {
-    return scrollRight(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
+    return scrollRight(m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor, animate);
   }
   return scrollDown(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
 }
