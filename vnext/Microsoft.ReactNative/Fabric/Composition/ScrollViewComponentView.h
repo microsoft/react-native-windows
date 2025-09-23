@@ -115,10 +115,18 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept override;
   winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept override;
 
+  // Override focusable to enable keyboard navigation when scrollbars are present
+  bool focusable() const noexcept override;
+
   int getScrollPositionX() noexcept;
   int getScrollPositionY() noexcept;
   double getVerticalSize() noexcept;
   double getHorizontalSize() noexcept;
+
+  // Keyboard navigation for scrollbars
+  bool focusNextScrollbar() noexcept;
+  bool focusPreviousScrollbar() noexcept;
+  void clearScrollbarFocus() noexcept;
 
  private:
   void updateDecelerationRate(float value) noexcept;
@@ -148,9 +156,12 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       m_scrollPositionChangedRevoker{};
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollBeginDrag_revoker
       m_scrollBeginDragRevoker{};
-
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollEndDrag_revoker
       m_scrollEndDragRevoker{};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollMomentumBegin_revoker
+      m_scrollMomentumBeginRevoker{};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollMomentumEnd_revoker
+      m_scrollMomentumEndRevoker{};
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;
@@ -162,6 +173,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_allowNextScrollNoMatterWhat{false};
   std::chrono::steady_clock::time_point m_lastScrollEventTime{};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
+
+  // Keyboard focus state for scrollbars
+  enum class FocusedScrollbar { None, Horizontal, Vertical };
+  FocusedScrollbar m_focusedScrollbar{FocusedScrollbar::None};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

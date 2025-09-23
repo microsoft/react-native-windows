@@ -65,6 +65,9 @@ struct ScrollBarComponent {
         vertical ? winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBarThumbVertical
                  : winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBarThumbHorizontal);
 
+    // Initialize keyboard focus state
+    m_isKeyboardFocused = false;
+
     updateShy(true);
     onScaleChanged();
     UpdateColorForScrollBarRegions();
@@ -571,6 +574,67 @@ struct ScrollBarComponent {
     }
   }
 
+  void setKeyboardFocus(bool focused) noexcept {
+    m_isKeyboardFocused = focused;
+    if (focused) {
+      // Visual feedback when scrollbar has keyboard focus
+      updateHighlight(ScrollbarHitRegion::Thumb);
+      updateShy(false); // Make scrollbar more visible when focused
+    } else {
+      // Return to normal appearance when focus is lost
+      updateHighlight(ScrollbarHitRegion::Unknown);
+      updateShy(true);
+    }
+  }
+
+  bool isKeyboardFocused() const noexcept {
+    return m_isKeyboardFocused;
+  }
+
+  bool handleKeyboardNavigation(winrt::Windows::System::VirtualKey key) noexcept {
+    if (!m_isKeyboardFocused || !m_visible) {
+      return false;
+    }
+
+    if (auto outer = m_wkOuter.get()) {
+      auto scrollView = winrt::get_self<ScrollViewComponentView>(outer);
+
+      if (m_vertical) {
+        switch (key) {
+          case winrt::Windows::System::VirtualKey::Up:
+            return scrollView->lineUp(true);
+          case winrt::Windows::System::VirtualKey::Down:
+            return scrollView->lineDown(true);
+          case winrt::Windows::System::VirtualKey::PageUp:
+            return scrollView->pageUp(true);
+          case winrt::Windows::System::VirtualKey::PageDown:
+            return scrollView->pageDown(true);
+          case winrt::Windows::System::VirtualKey::Home:
+            return scrollView->scrollToStart(true);
+          case winrt::Windows::System::VirtualKey::End:
+            return scrollView->scrollToEnd(true);
+        }
+      } else {
+        // Horizontal scrollbar
+        switch (key) {
+          case winrt::Windows::System::VirtualKey::Left:
+            return scrollView->lineLeft(true);
+          case winrt::Windows::System::VirtualKey::Right:
+            return scrollView->lineRight(true);
+          case winrt::Windows::System::VirtualKey::PageUp:
+            return scrollView->pageUp(true);
+          case winrt::Windows::System::VirtualKey::PageDown:
+            return scrollView->pageDown(true);
+          case winrt::Windows::System::VirtualKey::Home:
+            return scrollView->scrollToStart(true);
+          case winrt::Windows::System::VirtualKey::End:
+            return scrollView->scrollToEnd(true);
+        }
+      }
+    }
+    return false;
+  }
+
  private:
   winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView> m_wkOuter;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
@@ -600,6 +664,7 @@ struct ScrollBarComponent {
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_arrowFirstDrawingSurface{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_arrowLastDrawingSurface{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IRoundedRectangleVisual m_trackVisual{nullptr};
+  bool m_isKeyboardFocused{false};
 };
 
 winrt::Microsoft::ReactNative::ComponentView ScrollViewComponentView::Create(
@@ -997,6 +1062,33 @@ void ScrollViewComponentView::OnPointerCaptureLost() noexcept {
 
 void ScrollViewComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  // Handle Tab navigation for scrollbar focus
+  if (args.Key() == winrt::Windows::System::VirtualKey::Tab) {
+    bool shiftPressed = args.KeyStatus().IsShiftPressed;
+    if (shiftPressed) {
+      args.Handled(focusPreviousScrollbar());
+    } else {
+      args.Handled(focusNextScrollbar());
+    }
+    if (args.Handled()) {
+      return;
+    }
+  }
+
+  // If a scrollbar has focus, let it handle the key first
+  if (m_focusedScrollbar == FocusedScrollbar::Horizontal && m_horizontalScrollbarComponent->isKeyboardFocused()) {
+    if (m_horizontalScrollbarComponent->handleKeyboardNavigation(args.Key())) {
+      args.Handled(true);
+      return;
+    }
+  } else if (m_focusedScrollbar == FocusedScrollbar::Vertical && m_verticalScrollbarComponent->isKeyboardFocused()) {
+    if (m_verticalScrollbarComponent->handleKeyboardNavigation(args.Key())) {
+      args.Handled(true);
+      return;
+    }
+  }
+
+  // Handle general scroll view keyboard navigation
   switch (args.Key()) {
     case winrt::Windows::System::VirtualKey::End:
       args.Handled(scrollToEnd(true));
@@ -1354,6 +1446,32 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
         }
       });
 
+  m_scrollMomentumBeginRevoker = m_scrollVisual.ScrollMomentumBegin(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onMomentumScrollBegin(scrollMetrics);
+        }
+      });
+
+  m_scrollMomentumEndRevoker = m_scrollVisual.ScrollMomentumEnd(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onMomentumScrollEnd(scrollMetrics);
+        }
+      });
+
   return visual;
 }
 
@@ -1413,6 +1531,21 @@ winrt::com_ptr<ComponentView> ScrollViewComponentView::focusVisualRoot(
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ScrollViewComponentView::visualToHostFocus() noexcept {
   return m_scrollVisual;
+}
+
+bool ScrollViewComponentView::focusable() const noexcept {
+  // ScrollView is focusable if it has visible scrollbars that can be keyboard navigated
+  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+
+  // Check if horizontal scrollbar is needed and visible
+  bool hasHorizontalScrollbar = m_horizontalScrollbarComponent &&
+      m_contentSize.width > m_layoutMetrics.frame.size.width && viewProps.showsHorizontalScrollIndicator;
+
+  // Check if vertical scrollbar is needed and visible
+  bool hasVerticalScrollbar = m_verticalScrollbarComponent &&
+      m_contentSize.height > m_layoutMetrics.frame.size.height && viewProps.showsVerticalScrollIndicator;
+
+  return hasHorizontalScrollbar || hasVerticalScrollbar;
 }
 
 int ScrollViewComponentView::getScrollPositionX() noexcept {
@@ -1495,5 +1628,73 @@ void ScrollViewComponentView::updateSnapPoints() noexcept {
   }
 
   m_scrollVisual.SetSnapPoints(viewProps.snapToStart, viewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
+}
+
+bool ScrollViewComponentView::focusNextScrollbar() noexcept {
+  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+
+  // Clear current focus first
+  clearScrollbarFocus();
+
+  // Check which scrollbars are visible and focusable
+  // Horizontal scrollbar is visible when content width exceeds container width
+  bool horizontalVisible = m_horizontalScrollbarComponent && m_contentSize.width > m_layoutMetrics.frame.size.width;
+  // Vertical scrollbar is visible when content height exceeds container height
+  bool verticalVisible = m_verticalScrollbarComponent && m_contentSize.height > m_layoutMetrics.frame.size.height;
+
+  // For horizontal scroll views, prioritize horizontal scrollbar
+  // For vertical scroll views, prioritize vertical scrollbar
+  if (viewProps.horizontal && horizontalVisible) {
+    m_focusedScrollbar = FocusedScrollbar::Horizontal;
+    m_horizontalScrollbarComponent->setKeyboardFocus(true);
+    return true;
+  } else if (!viewProps.horizontal && verticalVisible) {
+    m_focusedScrollbar = FocusedScrollbar::Vertical;
+    m_verticalScrollbarComponent->setKeyboardFocus(true);
+    return true;
+  } else if (horizontalVisible) {
+    m_focusedScrollbar = FocusedScrollbar::Horizontal;
+    m_horizontalScrollbarComponent->setKeyboardFocus(true);
+    return true;
+  } else if (verticalVisible) {
+    m_focusedScrollbar = FocusedScrollbar::Vertical;
+    m_verticalScrollbarComponent->setKeyboardFocus(true);
+    return true;
+  }
+
+  return false;
+}
+
+bool ScrollViewComponentView::focusPreviousScrollbar() noexcept {
+  const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
+
+  // Clear current focus first
+  clearScrollbarFocus();
+
+  // Check which scrollbars are visible and focusable
+  bool horizontalVisible = m_horizontalScrollbarComponent && m_contentSize.width > m_layoutMetrics.frame.size.width;
+  bool verticalVisible = m_verticalScrollbarComponent && m_contentSize.height > m_layoutMetrics.frame.size.height;
+
+  // For reverse tab navigation, focus in opposite order
+  if (verticalVisible) {
+    m_focusedScrollbar = FocusedScrollbar::Vertical;
+    m_verticalScrollbarComponent->setKeyboardFocus(true);
+    return true;
+  } else if (horizontalVisible) {
+    m_focusedScrollbar = FocusedScrollbar::Horizontal;
+    m_horizontalScrollbarComponent->setKeyboardFocus(true);
+    return true;
+  }
+
+  return false;
+}
+
+void ScrollViewComponentView::clearScrollbarFocus() noexcept {
+  if (m_focusedScrollbar == FocusedScrollbar::Horizontal && m_horizontalScrollbarComponent) {
+    m_horizontalScrollbarComponent->setKeyboardFocus(false);
+  } else if (m_focusedScrollbar == FocusedScrollbar::Vertical && m_verticalScrollbarComponent) {
+    m_verticalScrollbarComponent->setKeyboardFocus(false);
+  }
+  m_focusedScrollbar = FocusedScrollbar::None;
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
