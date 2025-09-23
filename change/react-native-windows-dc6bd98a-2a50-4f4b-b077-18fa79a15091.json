@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adding changes to support horiontal scroll with keyboard",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
