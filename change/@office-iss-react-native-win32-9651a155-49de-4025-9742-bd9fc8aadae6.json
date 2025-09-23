@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update tester files",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}
