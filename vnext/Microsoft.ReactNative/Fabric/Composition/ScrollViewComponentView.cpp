@@ -8,6 +8,7 @@
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
+#include <cmath>
 
 #pragma warning(push)
 #pragma warning(disable : 4305)
@@ -1032,13 +1033,22 @@ bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
     return false;
   }
 
-  if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
-       m_scrollVisual.ScrollPosition().y) < 1.0f) {
+  // If content doesn't exceed frame size, no scrolling needed
+  if (m_contentSize.height <= m_layoutMetrics.frame.size.height &&
+      m_contentSize.width <= m_layoutMetrics.frame.size.width) {
     return false;
   }
 
-  auto x = (m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor;
-  auto y = (m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
+  auto x = std::max(0.0f, (m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor);
+  auto y =
+      std::max(0.0f, (m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor);
+
+  // Check if we're already at the end
+  auto currentPos = m_scrollVisual.ScrollPosition();
+  if (std::abs(currentPos.x - x) < 1.0f && std::abs(currentPos.y - y) < 1.0f) {
+    return false;
+  }
+
   // Ensure at least one scroll event will fire
   m_allowNextScrollNoMatterWhat = true;
   m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
@@ -1089,9 +1099,14 @@ bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
     return false;
   }
 
-  if (((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
-          m_scrollVisual.ScrollPosition().y <
-      1.0f) {
+  // If content doesn't exceed frame size, no scrolling allowed
+  if (m_contentSize.height <= m_layoutMetrics.frame.size.height) {
+    return false;
+  }
+
+  // Check if we're already at the bottom
+  float maxScrollY = (m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
+  if (m_scrollVisual.ScrollPosition().y >= maxScrollY - 1.0f) {
     return false;
   }
 
@@ -1130,9 +1145,14 @@ bool ScrollViewComponentView::scrollRight(float delta, bool animate) noexcept {
     return false;
   }
 
-  if (((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) -
-          m_scrollVisual.ScrollPosition().x <
-      1.0f) {
+  // If content doesn't exceed frame size, no scrolling allowed
+  if (m_contentSize.width <= m_layoutMetrics.frame.size.width) {
+    return false;
+  }
+
+  // Check if we're already at the right edge
+  float maxScrollX = (m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor;
+  if (m_scrollVisual.ScrollPosition().x >= maxScrollX - 1.0f) {
     return false;
   }
 
