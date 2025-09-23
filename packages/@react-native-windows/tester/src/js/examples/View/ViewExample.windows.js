@@ -1426,13 +1426,11 @@ export default ({
       name: 'box-sizing',
       render: BoxSizingExample,
     },
-<<<<<<< Upstream
     {
       title: 'Focus/Blur',
       name: 'focus-blur',
       render: FocusBlurExample,
     },
-=======
     // [Windows
     {
       title: 'NativeID',
@@ -1507,6 +1505,5 @@ export default ({
       },
     }, // ]TODO(macOS ISS#2323203)
     // Windows]
->>>>>>> Override
   ],
 }: RNTesterModule);

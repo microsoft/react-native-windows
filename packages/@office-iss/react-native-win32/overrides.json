@@ -89,7 +89,7 @@
       "issue": 6240
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "src-win/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseHash": "85efdbe556a087175fb9328f8d6e8d1f2cf29447"
@@ -398,7 +398,7 @@
       "issue": 0
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src-win/Libraries/Settings/Settings.win32.js",
       "baseFile": "packages/react-native/Libraries/Settings/Settings.js",
       "baseHash": "e1d244ee581a1456d00af638fb9331d90c48c91e"

@@ -73,7 +73,6 @@ function EmptyTextExample(): React.Node {
   );
 }
 
-<<<<<<< Upstream
 function TextAndLayoutLinesJSON({
   testID,
   ellipsizeMode,
@@ -111,23 +110,11 @@ function NumberOfLinesTextLayoutExample(): React.Node {
   );
 }
 
-export default [
-=======
 const examples = [
->>>>>>> Override
   {
     title: 'Empty Text',
     name: 'emptyText',
     render: EmptyTextExample,
-  },
-<<<<<<< Upstream
-  {
-    title: 'TextInlineViewsExample',
-    name: 'inlineViews',
-    description:
-      'Shows how inline views are rendered when text is subject to alignment.',
-    expect: 'The red box should align correctly with the rest of the text.',
-    render: TextInlineViewsExample,
   },
   {
     title: 'numberOfLines with onTextLayout',
@@ -137,9 +124,7 @@ const examples = [
     scrollable: true,
     render: NumberOfLinesTextLayoutExample,
   },
-] as $ReadOnlyArray<RNTesterModuleExample>;
-=======
-  // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
+   // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
   // Paper mode doesn't support Views nested in Text
   ...(global.RN$Bridgeless === true
     ? [
@@ -154,7 +139,6 @@ const examples = [
         },
       ]
     : []),
-];
+] ;
 
 export default examples;
->>>>>>> Override

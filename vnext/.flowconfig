@@ -105,17 +105,11 @@
 ../node_modules/
 
 [libs]
-<<<<<<< Upstream
-flow-typed/
-packages/react-native/interface.js
-packages/react-native/flow/
-=======
 interface.js
 flow/
 ../node_modules/.flow/flow-typed/
 ../node_modules/react-native/src/types
 src/types/
->>>>>>> Override
 
 [options]
 enums=true

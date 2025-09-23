@@ -130,13 +130,8 @@ double NativeDOM::compareDocumentPosition(
     } else {
       // Only the second is a document
       auto otherSurfaceId = otherNativeNodeReference.asNumber();
-<<<<<<< Upstream
       shadowNode = getShadowNode(rt, nativeNodeReference);
       otherShadowNode = getCurrentShadowTreeRevision(rt, otherSurfaceId);
-=======
-      shadowNode = shadowNodeFromValue(rt, nativeNodeReference);
-      otherShadowNode = getCurrentShadowTreeRevision(rt, static_cast<SurfaceId>(otherSurfaceId));
->>>>>>> Override
 
       if (isRootShadowNode(*shadowNode)) {
         // If this is a root node, we just need to check if the other is its

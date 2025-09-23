@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import RNTesterText from '../components/RNTesterText';
@@ -204,11 +204,17 @@ export default function TextLegend(): React.Node {
           onTextLayout={event => {
             setTextMetrics(event.nativeEvent.lines);
           }}
+          /* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+           * https://fburl.com/workplace/6291gfvu */
           style={{
             fontSize: fontSize,
             textAlign: alignment,
           }}>
-          {PANGRAMS[language]}
+          {
+            /* $FlowFixMe[invalid-computed-prop] Natural Inference rollout. See
+             * https://fburl.com/workplace/6291gfvu */
+            PANGRAMS[language]
+          }
         </RNTesterText>
       </View>
       <View style={styles.row}>

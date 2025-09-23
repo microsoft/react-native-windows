@@ -631,9 +631,6 @@ const VectorDrawableExample = () => {
   );
 };
 
-<<<<<<< Upstream
-function CacheControlExample(): React.Node {
-=======
 const AccessibilityActions = () => {
   const [accessibilityLabel, setAccessibilityLabel] =
     React.useState('Initial Label');
@@ -735,8 +732,7 @@ const ImageFunctionsExample = () => {
   );
 };
 
-function CacheControlAndroidExample(): React.Node {
->>>>>>> Override
+  function CacheControlExample(): React.Node {
   const [reload, setReload] = useState(0);
 
   const onReload = () => {
@@ -1311,39 +1307,6 @@ exports.examples = [
   },
   {
     title: 'Cache Policy',
-<<<<<<< Upstream
-=======
-    description:
-      ('First image has never been loaded before and is instructed not to load unless in cache.' +
-        'Placeholder image from above will stay. Second image is the same but forced to load regardless of' +
-        ' local cache state.': string),
-    render: function (): React.Node {
-      return (
-        <View style={styles.horizontal} testID="image-cache" accessible>
-          <Image
-            defaultSource={require('../../assets/bunny.png')}
-            source={{
-              uri: smallImage.uri + '?cacheBust=notinCache' + Date.now(),
-              cache: 'only-if-cached',
-            }}
-            style={styles.base}
-          />
-          <Image
-            defaultSource={require('../../assets/bunny.png')}
-            source={{
-              uri: smallImage.uri + '?cacheBust=notinCache' + Date.now(),
-              cache: 'reload',
-            }}
-            style={styles.base}
-          />
-        </View>
-      );
-    },
-    platform: 'ios',
-  },
-  {
-    title: 'Cache Policy',
->>>>>>> Override
     description: `- First image will be loaded and cached.
 - Second image is the same but will be reloaded if re-rendered as the cache policy is set to reload.
 - Third image will try to load from the cache first and only use the network if the cached version is unavailable.

@@ -13,21 +13,15 @@ import {GestureResponderHandlers} from '../../../types/public/ReactNativeRendere
 import {StyleProp} from '../../StyleSheet/StyleSheet';
 import {ViewStyle} from '../../StyleSheet/StyleSheetTypes';
 import {
-<<<<<<< Upstream
   BlurEvent,
   FocusEvent,
   LayoutChangeEvent,
   PointerEvents,
-} from '../../Types/CoreEventTypes';
-=======
-  LayoutChangeEvent,
   MouseEvent, // Windows
   NativeSyntheticEvent, // Windows
-  PointerEvents,
 } from 'react-native/Libraries/Types/CoreEventTypes';
 
 import {IKeyboardProps} from '../Keyboard/KeyboardExtProps'; // Windows
->>>>>>> Override
 import {Touchable} from '../Touchable/Touchable';
 import {AccessibilityProps} from './ViewAccessibility';
 

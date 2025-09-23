@@ -11,13 +11,10 @@
 import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
-<<<<<<< Upstream
   BlurEvent,
   FocusEvent,
-=======
   KeyEvent, // Windows
   MouseEvent, // Windows
->>>>>>> Override
   GestureResponderEvent,
   ScrollEvent,
 } from '../../Types/CoreEventTypes';

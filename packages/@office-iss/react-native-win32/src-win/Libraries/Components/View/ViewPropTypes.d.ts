@@ -8,7 +8,6 @@
  */
 
 import type * as React from 'react';
-<<<<<<< Upstream
 import {Insets} from '../../../types/public/Insets';
 import {GestureResponderHandlers} from '../../../types/public/ReactNativeRenderer';
 import {StyleProp} from '../../StyleSheet/StyleSheet';
@@ -18,21 +17,10 @@ import {
   FocusEvent,
   LayoutChangeEvent,
   PointerEvents,
-} from '../../Types/CoreEventTypes';
-import {Touchable} from '../Touchable/Touchable';
-=======
-import {Insets} from 'react-native/types/public/Insets';
-import {GestureResponderHandlers} from 'react-native/types/public/ReactNativeRenderer';
-import {StyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
-import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import {
-  LayoutChangeEvent,
   MouseEvent, // Win32
   NativeSyntheticEvent, // Win32
-  PointerEvents,
-} from 'react-native/Libraries/Types/CoreEventTypes';
-import {Touchable} from 'react-native/Libraries/Components/Touchable/Touchable';
->>>>>>> Override
+} from '../../Types/CoreEventTypes';
+import {Touchable} from '../Touchable/Touchable';
 import {AccessibilityProps} from './ViewAccessibility';
 
 export interface TVViewPropsIOS {

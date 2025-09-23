@@ -70,59 +70,6 @@ Object.defineProperties(global, {
   },
 });
 
-<<<<<<< Upstream
-// $FlowFixMe[incompatible-call] - `./mocks/AppState` is incomplete.
-mock('m#../Libraries/AppState/AppState', 'm#./mocks/AppState');
-mock('m#../Libraries/BatchedBridge/NativeModules', 'm#./mocks/NativeModules');
-mock(
-  'm#../Libraries/Components/AccessibilityInfo/AccessibilityInfo',
-  'm#./mocks/AccessibilityInfo',
-);
-mock(
-  'm#../Libraries/Components/ActivityIndicator/ActivityIndicator',
-  'm#./mocks/ActivityIndicator',
-);
-mock('m#../Libraries/Components/Clipboard/Clipboard', 'm#./mocks/Clipboard');
-mock(
-  'm#../Libraries/Components/RefreshControl/RefreshControl',
-  // $FlowFixMe[incompatible-call] - `../Libraries/Components/RefreshControl/RefreshControl` should export a component type.
-  'm#./mocks/RefreshControl',
-);
-// $FlowFixMe[incompatible-exact] - `../Libraries/Components/ScrollView/ScrollView` is... I don't even.
-// $FlowFixMe[prop-missing]
-mock('m#../Libraries/Components/ScrollView/ScrollView', 'm#./mocks/ScrollView');
-mock('m#../Libraries/Components/TextInput/TextInput', 'm#./mocks/TextInput');
-mock('m#../Libraries/Components/View/View', 'm#./mocks/View');
-mock(
-  'm#../Libraries/Components/View/ViewNativeComponent',
-  // $FlowFixMe[incompatible-call] - `./mocks/ViewNativeComponent` is incomplete.
-  // $FlowFixMe[prop-missing]
-  'm#./mocks/ViewNativeComponent',
-);
-mock('m#../Libraries/Core/InitializeCore', 'm#./mocks/InitializeCore');
-mock('m#../Libraries/Core/NativeExceptionsManager');
-mock('m#../Libraries/Image/Image', 'm#./mocks/Image');
-// $FlowFixMe[incompatible-call] - `./mocks/Linking` is incomplete.
-mock('m#../Libraries/Linking/Linking', 'm#./mocks/Linking');
-// $FlowFixMe[incompatible-call] - `../Libraries/Modal/Modal` should export a component type.
-mock('m#../Libraries/Modal/Modal', 'm#./mocks/Modal');
-mock(
-  'm#../Libraries/NativeComponent/NativeComponentRegistry',
-  // $FlowFixMe[prop-missing] - `./mocks/NativeComponentRegistry` should export named functions.
-  'm#./mocks/NativeComponentRegistry',
-);
-// $FlowFixMe[prop-missing] - `./mocks/RendererProxy` is incomplete.
-mock('m#../Libraries/ReactNative/RendererProxy', 'm#./mocks/RendererProxy');
-mock(
-  'm#../Libraries/ReactNative/requireNativeComponent',
-  'm#./mocks/requireNativeComponent',
-);
-// $FlowFixMe[prop-missing] - `./mocks/UIManager` is incomplete.
-mock('m#../Libraries/ReactNative/UIManager', 'm#./mocks/UIManager');
-mock('m#../Libraries/Text/Text', 'm#./mocks/Text');
-mock('m#../Libraries/Utilities/useColorScheme', 'm#./mocks/useColorScheme');
-mock('m#../Libraries/Vibration/Vibration', 'm#./mocks/Vibration');
-=======
 jest
   .mock('../Libraries/Core/InitializeCore', () => {})
   .mock('../Libraries/Core/NativeExceptionsManager')
@@ -564,4 +511,3 @@ jest
     __esModule: true,
     default: jest.fn().mockReturnValue('light'),
   }));
->>>>>>> Override
