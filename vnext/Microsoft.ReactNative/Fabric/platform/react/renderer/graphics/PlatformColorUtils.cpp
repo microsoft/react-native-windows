@@ -9,7 +9,10 @@
 #include <XamlUtils.h>
 #endif // CORE_ABI
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <winuser.h>
+#ifdef USE_FABRIC
+#include <react/renderer/graphics/Color.h>
+#include "HostPlatformColor.h"
+#endif
 
 namespace facebook::react {
 
@@ -144,35 +147,50 @@ winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &s
   return {};
 }
 
-winrt::Windows::UI::Color GetTextInputPlaceholderColor(
-    bool isFocused,
-    const winrt::Windows::UI::Color &backgroundColor) {
+#ifdef USE_FABRIC
+SharedColor GetTextInputPlaceholderColor(bool isFocused, const winrt::Windows::UI::Color &backgroundColor) {
   // In high contrast mode, always use system GrayText for accessibility
-  HIGHCONTRAST hcInfo = {};
-  if (SystemParametersInfo(SPI_GETHIGHCONTRAST, 0, &hcInfo, 0) && (hcInfo.dwFlags & HCF_HIGHCONTRASTON)) {
+  if (Microsoft::ReactNative::IsInHighContrastWin32()) {
     auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
-    return uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::GrayText);
+    auto grayText = uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::GrayText);
+    return hostPlatformColorFromRGBA(grayText.R, grayText.G, grayText.B, grayText.A);
   }
 
   // If no background color provided, use WinUI3 semantic colors as fallback
   if (backgroundColor.A == 0) {
     if (isFocused) {
-      return ResolvePlatformColor({"TextFillColorSecondary"});
+      auto color = ResolvePlatformColor({"TextFillColorSecondary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
     } else {
-      return ResolvePlatformColor({"TextFillColorDisabled"});
+      auto color = ResolvePlatformColor({"TextFillColorDisabled"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
     }
   }
 
   // Use ITU-R BT.601 luminance calculation to determine background brightness
   bool isLightBackground = Microsoft::ReactNative::IsColorLight(backgroundColor);
 
+  // Use Windows 11 design system semantic colors for optimal contrast and consistency
+  // Light backgrounds: TextFillColorPrimary (darker) for focus, TextFillColorSecondary for unfocused
+  // Dark backgrounds: TextFillColorPrimary (lighter) for focus, TextFillColorSecondary for unfocused
   if (isLightBackground) {
-    return isFocused ? winrt::Windows::UI::Color{0xFF, 0x60, 0x60, 0x60} : // Darker gray for focused state
-        winrt::Windows::UI::Color{0xFF, 0x99, 0x99, 0x99}; // Medium gray for unfocused state
+    if (isFocused) {
+      auto color = ResolvePlatformColor({"TextFillColorPrimary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    } else {
+      auto color = ResolvePlatformColor({"TextFillColorSecondary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    }
   } else {
-    return isFocused ? winrt::Windows::UI::Color{0xFF, 0xC0, 0xC0, 0xC0} : // Light gray for focused state
-        winrt::Windows::UI::Color{0xFF, 0x90, 0x90, 0x90}; // Medium gray for unfocused state
+    if (isFocused) {
+      auto color = ResolvePlatformColor({"TextFillColorPrimary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    } else {
+      auto color = ResolvePlatformColor({"TextFillColorSecondary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    }
   }
 }
+#endif
 
 } // namespace facebook::react

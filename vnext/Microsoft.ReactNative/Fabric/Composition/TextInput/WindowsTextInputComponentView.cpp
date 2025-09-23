@@ -1692,6 +1692,10 @@ void WindowsTextInputComponentView::DrawText() noexcept {
           winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
         } else {
           // Use theme-aware placeholder color based on focus state and background
+          // Color selection follows Windows 11 design system semantic colors:
+          // - High contrast: System GrayText for accessibility
+          // - Light backgrounds: Darker grays for better contrast
+          // - Dark backgrounds: Lighter grays for readability
           winrt::Windows::UI::Color backgroundColor = {};
           if (facebook::react::isColorMeaningful(props.backgroundColor)) {
             auto bgColor = (*props.backgroundColor).AsWindowsColor();
@@ -1699,11 +1703,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
           }
 
           auto placeholderColor = facebook::react::GetTextInputPlaceholderColor(m_hasFocus, backgroundColor);
-          auto d2dColor = D2D1::ColorF(
-              placeholderColor.R / 255.0f,
-              placeholderColor.G / 255.0f,
-              placeholderColor.B / 255.0f,
-              placeholderColor.A / 255.0f);
+          auto d2dColor = theme()->D2DColor(*placeholderColor);
           winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(d2dColor, brush.put()));
         }
 
