@@ -6251,6 +6251,11 @@ flow-bin@^0.271.0:
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.271.0.tgz#4a7632e9230f96bd00f0a61581b170fa153e1d73"
   integrity sha512-BQjk0DenuPLbB/WlpQzDkSnObOPdzR+PBDItZlawApH/56fqYlM40WuBLs+cfUjjaByML46WHyOAWlQoWnPnjQ==
 
+flow-bin@^0.272.2:
+  version "0.272.2"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.272.2.tgz#918fc58dc7a99725a83314f453d3e49a56aebdc5"
+  integrity sha512-Rf8UG1biRBUGGh6qN7Ua2Y2lJRpR8Pbzby5kfHQ5m5SgjC5eOPw3Qjbrheb9ec5oU4L1gCOXRYbkbpr02PRUBw==
+
 flow-enums-runtime@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/flow-enums-runtime/-/flow-enums-runtime-0.0.6.tgz#5bb0cd1b0a3e471330f4d109039b7eba5cb3e787"
@@ -8667,7 +8672,7 @@ merge2@^1.3.0, merge2@^1.4.1:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-metro-babel-register@^0.82.3:
+metro-babel-register@^0.82.4:
   version "0.82.5"
   resolved "https://registry.yarnpkg.com/metro-babel-register/-/metro-babel-register-0.82.5.tgz#897c2021e6c44b18b533338d420fcacd5e9807c4"
   integrity sha512-pWGLHX1ggicEu6UvF3Pe7E7xY7812u/EaY1OiR7f9ooy5s/W20OQsvkNshQ68j9v1yvFkckgzB2YCTYiklSsIg==
@@ -8749,7 +8754,7 @@ metro-file-map@0.82.5:
     nullthrows "^1.1.1"
     walker "^1.0.7"
 
-metro-memory-fs@^0.82.3:
+metro-memory-fs@^0.82.4:
   version "0.82.5"
   resolved "https://registry.yarnpkg.com/metro-memory-fs/-/metro-memory-fs-0.82.5.tgz#ae6c4c251cd6dc9cf44540c3b1356cff54db875e"
   integrity sha512-yMYtBwDtG84vnDfQDEGZ3EUYbHng4dMZX2AKSQFQOMdd34lyQcD1yV5yrrUTG/DqMKDxJGqmxDkeyqTlKwwuUA==
@@ -8807,7 +8812,7 @@ metro-symbolicate@0.82.5:
     source-map "^0.5.6"
     vlq "^1.0.0"
 
-metro-transform-plugins@0.82.5, metro-transform-plugins@^0.82.3:
+metro-transform-plugins@0.82.5, metro-transform-plugins@^0.82.4:
   version "0.82.5"
   resolved "https://registry.yarnpkg.com/metro-transform-plugins/-/metro-transform-plugins-0.82.5.tgz#678da4d0f9085b2a3fc0b4350062f19cc625c5fc"
   integrity sha512-57Bqf3rgq9nPqLrT2d9kf/2WVieTFqsQ6qWHpEng5naIUtc/Iiw9+0bfLLWSAw0GH40iJ4yMjFcFJDtNSYynMA==
@@ -11488,6 +11493,11 @@ tar@^6.0.2, tar@^6.1.9:
     minizlib "^2.1.1"
     mkdirp "^1.0.3"
     yallist "^4.0.0"
+
+temp-dir@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/temp-dir/-/temp-dir-2.0.0.tgz#bde92b05bdfeb1516e804c9c00ad45177f31321e"
+  integrity sha512-aoBAniQmmwtcKp/7BzsH8Cxzv8OL736p7v1ihGb5e9DJ9kTwGWHrQrVB5+lfVDzfGrdRzXch+ig7LHaY1JTOrg==
 
 temp@^0.8.4:
   version "0.8.4"

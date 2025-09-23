@@ -8,10 +8,10 @@
  */
 
 import type * as React from 'react';
-import {Insets} from '../../../types/public/Insets';
-import {GestureResponderHandlers} from '../../../types/public/ReactNativeRenderer';
-import {StyleProp} from '../../StyleSheet/StyleSheet';
-import {ViewStyle} from '../../StyleSheet/StyleSheetTypes';
+import {Insets} from 'react-native/types/public/Insets';
+import {GestureResponderHandlers} from 'react-native/types/public/ReactNativeRenderer';
+import {StyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
+import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import {
   BlurEvent,
   FocusEvent,
@@ -20,7 +20,7 @@ import {
   MouseEvent, // Win32
   NativeSyntheticEvent, // Win32
 } from '../../Types/CoreEventTypes';
-import {Touchable} from '../Touchable/Touchable';
+import {Touchable} from 'react-native/Libraries/Components/Touchable/Touchable';
 import {AccessibilityProps} from './ViewAccessibility';
 
 export interface TVViewPropsIOS {
