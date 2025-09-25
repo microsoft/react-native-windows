@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 17 Sep 2025 05:27:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 19 Sep 2025 05:29:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.993
+
+Fri, 19 Sep 2025 05:29:13 GMT
+
+### Changes
+
+- Removing Platform brush instead using proper caret brush (nitchaudhary@microsoft.com)
+- adding nullptr check before destroyShadow calls (protikbiswas100@microsoft.com)
+- fix (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-platform-override to v1.9.58
+
+## 0.0.0-canary.992
+
+Thu, 18 Sep 2025 05:34:35 GMT
+
+### Changes
+
+- Remove legacy cxxmodules (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.991
 

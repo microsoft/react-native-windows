@@ -4,7 +4,6 @@
 #pragma once
 
 #include <JSValue.h>
-#include <cxxreact/CxxModule.h>
 
 namespace Microsoft::ReactNative {
 

@@ -10,8 +10,12 @@
 namespace Microsoft::ReactNative {
 
 void ShadowNodeDeleter::operator()(ShadowNode *node) {
-  if (node->m_viewManager)
-    node->m_viewManager->destroyShadow(node);
+  if (node && node->m_viewManager) {
+    // Clear the view manager pointer to prevent double deletion
+    auto viewManager = node->m_viewManager;
+    node->m_viewManager = nullptr;
+    viewManager->destroyShadow(node);
+  }
 }
 
 void ShadowNodeRegistry::addRootView(std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&root, int64_t rootViewTag) {

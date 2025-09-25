@@ -501,7 +501,15 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   }
 
   void DropView(int64_t tag, bool removeChildren = true, bool zombieView = false) {
+    // Prevent re-entry and double deletion which can cause memory corruption
+    if (m_nodesBeingDropped.find(tag) != m_nodesBeingDropped.end()) {
+      return;
+    }
+
     if (auto node = m_nodeRegistry.findNode(tag)) {
+      // Mark this node as being dropped
+      m_nodesBeingDropped.insert(tag);
+
       node->onDropViewInstance();
 
       m_nativeUIManager->RemoveView(*node, removeChildren);
@@ -509,14 +517,21 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       if (zombieView)
         node->m_zombie = true;
 
-      for (auto childTag : node->m_children)
+      // Make a copy of children to avoid iterator invalidation
+      auto children = node->m_children;
+      for (auto childTag : children) {
         DropView(childTag, removeChildren, zombieView);
+      }
 
       if (removeChildren)
         node->removeAllChildren();
 
-      if (!zombieView)
+      if (!zombieView) {
         m_nodeRegistry.removeNode(tag);
+      }
+
+      // Remove from tracking set
+      m_nodesBeingDropped.erase(tag);
     }
   }
 
@@ -525,6 +540,8 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   ShadowNodeRegistry m_nodeRegistry;
   std::shared_ptr<NativeUIManager> m_nativeUIManager;
   const React::JSValueObject accessibilityEventTypes = React::JSValueObject{{"typeViewFocused", 8}};
+  // Track nodes being dropped to prevent double-deletion and corruption
+  std::unordered_set<int64_t> m_nodesBeingDropped;
 };
 
 UIManager::UIManager() : m_module(std::make_shared<UIManagerModule>()) {}

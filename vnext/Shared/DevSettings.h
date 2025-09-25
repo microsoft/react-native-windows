@@ -106,17 +106,11 @@ struct DevSettings {
 
   bool enableDefaultCrashHandler{false};
 
-  // Transitory. Used to indicate whether or not to load networking types in the default Cxx module registry.
-  bool omitNetworkingCxxModules{false};
-
   // OC:8368383 - Memory leak under investigation.
   bool useWebSocketTurboModule{false};
 
   // Enable concurrent mode by installing runtimeScheduler
   bool useRuntimeScheduler{false};
-
-  // If true, then use only Turbo Modules instead of CxxModules.
-  bool useTurboModulesOnly{false};
 };
 
 } // namespace react

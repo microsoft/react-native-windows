@@ -16,6 +16,5 @@ struct II18nModule {
   virtual void setForceRTL(bool forceRTL) = 0;
 };
 
-std::unique_ptr<facebook::xplat::module::CxxModule> createI18nModule(std::unique_ptr<II18nModule> module);
 } // namespace windows
 } // namespace react

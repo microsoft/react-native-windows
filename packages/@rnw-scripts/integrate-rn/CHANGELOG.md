@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 19 Sep 2025 05:29:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.63
+
+Fri, 19 Sep 2025 05:29:14 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.9.58
 
 ## 1.4.62
 

@@ -25,11 +25,6 @@
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>
 
-#include <Modules/ExceptionsManagerModule.h>
-#include <Modules/PlatformConstantsModule.h>
-#include <Modules/SourceCodeModule.h>
-#include <Modules/StatusBarManagerModule.h>
-
 #if (defined(_MSC_VER) && (defined(WINRT)))
 #include <Utils/LocalBundleReader.h>
 #endif
@@ -376,8 +371,7 @@ InstanceImpl::InstanceImpl(
     m_devManager->EnsureHermesInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
-  // Default (common) NativeModules
-  auto modules = GetDefaultNativeModules(nativeQueue);
+  std::vector<std::unique_ptr<NativeModule>> modules;
 
   // Add app provided modules.
   for (auto &cxxModule : cxxModules) {
@@ -590,111 +584,6 @@ InstanceImpl::~InstanceImpl() {
     m_devSettings->jsiRuntimeHolder->teardown();
   }
   m_nativeQueue->quitSynchronous();
-}
-
-std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
-    std::shared_ptr<MessageQueueThread> nativeQueue) {
-  std::vector<std::unique_ptr<NativeModule>> modules;
-  if (m_devSettings->useTurboModulesOnly) {
-    return modules;
-  }
-
-  auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
-
-  // These modules are instantiated separately in MSRN (Universal Windows).
-  // When there are module name collisions, the last one registered is used.
-  // If this code is enabled, we will have unused module instances.
-  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
-#if (defined(_MSC_VER) && !defined(WINRT))
-
-  // OC:8368383 - Memory leak under investigation.
-  if (!m_devSettings->useWebSocketTurboModule) {
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
-        Microsoft::React::GetWebSocketModuleName(),
-        [transitionalProps]() { return Microsoft::React::CreateWebSocketModule(transitionalProps); },
-        nativeQueue));
-  }
-
-  // Applications using the Windows ABI feature should load the networking TurboModule variants instead.
-  if (!m_devSettings->omitNetworkingCxxModules) {
-    // Use in case the host app provides its a non-Blob-compatible HTTP module.
-    if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
-      modules.push_back(std::make_unique<CxxNativeModule>(
-          m_innerInstance,
-          Microsoft::React::GetHttpModuleName(),
-          [transitionalProps]() { return Microsoft::React::CreateHttpModule(transitionalProps); },
-          nativeQueue));
-
-      modules.push_back(std::make_unique<CxxNativeModule>(
-          m_innerInstance,
-          Microsoft::React::GetBlobModuleName(),
-          [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
-          nativeQueue));
-
-      modules.push_back(std::make_unique<CxxNativeModule>(
-          m_innerInstance,
-          Microsoft::React::GetFileReaderModuleName(),
-          [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
-          nativeQueue));
-    }
-  }
-
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      "Timing",
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return react::CreateTimingModule(nativeQueue); },
-      nativeQueue));
-#endif
-
-  uint32_t hermesBytecodeVersion = 0;
-#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
-  hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
-#endif
-
-  // TODO - Encapsulate this in a helpers, and make sure callers add it to their
-  // list
-  std::string bundleUrl = (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback)
-      ? DevServerHelper::get_BundleUrl(
-            m_devSettings->sourceBundleHost,
-            m_devSettings->sourceBundlePort,
-            m_devSettings->debugBundlePath,
-            m_devSettings->platformName,
-            m_devSettings->bundleAppId,
-            m_devSettings->devBundle,
-            m_devSettings->useFastRefresh,
-            m_devSettings->inlineSourceMap,
-            hermesBytecodeVersion)
-      : m_devSettings->bundleRootPath;
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      facebook::react::SourceCodeModule::Name,
-      [bundleUrl]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return std::make_unique<SourceCodeModule>(bundleUrl);
-      },
-      nativeQueue));
-
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      "ExceptionsManager",
-      [redboxHandler = m_devSettings->redboxHandler]() mutable {
-        return std::make_unique<ExceptionsManagerModule>(redboxHandler);
-      },
-      nativeQueue));
-
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      PlatformConstantsModule::Name,
-      []() { return std::make_unique<PlatformConstantsModule>(); },
-      nativeQueue));
-
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      StatusBarManagerModule::Name,
-      []() { return std::make_unique<StatusBarManagerModule>(); },
-      nativeQueue));
-
-  return modules;
 }
 
 void InstanceImpl::RegisterForReloadIfNecessary() noexcept {

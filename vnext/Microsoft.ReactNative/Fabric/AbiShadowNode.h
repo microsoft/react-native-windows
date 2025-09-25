@@ -46,7 +46,7 @@ struct ShadowNode : ShadowNodeT<ShadowNode> {
   winrt::Microsoft::ReactNative::EventEmitter EventEmitter() const noexcept;
 
  protected:
-  facebook::react::ShadowNode::Weak m_shadowNode;
+  std::weak_ptr<const facebook::react::ShadowNode> m_shadowNode;
   winrt::Windows::Foundation::IInspectable m_tag;
 };
 

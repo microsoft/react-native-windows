@@ -7,9 +7,6 @@
 #include <React.h>
 #include <ReactPropertyBag.h>
 
-// React Native
-#include <cxxreact/CxxModule.h>
-
 // Windows API
 #include <winrt/Windows.Security.Cryptography.Certificates.h>
 

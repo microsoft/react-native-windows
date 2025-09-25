@@ -114,7 +114,6 @@
     <ClCompile Include="UtilsTest.cpp" />
     <ClCompile Include="WebSocketJSExecutorTest.cpp" />
     <ClCompile Include="WebSocketMocks.cpp" />
-    <ClCompile Include="WebSocketModuleTest.cpp" />
     <ClCompile Include="WinRTNetworkingMocks.cpp" />
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp" />
   </ItemGroup>
