@@ -382,7 +382,7 @@ TextMeasurement TextLayoutManager::measure(
   auto &attributedString = attributedStringBox.getValue();
 
   measurement = textMeasureCache_.get(
-      {attributedString, paragraphAttributes, layoutConstraints}, [&](TextMeasureCacheKey const &key) {
+      {attributedString, paragraphAttributes, layoutConstraints}, [&]() {
         auto telemetry = TransactionTelemetry::threadLocalTelemetry();
         if (telemetry) {
           telemetry->willMeasureText();

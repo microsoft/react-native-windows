@@ -577,7 +577,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewEventEmitter.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewProps.cpp" DisableSpecificWarnings="4305;4715;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\BaseScrollViewProps.cpp" DisableSpecificWarnings="4305;4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewShadowNode.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewState.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextProps.cpp" />
@@ -657,6 +657,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\BufferedRuntimeExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\ReactInstance.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\runtimeexecutor\platform\cxx\ReactCommon\RuntimeExecutorSyncUIThreadUtils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\TimerManager.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryReporter.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserverRegistry.cpp" />

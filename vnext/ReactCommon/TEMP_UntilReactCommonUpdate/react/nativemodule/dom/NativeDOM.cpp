@@ -112,7 +112,7 @@ double NativeDOM::compareDocumentPosition(
       return dom::DOCUMENT_POSITION_DISCONNECTED;
     } else if (nativeNodeReference.isNumber()) {
       // Only the first is a document
-      auto surfaceId = nativeNodeReference.asNumber();
+      auto surfaceId = static_cast<SurfaceId>(nativeNodeReference.asNumber());
       shadowNode = currentRevision;
       otherShadowNode = getShadowNode(rt, otherNativeNodeReference);
 
@@ -129,7 +129,7 @@ double NativeDOM::compareDocumentPosition(
       }
     } else {
       // Only the second is a document
-      auto otherSurfaceId = otherNativeNodeReference.asNumber();
+      auto otherSurfaceId = static_cast<SurfaceId>(otherNativeNodeReference.asNumber());
       shadowNode = getShadowNode(rt, nativeNodeReference);
       otherShadowNode = getCurrentShadowTreeRevision(rt, otherSurfaceId);
 
