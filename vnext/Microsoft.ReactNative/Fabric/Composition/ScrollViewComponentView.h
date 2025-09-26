@@ -121,7 +121,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
  private:
   void updateDecelerationRate(float value) noexcept;
   void updateContentVisualSize() noexcept;
-  void updateSnapPoints() noexcept;
   bool scrollToEnd(bool animate) noexcept;
   bool scrollToStart(bool animate) noexcept;
   bool scrollDown(float delta, bool animate) noexcept;
@@ -135,7 +134,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
   void updateShowsHorizontalScrollIndicator(bool value) noexcept;
   void updateShowsVerticalScrollIndicator(bool value) noexcept;
-  winrt::Windows::Foundation::Collections::IVector<float> CreateSnapToOffsets(const std::vector<float> &offsets);
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
