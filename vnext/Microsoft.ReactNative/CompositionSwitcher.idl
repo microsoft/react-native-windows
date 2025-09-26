@@ -31,13 +31,6 @@ namespace Microsoft.ReactNative.Composition.Experimental
     SwitchThumb,
   };
 
-  enum SnapAlignment
-  {
-    Start,
-    Center,
-    End,
-  };
-
   [webhosthidden]
   [uuid("172def51-9e1a-4e3c-841a-e5a470065acc")] // uuid needed for empty interfaces
   [version(0)]
@@ -127,7 +120,7 @@ namespace Microsoft.ReactNative.Composition.Experimental
     void SetMaximumZoomScale(Single maximumZoomScale);
     void SetMinimumZoomScale(Single minimumZoomScale);
     Boolean Horizontal;
-    void SetSnapPoints(Boolean snapToStart, Boolean snapToEnd, Windows.Foundation.Collections.IVectorView<Single> offsets, SnapAlignment snapToAlignment);
+    void SetSnapPoints(Boolean snapToStart, Boolean snapToEnd, Windows.Foundation.Collections.IVectorView<Single> offsets);
   }
 
   [webhosthidden]
