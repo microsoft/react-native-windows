@@ -10,10 +10,10 @@
 
 namespace Microsoft::ReactNative {
 
-// Color brightness calculation constants (standard luminance formula)
-constexpr int kColorBrightnessRedWeight = 299;
-constexpr int kColorBrightnessGreenWeight = 587;
-constexpr int kColorBrightnessBlueWeight = 114;
+// RGB luminance weights per ITU-R BT.601 standard (legacy NTSC weights)
+constexpr int kColorBrightnessRedWeight = 299; // Red coefficient: 299/1000 = 0.299
+constexpr int kColorBrightnessGreenWeight = 587; // Green coefficient: 587/1000 = 0.587
+constexpr int kColorBrightnessBlueWeight = 114; // Blue coefficient: 114/1000 = 0.114
 constexpr int kColorBrightnessDivisor = 1000;
 
 // Caret color threshold constants
@@ -24,7 +24,7 @@ constexpr int kCaretSelectionBrightnessThreshold = 125;
 bool IsColorLight(const winrt::Windows::UI::Color &clr) noexcept;
 bool IsInHighContrastWin32() noexcept;
 
-// Calculate brightness using standard luminance formula
+// Calculate brightness using ITU-R BT.601 luminance formula
 int CalculateColorBrightness(const winrt::Windows::UI::Color &color) noexcept;
 
 // Calculate brightness from RGB values

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix for hardcoded Textinput text holder as gray.GIssue:15129",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
