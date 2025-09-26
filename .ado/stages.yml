@@ -77,6 +77,11 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
+      - template: jobs/accessibility-tests.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
+
   - stage: CLI
     displayName: Cli 🖥
     dependsOn: Setup
