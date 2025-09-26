@@ -561,7 +561,31 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsOffscreenPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (compositionView->getClipState() == ClipState::FullyClipped) ? VARIANT_TRUE : VARIANT_FALSE;
+
+      // Special handling for modal content - check if component is in a popup/modal window
+      bool isOffscreen = true;
+      auto clipState = compositionView->getClipState();
+
+      if (clipState != ClipState::FullyClipped) {
+        isOffscreen = false;
+      } else {
+        // Component appears clipped, but check if it's modal content
+        // Modal content may appear clipped due to lack of parent relationships
+        // but should still be considered visible if it's in its own window
+        try {
+          if (auto hwnd = compositionView->GetHwndForParenting()) {
+            // Check if this window is visible and not minimized
+            if (IsWindowVisible(hwnd) && !IsIconic(hwnd)) {
+              isOffscreen = false; // Window is visible, so content is not offscreen
+            }
+          }
+        } catch (...) {
+          // If we can't get window info, fall back to clip state
+          isOffscreen = true;
+        }
+      }
+
+      pRetVal->boolVal = isOffscreen ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
     case UIA_HelpTextPropertyId: {
