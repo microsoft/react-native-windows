@@ -217,6 +217,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\ShadowViewNodePair.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\TinyMap.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Rect.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\timing\primitives.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />

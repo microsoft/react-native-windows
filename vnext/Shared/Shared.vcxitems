@@ -236,12 +236,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\AsynchronousEventBeat.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-	<ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeWin32App.cpp">
+	  <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeWin32App.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-	<ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.cpp">
+	  <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -545,7 +545,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\ReactPerfettoLogger.cpp" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\timing\primitives.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatPosix.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatWindows.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
