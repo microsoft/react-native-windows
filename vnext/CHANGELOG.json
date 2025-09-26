@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Sep 2025 05:31:31 GMT",
+      "version": "0.0.0-canary.994",
+      "tag": "react-native-windows_v0.0.0-canary.994",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cd6dcc01e04ff00da1821c95451f5871730af368",
+            "comment": "Fix for hardcoded Textinput text holder as gray.GIssue:15129"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Sep 2025 05:29:13 GMT",
       "version": "0.0.0-canary.993",
       "tag": "react-native-windows_v0.0.0-canary.993",
