@@ -44,6 +44,10 @@ class ActivityIndicatorViewProps final : public ViewProps {
   bool animating{true};
   SharedColor color{};
   ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 enum class AndroidDrawerLayoutKeyboardDismissMode { None, OnDrag };
@@ -107,6 +111,10 @@ class AndroidDrawerLayoutProps final : public ViewProps {
   Float drawerWidth{};
   AndroidDrawerLayoutDrawerLockMode drawerLockMode{AndroidDrawerLayoutDrawerLockMode::Unlocked};
   SharedColor statusBarBackgroundColor{};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class AndroidHorizontalScrollContentViewProps final : public ViewProps {
@@ -117,6 +125,10 @@ class AndroidHorizontalScrollContentViewProps final : public ViewProps {
 #pragma mark - Props
 
   bool removeClippedSubviews{false};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 enum class AndroidSwipeRefreshLayoutSize { Default, Large };
@@ -148,6 +160,10 @@ class AndroidSwipeRefreshLayoutProps final : public ViewProps {
   AndroidSwipeRefreshLayoutSize size{AndroidSwipeRefreshLayoutSize::Default};
   Float progressViewOffset{0.0};
   bool refreshing{false};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class AndroidSwitchProps final : public ViewProps {
@@ -166,6 +182,10 @@ class AndroidSwitchProps final : public ViewProps {
   bool on{false};
   SharedColor thumbTintColor{};
   SharedColor trackTintColor{};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class DebuggingOverlayProps final : public ViewProps {
@@ -176,6 +196,10 @@ class DebuggingOverlayProps final : public ViewProps {
 #pragma mark - Props
 
   
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class AndroidProgressBarProps final : public ViewProps {
@@ -192,6 +216,10 @@ class AndroidProgressBarProps final : public ViewProps {
   bool animating{true};
   SharedColor color{};
   std::string testID{""};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class PullToRefreshViewProps final : public ViewProps {
@@ -206,6 +234,10 @@ class PullToRefreshViewProps final : public ViewProps {
   std::string title{};
   Float progressViewOffset{0.0};
   bool refreshing{false};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class InputAccessoryProps final : public ViewProps {
@@ -216,6 +248,10 @@ class InputAccessoryProps final : public ViewProps {
 #pragma mark - Props
 
   SharedColor backgroundColor{};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 enum class ModalHostViewAnimationType { None, Slide, Fade };
@@ -356,6 +392,10 @@ class ModalHostViewProps final : public ViewProps {
   ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
   int identifier{0};
   std::string title{};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class SafeAreaViewProps final : public ViewProps {
@@ -366,6 +406,10 @@ class SafeAreaViewProps final : public ViewProps {
 #pragma mark - Props
 
   
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class SwitchProps final : public ViewProps {
@@ -383,6 +427,10 @@ class SwitchProps final : public ViewProps {
   SharedColor thumbColor{};
   SharedColor trackColorForFalse{};
   SharedColor trackColorForTrue{};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 class UnimplementedNativeViewProps final : public ViewProps {
@@ -393,6 +441,10 @@ class UnimplementedNativeViewProps final : public ViewProps {
 #pragma mark - Props
 
   std::string name{""};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
 };
 
 } // namespace facebook::react

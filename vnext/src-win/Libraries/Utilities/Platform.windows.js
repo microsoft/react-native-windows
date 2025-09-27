@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * @format
  * @flow strict
+ * @format
  */
 
 import type {

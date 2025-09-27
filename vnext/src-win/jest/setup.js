@@ -4,21 +4,20 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @flow strict-local
  * @format
  */
-
-'use strict';
 
 global.IS_REACT_ACT_ENVIRONMENT = true;
 // Suppress the `react-test-renderer` warnings until New Architecture and legacy
 // mode are no longer supported by React Native.
 global.IS_REACT_NATIVE_TEST_ENVIRONMENT = true;
 
-const MockNativeMethods = jest.requireActual('./MockNativeMethods');
-const mockComponent = jest.requireActual('./mockComponent');
+import '@react-native/js-polyfills/error-guard';
 
-jest.requireActual('@react-native/js-polyfills/error-guard');
+import mock from './mock';
 
+// $FlowIgnore[cannot-write]
 Object.defineProperties(global, {
   __DEV__: {
     configurable: true,
@@ -29,7 +28,9 @@ Object.defineProperties(global, {
   cancelAnimationFrame: {
     configurable: true,
     enumerable: true,
-    value: id => clearTimeout(id),
+    value(id: TimeoutID): void {
+      return clearTimeout(id);
+    },
     writable: true,
   },
   nativeFabricUIManager: {
@@ -42,6 +43,7 @@ Object.defineProperties(global, {
     configurable: true,
     enumerable: true,
     value: {
+      // $FlowIgnore[method-unbinding]
       now: jest.fn(Date.now),
     },
     writable: true,
@@ -49,13 +51,15 @@ Object.defineProperties(global, {
   regeneratorRuntime: {
     configurable: true,
     enumerable: true,
-    value: jest.requireActual('regenerator-runtime/runtime'),
+    value: jest.requireActual<mixed>('regenerator-runtime/runtime'),
     writable: true,
   },
   requestAnimationFrame: {
     configurable: true,
     enumerable: true,
-    value: callback => setTimeout(() => callback(jest.now()), 0),
+    value(callback: number => void): TimeoutID {
+      return setTimeout(() => callback(jest.now()), 0);
+    },
     writable: true,
   },
   window: {
