@@ -1156,7 +1156,9 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
         {texts}
         {marker}
       </View>
-
+    </View>
+  ) : (
+    <View>
       {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
        * https://fburl.com/workplace/6291gfvu */}
       <RNTesterText style={subtitleStyle}>
