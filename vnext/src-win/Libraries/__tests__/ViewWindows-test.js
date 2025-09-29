@@ -1,9 +1,10 @@
-
 'use strict';
 
-// Add this import to fix the mockComponent reference error
+// Add these imports to fix the reference errors
 import mockComponent from 'react-native/jest/mockComponent';
+import MockNativeMethods from 'react-native/jest/MockNativeMethods';
 global.mockComponent = mockComponent;
+global.MockNativeMethods = MockNativeMethods;
 
 const React = require('react');
 const renderer = require('react-native/jest/renderer');
