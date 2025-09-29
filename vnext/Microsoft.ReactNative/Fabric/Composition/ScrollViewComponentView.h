@@ -18,8 +18,6 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-using namespace Microsoft::ReactNative::Composition::Experimental;
-
 struct ScrollBarComponent;
 
 struct ScrollViewComponentView : ScrollViewComponentViewT<ScrollViewComponentView, ViewComponentView> {
@@ -137,7 +135,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
   void updateShowsHorizontalScrollIndicator(bool value) noexcept;
   void updateShowsVerticalScrollIndicator(bool value) noexcept;
-  SnapAlignment convertSnapToAlignment(facebook::react::ScrollViewSnapToAlignment alignment) noexcept;
   winrt::Windows::Foundation::Collections::IVector<float> CreateSnapToOffsets(const std::vector<float> &offsets);
 
   facebook::react::Size m_contentSize;

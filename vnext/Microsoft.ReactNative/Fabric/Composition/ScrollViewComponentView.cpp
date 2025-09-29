@@ -817,13 +817,16 @@ void ScrollViewComponentView::updateProps(
   }
 
   if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
-      oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
-    if (oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets ||
+      oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+    if ((newViewProps.snapToInterval > 0 || oldViewProps.snapToInterval != newViewProps.snapToInterval) &&
+        (newViewProps.decelerationRate >= 0.99)) {
+      // Use the comprehensive updateSnapPoints method when snapToInterval is involved
+      // Typically used in combination with snapToAlignment and decelerationRate="fast".
       updateSnapPoints();
     } else {
-      const auto snapToOffsets = CreateSnapToOffsets(newViewProps.snapToOffsets);
-      m_scrollVisual.SetSnapPoints(
-          newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView(), SnapAlignment::Center);
+      auto snapToOffsets = CreateSnapToOffsets(newViewProps.snapToOffsets);
+      m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
     }
   }
 }
@@ -1477,29 +1480,12 @@ void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
 }
 
-SnapAlignment ScrollViewComponentView::convertSnapToAlignment(
-    facebook::react::ScrollViewSnapToAlignment alignment) noexcept {
-  switch (alignment) {
-    case facebook::react::ScrollViewSnapToAlignment::Center:
-      return SnapAlignment::Center;
-    case facebook::react::ScrollViewSnapToAlignment::End:
-      return SnapAlignment::End;
-    case facebook::react::ScrollViewSnapToAlignment::Start:
-    default:
-      return SnapAlignment::Start;
-  }
-}
-
 void ScrollViewComponentView::updateSnapPoints() noexcept {
   const auto &viewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(this->viewProps());
   const auto snapToOffsets = CreateSnapToOffsets(viewProps.snapToOffsets);
-  // Typically used in combination with snapToAlignment and decelerationRate="fast"
-  auto snapAlignment = SnapAlignment::Center;
-  auto decelerationRate = viewProps.decelerationRate;
 
   // snapToOffsets has priority over snapToInterval (matches React Native behavior)
-  if (viewProps.snapToInterval > 0 && decelerationRate >= 0.99) {
-    snapAlignment = convertSnapToAlignment(viewProps.snapToAlignment);
+  if (viewProps.snapToInterval > 0) {
     // Generate snap points based on interval
     // Calculate the content size to determine how many intervals to create
     float contentLength = viewProps.horizontal
@@ -1520,6 +1506,6 @@ void ScrollViewComponentView::updateSnapPoints() noexcept {
     }
   }
 
-  m_scrollVisual.SetSnapPoints(viewProps.snapToStart, viewProps.snapToEnd, snapToOffsets.GetView(), snapAlignment);
+  m_scrollVisual.SetSnapPoints(viewProps.snapToStart, viewProps.snapToEnd, snapToOffsets.GetView());
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
