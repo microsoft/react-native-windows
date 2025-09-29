@@ -572,14 +572,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
         // Component appears clipped, but check if it's modal content
         // Modal content may appear clipped due to lack of parent relationships
         // but should still be considered visible if it's in its own window
-        try {
-          if (auto hwnd = compositionView->GetHwndForParenting()) {
-            // Check if this window is visible and not minimized
-            if (IsWindowVisible(hwnd) && !IsIconic(hwnd)) {
-              isOffscreen = false; // Window is visible, so content is not offscreen
-            }
+        if (auto hwnd = compositionView->GetHwndForParenting()) {
+          // Check if this window is visible and not minimized
+          if (IsWindowVisible(hwnd) && !IsIconic(hwnd)) {
+            isOffscreen = false; // Window is visible, so content is not offscreen
           }
-        } catch (...) {
+        } else {
           // If we can't get window info, fall back to clip state
           isOffscreen = true;
         }
