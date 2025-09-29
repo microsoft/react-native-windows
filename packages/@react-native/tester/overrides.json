@@ -581,6 +581,13 @@
       "issue": 4054
     },
     {
+      "type": "derived",
+      "file": "js/utils/JSEventLoopWatchdog.js",
+      "baseFile": "packages/rn-tester/js/utils/JSEventLoopWatchdog.js",
+      "baseHash": "51ccf03041fa38544185d295e87ec2f48297ec5b",
+      "issue": 4054
+    },
+    {
       "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
