@@ -581,7 +581,7 @@
       "issue": 4054
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "js/utils/JSEventLoopWatchdog.js",
       "baseFile": "packages/rn-tester/js/utils/JSEventLoopWatchdog.js",
       "baseHash": "51ccf03041fa38544185d295e87ec2f48297ec5b",
