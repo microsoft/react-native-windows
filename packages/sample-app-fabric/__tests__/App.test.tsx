@@ -3,7 +3,7 @@
  */
 
 // Add this import to fix the mockComponent reference error
-import mockComponent from 'react-native/jest/mockComponent';
+import mockComponent from 'react-native-windows/jest/mockComponent';
 global.mockComponent = mockComponent;
 
 import 'react-native';
