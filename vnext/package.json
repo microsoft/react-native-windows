@@ -28,14 +28,14 @@
     "@react-native-community/cli-platform-ios": "17.0.0",
     "@react-native-windows/cli": "0.0.0-canary.276",
     "@react-native/assets": "1.0.0",
-    "@react-native/assets-registry": "0.81.0-nightly-20250521-3cb70bb6a",
-    "@react-native/codegen": "0.81.0-nightly-20250521-3cb70bb6a",
-    "@react-native/community-cli-plugin": "0.81.0-nightly-20250521-3cb70bb6a",
-    "@react-native/gradle-plugin": "0.81.0-nightly-20250521-3cb70bb6a",
-    "@react-native/js-polyfills": "0.81.0-nightly-20250521-3cb70bb6a",
-    "@react-native/normalize-colors": "0.81.0-nightly-20250521-3cb70bb6a",
-    "@react-native/virtualized-lists": "0.81.0-nightly-20250521-3cb70bb6a",
-    "@react-native/new-app-screen": "0.81.0-nightly-20250521-3cb70bb6a",
+    "@react-native/assets-registry": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/codegen": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/community-cli-plugin": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/gradle-plugin": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/js-polyfills": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/normalize-colors": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/virtualized-lists": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/new-app-screen": "0.81.0-nightly-20250604-1a6d466f1",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "ansi-regex": "^5.0.0",
@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "@react-native-windows/codegen": "0.0.0-canary.125",
-    "@react-native/metro-config": "0.81.0-nightly-20250521-3cb70bb6a",
+    "@react-native/metro-config": "0.81.0-nightly-20250604-1a6d466f1",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.37",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.41",
@@ -92,7 +92,7 @@
   "peerDependencies": {
     "@types/react": "^19.1.0",
     "react": "^19.1.0",
-    "react-native": "0.81.0-nightly-20250521-3cb70bb6a"
+    "react-native": "0.81.0-nightly-20250604-1a6d466f1"
   },
   "beachball": {
     "defaultNpmTag": "canary",
