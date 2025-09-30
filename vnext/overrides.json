@@ -288,7 +288,7 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "src-win/jest/setup.js",
       "baseFile": "packages/react-native/jest/setup.js",
       "baseHash": "34b3b82637073a7ce26503600a71b6d8e6afaf47",
