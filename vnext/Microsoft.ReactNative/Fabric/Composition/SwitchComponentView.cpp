@@ -315,7 +315,8 @@ void SwitchComponentView::OnPointerExited(
 
 void SwitchComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  if (args.Key() == winrt::Windows::System::VirtualKey::Space) {
+  if (args.Key() == winrt::Windows::System::VirtualKey::Space ||
+      args.Key() == winrt::Windows::System::VirtualKey::Enter) {
     if (toggle()) {
       args.Handled(true);
     }
