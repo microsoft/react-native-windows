@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 30 Sep 2025 05:27:15 GMT",
+      "version": "0.0.0-canary.995",
+      "tag": "react-native-windows_v0.0.0-canary.995",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cc9d7a0ff7617c12bdb4db8413ebd6bc59e9398d",
+            "comment": "[Fabric] Fixing Clipped Property for Modal Component"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Sep 2025 05:31:31 GMT",
       "version": "0.0.0-canary.994",
       "tag": "react-native-windows_v0.0.0-canary.994",
