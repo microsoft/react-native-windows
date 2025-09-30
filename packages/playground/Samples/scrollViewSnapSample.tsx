@@ -288,6 +288,12 @@ export default class Bootstrap extends React.Component<{}, any> {
             onScrollEndDrag={() => {
               console.log('onScrollEndDrag');
             }}
+            onMomentumScrollBegin={() => {
+              console.log('onMomentumScrollBegin');
+            }}
+            onMomentumScrollEnd={() => {
+              console.log('onMomentumScrollEnd');
+            }}
             onScroll={() => {
               console.log('onScroll');
             }}
