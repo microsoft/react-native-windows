@@ -1,4 +1,3 @@
-
 # Troubleshoot RNW dependencies
 param(
     [switch]$Install = $false,

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 08 Sep 2025 15:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 29 Sep 2025 15:29:09 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.6
+
+Mon, 29 Sep 2025 15:29:09 GMT
+
+### Changes
+
+- upgrade dotnet (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.80.0-preview.5
 
