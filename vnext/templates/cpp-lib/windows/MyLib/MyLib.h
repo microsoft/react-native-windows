@@ -6,6 +6,9 @@
 #if __has_include("codegen/Native{{ pascalName }}DataTypes.g.h")
   #include "codegen/Native{{ pascalName }}DataTypes.g.h"
 #endif
+// Note: The following lines use Mustache template syntax ({{#variable}}, {{^variable}}, {{/variable}})
+// which will be processed during project generation to produce standard C++ code.
+// If existing codegen spec files are found, use the actual filename; otherwise use conditional includes.
 {{#hasExistingSpecFiles}}
 #include "codegen/{{ firstSpecFile }}"
 {{/hasExistingSpecFiles}}
@@ -25,6 +28,8 @@ namespace winrt::{{ namespaceCpp }}
 REACT_MODULE({{ pascalName }})
 struct {{ pascalName }}
 {
+  // Note: Mustache template syntax below ({{#variable}}, {{^variable}}, {{/variable}}) will be
+  // processed during project generation to produce standard C++ code based on detected codegen files.
 {{#hasExistingSpecFiles}}
   using ModuleSpec = {{ namespaceCpp }}Codegen::{{ firstSpecName }};
 {{/hasExistingSpecFiles}}
