@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 26 Sep 2025 05:31:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 30 Sep 2025 05:27:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.995
+
+Tue, 30 Sep 2025 05:27:15 GMT
+
+### Changes
+
+- [Fabric] Fixing Clipped Property for Modal Component (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.994
 
