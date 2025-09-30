@@ -732,7 +732,7 @@ const ImageFunctionsExample = () => {
   );
 };
 
-  function CacheControlExample(): React.Node {
+function CacheControlExample(): React.Node {
   const [reload, setReload] = useState(0);
 
   const onReload = () => {

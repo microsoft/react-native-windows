@@ -124,7 +124,7 @@ const examples = [
     scrollable: true,
     render: NumberOfLinesTextLayoutExample,
   },
-   // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
+  // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
   // Paper mode doesn't support Views nested in Text
   ...(global.RN$Bridgeless === true
     ? [
@@ -139,6 +139,6 @@ const examples = [
         },
       ]
     : []),
-] ;
+];
 
 export default examples;

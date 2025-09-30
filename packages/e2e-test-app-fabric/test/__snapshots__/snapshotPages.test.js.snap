@@ -67628,6 +67628,7 @@ exports[`snapshotAllPages Text 3`] = `
             "textAlign": "center",
           }
         }
+        testID="adjusting-text"
       >
         This is adjusting text.
       </Text>
@@ -67696,6 +67697,7 @@ exports[`snapshotAllPages Text 3`] = `
           },
         ]
       }
+      testID="set-height-20"
     >
       <View
         style={{}}
@@ -67789,6 +67791,7 @@ exports[`snapshotAllPages Text 3`] = `
           },
         ]
       }
+      testID="set-height-40"
     >
       <View
         style={{}}
@@ -67882,6 +67885,7 @@ exports[`snapshotAllPages Text 3`] = `
           },
         ]
       }
+      testID="set-height-60"
     >
       <View
         style={{}}
@@ -71446,7 +71450,9 @@ exports[`snapshotAllPages Text 22`] = `
 `;
 
 exports[`snapshotAllPages Text 23`] = `
-<View>
+<View
+  testID="text-with-toggle-attributes"
+>
   <Text
     style={
       [
@@ -71521,10 +71527,10 @@ exports[`snapshotAllPages Text 23`] = `
           undefined,
         ]
       }
+      testID="toggle-weight"
     >
       Toggle Weight
     </Text>
-     (with highlight onPress)
   </Text>
   <Text
     onPress={[Function]}
@@ -71536,9 +71542,9 @@ exports[`snapshotAllPages Text 23`] = `
         undefined,
       ]
     }
-    suppressHighlighting={true}
+    testID="increase-size"
   >
-    Increase Size (suppressHighlighting true)
+    Increase Size
   </Text>
 </View>
 `;
@@ -73201,6 +73207,193 @@ exports[`snapshotAllPages Text 42`] = `
 
 exports[`snapshotAllPages Text 43`] = `
 <View
+  style={
+    {
+      "rowGap": 20,
+    }
+  }
+>
+  <View
+    testID="tail-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      tail
+    </Text>
+    <Text
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    testID="head-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      head
+    </Text>
+    <Text
+      ellipsizeMode="head"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    testID="middle-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      middle
+    </Text>
+    <Text
+      ellipsizeMode="middle"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    testID="clip-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      clip
+    </Text>
+    <Text
+      ellipsizeMode="clip"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Text 44`] = `
+<View
   accessible={true}
   testID="text-accessibility"
 >
@@ -73217,7 +73410,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 45`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -73294,7 +73487,7 @@ exports[`snapshotAllPages Text 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 45`] = `
+exports[`snapshotAllPages Text 46`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -73350,7 +73543,7 @@ exports[`snapshotAllPages Text 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 46`] = `
+exports[`snapshotAllPages Text 47`] = `
 <View
   testID="text-opacity"
 >
@@ -73457,7 +73650,7 @@ exports[`snapshotAllPages Text 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 47`] = `
+exports[`snapshotAllPages Text 48`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -73475,7 +73668,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View>
   <Text
     style={
@@ -88145,6 +88338,236 @@ exports[`snapshotAllPages View 20`] = `
 
 exports[`snapshotAllPages View 21`] = `
 <View
+  onBlur={[Function]}
+  onFocus={[Function]}
+  style={
+    [
+      {
+        "backgroundColor": "green",
+        "borderColor": "transparent",
+        "borderWidth": 2,
+        "padding": 10,
+      },
+      false,
+    ]
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "color": "white",
+        },
+      ]
+    }
+  >
+    Focused: 
+    false
+  </Text>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      true
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      true
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+  <View
+    accessible={false}
+    focusable={false}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      false
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      true
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 22`] = `
+<View
   accessibilityLabel="NativeID Example"
   accessible={true}
   nativeID="native-id-view"
@@ -88165,7 +88588,7 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityActions={
     [
@@ -88269,7 +88692,7 @@ exports[`snapshotAllPages View 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -88290,7 +88713,7 @@ exports[`snapshotAllPages View 23`] = `
 />
 `;
 
-exports[`snapshotAllPages View 24`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -88315,7 +88738,7 @@ exports[`snapshotAllPages View 24`] = `
 />
 `;
 
-exports[`snapshotAllPages View 25`] = `
+exports[`snapshotAllPages View 26`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
