@@ -2,6 +2,42 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 19 Sep 2025 05:29:13 GMT",
+      "version": "0.0.0-canary.297",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.297",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "054949ab65ae451191ec868f0384c9df717173c6",
+            "comment": "integrate nightly 0.81.0-nightly-20250521-3cb70bb6a"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.58",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Sep 2025 05:22:57 GMT",
+      "version": "0.0.0-canary.296",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.296",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "mmaring@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "dca862a71a36a4c8147bb0d26376bdf59afba232",
+            "comment": "Add reply count prop to AccessibilityAnnotationInfo"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Aug 2025 05:30:39 GMT",
       "version": "0.0.0-canary.295",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.295",

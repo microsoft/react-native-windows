@@ -310,8 +310,7 @@ type ButtonRef = React.ElementRef<typeof TouchableHighlight>;
 const Button: component(
   ref?: React.RefSetter<ButtonRef>,
   ...props: ButtonProps
-) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
-  // Windows
+) = ({ref, ...props}: {ref?: React.RefSetter<ButtonRef>, ...ButtonProps}) => {
   // [Windows
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
@@ -545,7 +544,7 @@ const Button: component(
     );
   }
   // Windows]
-});
+};
 
 Button.displayName = 'Button';
 

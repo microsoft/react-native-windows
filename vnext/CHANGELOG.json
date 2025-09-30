@@ -2,6 +2,147 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Sep 2025 05:31:31 GMT",
+      "version": "0.0.0-canary.994",
+      "tag": "react-native-windows_v0.0.0-canary.994",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cd6dcc01e04ff00da1821c95451f5871730af368",
+            "comment": "Fix for hardcoded Textinput text holder as gray.GIssue:15129"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 19 Sep 2025 05:29:13 GMT",
+      "version": "0.0.0-canary.993",
+      "tag": "react-native-windows_v0.0.0-canary.993",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c2a26e96a1c8b28588571ec3b0c2e9b892fcbb8e",
+            "comment": "Removing Platform brush instead using proper caret brush"
+          },
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2d852979902a125799274b8c712d04dbc59db1a8",
+            "comment": "adding nullptr check before destroyShadow calls"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "054949ab65ae451191ec868f0384c9df717173c6",
+            "comment": "fix"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.58",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Sep 2025 05:34:35 GMT",
+      "version": "0.0.0-canary.992",
+      "tag": "react-native-windows_v0.0.0-canary.992",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "56e79f5918548b6a7c510faf429ee877804ba566",
+            "comment": "Remove legacy cxxmodules"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 17 Sep 2025 05:27:16 GMT",
+      "version": "0.0.0-canary.991",
+      "tag": "react-native-windows_v0.0.0-canary.991",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7c73e0c0bfe556b20085bb98d2bd35c28a0764e1",
+            "comment": "Upgrade dotnet version"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.276",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Sep 2025 05:26:20 GMT",
+      "version": "0.0.0-canary.990",
+      "tag": "react-native-windows_v0.0.0-canary.990",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "copilot@github.com",
+            "package": "react-native-windows",
+            "commit": "eecbc1804362327bb6b1108f455bda1b6b70f6de",
+            "comment": "Fix deadlock in ReactInstanceWin::DetachRootView by replacing sync call with async"
+          },
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "34d1771bd47980c0b5c05172eb63e6f7cab89299",
+            "comment": "Implement onMomentumScrollEnd and onMomentumScrollBegin for Fabric ScrollView"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Sep 2025 05:26:26 GMT",
+      "version": "0.0.0-canary.989",
+      "tag": "react-native-windows_v0.0.0-canary.989",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "42d0d8ca07312c26471036a6be2093dd6f2e6faa",
+            "comment": "adding UIA event handler changes for navigator"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Sep 2025 05:24:07 GMT",
+      "version": "0.0.0-canary.988",
+      "tag": "react-native-windows_v0.0.0-canary.988",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3e8db0cd192b74a23ad8ba4bcac922e04abec808",
+            "comment": "[Fabric] Fix for Text and TextInput focus issue with screen readers."
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.275",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Aug 2025 05:26:00 GMT",
       "version": "0.0.0-canary.987",
       "tag": "react-native-windows_v0.0.0-canary.987",

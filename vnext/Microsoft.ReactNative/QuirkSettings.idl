@@ -64,6 +64,11 @@ namespace Microsoft.ReactNative
         "By default `react-native-windows` will use the new RuntimeScheduler."
         "Setting this to false will revert the behavior to previous scheduling logic.")
     static void SetUseRuntimeScheduler(ReactInstanceSettings settings, Boolean value);
+
+    DOC_STRING(
+      "By default `react-native-windows` will not call sync JS call: runOnQueueSync."
+      "Setting this to true will revert the behavior to previous logic and might result in hang.")
+    static void SetUseRunOnQueueSync(ReactInstanceSettings settings, Boolean value);
   }
 
 } // namespace Microsoft.ReactNative

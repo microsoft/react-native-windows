@@ -1,8 +1,25 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 19 Sep 2025 05:29:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.297
+
+Fri, 19 Sep 2025 05:29:13 GMT
+
+### Changes
+
+- integrate nightly 0.81.0-nightly-20250521-3cb70bb6a (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-platform-override to v1.9.58
+
+## 0.0.0-canary.296
+
+Wed, 03 Sep 2025 05:22:57 GMT
+
+### Changes
+
+- Add reply count prop to AccessibilityAnnotationInfo (mmaring@microsoft.com)
 
 ## 0.0.0-canary.295
 
