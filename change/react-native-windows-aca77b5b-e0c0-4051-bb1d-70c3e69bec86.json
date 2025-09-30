@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Fixing Clipped Property for Modal Component",
+  "packageName": "react-native-windows",
+  "email": "kvineeth@microsoft.com",
+  "dependentChangeType": "patch"
+}
