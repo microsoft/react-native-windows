@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Revert \"[Fabric] Implement snapToInterval property for ScrollView  (#14847)\"",
+  "packageName": "react-native-windows",
+  "email": "54227869+anupriya13@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
