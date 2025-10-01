@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 Oct 2025 05:25:55 GMT",
+      "version": "0.0.0-canary.996",
+      "tag": "react-native-windows_v0.0.0-canary.996",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "63e9eaaa2249c3f7b46200203cb69c006c5770a9",
+            "comment": "Revert \"[Fabric] Implement snapToInterval property for ScrollView  (#14847)\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 30 Sep 2025 05:27:15 GMT",
       "version": "0.0.0-canary.995",
       "tag": "react-native-windows_v0.0.0-canary.995",
