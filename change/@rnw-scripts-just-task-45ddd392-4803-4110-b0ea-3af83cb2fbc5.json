@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update downloadFlowTypes with newly missing flow types",
+  "packageName": "@rnw-scripts/just-task",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}
