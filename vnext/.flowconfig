@@ -106,7 +106,7 @@
 
 [libs]
 interface.js
-flow/
+../node_modules/.flow/flow/
 ../node_modules/.flow/flow-typed/
 ../node_modules/react-native/src/types
 src/types/
