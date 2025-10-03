@@ -16,6 +16,7 @@
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <atlcomcli.h>
+#include <react/renderer/components/view/HostPlatformViewProps.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.UI.Composition.h>
@@ -747,6 +748,14 @@ void ComponentView::updateAccessibilityProps(
   if (!UiaClientsAreListening())
     return;
 
+  // Cast to HostPlatformViewProps to access Windows-specific properties
+  auto oldHostProps = dynamic_cast<const facebook::react::HostPlatformViewProps *>(&oldViewProps);
+  auto newHostProps = dynamic_cast<const facebook::react::HostPlatformViewProps *>(&newViewProps);
+  if (!oldHostProps || !newHostProps) {
+    // The cast failed; cannot safely access HostPlatformViewProps-specific members.
+    return;
+  }
+
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(), UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
 
@@ -789,41 +798,41 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_PositionInSetPropertyId,
-      oldViewProps.accessibilityPosInSet,
-      newViewProps.accessibilityPosInSet);
+      oldHostProps->accessibilityPosInSet,
+      newHostProps->accessibilityPosInSet);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_SizeOfSetPropertyId,
-      oldViewProps.accessibilitySetSize,
-      newViewProps.accessibilitySetSize);
+      oldHostProps->accessibilitySetSize,
+      newHostProps->accessibilitySetSize);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_LiveSettingPropertyId,
-      oldViewProps.accessibilityLiveRegion,
-      newViewProps.accessibilityLiveRegion);
+      oldHostProps->accessibilityLiveRegion,
+      newHostProps->accessibilityLiveRegion);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      EnsureUiaProvider(), UIA_LevelPropertyId, oldViewProps.accessibilityLevel, newViewProps.accessibilityLevel);
+      EnsureUiaProvider(), UIA_LevelPropertyId, oldHostProps->accessibilityLevel, newHostProps->accessibilityLevel);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_AccessKeyPropertyId,
-      oldViewProps.accessibilityAccessKey,
-      newViewProps.accessibilityAccessKey);
+      oldHostProps->accessibilityAccessKey,
+      newHostProps->accessibilityAccessKey);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_ItemTypePropertyId,
-      oldViewProps.accessibilityItemType,
-      newViewProps.accessibilityItemType);
+      oldHostProps->accessibilityItemType,
+      newHostProps->accessibilityItemType);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_FullDescriptionPropertyId,
-      oldViewProps.accessibilityDescription,
-      newViewProps.accessibilityDescription);
+      oldHostProps->accessibilityDescription,
+      newHostProps->accessibilityDescription);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
@@ -833,7 +842,7 @@ void ComponentView::updateAccessibilityProps(
 
   // Handle annotation properties with single call
   winrt::Microsoft::ReactNative::implementation::UpdateUiaPropertiesForAnnotation(
-      EnsureUiaProvider(), oldViewProps.accessibilityAnnotation, newViewProps.accessibilityAnnotation);
+      EnsureUiaProvider(), oldHostProps->accessibilityAnnotation, newHostProps->accessibilityAnnotation);
 
   // Handle expand/collapse state changes
   if (oldViewProps.accessibilityState.has_value() != newViewProps.accessibilityState.has_value() ||

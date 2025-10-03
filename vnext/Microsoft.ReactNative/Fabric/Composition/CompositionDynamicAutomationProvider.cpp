@@ -8,6 +8,7 @@
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
+#include <react/renderer/components/view/HostPlatformViewProps.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
@@ -484,6 +485,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  // Cast to HostPlatformViewProps to access Windows-specific properties like accessibilityLevel
+  auto hostProps = std::dynamic_pointer_cast<const facebook::react::HostPlatformViewProps>(baseView->props());
+  if (hostProps == nullptr) {
+    // If hostProps is needed later, handle the null case appropriately.
+    // For now, we just proceed; add error handling if hostProps is dereferenced below.
+  }
+
   auto compositionView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
   if (compositionView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
@@ -597,17 +605,17 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_PositionInSetPropertyId: {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = props->accessibilityPosInSet;
+      pRetVal->lVal = hostProps ? hostProps->accessibilityPosInSet : 0;
       break;
     }
     case UIA_SizeOfSetPropertyId: {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = props->accessibilitySetSize;
+      pRetVal->lVal = hostProps ? hostProps->accessibilitySetSize : 0;
       break;
     }
     case UIA_LiveSettingPropertyId: {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = GetLiveSetting(props->accessibilityLiveRegion);
+      pRetVal->lVal = GetLiveSetting(hostProps ? hostProps->accessibilityLiveRegion : "none");
       break;
     }
     case UIA_ItemStatusPropertyId: {
@@ -619,24 +627,27 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_LevelPropertyId: {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = props->accessibilityLevel;
+      pRetVal->lVal = hostProps ? hostProps->accessibilityLevel : 0;
       break;
     }
     case UIA_AccessKeyPropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto accessKey = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityAccessKey.value_or(""));
+      auto accessKey =
+          ::Microsoft::Common::Unicode::Utf8ToUtf16(hostProps ? hostProps->accessibilityAccessKey.value_or("") : "");
       pRetVal->bstrVal = SysAllocString(accessKey.c_str());
       break;
     }
     case UIA_ItemTypePropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto itemtype = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityItemType.value_or(""));
+      auto itemtype =
+          ::Microsoft::Common::Unicode::Utf8ToUtf16(hostProps ? hostProps->accessibilityItemType.value_or("") : "");
       pRetVal->bstrVal = SysAllocString(itemtype.c_str());
       break;
     }
     case UIA_FullDescriptionPropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto desc = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityDescription.value_or(""));
+      auto desc =
+          ::Microsoft::Common::Unicode::Utf8ToUtf16(hostProps ? hostProps->accessibilityDescription.value_or("") : "");
       pRetVal->bstrVal = SysAllocString(desc.c_str());
       break;
     }
