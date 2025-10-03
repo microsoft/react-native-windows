@@ -749,8 +749,12 @@ void ComponentView::updateAccessibilityProps(
     return;
 
   // Cast to HostPlatformViewProps to access Windows-specific properties
-  auto oldHostProps = static_cast<const facebook::react::HostPlatformViewProps *>(&oldViewProps);
-  auto newHostProps = static_cast<const facebook::react::HostPlatformViewProps *>(&newViewProps);
+  auto oldHostProps = dynamic_cast<const facebook::react::HostPlatformViewProps *>(&oldViewProps);
+  auto newHostProps = dynamic_cast<const facebook::react::HostPlatformViewProps *>(&newViewProps);
+  if (!oldHostProps || !newHostProps) {
+    // The cast failed; cannot safely access HostPlatformViewProps-specific members.
+    return;
+  }
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(), UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
