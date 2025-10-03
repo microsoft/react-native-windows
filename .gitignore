@@ -44,6 +44,9 @@ package-lock.json
 *BundleArtifacts*
 *ReactAssets*
 
+# RN Tester sync cache (created by scripts/sync-rn-tester.ps1)
+.rn-cache/
+
 #OS junk files
 [Tt]humbs.db
 *.DS_Store
