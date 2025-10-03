@@ -1,0 +1,7 @@
+{
+  "comment": "Fixing heading level for accessibility",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
