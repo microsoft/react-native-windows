@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
 
 'use strict';
@@ -1011,7 +1011,7 @@ module.exports = ([
         'web-search',
         'ascii-capable-number-pad',
         'numeric',
-      ];
+      ] as const;
       const examples = keyboardTypes.map(type => {
         return (
           <WithLabel key={type} label={type}>
@@ -1035,7 +1035,7 @@ module.exports = ([
         'search',
         'email',
         'url',
-      ];
+      ] as const;
       const examples = inputMode.map(mode => {
         return (
           <WithLabel key={mode} label={mode}>
@@ -1064,7 +1064,7 @@ module.exports = ([
         'previous',
         'search',
         'send',
-      ];
+      ] as const;
       const examples = enterKeyHintTypesHints.map(hint => {
         return (
           <WithLabel key={hint} label={hint}>

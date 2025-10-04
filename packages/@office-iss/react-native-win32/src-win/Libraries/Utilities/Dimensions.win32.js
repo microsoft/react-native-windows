@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * @format
  * @flow
+ * @format
  */
 
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
