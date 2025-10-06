@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 19 Sep 2025 05:29:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 01 Oct 2025 05:25:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.996
+
+Wed, 01 Oct 2025 05:25:55 GMT
+
+### Changes
+
+- Revert "[Fabric] Implement snapToInterval property for ScrollView  (#14847)" (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.995
+
+Tue, 30 Sep 2025 05:27:15 GMT
+
+### Changes
+
+- [Fabric] Fixing Clipped Property for Modal Component (kvineeth@microsoft.com)
+
+## 0.0.0-canary.994
+
+Fri, 26 Sep 2025 05:31:31 GMT
+
+### Changes
+
+- Fix for hardcoded Textinput text holder as gray.GIssue:15129 (nitchaudhary@microsoft.com)
 
 ## 0.0.0-canary.993
 
