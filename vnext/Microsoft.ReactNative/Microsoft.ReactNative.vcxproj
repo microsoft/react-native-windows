@@ -68,7 +68,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared" />
   <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
-  <Import Project="..\Shared\Shared.vcxitems" Label="Shared" /><Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
+  <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
   <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   <ImportGroup Label="PropertySheets">
