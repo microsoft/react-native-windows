@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-#include <utility>
 #include <stdexcept> // For std::runtime_error
+#include <utility>
 #include "dispatchQueue/dispatchQueue.h"
 #include "queueService.h"
 
@@ -97,7 +97,7 @@ std::vector<std::shared_ptr<TP_WORK>> ThreadPoolSchedulerWin::s_trackedThreadPoo
 ThreadPoolSchedulerWin::ThreadPoolSchedulerWin(uint32_t maxThreads)
     : m_maxThreads{maxThreads == 0 ? MaxConcurrentThreads : maxThreads} {
   // Create thread pool work
-  TP_WORK* tpWork = ::CreateThreadpoolWork(WorkCallback, this, nullptr);
+  TP_WORK *tpWork = ::CreateThreadpoolWork(WorkCallback, this, nullptr);
 
   // Throw immediately if creation failed
   if (!tpWork) {
