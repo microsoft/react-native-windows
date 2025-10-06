@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.81.0-nightly-20250521-3cb70bb6a",
+  "baseVersion": "0.81.0-nightly-20250604-1a6d466f1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "dbea35126905a8314fa0a64ed2912896bc6d307b"
+      "baseHash": "a9dfa56b1428e49ea4474e0fee395c0dba67625b"
     },
     {
       "type": "derived",
@@ -142,14 +142,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.cpp",
-      "baseHash": "592e8097645b4d75107277c2ae544f8c514bd1fb",
+      "baseHash": "8dee609f47ed1e6e0d876f5ad75876a07d951d49",
       "issue": 14257
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.h",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.h",
-      "baseHash": "bad5d4e69105e4a67a6436f87ecac1ae557fff61",
+      "baseHash": "01eff14d2d24d0ff73f2380fadde077953606fd2",
       "issue": 14654
     },
     {
@@ -163,7 +163,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/ParagraphShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/ParagraphShadowNode.cpp",
-      "baseHash": "4b4811c43b33fc389a35838aa4a54e29251b2681",
+      "baseHash": "670620c8ef2c5ed6ac11ff48154c70bee18f50ee",
       "issue": 15132
     },
     {
@@ -224,7 +224,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
-      "baseHash": "e03ce8e5db0216f23389ff8b3e9ea450c8a031b7",
+      "baseHash": "3e2118e9f8acff69371d8f9ad885927452cfb3a1",
       "issue": 14673
     },
     {
@@ -238,14 +238,14 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
-      "baseHash": "a3caedc8e2a223bf80e04801434a32934c3d60d0",
+      "baseHash": "7111336c1517950c7b0c7acec7ee7a0a3f7c1ae0",
       "issue": 4054
     },
     {
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "b447e699186ab3e95da9dc4520b9c2517776e723"
+      "baseHash": "79fa02963edb0e0f580fad3c401187956b393e2e"
     },
     {
       "type": "platform",
@@ -288,10 +288,10 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "src-win/jest/setup.js",
       "baseFile": "packages/react-native/jest/setup.js",
-      "baseHash": "8582f862e5fce906d3feb54b640bc29adc8df9f6",
+      "baseHash": "34b3b82637073a7ce26503600a71b6d8e6afaf47",
       "issue": 14929
     },
     {
@@ -302,7 +302,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Alert/Alert.windows.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
-      "baseHash": "bd8f474e454f2b703ca7fb55cb022f24046bc0f8"
+      "baseHash": "980f439d79b614424de82f8a3380dea74ab6824b"
     },
     {
       "type": "platform",
@@ -327,7 +327,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
-      "baseHash": "706e7b9a66fbddcb4b19c6d1d9b9838db9d15d52",
+      "baseHash": "28b564593dd7886279f3f4becee3a1da5144be1d",
       "issue": 4578
     },
     {
@@ -341,7 +341,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "6063d726e6255d1c55e07587f9ce09f1b7284301"
+      "baseHash": "ff56172f38be109b069589c40b6be80751c3527c"
     },
     {
       "type": "platform",
@@ -397,13 +397,13 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/RefreshControl/RefreshControl.js",
-      "baseHash": "42953d82f39f9ad792a7a441e6008f792bb4c13a"
+      "baseHash": "2d5a412d168f38a8c28582a3eb300495050b1ddc"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "06b4d1e5824d8c85de6ab74faf5adc33093558af"
+      "baseHash": "2f5ade3e04889643f0e7af1380e8864869125394"
     },
     {
       "type": "derived",
@@ -421,31 +421,31 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
-      "baseHash": "b611f4e98e9c7818dfac087e4f14384d3cc16b6a"
+      "baseHash": "217606b7527281d62335913ee8349506fcb9192b"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "2a5835c5cbdb36bd110e26f9be737aaaeb1fd97c"
+      "baseHash": "6bdac6e2d8569b25480db63f81d7f6dfc130f5f7"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInputState.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "400af173e846317c705487f51f3cb165e7378a4f"
+      "baseHash": "6ed06ca68066b0cdbaa28a2e5f1fe1b6d9d62f63"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/AndroidTextInputNativeComponent.js",
-      "baseHash": "dad89638b07112094c027d16046a93728334bb64"
+      "baseHash": "89e74c58f4a948b921af4bb358a4ac5629d0aca2"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "2f7db68acd47af643bc0625d31d199332d519871"
+      "baseHash": "399b4d18cb04aae8d565484d3e228eccd88abad6"
     },
     {
       "type": "derived",
@@ -475,7 +475,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "bda66632ba3157166d9c8ff0ab78f74ed21aaf1d"
+      "baseHash": "f22cce74573326eaf0fa2f9bc06710d407f92706"
     },
     {
       "type": "patch",
@@ -488,7 +488,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "121c2126d26c94c8e508e3fb19ffe33f7be814b1"
+      "baseHash": "a3a08960f0c78d97f9144e32ed8388f02ff2a641"
     },
     {
       "type": "derived",
@@ -500,19 +500,19 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "04981261b2ed61b31bfbb396478bb6b103d99253"
+      "baseHash": "26f3cbc5eeb46241a6e25cf051d5fa872c8c936c"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "ef39871442f6fd69ff316e824fcace95bda6f95b"
+      "baseHash": "10b609db23ea9243b34d787d42a148f5cb9b33f2"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "ec1ffd005b6631e6af027731b087a7620fbf5cf5"
+      "baseHash": "8ade41e42a14e3d39428e7e135120feedbdb2f6c"
     },
     {
       "type": "patch",
@@ -542,7 +542,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Image/resolveAssetSource.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/resolveAssetSource.js",
-      "baseHash": "6b011a6e50979371f7a0970baea242e5e5771b30",
+      "baseHash": "5d34037f3a870c1380b34041cf9b5439ef066bcb",
       "issue": 10619
     },
     {
@@ -579,13 +579,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Modal/Modal.windows.js",
       "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
-      "baseHash": "35fbf7a19cd6e7af8bd9dfce31bc188ebbd7f0b7"
+      "baseHash": "487ce21a8b85a1961005c4ae66186fe0042040d6"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "b520e2bdb2be31bdb6ad7e3769dbe69168870c8c"
+      "baseHash": "2afdb9c2f278c6008944e31eea4c20078529e561"
     },
     {
       "type": "derived",
@@ -597,7 +597,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Network/RCTNetworking.windows.js",
       "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "4b96609d7e8d0596d2960aacfda35af73cec1085"
+      "baseHash": "975cb78ed40d162be73144bafcaee9bcd057bd44"
     },
     {
       "type": "platform",
@@ -614,7 +614,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "b52df7d819237b8acdd08f84631e3c257a9cb390",
+      "baseHash": "54f2a508c9378c1d9240ff27a460a8815e2b8ebd",
       "issue": 4379
     },
     {
@@ -644,7 +644,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "108e59816ed3b3c8183d0687a66088755580c00d"
+      "baseHash": "a24c9881da46b612c461a304b3ba9c640adbb5cb"
     },
     {
       "type": "derived",
@@ -675,7 +675,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "8c3daf7b75af0445441def55571374bebed83726"
+      "baseHash": "58c8663867cc2cfdf9bd62425386dd1f44a592e8"
     },
     {
       "type": "derived",
@@ -694,13 +694,13 @@
       "type": "patch",
       "file": "src-win/src/private/featureflags/ReactNativeFeatureFlagsBase.js",
       "baseFile": "packages/react-native/src/private/featureflags/ReactNativeFeatureFlagsBase.js",
-      "baseHash": "32823af7188e2935b7fbf1cb368ab9ad94b38d4f"
+      "baseHash": "ed87cf338bea97b7b4aba393fcc457900e3c73d9"
     },
     {
       "type": "patch",
       "file": "src-win/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
-      "baseHash": "b68cd3eb3257f988de7a238ebd5e6424769531a7"
+      "baseHash": "3f0e8a7f4f4bbe46ab71f2b4b62f7071a78bb908"
     },
     {
       "type": "platform",

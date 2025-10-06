@@ -389,7 +389,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
   "Visual Tree": {
     "Comment": "advanced-borders",
     "Offset": "0, 0, 0",
-    "Size": "916, 98",
+    "Size": "916, 97",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -480,12 +480,12 @@ exports[`Text Tests Text can have advanced borders 1`] = `
       },
       {
         "Offset": "0, 38, 0",
-        "Size": "916, 40",
+        "Size": "916, 39",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "916, 39",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -521,7 +521,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "-10, 20, 0",
-                "Size": "10, 14",
+                "Size": "10, 13",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -557,7 +557,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 22, 0",
-                "Size": "20, 10",
+                "Size": "20, 9",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -566,12 +566,12 @@ exports[`Text Tests Text can have advanced borders 1`] = `
       },
       {
         "Offset": "0, 77, 0",
-        "Size": "916, 21",
+        "Size": "916, 22",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 21",
+            "Size": "916, 22",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -607,7 +607,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "-1, 4, 0",
-                "Size": "1, 13",
+                "Size": "1, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -643,7 +643,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "0, 4, 0",
-                "Size": "1, 13",
+                "Size": "1, 14",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -736,7 +736,7 @@ exports[`Text Tests Text can have borders 1`] = `
   "Visual Tree": {
     "Comment": "text-border",
     "Offset": "0, 0, 0",
-    "Size": "916, 384",
+    "Size": "916, 385",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {

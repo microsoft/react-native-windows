@@ -11,6 +11,8 @@
 import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
+  BlurEvent,
+  FocusEvent,
   GestureResponderEvent,
   ScrollEvent,
 } from '../../Types/CoreEventTypes';
@@ -98,10 +100,12 @@ else if (Platform.OS === 'win32') {
 
 export type {
   AutoCapitalize,
+  BlurEvent,
   EnterKeyHintType,
   EnterKeyHintTypeAndroid,
   EnterKeyHintTypeIOS,
   EnterKeyHintTypeOptions,
+  FocusEvent,
   InputModeOptions,
   KeyboardType,
   KeyboardTypeAndroid,
@@ -541,14 +545,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     });
   };
 
-  const _onFocus = (event: TextInputFocusEvent) => {
+  const _onFocus = (event: FocusEvent) => {
     TextInputState.focusInput(inputRef.current);
     if (props.onFocus) {
       props.onFocus(event);
     }
   };
 
-  const _onBlur = (event: TextInputBlurEvent) => {
+  const _onBlur = (event: BlurEvent) => {
     TextInputState.blurInput(inputRef.current);
     if (props.onBlur) {
       props.onBlur(event);
@@ -895,7 +899,7 @@ const enterKeyHintToReturnTypeMap = {
   previous: 'previous',
   search: 'search',
   send: 'send',
-};
+} as const;
 
 const inputModeToKeyboardTypeMap = {
   none: 'default',
@@ -903,10 +907,11 @@ const inputModeToKeyboardTypeMap = {
   decimal: 'decimal-pad',
   numeric: 'number-pad',
   tel: 'phone-pad',
-  search: Platform.OS === 'ios' ? 'web-search' : 'default',
+  search:
+    Platform.OS === 'ios' ? ('web-search' as const) : ('default' as const),
   email: 'email-address',
   url: 'url',
-};
+} as const;
 
 // Map HTML autocomplete values to Android autoComplete values
 const autoCompleteWebToAutoCompleteAndroidMap = {
@@ -940,7 +945,7 @@ const autoCompleteWebToAutoCompleteAndroidMap = {
   'tel-country-code': 'tel-country-code',
   'tel-national': 'tel-national',
   username: 'username',
-};
+} as const;
 
 // Map HTML autocomplete values to iOS textContentType values
 const autoCompleteWebToTextContentTypeMap = {
@@ -980,7 +985,7 @@ const autoCompleteWebToTextContentTypeMap = {
   tel: 'telephoneNumber',
   url: 'URL',
   username: 'username',
-};
+} as const;
 
 const TextInput: component(
   ref?: React.RefSetter<TextInputInstance>,
@@ -1032,8 +1037,7 @@ const TextInput: component(
           : Platform.OS === 'ios' &&
               autoComplete &&
               autoComplete in autoCompleteWebToTextContentTypeMap
-            ? // $FlowFixMe[invalid-computed-prop]
-              // $FlowFixMe[prop-missing]
+            ? // $FlowFixMe[prop-missing]
               autoCompleteWebToTextContentTypeMap[autoComplete]
             : textContentType
       }
@@ -1072,7 +1076,7 @@ const verticalAlignToTextAlignVerticalMap = {
   top: 'top',
   bottom: 'bottom',
   middle: 'center',
-};
+} as const;
 
 // $FlowFixMe[unclear-type] Unclear type. Using `any` type is not safe.
 export default TextInput as any as TextInputType;
