@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 29 Sep 2025 15:29:09 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 06 Oct 2025 15:30:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.8
+
+Mon, 06 Oct 2025 15:30:40 GMT
+
+### Changes
+
+- Implement onMomentumScrollEnd and onMomentumScrollBegin for Fabric ScrollView (198982749+Copilot@users.noreply.github.com)
 
 ## 0.80.0-preview.7
 
