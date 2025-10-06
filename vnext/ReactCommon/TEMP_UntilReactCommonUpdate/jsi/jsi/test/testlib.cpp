@@ -1658,10 +1658,7 @@ TEST_P(JSITest, CreateFromUtf16Test) {
   auto cp = eval("loneSurrogate.charCodeAt(0)").getNumber();
   EXPECT_EQ(cp, 55357); // 0xD83D in decimal
 }
-Windows] */
 
-/*
-[Windows 
 TEST_P(JSITest, GetStringDataTest) {
   // This Runtime Decorator is used to test the default getStringData
   // implementation for VMs that do not provide their own implementation
@@ -1752,31 +1749,29 @@ TEST_P(JSITest, ObjectCreateWithPrototype) {
 }
 Windows] */
 
-/* [Windows #15134 Uncomment this and solve the JSI TEST issues
-
 TEST_P(JSITest, SetRuntimeData) {
   class RD : public RuntimeDecorator<Runtime, Runtime> {
    public:
     explicit RD(Runtime& rt) : RuntimeDecorator(rt) {}
 
     void setRuntimeDataImpl(
-        const UUID& uuid,
+        const facebook::jsi::UUID& uuid,
         const void* data,
         void (*deleter)(const void* data)) override {
-      Runtime::setRuntimeDataImpl(uuid, data, deleter);
+      RuntimeDecorator::setRuntimeDataImpl(uuid, data, deleter);
     }
 
-    const void* getRuntimeDataImpl(const UUID& uuid) override {
-      return Runtime::getRuntimeDataImpl(uuid);
+    const void* getRuntimeDataImpl(const facebook::jsi::UUID& uuid) override {
+      return RuntimeDecorator::getRuntimeDataImpl(uuid);
     }
   };
 
   RD rd1 = RD(rt);
-  UUID uuid1{0xe67ab3d6, 0x09a0, 0x11f0, 0xa641, 0x325096b39f47};
+  facebook::jsi::UUID uuid1{0xe67ab3d6, 0x09a0, 0x11f0, 0xa641, 0x325096b39f47};
   auto str = std::make_shared<std::string>("hello world");
   rd1.setRuntimeData(uuid1, str);
 
-  UUID uuid2{0xa12f99fc, 0x09a2, 0x11f0, 0x84de, 0x325096b39f47};
+  facebook::jsi::UUID uuid2{0xa12f99fc, 0x09a2, 0x11f0, 0x84de, 0x325096b39f47};
   auto obj1 = std::make_shared<Object>(rd1);
   rd1.setRuntimeData(uuid2, obj1);
 
@@ -1797,7 +1792,7 @@ TEST_P(JSITest, SetRuntimeData) {
 
   auto rt2 = factory();
   RD* rd2 = new RD(*rt2);
-  UUID uuid3{0x16f55892, 0x1034, 0x11f0, 0x8f65, 0x325096b39f47};
+  facebook::jsi::UUID uuid3{0x16f55892, 0x1034, 0x11f0, 0x8f65, 0x325096b39f47};
   auto obj2 = std::make_shared<Object>(*rd2);
   rd2->setRuntimeData(uuid3, obj2);
 
@@ -1860,7 +1855,6 @@ TEST_P(JSITest, CastInterface) {
 
   EXPECT_EQ(ptr, nullptr);
 }
-  Windows] */
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
