@@ -489,6 +489,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  // Cast to HostPlatformViewProps to access Windows-specific properties like accessibilityLevel
+  auto hostProps = std::dynamic_pointer_cast<const facebook::react::HostPlatformViewProps>(baseView->props());
+  if (hostProps == nullptr) {
+    // If hostProps is needed later, handle the null case appropriately.
+    // For now, we just proceed; add error handling if hostProps is dereferenced below.
+  }
+
   auto compositionView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
   if (compositionView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
