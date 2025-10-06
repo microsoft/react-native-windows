@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update communitycli template version",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}

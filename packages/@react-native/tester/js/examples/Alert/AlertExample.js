@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import type {RNTesterModule} from '../../types/RNTesterTypes';
@@ -261,6 +261,8 @@ const PromptOptions = () => {
 
       <Pressable
         style={styles.wrapper}
+        /* $FlowFixMe[incompatible-call] Natural Inference rollout. See
+         * https://fburl.com/workplace/6291gfvu */
         onPress={() => Alert.prompt('Type a value', null, customButtons)}>
         <View style={styles.button}>
           <Text>prompt with title & custom buttons</Text>
@@ -306,6 +308,8 @@ const PromptOptions = () => {
           Alert.prompt(
             'Type a value',
             null,
+            /* $FlowFixMe[incompatible-call] Natural Inference rollout. See
+             * https://fburl.com/workplace/6291gfvu */
             customButtons,
             'login-password',
             'admin@site.com',
@@ -453,5 +457,7 @@ export default ({
   documentationURL: 'https://reactnative.dev/docs/alert',
   description:
     'Alerts display a concise and informative message and prompt the user to make a decision.',
+  /* $FlowFixMe[incompatible-cast] Natural Inference rollout. See
+   * https://fburl.com/workplace/6291gfvu */
   examples,
 }: RNTesterModule);

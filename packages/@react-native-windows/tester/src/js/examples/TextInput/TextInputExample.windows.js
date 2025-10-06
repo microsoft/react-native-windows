@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 'use strict';
@@ -327,19 +327,21 @@ const examples: Array<RNTesterModuleExample> = [
             style={[styles.singleLine]}
             testID="textinput-weight-default"
           />
-          {[
-            'normal',
-            'bold',
-            '900',
-            800,
-            '700',
-            '600',
-            '500',
-            '400',
-            '300',
-            '200',
-            '100',
-          ].map(fontWeight => (
+          {(
+            [
+              'normal',
+              'bold',
+              '900',
+              800,
+              '700',
+              '600',
+              '500',
+              '400',
+              '300',
+              '200',
+              '100',
+            ] as const
+          ).map(fontWeight => (
             <ExampleTextInput
               defaultValue={`Font Weight (${fontWeight})`}
               key={fontWeight}
@@ -687,7 +689,7 @@ const examples: Array<RNTesterModuleExample> = [
         'done',
         'previous',
         'next',
-      ];
+      ] as const;
       const returnKeyLabels = ['Compile', 'React Native'];
       const returnKeyExamples = returnKeyTypes.map(type => {
         return (
