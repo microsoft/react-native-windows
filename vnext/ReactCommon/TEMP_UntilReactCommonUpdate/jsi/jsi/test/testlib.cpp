@@ -1758,11 +1758,11 @@ TEST_P(JSITest, SetRuntimeData) {
         const facebook::jsi::UUID& uuid,
         const void* data,
         void (*deleter)(const void* data)) override {
-      RuntimeDecorator::setRuntimeDataImpl(uuid, data, deleter);
+      Runtime::setRuntimeDataImpl(uuid, data, deleter);
     }
 
     const void* getRuntimeDataImpl(const facebook::jsi::UUID& uuid) override {
-      return RuntimeDecorator::getRuntimeDataImpl(uuid);
+      return Runtime::getRuntimeDataImpl(uuid);
     }
   };
 
