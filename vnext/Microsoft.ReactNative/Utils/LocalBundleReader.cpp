@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Utils/LocalBundleReader.h>
+#include <fmt/format.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Storage.h>
 #include "Unicode.h"
@@ -28,26 +29,32 @@ std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri 
 
   auto resource = FindResourceW(hmodule, resourceName, RT_RCDATA);
   if (!resource) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
   }
 
   auto hglobal = LoadResource(hmodule, resource);
   if (!hglobal) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
   }
 
   auto start = static_cast<char *>(LockResource(hglobal));
   if (!start) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
   }
 
   auto size = SizeofResource(hmodule, resource);
   if (!size) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't get size of resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't get size of resource {} in module {}",
+            winrt::to_string(resourceName),
+            winrt::to_string(moduleName)));
   }
 
   return std::string(start, start + size);
@@ -82,8 +89,9 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
     // DataReader.ReadBytes will read as many bytes as are present in the
     // array_view. The backing string has fileBuffer.Length() + 1 bytes, without
     // an explicit end it will read 1 byte to many and throw.
-    dataReader.ReadBytes(winrt::array_view<uint8_t>{
-        reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
+    dataReader.ReadBytes(
+        winrt::array_view<uint8_t>{
+            reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
     dataReader.Close();
 
     co_return script;

@@ -15,6 +15,7 @@
 #include <react/renderer/core/RawProps.h>
 #include <react/renderer/core/graphicsConversions.h>
 #include <react/renderer/css/CSSAngle.h>
+#include <react/renderer/css/CSSNumber.h>
 #include <react/renderer/css/CSSPercentage.h>
 #include <react/renderer/css/CSSValueParser.h>
 #include <react/renderer/graphics/BackgroundImage.h>
@@ -60,25 +61,6 @@ inline float yogaFloatFromFloat(Float value) {
   }
 
   return (float)value;
-}
-
-/*
- * Converts string to float only if the entire string is valid float.
- */
-inline std::optional<float> stringToFloat(const std::string& string) {
-  try {
-    size_t pos = 0;
-    auto result = std::stof(string, &pos);
-    // Check if entire string was valid
-    if (pos == string.length()) {
-      return result;
-    }
-  } catch (...) {
-    // Ignore, caller falls back to default value.
-    return std::nullopt;
-  }
-
-  return std::nullopt;
 }
 
 /*
@@ -483,19 +465,15 @@ inline void fromRawValue(
       result = yoga::StyleSizeLength::ofFitContent();
       return;
     } else {
-      if (stringValue.back() == '%') {
-        auto tryValue =
-            stringToFloat(stringValue.substr(0, stringValue.length() - 1));
-        if (tryValue.has_value()) {
-          result = yoga::StyleSizeLength::percent(tryValue.value());
-          return;
-        }
-      } else {
-        auto tryValue = stringToFloat(stringValue);
-        if (tryValue.has_value()) {
-          result = yoga::StyleSizeLength::points(tryValue.value());
-          return;
-        }
+      auto parsed = parseCSSProperty<CSSNumber, CSSPercentage>(stringValue);
+      if (std::holds_alternative<CSSPercentage>(parsed)) {
+        result = yoga::StyleSizeLength::percent(
+            std::get<CSSPercentage>(parsed).value);
+        return;
+      } else if (std::holds_alternative<CSSNumber>(parsed)) {
+        result =
+            yoga::StyleSizeLength::points(std::get<CSSNumber>(parsed).value);
+        return;
       }
     }
   }
@@ -515,19 +493,14 @@ inline void fromRawValue(
       result = yoga::StyleLength::ofAuto();
       return;
     } else {
-      if (stringValue.back() == '%') {
-        auto tryValue =
-            stringToFloat(stringValue.substr(0, stringValue.length() - 1));
-        if (tryValue.has_value()) {
-          result = yoga::StyleLength::percent(tryValue.value());
-          return;
-        }
-      } else {
-        auto tryValue = stringToFloat(stringValue);
-        if (tryValue.has_value()) {
-          result = yoga::StyleLength::points(tryValue.value());
-          return;
-        }
+      auto parsed = parseCSSProperty<CSSNumber, CSSPercentage>(stringValue);
+      if (std::holds_alternative<CSSPercentage>(parsed)) {
+        result =
+            yoga::StyleLength::percent(std::get<CSSPercentage>(parsed).value);
+        return;
+      } else if (std::holds_alternative<CSSNumber>(parsed)) {
+        result = yoga::StyleLength::points(std::get<CSSNumber>(parsed).value);
+        return;
       }
     }
   }
@@ -875,6 +848,19 @@ inline void fromRawValue(
   react_native_expect(false);
 }
 
+inline std::string toString(const PointerEventsMode& value) {
+  switch (value) {
+    case PointerEventsMode::Auto:
+      return "auto";
+    case PointerEventsMode::None:
+      return "none";
+    case PointerEventsMode::BoxNone:
+      return "box-none";
+    case PointerEventsMode::BoxOnly:
+      return "box-only";
+  }
+}
+
 inline void fromRawValue(
     const PropsParserContext& context,
     const RawValue& value,
@@ -1207,7 +1193,45 @@ inline void fromRawValue(
     }
 
     std::string type = (std::string)(typeIt->second);
-    if (type == "linearGradient") {
+    std::vector<ColorStop> colorStops;
+    auto colorStopsIt = rawBackgroundImageMap.find("colorStops");
+
+    if (colorStopsIt != rawBackgroundImageMap.end() &&
+        colorStopsIt->second.hasType<std::vector<RawValue>>()) {
+      auto rawColorStops =
+          static_cast<std::vector<RawValue>>(colorStopsIt->second);
+
+      for (const auto& stop : rawColorStops) {
+        if (stop.hasType<std::unordered_map<std::string, RawValue>>()) {
+          auto stopMap =
+              static_cast<std::unordered_map<std::string, RawValue>>(stop);
+          auto positionIt = stopMap.find("position");
+          auto colorIt = stopMap.find("color");
+
+          if (positionIt != stopMap.end() && colorIt != stopMap.end()) {
+            ColorStop colorStop;
+            if (positionIt->second.hasValue()) {
+              auto valueUnit = toValueUnit(positionIt->second);
+              if (!valueUnit) {
+                result = {};
+                return;
+              }
+              colorStop.position = valueUnit;
+            }
+            if (colorIt->second.hasValue()) {
+              fromRawValue(
+                  context.contextContainer,
+                  context.surfaceId,
+                  colorIt->second,
+                  colorStop.color);
+            }
+            colorStops.push_back(colorStop);
+          }
+        }
+      }
+    }
+
+    if (type == "linear-gradient") {
       LinearGradient linearGradient;
 
       auto directionIt = rawBackgroundImageMap.find("direction");
@@ -1240,43 +1264,88 @@ inline void fromRawValue(
         }
       }
 
-      auto colorStopsIt = rawBackgroundImageMap.find("colorStops");
-      if (colorStopsIt != rawBackgroundImageMap.end() &&
-          colorStopsIt->second.hasType<std::vector<RawValue>>()) {
-        auto rawColorStops =
-            static_cast<std::vector<RawValue>>(colorStopsIt->second);
+      if (!colorStops.empty()) {
+        linearGradient.colorStops = colorStops;
+      }
 
-        for (const auto& stop : rawColorStops) {
-          if (stop.hasType<std::unordered_map<std::string, RawValue>>()) {
-            auto stopMap =
-                static_cast<std::unordered_map<std::string, RawValue>>(stop);
-            auto positionIt = stopMap.find("position");
-            auto colorIt = stopMap.find("color");
+      backgroundImage.emplace_back(std::move(linearGradient));
+    } else if (type == "radial-gradient") {
+      RadialGradient radialGradient;
+      auto shapeIt = rawBackgroundImageMap.find("shape");
+      if (shapeIt != rawBackgroundImageMap.end() &&
+          shapeIt->second.hasType<std::string>()) {
+        auto shape = (std::string)(shapeIt->second);
+        radialGradient.shape = shape == "circle" ? RadialGradientShape::Circle
+                                                 : RadialGradientShape::Ellipse;
+      }
 
-            if (positionIt != stopMap.end() && colorIt != stopMap.end()) {
-              ColorStop colorStop;
-              if (positionIt->second.hasValue()) {
-                auto valueUnit = toValueUnit(positionIt->second);
-                if (!valueUnit) {
-                  result = {};
-                  return;
-                }
-                colorStop.position = valueUnit;
-              }
-              if (colorIt->second.hasValue()) {
-                fromRawValue(
-                    context.contextContainer,
-                    context.surfaceId,
-                    colorIt->second,
-                    colorStop.color);
-              }
-              linearGradient.colorStops.push_back(colorStop);
-            }
+      auto sizeIt = rawBackgroundImageMap.find("size");
+      if (sizeIt != rawBackgroundImageMap.end()) {
+        if (sizeIt->second.hasType<std::string>()) {
+          auto sizeStr = (std::string)(sizeIt->second);
+          if (sizeStr == "closest-side") {
+            radialGradient.size.value =
+                RadialGradientSize::SizeKeyword::ClosestSide;
+          } else if (sizeStr == "farthest-side") {
+            radialGradient.size.value =
+                RadialGradientSize::SizeKeyword::FarthestSide;
+          } else if (sizeStr == "closest-corner") {
+            radialGradient.size.value =
+                RadialGradientSize::SizeKeyword::ClosestCorner;
+          } else if (sizeStr == "farthest-corner") {
+            radialGradient.size.value =
+                RadialGradientSize::SizeKeyword::FarthestCorner;
+          }
+        } else if (sizeIt->second
+                       .hasType<std::unordered_map<std::string, RawValue>>()) {
+          auto sizeMap = static_cast<std::unordered_map<std::string, RawValue>>(
+              sizeIt->second);
+          auto xIt = sizeMap.find("x");
+          auto yIt = sizeMap.find("y");
+          if (xIt != sizeMap.end() && yIt != sizeMap.end()) {
+            RadialGradientSize sizeObj;
+            sizeObj.value = RadialGradientSize::Dimensions{
+                toValueUnit(xIt->second), toValueUnit(yIt->second)};
+            radialGradient.size = sizeObj;
+          }
+        }
+
+        auto positionIt = rawBackgroundImageMap.find("position");
+        if (positionIt != rawBackgroundImageMap.end() &&
+            positionIt->second
+                .hasType<std::unordered_map<std::string, RawValue>>()) {
+          auto positionMap =
+              static_cast<std::unordered_map<std::string, RawValue>>(
+                  positionIt->second);
+
+          auto topIt = positionMap.find("top");
+          auto bottomIt = positionMap.find("bottom");
+          auto leftIt = positionMap.find("left");
+          auto rightIt = positionMap.find("right");
+
+          if (topIt != positionMap.end()) {
+            auto topValue = toValueUnit(topIt->second);
+            radialGradient.position.top = topValue;
+          } else if (bottomIt != positionMap.end()) {
+            auto bottomValue = toValueUnit(bottomIt->second);
+            radialGradient.position.bottom = bottomValue;
+          }
+
+          if (leftIt != positionMap.end()) {
+            auto leftValue = toValueUnit(leftIt->second);
+            radialGradient.position.left = leftValue;
+          } else if (rightIt != positionMap.end()) {
+            auto rightValue = toValueUnit(rightIt->second);
+            radialGradient.position.right = rightValue;
           }
         }
       }
 
-      backgroundImage.push_back(std::move(linearGradient));
+      if (!colorStops.empty()) {
+        radialGradient.colorStops = colorStops;
+      }
+
+      backgroundImage.emplace_back(std::move(radialGradient));
     }
   }
 
@@ -1399,6 +1468,107 @@ inline std::string toString(const LayoutConformance& value) {
     case LayoutConformance::Compatibility:
       return "compatibility";
   }
+}
+
+inline std::string toString(const std::array<Float, 16>& m) {
+  std::string result;
+  result += "[ " + std::to_string(m[0]) + " " + std::to_string(m[1]) + " " +
+      std::to_string(m[2]) + " " + std::to_string(m[3]) + " ]\n";
+  result += "[ " + std::to_string(m[4]) + " " + std::to_string(m[5]) + " " +
+      std::to_string(m[6]) + " " + std::to_string(m[7]) + " ]\n";
+  result += "[ " + std::to_string(m[8]) + " " + std::to_string(m[9]) + " " +
+      std::to_string(m[10]) + " " + std::to_string(m[11]) + " ]\n";
+  result += "[ " + std::to_string(m[12]) + " " + std::to_string(m[13]) + " " +
+      std::to_string(m[14]) + " " + std::to_string(m[15]) + " ]";
+  return result;
+}
+
+inline std::string toString(const Transform& transform) {
+  std::string result = "[";
+  bool first = true;
+
+  for (const auto& operation : transform.operations) {
+    if (!first) {
+      result += ", ";
+    }
+    first = false;
+
+    switch (operation.type) {
+      case TransformOperationType::Perspective: {
+        result +=
+            "{\"perspective\": " + std::to_string(operation.x.value) + "}";
+        break;
+      }
+      case TransformOperationType::Rotate: {
+        if (operation.x.value != 0 && operation.y.value == 0 &&
+            operation.z.value == 0) {
+          result +=
+              R"({"rotateX": ")" + std::to_string(operation.x.value) + "rad\"}";
+        } else if (
+            operation.x.value == 0 && operation.y.value != 0 &&
+            operation.z.value == 0) {
+          result +=
+              R"({"rotateY": ")" + std::to_string(operation.y.value) + "rad\"}";
+        } else if (
+            operation.x.value == 0 && operation.y.value == 0 &&
+            operation.z.value != 0) {
+          result +=
+              R"({"rotateZ": ")" + std::to_string(operation.z.value) + "rad\"}";
+        }
+        break;
+      }
+      case TransformOperationType::Scale: {
+        if (operation.x.value == operation.y.value &&
+            operation.x.value == operation.z.value) {
+          result += "{\"scale\": " + std::to_string(operation.x.value) + "}";
+        } else if (operation.y.value == 1 && operation.z.value == 1) {
+          result += "{\"scaleX\": " + std::to_string(operation.x.value) + "}";
+        } else if (operation.x.value == 1 && operation.z.value == 1) {
+          result += "{\"scaleY\": " + std::to_string(operation.y.value) + "}";
+        } else if (operation.x.value == 1 && operation.y.value == 1) {
+          result += "{\"scaleZ\": " + std::to_string(operation.z.value) + "}";
+        }
+        break;
+      }
+      case TransformOperationType::Translate: {
+        if (operation.x.value != 0 && operation.y.value != 0 &&
+            operation.z.value == 0) {
+          result += "{\"translate\": [";
+          result += std::to_string(operation.x.value) + ", " +
+              std::to_string(operation.y.value);
+          result += "]}";
+        } else if (operation.x.value != 0 && operation.y.value == 0) {
+          result +=
+              "{\"translateX\": " + std::to_string(operation.x.value) + "}";
+        } else if (operation.x.value == 0 && operation.y.value != 0) {
+          result +=
+              "{\"translateY\": " + std::to_string(operation.y.value) + "}";
+        }
+        break;
+      }
+      case TransformOperationType::Skew: {
+        if (operation.x.value != 0 && operation.y.value == 0) {
+          result +=
+              R"({"skewX": ")" + std::to_string(operation.x.value) + "rad\"}";
+        } else if (operation.x.value == 0 && operation.y.value != 0) {
+          result +=
+              R"({"skewY": ")" + std::to_string(operation.y.value) + "rad\"}";
+        }
+        break;
+      }
+      case TransformOperationType::Arbitrary: {
+        result += "{\"matrix\": " + toString(transform.matrix) + "}";
+        break;
+      }
+      case TransformOperationType::Identity: {
+        result += "{\"identity\": true}";
+        break;
+      }
+    }
+  }
+
+  result += "]";
+  return result;
 }
 
 } // namespace facebook::react

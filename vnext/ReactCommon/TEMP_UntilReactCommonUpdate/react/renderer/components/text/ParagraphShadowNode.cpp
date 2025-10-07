@@ -23,7 +23,6 @@
 // Windows this assert breaks e2etest-fabric as window selection doesnt work
 //Testing Once
 #define assert_valid_size(size, layoutConstraints)  \
-  //react_native_assert(true)
   react_native_assert(                              \
       (size).width + kDefaultEpsilon >=             \
           (layoutConstraints).minimumSize.width &&  \
