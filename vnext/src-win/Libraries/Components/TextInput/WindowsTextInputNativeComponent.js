@@ -63,7 +63,7 @@ export type ReturnKeyType =
 
 export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline';
 
-export type NativeProps = $ReadOnly<{
+export type AndroidTextInputNativeProps = $ReadOnly<{
   // This allows us to inherit everything from ViewProps except for style (see below)
   // This must be commented for Fabric codegen to work.
   ...Omit<ViewProps, 'style'>,
@@ -621,7 +621,7 @@ export type NativeProps = $ReadOnly<{
   // submitKeyEvents?
 }>;
 
-type NativeType = HostComponent<NativeProps>;
+type NativeType = HostComponent<AndroidTextInputNativeProps>;
 
 type NativeCommands = TextInputNativeCommands<NativeType>;
 

@@ -20,13 +20,6 @@ import invariant from 'invariant'; // [Windows]
 import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
-export type Props = ViewProps;
-
-type PropsWithRef = $ReadOnly<{
-  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
-  ...ViewProps,
-}>;
-
 // [Windows
 // $FlowFixMe - children typing
 const childrenWithImportantForAccessibility = children => {
@@ -64,7 +57,10 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-function View(props: PropsWithRef): React.Node {
+export default component View(
+  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
+  ...props: ViewProps
+) {
   const hasTextAncestor = use(TextAncestor);
 
   // Extract common props needed by all paths
@@ -251,7 +247,7 @@ function View(props: PropsWithRef): React.Node {
   let actualView;
   if (ReactNativeFeatureFlags.reduceDefaultPropsInView()) {
     //Destructured props at function scope, just create processedProps
-    const processedProps = otherProps as {...PropsWithRef};
+    const processedProps = otherProps as {...ViewProps};
 
     const parsedAriaLabelledBy = ariaLabelledBy?.split(/\s*,\s*/g);
     if (parsedAriaLabelledBy !== undefined) {
@@ -472,6 +468,7 @@ function View(props: PropsWithRef): React.Node {
         accessibilityValue={_accessibilityValue}
         importantForAccessibility={computedImportantForAccessibility}
         nativeID={id ?? nativeID}
+        ref={ref}
         // [Windows
         accessible={_accessible}
         children={otherProps.children}
@@ -549,8 +546,3 @@ function View(props: PropsWithRef): React.Node {
 
   return actualView;
 }
-
-export default View as component(
-  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
-  ...props: ViewProps
-);
