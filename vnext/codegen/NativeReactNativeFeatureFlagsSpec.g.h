@@ -20,8 +20,8 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{0, L"commonTestFlag"},
       SyncMethod<bool() noexcept>{1, L"commonTestFlagWithoutNativeImplementation"},
       SyncMethod<bool() noexcept>{2, L"animatedShouldSignalBatch"},
-      SyncMethod<bool() noexcept>{3, L"avoidCeilingAvailableAndroidTextWidth"},
-      SyncMethod<bool() noexcept>{4, L"cxxNativeAnimatedEnabled"},
+      SyncMethod<bool() noexcept>{3, L"cxxNativeAnimatedEnabled"},
+      SyncMethod<bool() noexcept>{4, L"cxxNativeAnimatedRemoveJsSync"},
       SyncMethod<bool() noexcept>{5, L"disableMainQueueSyncDispatchIOS"},
       SyncMethod<bool() noexcept>{6, L"disableMountItemReorderingAndroid"},
       SyncMethod<bool() noexcept>{7, L"disableTextLayoutManagerCacheAndroid"},
@@ -39,7 +39,7 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{19, L"enableFontScaleChangesUpdatingLayout"},
       SyncMethod<bool() noexcept>{20, L"enableIOSTextBaselineOffsetPerLine"},
       SyncMethod<bool() noexcept>{21, L"enableIOSViewClipToPaddingBox"},
-      SyncMethod<bool() noexcept>{22, L"enableIntersectionObserverEventLoopIntegration"},
+      SyncMethod<bool() noexcept>{22, L"enableInteropViewManagerClassLookUpOptimizationIOS"},
       SyncMethod<bool() noexcept>{23, L"enableLayoutAnimationsOnAndroid"},
       SyncMethod<bool() noexcept>{24, L"enableLayoutAnimationsOnIOS"},
       SyncMethod<bool() noexcept>{25, L"enableMainQueueCoordinatorOnIOS"},
@@ -56,22 +56,24 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{36, L"enableViewRecycling"},
       SyncMethod<bool() noexcept>{37, L"enableViewRecyclingForText"},
       SyncMethod<bool() noexcept>{38, L"enableViewRecyclingForView"},
-      SyncMethod<bool() noexcept>{39, L"fixMappingOfEventPrioritiesBetweenFabricAndReact"},
-      SyncMethod<bool() noexcept>{40, L"fuseboxEnabledRelease"},
-      SyncMethod<bool() noexcept>{41, L"fuseboxNetworkInspectionEnabled"},
-      SyncMethod<bool() noexcept>{42, L"incorporateMaxLinesDuringAndroidLayout"},
-      SyncMethod<bool() noexcept>{43, L"traceTurboModulePromiseRejectionsOnAndroid"},
-      SyncMethod<bool() noexcept>{44, L"updateRuntimeShadowNodeReferencesOnCommit"},
-      SyncMethod<bool() noexcept>{45, L"useAlwaysAvailableJSErrorHandling"},
-      SyncMethod<bool() noexcept>{46, L"useAndroidTextLayoutWidthDirectly"},
-      SyncMethod<bool() noexcept>{47, L"useFabricInterop"},
-      SyncMethod<bool() noexcept>{48, L"useNativeViewConfigsInBridgelessMode"},
-      SyncMethod<bool() noexcept>{49, L"useOptimizedEventBatchingOnAndroid"},
-      SyncMethod<bool() noexcept>{50, L"useRawPropsJsiValue"},
-      SyncMethod<bool() noexcept>{51, L"useShadowNodeStateOnClone"},
-      SyncMethod<bool() noexcept>{52, L"useTurboModuleInterop"},
-      SyncMethod<bool() noexcept>{53, L"useTurboModules"},
-      SyncMethod<double() noexcept>{54, L"virtualViewPrerenderRatio"},
+      SyncMethod<bool() noexcept>{39, L"enableVirtualViewDebugFeatures"},
+      SyncMethod<bool() noexcept>{40, L"enableVirtualViewRenderState"},
+      SyncMethod<bool() noexcept>{41, L"enableVirtualViewWindowFocusDetection"},
+      SyncMethod<bool() noexcept>{42, L"fixMappingOfEventPrioritiesBetweenFabricAndReact"},
+      SyncMethod<bool() noexcept>{43, L"fuseboxEnabledRelease"},
+      SyncMethod<bool() noexcept>{44, L"fuseboxNetworkInspectionEnabled"},
+      SyncMethod<double() noexcept>{45, L"preparedTextCacheSize"},
+      SyncMethod<bool() noexcept>{46, L"traceTurboModulePromiseRejectionsOnAndroid"},
+      SyncMethod<bool() noexcept>{47, L"updateRuntimeShadowNodeReferencesOnCommit"},
+      SyncMethod<bool() noexcept>{48, L"useAlwaysAvailableJSErrorHandling"},
+      SyncMethod<bool() noexcept>{49, L"useFabricInterop"},
+      SyncMethod<bool() noexcept>{50, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{51, L"useOptimizedEventBatchingOnAndroid"},
+      SyncMethod<bool() noexcept>{52, L"useRawPropsJsiValue"},
+      SyncMethod<bool() noexcept>{53, L"useShadowNodeStateOnClone"},
+      SyncMethod<bool() noexcept>{54, L"useTurboModuleInterop"},
+      SyncMethod<bool() noexcept>{55, L"useTurboModules"},
+      SyncMethod<double() noexcept>{56, L"virtualViewPrerenderRatio"},
   };
 
   template <class TModule>
@@ -95,14 +97,14 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(animatedShouldSignalBatch) static bool animatedShouldSignalBatch() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
-          "avoidCeilingAvailableAndroidTextWidth",
-          "    REACT_SYNC_METHOD(avoidCeilingAvailableAndroidTextWidth) bool avoidCeilingAvailableAndroidTextWidth() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(avoidCeilingAvailableAndroidTextWidth) static bool avoidCeilingAvailableAndroidTextWidth() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
           "cxxNativeAnimatedEnabled",
           "    REACT_SYNC_METHOD(cxxNativeAnimatedEnabled) bool cxxNativeAnimatedEnabled() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(cxxNativeAnimatedEnabled) static bool cxxNativeAnimatedEnabled() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          4,
+          "cxxNativeAnimatedRemoveJsSync",
+          "    REACT_SYNC_METHOD(cxxNativeAnimatedRemoveJsSync) bool cxxNativeAnimatedRemoveJsSync() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(cxxNativeAnimatedRemoveJsSync) static bool cxxNativeAnimatedRemoveJsSync() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "disableMainQueueSyncDispatchIOS",
@@ -190,9 +192,9 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableIOSViewClipToPaddingBox) static bool enableIOSViewClipToPaddingBox() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           22,
-          "enableIntersectionObserverEventLoopIntegration",
-          "    REACT_SYNC_METHOD(enableIntersectionObserverEventLoopIntegration) bool enableIntersectionObserverEventLoopIntegration() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(enableIntersectionObserverEventLoopIntegration) static bool enableIntersectionObserverEventLoopIntegration() noexcept { /* implementation */ }\n");
+          "enableInteropViewManagerClassLookUpOptimizationIOS",
+          "    REACT_SYNC_METHOD(enableInteropViewManagerClassLookUpOptimizationIOS) bool enableInteropViewManagerClassLookUpOptimizationIOS() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableInteropViewManagerClassLookUpOptimizationIOS) static bool enableInteropViewManagerClassLookUpOptimizationIOS() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           23,
           "enableLayoutAnimationsOnAndroid",
@@ -275,81 +277,91 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableViewRecyclingForView) static bool enableViewRecyclingForView() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           39,
+          "enableVirtualViewDebugFeatures",
+          "    REACT_SYNC_METHOD(enableVirtualViewDebugFeatures) bool enableVirtualViewDebugFeatures() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableVirtualViewDebugFeatures) static bool enableVirtualViewDebugFeatures() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          40,
+          "enableVirtualViewRenderState",
+          "    REACT_SYNC_METHOD(enableVirtualViewRenderState) bool enableVirtualViewRenderState() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableVirtualViewRenderState) static bool enableVirtualViewRenderState() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          41,
+          "enableVirtualViewWindowFocusDetection",
+          "    REACT_SYNC_METHOD(enableVirtualViewWindowFocusDetection) bool enableVirtualViewWindowFocusDetection() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableVirtualViewWindowFocusDetection) static bool enableVirtualViewWindowFocusDetection() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          42,
           "fixMappingOfEventPrioritiesBetweenFabricAndReact",
           "    REACT_SYNC_METHOD(fixMappingOfEventPrioritiesBetweenFabricAndReact) bool fixMappingOfEventPrioritiesBetweenFabricAndReact() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(fixMappingOfEventPrioritiesBetweenFabricAndReact) static bool fixMappingOfEventPrioritiesBetweenFabricAndReact() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          40,
+          43,
           "fuseboxEnabledRelease",
           "    REACT_SYNC_METHOD(fuseboxEnabledRelease) bool fuseboxEnabledRelease() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(fuseboxEnabledRelease) static bool fuseboxEnabledRelease() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          41,
+          44,
           "fuseboxNetworkInspectionEnabled",
           "    REACT_SYNC_METHOD(fuseboxNetworkInspectionEnabled) bool fuseboxNetworkInspectionEnabled() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(fuseboxNetworkInspectionEnabled) static bool fuseboxNetworkInspectionEnabled() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          42,
-          "incorporateMaxLinesDuringAndroidLayout",
-          "    REACT_SYNC_METHOD(incorporateMaxLinesDuringAndroidLayout) bool incorporateMaxLinesDuringAndroidLayout() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(incorporateMaxLinesDuringAndroidLayout) static bool incorporateMaxLinesDuringAndroidLayout() noexcept { /* implementation */ }\n");
+          45,
+          "preparedTextCacheSize",
+          "    REACT_SYNC_METHOD(preparedTextCacheSize) double preparedTextCacheSize() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(preparedTextCacheSize) static double preparedTextCacheSize() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          43,
+          46,
           "traceTurboModulePromiseRejectionsOnAndroid",
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) static bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          44,
+          47,
           "updateRuntimeShadowNodeReferencesOnCommit",
           "    REACT_SYNC_METHOD(updateRuntimeShadowNodeReferencesOnCommit) bool updateRuntimeShadowNodeReferencesOnCommit() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(updateRuntimeShadowNodeReferencesOnCommit) static bool updateRuntimeShadowNodeReferencesOnCommit() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          45,
+          48,
           "useAlwaysAvailableJSErrorHandling",
           "    REACT_SYNC_METHOD(useAlwaysAvailableJSErrorHandling) bool useAlwaysAvailableJSErrorHandling() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useAlwaysAvailableJSErrorHandling) static bool useAlwaysAvailableJSErrorHandling() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          46,
-          "useAndroidTextLayoutWidthDirectly",
-          "    REACT_SYNC_METHOD(useAndroidTextLayoutWidthDirectly) bool useAndroidTextLayoutWidthDirectly() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(useAndroidTextLayoutWidthDirectly) static bool useAndroidTextLayoutWidthDirectly() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          47,
+          49,
           "useFabricInterop",
           "    REACT_SYNC_METHOD(useFabricInterop) bool useFabricInterop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useFabricInterop) static bool useFabricInterop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          48,
+          50,
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          49,
+          51,
           "useOptimizedEventBatchingOnAndroid",
           "    REACT_SYNC_METHOD(useOptimizedEventBatchingOnAndroid) bool useOptimizedEventBatchingOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useOptimizedEventBatchingOnAndroid) static bool useOptimizedEventBatchingOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          50,
+          52,
           "useRawPropsJsiValue",
           "    REACT_SYNC_METHOD(useRawPropsJsiValue) bool useRawPropsJsiValue() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useRawPropsJsiValue) static bool useRawPropsJsiValue() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          51,
+          53,
           "useShadowNodeStateOnClone",
           "    REACT_SYNC_METHOD(useShadowNodeStateOnClone) bool useShadowNodeStateOnClone() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useShadowNodeStateOnClone) static bool useShadowNodeStateOnClone() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          52,
+          54,
           "useTurboModuleInterop",
           "    REACT_SYNC_METHOD(useTurboModuleInterop) bool useTurboModuleInterop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModuleInterop) static bool useTurboModuleInterop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          53,
+          55,
           "useTurboModules",
           "    REACT_SYNC_METHOD(useTurboModules) bool useTurboModules() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModules) static bool useTurboModules() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          54,
+          56,
           "virtualViewPrerenderRatio",
           "    REACT_SYNC_METHOD(virtualViewPrerenderRatio) double virtualViewPrerenderRatio() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(virtualViewPrerenderRatio) static double virtualViewPrerenderRatio() noexcept { /* implementation */ }\n");

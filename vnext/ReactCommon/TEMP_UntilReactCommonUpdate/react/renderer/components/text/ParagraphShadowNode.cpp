@@ -20,6 +20,19 @@
 #include <react/utils/FloatComparison.h>
 
 #include <react/renderer/components/text/ParagraphState.h>
+<<<<<<< Upstream
+
+#define assert_valid_size(size, layoutConstraints)  \
+  react_native_assert(                              \
+      (size).width + kDefaultEpsilon >=             \
+          (layoutConstraints).minimumSize.width &&  \
+      (size).width - kDefaultEpsilon <=             \
+          (layoutConstraints).maximumSize.width &&  \
+      (size).height + kDefaultEpsilon >=            \
+          (layoutConstraints).minimumSize.height && \
+      (size).height - kDefaultEpsilon <=            \
+          (layoutConstraints).maximumSize.height)
+=======
 // Windows this assert breaks e2etest-fabric as window selection doesnt work
 #define assert_valid_size(size, layoutConstraints)                         \
   react_native_assert(true)
@@ -33,6 +46,7 @@
   //          (layoutConstraints).minimumSize.height &&                       \
   //      (size).height - kDefaultEpsilon <=                                  \
   //          (layoutConstraints).maximumSize.height))
+>>>>>>> Override
 
 namespace facebook::react {
 using Content = ParagraphShadowNode::Content;

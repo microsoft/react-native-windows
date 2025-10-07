@@ -26,6 +26,7 @@ struct IntersectionObserverSpec_NativeIntersectionObserverEntry {
 
 struct IntersectionObserverSpec_NativeIntersectionObserverObserveOptions {
     double intersectionObserverId;
+    std::optional<> rootShadowNode;
      targetShadowNode;
     std::vector<double> thresholds;
     std::optional<std::vector<double>> rootThresholds;
@@ -48,6 +49,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserve
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"intersectionObserverId", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::intersectionObserverId},
+        {L"rootShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::rootShadowNode},
         {L"targetShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::targetShadowNode},
         {L"thresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::thresholds},
         {L"rootThresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::rootThresholds},
