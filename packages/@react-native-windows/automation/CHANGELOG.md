@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Wed, 01 Oct 2025 05:25:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.3.419
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.337
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @rnw-scripts/just-task to v2.3.56
 
 ## 0.3.418
 

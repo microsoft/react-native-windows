@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:44 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Oct 2025 05:27:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.56
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Patches
+
+- Update downloadFlowTypes with newly missing flow types (hmalothu@microsoft.com)
 
 ## 2.3.55
 

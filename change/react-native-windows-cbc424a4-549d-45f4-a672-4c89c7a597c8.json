@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update tester files",
-  "packageName": "react-native-windows",
-  "email": "hmalothu@microsoft.com",
-  "dependentChangeType": "patch"
-}
