@@ -62,5 +62,11 @@
                 "DotNetCoreVersion": "6.0.403"
             }
         }
+        {
+            "name": "windows-dotnetcore-sdk",
+            "parameters": {
+                "DotNetCoreVersion": "8.0.413"
+            }
+        }
     ]
 }
