@@ -154,7 +154,6 @@ AccessibilityProps::AccessibilityProps(
                     "accessibilityIgnoresInvertColors",
                     sourceProps.accessibilityIgnoresInvertColors,
                     false)),
-<<<<<<< Upstream
       accessibilityRespondsToUserInteraction(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilityRespondsToUserInteraction
@@ -164,8 +163,6 @@ AccessibilityProps::AccessibilityProps(
                     "accessibilityRespondsToUserInteraction",
                     sourceProps.accessibilityRespondsToUserInteraction,
                     true)),
-=======
->>>>>>> Override
       onAccessibilityTap(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.onAccessibilityTap

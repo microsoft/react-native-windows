@@ -305,24 +305,17 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/DisplayContents/DisplayContentsExample')
       .default,
   },
-<<<<<<< Upstream
   {
     key: 'FocusEventsExample',
     module: require('../examples/FocusEventsExample/FocusEventsExample')
       .default,
   },
-  {
-    key: 'InvalidPropsExample',
-    module: require('../examples/InvalidProps/InvalidPropsExample'),
-  },
-=======
   // Only show the link for the example if the API is available.
   // E2E Tests failing when this test is enabled
   // {
   //   key: 'InvalidPropsExample',
   //   module: require('../examples/InvalidProps/InvalidPropsExample'),
   // },
->>>>>>> Override
   {
     key: 'Keyboard',
     category: 'Basic',

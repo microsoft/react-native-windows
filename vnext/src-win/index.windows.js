@@ -170,7 +170,6 @@ module.exports = {
     return require('./Libraries/Components/RefreshControl/RefreshControl')
       .default;
   },
-<<<<<<< Upstream
   /**
    * @deprecated SafeAreaView has been deprecated and will be removed in a future release.
    * Please use 'react-native-safe-area-context' instead.
@@ -183,9 +182,6 @@ module.exports = {
         "Please use 'react-native-safe-area-context' instead. " +
         'See https://github.com/th3rdwave/react-native-safe-area-context',
     );
-=======
-  get SafeAreaView(): SafeAreaView {
->>>>>>> Override
     return require('./Libraries/Components/SafeAreaView/SafeAreaView').default;
   },
   get ScrollView(): ScrollView {
@@ -426,69 +422,12 @@ module.exports = {
   get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
   },
-<<<<<<< Upstream
   get VirtualViewMode() {
     return require('./src/private/components/virtualview/VirtualView')
       .VirtualViewMode;
   },
   // #endregion
 } as ReactNativePublicAPI;
-=======
-
-  // Additional windows exports (Typescript components exported as flow any)
-  get DatePicker(): any {
-    invariant(
-      false,
-      'DatePicker has been extracted and removed from react-native-windows. ' +
-        "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
-        'See https://github.com/react-native-datetimepicker/datetimepicker',
-    );
-  },
-  get Flyout(): any {
-    return require('./Libraries/Components/Flyout/Flyout').Flyout;
-  },
-  get Glyph(): any {
-    return require('./Libraries/Components/Glyph/Glyph').Glyph;
-  },
-  get PickerWindows(): any {
-    invariant(
-      false,
-      'PickerWindows has been extracted and removed from react-native-windows. ' +
-        "It can now be installed and imported as Picker from '@react-native-picker/picker'. " +
-        'See https://github.com/react-native-picker/picker',
-    );
-  },
-  get Popup(): any {
-    return require('./Libraries/Components/Popup/Popup').Popup;
-  },
-  get supportKeyboard(): any {
-    return require('./Libraries/Components/Keyboard/KeyboardExt')
-      .supportKeyboard;
-  },
-  get DayOfWeek(): any {
-    invariant(
-      false,
-      'DatePicker has been extracted and removed from react-native-windows. ' +
-        "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
-        'See https://github.com/react-native-datetimepicker/datetimepicker',
-    );
-  },
-  get EventPhase(): any {
-    return require('./Libraries/Components/View/ViewPropTypes')
-      .HandledEventPhase;
-  },
-  get HandledEventPhase(): any {
-    return require('./Libraries/Components/View/ViewPropTypes')
-      .HandledEventPhase;
-  },
-  get ViewWindows(): any {
-    return require('./Libraries/Components/View/View').default;
-  },
-  get AppTheme(): AppTheme {
-    return require('./Libraries/AppTheme/AppTheme');
-  },
-};
->>>>>>> Override
 
 if (__DEV__) {
   /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
