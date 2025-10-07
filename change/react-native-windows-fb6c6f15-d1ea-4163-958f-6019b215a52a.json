@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "upgrade to dotnet8",
+  "packageName": "react-native-windows",
+  "email": "10109130+sharath2727@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
