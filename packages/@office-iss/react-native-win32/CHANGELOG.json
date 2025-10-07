@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 07 Oct 2025 05:27:27 GMT",
+      "version": "0.0.0-canary.298",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.298",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "bcce2736db9d50987e9c3b5a614e527f871d22a9",
+            "comment": "Update tester files"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.56",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.59",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Sep 2025 05:29:13 GMT",
       "version": "0.0.0-canary.297",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.297",

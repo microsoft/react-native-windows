@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 07 Oct 2025 05:27:28 GMT",
+      "version": "0.0.0-canary.125",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.125",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.68",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.56",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Aug 2025 05:30:41 GMT",
       "version": "0.0.0-canary.124",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.124",
