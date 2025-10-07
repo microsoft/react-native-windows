@@ -50,7 +50,7 @@
     "@react-native/metro-babel-transformer": "0.81.0-nightly-20250604-1a6d466f1",
     "@react-native/metro-config": "0.81.0-nightly-20250604-1a6d466f1",
     "@tsconfig/node22": "22.0.2",
-    "@types/react": "^19.1.0",
+    "@types/react": "^19.0.0",
     "@typescript-eslint/parser": "^7.1.1",
     "ansi-styles": "^4.2.1",
     "babel-plugin-minify-dead-code-elimination": "^0.5.2",
