@@ -30,13 +30,13 @@
     "@react-native-community/cli-platform-android": "17.0.0",
     "@react-native-community/cli-platform-ios": "17.0.0",
     "@react-native/assets": "1.0.0",
-    "@react-native/assets-registry": "0.81.0-nightly-20250604-1a6d466f1",
-    "@react-native/codegen": "0.81.0-nightly-20250604-1a6d466f1",
-    "@react-native/community-cli-plugin": "0.81.0-nightly-20250604-1a6d466f1",
-    "@react-native/gradle-plugin": "0.81.0-nightly-20250604-1a6d466f1",
-    "@react-native/js-polyfills": "0.81.0-nightly-20250604-1a6d466f1",
-    "@react-native/normalize-colors": "0.81.0-nightly-20250604-1a6d466f1",
-    "@react-native/virtualized-lists": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/assets-registry": "0.81.0-nightly-20250702-b41b924b2",
+    "@react-native/codegen": "0.81.0-nightly-20250702-b41b924b2",
+    "@react-native/community-cli-plugin": "0.81.0-nightly-20250702-b41b924b2",
+    "@react-native/gradle-plugin": "0.81.0-nightly-20250702-b41b924b2",
+    "@react-native/js-polyfills": "0.81.0-nightly-20250702-b41b924b2",
+    "@react-native/normalize-colors": "0.81.0-nightly-20250702-b41b924b2",
+    "@react-native/virtualized-lists": "0.81.0-nightly-20250702-b41b924b2",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "ansi-regex": "^5.0.0",
@@ -72,7 +72,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
-    "@react-native/metro-config": "0.81.0-nightly-20250604-1a6d466f1",
+    "@react-native/metro-config": "0.81.0-nightly-20250702-b41b924b2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.37",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.41",
@@ -95,7 +95,7 @@
   "peerDependencies": {
     "@types/react": "^19.1.0",
     "react": "^19.1.0",
-    "react-native": "0.81.0-nightly-20250604-1a6d466f1"
+    "react-native": "0.81.0-nightly-20250702-b41b924b2"
   },
   "beachball": {
     "defaultNpmTag": "canary",
