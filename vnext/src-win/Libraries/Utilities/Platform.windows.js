@@ -6,10 +6,7 @@
  * @format
  */
 
-import type {
-  Platform as PlatformType,
-  PlatformSelectSpec,
-} from './PlatformTypes';
+import type {PlatformSelectSpec, PlatformType} from './PlatformTypes';
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 

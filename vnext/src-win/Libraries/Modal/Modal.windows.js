@@ -89,9 +89,9 @@ export type ModalBaseProps = {
    */
   visible?: ?boolean,
   /**
-   * The `onRequestClose` callback is called when the user taps the hardware back button on Android or the menu button on Apple TV.
+   * The `onRequestClose` callback is called when the user taps the hardware back button on Android, dismisses the sheet using a gesture on iOS (when `allowSwipeDismissal` is set to true) or the menu button on Apple TV.
    *
-   * This is required on Apple TV and Android.
+   * This is required on iOS and Android.
    */
   // onRequestClose?: (event: NativeSyntheticEvent<any>) => void;
   onRequestClose?: ?DirectEventHandler<null>,
@@ -150,6 +150,12 @@ export type ModalPropsIOS = {
   //   | ((event: NativeSyntheticEvent<any>) => void)
   //   | undefined;
   onOrientationChange?: ?DirectEventHandler<OrientationChangeEvent>,
+
+  /**
+   * Controls whether the modal can be dismissed by swiping down on iOS.
+   * This requires you to implement the `onRequestClose` prop to handle the dismissal.
+   */
+  allowSwipeDismissal?: ?boolean,
 };
 
 export type ModalPropsAndroid = {
@@ -201,6 +207,16 @@ function confirmProps(props: ModalProps) {
     ) {
       console.warn(
         'Modal with translucent navigation bar and without translucent status bar is not supported.',
+      );
+    }
+
+    if (
+      Platform.OS === 'ios' &&
+      props.allowSwipeDismissal === true &&
+      !props.onRequestClose
+    ) {
+      console.warn(
+        'Modal requires the onRequestClose prop when used with `allowSwipeDismissal`. This is necessary to prevent state corruption.',
       );
     }
   }
@@ -340,8 +356,13 @@ class Modal extends React.Component<ModalProps, ModalState> {
         onStartShouldSetResponder={this._shouldSetResponder}
         supportedOrientations={this.props.supportedOrientations}
         onOrientationChange={this.props.onOrientationChange}
+<<<<<<< Upstream
+        allowSwipeDismissal={this.props.allowSwipeDismissal}
+        testID={this.props.testID}>
+=======
         testID={this.props.testID}
         title={this.props.title}>
+>>>>>>> Override
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>
             <View

@@ -170,7 +170,22 @@ module.exports = {
     return require('./Libraries/Components/RefreshControl/RefreshControl')
       .default;
   },
+<<<<<<< Upstream
+  /**
+   * @deprecated SafeAreaView has been deprecated and will be removed in a future release.
+   * Please use 'react-native-safe-area-context' instead.
+   * See https://github.com/th3rdwave/react-native-safe-area-context
+   */
+  get SafeAreaView() {
+    warnOnce(
+      'safe-area-view-deprecated',
+      'SafeAreaView has been deprecated and will be removed in a future release. ' +
+        "Please use 'react-native-safe-area-context' instead. " +
+        'See https://github.com/th3rdwave/react-native-safe-area-context',
+    );
+=======
   get SafeAreaView(): SafeAreaView {
+>>>>>>> Override
     return require('./Libraries/Components/SafeAreaView/SafeAreaView').default;
   },
   get ScrollView(): ScrollView {
@@ -219,6 +234,9 @@ module.exports = {
   },
   get VirtualizedSectionList(): VirtualizedSectionList {
     return require('./Libraries/Lists/VirtualizedSectionList').default;
+  },
+  get unstable_VirtualView() {
+    return require('./src/private/components/virtualview/VirtualView').default;
   },
   // #endregion
   // #region APIs
@@ -417,6 +435,14 @@ module.exports = {
   get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
   },
+<<<<<<< Upstream
+  get VirtualViewMode() {
+    return require('./src/private/components/virtualview/VirtualView')
+      .VirtualViewMode;
+  },
+  // #endregion
+} as ReactNativePublicAPI;
+=======
   // Win32 Types (Typescript components exported as flow any)
   get ColorGradientWin32(): ColorGradientWin32 {
     return require('./Libraries/StyleSheet/PlatformColorValueTypesWin32')
@@ -447,6 +473,7 @@ module.exports = {
       .PersonaCoinPresence;
   },
 };
+>>>>>>> Override
 
 if (__DEV__) {
   /* $FlowFixMe[prop-missing] This is intentional: Flow will error when

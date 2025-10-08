@@ -8,6 +8,13 @@
  * @format
  */
 
+<<<<<<< Upstream
+export * from '../../src/private/specs_DEPRECATED/modules/NativeImageLoaderIOS';
+import NativeImageLoaderIOS from '../../src/private/specs_DEPRECATED/modules/NativeImageLoaderIOS';
+
+export default NativeImageLoaderIOS;
+=======
 export * from '../../src/private/specs_DEPRECATED/modules/NativeImageLoaderWin32';
 import NativeImageLoaderWin32 from '../../src/private/specs_DEPRECATED/modules/NativeImageLoaderWin32';
 export default NativeImageLoaderWin32;
+>>>>>>> Override

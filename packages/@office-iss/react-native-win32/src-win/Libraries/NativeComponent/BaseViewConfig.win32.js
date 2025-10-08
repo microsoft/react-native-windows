@@ -11,7 +11,6 @@
 import type {PartialViewConfigWithoutName} from './PlatformBaseViewConfig';
 
 import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
-import NativeReactNativeFeatureFlags from '../../src/private/featureflags/specs/NativeReactNativeFeatureFlags';
 import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
 import {
   ConditionallyIgnoredEventHandlers,
@@ -225,6 +224,14 @@ const validAttributesForNonEventProps = {
   hitSlop: {diff: require('../Utilities/differ/insetsDiffer').default},
   collapsable: true,
   collapsableChildren: true,
+<<<<<<< Upstream
+  filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
+    ? (true as const)
+    : {process: require('../StyleSheet/processFilter').default},
+  boxShadow: ReactNativeFeatureFlags.enableNativeCSSParsing()
+    ? (true as const)
+    : {process: require('../StyleSheet/processBoxShadow').default},
+=======
   experimental_filter:
     NativeReactNativeFeatureFlags != null &&
     ReactNativeFeatureFlags.enableNativeCSSParsing()
@@ -239,6 +246,7 @@ const validAttributesForNonEventProps = {
       : {
           process: require('../StyleSheet/processBoxShadow').default,
         },
+>>>>>>> Override
   mixBlendMode: true,
   isolation: true,
 

@@ -68,6 +68,7 @@ export type ButtonProps = $ReadOnly<{
     @platform tv
 
     @default false
+    @deprecated Use `focusable` instead
    */
   hasTVPreferredFocus?: ?boolean,
 
@@ -305,7 +306,16 @@ export type ButtonProps = $ReadOnly<{
   ```
  */
 
+<<<<<<< Upstream
+const NativeTouchable:
+  | typeof TouchableNativeFeedback
+  | typeof TouchableOpacity =
+  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+
+type ButtonRef = React.ElementRef<typeof NativeTouchable>;
+=======
 type ButtonRef = React.ElementRef<typeof TouchableHighlight>;
+>>>>>>> Override
 
 const Button: component(
   ref?: React.RefSetter<ButtonRef>,
@@ -407,6 +417,41 @@ const Button: component(
     importantForAccessibility === 'no'
       ? 'no-hide-descendants'
       : importantForAccessibility;
+<<<<<<< Upstream
+
+  return (
+    <NativeTouchable
+      accessible={accessible}
+      accessibilityActions={accessibilityActions}
+      onAccessibilityAction={onAccessibilityAction}
+      accessibilityLabel={ariaLabel || accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityLanguage={accessibilityLanguage}
+      accessibilityRole="button"
+      accessibilityState={_accessibilityState}
+      importantForAccessibility={_importantForAccessibility}
+      hasTVPreferredFocus={hasTVPreferredFocus}
+      nextFocusDown={nextFocusDown}
+      nextFocusForward={nextFocusForward}
+      nextFocusLeft={nextFocusLeft}
+      nextFocusRight={nextFocusRight}
+      nextFocusUp={nextFocusUp}
+      testID={testID}
+      disabled={disabled}
+      onPress={onPress}
+      touchSoundDisabled={touchSoundDisabled}
+      // $FlowFixMe[incompatible-exact]
+      // $FlowFixMe[prop-missing]
+      // $FlowFixMe[incompatible-type-arg]
+      ref={ref}>
+      <View style={buttonStyles}>
+        <Text style={textStyles} disabled={disabled}>
+          {formattedTitle}
+        </Text>
+      </View>
+    </NativeTouchable>
+  );
+=======
   // [Windows
   if (Platform.OS === 'windows') {
     return (
@@ -544,6 +589,7 @@ const Button: component(
     );
   }
   // Windows]
+>>>>>>> Override
 };
 
 Button.displayName = 'Button';
