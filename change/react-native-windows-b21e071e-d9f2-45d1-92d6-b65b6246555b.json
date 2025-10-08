@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adding UIA event handler changes for navigator",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
