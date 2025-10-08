@@ -22,7 +22,7 @@ type OrientationChangeEvent = $ReadOnly<{|
   orientation: 'portrait' | 'landscape',
 |}>;
 
-type RCTModalHostViewNativeProps = $ReadOnly<{
+type RCTModalHostViewNativeProps = $ReadOnly<{|
   ...ViewProps,
 
   /**
