@@ -356,13 +356,9 @@ class Modal extends React.Component<ModalProps, ModalState> {
         onStartShouldSetResponder={this._shouldSetResponder}
         supportedOrientations={this.props.supportedOrientations}
         onOrientationChange={this.props.onOrientationChange}
-<<<<<<< Upstream
         allowSwipeDismissal={this.props.allowSwipeDismissal}
-        testID={this.props.testID}>
-=======
         testID={this.props.testID}
         title={this.props.title}>
->>>>>>> Override
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>
             <View

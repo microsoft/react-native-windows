@@ -244,29 +244,12 @@ const validAttributesForNonEventProps = {
   hitSlop: {diff: require('../Utilities/differ/insetsDiffer').default},
   collapsable: true,
   collapsableChildren: true,
-<<<<<<< Upstream
-  filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
+  experimental_filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
     ? (true as const)
     : {process: require('../StyleSheet/processFilter').default},
   boxShadow: ReactNativeFeatureFlags.enableNativeCSSParsing()
     ? (true as const)
     : {process: require('../StyleSheet/processBoxShadow').default},
-=======
-  experimental_filter:
-    NativeReactNativeFeatureFlags != null &&
-    ReactNativeFeatureFlags.enableNativeCSSParsing()
-      ? (true as const)
-      : {
-          process: require('../StyleSheet/processFilter').default,
-        },
-  boxShadow:
-    NativeReactNativeFeatureFlags != null &&
-    ReactNativeFeatureFlags.enableNativeCSSParsing()
-      ? (true as const)
-      : {
-          process: require('../StyleSheet/processBoxShadow').default,
-        },
->>>>>>> Override
   mixBlendMode: true,
   isolation: true,
 

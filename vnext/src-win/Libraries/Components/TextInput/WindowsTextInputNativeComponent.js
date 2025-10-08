@@ -63,7 +63,7 @@ export type ReturnKeyType =
 
 export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline';
 
-export type AndroidTextInputNativeProps = $ReadOnly<{
+export type NativeProps = $ReadOnly<{
   // This allows us to inherit everything from ViewProps except for style (see below)
   // This must be commented for Fabric codegen to work.
   ...Omit<ViewProps, 'style'>,
@@ -621,7 +621,7 @@ export type AndroidTextInputNativeProps = $ReadOnly<{
   // submitKeyEvents?
 }>;
 
-type NativeType = HostComponent<AndroidTextInputNativeProps>;
+type NativeType = HostComponent<NativeProps>;
 
 type NativeCommands = TextInputNativeCommands<NativeType>;
 
@@ -776,16 +776,6 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
   },
 };
 
-<<<<<<< Upstream
-let AndroidTextInputNativeComponent =
-  NativeComponentRegistry.get<AndroidTextInputNativeProps>(
-    'AndroidTextInput',
-    () => __INTERNAL_VIEW_CONFIG,
-  );
-
-// flowlint-next-line unclear-type:off
-export default ((AndroidTextInputNativeComponent: any): HostComponent<AndroidTextInputNativeProps>);
-=======
 let WindowsTextInputNativeComponent = NativeComponentRegistry.get<NativeProps>(
   'WindowsTextInput',
   () => __INTERNAL_VIEW_CONFIG,
@@ -793,4 +783,3 @@ let WindowsTextInputNativeComponent = NativeComponentRegistry.get<NativeProps>(
 
 // flowlint-next-line unclear-type:off
 export default ((WindowsTextInputNativeComponent: any): HostComponent<NativeProps>);
->>>>>>> Override

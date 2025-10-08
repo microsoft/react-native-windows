@@ -20,8 +20,6 @@ import invariant from 'invariant'; // [Windows]
 import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
-<<<<<<< Upstream
-=======
 export type Props = ViewProps;
 
 type PropsWithRef = $ReadOnly<{
@@ -59,7 +57,6 @@ const childrenWithImportantForAccessibility = children => {
 };
 // Windows]
 
->>>>>>> Override
 /**
  * The most fundamental component for building a UI, View is a container that
  * supports layout with flexbox, style, some touch handling, and accessibility
@@ -256,34 +253,8 @@ export default component View(
 
   let actualView;
   if (ReactNativeFeatureFlags.reduceDefaultPropsInView()) {
-<<<<<<< Upstream
-    const {
-      accessibilityState,
-      accessibilityValue,
-      'aria-busy': ariaBusy,
-      'aria-checked': ariaChecked,
-      'aria-disabled': ariaDisabled,
-      'aria-expanded': ariaExpanded,
-      'aria-hidden': ariaHidden,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-live': ariaLive,
-      'aria-selected': ariaSelected,
-      'aria-valuemax': ariaValueMax,
-      'aria-valuemin': ariaValueMin,
-      'aria-valuenow': ariaValueNow,
-      'aria-valuetext': ariaValueText,
-      id,
-      tabIndex,
-      ...otherProps
-    } = props;
-
-    // Since we destructured props, we can now treat it as mutable
-    const processedProps = otherProps as {...ViewProps};
-=======
     //Destructured props at function scope, just create processedProps
     const processedProps = otherProps as {...PropsWithRef};
->>>>>>> Override
 
     const parsedAriaLabelledBy = ariaLabelledBy?.split(/\s*,\s*/g);
     if (parsedAriaLabelledBy !== undefined) {
@@ -398,58 +369,6 @@ export default component View(
       };
     }
 
-<<<<<<< Upstream
-    actualView =
-      ref == null ? (
-        <ViewNativeComponent {...processedProps} />
-      ) : (
-        <ViewNativeComponent {...processedProps} ref={ref} />
-      );
-  } else {
-    const {
-      accessibilityElementsHidden,
-      accessibilityLabel,
-      accessibilityLabelledBy,
-      accessibilityLiveRegion,
-      accessibilityState,
-      accessibilityValue,
-      'aria-busy': ariaBusy,
-      'aria-checked': ariaChecked,
-      'aria-disabled': ariaDisabled,
-      'aria-expanded': ariaExpanded,
-      'aria-hidden': ariaHidden,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-live': ariaLive,
-      'aria-selected': ariaSelected,
-      'aria-valuemax': ariaValueMax,
-      'aria-valuemin': ariaValueMin,
-      'aria-valuenow': ariaValueNow,
-      'aria-valuetext': ariaValueText,
-      focusable,
-      id,
-      importantForAccessibility,
-      nativeID,
-      tabIndex,
-      ...otherProps
-    } = props;
-    const _accessibilityLabelledBy =
-      ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
-
-    const _accessibilityState =
-      accessibilityState != null ||
-      ariaBusy != null ||
-      ariaChecked != null ||
-      ariaDisabled != null ||
-      ariaExpanded != null ||
-      ariaSelected != null
-        ? {
-            busy: ariaBusy ?? accessibilityState?.busy,
-            checked: ariaChecked ?? accessibilityState?.checked,
-            disabled: ariaDisabled ?? accessibilityState?.disabled,
-            expanded: ariaExpanded ?? accessibilityState?.expanded,
-            selected: ariaSelected ?? accessibilityState?.selected,
-=======
     // [Windows key event processing and accessible property
     if (otherProps.keyDownEvents || otherProps.onKeyDown) {
       processedProps.onKeyDown = event => {
@@ -462,7 +381,6 @@ export default component View(
             ) {
               event.stopPropagation();
             }
->>>>>>> Override
           }
         }
         otherProps.onKeyDown && otherProps.onKeyDown(event);
@@ -557,14 +475,10 @@ export default component View(
         accessibilityValue={_accessibilityValue}
         importantForAccessibility={computedImportantForAccessibility}
         nativeID={id ?? nativeID}
-<<<<<<< Upstream
-        ref={ref}
-=======
         // [Windows
         accessible={_accessible}
         children={otherProps.children}
         // Windows]
->>>>>>> Override
       />
     );
   }

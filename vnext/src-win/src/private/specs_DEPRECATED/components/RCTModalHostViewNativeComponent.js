@@ -22,11 +22,7 @@ type OrientationChangeEvent = $ReadOnly<{|
   orientation: 'portrait' | 'landscape',
 |}>;
 
-<<<<<<< Upstream
 type RCTModalHostViewNativeProps = $ReadOnly<{
-=======
-type NativeProps = $ReadOnly<{|
->>>>>>> Override
   ...ViewProps,
 
   /**

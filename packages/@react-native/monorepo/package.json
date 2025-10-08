@@ -13,16 +13,9 @@
     "flow": "flow",
     "format-check": "prettier --list-different \"./**/*.{js,md,yml,ts,tsx}\"",
     "format": "npm run prettier && npm run clang-format",
-<<<<<<< Upstream
-    "featureflags": "yarn --cwd packages/react-native featureflags",
-    "lint-ci": "./.github/workflow-scripts/analyze_code.sh && yarn shellcheck",
-    "lint-markdown": "markdownlint-cli2 2>&1",
-    "lint": "eslint --max-warnings 0 .",
-=======
     "featureflags": "cd packages/react-native && yarn featureflags",
     "lint-ci": "./scripts/circleci/analyze_code.sh && yarn shellcheck",
     "lint-java": "node ./scripts/lint-java.js",
->>>>>>> Override
     "prettier": "prettier --write \"./**/*.{js,md,yml,ts,tsx}\"",
     "print-packages": "node ./scripts/monorepo/print",
     "shellcheck": "./scripts/circleci/analyze_scripts.sh",
@@ -54,18 +47,10 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-flow": "^7.24.7",
     "@jest/create-cache-key-function": "^29.7.0",
-<<<<<<< Upstream
-    "@microsoft/api-extractor": "^7.52.2",
-    "@react-native/metro-babel-transformer": "0.80.0-main",
-    "@react-native/metro-config": "0.80.0-main",
-    "@tsconfig/node22": "22.0.2",
-    "@types/react": "^19.1.0",
-=======
     "@react-native/metro-babel-transformer": "0.81.0-nightly-20250604-1a6d466f1",
     "@react-native/metro-config": "0.81.0-nightly-20250604-1a6d466f1",
     "@tsconfig/node18": "1.0.1",
     "@types/react": "^19.0.0",
->>>>>>> Override
     "@typescript-eslint/parser": "^7.1.1",
     "ansi-styles": "^4.2.1",
     "babel-plugin-minify-dead-code-elimination": "^0.5.2",
@@ -116,13 +101,8 @@
     "supports-color": "^7.1.0",
     "temp-dir": "^2.0.0",
     "tinybench": "^3.1.0",
-<<<<<<< Upstream
-    "typescript": "5.8.3",
-    "ws": "^6.2.3"
-=======
     "typescript": "5.0.4",
     "ws": "^6.2.2"
->>>>>>> Override
   },
   "resolutions": {
     "eslint-plugin-react-hooks": "6.1.0-canary-12bc60f5-20250613",

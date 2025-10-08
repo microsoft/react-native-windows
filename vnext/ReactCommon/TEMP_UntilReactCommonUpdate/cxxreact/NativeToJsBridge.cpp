@@ -346,10 +346,6 @@ NativeToJsBridge::getInspectorTargetDelegate() {
   return  m_executor->getRuntimeTargetDelegate();
 }
 
-<<<<<<< Upstream
 } // namespace facebook::react
 
 #endif // RCT_FIT_RM_OLD_RUNTIME
-=======
-} // namespace facebook::react
->>>>>>> Override
