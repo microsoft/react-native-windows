@@ -175,7 +175,7 @@ const PASSTHROUGH_PROPS = [
   'onMouseLeave', // [Windows]
   'tabIndex', // [Windows]
   'tooltip', // [Windows]
-];
+] as const;
 
 /**
  * Do not use unless you have a very good reason.

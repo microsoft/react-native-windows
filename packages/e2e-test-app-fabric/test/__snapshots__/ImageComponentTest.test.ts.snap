@@ -1182,12 +1182,12 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
       },
       {
         "Offset": "12, 20, 0",
-        "Size": "52, 20",
+        "Size": "52, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 20",
+            "Size": "52, 19",
             "Visual Type": "SpriteVisual",
           },
         ],

@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.64
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.97
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @rnw-scripts/just-task to v2.3.56
 
 ## 1.4.63
 

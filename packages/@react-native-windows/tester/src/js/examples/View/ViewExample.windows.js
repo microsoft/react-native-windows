@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 'use strict';
@@ -14,6 +14,7 @@ import type {RNTesterModule} from '../../types/RNTesterTypes';
 
 import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
+import {useState} from 'react';
 import {
   Platform,
   PlatformColor,
@@ -667,6 +668,74 @@ function BoxSizingExample(): React.Node {
       <View style={[styles.boxSizingBox, {boxSizing: 'border-box'}]}>
         <View style={styles.boxSizingChild} />
       </View>
+    </View>
+  );
+}
+
+function FocusableInnerRow({focusable}: {focusable: boolean}) {
+  const styles = StyleSheet.create({
+    focused: {
+      borderColor: 'blue',
+      borderWidth: 2,
+    },
+    innerBox: {
+      backgroundColor: 'red',
+      width: '100%',
+      height: 50,
+      borderColor: 'transparent',
+      borderWidth: 2,
+    },
+    innerBoxTextColor: {
+      color: 'white',
+    },
+  });
+  const [focused, setFocused] = useState(false);
+  return (
+    <View
+      accessible={focusable}
+      focusable={focusable}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      style={[styles.innerBox, focused && styles.focused]}>
+      <RNTesterText style={styles.innerBoxTextColor}>
+        Focusable: {focusable ? 'true' : 'false'}
+      </RNTesterText>
+      <RNTesterText style={styles.innerBoxTextColor}>
+        Focused: {focused ? 'true' : 'false'}
+      </RNTesterText>
+    </View>
+  );
+}
+
+function FocusBlurExample(): React.Node {
+  const styles = StyleSheet.create({
+    focused: {
+      borderColor: 'blue',
+      borderWidth: 2,
+    },
+    outerBox: {
+      backgroundColor: 'green',
+      borderColor: 'transparent',
+      borderWidth: 2,
+      padding: 10,
+    },
+    outerBoxTextColor: {
+      color: 'white',
+    },
+  });
+  const [outerFocused, setOuterFocused] = useState(false);
+  return (
+    <View
+      onBlur={() => setOuterFocused(false)}
+      onFocus={() => setOuterFocused(true)}
+      style={[styles.outerBox, outerFocused && styles.focused]}>
+      <RNTesterText style={styles.outerBoxTextColor}>
+        Focused: {outerFocused ? 'true' : 'false'}
+      </RNTesterText>
+      <FocusableInnerRow focusable={true} />
+      <FocusableInnerRow focusable={true} />
+      <FocusableInnerRow focusable={false} />
+      <FocusableInnerRow focusable={true} />
     </View>
   );
 }
@@ -1356,6 +1425,11 @@ export default ({
       title: 'Box Sizing',
       name: 'box-sizing',
       render: BoxSizingExample,
+    },
+    {
+      title: 'Focus/Blur',
+      name: 'focus-blur',
+      render: FocusBlurExample,
     },
     // [Windows
     {

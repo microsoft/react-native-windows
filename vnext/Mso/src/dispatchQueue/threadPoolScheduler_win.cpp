@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+#include <stdexcept> // For std::runtime_error
 #include <utility>
 #include "dispatchQueue/dispatchQueue.h"
 #include "queueService.h"
@@ -14,7 +15,7 @@ struct ThreadPoolWorkDeleter {
 };
 
 struct ThreadPoolSchedulerWin : Mso::UnknownObject<IDispatchQueueScheduler> {
-  ThreadPoolSchedulerWin(uint32_t maxThreads) noexcept;
+  ThreadPoolSchedulerWin(uint32_t maxThreads);
   ~ThreadPoolSchedulerWin() noexcept override;
 
   static void __stdcall WorkCallback(
@@ -93,9 +94,17 @@ std::mutex ThreadPoolSchedulerWin::s_threadPoolWorkMutex;
 bool ThreadPoolSchedulerWin::s_enableThreadPoolWorkTracking{false};
 std::vector<std::shared_ptr<TP_WORK>> ThreadPoolSchedulerWin::s_trackedThreadPoolWork;
 
-ThreadPoolSchedulerWin::ThreadPoolSchedulerWin(uint32_t maxThreads) noexcept
-    : m_threadPoolWork{::CreateThreadpoolWork(WorkCallback, this, nullptr), ThreadPoolWorkDeleter{}},
-      m_maxThreads{maxThreads == 0 ? MaxConcurrentThreads : maxThreads} {
+ThreadPoolSchedulerWin::ThreadPoolSchedulerWin(uint32_t maxThreads)
+    : m_maxThreads{maxThreads == 0 ? MaxConcurrentThreads : maxThreads} {
+  // Create thread pool work
+  TP_WORK *tpWork = ::CreateThreadpoolWork(WorkCallback, this, nullptr);
+
+  // Throw immediately if creation failed
+  if (!tpWork) {
+    throw std::runtime_error("Failed to create thread pool work");
+  }
+
+  m_threadPoolWork = std::shared_ptr<TP_WORK>(tpWork, ThreadPoolWorkDeleter{});
   TrackThreadPoolWork(m_threadPoolWork);
 }
 

@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 01 Oct 2025 05:25:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 08 Oct 2025 05:27:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.998
+
+Wed, 08 Oct 2025 05:27:20 GMT
+
+### Changes
+
+- fixed testcli.cpp tests related setruntimedataimpl and getruntimedataimpl (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.997
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Changes
+
+- Update tester files (hmalothu@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.277
+- Bump @react-native-windows/codegen to v0.0.0-canary.126
+- Bump @rnw-scripts/just-task to v2.3.56
+- Bump react-native-platform-override to v1.9.59
 
 ## 0.0.0-canary.996
 

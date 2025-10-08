@@ -112,10 +112,22 @@ async function downloadFlowTypes(overwrite = false) {
 
   const reactNativeRef = await getAbbreviatedRef(reactNativeVersion);
 
+  // Download the 'flow-typed' path from the react-native monorepo root
+  // and copy it into a ./flow folder
   await downloadFilesFromReactNative(
     reactNativeRef,
     'flow-typed',
     path.resolve(rnDir, '../.flow/flow-typed'),
+    '**/*.*',
+    overwrite,
+  );
+
+  // Download the 'flow' path from the react-native package root
+  // and copy it into a ./flow folder
+  await downloadFilesFromReactNative(
+    reactNativeRef,
+    'packages/react-native/flow',
+    path.resolve(rnDir, '../.flow/flow'),
     '**/*.*',
     overwrite,
   );
@@ -148,6 +160,8 @@ task(
   series('downloadFlowTypes', async () => {
     const flowBinPath = require.resolve('flow-bin');
     const flowPath = path.join(path.dirname(flowBinPath), 'cli.js');
-    require('child_process').execSync(`node "${flowPath}" check`, {stdio: 'inherit'});
+    require('child_process').execSync(`node "${flowPath}" check`, {
+      stdio: 'inherit',
+    });
   }),
 );

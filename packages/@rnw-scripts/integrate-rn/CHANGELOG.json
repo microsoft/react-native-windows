@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Tue, 07 Oct 2025 05:27:27 GMT",
+      "version": "1.4.64",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.64",
+      "comments": {
+        "patch": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "bcce2736db9d50987e9c3b5a614e527f871d22a9",
+            "comment": "Update communitycli template version"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.97",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.68",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.94",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.9.59",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.56",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Sep 2025 05:29:14 GMT",
       "version": "1.4.63",
       "tag": "@rnw-scripts/integrate-rn_v1.4.63",

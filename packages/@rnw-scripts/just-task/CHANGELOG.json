@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Tue, 07 Oct 2025 05:27:27 GMT",
+      "version": "2.3.56",
+      "tag": "@rnw-scripts/just-task_v2.3.56",
+      "comments": {
+        "patch": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "bcce2736db9d50987e9c3b5a614e527f871d22a9",
+            "comment": "Update downloadFlowTypes with newly missing flow types"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Aug 2025 05:30:44 GMT",
       "version": "2.3.55",
       "tag": "@rnw-scripts/just-task_v2.3.55",

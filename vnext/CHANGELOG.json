@@ -2,6 +2,60 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Oct 2025 05:27:20 GMT",
+      "version": "0.0.0-canary.998",
+      "tag": "react-native-windows_v0.0.0-canary.998",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "50d5d8861fcadc2bcc67c4f1b4027c8f3f546e63",
+            "comment": "fixed testcli.cpp tests related setruntimedataimpl and getruntimedataimpl"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Oct 2025 05:27:27 GMT",
+      "version": "0.0.0-canary.997",
+      "tag": "react-native-windows_v0.0.0-canary.997",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bcce2736db9d50987e9c3b5a614e527f871d22a9",
+            "comment": "Update tester files"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.277",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.126",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.56",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.59",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Oct 2025 05:25:55 GMT",
       "version": "0.0.0-canary.996",
       "tag": "react-native-windows_v0.0.0-canary.996",
