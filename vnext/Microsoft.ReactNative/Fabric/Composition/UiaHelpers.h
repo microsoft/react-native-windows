@@ -64,10 +64,10 @@ long GetAnnotationTypeId(const std::string &annotationType) noexcept;
 
 long GetControlTypeFromString(const std::string &role) noexcept;
 
-long GetHeadingLevel(int headingLevel, const std::string &strRole, const facebook::react::Role &role) noexcept
+long GetHeadingLevel(int headingLevel, const std::string &strRole, const facebook::react::Role &role) noexcept;
 
-    bool accessibilityAnnotationHasValue(
-        const std::optional<facebook::react::AccessibilityAnnotation> &annotation) noexcept;
+bool accessibilityAnnotationHasValue(
+    const std::optional<facebook::react::AccessibilityAnnotation> &annotation) noexcept;
 
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept;
 
