@@ -305,11 +305,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/DisplayContents/DisplayContentsExample')
       .default,
   },
-  {
+  /*{
     key: 'FocusEventsExample',
     module: require('../examples/FocusEventsExample/FocusEventsExample')
       .default,
-  },
+  },*/
   // Only show the link for the example if the API is available.
   // E2E Tests failing when this test is enabled
   // {

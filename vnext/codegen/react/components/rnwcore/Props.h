@@ -466,6 +466,7 @@ class ModalHostViewProps final : public ViewProps {
   bool hardwareAccelerated{false};
   bool visible{false};
   bool animated{false};
+  bool allowSwipeDismissal{false};
   ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
   int identifier{0};
   std::string title{};

@@ -474,6 +474,7 @@ ModalHostViewProps::ModalHostViewProps(
     hardwareAccelerated(convertRawProp(context, rawProps, "hardwareAccelerated", sourceProps.hardwareAccelerated, {false})),
     visible(convertRawProp(context, rawProps, "visible", sourceProps.visible, {false})),
     animated(convertRawProp(context, rawProps, "animated", sourceProps.animated, {false})),
+    allowSwipeDismissal(convertRawProp(context, rawProps, "allowSwipeDismissal", sourceProps.allowSwipeDismissal, {false})),
     supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", ModalHostViewSupportedOrientationsMaskWrapped{ .value = sourceProps.supportedOrientations }, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)}).value),
     identifier(convertRawProp(context, rawProps, "identifier", sourceProps.identifier, {0})),
     title(convertRawProp(context, rawProps, "title", sourceProps.title, {})) {}
@@ -524,6 +525,10 @@ folly::dynamic ModalHostViewProps::getDiffProps(
     
   if (animated != oldProps->animated) {
     result["animated"] = animated;
+  }
+    
+  if (allowSwipeDismissal != oldProps->allowSwipeDismissal) {
+    result["allowSwipeDismissal"] = allowSwipeDismissal;
   }
     
   if (supportedOrientations != oldProps->supportedOrientations) {
