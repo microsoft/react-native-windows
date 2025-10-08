@@ -62,6 +62,8 @@ long GetLiveSetting(const std::string &liveRegion) noexcept;
 
 long GetAnnotationTypeId(const std::string &annotationType) noexcept;
 
+long GetControlTypeFromRole(const facebook::react::Role &role) noexcept;
+
 long GetControlTypeFromString(const std::string &role) noexcept;
 
 long GetHeadingLevel(int headingLevel, const std::string &strRole, const facebook::react::Role &role) noexcept;
