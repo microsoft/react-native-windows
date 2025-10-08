@@ -249,8 +249,6 @@ function Pressable({
     onPressMove,
     onPressOut,
     // [Windows
-    onBlur,
-    onFocus,
     onKeyDown,
     onKeyUp,
     // Windows]
@@ -351,8 +349,6 @@ function Pressable({
         }
       },
       // [Windows
-      onBlur,
-      onFocus,
       onKeyDown,
       onKeyUp,
       // Windows]
@@ -376,8 +372,6 @@ function Pressable({
       onPressMove,
       onPressOut,
       // [Windows
-      onBlur,
-      onFocus,
       onKeyDown,
       onKeyUp,
       // Windows]

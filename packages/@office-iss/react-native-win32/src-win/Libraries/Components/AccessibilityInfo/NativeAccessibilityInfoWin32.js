@@ -7,4 +7,4 @@
  */
 
 export * from '../../../src/private/specs_DEPRECATED/modules/NativeAccessibilityInfoWin32';
-import {default} from '../../../src/private/specs_DEPRECATED/modules/NativeAccessibilityInfoWin32';
+export {default} from '../../../src/private/specs_DEPRECATED/modules/NativeAccessibilityInfoWin32';

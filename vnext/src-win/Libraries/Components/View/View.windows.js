@@ -108,7 +108,6 @@ export default component View(
     importantForAccessibility,
     nativeID,
     tabIndex,
-    ref,
     ...otherProps
   } = props;
 

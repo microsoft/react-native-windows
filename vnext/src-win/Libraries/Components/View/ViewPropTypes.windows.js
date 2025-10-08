@@ -564,7 +564,7 @@ type ViewBaseProps = $ReadOnly<{
    * descendant elements.
    */
   experimental_accessibilityOrder?: ?Array<string>,
-  
+
   'aria-readonly'?: ?boolean, // [Windows]
 
   'aria-multiselectable'?: ?boolean, // [Windows]
