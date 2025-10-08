@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix for watson",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}

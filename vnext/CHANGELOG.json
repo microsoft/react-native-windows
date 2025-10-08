@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Oct 2025 05:27:20 GMT",
+      "version": "0.0.0-canary.998",
+      "tag": "react-native-windows_v0.0.0-canary.998",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "50d5d8861fcadc2bcc67c4f1b4027c8f3f546e63",
+            "comment": "fixed testcli.cpp tests related setruntimedataimpl and getruntimedataimpl"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Oct 2025 05:27:27 GMT",
       "version": "0.0.0-canary.997",
       "tag": "react-native-windows_v0.0.0-canary.997",
