@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fixed testcli.cpp tests related setruntimedataimpl and getruntimedataimpl",
+  "packageName": "react-native-windows",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
