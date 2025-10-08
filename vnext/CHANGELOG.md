@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 08 Oct 2025 05:27:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.998
+
+Wed, 08 Oct 2025 05:27:20 GMT
+
+### Changes
+
+- fixed testcli.cpp tests related setruntimedataimpl and getruntimedataimpl (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.0.0-canary.997
 
