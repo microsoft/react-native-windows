@@ -303,16 +303,22 @@ bool TextViewManager::UpdateProperty(
       auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
 
       textBlock.SetValue(winrt::AutomationProperties::LocalizedControlTypeProperty(), boxedValue);
-      if (role == "header") {
-        xaml::Automation::AutomationProperties::SetHeadingLevel(
-            textBlock, winrt::Peers::AutomationHeadingLevel::Level2);
-      } else {
+      if (role != "header") {
         textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
       }
     } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(winrt::AutomationProperties::LocalizedControlTypeProperty());
       textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
     }
+  } else if (propertyName == "accessibilityLevel") {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+            auto value = static_cast<int>(propertyValue.AsDouble());
+            auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+            textBlock.SetValue(winrt::AutomationProperties::HeadingLevelProperty(), boxedValue);
+          } else if (propertyValue.IsNull()) {
+            textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
+          }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
