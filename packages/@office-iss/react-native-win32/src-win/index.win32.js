@@ -231,10 +231,6 @@ module.exports = {
   get VirtualizedSectionList(): VirtualizedSectionList {
     return require('./Libraries/Lists/VirtualizedSectionList').default;
   },
-  get unstable_VirtualView(): unstable_VirtualView {
-    return require('./src/private/components/virtualview/VirtualView').default;
-  },
-  // #endregion
   // #region APIs
   get AccessibilityInfo(): AccessibilityInfo {
     return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo')
@@ -430,10 +426,6 @@ module.exports = {
   },
   get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
-  },
-  get VirtualViewMode(): VirtualViewMode {
-    return require('./src/private/components/virtualview/VirtualView')
-      .VirtualViewMode;
   },
   // #endregion
   // Win32 Types (Typescript components exported as flow any)
