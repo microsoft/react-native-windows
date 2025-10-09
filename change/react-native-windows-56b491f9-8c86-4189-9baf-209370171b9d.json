@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add UIA HeadingLevel behaviour for Fabric architecture",
+  "packageName": "react-native-windows",
+  "email": "kvineeth@microsoft.com",
+  "dependentChangeType": "patch"
+}
