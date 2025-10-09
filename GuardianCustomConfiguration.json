@@ -6,5 +6,15 @@
                 "suppressionsFile": "$(Build.SourcesDirectory)/.ado/config/CredScanSuppressions.json"
             }
         }
+    },
+    "TSAOptions": {
+        "areaPath": "OS\\Windows Client and Services\\WinPD\\SPICE\\ReactNative",
+        "iterationPath": "OS\\Future",
+        "notificationAliases": ["vivekkh@microsoft.com", "sreeharir@microsoft.com"],
+        "codebaseAdmins": ["vivekkh@microsoft.com"],
+        "bugTags": ["SDL", "Security", "Guardian"],
+        "instanceUrl": "https://dev.azure.com/microsoft",
+        "projectName": "OS",
+        "allTools": true
     }
 }

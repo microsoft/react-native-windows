@@ -102,4 +102,17 @@ jobs:
       # Performs static code analysis.
       - task: CodeQL3000Finalize@0
         displayName: "🛡️ Finalize CodeQL"
+        inputs:
+          # Enable TSA for automatic bug filing from CodeQL
+          TSAEnabled: true
+          TSAOptions: |
+            {
+              "areaPath": "OS\\Windows Client and Services\\WinPD\\SPICE\\ReactNative",
+              "iterationPath": "OS\\Future",
+              "notificationAliases": ["vivekkh@microsoft.com", "sreeharir@microsoft.com"],
+              "codebaseAdmins": ["vivekkh@microsoft.com"],
+              "bugTags": ["SDL", "Security", "CodeQL"],
+              "instanceUrl": "https://dev.azure.com/microsoft",
+              "projectName": "OS"
+            }
         continueOnError: ${{ parameters.complianceWarnOnly }}
