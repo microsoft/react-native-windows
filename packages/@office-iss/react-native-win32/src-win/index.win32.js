@@ -465,7 +465,7 @@ module.exports = {
     return require('./Libraries/PersonaCoin/PersonaCoinTypes')
       .PersonaCoinPresence;
   },
-} as ReactNativePublicAPI;
+};
 
 if (__DEV__) {
   /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
