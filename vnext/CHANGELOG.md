@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 08 Oct 2025 05:27:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 09 Oct 2025 05:28:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.999
+
+Thu, 09 Oct 2025 05:28:12 GMT
+
+### Changes
+
+- fix for watson (hmalothu@microsoft.com)
+- Add UIA HeadingLevel behaviour for Fabric architecture (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.998
 

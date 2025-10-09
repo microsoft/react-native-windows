@@ -23,6 +23,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
     accessibilityLabel="A blue box"
     accessibilityLevel={1}
     accessible={true}
+    role="heading"
     style={
       {
         "backgroundColor": "blue",
@@ -38,6 +39,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
   <View
     accessibilityLabel="A hint for the red box."
     accessibilityLevel={2}
+    accessibilityRole="header"
     accessible={true}
     style={
       {

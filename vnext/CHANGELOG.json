@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Oct 2025 05:28:12 GMT",
+      "version": "0.0.0-canary.999",
+      "tag": "react-native-windows_v0.0.0-canary.999",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1a95351e5203a6c0651cf73885cd7ea99e7d2b9",
+            "comment": "fix for watson"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8826a5593c3fdf0cc51fa7f451c0442c380c8b38",
+            "comment": "Add UIA HeadingLevel behaviour for Fabric architecture"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Oct 2025 05:27:20 GMT",
       "version": "0.0.0-canary.998",
       "tag": "react-native-windows_v0.0.0-canary.998",
