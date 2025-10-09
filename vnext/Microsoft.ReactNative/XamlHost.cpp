@@ -80,6 +80,8 @@ struct XamlHostComponentView : public winrt::implements<XamlHostComponentView, w
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
 };
 
+} // namespace winrt::Microsoft::ReactNative
+
 void RegisterXamlHostComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
   ::Microsoft::ReactNativeSpecs::RegisterXamlHostNativeComponent<winrt::Microsoft::ReactNative::XamlHostComponentView>(
       packageBuilder,
@@ -92,7 +94,5 @@ void RegisterXamlHostComponentView(winrt::Microsoft::ReactNative::IReactPackageB
             });
       });
 }
-
-} // namespace winrt::Microsoft::ReactNative
 
 #endif // defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
