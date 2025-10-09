@@ -2076,9 +2076,9 @@
   integrity sha512-NR0U/9EIToQ64dsxcnA6PFRjlSqzwq877H0ihfrXqKx7jIpvn5mLtrVE0X0DhF7C+tZZiC3oeQJHcURiGqHUIw==
 
 "@react-native-picker/picker@^2.5.1":
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.1.tgz#d8884440abc5f75579d82f9888e50ca047c9ec14"
-  integrity sha512-ThklnkK4fV3yynnIIRBkxxjxR4IFbdMNJVF6tlLdOJ/zEFUEFUEdXY0KmH0iYzMwY8W4/InWsLiA7AkpAbnexA==
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.2.tgz#f71a769ed6c55e9122c41547d09fd97d6d9bbdfd"
+  integrity sha512-2zyFdW4jgHjF+NeuDZ4nl3hJ+8suey69bI3yljqhNyowfklW2NwNrdDUaJ2iwtPCpk2pt7834aPF8TI6iyZRhA==
 
 "@react-native/assets-registry@0.81.0-nightly-20250604-1a6d466f1":
   version "0.81.0-nightly-20250604-1a6d466f1"
