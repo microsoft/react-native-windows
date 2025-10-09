@@ -175,7 +175,7 @@ module.exports = {
    * Please use 'react-native-safe-area-context' instead.
    * See https://github.com/th3rdwave/react-native-safe-area-context
    */
-  get SafeAreaView() {
+  get SafeAreaView(): SafeAreaView {
     warnOnce(
       'safe-area-view-deprecated',
       'SafeAreaView has been deprecated and will be removed in a future release. ' +
@@ -228,9 +228,6 @@ module.exports = {
   },
   get VirtualizedSectionList(): VirtualizedSectionList {
     return require('./Libraries/Lists/VirtualizedSectionList').default;
-  },
-  get unstable_VirtualView() {
-    return require('./src/private/components/virtualview/VirtualView').default;
   },
   // #endregion
   // #region APIs
@@ -422,11 +419,6 @@ module.exports = {
   get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
   },
-  get VirtualViewMode() {
-    return require('./src/private/components/virtualview/VirtualView')
-      .VirtualViewMode;
-  },
-  // #endregion
   // Additional windows exports (Typescript components exported as flow any)
   get DatePicker(): any {
     invariant(
@@ -479,7 +471,7 @@ module.exports = {
   get AppTheme(): AppTheme {
     return require('./Libraries/AppTheme/AppTheme');
   },
-} as ReactNativePublicAPI;
+};
 
 if (__DEV__) {
   /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
