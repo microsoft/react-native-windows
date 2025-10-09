@@ -2,6 +2,43 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
+    <!-- SDL MANDATORY WARNINGS (Microsoft Security Development Lifecycle) -->
+    <!-- These warnings MUST be enabled and fixed per SDL requirements -->
+    <!-- Work Item: #58386089 - Fix warnings identified by native code compiler -->
+    <SDLMandatoryWarnings>
+      4018;  <!-- 'expression' : signed/unsigned mismatch -->
+      4055;  <!-- 'conversion' : from data pointer to function pointer -->
+      4146;  <!-- unary minus operator applied to unsigned type -->
+      4242;  <!-- 'identifier' : conversion with possible loss of data -->
+      4244;  <!-- 'conversion' conversion with possible loss of data -->
+      4267;  <!-- 'var' : conversion from size_t with possible loss of data -->
+      4302;  <!-- 'conversion' : truncation from type1 to type2 -->
+      4308;  <!-- negative integral constant converted to unsigned type -->
+      4509;  <!-- nonstandard extension: SEH with destructor -->
+      4510;  <!-- 'class' : default constructor could not be generated -->
+      4532;  <!-- jump out of __finally/finally block undefined behavior -->
+      4533;  <!-- initialization skipped by instruction -->
+      4610;  <!-- object can never be instantiated -->
+      4611;  <!-- interaction between function and C++ destruction non-portable -->
+      4700;  <!-- uninitialized local variable used -->
+      4701;  <!-- potentially uninitialized local variable used -->
+      4703;  <!-- potentially uninitialized local pointer variable used -->
+      4789;  <!-- destination of memory copy too small -->
+      4995;  <!-- function marked as pragma deprecated -->
+      4996   <!-- deprecated function (including std::) -->
+    </SDLMandatoryWarnings>
+
+    <!-- SDL RECOMMENDED WARNINGS (Strongly recommended to fix) -->
+    <SDLRecommendedWarnings>
+      4245;  <!-- conversion signed/unsigned mismatch -->
+      4389;  <!-- operator signed/unsigned mismatch -->
+      4512;  <!-- assignment operator could not be generated -->
+      4102;  <!-- unreferenced label -->
+      4254;  <!-- conversion with possible loss of data -->
+      4306;  <!-- conversion to type of greater size -->
+      4310   <!-- cast truncates constant value -->
+    </SDLRecommendedWarnings>
+
     <!-- Office pre-disabled warnings -->
     <!--
         C4201 - nonstandard extension used : nameless struct/union
@@ -31,8 +68,16 @@
       <!-- /permissive- by default to enforce standards conformance, unless ENABLEPermissive has been set -->
       <AdditionalOptions Condition="'$(ENABLEPermissive)' == ''">/permissive- %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>$(OfficePreDisabledWarnings);$(ExtraWarningsToDisable);$(DisableSpecificWarnings)</DisableSpecificWarnings>
+      
+      <!-- SDL REQUIREMENT: Treat warnings as errors -->
       <TreatWarningAsError>true</TreatWarningAsError>
+      
+      <!-- SDL REQUIREMENT: Use /W4 warning level -->
       <WarningLevel>Level4</WarningLevel>
+      
+      <!-- SDL REQUIREMENT: Explicitly enable mandatory warnings as errors -->
+      <!-- This ensures SDL mandatory warnings are NEVER disabled -->
+      <WarningAsError>$(SDLMandatoryWarnings);%(WarningAsError)</WarningAsError>
     </ClCompile>
     <Link>
       <!--
