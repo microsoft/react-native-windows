@@ -98,4 +98,16 @@ public:
 #endif
 };
 
+class XamlHostState {
+public:
+  XamlHostState() = default;
+
+#ifdef RN_SERIALIZABLE_STATE
+  XamlHostState(XamlHostState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
+  };
+#endif
+};
+
 } // namespace facebook::react

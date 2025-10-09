@@ -48,6 +48,7 @@ import typeof SafeAreaView from './Libraries/Components/SafeAreaView/SafeAreaVie
 import typeof ScrollView from './Libraries/Components/ScrollView/ScrollView';
 import typeof StatusBar from './Libraries/Components/StatusBar/StatusBar';
 import typeof Switch from './Libraries/Components/Switch/Switch';
+import typeof XamlHost from './Libraries/Components/Xaml/XamlHost';
 import typeof InputAccessoryView from './Libraries/Components/TextInput/InputAccessoryView';
 import TextInput from './Libraries/Components/TextInput/TextInput';
 import typeof ToastAndroid from './Libraries/Components/ToastAndroid/ToastAndroid';
