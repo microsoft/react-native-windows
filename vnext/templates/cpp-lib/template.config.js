@@ -93,6 +93,24 @@ async function getFileMappings(config = {}, options = {}) {
       .replace('}', '') ?? crypto.randomUUID();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
 
+  // Check for existing codegen spec files
+  const codegenPath = path.join(projectRoot, 'windows', projectName, 'codegen');
+  let existingSpecFiles = [];
+  let firstSpecName = null;
+  if (existsSync(codegenPath)) {
+    try {
+      const specFiles = await glob('*Spec.g.h', { cwd: codegenPath });
+      existingSpecFiles = specFiles;
+      if (specFiles.length > 0) {
+        // Extract the spec name from filename (e.g., "NativeMyModuleSpec.g.h" -> "MyModuleSpec")
+        const firstFile = specFiles[0];
+        firstSpecName = firstFile.replace(/^Native/, '').replace(/\.g\.h$/, '');
+      }
+    } catch (e) {
+      // If we can't read the codegen directory, continue with empty array
+    }
+  }
+
   const cppNugetPackages = [];
 
   const replacements = {
@@ -103,6 +121,12 @@ async function getFileMappings(config = {}, options = {}) {
     pascalName: templateUtils.pascalCase(projectName),
     namespace: namespace,
     namespaceCpp: namespaceCpp,
+
+    // Codegen spec files information
+    existingSpecFiles: existingSpecFiles,
+    hasExistingSpecFiles: existingSpecFiles.length > 0,
+    firstSpecFile: existingSpecFiles.length > 0 ? existingSpecFiles[0] : null,
+    firstSpecName: firstSpecName,
 
     rnwVersion: rnwVersion,
     rnwPathFromProjectRoot: path
