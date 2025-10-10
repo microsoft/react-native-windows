@@ -161,6 +161,10 @@ function View(props: PropsWithRef): React.Node {
             for (const el of otherProps.keyDownEvents) {
               if (
                 event.nativeEvent.code === el.code &&
+                event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+                event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+                event.nativeEvent.altKey === Boolean(el.altKey) &&
+                event.nativeEvent.metaKey === Boolean(el.metaKey) &&
                 el.handledEventPhase === 3
               ) {
                 event.stopPropagation();
@@ -179,6 +183,10 @@ function View(props: PropsWithRef): React.Node {
             for (const el of otherProps.keyUpEvents) {
               if (
                 event.nativeEvent.code === el.code &&
+                event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+                event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+                event.nativeEvent.altKey === Boolean(el.altKey) &&
+                event.nativeEvent.metaKey === Boolean(el.metaKey) &&
                 el.handledEventPhase === 3
               ) {
                 event.stopPropagation();
@@ -200,6 +208,10 @@ function View(props: PropsWithRef): React.Node {
             for (const el of otherProps.keyDownEvents) {
               if (
                 event.nativeEvent.code === el.code &&
+                event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+                event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+                event.nativeEvent.altKey === Boolean(el.altKey) &&
+                event.nativeEvent.metaKey === Boolean(el.metaKey) &&
                 el.handledEventPhase === 1
               ) {
                 event.stopPropagation();
@@ -218,6 +230,10 @@ function View(props: PropsWithRef): React.Node {
             for (const el of otherProps.keyUpEvents) {
               if (
                 event.nativeEvent.code === el.code &&
+                event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+                event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+                event.nativeEvent.altKey === Boolean(el.altKey) &&
+                event.nativeEvent.metaKey === Boolean(el.metaKey) &&
                 el.handledEventPhase === 1
               ) {
                 event.stopPropagation();
@@ -374,6 +390,10 @@ function View(props: PropsWithRef): React.Node {
           for (const el of otherProps.keyDownEvents) {
             if (
               event.nativeEvent.code === el.code &&
+              event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+              event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+              event.nativeEvent.altKey === Boolean(el.altKey) &&
+              event.nativeEvent.metaKey === Boolean(el.metaKey) &&
               el.handledEventPhase === 3
             ) {
               event.stopPropagation();
@@ -391,6 +411,10 @@ function View(props: PropsWithRef): React.Node {
           for (const el of otherProps.keyUpEvents) {
             if (
               event.nativeEvent.code === el.code &&
+              event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+              event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+              event.nativeEvent.altKey === Boolean(el.altKey) &&
+              event.nativeEvent.metaKey === Boolean(el.metaKey) &&
               el.handledEventPhase === 3
             ) {
               event.stopPropagation();
@@ -408,6 +432,10 @@ function View(props: PropsWithRef): React.Node {
           for (const el of otherProps.keyDownEvents) {
             if (
               event.nativeEvent.code === el.code &&
+              event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+              event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+              event.nativeEvent.altKey === Boolean(el.altKey) &&
+              event.nativeEvent.metaKey === Boolean(el.metaKey) &&
               el.handledEventPhase === 1
             ) {
               event.stopPropagation();
@@ -425,6 +453,10 @@ function View(props: PropsWithRef): React.Node {
           for (const el of otherProps.keyUpEvents) {
             if (
               event.nativeEvent.code === el.code &&
+              event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+              event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+              event.nativeEvent.altKey === Boolean(el.altKey) &&
+              event.nativeEvent.metaKey === Boolean(el.metaKey) &&
               el.handledEventPhase === 1
             ) {
               event.stopPropagation();
