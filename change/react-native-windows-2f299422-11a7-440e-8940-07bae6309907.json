@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Revert \"Cherrypick Scrollview parity and revert Scrollview regression PRs for stable 0.80 (#15183)\"",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
