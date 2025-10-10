@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix ARM64 support in rnw-dependencies.ps1 by detecting processor architecture and installing the correct Visual Studio VC Tools component (ARM64 vs x86.x64)",
+  "packageName": "react-native-windows",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
