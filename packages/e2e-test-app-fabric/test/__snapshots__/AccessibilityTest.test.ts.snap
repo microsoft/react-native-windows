@@ -4,9 +4,10 @@ exports[`Accessibility Tests Accessibility data for Label and Level 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "accessibility-base-view-2",
-    "ControlType": 50026,
+    "ControlType": 50020,
+    "HeadingLevel": 80052,
     "Level": 2,
-    "LocalizedControlType": "group",
+    "LocalizedControlType": "text",
     "Name": "A hint for the red box.",
   },
   "Component Tree": {
@@ -38,12 +39,13 @@ exports[`Accessibility Tests Accessibility data for Label,Level and Hint 1`] = `
     "AnnotationPattern.TypeId": 60003,
     "AnnotationPattern.TypeName": "Check Comment",
     "AutomationId": "accessibility-base-view-1",
-    "ControlType": 50026,
+    "ControlType": 50020,
     "Description": "Sample Description",
+    "HeadingLevel": 80051,
     "HelpText": "A hint for the blue box.",
     "ItemType": "comment",
     "Level": 1,
-    "LocalizedControlType": "group",
+    "LocalizedControlType": "text",
     "Name": "A blue box",
   },
   "Component Tree": {
