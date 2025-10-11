@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removing auto generated files",
+  "packageName": "react-native-windows",
+  "email": "kvineeth@microsoft.com",
+  "dependentChangeType": "patch"
+}
