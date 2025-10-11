@@ -450,7 +450,7 @@ const validAttributesForEventProps = {
   onFocus: true,
   // Windows]
   // [Windows
-};
+} as const;
 // Windows]
 
 /**

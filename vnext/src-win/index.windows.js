@@ -28,7 +28,7 @@ import typeof NativeModules from './Libraries/BatchedBridge/NativeModules';
 import typeof codegenNativeCommands from './Libraries/Utilities/codegenNativeCommands';
 import typeof codegenNativeComponent from './Libraries/Utilities/codegenNativeComponent';
 import {findNodeHandle} from './Libraries/ReactNative/RendererProxy';
-// import {unstable_batchedUpdates} from './Libraries/ReactNative/RendererProxy';
+import {unstable_batchedUpdates} from './Libraries/ReactNative/RendererProxy';
 // Components
 import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';
 import typeof ActivityIndicator from './Libraries/Components/ActivityIndicator/ActivityIndicator';
