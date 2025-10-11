@@ -68,6 +68,7 @@ export type ButtonProps = $ReadOnly<{
     @platform tv
 
     @default false
+    @deprecated Use `focusable` instead
    */
   hasTVPreferredFocus?: ?boolean,
 

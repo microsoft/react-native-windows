@@ -8,4 +8,5 @@
 
 export * from '../../src/private/specs_DEPRECATED/modules/NativePlatformConstantsWin';
 import NativePlatformConstantsWin from '../../src/private/specs_DEPRECATED/modules/NativePlatformConstantsWin';
+
 export default NativePlatformConstantsWin;

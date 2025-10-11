@@ -17,6 +17,23 @@
 
 namespace facebook::react {
 
+class VirtualViewProps final : public ViewProps {
+ public:
+  VirtualViewProps() = default;
+  VirtualViewProps(const PropsParserContext& context, const VirtualViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool initialHidden{false};
+  int renderState{0};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
+};
+
 enum class ActivityIndicatorViewSize { Small, Large };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ActivityIndicatorViewSize &result) {
@@ -33,6 +50,12 @@ static inline std::string toString(const ActivityIndicatorViewSize &value) {
   }
 }
 
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const ActivityIndicatorViewSize &value) {
+  return toString(value);
+}
+#endif
+
 class ActivityIndicatorViewProps final : public ViewProps {
  public:
   ActivityIndicatorViewProps() = default;
@@ -46,6 +69,8 @@ class ActivityIndicatorViewProps final : public ViewProps {
   ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -65,6 +90,12 @@ static inline std::string toString(const AndroidDrawerLayoutKeyboardDismissMode 
     case AndroidDrawerLayoutKeyboardDismissMode::OnDrag: return "on-drag";
   }
 }
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const AndroidDrawerLayoutKeyboardDismissMode &value) {
+  return toString(value);
+}
+#endif
 enum class AndroidDrawerLayoutDrawerPosition { Left, Right };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerPosition &result) {
@@ -80,6 +111,12 @@ static inline std::string toString(const AndroidDrawerLayoutDrawerPosition &valu
     case AndroidDrawerLayoutDrawerPosition::Right: return "right";
   }
 }
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const AndroidDrawerLayoutDrawerPosition &value) {
+  return toString(value);
+}
+#endif
 enum class AndroidDrawerLayoutDrawerLockMode { Unlocked, LockedClosed, LockedOpen };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerLockMode &result) {
@@ -98,6 +135,12 @@ static inline std::string toString(const AndroidDrawerLayoutDrawerLockMode &valu
   }
 }
 
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const AndroidDrawerLayoutDrawerLockMode &value) {
+  return toString(value);
+}
+#endif
+
 class AndroidDrawerLayoutProps final : public ViewProps {
  public:
   AndroidDrawerLayoutProps() = default;
@@ -113,6 +156,8 @@ class AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -127,6 +172,8 @@ class AndroidHorizontalScrollContentViewProps final : public ViewProps {
   bool removeClippedSubviews{false};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -147,6 +194,12 @@ static inline std::string toString(const AndroidSwipeRefreshLayoutSize &value) {
   }
 }
 
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const AndroidSwipeRefreshLayoutSize &value) {
+  return toString(value);
+}
+#endif
+
 class AndroidSwipeRefreshLayoutProps final : public ViewProps {
  public:
   AndroidSwipeRefreshLayoutProps() = default;
@@ -162,6 +215,8 @@ class AndroidSwipeRefreshLayoutProps final : public ViewProps {
   bool refreshing{false};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -184,6 +239,8 @@ class AndroidSwitchProps final : public ViewProps {
   SharedColor trackTintColor{};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -198,6 +255,8 @@ class DebuggingOverlayProps final : public ViewProps {
   
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -218,6 +277,8 @@ class AndroidProgressBarProps final : public ViewProps {
   std::string testID{""};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -236,6 +297,8 @@ class PullToRefreshViewProps final : public ViewProps {
   bool refreshing{false};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -250,6 +313,8 @@ class InputAccessoryProps final : public ViewProps {
   SharedColor backgroundColor{};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -271,6 +336,12 @@ static inline std::string toString(const ModalHostViewAnimationType &value) {
     case ModalHostViewAnimationType::Fade: return "fade";
   }
 }
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const ModalHostViewAnimationType &value) {
+  return toString(value);
+}
+#endif
 enum class ModalHostViewPresentationStyle { FullScreen, PageSheet, FormSheet, OverFullScreen };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewPresentationStyle &result) {
@@ -290,6 +361,12 @@ static inline std::string toString(const ModalHostViewPresentationStyle &value) 
     case ModalHostViewPresentationStyle::OverFullScreen: return "overFullScreen";
   }
 }
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const ModalHostViewPresentationStyle &value) {
+  return toString(value);
+}
+#endif
 using ModalHostViewSupportedOrientationsMask = uint32_t;
 
 struct ModalHostViewSupportedOrientationsMaskWrapped {
@@ -389,11 +466,14 @@ class ModalHostViewProps final : public ViewProps {
   bool hardwareAccelerated{false};
   bool visible{false};
   bool animated{false};
+  bool allowSwipeDismissal{false};
   ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
   int identifier{0};
   std::string title{};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -408,6 +488,8 @@ class SafeAreaViewProps final : public ViewProps {
   
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -429,6 +511,8 @@ class SwitchProps final : public ViewProps {
   SharedColor trackColorForTrue{};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };
@@ -443,6 +527,8 @@ class UnimplementedNativeViewProps final : public ViewProps {
   std::string name{""};
 
   #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
   folly::dynamic getDiffProps(const Props* prevProps) const override;
   #endif
 };

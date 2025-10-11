@@ -136,7 +136,7 @@
       </PreprocessorDefinitions>
       <LanguageStandard>$(CppStandard)</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
       <AdditionalOptions>/utf-8 %(AdditionalOptions) /await</AdditionalOptions>
       <ControlFlowGuard>Guard</ControlFlowGuard>

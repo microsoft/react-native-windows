@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Utils/LocalBundleReader.h>
+#include <fmt/format.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Storage.h>
 #include "Unicode.h"

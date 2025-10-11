@@ -101,7 +101,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-basic",
     "Offset": "0, 0, 0",
-    "Size": "998, 452",
+    "Size": "998, 422",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -110,7 +110,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 452",
+        "Size": "998, 422",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -119,12 +119,12 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 452",
+            "Size": "998, 422",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "998, 452",
+                "Size": "998, 422",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
@@ -133,7 +133,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                       "Color": "rgba(255, 255, 255, 255)",
                     },
                     "Offset": "0, 0, 0",
-                    "Size": "998, 452",
+                    "Size": "998, 422",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -418,7 +418,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 446",
+            "Size": "12, 416",
             "Visual Type": "Visual",
           },
           {
@@ -435,7 +435,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 420",
+            "Size": "6, 390",
             "Visual Type": "Visual",
           },
         ],
@@ -4029,76 +4029,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           },
         ],
       },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "76",
-        "TextRangePattern.GetText": "76",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "77",
-        "TextRangePattern.GetText": "77",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "78",
-        "TextRangePattern.GetText": "78",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "79",
-        "TextRangePattern.GetText": "79",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "80",
-        "TextRangePattern.GetText": "80",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "81",
-        "TextRangePattern.GetText": "81",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "82",
-        "TextRangePattern.GetText": "82",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "83",
-        "TextRangePattern.GetText": "83",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "84",
-        "TextRangePattern.GetText": "84",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "85",
-        "TextRangePattern.GetText": "85",
-      },
     ],
   },
   "Component Tree": {
@@ -4267,94 +4197,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {},
           },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
         ],
       },
     ],
@@ -4362,7 +4204,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-nested",
     "Offset": "0, 0, 0",
-    "Size": "998, 402",
+    "Size": "998, 372",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4411,7 +4253,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 402",
+        "Size": "998, 372",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -4420,17 +4262,17 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1237",
+            "Size": "998, 869",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "1, 1, 0",
-                "Size": "996, 1236",
+                "Size": "996, 868",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "996, 1236",
+                    "Size": "996, 868",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -5685,738 +5527,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                           },
                         ],
                       },
-                      {
-                        "Offset": "10, 766, 0",
-                        "Size": "478, 460",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "478, 460",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 776, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 802, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 868, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 894, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 960, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 986, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 1052, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 1078, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 1144, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 1170, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "508, 766, 0",
-                        "Size": "478, 460",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "478, 460",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 776, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 802, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 868, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 894, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 960, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 986, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 1052, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 1078, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 1144, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 1170, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
                     ],
                   },
                 ],
@@ -6433,7 +5543,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 396",
+            "Size": "12, 366",
             "Visual Type": "Visual",
           },
           {
@@ -6450,7 +5560,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 120",
+            "Size": "6, 146",
             "Visual Type": "Visual",
           },
         ],
