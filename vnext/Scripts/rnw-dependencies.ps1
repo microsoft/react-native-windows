@@ -62,8 +62,36 @@ if ($tagsToInclude.Contains('rnwDev')) {
     $tagsToInclude.Add('appDev') | Out-null;
 }
 
+# Detect processor architecture to select appropriate VC Tools component
+$ProcessorArchitecture = $Env:Processor_Architecture
+
+# Getting $Env:Processor_Architecture on arm64 machines will return x86.  So check if the environment
+# variable "ProgramFiles(Arm)" is also set, if it is we know the actual processor architecture is arm64.
+# The value will also be x86 on amd64 machines when running the x86 version of PowerShell.
+if ($ProcessorArchitecture -eq "x86")
+{
+    if ($null -ne ${Env:ProgramFiles(Arm)})
+    {
+        $ProcessorArchitecture = "arm64"
+    }
+    elseif ($null -ne ${Env:ProgramFiles(x86)})
+    {
+        $ProcessorArchitecture = "amd64"
+    }
+}
+
+# Select the appropriate VC Tools component based on processor architecture
+if ($ProcessorArchitecture -eq "arm64")
+{
+    $vcToolsComponent = 'Microsoft.VisualStudio.Component.VC.Tools.ARM64'
+}
+else
+{
+    $vcToolsComponent = 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64'
+}
+
 $vsComponents = @('Microsoft.Component.MSBuild',
-    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
+    $vcToolsComponent,
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
     'Microsoft.VisualStudio.Component.Windows10SDK.19041',
