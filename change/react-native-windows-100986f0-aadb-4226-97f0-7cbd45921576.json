@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add symbol publishing compliance for Work Item 59264834",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "none"
+}
