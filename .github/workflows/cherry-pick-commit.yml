@@ -13,6 +13,10 @@ name: Cherry-pick Commit to Branch
         required: true
         type: string
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   cherry-pick:
     runs-on: ubuntu-latest
