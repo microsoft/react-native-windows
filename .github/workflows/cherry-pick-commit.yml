@@ -1,0 +1,79 @@
+---
+name: Cherry-pick Commit to Branch
+
+'on':
+  workflow_dispatch:
+    inputs:
+      commit_id:
+        description: 'Commit SHA or ID to cherry-pick'
+        required: true
+        type: string
+      target_branch:
+        description: 'Target branch name to cherry-pick into'
+        required: true
+        type: string
+
+jobs:
+  cherry-pick:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install -y gh
+
+      - name: Authenticate GitHub CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Clone repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh auth setup-git
+          gh repo clone "${{ github.repository }}" repo
+          cd repo
+          git fetch origin
+
+      - name: Configure Git
+        working-directory: ./repo
+        run: |
+          git config user.name "React-Native-Windows Bot"
+          git config user.email "53619745+rnbot@users.noreply.github.com"
+
+      - name: Checkout target branch
+        working-directory: ./repo
+        run: |
+          git checkout "${{ github.event.inputs.target_branch }}"
+          git pull origin "${{ github.event.inputs.target_branch }}"
+
+      - name: Cherry-pick commit
+        working-directory: ./repo
+        run: |
+          COMMIT_ID="${{ github.event.inputs.commit_id }}"
+          TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
+
+          echo "🍒 Cherry-picking commit $COMMIT_ID into branch $TARGET_BRANCH"
+
+          if git cherry-pick "$COMMIT_ID"; then
+            echo "✅ Cherry-pick successful"
+          else
+            echo "❌ Cherry-pick failed with conflicts"
+            echo "Conflict details:"
+            git status
+            exit 1
+          fi
+
+      - name: Push changes
+        working-directory: ./repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COMMIT_ID="${{ github.event.inputs.commit_id }}"
+          TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
+
+          echo "📤 Pushing cherry-picked commit to $TARGET_BRANCH"
+          REPO_URL="https://x-access-token:${GH_TOKEN}@github.com"
+          REPO_URL="${REPO_URL}/${{ github.repository }}.git"
+          git push "$REPO_URL" "$TARGET_BRANCH"
+          echo "✅ Successfully cherry-picked $COMMIT_ID to $TARGET_BRANCH"
