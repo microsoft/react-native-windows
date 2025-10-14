@@ -72,7 +72,10 @@ steps:
         inputs:
           artifact: ${{ parameters.artifactName2 }}.${{ slice.platform }}.${{ slice.configuration }}
           path: ${{parameters.nugetroot}}/${{ parameters.artifactName2 }}/${{ slice.platform }}/${{ slice.configuration }}
-
+  
+  - pwsh: yarn build
+    displayName: Run yarn build
+    
   - task: PowerShell@2
     displayName: Copy MSRN Resources to NuGet layout
     inputs:
