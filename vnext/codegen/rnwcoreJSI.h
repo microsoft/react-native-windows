@@ -30,6 +30,7 @@ public:
   virtual bool disableTextLayoutManagerCacheAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAccessibilityOrder(jsi::Runtime &rt) = 0;
   virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableAndroidTextMeasurementOptimizations(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
   virtual bool enableCustomFocusSearchOnClippedElementsAndroid(jsi::Runtime &rt) = 0;
@@ -65,6 +66,7 @@ public:
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) = 0;
+  virtual bool hideOffscreenVirtualViewsOnIOS(jsi::Runtime &rt) = 0;
   virtual double preparedTextCacheSize(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool updateRuntimeShadowNodeReferencesOnCommit(jsi::Runtime &rt) = 0;
@@ -186,6 +188,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableAccumulatedUpdatesInRawPropsAndroid, jsInvoker_, instance_);
+    }
+    bool enableAndroidTextMeasurementOptimizations(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableAndroidTextMeasurementOptimizations) == 1,
+          "Expected enableAndroidTextMeasurementOptimizations(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableAndroidTextMeasurementOptimizations, jsInvoker_, instance_);
     }
     bool enableBridgelessArchitecture(jsi::Runtime &rt) override {
       static_assert(
@@ -466,6 +476,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::fuseboxNetworkInspectionEnabled, jsInvoker_, instance_);
+    }
+    bool hideOffscreenVirtualViewsOnIOS(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::hideOffscreenVirtualViewsOnIOS) == 1,
+          "Expected hideOffscreenVirtualViewsOnIOS(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::hideOffscreenVirtualViewsOnIOS, jsInvoker_, instance_);
     }
     double preparedTextCacheSize(jsi::Runtime &rt) override {
       static_assert(
@@ -2426,69 +2444,6 @@ private:
 
   private:
     friend class NativeBlobModuleCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeBugReportingCxxSpecJSI : public TurboModule {
-protected:
-  NativeBugReportingCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void startReportAProblemFlow(jsi::Runtime &rt) = 0;
-  virtual void setExtraData(jsi::Runtime &rt, jsi::Object extraData, jsi::Object extraFiles) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeBugReportingCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "BugReporting";
-
-protected:
-  NativeBugReportingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeBugReportingCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeBugReportingCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeBugReportingCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void startReportAProblemFlow(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::startReportAProblemFlow) == 1,
-          "Expected startReportAProblemFlow(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startReportAProblemFlow, jsInvoker_, instance_);
-    }
-    void setExtraData(jsi::Runtime &rt, jsi::Object extraData, jsi::Object extraFiles) override {
-      static_assert(
-          bridging::getParameterCount(&T::setExtraData) == 3,
-          "Expected setExtraData(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setExtraData, jsInvoker_, instance_, std::move(extraData), std::move(extraFiles));
-    }
-
-  private:
-    friend class NativeBugReportingCxxSpec;
     T *instance_;
   };
 
@@ -8996,6 +8951,7 @@ protected:
 public:
   virtual double now(jsi::Runtime &rt) = 0;
   virtual double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) = 0;
+  virtual jsi::Array measure(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime, std::optional<double> endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
   virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
@@ -9011,6 +8967,8 @@ public:
   virtual void disconnect(jsi::Runtime &rt, jsi::Value observer) = 0;
   virtual jsi::Array takeRecords(jsi::Runtime &rt, jsi::Value observer, bool sort) = 0;
   virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
+  virtual void setCurrentTimeStampForTesting(jsi::Runtime &rt, double timeStamp) = 0;
+  virtual void clearEventCountsForTesting(jsi::Runtime &rt) = 0;
 
 };
 
@@ -9056,6 +9014,14 @@ private:
 
       return bridging::callFromJs<double>(
           rt, &T::markWithResult, jsInvoker_, instance_, std::move(name), std::move(startTime));
+    }
+    jsi::Array measure(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime, std::optional<double> endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
+      static_assert(
+          bridging::getParameterCount(&T::measure) == 7,
+          "Expected measure(...) to have 7 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
     }
     jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
       static_assert(
@@ -9176,6 +9142,22 @@ private:
 
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getSupportedPerformanceEntryTypes, jsInvoker_, instance_);
+    }
+    void setCurrentTimeStampForTesting(jsi::Runtime &rt, double timeStamp) override {
+      static_assert(
+          bridging::getParameterCount(&T::setCurrentTimeStampForTesting) == 2,
+          "Expected setCurrentTimeStampForTesting(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setCurrentTimeStampForTesting, jsInvoker_, instance_, std::move(timeStamp));
+    }
+    void clearEventCountsForTesting(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearEventCountsForTesting) == 1,
+          "Expected clearEventCountsForTesting(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::clearEventCountsForTesting, jsInvoker_, instance_);
     }
 
   private:
