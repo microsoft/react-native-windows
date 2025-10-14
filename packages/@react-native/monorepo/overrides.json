@@ -5,7 +5,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "package.json",
-      "baseVersion": "0.81.0-nightly-20250702-b41b924b2",
+      "baseVersion": "0.81.0-nightly-20250708-5ec8e6058",
       "baseHash": "2c4c15c75547eba448c1e2f90f0d959a940d7930"
     }
   ]

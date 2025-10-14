@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Integrate 0.81.0-nightly-20250702-b41b924b2",
+  "comment": "Integrate 0.81.0-nightly-20250708-5ec8e6058",
   "packageName": "react-native-windows",
   "email": "kvineeth@microsoft.com",
   "dependentChangeType": "patch"
