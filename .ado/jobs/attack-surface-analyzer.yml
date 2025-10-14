@@ -16,196 +16,194 @@ parameters:
     default: true
 
 jobs:
-  # Only run ASA for PullRequest and Continuous builds (not SecurePullRequest)
-  - ${{if ne(parameters.buildEnvironment, 'SecurePullRequest')}}:
-    - job: AttackSurfaceAnalyzer
-      displayName: Attack Surface Analyzer (ASA) 🛡️
-      pool: ${{ parameters.AgentPool.Medium }}
-      timeoutInMinutes: 60
-      cancelTimeoutInMinutes: 5
+  - job: AttackSurfaceAnalyzer
+    displayName: Attack Surface Analyzer (ASA) 🛡️
+    pool: ${{ parameters.AgentPool.Medium }}
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
 
-      variables:
-        - template: ../variables/windows.yml
+    variables:
+      - template: ../variables/windows.yml
 
-      steps:
-        - template: ../templates/checkout-shallow.yml
+    steps:
+      - template: ../templates/checkout-shallow.yml
 
-        - template: ../templates/prepare-js-env.yml
+      - template: ../templates/prepare-js-env.yml
 
-        - template: ../templates/set-version-vars.yml
-          parameters:
-            buildEnvironment: ${{ parameters.buildEnvironment }}
+      - template: ../templates/set-version-vars.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
 
-        - template: ../templates/prepare-build-env.yml
-          parameters:
-            platform: x64
-            configuration: Release
-            buildEnvironment: ${{ parameters.buildEnvironment }}
+      - template: ../templates/prepare-build-env.yml
+        parameters:
+          platform: x64
+          configuration: Release
+          buildEnvironment: ${{ parameters.buildEnvironment }}
 
-        # Install Attack Surface Analyzer CLI tool
-        - task: PowerShell@2
-          displayName: '🛡️ Install Attack Surface Analyzer'
-          inputs:
-            targetType: inline
-            script: |
-              Write-Host "Installing Attack Surface Analyzer (ASA) CLI tool..."
-              dotnet tool install --global Microsoft.CST.AttackSurfaceAnalyzer.CLI
-              
-              # Verify installation
-              asa --version
-              if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to install or verify ASA"
-                exit 1
+      # Install Attack Surface Analyzer CLI tool
+      - task: PowerShell@2
+        displayName: '🛡️ Install Attack Surface Analyzer'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "Installing Attack Surface Analyzer (ASA) CLI tool..."
+            dotnet tool install --global Microsoft.CST.AttackSurfaceAnalyzer.CLI
+            
+            # Verify installation
+            asa --version
+            if ($LASTEXITCODE -ne 0) {
+              Write-Error "Failed to install or verify ASA"
+              exit 1
+            }
+            Write-Host "✅ ASA installed successfully"
+
+      # Take "before" snapshot of the system
+      - task: PowerShell@2
+        displayName: '🛡️ ASA - Collect Before Snapshot'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "Taking 'before' snapshot of system state..."
+            asa collect -r before --verbose
+            if ($LASTEXITCODE -ne 0) {
+              Write-Error "Failed to collect 'before' snapshot"
+              exit 1
+            }
+            Write-Host "✅ Before snapshot collected successfully"
+
+      # Build the React Native Windows solution
+      # This simulates the "installation" that ASA will analyze
+      - template: ../templates/msbuild-sln.yml
+        parameters:
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.sln
+          buildPlatform: x64
+          buildConfiguration: Release
+
+      # Optional: Build NuGet packages if needed
+      # This step simulates package creation which could modify system state
+      - task: PowerShell@2
+        displayName: '🛡️ ASA - Simulate Package Installation'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "Simulating package installation for ASA analysis..."
+            Write-Host "Build artifacts are in place for analysis"
+            # Note: Actual NuGet package installation would go here if needed
+            # For now, we're analyzing the build process itself
+
+      # Take "after" snapshot of the system
+      - task: PowerShell@2
+        displayName: '🛡️ ASA - Collect After Snapshot'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "Taking 'after' snapshot of system state..."
+            asa collect -r after --verbose
+            if ($LASTEXITCODE -ne 0) {
+              Write-Error "Failed to collect 'after' snapshot"
+              exit 1
+            }
+            Write-Host "✅ After snapshot collected successfully"
+
+      # Export comparison results
+      - task: PowerShell@2
+        displayName: '🛡️ ASA - Export Comparison Results'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "Comparing before and after snapshots..."
+            
+            # Create output directory for results
+            $resultsDir = "$(Build.ArtifactStagingDirectory)\ASA_Results"
+            New-Item -ItemType Directory -Force -Path $resultsDir | Out-Null
+            
+            # Export results to JSON
+            asa export-collect -f before after -o "$resultsDir\asa-comparison.json" --verbose
+            if ($LASTEXITCODE -ne 0) {
+              Write-Error "Failed to export comparison results"
+              exit 1
+            }
+            
+            # Also export to HTML for easier viewing
+            asa export-collect -f before after -o "$resultsDir\asa-comparison.html" --verbose
+            
+            Write-Host "✅ Comparison results exported successfully"
+            Write-Host "Results location: $resultsDir"
+
+      # Analyze results and check for security issues
+      - task: PowerShell@2
+        displayName: '🛡️ ASA - Analyze Results'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "Analyzing ASA results for security regressions..."
+            
+            $resultsFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.json"
+            
+            if (-not (Test-Path $resultsFile)) {
+              Write-Error "Results file not found: $resultsFile"
+              exit 1
+            }
+            
+            # Load and analyze the results
+            $results = Get-Content $resultsFile | ConvertFrom-Json
+            
+            Write-Host "📊 ASA Analysis Summary:"
+            Write-Host "========================"
+            
+            # Count changes by category
+            $changeCount = 0
+            if ($results) {
+              if ($results.PSObject.Properties['Results']) {
+                $changeCount = $results.Results.Count
               }
-              Write-Host "✅ ASA installed successfully"
+            }
+            
+            Write-Host "Total changes detected: $changeCount"
+            
+            # For SDL compliance, we should review any changes
+            # Particularly focus on:
+            # - Registry permission changes
+            # - File permission changes
+            # - Service installations
+            # - Firewall rule changes
+            # - Certificate store modifications
+            
+            if ($changeCount -gt 0) {
+              Write-Host "⚠️ Changes detected during build process"
+              Write-Host "Review the exported results for security implications"
+              Write-Host "Results available in build artifacts: ASA_Results"
+            } else {
+              Write-Host "✅ No significant system changes detected"
+            }
+            
+            # For now, we'll treat this as informational
+            # In production, you might want to fail on certain types of changes
+            Write-Host "ASA analysis completed"
+        continueOnError: ${{ parameters.complianceWarnOnly }}
 
-        # Take "before" snapshot of the system
-        - task: PowerShell@2
-          displayName: '🛡️ ASA - Collect Before Snapshot'
-          inputs:
-            targetType: inline
-            script: |
-              Write-Host "Taking 'before' snapshot of system state..."
-              asa collect -r before --verbose
-              if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to collect 'before' snapshot"
-                exit 1
-              }
-              Write-Host "✅ Before snapshot collected successfully"
+      # Publish ASA results as build artifact
+      - task: PublishBuildArtifacts@1
+        displayName: '🛡️ Publish ASA Results'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)\ASA_Results'
+          ArtifactName: 'ASA_Results'
+          publishLocation: 'Container'
+        condition: always()
 
-        # Build the React Native Windows solution
-        # This simulates the "installation" that ASA will analyze
-        - template: ../templates/msbuild-sln.yml
-          parameters:
-            solutionDir: vnext
-            solutionName: Microsoft.ReactNative.sln
-            buildPlatform: x64
-            buildConfiguration: Release
-
-        # Optional: Build NuGet packages if needed
-        # This step simulates package creation which could modify system state
-        - task: PowerShell@2
-          displayName: '🛡️ ASA - Simulate Package Installation'
-          inputs:
-            targetType: inline
-            script: |
-              Write-Host "Simulating package installation for ASA analysis..."
-              Write-Host "Build artifacts are in place for analysis"
-              # Note: Actual NuGet package installation would go here if needed
-              # For now, we're analyzing the build process itself
-
-        # Take "after" snapshot of the system
-        - task: PowerShell@2
-          displayName: '🛡️ ASA - Collect After Snapshot'
-          inputs:
-            targetType: inline
-            script: |
-              Write-Host "Taking 'after' snapshot of system state..."
-              asa collect -r after --verbose
-              if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to collect 'after' snapshot"
-                exit 1
-              }
-              Write-Host "✅ After snapshot collected successfully"
-
-        # Export comparison results
-        - task: PowerShell@2
-          displayName: '🛡️ ASA - Export Comparison Results'
-          inputs:
-            targetType: inline
-            script: |
-              Write-Host "Comparing before and after snapshots..."
-              
-              # Create output directory for results
-              $resultsDir = "$(Build.ArtifactStagingDirectory)\ASA_Results"
-              New-Item -ItemType Directory -Force -Path $resultsDir | Out-Null
-              
-              # Export results to JSON
-              asa export-collect -f before after -o "$resultsDir\asa-comparison.json" --verbose
-              if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to export comparison results"
-                exit 1
-              }
-              
-              # Also export to HTML for easier viewing
-              asa export-collect -f before after -o "$resultsDir\asa-comparison.html" --verbose
-              
-              Write-Host "✅ Comparison results exported successfully"
-              Write-Host "Results location: $resultsDir"
-
-        # Analyze results and check for security issues
-        - task: PowerShell@2
-          displayName: '🛡️ ASA - Analyze Results'
-          inputs:
-            targetType: inline
-            script: |
-              Write-Host "Analyzing ASA results for security regressions..."
-              
-              $resultsFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.json"
-              
-              if (-not (Test-Path $resultsFile)) {
-                Write-Error "Results file not found: $resultsFile"
-                exit 1
-              }
-              
-              # Load and analyze the results
-              $results = Get-Content $resultsFile | ConvertFrom-Json
-              
-              Write-Host "📊 ASA Analysis Summary:"
-              Write-Host "========================"
-              
-              # Count changes by category
-              $changeCount = 0
-              if ($results) {
-                if ($results.PSObject.Properties['Results']) {
-                  $changeCount = $results.Results.Count
-                }
-              }
-              
-              Write-Host "Total changes detected: $changeCount"
-              
-              # For SDL compliance, we should review any changes
-              # Particularly focus on:
-              # - Registry permission changes
-              # - File permission changes
-              # - Service installations
-              # - Firewall rule changes
-              # - Certificate store modifications
-              
-              if ($changeCount -gt 0) {
-                Write-Host "⚠️ Changes detected during build process"
-                Write-Host "Review the exported results for security implications"
-                Write-Host "Results available in build artifacts: ASA_Results"
-              } else {
-                Write-Host "✅ No significant system changes detected"
-              }
-              
-              # For now, we'll treat this as informational
-              # In production, you might want to fail on certain types of changes
-              Write-Host "ASA analysis completed"
-          continueOnError: ${{ parameters.complianceWarnOnly }}
-
-        # Publish ASA results as build artifact
-        - task: PublishBuildArtifacts@1
-          displayName: '🛡️ Publish ASA Results'
-          inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)\ASA_Results'
-            ArtifactName: 'ASA_Results'
-            publishLocation: 'Container'
-          condition: always()
-
-        # Generate summary for PR
-        - task: PowerShell@2
-          displayName: '🛡️ ASA - Generate PR Summary'
-          inputs:
-            targetType: inline
-            script: |
-              Write-Host "Generating ASA summary for PR..."
-              
-              $resultsFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.json"
-              
-              if (Test-Path $resultsFile) {
-                Write-Host "##vso[task.uploadsummary]$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.html"
-                Write-Host "✅ ASA summary will be available in PR"
-              }
-          condition: always()
+      # Generate summary for PR
+      - task: PowerShell@2
+        displayName: '🛡️ ASA - Generate PR Summary'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "Generating ASA summary for PR..."
+            
+            $resultsFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.json"
+            
+            if (Test-Path $resultsFile) {
+              Write-Host "##vso[task.uploadsummary]$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.html"
+              Write-Host "✅ ASA summary will be available in PR"
+            }
+        condition: always()
