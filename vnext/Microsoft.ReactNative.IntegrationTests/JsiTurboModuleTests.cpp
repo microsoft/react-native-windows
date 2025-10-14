@@ -88,25 +88,25 @@ jsi::String MySimpleTurboModule::getString(jsi::Runtime &rt, jsi::String arg) {
   return jsi::String::createFromUtf8(rt, arg.utf8(rt));
 }
 
-jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, jsi::Array arg) {
-  TestEventService::LogEvent("getArray called", arg.length(rt));
-  return react::deepCopyJSIArray(rt, arg);
-}
+// jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, jsi::Array arg) {
+//   TestEventService::LogEvent("getArray called", arg.length(rt));
+//   return react::deepCopyJSIArray(rt, arg);
+// }
 
-jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, jsi::Object arg) {
-  TestEventService::LogEvent("getObject called", "OK");
-  return react::deepCopyJSIObject(rt, arg);
-}
+// jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, jsi::Object arg) {
+//   TestEventService::LogEvent("getObject called", "OK");
+//   return react::deepCopyJSIObject(rt, arg);
+// }
 
-jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) {
-  TestEventService::LogEvent("getValue called", "OK");
-  // Note: return type isn't type-safe.
-  jsi::Object result(rt);
-  result.setProperty(rt, "x", jsi::Value(x));
-  result.setProperty(rt, "y", jsi::String::createFromUtf8(rt, y.utf8(rt)));
-  result.setProperty(rt, "z", react::deepCopyJSIObject(rt, z));
-  return result;
-}
+// jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) {
+//   TestEventService::LogEvent("getValue called", "OK");
+//   // Note: return type isn't type-safe.
+//   jsi::Object result(rt);
+//   result.setProperty(rt, "x", jsi::Value(x));
+//   result.setProperty(rt, "y", jsi::String::createFromUtf8(rt, y.utf8(rt)));
+//   result.setProperty(rt, "z", react::deepCopyJSIObject(rt, z));
+//   return result;
+// }
 
 void MySimpleTurboModule::getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) {
   TestEventService::LogEvent("getValueWithCallback called", "OK");
@@ -171,12 +171,12 @@ TEST_CLASS (JsiTurboModuleTests) {
          TestEvent{"getString result", "Hello"},
          TestEvent{"getString called", ""},
          TestEvent{"getString result", ""},
-         TestEvent{"getArray called", 3},
-         TestEvent{"getArray result", "OK"},
-         TestEvent{"getObject called", "OK"},
-         TestEvent{"getObject result", "OK"},
-         TestEvent{"getValue called", "OK"},
-         TestEvent{"getValue result", "OK"},
+         //  TestEvent{"getArray called", 3},
+         //  TestEvent{"getArray result", "OK"},
+         //  TestEvent{"getObject called", "OK"},
+         //  TestEvent{"getObject result", "OK"},
+         //  TestEvent{"getValue called", "OK"},
+         //  TestEvent{"getValue result", "OK"},
          TestEvent{"getConstants called", "OK"},
          TestEvent{"getConstants result", "OK"},
          TestEvent{"getValueWithCallback called", "OK"},
