@@ -18,7 +18,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct LayoutContext : LayoutContextT<LayoutContext> {
-  LayoutContext(facebook::react::LayoutContext layoutContext) : m_layoutContext(layoutContext) {};
+  LayoutContext(facebook::react::LayoutContext layoutContext) : m_layoutContext(layoutContext){};
 
   float PointScaleFactor() const noexcept {
     return m_layoutContext.pointScaleFactor;
