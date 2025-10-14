@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "dffde8af29e798734adf3afdea42ead6cbb8698c",
+      "baseHash": "d80fda0dc8694fec30a830c9505ce0d993d4243f",
       "issue": 4054
     },
     {
@@ -215,7 +215,7 @@
       "type": "copy",
       "directory": "js/examples/LinearGradient",
       "baseDirectory": "packages/rn-tester/js/examples/LinearGradient/",
-      "baseHash": "f08eae1f8cca525ac25685b4041d80755cfcbc27",
+      "baseHash": "601ee443dd033a5622d000de87cea51aa4e9119d",
       "issue": 4054
     },
     {
@@ -515,7 +515,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "ee71ec149a82c221404ecb97507ae901773c079d",
+      "baseHash": "c226e869c7cecc46179e261625abf8e82d9dfe16",
       "issue": 4054
     },
     {
@@ -570,7 +570,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "60fa5f78a5eae5e51678d59456d22bd7d4b73374",
+      "baseHash": "0aaf9b3f905d737372a382ffc59d30f3b16622dd",
       "issue": 4054
     },
     {
@@ -654,7 +654,7 @@
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "58880f07cabb09d297027d55ac3e3dacd4e9bd7d",
+      "baseHash": "382995716ab5f688187530a5fb5362d97638c4f1",
       "issue": 4054
     },
     {
@@ -668,7 +668,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "319de7c87f02661e0bc6fefd70d99c04bb20a9f6",
+      "baseHash": "e847b2b1a87e2db14460c3df73c17e5368ad9d7a",
       "issue": 13228
     },
     {

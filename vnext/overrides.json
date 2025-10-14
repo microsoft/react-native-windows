@@ -14,7 +14,7 @@
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "265afd0d72f00d81b21ea52db43387855d3ec67a"
+      "baseHash": "a5a50b87e779ba343919454cb5f7c1e77c2db982"
     },
     {
       "type": "derived",
@@ -86,14 +86,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.cpp",
-      "baseHash": "b4b85a46a927506035658c8cd7ef51109ca8c940",
+      "baseHash": "d8cf95191866699c484f1ab71201974fbe661239",
       "issue": 13587
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.h",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.h",
-      "baseHash": "d41aff777c114fdfb883418d66d25638d346f5a2",
+      "baseHash": "d9dff538dba234600e8e0d7d7a8243891f414c29",
       "issue": 13587
     },
     {
@@ -142,14 +142,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.cpp",
-      "baseHash": "8dee609f47ed1e6e0d876f5ad75876a07d951d49",
+      "baseHash": "3c3c6d95134449d63baefbf8b83d97d87a5a422d",
       "issue": 14257
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.h",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.h",
-      "baseHash": "01eff14d2d24d0ff73f2380fadde077953606fd2",
+      "baseHash": "0501da7595760e3bc7a61708168650c47c787127",
       "issue": 14654
     },
     {
@@ -231,7 +231,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "d75b1af2108d5fb86db91e98ce3f4e9b571f28ca"
+      "baseHash": "c5d0dfd40d0fb7c197790b1f23f4f8b9ca835047"
     },
     {
       "type": "platform",
@@ -389,7 +389,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "a8cfb5237c3ab09b51a0043527011092c98b812a"
+      "baseHash": "ef4edc51e3a0a99ffc3d86b608902e45ecc539ec"
     },
     {
       "type": "derived",
@@ -407,13 +407,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
-      "baseHash": "217606b7527281d62335913ee8349506fcb9192b"
+      "baseHash": "98208f1973dfdb207eeeb74152dbd9c355735bae"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "6bdac6e2d8569b25480db63f81d7f6dfc130f5f7"
+      "baseHash": "b6289ef53abc941f6f0aed50f80d3852b6682215"
     },
     {
       "type": "patch",
@@ -474,7 +474,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "b5df605a012fc501aab97b413a9640a48648fe9b"
+      "baseHash": "83a4fc8e982845619abb121bb860ad63366260c7"
     },
     {
       "type": "derived",
@@ -624,13 +624,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.d.ts",
       "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
-      "baseHash": "d3807571f477ef8ba4bb20c1ee899b1a5814941d"
+      "baseHash": "3540a1a36fc487e54c1cec9b0c57b4fdc2124b60"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "a24c9881da46b612c461a304b3ba9c640adbb5cb"
+      "baseHash": "fb6f5390b49eb22085ac1618becde3a5208ba167"
     },
     {
       "type": "derived",
