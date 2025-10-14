@@ -30,13 +30,13 @@
 
     <!-- SDL RECOMMENDED WARNINGS (Strongly recommended to fix) -->
     <SDLRecommendedWarnings>
-      4245;  <!-- conversion signed/unsigned mismatch -->
-      4389;  <!-- operator signed/unsigned mismatch -->
-      4512;  <!-- assignment operator could not be generated -->
-      4102;  <!-- unreferenced label -->
-      4254;  <!-- conversion with possible loss of data -->
-      4306;  <!-- conversion to type of greater size -->
-      4310   <!-- cast truncates constant value -->
+      4287;  <!-- unsigned/negative constant mismatch -->
+      4365;  <!-- signed/unsigned mismatch -->
+      4388;  <!-- signed/unsigned mismatch in comparison -->
+      4545;  <!-- expression before comma evaluates to function missing argument list -->
+      4546;  <!-- function call before comma missing argument list -->
+      4547;  <!-- operator before comma has no effect -->
+      4549   <!-- operator before comma has no effect -->
     </SDLRecommendedWarnings>
 
     <!-- Office pre-disabled warnings -->
