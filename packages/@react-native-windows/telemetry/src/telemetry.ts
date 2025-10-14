@@ -369,7 +369,7 @@ export class Telemetry {
     // Populate Part A extensions
     telemetryItem.ext = {};
     telemetryItem.ext.device = {
-      localId: Telemetry.commonProperties.deviceId,
+      id: Telemetry.commonProperties.deviceId,
       deviceClass: Telemetry.commonProperties.deviceClass,
     };
     telemetryItem.ext.os = {
@@ -385,8 +385,6 @@ export class Telemetry {
           numCPUs: Telemetry.commonProperties.numCPUs,
           totalMemory: Telemetry.commonProperties.totalMemory,
           diskFreeSpace: Telemetry.commonProperties.deviceDiskFreeSpace,
-          localId: Telemetry.commonProperties.deviceId,
-          deviceClass: Telemetry.commonProperties.deviceClass,
         },
         nodePlatform: Telemetry.commonProperties.nodePlatform,
         nodeArchitecture: Telemetry.commonProperties.nodeArchitecture,
