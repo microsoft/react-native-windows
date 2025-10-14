@@ -34,7 +34,7 @@ class AbiProps final : public facebook::react::Props {
 };
 
 struct ShadowNode : ShadowNodeT<ShadowNode> {
-  ShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept;
+  ShadowNode(std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept;
 
   void EnsureUnsealed() noexcept;
   winrt::Windows::Foundation::IInspectable Tag() const noexcept;

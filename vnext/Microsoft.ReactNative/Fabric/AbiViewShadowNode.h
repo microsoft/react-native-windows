@@ -18,7 +18,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct LayoutContext : LayoutContextT<LayoutContext> {
-  LayoutContext(facebook::react::LayoutContext layoutContext) : m_layoutContext(layoutContext){};
+  LayoutContext(facebook::react::LayoutContext layoutContext) : m_layoutContext(layoutContext) {};
 
   float PointScaleFactor() const noexcept {
     return m_layoutContext.pointScaleFactor;
@@ -49,7 +49,7 @@ struct LayoutContext : LayoutContextT<LayoutContext> {
 };
 
 struct YogaLayoutableShadowNode : YogaLayoutableShadowNodeT<YogaLayoutableShadowNode, implementation::ShadowNode> {
-  YogaLayoutableShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept;
+  YogaLayoutableShadowNode(std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept;
 
   void Layout(winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept;
 };
