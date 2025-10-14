@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "rever passing localid to telmetry pipeline",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "patch"
+}
