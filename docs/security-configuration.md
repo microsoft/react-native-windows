@@ -115,6 +115,7 @@ Certificate validation is handled automatically by the Windows platform:
 React Native Windows uses WebView2 with comprehensive security controls:
 
 #### Sandboxing and Isolation
+
 - **Process Isolation**: WebView2 runs in separate security context
 - **Origin Restrictions**: Prevents unauthorized cross-origin access
 - **Content Security Policy**: Enforces security boundaries
@@ -184,16 +185,19 @@ if ($signature.SignerCertificate.Subject -notlike "*Microsoft*") {
 ### Secure Coding Guidelines
 
 #### Input Validation
+
 - **Validate All Inputs**: Implement comprehensive input validation in native modules
 - **Sanitize Data**: Properly escape and sanitize user inputs before processing
 - **Bounds Checking**: Ensure array and buffer bounds are validated
 
 #### Memory Safety
+
 - **RAII Patterns**: Use Resource Acquisition Is Initialization
 - **Smart Pointers**: Prefer `std::unique_ptr` and `std::shared_ptr` over raw pointers
 - **Buffer Overflow Protection**: Enabled through `/GS` compiler flag
 
 #### Error Handling
+
 - **Secure Error Messages**: Avoid exposing sensitive information in error messages
 - **Exception Safety**: Implement proper exception handling with RAII
 - **Security Logging**: Ensure logs don't contain sensitive data
@@ -201,11 +205,13 @@ if ($signature.SignerCertificate.Subject -notlike "*Microsoft*") {
 ### Dependencies Security
 
 #### Package Management
+
 - **Vulnerability Scanning**: Automated scanning in CI/CD pipeline
 - **Regular Updates**: Keep dependencies updated to latest secure versions
 - **Lock Files**: Use package lock files for reproducible, secure builds
 
 #### Native Dependencies
+
 - **Code Signature Verification**: All native dependencies verified during download
 - **Trusted Sources**: Download only from official Microsoft and trusted sources
 - **Integrity Validation**: Verify checksums and digital signatures
@@ -217,11 +223,13 @@ if ($signature.SignerCertificate.Subject -notlike "*Microsoft*") {
 Security testing is integrated into the build process:
 
 #### Compiler-Based Analysis
+
 - **Warning as Errors**: All security warnings treated as build failures
 - **Static Analysis**: Integrated `/analyze` compiler flag for security analysis
 - **Code Analysis**: PREfast security rule enforcement
 
 #### CI/CD Integration
+
 ```yaml
 # Example from .ado/publish.yml
 - task: MSBuild@1
@@ -233,6 +241,7 @@ Security testing is integrated into the build process:
 ### Dynamic Testing
 
 #### Security Testing Framework
+
 - **Unit Tests**: Security-focused unit testing
 - **Integration Tests**: Security boundary validation
 - **Penetration Testing**: Regular security assessments
@@ -244,27 +253,32 @@ React Native Windows maintains compliance with Microsoft Security Development Li
 ### SDL Requirements Status
 
 #### ✅ Compiler Requirements (Policy: Microsoft.Security.CE.10019)
+
 - **Azure DevOps CI/CD**: Security-enabled build pipelines
 - **MSBuild Security Flags**: Control Flow Guard, Spectre mitigation enabled
 - **Symbol Publishing**: Integrated for Microsoft Security Response Center support
 - **Static Analysis**: Security analysis integrated in build process
 
 #### ✅ TLS Implementation  
+
 - **Platform TLS Enforcement**: Windows system-level TLS policies
 - **WebView2 Security**: Automatic HTTPS and certificate validation
 - **No Custom TLS Bypass**: Framework uses secure platform defaults
 
 #### ✅ Secret & Storage Management
+
 - **Windows.Security.Cryptography**: Platform cryptography API access
 - **PasswordVault Integration**: Secure credential storage through Windows APIs
 - **Enterprise Credential Support**: Windows enterprise credential integration
 
 #### ✅ Web Content Security
+
 - **WebView2 Sandboxing**: Proper content isolation and security boundaries
 - **Content Security Policy**: Security policy enforcement
 - **Origin Restrictions**: Prevents unauthorized cross-origin access
 
 #### ✅ Code Signature Verification (Policy: Microsoft.Security.CE.10121)
+
 - **Download Verification**: All downloads verified with digital signatures
 - **Microsoft Publisher Validation**: Ensures content is Microsoft-signed
 - **Integrity Checking**: Cryptographic integrity validation
@@ -281,6 +295,7 @@ Security compliance is documented through:
 ### Security Review Process
 
 #### Code Review Requirements
+
 1. **Security-Focused Reviews**: All security-sensitive code changes require security review
 2. **Architecture Reviews**: Major changes undergo security architecture review
 3. **Threat Modeling**: New features require threat modeling analysis
@@ -289,6 +304,7 @@ Security compliance is documented through:
 ## Security Configuration Checklist
 
 ### Build Configuration
+
 - [ ] Control Flow Guard enabled in `React.Cpp.props`
 - [ ] Spectre mitigation enabled in `React.Cpp.props`  
 - [ ] Warnings as errors configured in `Warnings.props`
@@ -296,18 +312,21 @@ Security compliance is documented through:
 - [ ] Symbol generation enabled for security analysis
 
 ### Runtime Configuration  
+
 - [ ] Platform TLS enforcement verified
 - [ ] WebView2 security settings validated
 - [ ] Certificate validation working properly
 - [ ] Secure credential storage configured
 
 ### Development Process
+
 - [ ] Security code reviews implemented
 - [ ] Static analysis tools integrated in CI/CD
 - [ ] Vulnerability scanning automated
 - [ ] Security testing in build pipeline
 
 ### Dependencies
+
 - [ ] Package vulnerability scanning enabled
 - [ ] Code signature verification implemented in `rnw-dependencies.ps1`
 - [ ] Trusted source validation configured
@@ -316,17 +335,20 @@ Security compliance is documented through:
 ## Additional Resources
 
 ### Security Documentation
+
 - [Microsoft Security Development Lifecycle](https://www.microsoft.com/securityengineering/sdl)
 - [Windows Security APIs](https://docs.microsoft.com/en-us/uwp/api/windows.security)
 - [WebView2 Security Guide](https://docs.microsoft.com/en-us/microsoft-edge/webview2/concepts/security)
 
 ### React Native Windows Security Implementation
+
 - **MSBuild Configuration**: See `vnext/PropertySheets/` for security build settings
 - **Security APIs**: See `vnext/Microsoft.ReactNative/Modules/` for Windows security API usage
 - **CI/CD Security**: See `.ado/` directory for security pipeline configurations
 - **Dependency Security**: See `vnext/Scripts/rnw-dependencies.ps1` for signature verification
 
 ### Support and Contacts
+
 - **Security Issues**: Report security vulnerabilities to Microsoft Security Response Center (MSRC)
 - **SDL Compliance**: Contact React Native Windows security team for compliance questions
 - **Architecture Reviews**: Engage security architects for design reviews

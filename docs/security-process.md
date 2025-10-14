@@ -13,13 +13,16 @@ React Native Windows follows Microsoft Security Development Lifecycle (SDL) requ
 All code changes must pass security review gates based on change classification:
 
 #### 1. Standard Code Changes
+
 - **Security Impact Assessment**: Automated security impact analysis
 - **Peer Review**: Security-aware code review by team members
 - **Static Analysis**: Automated security scanning in CI/CD pipeline
 - **Approval Required**: Standard approval from code reviewers
 
 #### 2. Security-Sensitive Changes
+
 Changes that require enhanced security review:
+
 - Native module modifications accessing Windows security APIs
 - WebView security configuration changes
 - Cryptographic implementation changes
@@ -27,19 +30,23 @@ Changes that require enhanced security review:
 - Build system security changes
 
 **Enhanced Review Process:**
+
 - **Security Architecture Review**: Security team review for design changes
 - **Threat Modeling**: Analysis of security implications
 - **Security Testing**: Additional security-focused testing requirements
 - **Security Approval**: Explicit security team sign-off required
 
 #### 3. Critical Security Changes
+
 Changes with high security impact:
+
 - Authentication/authorization system changes
 - Core security API modifications
 - Security policy implementations
 - Compliance-related changes
 
 **Critical Review Process:**
+
 - **Security Design Review**: Formal security architecture review
 - **Comprehensive Threat Modeling**: Full threat analysis and mitigation planning
 - **Security Testing**: Comprehensive security testing including penetration testing
@@ -51,24 +58,28 @@ Changes with high security impact:
 Security milestones are integrated into the development lifecycle:
 
 #### Design Phase
+
 - [ ] **Threat Model Created**: Comprehensive threat modeling for new features
 - [ ] **Security Requirements Defined**: Clear security requirements documented
 - [ ] **Security Architecture Review**: Security team review of design
 - [ ] **Privacy Impact Assessment**: Privacy implications analyzed
 
 #### Implementation Phase  
+
 - [ ] **Secure Coding Standards**: SDL coding standards followed
 - [ ] **Security API Usage**: Proper use of Windows security APIs
 - [ ] **Input Validation**: Comprehensive input validation implemented
 - [ ] **Error Handling**: Secure error handling patterns implemented
 
 #### Testing Phase
+
 - [ ] **Security Unit Tests**: Security-focused unit tests implemented
 - [ ] **Static Analysis Clean**: No security warnings in static analysis
 - [ ] **Dynamic Security Testing**: Security testing passed
 - [ ] **Vulnerability Assessment**: Security vulnerability scanning completed
 
 #### Release Phase
+
 - [ ] **Security Documentation**: Security documentation updated
 - [ ] **Compliance Verification**: SDL compliance requirements verified
 - [ ] **Security Sign-off**: Security team approval obtained
@@ -81,6 +92,7 @@ Security milestones are integrated into the development lifecycle:
 Integrated security testing in CI/CD pipeline:
 
 #### Static Analysis
+
 ```yaml
 # Security static analysis in Azure DevOps pipeline
 - task: MSBuild@1
@@ -94,6 +106,7 @@ Integrated security testing in CI/CD pipeline:
 ```
 
 #### Security Scanning
+
 ```yaml
 # Vulnerability scanning
 - task: ComponentGovernanceComponentDetection@0
@@ -107,12 +120,13 @@ Integrated security testing in CI/CD pipeline:
 ### Manual Security Testing
 
 #### Security Test Cases
+
 1. **Input Validation Testing**
    - Malicious input injection testing
    - Boundary condition testing
    - Format string vulnerability testing
 
-2. **Authentication Testing** 
+2. **Authentication Testing**
    - Credential storage security testing
    - Authentication bypass testing
    - Session management testing
@@ -161,6 +175,7 @@ Date: [Date]
 Regular verification of SDL compliance requirements:
 
 #### Build Security Compliance
+
 - [ ] **Control Flow Guard**: Enabled in build configuration
 - [ ] **Spectre Mitigation**: Enabled for all native code
 - [ ] **SDL Warnings**: All SDL mandatory warnings enabled as errors
@@ -168,12 +183,14 @@ Regular verification of SDL compliance requirements:
 - [ ] **Symbol Publishing**: Debug symbols published for security response
 
 #### Runtime Security Compliance  
+
 - [ ] **TLS Enforcement**: Platform TLS enforcement validated
 - [ ] **Certificate Validation**: Proper certificate validation implemented
 - [ ] **Secure Storage**: Encrypted storage for sensitive data
 - [ ] **WebView Security**: Secure WebView configuration validated
 
 #### Development Process Compliance
+
 - [ ] **Security Training**: Team security training completed
 - [ ] **Security Reviews**: Security review process followed
 - [ ] **Vulnerability Management**: Vulnerability response process established
@@ -184,12 +201,14 @@ Regular verification of SDL compliance requirements:
 Regular SDL compliance attestation:
 
 #### Quarterly Compliance Review
+
 1. **Evidence Collection**: Gather compliance evidence
 2. **Gap Analysis**: Identify compliance gaps
 3. **Remediation Planning**: Plan remediation for any gaps
 4. **Attestation**: Formal compliance attestation
 
 #### Annual Security Assessment
+
 1. **Comprehensive Review**: Full security posture assessment  
 2. **Threat Model Update**: Update threat models
 3. **Security Architecture Review**: Review security architecture
@@ -202,6 +221,7 @@ Regular SDL compliance attestation:
 Security incidents are classified by severity:
 
 #### Critical (P0)
+
 - Active exploitation of security vulnerability
 - Data breach or exposure of sensitive information
 - Complete system compromise
@@ -210,6 +230,7 @@ Security incidents are classified by severity:
 **Response Team**: Security lead, engineering lead, product manager
 
 #### High (P1)  
+
 - Security vulnerability with high impact
 - Potential for data exposure
 - Security control bypass
@@ -218,6 +239,7 @@ Security incidents are classified by severity:
 **Response Team**: Security team member, engineering team
 
 #### Medium (P2)
+
 - Security vulnerability with medium impact
 - Security policy violation
 - Configuration issue with security implications
@@ -226,6 +248,7 @@ Security incidents are classified by severity:
 **Response Team**: Engineering team with security consultation
 
 #### Low (P3)
+
 - Minor security issue
 - Security documentation gap
 - Low-impact configuration issue
@@ -272,12 +295,14 @@ Security incidents are classified by severity:
 Security documentation must be updated for:
 
 #### New Features
+
 - Security design documentation
 - Threat model updates
 - Security testing documentation
 - User security guidance
 
 #### Security Changes
+
 - Security configuration updates
 - API security documentation
 - Security best practices updates
@@ -297,12 +322,14 @@ Security documentation must be updated for:
 All team members must complete:
 
 #### Initial Security Training
+
 - SDL fundamentals training
 - Secure coding training  
 - Threat modeling training
 - Security testing training
 
 #### Annual Refresher Training
+
 - Security update training
 - New threat awareness training
 - Compliance update training
@@ -311,12 +338,14 @@ All team members must complete:
 ### Role-Specific Training
 
 #### Developers
+
 - Secure coding practices
 - Security API usage
 - Vulnerability prevention
 - Security testing techniques
 
 #### Security Team
+
 - Advanced threat modeling
 - Security architecture
 - Incident response
@@ -325,12 +354,14 @@ All team members must complete:
 ## Tools and Resources
 
 ### Security Tools
+
 - **Static Analysis**: Visual Studio Code Analysis, PREfast
 - **Dynamic Analysis**: Application Verifier, Dr. Memory
 - **Vulnerability Scanning**: Component Governance, WhiteSource
 - **Security Testing**: OWASP ZAP, Burp Suite
 
 ### Documentation Resources
+
 - [Microsoft Security Development Lifecycle](https://www.microsoft.com/securityengineering/sdl)
 - [SDL Process Guidance](https://www.microsoft.com/securityengineering/sdl/practices)
 - [OWASP Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)

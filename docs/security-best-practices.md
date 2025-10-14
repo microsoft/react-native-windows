@@ -367,12 +367,14 @@ void MakePinnedRequest(std::string url, ReactPromise<std::string> promise) noexc
 ### Avoid These Patterns
 
 #### ❌ Insecure Random Number Generation
+
 ```javascript
 // Don't use Math.random() for security-sensitive operations
 const insecureToken = Math.random().toString(36);
 ```
 
 #### ✅ Use Cryptographically Secure Random
+
 ```javascript
 import {NativeModules} from 'react-native';
 const {WindowsSecurity} = NativeModules;
@@ -381,12 +383,14 @@ const secureToken = await WindowsSecurity.generateSecureRandom(32);
 ```
 
 #### ❌ Storing Sensitive Data in Plain Text
+
 ```javascript
 // Don't store sensitive data unencrypted
 AsyncStorage.setItem('password', plainTextPassword);
 ```
 
 #### ✅ Use Secure Storage
+
 ```javascript
 // Use encrypted storage for sensitive data
 await SecureDataManager.storeSecureData('credentials', {
@@ -396,6 +400,7 @@ await SecureDataManager.storeSecureData('credentials', {
 ```
 
 #### ❌ Insufficient Input Validation
+
 ```cpp
 // Don't trust user input
 void ProcessInput(std::string input) {
@@ -405,6 +410,7 @@ void ProcessInput(std::string input) {
 ```
 
 #### ✅ Comprehensive Input Validation
+
 ```cpp
 // Validate and sanitize all inputs
 void ProcessInput(std::string input) {
@@ -420,6 +426,7 @@ void ProcessInput(std::string input) {
 ### Security Testing
 
 #### Unit Tests for Security Functions
+
 ```cpp
 // Test security functions
 TEST_CLASS(SecurityTests) {
@@ -447,6 +454,7 @@ public:
 ### Security Monitoring
 
 #### Logging Security Events
+
 ```cpp
 class SecurityLogger {
 public:
@@ -465,6 +473,7 @@ public:
 ## Security Checklist
 
 ### Development Phase
+
 - [ ] Input validation implemented for all user inputs
 - [ ] Memory management uses RAII and smart pointers  
 - [ ] Error handling doesn't leak sensitive information
@@ -472,6 +481,7 @@ public:
 - [ ] Sensitive data encrypted before storage
 
 ### Testing Phase
+
 - [ ] Security unit tests implemented
 - [ ] Input validation tests with malicious inputs
 - [ ] Encryption/decryption functionality tested
@@ -479,6 +489,7 @@ public:
 - [ ] WebView security configuration validated
 
 ### Deployment Phase
+
 - [ ] HTTPS enforced for all network communications
 - [ ] Certificate pinning implemented for critical services
 - [ ] Content Security Policy configured for WebViews
