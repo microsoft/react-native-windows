@@ -18,8 +18,6 @@ import invariant from 'invariant'; // [Windows]
 import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
-export type Props = ViewProps;
-
 /**
  * The most fundamental component for building a UI, View is a container that
  * supports layout with flexbox, style, some touch handling, and accessibility

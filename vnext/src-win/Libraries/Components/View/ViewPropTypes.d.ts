@@ -25,6 +25,9 @@ import {IKeyboardProps} from '../Keyboard/KeyboardExtProps'; // Windows
 import {Touchable} from '../Touchable/Touchable';
 import {AccessibilityProps} from './ViewAccessibility';
 
+/**
+ * @deprecated These properties are not implemented natively.
+ */
 export interface TVViewPropsIOS {
   /**
    * *(Apple TV only)* When set to true, this view will be focusable
@@ -38,6 +41,7 @@ export interface TVViewPropsIOS {
    * *(Apple TV only)* May be set to true to force the Apple TV focus engine to move focus to this view.
    *
    * @platform ios
+   * @deprecated Use `focusable` instead
    */
   hasTVPreferredFocus?: boolean | undefined;
 

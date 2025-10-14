@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import type {
   GestureResponderEvent,
   LayoutChangeEvent,
@@ -31,8 +32,6 @@ import * as React from 'react';
 import {memo, useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
-
-type ViewStyleProp = React.ElementConfig<typeof View>['style'];
 
 export type {PressableAndroidRippleConfig};
 
@@ -240,6 +239,8 @@ function Pressable({
     disabled,
     focusable,
     hitSlop,
+    onBlur,
+    onFocus,
     onHoverIn,
     onHoverOut,
     onLongPress,
@@ -248,8 +249,6 @@ function Pressable({
     onPressMove,
     onPressOut,
     // [Windows
-    onBlur,
-    onFocus,
     onKeyDown,
     onKeyUp,
     // Windows]
@@ -319,6 +318,8 @@ function Pressable({
       delayHoverOut,
       delayLongPress,
       delayPressIn: unstable_pressDelay,
+      onBlur,
+      onFocus,
       onHoverIn,
       onHoverOut,
       onLongPress,
@@ -348,8 +349,6 @@ function Pressable({
         }
       },
       // [Windows
-      onBlur,
-      onFocus,
       onKeyDown,
       onKeyUp,
       // Windows]
@@ -363,6 +362,8 @@ function Pressable({
       delayLongPress,
       disabled,
       hitSlop,
+      onBlur,
+      onFocus,
       onHoverIn,
       onHoverOut,
       onLongPress,
@@ -371,8 +372,6 @@ function Pressable({
       onPressMove,
       onPressOut,
       // [Windows
-      onBlur,
-      onFocus,
       onKeyDown,
       onKeyUp,
       // Windows]
@@ -382,6 +381,7 @@ function Pressable({
       unstable_pressDelay,
     ],
   );
+
   const eventHandlers = usePressability(config);
 
   return (

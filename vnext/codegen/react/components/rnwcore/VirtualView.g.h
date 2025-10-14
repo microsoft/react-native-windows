@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from ModalHostViewNativeComponent spec file in flow / TypeScript.
+ * This file is auto-generated from VirtualViewNativeComponent spec file in flow / TypeScript.
  */
 // clang-format off
 #pragma once
@@ -18,25 +18,15 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ModalHostViewProps)
-struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  ModalHostViewProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+REACT_STRUCT(VirtualViewProps)
+struct VirtualViewProps : winrt::implements<VirtualViewProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  VirtualViewProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
     : ViewProps(props)
   {
      if (cloneFrom) {
-       auto cloneFromProps = cloneFrom.as<ModalHostViewProps>();
-       animationType = cloneFromProps->animationType;
-       presentationStyle = cloneFromProps->presentationStyle;
-       transparent = cloneFromProps->transparent;
-       statusBarTranslucent = cloneFromProps->statusBarTranslucent;
-       navigationBarTranslucent = cloneFromProps->navigationBarTranslucent;
-       hardwareAccelerated = cloneFromProps->hardwareAccelerated;
-       visible = cloneFromProps->visible;
-       animated = cloneFromProps->animated;
-       allowSwipeDismissal = cloneFromProps->allowSwipeDismissal;
-       supportedOrientations = cloneFromProps->supportedOrientations;
-       identifier = cloneFromProps->identifier;
-       title = cloneFromProps->title;  
+       auto cloneFromProps = cloneFrom.as<VirtualViewProps>();
+       initialHidden = cloneFromProps->initialHidden;
+       renderState = cloneFromProps->renderState;  
      }
   }
 
@@ -44,92 +34,37 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
-  REACT_FIELD(animationType)
-  std::optional<std::string> animationType;
+  REACT_FIELD(initialHidden)
+  std::optional<bool> initialHidden{};
 
-  REACT_FIELD(presentationStyle)
-  std::optional<std::string> presentationStyle;
-
-  REACT_FIELD(transparent)
-  std::optional<bool> transparent{};
-
-  REACT_FIELD(statusBarTranslucent)
-  std::optional<bool> statusBarTranslucent{};
-
-  REACT_FIELD(navigationBarTranslucent)
-  std::optional<bool> navigationBarTranslucent{};
-
-  REACT_FIELD(hardwareAccelerated)
-  std::optional<bool> hardwareAccelerated{};
-
-  REACT_FIELD(visible)
-  std::optional<bool> visible{};
-
-  REACT_FIELD(animated)
-  std::optional<bool> animated{};
-
-  REACT_FIELD(allowSwipeDismissal)
-  std::optional<bool> allowSwipeDismissal{};
-
-  REACT_FIELD(supportedOrientations)
-  std::optional<std::vector<std::string>> supportedOrientations;
-
-  REACT_FIELD(identifier)
-  std::optional<int32_t> identifier{};
-
-  REACT_FIELD(title)
-  std::optional<std::string> title;
+  REACT_FIELD(renderState)
+  int32_t renderState{};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(ModalHostView_OnRequestClose)
-struct ModalHostView_OnRequestClose {
+REACT_STRUCT(VirtualView_OnModeChange)
+struct VirtualView_OnModeChange {
+  REACT_FIELD(mode)
+  int32_t mode{};
+
+  REACT_FIELD(targetRect)
+  VirtualViewSpec_onModeChange2 targetRect;
+
+  REACT_FIELD(thresholdRect)
+  VirtualViewSpec_onModeChange3 thresholdRect;
 };
 
-REACT_STRUCT(ModalHostView_OnShow)
-struct ModalHostView_OnShow {
-};
-
-REACT_STRUCT(ModalHostView_OnDismiss)
-struct ModalHostView_OnDismiss {
-};
-
-REACT_STRUCT(ModalHostView_OnOrientationChange)
-struct ModalHostView_OnOrientationChange {
-  REACT_FIELD(orientation)
-  std::string orientation;
-};
-
-struct ModalHostViewEventEmitter {
-  ModalHostViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
+struct VirtualViewEventEmitter {
+  VirtualViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnRequestClose = ModalHostView_OnRequestClose;
-  using OnShow = ModalHostView_OnShow;
-  using OnDismiss = ModalHostView_OnDismiss;
-  using OnOrientationChange = ModalHostView_OnOrientationChange;
+  using OnModeChange = VirtualView_OnModeChange;
+  using OnModeChange2 = VirtualView_OnModeChange2;
+  using OnModeChange3 = VirtualView_OnModeChange3;
 
-  void onRequestClose(OnRequestClose &value) const {
-    m_eventEmitter.DispatchEvent(L"requestClose", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
-      winrt::Microsoft::ReactNative::WriteValue(writer, value);
-    });
-  }
-
-  void onShow(OnShow &value) const {
-    m_eventEmitter.DispatchEvent(L"show", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
-      winrt::Microsoft::ReactNative::WriteValue(writer, value);
-    });
-  }
-
-  void onDismiss(OnDismiss &value) const {
-    m_eventEmitter.DispatchEvent(L"dismiss", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
-      winrt::Microsoft::ReactNative::WriteValue(writer, value);
-    });
-  }
-
-  void onOrientationChange(OnOrientationChange &value) const {
-    m_eventEmitter.DispatchEvent(L"orientationChange", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onModeChange(OnModeChange &value) const {
+    m_eventEmitter.DispatchEvent(L"modeChange", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
@@ -139,12 +74,12 @@ struct ModalHostViewEventEmitter {
 };
 
 template<typename TUserData>
-struct BaseModalHostView {
+struct BaseVirtualView {
 
   virtual void UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
-    const winrt::com_ptr<ModalHostViewProps> &newProps,
-    const winrt::com_ptr<ModalHostViewProps> &/*oldProps*/) noexcept {
+    const winrt::com_ptr<VirtualViewProps> &newProps,
+    const winrt::com_ptr<VirtualViewProps> &/*oldProps*/) noexcept {
     m_props = newProps;
   }
 
@@ -161,7 +96,7 @@ struct BaseModalHostView {
     const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
   }
 
-  virtual void UpdateEventEmitter(const std::shared_ptr<ModalHostViewEventEmitter> &eventEmitter) noexcept {
+  virtual void UpdateEventEmitter(const std::shared_ptr<VirtualViewEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
@@ -191,32 +126,32 @@ struct BaseModalHostView {
 
   
 
-  const std::shared_ptr<ModalHostViewEventEmitter>& EventEmitter() const { return m_eventEmitter; }
-  const winrt::com_ptr<ModalHostViewProps>& Props() const { return m_props; }
+  const std::shared_ptr<VirtualViewEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<VirtualViewProps>& Props() const { return m_props; }
 
 private:
-  winrt::com_ptr<ModalHostViewProps> m_props;
-  std::shared_ptr<ModalHostViewEventEmitter> m_eventEmitter;
+  winrt::com_ptr<VirtualViewProps> m_props;
+  std::shared_ptr<VirtualViewEventEmitter> m_eventEmitter;
 };
 
 template <typename TUserData>
-void RegisterModalHostViewNativeComponent(
+void RegisterVirtualViewNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"ModalHostView", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+      L"VirtualView", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
                               const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<ModalHostViewProps>(props, cloneFrom); 
+            return winrt::make<VirtualViewProps>(props, cloneFrom); 
         });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->UpdateProps(view, newProps ? newProps.as<ModalHostViewProps>() : nullptr, oldProps ? oldProps.as<ModalHostViewProps>() : nullptr);
+            userData->UpdateProps(view, newProps ? newProps.as<VirtualViewProps>() : nullptr, oldProps ? oldProps.as<VirtualViewProps>() : nullptr);
         });
 
         compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -229,10 +164,10 @@ void RegisterModalHostViewNativeComponent(
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->UpdateEventEmitter(std::make_shared<ModalHostViewEventEmitter>(eventEmitter));
+          userData->UpdateEventEmitter(std::make_shared<VirtualViewEventEmitter>(eventEmitter));
         });
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseModalHostView<TUserData>::FinalizeUpdate) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseVirtualView<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -240,7 +175,7 @@ void RegisterModalHostViewNativeComponent(
           });
         } 
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseModalHostView<TUserData>::UpdateState) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseVirtualView<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -248,7 +183,7 @@ void RegisterModalHostViewNativeComponent(
           });
         }
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseModalHostView<TUserData>::MountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseVirtualView<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -256,7 +191,7 @@ void RegisterModalHostViewNativeComponent(
           });
         }
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseModalHostView<TUserData>::UnmountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseVirtualView<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -266,13 +201,13 @@ void RegisterModalHostViewNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseModalHostView<TUserData>::Initialize) {
+          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseVirtualView<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseModalHostView<TUserData>::CreateVisual) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseVirtualView<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);
