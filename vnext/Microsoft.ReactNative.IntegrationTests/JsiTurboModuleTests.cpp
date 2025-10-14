@@ -38,6 +38,10 @@ namespace ReactNativeIntegrationTests {
 // Use anonymous namespace to avoid any linking conflicts
 namespace {
 
+jsi::Value deepCopyJSIValue(jsi::Runtime &rt, const jsi::Value &value);
+jsi::Object deepCopyJSIObject(jsi::Runtime &rt, const jsi::Object &obj);
+jsi::Array deepCopyJSIArray(jsi::Runtime &rt, const jsi::Array &arr);
+
 struct MySimpleTurboModule : react::NativeMySimpleTurboModuleCxxCxxSpecJSI {
   MySimpleTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker);
 
@@ -88,25 +92,25 @@ jsi::String MySimpleTurboModule::getString(jsi::Runtime &rt, jsi::String arg) {
   return jsi::String::createFromUtf8(rt, arg.utf8(rt));
 }
 
-// jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, jsi::Array arg) {
-//   TestEventService::LogEvent("getArray called", arg.length(rt));
-//   return react::deepCopyJSIArray(rt, arg);
-// }
+jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, jsi::Array arg) {
+  TestEventService::LogEvent("getArray called", arg.length(rt));
+  return deepCopyJSIArray(rt, arg);
+}
 
-// jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, jsi::Object arg) {
-//   TestEventService::LogEvent("getObject called", "OK");
-//   return react::deepCopyJSIObject(rt, arg);
-// }
+jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, jsi::Object arg) {
+  TestEventService::LogEvent("getObject called", "OK");
+  return deepCopyJSIObject(rt, arg);
+}
 
-// jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) {
-//   TestEventService::LogEvent("getValue called", "OK");
-//   // Note: return type isn't type-safe.
-//   jsi::Object result(rt);
-//   result.setProperty(rt, "x", jsi::Value(x));
-//   result.setProperty(rt, "y", jsi::String::createFromUtf8(rt, y.utf8(rt)));
-//   result.setProperty(rt, "z", react::deepCopyJSIObject(rt, z));
-//   return result;
-// }
+jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) {
+  TestEventService::LogEvent("getValue called", "OK");
+  // Note: return type isn't type-safe.
+  jsi::Object result(rt);
+  result.setProperty(rt, "x", jsi::Value(x));
+  result.setProperty(rt, "y", jsi::String::createFromUtf8(rt, y.utf8(rt)));
+  result.setProperty(rt, "z", deepCopyJSIObject(rt, z));
+  return result;
+}
 
 void MySimpleTurboModule::getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) {
   TestEventService::LogEvent("getValueWithCallback called", "OK");
@@ -141,6 +145,58 @@ struct MySimpleTurboModulePackageProvider
   }
 };
 
+jsi::Value deepCopyJSIValue(jsi::Runtime &rt, const jsi::Value &value) {
+  if (value.isNull()) {
+    return jsi::Value::null();
+  }
+
+  if (value.isBool()) {
+    return jsi::Value(value.getBool());
+  }
+
+  if (value.isNumber()) {
+    return jsi::Value(value.getNumber());
+  }
+
+  if (value.isString()) {
+    return value.getString(rt);
+  }
+
+  if (value.isObject()) {
+    jsi::Object o = value.getObject(rt);
+    if (o.isArray(rt)) {
+      return deepCopyJSIArray(rt, o.getArray(rt));
+    }
+    if (o.isFunction(rt)) {
+      return o.getFunction(rt);
+    }
+    return deepCopyJSIObject(rt, o);
+  }
+
+  return jsi::Value::undefined();
+}
+
+jsi::Object deepCopyJSIObject(jsi::Runtime &rt, const jsi::Object &obj) {
+  jsi::Object copy(rt);
+  jsi::Array propertyNames = obj.getPropertyNames(rt);
+  size_t size = propertyNames.size(rt);
+  for (size_t i = 0; i < size; i++) {
+    jsi::String name = propertyNames.getValueAtIndex(rt, i).getString(rt);
+    jsi::Value value = obj.getProperty(rt, name);
+    copy.setProperty(rt, name, deepCopyJSIValue(rt, value));
+  }
+  return copy;
+}
+
+jsi::Array deepCopyJSIArray(jsi::Runtime &rt, const jsi::Array &arr) {
+  size_t size = arr.size(rt);
+  jsi::Array copy(rt, size);
+  for (size_t i = 0; i < size; i++) {
+    copy.setValueAtIndex(rt, i, deepCopyJSIValue(rt, arr.getValueAtIndex(rt, i)));
+  }
+  return copy;
+}
+
 } // namespace
 
 // The test fails to run when compiled on x86. It is most probably of the mix of sdtcall vs cdecl calling conventions
@@ -171,12 +227,12 @@ TEST_CLASS (JsiTurboModuleTests) {
          TestEvent{"getString result", "Hello"},
          TestEvent{"getString called", ""},
          TestEvent{"getString result", ""},
-         //  TestEvent{"getArray called", 3},
-         //  TestEvent{"getArray result", "OK"},
-         //  TestEvent{"getObject called", "OK"},
-         //  TestEvent{"getObject result", "OK"},
-         //  TestEvent{"getValue called", "OK"},
-         //  TestEvent{"getValue result", "OK"},
+         TestEvent{"getArray called", 3},
+         TestEvent{"getArray result", "OK"},
+         TestEvent{"getObject called", "OK"},
+         TestEvent{"getObject result", "OK"},
+         TestEvent{"getValue called", "OK"},
+         TestEvent{"getValue result", "OK"},
          TestEvent{"getConstants called", "OK"},
          TestEvent{"getConstants result", "OK"},
          TestEvent{"getValueWithCallback called", "OK"},

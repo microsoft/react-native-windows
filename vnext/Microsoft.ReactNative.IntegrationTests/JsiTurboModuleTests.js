@@ -44,25 +44,25 @@ mySimpleTurboModule.logAction(
   mySimpleTurboModule.getString(''),
 );
 
-// const arr1 = mySimpleTurboModule.getArray(['Hello', 5, false]);
-// const arr1Matches =
-//   arr1.length === 3 &&
-//   arr1[0] === 'Hello' &&
-//   arr1[1] === 5 &&
-//   arr1[2] === false;
-// mySimpleTurboModule.logAction('getArray result', arr1Matches ? 'OK' : 'Failed');
+const arr1 = mySimpleTurboModule.getArray(['Hello', 5, false]);
+const arr1Matches =
+  arr1.length === 3 &&
+  arr1[0] === 'Hello' &&
+  arr1[1] === 5 &&
+  arr1[2] === false;
+mySimpleTurboModule.logAction('getArray result', arr1Matches ? 'OK' : 'Failed');
 
-// const obj1 = mySimpleTurboModule.getObject({x: 'Hello', y: 5, z: false});
-// const obj1Matches = obj1.x === 'Hello' && obj1.y === 5 && obj1.z === false;
-// mySimpleTurboModule.logAction(
-//   'getObject result',
-//   obj1Matches ? 'OK' : 'Failed',
-// );
+const obj1 = mySimpleTurboModule.getObject({x: 'Hello', y: 5, z: false});
+const obj1Matches = obj1.x === 'Hello' && obj1.y === 5 && obj1.z === false;
+mySimpleTurboModule.logAction(
+  'getObject result',
+  obj1Matches ? 'OK' : 'Failed',
+);
 
-// const obj2 = mySimpleTurboModule.getValue(42, 'Hello', {x: 5, y: 12});
-// const obj2Matches =
-//   obj2.x === 42 && obj2.y === 'Hello' && obj2.z.x === 5 && obj2.z.y === 12;
-// mySimpleTurboModule.logAction('getValue result', obj2Matches ? 'OK' : 'Failed');
+const obj2 = mySimpleTurboModule.getValue(42, 'Hello', {x: 5, y: 12});
+const obj2Matches =
+  obj2.x === 42 && obj2.y === 'Hello' && obj2.z.x === 5 && obj2.z.y === 12;
+mySimpleTurboModule.logAction('getValue result', obj2Matches ? 'OK' : 'Failed');
 
 const obj3 = mySimpleTurboModule.getConstants();
 const obj3Matches =
