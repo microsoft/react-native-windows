@@ -17,6 +17,23 @@
 
 namespace facebook::react {
 
+class VirtualViewExperimentalProps final : public ViewProps {
+ public:
+  VirtualViewExperimentalProps() = default;
+  VirtualViewExperimentalProps(const PropsParserContext& context, const VirtualViewExperimentalProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool initialHidden{false};
+  int renderState{0};
+
+  #ifdef RN_SERIALIZABLE_STATE
+  ComponentName getDiffPropsImplementationTarget() const override;
+
+  folly::dynamic getDiffProps(const Props* prevProps) const override;
+  #endif
+};
+
 class VirtualViewProps final : public ViewProps {
  public:
   VirtualViewProps() = default;

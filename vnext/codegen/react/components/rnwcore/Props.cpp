@@ -14,6 +14,40 @@
 
 namespace facebook::react {
 
+VirtualViewExperimentalProps::VirtualViewExperimentalProps(
+    const PropsParserContext &context,
+    const VirtualViewExperimentalProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    initialHidden(convertRawProp(context, rawProps, "initialHidden", sourceProps.initialHidden, {false})),
+    renderState(convertRawProp(context, rawProps, "renderState", sourceProps.renderState, {0})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName VirtualViewExperimentalProps::getDiffPropsImplementationTarget() const {
+  return "VirtualViewExperimental";
+}
+
+folly::dynamic VirtualViewExperimentalProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = VirtualViewExperimentalProps();
+  const VirtualViewExperimentalProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const VirtualViewExperimentalProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (initialHidden != oldProps->initialHidden) {
+    result["initialHidden"] = initialHidden;
+  }
+    
+  if (renderState != oldProps->renderState) {
+    result["renderState"] = renderState;
+  }
+  return result;
+}
+#endif
 VirtualViewProps::VirtualViewProps(
     const PropsParserContext &context,
     const VirtualViewProps &sourceProps,

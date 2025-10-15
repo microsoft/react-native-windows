@@ -21,8 +21,8 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonT
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_animatedShouldSignalBatch(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->animatedShouldSignalBatch(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_cdpInteractionMetricsEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->cdpInteractionMetricsEnabled(
     rt
   );
 }
@@ -36,13 +36,18 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_cxxNati
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMainQueueSyncDispatchIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableMainQueueSyncDispatchIOS(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableFabricCommitInCXXAnimated(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableFabricCommitInCXXAnimated(
     rt
   );
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableMountItemReorderingAndroid(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableOldAndroidAttachmentMetricsWorkarounds(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->disableOldAndroidAttachmentMetricsWorkarounds(
     rt
   );
 }
@@ -91,6 +96,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableD
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEagerMainQueueModulesOnIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableEagerMainQueueModulesOnIOS(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEagerRootViewAttachment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableEagerRootViewAttachment(
     rt
@@ -126,6 +136,16 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableI
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImagePrefetchingAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableImagePrefetchingAndroid(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImmediateUpdateModeForContentOffsetChanges(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableImmediateUpdateModeForContentOffsetChanges(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableInteropViewManagerClassLookUpOptimizationIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableInteropViewManagerClassLookUpOptimizationIOS(
     rt
@@ -143,11 +163,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableL
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMainQueueCoordinatorOnIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableMainQueueCoordinatorOnIOS(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMainQueueModulesOnIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableMainQueueModulesOnIOS(
     rt
   );
 }
@@ -183,11 +198,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableP
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableResourceTimingAPI(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableResourceTimingAPI(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableSynchronousStateUpdates(
     rt
   );
 }
@@ -246,8 +256,38 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_hideOff
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_perfMonitorV2Enabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->perfMonitorV2Enabled(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preparedTextCacheSize(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->preparedTextCacheSize(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventShadowTreeCommitExhaustion(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->preventShadowTreeCommitExhaustion(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_releaseImageDataWhenConsumed(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->releaseImageDataWhenConsumed(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_shouldPressibilityUseW3CPointerEventsForHover(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->shouldPressibilityUseW3CPointerEventsForHover(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_skipActivityIdentityAssertionOnHostPause(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->skipActivityIdentityAssertionOnHostPause(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_sweepActiveTouchOnChildNativeGesturesAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->sweepActiveTouchOnChildNativeGesturesAndroid(
     rt
   );
 }
@@ -268,6 +308,16 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useAlwa
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useFabricInterop(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useFabricInterop(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeEqualsInNativeReadableArrayAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useNativeEqualsInNativeReadableArrayAndroid(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeTransformHelperAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useNativeTransformHelperAndroid(
     rt
   );
 }
@@ -311,11 +361,12 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   : TurboModule("NativeReactNativeFeatureFlagsCxx", jsInvoker) {
   methodMap_["commonTestFlag"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlag};
   methodMap_["commonTestFlagWithoutNativeImplementation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlagWithoutNativeImplementation};
-  methodMap_["animatedShouldSignalBatch"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_animatedShouldSignalBatch};
+  methodMap_["cdpInteractionMetricsEnabled"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_cdpInteractionMetricsEnabled};
   methodMap_["cxxNativeAnimatedEnabled"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_cxxNativeAnimatedEnabled};
   methodMap_["cxxNativeAnimatedRemoveJsSync"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_cxxNativeAnimatedRemoveJsSync};
-  methodMap_["disableMainQueueSyncDispatchIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMainQueueSyncDispatchIOS};
+  methodMap_["disableFabricCommitInCXXAnimated"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableFabricCommitInCXXAnimated};
   methodMap_["disableMountItemReorderingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid};
+  methodMap_["disableOldAndroidAttachmentMetricsWorkarounds"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableOldAndroidAttachmentMetricsWorkarounds};
   methodMap_["disableTextLayoutManagerCacheAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableTextLayoutManagerCacheAndroid};
   methodMap_["enableAccessibilityOrder"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccessibilityOrder};
   methodMap_["enableAccumulatedUpdatesInRawPropsAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccumulatedUpdatesInRawPropsAndroid};
@@ -325,6 +376,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableCustomFocusSearchOnClippedElementsAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCustomFocusSearchOnClippedElementsAndroid};
   methodMap_["enableDestroyShadowTreeRevisionAsync"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableDestroyShadowTreeRevisionAsync};
   methodMap_["enableDoubleMeasurementFixAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableDoubleMeasurementFixAndroid};
+  methodMap_["enableEagerMainQueueModulesOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEagerMainQueueModulesOnIOS};
   methodMap_["enableEagerRootViewAttachment"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableEagerRootViewAttachment};
   methodMap_["enableFabricLogs"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFabricLogs};
   methodMap_["enableFabricRenderer"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFabricRenderer};
@@ -332,11 +384,12 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableFontScaleChangesUpdatingLayout"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFontScaleChangesUpdatingLayout};
   methodMap_["enableIOSTextBaselineOffsetPerLine"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableIOSTextBaselineOffsetPerLine};
   methodMap_["enableIOSViewClipToPaddingBox"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableIOSViewClipToPaddingBox};
+  methodMap_["enableImagePrefetchingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImagePrefetchingAndroid};
+  methodMap_["enableImmediateUpdateModeForContentOffsetChanges"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableImmediateUpdateModeForContentOffsetChanges};
   methodMap_["enableInteropViewManagerClassLookUpOptimizationIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableInteropViewManagerClassLookUpOptimizationIOS};
   methodMap_["enableLayoutAnimationsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLayoutAnimationsOnAndroid};
   methodMap_["enableLayoutAnimationsOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLayoutAnimationsOnIOS};
   methodMap_["enableMainQueueCoordinatorOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMainQueueCoordinatorOnIOS};
-  methodMap_["enableMainQueueModulesOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMainQueueModulesOnIOS};
   methodMap_["enableModuleArgumentNSNullConversionIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableModuleArgumentNSNullConversionIOS};
   methodMap_["enableNativeCSSParsing"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableNativeCSSParsing};
   methodMap_["enableNetworkEventReporting"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableNetworkEventReporting};
@@ -344,7 +397,6 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enablePreparedTextLayout"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enablePreparedTextLayout};
   methodMap_["enablePropsUpdateReconciliationAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enablePropsUpdateReconciliationAndroid};
   methodMap_["enableResourceTimingAPI"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableResourceTimingAPI};
-  methodMap_["enableSynchronousStateUpdates"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates};
   methodMap_["enableViewCulling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableViewCulling};
   methodMap_["enableViewRecycling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableViewRecycling};
   methodMap_["enableViewRecyclingForText"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableViewRecyclingForText};
@@ -356,11 +408,19 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["fuseboxEnabledRelease"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledRelease};
   methodMap_["fuseboxNetworkInspectionEnabled"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxNetworkInspectionEnabled};
   methodMap_["hideOffscreenVirtualViewsOnIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_hideOffscreenVirtualViewsOnIOS};
+  methodMap_["perfMonitorV2Enabled"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_perfMonitorV2Enabled};
   methodMap_["preparedTextCacheSize"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preparedTextCacheSize};
+  methodMap_["preventShadowTreeCommitExhaustion"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventShadowTreeCommitExhaustion};
+  methodMap_["releaseImageDataWhenConsumed"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_releaseImageDataWhenConsumed};
+  methodMap_["shouldPressibilityUseW3CPointerEventsForHover"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_shouldPressibilityUseW3CPointerEventsForHover};
+  methodMap_["skipActivityIdentityAssertionOnHostPause"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_skipActivityIdentityAssertionOnHostPause};
+  methodMap_["sweepActiveTouchOnChildNativeGesturesAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_sweepActiveTouchOnChildNativeGesturesAndroid};
   methodMap_["traceTurboModulePromiseRejectionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_traceTurboModulePromiseRejectionsOnAndroid};
   methodMap_["updateRuntimeShadowNodeReferencesOnCommit"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_updateRuntimeShadowNodeReferencesOnCommit};
   methodMap_["useAlwaysAvailableJSErrorHandling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useAlwaysAvailableJSErrorHandling};
   methodMap_["useFabricInterop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useFabricInterop};
+  methodMap_["useNativeEqualsInNativeReadableArrayAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeEqualsInNativeReadableArrayAndroid};
+  methodMap_["useNativeTransformHelperAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeTransformHelperAndroid};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
   methodMap_["useOptimizedEventBatchingOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useOptimizedEventBatchingOnAndroid};
   methodMap_["useRawPropsJsiValue"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useRawPropsJsiValue};
@@ -2976,21 +3036,6 @@ NativeIdleCallbacksCxxSpecJSI::NativeIdleCallbacksCxxSpecJSI(std::shared_ptr<Cal
   methodMap_["requestIdleCallback"] = MethodMetadata {2, __hostFunction_NativeIdleCallbacksCxxSpecJSI_requestIdleCallback};
   methodMap_["cancelIdleCallback"] = MethodMetadata {1, __hostFunction_NativeIdleCallbacksCxxSpecJSI_cancelIdleCallback};
 }
-static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_observe(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->observe(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_unobserve(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->unobserve(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
-    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : jsi::Value(rt, args[1])
-  );
-  return jsi::Value::undefined();
-}
 static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_observeV2(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->observeV2(
     rt,
@@ -3026,8 +3071,6 @@ static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_takeRecord
 
 NativeIntersectionObserverCxxSpecJSI::NativeIntersectionObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativeIntersectionObserverCxx", jsInvoker) {
-  methodMap_["observe"] = MethodMetadata {1, __hostFunction_NativeIntersectionObserverCxxSpecJSI_observe};
-  methodMap_["unobserve"] = MethodMetadata {2, __hostFunction_NativeIntersectionObserverCxxSpecJSI_unobserve};
   methodMap_["observeV2"] = MethodMetadata {1, __hostFunction_NativeIntersectionObserverCxxSpecJSI_observeV2};
   methodMap_["unobserveV2"] = MethodMetadata {2, __hostFunction_NativeIntersectionObserverCxxSpecJSI_unobserveV2};
   methodMap_["connect"] = MethodMetadata {1, __hostFunction_NativeIntersectionObserverCxxSpecJSI_connect};
@@ -3093,34 +3136,31 @@ static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_now(jsi::Runtime &r
     rt
   );
 }
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_markWithResult(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->markWithResult(
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_reportMark(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->reportMark(
     rt,
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt),
-    count <= 1 || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asNumber())
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber(),
+    count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : jsi::Value(rt, args[2])
   );
+  return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_measure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->measure(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt),
-    count <= 1 || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asNumber()),
-    count <= 2 || args[2].isUndefined() ? std::nullopt : std::make_optional(args[2].asNumber()),
-    count <= 3 || args[3].isUndefined() ? std::nullopt : std::make_optional(args[3].asNumber()),
-    count <= 4 || args[4].isUndefined() ? std::nullopt : std::make_optional(args[4].asString(rt)),
-    count <= 5 || args[5].isUndefined() ? std::nullopt : std::make_optional(args[5].asString(rt))
-  );
-}
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_measureWithResult(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->measureWithResult(
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_reportMeasure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->reportMeasure(
     rt,
     count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt),
     count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber(),
     count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asNumber(),
-    count <= 3 || args[3].isUndefined() ? std::nullopt : std::make_optional(args[3].asNumber()),
-    count <= 4 || args[4].isUndefined() ? std::nullopt : std::make_optional(args[4].asString(rt)),
-    count <= 5 || args[5].isUndefined() ? std::nullopt : std::make_optional(args[5].asString(rt))
+    count <= 3 ? throw jsi::JSError(rt, "Expected argument in position 3 to be passed") : jsi::Value(rt, args[3])
   );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getMarkTime(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->getMarkTime(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
+  );
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
 }
 static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_clearMarks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->clearMarks(
@@ -3208,13 +3248,6 @@ static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getSupportedPerform
     rt
   );
 }
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_setCurrentTimeStampForTesting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->setCurrentTimeStampForTesting(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
 static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_clearEventCountsForTesting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->clearEventCountsForTesting(
     rt
@@ -3225,9 +3258,9 @@ static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_clearEventCountsFor
 NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativePerformanceCxx", jsInvoker) {
   methodMap_["now"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_now};
-  methodMap_["markWithResult"] = MethodMetadata {2, __hostFunction_NativePerformanceCxxSpecJSI_markWithResult};
-  methodMap_["measure"] = MethodMetadata {6, __hostFunction_NativePerformanceCxxSpecJSI_measure};
-  methodMap_["measureWithResult"] = MethodMetadata {6, __hostFunction_NativePerformanceCxxSpecJSI_measureWithResult};
+  methodMap_["reportMark"] = MethodMetadata {3, __hostFunction_NativePerformanceCxxSpecJSI_reportMark};
+  methodMap_["reportMeasure"] = MethodMetadata {4, __hostFunction_NativePerformanceCxxSpecJSI_reportMeasure};
+  methodMap_["getMarkTime"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_getMarkTime};
   methodMap_["clearMarks"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_clearMarks};
   methodMap_["clearMeasures"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_clearMeasures};
   methodMap_["getEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getEntries};
@@ -3242,7 +3275,6 @@ NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInv
   methodMap_["disconnect"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_disconnect};
   methodMap_["takeRecords"] = MethodMetadata {2, __hostFunction_NativePerformanceCxxSpecJSI_takeRecords};
   methodMap_["getSupportedPerformanceEntryTypes"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getSupportedPerformanceEntryTypes};
-  methodMap_["setCurrentTimeStampForTesting"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_setCurrentTimeStampForTesting};
   methodMap_["clearEventCountsForTesting"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_clearEventCountsForTesting};
 }
 static jsi::Value __hostFunction_NativeDOMCxxSpecJSI_compareDocumentPosition(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
