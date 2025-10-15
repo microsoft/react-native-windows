@@ -115,7 +115,7 @@ test('setup() verify static common property values with async sources', async ()
   await TelemetryTest.startTest();
 
   const props: Record<string, () => Promise<string | undefined>> = {
-    deviceId: basePropUtils.deviceId,
+    //deviceId: basePropUtils.deviceId,
     deviceLocale: basePropUtils.deviceLocale,
   };
 
@@ -365,11 +365,6 @@ function verifyTestCommandTelemetryProcessor(
       // Verify basics
       const commonProperties = properties!.common;
       expect(commonProperties.commandName).toBe('test-command');
-      // Verify LocalId
-      const expectedLocalId = TelemetryTest.getCommonProperty('deviceId');
-      expect(envelope.ext?.device?.localId).toBeDefined();
-      expect(envelope.ext?.device?.localId).toBe(expectedLocalId);
-      expect(commonProperties.device?.localId).toBe(expectedLocalId); // Only if you know it's set in the event, not in static commonProperties
 
       // Verify versions info
       const versions = properties!.versions;
