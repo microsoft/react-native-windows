@@ -56,16 +56,25 @@ jobs:
               # Install from public NuGet.org feed
               dotnet tool install --global Microsoft.CST.AttackSurfaceAnalyzer.CLI --add-source https://api.nuget.org/v3/index.json
               
+              if ($LASTEXITCODE -ne 0) {
+                Write-Error "Failed to install ASA tool"
+                exit 1
+              }
+              
               # Refresh environment PATH to include .NET global tools
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
               
-              # Verify installation
-              asa --version
-              if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to install or verify ASA"
+              # Verify installation by capturing output
+              $asaOutput = asa --version 2>&1 | Out-String
+              Write-Host "ASA Version output: $asaOutput"
+              
+              # Check if the version output contains expected information
+              if ($asaOutput -match "AttackSurfaceAnalyzer|Asa \d+\.\d+") {
+                Write-Host "✅ ASA installed successfully"
+              } else {
+                Write-Error "Failed to verify ASA installation"
                 exit 1
               }
-              Write-Host "✅ ASA installed successfully"
 
         # Take "before" snapshot of the system
         - task: PowerShell@2
