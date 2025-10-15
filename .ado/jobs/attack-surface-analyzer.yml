@@ -50,6 +50,7 @@ jobs:
         - task: PowerShell@2
           displayName: '🛡️ Install Attack Surface Analyzer'
           inputs:
+            errorActionPreference: 'continue'
             targetType: inline
             script: |
               Write-Host "Installing Attack Surface Analyzer (ASA) CLI tool..."
