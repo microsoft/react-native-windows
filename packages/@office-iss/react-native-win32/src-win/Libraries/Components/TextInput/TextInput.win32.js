@@ -651,6 +651,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
           el.handledEventPhase === eventPhase.Bubbling
         ) {
           event.stopPropagation();
@@ -664,7 +668,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code === el.code && el.handledEventPhase === 3) {
+        if (
+          event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+          el.handledEventPhase === 3
+        ) {
           event.stopPropagation();
         }
       }
@@ -676,7 +687,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
-        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
+        if (
+          event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+          el.handledEventPhase === 1
+        ) {
           event.stopPropagation();
         }
       }
@@ -688,7 +706,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
+        if (
+          event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+          el.handledEventPhase === 1
+        ) {
           event.stopPropagation();
         }
       }
