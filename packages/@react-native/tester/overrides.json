@@ -269,13 +269,6 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/OSSLibraryExample",
-      "baseDirectory": "packages/rn-tester/js/examples/OSSLibraryExample",
-      "baseHash": "5e81207c1955cdd2c2e3c307785d614f74ff858f",
-      "issue": 4054
-    },
-    {
-      "type": "copy",
       "directory": "js/examples/PanResponder",
       "baseDirectory": "packages/rn-tester/js/examples/PanResponder",
       "baseHash": "6859f5e7f35424e6ddc4aa9c39a76ecb946c7bb3",
