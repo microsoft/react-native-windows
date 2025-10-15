@@ -64,10 +64,14 @@ jobs:
               # Refresh environment PATH to include .NET global tools
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
               
-              # Verify installation by capturing output (suppress error action as asa writes to stderr)
-              $ErrorActionPreference = 'Continue'
-              $asaOutput = & asa --version 2>&1 | Out-String
-              $ErrorActionPreference = 'Stop'
+              # Verify installation by capturing output (asa writes to stderr which PowerShell treats as error)
+              # Use try-catch to suppress the error and capture output
+              try {
+                $asaOutput = & asa --version 2>&1 | Out-String
+              } catch {
+                # Capture the error message which contains the version info
+                $asaOutput = $_.Exception.Message
+              }
               
               Write-Host "ASA Version output: $asaOutput"
               
