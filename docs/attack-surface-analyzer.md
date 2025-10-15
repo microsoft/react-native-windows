@@ -16,7 +16,7 @@ Attack Surface Analyzer is a Microsoft tool that helps determine the changes mad
 
 ## How ASA Runs in CI
 
-ASA is integrated into the Build stage of the PR pipeline and runs automatically on every pull request. The job performs the following steps:
+ASA is integrated into the Build stage of the PR pipeline and runs automatically on secure pull requests (SecurePullRequest builds). The job performs the following steps:
 
 ### 1. Installation
 ```yaml
@@ -117,11 +117,11 @@ ASA runs as part of the Build stage in `.ado/stages.yml`:
 
 ### Parameters
 
-- **buildEnvironment**: PullRequest, SecurePullRequest, or Continuous
+- **buildEnvironment**: Currently configured to run only for SecurePullRequest builds
 - **AgentPool**: Defines the build agent pool (Medium tier recommended)
 - **complianceWarnOnly**: When `true`, ASA failures won't block PR (default: `true`)
 
-Currently, ASA is configured with `complianceWarnOnly: true` to allow gradual adoption. This can be changed to `false` to enforce blocking on security regressions.
+ASA is configured to run only for SecurePullRequest builds to ensure thorough security scanning in controlled environments. It uses `complianceWarnOnly: true` to allow gradual adoption. This can be changed to `false` to enforce blocking on security regressions.
 
 ## Local Testing
 
