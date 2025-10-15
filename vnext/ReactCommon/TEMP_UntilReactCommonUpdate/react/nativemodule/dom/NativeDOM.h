@@ -49,7 +49,7 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
       /* rightWidth: */ int,
       /* bottomWidth: */ int,
       /* leftWidth: */ int>
-  getBorderWidth(jsi::Runtime& rt, ShadowNode::Shared shadowNode);
+  getBorderWidth(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
 
   std::tuple<
       /* x: */ double,
@@ -58,37 +58,37 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
       /* height: */ double>
   getBoundingClientRect(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
       bool includeTransform);
 
   std::tuple</* width: */ int, /* height: */ int> getInnerSize(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode);
+      std::shared_ptr<const ShadowNode> shadowNode);
 
   std::tuple</* scrollLeft: */ double, /* scrollTop: */ double>
-  getScrollPosition(jsi::Runtime& rt, ShadowNode::Shared shadowNode);
+  getScrollPosition(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
 
   std::tuple</* scrollWidth: */ int, /* scrollHeight */ int> getScrollSize(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode);
+      std::shared_ptr<const ShadowNode> shadowNode);
 
-  std::string getTagName(jsi::Runtime& rt, ShadowNode::Shared shadowNode);
+  std::string getTagName(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
 
-  std::string getTextContent(jsi::Runtime& rt, ShadowNode::Shared shadowNode);
+  std::string getTextContent(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
 
   bool hasPointerCapture(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
       double pointerId);
 
   void releasePointerCapture(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
       double pointerId);
 
   void setPointerCapture(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
       double pointerId);
 
 #pragma mark - Methods from the HTMLElement interface (for ReactNativeElement).
@@ -97,7 +97,7 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
       /* offsetParent: */ jsi::Value,
       /* top: */ double,
       /* left: */ double>
-  getOffset(jsi::Runtime& rt, ShadowNode::Shared shadowNode);
+  getOffset(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
 
 #pragma mark - Special methods to handle the root node.
 
@@ -110,18 +110,18 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
 
   void measure(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
       jsi::Function callback);
 
   void measureInWindow(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
       jsi::Function callback);
 
   void measureLayout(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
-      ShadowNode::Shared relativeToShadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
+      std::shared_ptr<const ShadowNode> relativeToShadowNode,
       jsi::Function onFail,
       jsi::Function onSuccess);
 
@@ -131,7 +131,7 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
 
   void setNativeProps(
       jsi::Runtime& rt,
-      ShadowNode::Shared shadowNode,
+      std::shared_ptr<const ShadowNode> shadowNode,
       jsi::Value updatePayload);
 };
 

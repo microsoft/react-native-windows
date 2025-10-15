@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.81.0-nightly-20250702-b41b924b2",
+  "baseVersion": "0.81.0-nightly-20250709-6892dde36",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "265afd0d72f00d81b21ea52db43387855d3ec67a"
+      "baseHash": "a5a50b87e779ba343919454cb5f7c1e77c2db982"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "d75b1af2108d5fb86db91e98ce3f4e9b571f28ca"
+      "baseHash": "c5d0dfd40d0fb7c197790b1f23f4f8b9ca835047"
     },
     {
       "type": "platform",
@@ -108,13 +108,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
-      "baseHash": "217606b7527281d62335913ee8349506fcb9192b"
+      "baseHash": "98208f1973dfdb207eeeb74152dbd9c355735bae"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "6bdac6e2d8569b25480db63f81d7f6dfc130f5f7"
+      "baseHash": "b6289ef53abc941f6f0aed50f80d3852b6682215"
     },
     {
       "type": "patch",
@@ -177,7 +177,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "b5df605a012fc501aab97b413a9640a48648fe9b"
+      "baseHash": "83a4fc8e982845619abb121bb860ad63366260c7"
     },
     {
       "type": "derived",
@@ -419,13 +419,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.d.ts",
       "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
-      "baseHash": "d3807571f477ef8ba4bb20c1ee899b1a5814941d"
+      "baseHash": "3540a1a36fc487e54c1cec9b0c57b4fdc2124b60"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "a24c9881da46b612c461a304b3ba9c640adbb5cb"
+      "baseHash": "fb6f5390b49eb22085ac1618becde3a5208ba167"
     },
     {
       "type": "derived",
