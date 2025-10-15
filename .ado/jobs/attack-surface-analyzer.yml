@@ -56,6 +56,9 @@ jobs:
               # Install from public NuGet.org feed
               dotnet tool install --global Microsoft.CST.AttackSurfaceAnalyzer.CLI --add-source https://api.nuget.org/v3/index.json
               
+              # Refresh environment PATH to include .NET global tools
+              $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
+              
               # Verify installation
               asa --version
               if ($LASTEXITCODE -ne 0) {
@@ -70,6 +73,9 @@ jobs:
           inputs:
             targetType: inline
             script: |
+              # Refresh environment PATH to include .NET global tools
+              $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
+              
               Write-Host "Taking 'before' snapshot of system state..."
               asa collect -r before --verbose
               if ($LASTEXITCODE -ne 0) {
@@ -105,6 +111,9 @@ jobs:
           inputs:
             targetType: inline
             script: |
+              # Refresh environment PATH to include .NET global tools
+              $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
+              
               Write-Host "Taking 'after' snapshot of system state..."
               asa collect -r after --verbose
               if ($LASTEXITCODE -ne 0) {
@@ -119,6 +128,9 @@ jobs:
           inputs:
             targetType: inline
             script: |
+              # Refresh environment PATH to include .NET global tools
+              $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
+              
               Write-Host "Comparing before and after snapshots..."
               
               # Create output directory for results
