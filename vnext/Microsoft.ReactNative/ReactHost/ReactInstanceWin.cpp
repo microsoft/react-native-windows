@@ -392,15 +392,15 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
 
 #else
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
-        L"ImageLoader",
-        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+  //if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
+  //  registerTurboModule(
+  //      L"ImageLoader",
+  //      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
 
-    registerTurboModule(
-        L"NativeAnimatedModule",
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
-  }
+  //  registerTurboModule(
+  //      L"NativeAnimatedModule",
+  //      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
+  //}
 #endif
 
   if (!m_options.UseWebDebugger()) {
