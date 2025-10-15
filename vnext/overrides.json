@@ -180,31 +180,10 @@
       "baseHash": "6a66bfa6f1a36ac0b1d3c114d0c4d11496c4f82e"
     },
     {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityProps.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityProps.cpp",
-      "baseHash": "84c725e0fcd477def9d5f6ae0e5bf14fd6e89d5c",
-      "issue": 14845
-    },
-    {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/DynamicEventPayload.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/DynamicEventPayload.cpp",
-      "baseHash": "4fa9c00291790a3b7eca1d38aeb5c28bc081143c",
-      "issue": 14797
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSHexColor.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSHexColor.h",
-      "baseHash": "7ff0d621afc16dbee0b2959bb07c78418506b59c",
-      "issue": 14666
     },
     {
       "type": "patch",
