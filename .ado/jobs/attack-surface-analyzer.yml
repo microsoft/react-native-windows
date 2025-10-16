@@ -117,7 +117,7 @@ jobs:
               }
               Write-Host "✅ After snapshot collected successfully"
 
-        # Export comparison results
+        # Export comparison results (ASA 2.3 syntax)
         - task: PowerShell@2
           displayName: '🛡️ ASA - Export Comparison Results'
           inputs:
@@ -125,22 +125,39 @@ jobs:
             script: |
               # Refresh environment PATH to include .NET global tools
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
-              
-              Write-Host "Comparing before and after snapshots..."
-              
+
+              Write-Host "Comparing before and after snapshots for ASA 2.3..."
+
               # Create output directory for results
               $resultsDir = "$(Build.ArtifactStagingDirectory)\ASA_Results"
               New-Item -ItemType Directory -Force -Path $resultsDir | Out-Null
-              
-              # Export results to JSON
-              asa export-collect --before before --after after --format json --output "$resultsDir\asa-comparison.json" --verbose
+
+              # Default ASA database filenames
+              $beforeDb = "asa_before.sqlite"
+              $afterDb = "asa_after.sqlite"
+
+              # Rename default output databases from collect steps
+              if (Test-Path "asa.sqlite") {
+                Rename-Item -Path "asa.sqlite" -NewName $beforeDb -Force
+              }
+
+              # Take after snapshot again to ensure it's saved separately
+              asa collect --databasefilename $afterDb --verbose
+              if ($LASTEXITCODE -ne 0) {
+                Write-Error "Failed to collect 'after' snapshot"
+                exit 1
+              }
+
+              Write-Host "Generating comparison results (JSON and HTML)..."
+
+              # Run the comparison and export
+              asa export-collect $beforeDb $afterDb "$resultsDir\asa-comparison.json" --verbose
               if ($LASTEXITCODE -ne 0) {
                 Write-Error "Failed to export comparison results (JSON)"
                 exit 1
               }
 
-              # Also export to HTML for easier viewing
-              asa export-collect --before before --after after --format html --output "$resultsDir\asa-comparison.html" --verbose
+              asa export-collect $beforeDb $afterDb "$resultsDir\asa-comparison.html" --verbose
               if ($LASTEXITCODE -ne 0) {
                 Write-Error "Failed to export comparison results (HTML)"
                 exit 1
