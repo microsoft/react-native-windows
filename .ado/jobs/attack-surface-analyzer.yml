@@ -133,15 +133,19 @@ jobs:
               New-Item -ItemType Directory -Force -Path $resultsDir | Out-Null
               
               # Export results to JSON
-              asa export-collect -f before after -o "$resultsDir\asa-comparison.json" --verbose
+              asa export-collect --before before --after after --format json --output "$resultsDir\asa-comparison.json" --verbose
               if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to export comparison results"
+                Write-Error "Failed to export comparison results (JSON)"
                 exit 1
               }
-              
+
               # Also export to HTML for easier viewing
-              asa export-collect -f before after -o "$resultsDir\asa-comparison.html" --verbose
-              
+              asa export-collect --before before --after after --format html --output "$resultsDir\asa-comparison.html" --verbose
+              if ($LASTEXITCODE -ne 0) {
+                Write-Error "Failed to export comparison results (HTML)"
+                exit 1
+              }
+
               Write-Host "✅ Comparison results exported successfully"
               Write-Host "Results location: $resultsDir"
 
