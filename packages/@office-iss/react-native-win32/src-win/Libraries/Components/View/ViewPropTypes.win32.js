@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 'use strict';
@@ -281,6 +281,7 @@ export type ViewPropsAndroid = $ReadOnly<{
    * Whether to force the Android TV focus engine to move focus to this view.
    *
    * @platform android
+   * @deprecated Use `focusable` instead
    */
   hasTVPreferredFocus?: ?boolean,
 
@@ -490,6 +491,13 @@ type ViewBaseProps = $ReadOnly<{
    * See https://reactnative.dev/docs/view#removeclippedsubviews
    */
   removeClippedSubviews?: ?boolean,
+
+  /**
+   * Defines the order in which descendant elements receive accessibility focus.
+   * The elements in the array represent nativeID values for the respective
+   * descendant elements.
+   */
+  experimental_accessibilityOrder?: ?Array<string>,
 
   /**
    * Specifies the nativeID of the associated label text. When the assistive technology focuses on the component with this props, the text is read aloud.

@@ -477,6 +477,12 @@ void FabricUIManager::schedulerDidSendAccessibilityEvent(
   assert(false);
 }
 
+void FabricUIManager::schedulerDidUpdateShadowTree(
+    const std::unordered_map<facebook::react::Tag, folly::dynamic> &tagToProps) {
+  // TODO: Implement shadow tree update handling if needed
+  // This method is called when the scheduler updates shadow tree props
+}
+
 void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 

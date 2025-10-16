@@ -4,11 +4,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @flow strict-local
  * @format
- * @flow
  */
 
 // flowlint unsafe-getters-setters:off
+// flowlint unclear-type:off
+// flowlint untyped-import:off
 
 'use strict';
 'use client';
@@ -168,7 +170,18 @@ module.exports = {
     return require('./Libraries/Components/RefreshControl/RefreshControl')
       .default;
   },
+  /**
+   * @deprecated SafeAreaView has been deprecated and will be removed in a future release.
+   * Please use 'react-native-safe-area-context' instead.
+   * See https://github.com/th3rdwave/react-native-safe-area-context
+   */
   get SafeAreaView(): SafeAreaView {
+    warnOnce(
+      'safe-area-view-deprecated',
+      'SafeAreaView has been deprecated and will be removed in a future release. ' +
+        "Please use 'react-native-safe-area-context' instead. " +
+        'See https://github.com/th3rdwave/react-native-safe-area-context',
+    );
     return require('./Libraries/Components/SafeAreaView/SafeAreaView').default;
   },
   get ScrollView(): ScrollView {
@@ -406,7 +419,6 @@ module.exports = {
   get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
   },
-
   // Additional windows exports (Typescript components exported as flow any)
   get DatePicker(): any {
     invariant(

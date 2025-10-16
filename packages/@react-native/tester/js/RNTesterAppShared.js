@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
 
 import type {RNTesterModuleInfo, ScreenTypes} from './types/RNTesterTypes';
@@ -34,6 +34,7 @@ import {
   Button,
   Linking,
   Platform,
+  StatusBar,
   StyleSheet,
   View,
   useColorScheme,
@@ -275,6 +276,12 @@ const RNTesterApp = ({
 
   return (
     <RNTesterThemeContext.Provider value={theme}>
+      {Platform.OS === 'android' ? (
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={theme.GroupedBackgroundColor}
+        />
+      ) : null}
       {!shouldHideChrome && (
         <RNTTitleBar
           title={title}

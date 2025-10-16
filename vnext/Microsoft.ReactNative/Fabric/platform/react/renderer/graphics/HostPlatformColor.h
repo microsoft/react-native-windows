@@ -97,6 +97,12 @@ inline ColorComponents colorComponentsFromHostPlatformColor(Color color) {
       (float)windowsColor.A / ratio};
 }
 
+// windows
+inline bool hostPlatformColorIsColorMeaningful(Color color) noexcept {
+  auto windowsColor = color.AsWindowsColor();
+  return windowsColor.A > 0;
+}
+
 } // namespace facebook::react
 
 namespace std {

@@ -13,7 +13,8 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-YogaLayoutableShadowNode::YogaLayoutableShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept
+YogaLayoutableShadowNode::YogaLayoutableShadowNode(
+    std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept
     : base_type(shadowNode) {}
 
 void YogaLayoutableShadowNode::Layout(winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept {

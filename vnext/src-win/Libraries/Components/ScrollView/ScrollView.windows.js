@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import type {HostInstance} from '../../../src/private/types/HostInstance';
@@ -1480,6 +1480,7 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
       // then the second tap goes to the actual interior view)
       const {keyboardShouldPersistTaps} = this.props;
       const keyboardNeverPersistTaps =
+        // $FlowFixMe[sketchy-null-bool]
         !keyboardShouldPersistTaps || keyboardShouldPersistTaps === 'never';
 
       if (typeof e.target === 'number') {
@@ -1562,6 +1563,7 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
 
     const {keyboardShouldPersistTaps} = this.props;
     const keyboardNeverPersistsTaps =
+      // $FlowFixMe[sketchy-null-bool]
       !keyboardShouldPersistTaps || keyboardShouldPersistTaps === 'never';
 
     // Dismiss the keyboard now if we didn't become responder in capture phase
@@ -1646,7 +1648,9 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
     if (__DEV__ && this.props.style !== undefined) {
       // $FlowFixMe[underconstrained-implicit-instantiation]
       const style = flattenStyle(this.props.style);
-      const childLayoutProps = ['alignItems', 'justifyContent'].filter(
+      const childLayoutProps = (
+        ['alignItems', 'justifyContent'] as const
+      ).filter(
         // $FlowFixMe[incompatible-use]
         prop => style && style[prop] !== undefined,
       );

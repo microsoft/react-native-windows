@@ -1,8 +1,61 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 19 Sep 2025 05:29:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 09 Oct 2025 05:28:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.999
+
+Thu, 09 Oct 2025 05:28:12 GMT
+
+### Changes
+
+- fix for watson (hmalothu@microsoft.com)
+- Add UIA HeadingLevel behaviour for Fabric architecture (kvineeth@microsoft.com)
+
+## 0.0.0-canary.998
+
+Wed, 08 Oct 2025 05:27:20 GMT
+
+### Changes
+
+- fixed testcli.cpp tests related setruntimedataimpl and getruntimedataimpl (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.997
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Changes
+
+- Update tester files (hmalothu@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.277
+- Bump @react-native-windows/codegen to v0.0.0-canary.126
+- Bump @rnw-scripts/just-task to v2.3.56
+- Bump react-native-platform-override to v1.9.59
+
+## 0.0.0-canary.996
+
+Wed, 01 Oct 2025 05:25:55 GMT
+
+### Changes
+
+- Revert "[Fabric] Implement snapToInterval property for ScrollView  (#14847)" (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.995
+
+Tue, 30 Sep 2025 05:27:15 GMT
+
+### Changes
+
+- [Fabric] Fixing Clipped Property for Modal Component (kvineeth@microsoft.com)
+
+## 0.0.0-canary.994
+
+Fri, 26 Sep 2025 05:31:31 GMT
+
+### Changes
+
+- Fix for hardcoded Textinput text holder as gray.GIssue:15129 (nitchaudhary@microsoft.com)
 
 ## 0.0.0-canary.993
 

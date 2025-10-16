@@ -33,6 +33,7 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
        hardwareAccelerated = cloneFromProps->hardwareAccelerated;
        visible = cloneFromProps->visible;
        animated = cloneFromProps->animated;
+       allowSwipeDismissal = cloneFromProps->allowSwipeDismissal;
        supportedOrientations = cloneFromProps->supportedOrientations;
        identifier = cloneFromProps->identifier;
        title = cloneFromProps->title;  
@@ -66,6 +67,9 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
 
   REACT_FIELD(animated)
   std::optional<bool> animated{};
+
+  REACT_FIELD(allowSwipeDismissal)
+  std::optional<bool> allowSwipeDismissal{};
 
   REACT_FIELD(supportedOrientations)
   std::optional<std::vector<std::string>> supportedOrientations;

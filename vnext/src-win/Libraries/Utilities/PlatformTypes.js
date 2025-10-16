@@ -178,7 +178,7 @@ type WebPlatform = {
   select: <T>(spec: PlatformSelectSpec<T>) => T,
 };
 
-export type Platform =
+export type PlatformType =
   | IOSPlatform
   | AndroidPlatform
   | WindowsPlatform
