@@ -18,7 +18,7 @@ import type {
 } from '../Types/CoreEventTypes';
 
 import SoundManager from '../Components/Sound/SoundManager';
-import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
+import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import UIManager from '../ReactNative/UIManager';
 import {type RectOrSize, normalizeRect} from '../StyleSheet/Rect';
 import {type PointerEvent} from '../Types/CoreEventTypes';
