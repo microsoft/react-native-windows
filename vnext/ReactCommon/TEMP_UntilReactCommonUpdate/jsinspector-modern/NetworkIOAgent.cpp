@@ -480,6 +480,8 @@ void NetworkIOAgent::handleIoClose(const cdp::PreparsedRequest& req) {
   }
 }
 
+/*
+[Windows #13587]
 void NetworkIOAgent::handleGetResponseBody(const cdp::PreparsedRequest& req) {
   long long requestId = req.id;
   if (!req.params.isObject()) {
@@ -529,6 +531,6 @@ void NetworkIOAgent::handleGetResponseBody(const cdp::PreparsedRequest& req) {
   };
 
   frontendChannel_(cdp::jsonResult(requestId, result.toDynamic()));
-}
+}*/
 
 } // namespace facebook::react::jsinspector_modern

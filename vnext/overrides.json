@@ -98,6 +98,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/tracing/RuntimeSamplingProfileTraceEventSerializer.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/tracing/RuntimeSamplingProfileTraceEventSerializer.cpp",
+      "baseHash": "cba5466055f9089a93cfd7968b0001354df95e60",
+      "issue": 15256
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/Utf8.h",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
       "baseHash": "d961f37983356cbc64622db6194cd4b2a9a4e05c",
