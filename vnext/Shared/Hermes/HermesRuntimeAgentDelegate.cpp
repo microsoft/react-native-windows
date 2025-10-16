@@ -53,11 +53,17 @@ HermesRuntimeAgentDelegate::HermesRuntimeAgentDelegate(
                 frontendChannel(std::string_view(json_utf8, json_size));
               }),
           HermesStateWrapper::unwrapDestructively(previouslyExportedState.get()).release())) {
+  // Always enable both domains for debugging
+  // TODO: move enableRuntimeDomain and enableDebuggerDomain for conditional handling
+  HermesApi2().enableRuntimeDomain(hermesCdpAgent_.get());
+  HermesApi2().enableDebuggerDomain(hermesCdpAgent_.get());
+
+  // TODO: find isRuntimeDomainEnabled and isDebuggerDomainEnabled why not enabled
   if (sessionState.isRuntimeDomainEnabled) {
-    HermesApi2().enableRuntimeDomain(hermesCdpAgent_.get());
+    OutputDebugStringA("[RNW] SessionState: Runtime domain was already enabled\n");
   }
   if (sessionState.isDebuggerDomainEnabled) {
-    HermesApi2().enableDebuggerDomain(hermesCdpAgent_.get());
+    OutputDebugStringA("[RNW] SessionState: Debugger domain was already enabled\n");
   }
 }
 

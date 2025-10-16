@@ -10,110 +10,33 @@
 #include <hermes/hermes_api.h>
 #include <react/runtime/JSRuntimeFactory.h>
 
-// ===> Hermes Runtime API start
-
-#define HERMES_CDECL __cdecl
-
-EXTERN_C_START
-
-typedef struct hermes_runtime_s *hermes_runtime;
-typedef struct hermes_cdp_debugger_s *hermes_cdp_debugger;
-typedef struct hermes_cdp_agent_s *hermes_cdp_agent;
-typedef struct hermes_cdp_state_s *hermes_cdp_state;
-typedef struct hermes_stack_trace_s *hermes_stack_trace;
-
-typedef enum {
-  hermes_status_ok = 0,
-  hermes_status_error = 1,
-} hermes_status;
-
-typedef enum {
-  hermes_console_api_type_log,
-  hermes_console_api_type_debug,
-  hermes_console_api_type_info,
-  hermes_console_api_type_error,
-  hermes_console_api_type_warning,
-  hermes_console_api_type_dir,
-  hermes_console_api_type_dir_xml,
-  hermes_console_api_type_table,
-  hermes_console_api_type_trace,
-  hermes_console_api_type_start_group,
-  hermes_console_api_type_start_group_collapsed,
-  hermes_console_api_type_end_group,
-  hermes_console_api_type_clear,
-  hermes_console_api_type_assert,
-  hermes_console_api_type_time_end,
-  hermes_console_api_type_count,
-} hermes_console_api_type;
-
-typedef void(HERMES_CDECL *hermes_release_callback)(void *data_to_release);
-typedef void(HERMES_CDECL *hermes_runtime_task_callback)(void *cb_data, hermes_runtime runtime);
-
-typedef struct {
-  void *data;
-  hermes_runtime_task_callback invoke;
-  hermes_release_callback release;
-} hermes_runtime_task_functor;
-
-typedef void(
-    HERMES_CDECL *hermes_enqueue_runtime_task_callback)(void *cb_data, hermes_runtime_task_functor runtime_task);
-
-typedef struct {
-  void *data;
-  hermes_enqueue_runtime_task_callback invoke;
-  hermes_release_callback release;
-} hermes_enqueue_runtime_task_functor;
-
-typedef void(
-    HERMES_CDECL *hermes_enqueue_frontend_message_callback)(void *cb_data, const char *json_utf8, size_t json_size);
-
-typedef struct {
-  void *data;
-  hermes_enqueue_frontend_message_callback invoke;
-  hermes_release_callback release;
-} hermes_enqueue_frontend_message_functor;
-
-typedef hermes_status(HERMES_CDECL *hermes_create_cdp_debugger)(hermes_runtime runtime, hermes_cdp_debugger *result);
-typedef hermes_status(HERMES_CDECL *hermes_create_cdp_agent)(
-    hermes_cdp_debugger cdp_debugger,
-    int32_t execition_context_id,
-    hermes_enqueue_runtime_task_functor enqueue_runtime_task_callback,
-    hermes_enqueue_frontend_message_functor enqueue_frontend_message_callback,
-    hermes_cdp_state cdp_state,
-    hermes_cdp_agent *result);
-typedef hermes_status(HERMES_CDECL *hermes_get_cdp_state)(hermes_cdp_agent cdp_agent, hermes_cdp_state *result);
-typedef hermes_status(HERMES_CDECL *hermes_capture_stack_trace)(hermes_runtime runtime, hermes_stack_trace *result);
-typedef hermes_status(HERMES_CDECL *hermes_release_cdp_debugger)(hermes_cdp_debugger cdp_debugger);
-typedef hermes_status(HERMES_CDECL *hermes_release_cdp_agent)(hermes_cdp_agent cdp_agent);
-typedef hermes_status(HERMES_CDECL *hermes_release_cdp_state)(hermes_cdp_state cdp_state);
-typedef hermes_status(HERMES_CDECL *hermes_release_stack_trace)(hermes_stack_trace stack_trace);
-typedef hermes_status(
-    HERMES_CDECL *hermes_cdp_agent_handle_command)(hermes_cdp_agent cdp_agent, const char *json_utf8, size_t json_size);
-typedef hermes_status(HERMES_CDECL *hermes_cdp_agent_enable_runtime_domain)(hermes_cdp_agent cdp_agent);
-typedef hermes_status(HERMES_CDECL *hermes_cdp_agent_enable_debugger_domain)(hermes_cdp_agent cdp_agent);
-
-typedef struct {
-  void *reserved[3];
-  hermes_create_cdp_debugger create_cdp_debugger;
-  hermes_create_cdp_agent create_cdp_agent;
-  hermes_get_cdp_state get_cdp_state;
-  hermes_capture_stack_trace capture_stack_trace;
-  hermes_release_cdp_debugger release_cdp_debugger;
-  hermes_release_cdp_agent release_cdp_agent;
-  hermes_release_cdp_state release_cdp_state;
-  hermes_release_stack_trace release_stack_trace;
-  hermes_cdp_agent_handle_command cdp_agent_handle_command;
-  hermes_cdp_agent_enable_runtime_domain cdp_agent_enable_runtime_domain;
-  hermes_cdp_agent_enable_debugger_domain cdp_agent_enable_debugger_domain;
-} *hermes_api_vtable;
-
-EXTERN_C_END
-
 namespace facebook::hermes {
 
+// Direct DLL loading implementation that bypasses broken delay loading
 inline hermes_api_vtable getHermesApiVTable() {
-  // TODO: Implement loading from DLL.
   static hermes_api_vtable vtable = nullptr;
+  static bool initialization_attempted = false;
+  
+  if (!vtable && !initialization_attempted) {
+    initialization_attempted = true;
+    // TODO: dont call .dll twice
+    HMODULE hermesModule = LoadLibraryW(L"hermes.dll");
+    // check where are we calling from
+    typedef napi_status (*hermes_get_cdp_vtable_func)(hermes_api_vtable *);
+    hermes_get_cdp_vtable_func getCdpVtable = 
+        (hermes_get_cdp_vtable_func)GetProcAddress(hermesModule, "hermes_get_cdp_vtable");
+    
+    if (getCdpVtable) { 
+      napi_status status = getCdpVtable(&vtable);
+      if (status == napi_ok && vtable) {
+        OutputDebugStringA("[RNW] getHermesApiVTable() - CDP vtable loaded successfully!\n");
+      } else {
+        OutputDebugStringA("[RNW] getHermesApiVTable() - Failed to get CDP vtable\n");
+        vtable = nullptr;
+      }
+    }
+  }
+  
   return vtable;
 }
 
@@ -170,25 +93,65 @@ struct FunctorWrapper : FunctorWrapperBase<TFunctor, decltype(std::declval<TFunc
 
 struct HermesCdpDebuggerDeleter {
   void operator()(hermes_cdp_debugger cdp_debugger) {
-    getHermesApiVTable()->release_cdp_debugger(cdp_debugger);
+    // Skip deletion for stub/dummy values to prevent crashes
+    if (cdp_debugger == nullptr || 
+        cdp_debugger == (hermes_cdp_debugger)0x1 || 
+        cdp_debugger == (hermes_cdp_debugger)0x2) {
+      return;
+    }
+    
+    auto vtable = getHermesApiVTable();
+    if (vtable) {
+      vtable->release_cdp_debugger(cdp_debugger);
+    }
   }
 };
 
 struct HermesCdpAgentDeleter {
   void operator()(hermes_cdp_agent cdp_agent) {
-    getHermesApiVTable()->release_cdp_agent(cdp_agent);
+    // Skip deletion for stub/dummy values to prevent crashes
+    if (cdp_agent == nullptr || 
+        cdp_agent == (hermes_cdp_agent)0x1 || 
+        cdp_agent == (hermes_cdp_agent)0x2) {
+      return;
+    }
+    
+    auto vtable = getHermesApiVTable();
+    if (vtable) {
+      vtable->release_cdp_agent(cdp_agent);
+    }
   }
 };
 
 struct HermesCdpStateDeleter {
   void operator()(hermes_cdp_state cdp_state) {
-    getHermesApiVTable()->release_cdp_state(cdp_state);
+    // Skip deletion for stub/dummy values to prevent crashes
+    if (cdp_state == nullptr || 
+        cdp_state == (hermes_cdp_state)0x1 || 
+        cdp_state == (hermes_cdp_state)0x2) {
+      return;
+    }
+    
+    auto vtable = getHermesApiVTable();
+    if (vtable) {
+      vtable->release_cdp_state(cdp_state);
+    }
   }
 };
 
 struct HermesStackTraceDeleter {
   void operator()(hermes_stack_trace stack_trace) {
-    getHermesApiVTable()->release_stack_trace(stack_trace);
+    // Skip deletion for stub/dummy values to prevent crashes
+    if (stack_trace == nullptr || 
+        stack_trace == (hermes_stack_trace)0x1 || 
+        stack_trace == (hermes_stack_trace)0x2) {
+      return;
+    }
+    
+    auto vtable = getHermesApiVTable();
+    if (vtable) {
+      vtable->release_stack_trace(stack_trace);
+    }
   }
 };
 
@@ -255,15 +218,14 @@ struct HermesApi2 {
 
  private:
   hermes_api_vtable vtable{getHermesApiVTable()};
+  
 };
 
 } // namespace facebook::hermes
 
-// ===> Hermes Runtime API end
-
 namespace Microsoft::ReactNative {
 
-class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
+class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit, public std::enable_shared_from_this<HermesRuntimeHolder> {
  public: // RuntimeHolderLazyInit implementation.
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
   facebook::react::JSIEngineOverride getRuntimeType() noexcept override;

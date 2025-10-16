@@ -37,6 +37,22 @@ class HermesRuntimeTargetDelegate : public facebook::react::jsinspector_modern::
       facebook::jsi::Runtime &runtime,
       size_t framesToSkip) override;
 
+/**
+   * Start sampling profiler.
+   */
+  void enableSamplingProfiler() override;
+
+  /**
+   * Stop sampling profiler.
+   */
+  void disableSamplingProfiler() override;
+
+  /**
+   * Return recorded sampling profile for the previous sampling session.
+   */
+  facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile collectSamplingProfile() override;
+
+
  private:
   std::shared_ptr<HermesRuntimeHolder> hermesRuntimeHolder_;
   const facebook::hermes::HermesUniqueCdpDebugger hermesCdpDebugger_;

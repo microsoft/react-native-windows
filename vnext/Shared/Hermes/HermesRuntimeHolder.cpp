@@ -15,7 +15,9 @@
 #include <jsinspector-modern/tracing/InstanceTracingProfile.h>
 #include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <mutex>
+#include <cstdio>
 #include "SafeLoadLibrary.h"
+#include "HermesRuntimeTargetDelegate.h"
 
 #define CRASH_ON_ERROR(result) VerifyElseCrash(result == napi_ok);
 
@@ -366,7 +368,17 @@ std::shared_ptr<facebook::jsi::Runtime> HermesRuntimeHolder::getRuntime() noexce
 
 const std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate> &
 HermesRuntimeHolder::getSharedRuntimeTargetDelegate() {
-  // TODO: [vmoroz] create on demand using Hermes API.
+  if (!m_targetDelegate) {
+    hermes_api_vtable vtable = facebook::hermes::getHermesApiVTable();
+    
+    if (vtable != nullptr) {
+      OutputDebugStringA("HermesRuntimeHolder: Creating CDP target delegate\n");
+      auto shared_this = shared_from_this();
+      m_targetDelegate = std::shared_ptr<Microsoft::ReactNative::HermesRuntimeTargetDelegate>(
+          new Microsoft::ReactNative::HermesRuntimeTargetDelegate(shared_this));
+    }
+  }
+  
   return m_targetDelegate;
 }
 
@@ -426,7 +438,8 @@ facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
 }
 
 facebook::react::jsinspector_modern::RuntimeTargetDelegate &HermesJSRuntime::getRuntimeTargetDelegate() {
-  return *m_holder->getSharedRuntimeTargetDelegate();
+  auto delegate = m_holder->getSharedRuntimeTargetDelegate();
+  return *delegate;
 }
 
 void HermesJSRuntime::addConsoleMessage(
@@ -464,9 +477,13 @@ std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> Herme
     std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState> previouslyExportedState,
     const facebook::react::jsinspector_modern::ExecutionContextDescription &executionContextDescription,
     facebook::react::RuntimeExecutor runtimeExecutor) {
-  (void)frontendChannel;
-  (void)sessionState;
-  return nullptr;
+  auto& targetDelegate = getRuntimeTargetDelegate();
+  return targetDelegate.createAgentDelegate(
+      frontendChannel, 
+      sessionState, 
+      std::move(previouslyExportedState), 
+      executionContextDescription, 
+      runtimeExecutor);
 }
 
 } // namespace Microsoft::ReactNative

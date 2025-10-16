@@ -134,4 +134,17 @@ std::unique_ptr<StackTrace> HermesRuntimeTargetDelegate::captureStackTrace(
       HermesApi2().captureStackTrace(hermesRuntimeHolder_->getHermesRuntime()));
 }
 
+void HermesRuntimeTargetDelegate::enableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+void HermesRuntimeTargetDelegate::disableSamplingProfiler() {
+  return; // [Windows TODO: stubbed implementation #14700]
+}
+
+facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesRuntimeTargetDelegate::collectSamplingProfile() {
+  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
+      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
+}
+
 } // namespace Microsoft::ReactNative
