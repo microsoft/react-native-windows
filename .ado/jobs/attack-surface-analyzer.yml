@@ -61,10 +61,6 @@ jobs:
                 Write-Error "Failed to install ASA tool"
                 exit 1
               }
-              
-              # Refresh environment PATH to include .NET global tools
-              $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
-              exit 0
 
         # Take "before" snapshot of the system
         - task: PowerShell@2
