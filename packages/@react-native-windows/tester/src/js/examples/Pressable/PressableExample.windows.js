@@ -10,6 +10,7 @@
 
 import type {RNTesterModule} from '../../types/RNTesterTypes';
 
+import * as PressableExampleFbInternal from './PressableExampleFbInternal';
 import * as React from 'react';
 import {
   Alert,
@@ -23,7 +24,6 @@ import {
   View,
   Switch,
 } from 'react-native';
-import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const {useEffect, useRef, useState} = React;
 
@@ -291,6 +291,8 @@ function PressableDisabled() {
   );
 }
 
+<<<<<<< Upstream
+=======
 function PressableHoverStyle() {
   const [hovered, setHovered] = useState(false);
   return (
@@ -457,6 +459,7 @@ function PressWithKeyCapture() {
   );
 }
 
+>>>>>>> Override
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
@@ -752,6 +755,9 @@ const examples = [
       return <PressableAriaLabel />;
     },
   },
+<<<<<<< Upstream
+  ...PressableExampleFbInternal.examples,
+=======
   {
     title: 'Focusability in Pressable',
     description:
@@ -1107,16 +1113,8 @@ const examples = [
     },
   },
   // Windows]
+>>>>>>> Override
 ];
-
-if (ReactNativeFeatureFlags.shouldPressibilityUseW3CPointerEventsForHover()) {
-  examples.push({
-    title: 'Change style based on Hover',
-    render(): React.Node {
-      return <PressableHoverStyle />;
-    },
-  });
-}
 
 module.exports = ({
   title: 'Pressable',

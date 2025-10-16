@@ -10,6 +10,8 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 const {RNTesterThemeContext} = require('../../components/RNTesterTheme');
 const React = require('react');
 const {Alert, Button, StyleSheet, View} = require('react-native');
@@ -231,6 +233,9 @@ exports.examples = [
       );
     },
   },
+<<<<<<< Upstream
+] as Array<RNTesterModuleExample>;
+=======
   {
     title: 'Button with Accessible and Focusable Prop',
     render: function (): React.Node {
@@ -275,6 +280,7 @@ exports.examples = [
     },
   },
 ];
+>>>>>>> Override
 
 const styles = StyleSheet.create({
   container: {
