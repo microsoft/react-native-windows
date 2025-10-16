@@ -17,7 +17,7 @@
     "@typescript-eslint/parser": "^7.1.1",
     "@react-native/new-app-screen": "0.81.0-nightly-20250709-6892dde36",
     "react": "^19.1.0",
-    "react-native": "0.81.0-nightly-20250709-6892dde36",
+    "react-native": "0.82.0-nightly-20250806-5936f29d6",
     "react-native-windows": "^0.0.0-canary.999"
   },
   "devDependencies": {
