@@ -22,10 +22,26 @@ const std::string PERFETTO_DEFAULT_TRACK_NAME = "# Web Performance";
 const std::string PERFETTO_TRACK_NAME_PREFIX = "# Web Performance: ";
 
 std::string toPerfettoTrackName(
-    const std::optional<std::string_view>& trackName) {
-  return trackName.has_value()
-      ? PERFETTO_TRACK_NAME_PREFIX + std::string(trackName.value())
-      : PERFETTO_DEFAULT_TRACK_NAME;
+    const std::optional<std::string_view>& trackName,
+    const std::optional<std::string_view>& trackGroup) {
+  std::string perfettoTrackName = PERFETTO_DEFAULT_TRACK_NAME;
+
+  if (trackName || trackGroup) {
+    perfettoTrackName += ": ";
+
+    if (trackGroup) {
+      perfettoTrackName += *trackGroup;
+      if (trackName) {
+        perfettoTrackName += " | ";
+      }
+    }
+
+    if (trackName) {
+      perfettoTrackName += *trackName;
+    }
+  }
+
+  return perfettoTrackName;
 }
 #elif defined(WITH_FBSYSTRACE)
 int64_t getDeltaNanos(HighResTimeStamp jsTime) {
@@ -51,10 +67,12 @@ int64_t getDeltaNanos(HighResTimeStamp jsTime) {
     const std::string_view& eventName,
     HighResTimeStamp startTime,
     HighResTimeStamp endTime,
-    const std::optional<std::string_view>& trackName) {
+    const std::optional<std::string_view>& trackName,
+    const std::optional<std::string_view>& trackGroup) {
 #if defined(WITH_PERFETTO)
   if (TRACE_EVENT_CATEGORY_ENABLED("react-native")) {
-    auto track = getPerfettoWebPerfTrackAsync(toPerfettoTrackName(trackName));
+    auto track = getPerfettoWebPerfTrackAsync(
+        toPerfettoTrackName(trackName, trackGroup));
     TRACE_EVENT_BEGIN(
         "react-native",
         perfetto::DynamicString(eventName.data(), eventName.size()),
@@ -78,15 +96,22 @@ int64_t getDeltaNanos(HighResTimeStamp jsTime) {
 /* static */ void ReactPerfettoLogger::mark(
     const std::string_view& eventName,
     HighResTimeStamp startTime,
-    const std::optional<std::string_view>& trackName) {
+    const std::optional<std::string_view>& trackName,
+    const std::optional<std::string_view>& trackGroup) {
 #if defined(WITH_PERFETTO)
   if (TRACE_EVENT_CATEGORY_ENABLED("react-native")) {
     TRACE_EVENT_INSTANT(
         "react-native",
         perfetto::DynamicString(eventName.data(), eventName.size()),
-        getPerfettoWebPerfTrackSync(toPerfettoTrackName(trackName)),
+        getPerfettoWebPerfTrackSync(toPerfettoTrackName(trackName, trackGroup)),
         highResTimeStampToPerfettoTraceTime(startTime));
   }
+ /* [Windows #14699
+#elif defined(WITH_FBSYSTRACE)
+  static const char* kTrackName = "# Web Performance: Markers";
+  fbsystrace_instant_for_track_with_timedelta(
+      TRACE_TAG_REACT, kTrackName, eventName.data(), getDeltaNanos(startTime));
+      Windows] */
 #endif
 }
 
