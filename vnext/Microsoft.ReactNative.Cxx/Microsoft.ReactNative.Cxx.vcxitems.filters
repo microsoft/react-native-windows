@@ -175,6 +175,8 @@
     <ClInclude Include="$(NodeApiDir)js_native_api.h" />
     <ClInclude Include="$(NodeApiDir)js_native_api_types.h" />
     <ClInclude Include="$(NodeApiDir)js_runtime_api.h" />
+    <ClInclude Include="$(NodeApiDir)node_api.h" />
+    <ClInclude Include="$(NodeApiDir)node_api_types.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">
