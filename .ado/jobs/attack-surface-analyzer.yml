@@ -72,7 +72,8 @@ jobs:
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
               
               Write-Host "Taking 'before' snapshot of system state..."
-              asa collect -r before --verbose
+              # FIXED: Specify collectors explicitly to avoid "No collectors have been defined" error
+              asa collect --collectors Registry,Files,Services,Ports,Certificates,Firewall --runid before --verbose
               if ($LASTEXITCODE -ne 0) {
                 Write-Error "Failed to collect 'before' snapshot"
                 exit 1
@@ -110,7 +111,8 @@ jobs:
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
               
               Write-Host "Taking 'after' snapshot of system state..."
-              asa collect -r after --verbose
+              # FIXED: Specify collectors explicitly and use different runid
+              asa collect --collectors Registry,Files,Services,Ports,Certificates,Firewall --runid after --verbose
               if ($LASTEXITCODE -ne 0) {
                 Write-Error "Failed to collect 'after' snapshot"
                 exit 1
@@ -132,32 +134,17 @@ jobs:
               $resultsDir = "$(Build.ArtifactStagingDirectory)\ASA_Results"
               New-Item -ItemType Directory -Force -Path $resultsDir | Out-Null
 
-              # Default ASA database filenames
-              $beforeDb = "asa_before.sqlite"
-              $afterDb = "asa_after.sqlite"
-
-              # Rename default output databases from collect steps
-              if (Test-Path "asa.sqlite") {
-                Rename-Item -Path "asa.sqlite" -NewName $beforeDb -Force
-              }
-
-              # Take after snapshot again to ensure it's saved separately
-              asa collect --databasefilename $afterDb --verbose
-              if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to collect 'after' snapshot"
-                exit 1
-              }
-
               Write-Host "Generating comparison results (JSON and HTML)..."
 
-              # Run the comparison and export
-              asa export-collect $beforeDb $afterDb "$resultsDir\asa-comparison.json" --verbose
+              # FIXED: Use the correct export syntax for ASA 2.3 with runids
+              asa export-collect --runid-base before --runid-compare after --output-path "$resultsDir\asa-comparison.json" --verbose
               if ($LASTEXITCODE -ne 0) {
                 Write-Error "Failed to export comparison results (JSON)"
                 exit 1
               }
 
-              asa export-collect $beforeDb $afterDb "$resultsDir\asa-comparison.html" --verbose
+              # Generate HTML report
+              asa export-collect --runid-base before --runid-compare after --output-path "$resultsDir\asa-comparison.html" --format HTML --verbose
               if ($LASTEXITCODE -ne 0) {
                 Write-Error "Failed to export comparison results (HTML)"
                 exit 1
