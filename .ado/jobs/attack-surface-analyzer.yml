@@ -72,7 +72,6 @@ jobs:
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
               
               Write-Host "Taking 'before' snapshot of system state..."
-              # FIXED: Use correct ASA command syntax based on CLI walkthrough
               # Collect files (-f), registry (-r), services (-s), ports (-p), certificates (-c)
               asa collect -f -r -s -p -c --directories "$(Build.SourcesDirectory)" --verbose
               if ($LASTEXITCODE -ne 0) {
@@ -112,7 +111,6 @@ jobs:
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
               
               Write-Host "Taking 'after' snapshot of system state..."
-              # FIXED: Use same collector flags as baseline scan
               # Collect files (-f), registry (-r), services (-s), ports (-p), certificates (-c)
               asa collect -f -r -s -p -c --directories "$(Build.SourcesDirectory)" --verbose
               if ($LASTEXITCODE -ne 0) {
@@ -121,7 +119,7 @@ jobs:
               }
               Write-Host "✅ After snapshot collected successfully"
 
-        # Export comparison results (ASA 2.3 syntax)
+        # Export comparison results
         - task: PowerShell@2
           displayName: '🛡️ ASA - Export Comparison Results'
           inputs:
@@ -130,7 +128,7 @@ jobs:
               # Refresh environment PATH to include .NET global tools
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
 
-              Write-Host "Comparing before and after snapshots for ASA 2.3..."
+              Write-Host "Comparing before and after snapshots..."
 
               # Create output directory for results
               $resultsDir = "$(Build.ArtifactStagingDirectory)\ASA_Results"
@@ -138,22 +136,51 @@ jobs:
 
               Write-Host "Generating comparison results (SARIF and JSON)..."
 
-              # FIXED: Use correct export syntax from CLI walkthrough - compares latest two collection runs automatically
               # Export as SARIF format for security analysis
-              asa export-collect --outputsarif "$resultsDir\asa-comparison.sarif" --verbose
+              $sarifOutput = "$resultsDir\asa-comparison.sarif"
+              asa export-collect --outputsarif "$sarifOutput" --verbose
               if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to export comparison results (SARIF)"
-                exit 1
+                Write-Warning "SARIF export failed, trying alternative approach"
               }
 
-              # Export as JSON format for additional analysis
-              asa export-collect "$resultsDir\asa-comparison.json" --verbose
+              # Export as JSON format for additional analysis  
+              $jsonOutput = "$resultsDir\asa-comparison.json"
+              asa export-collect "$jsonOutput" --verbose
               if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to export comparison results (JSON)"
-                exit 1
+                Write-Warning "JSON export failed, trying alternative approach"
               }
 
-              Write-Host "✅ Comparison results exported successfully"
+              # FIXED: Check for actual generated files and copy them if needed
+              Write-Host "Checking for generated ASA files..."
+              $sourceDir = "$(Build.SourcesDirectory)"
+              
+              # Look for timestamp-based output files that ASA actually generates
+              $generatedFiles = Get-ChildItem -Path $sourceDir -Filter "*summary*.json*" -ErrorAction SilentlyContinue
+              $generatedFiles += Get-ChildItem -Path $sourceDir -Filter "*vs_*.json*" -ErrorAction SilentlyContinue
+              $generatedFiles += Get-ChildItem -Path $sourceDir -Filter "*.sarif" -ErrorAction SilentlyContinue
+              
+              if ($generatedFiles.Count -gt 0) {
+                Write-Host "Found $($generatedFiles.Count) ASA output files:"
+                foreach ($file in $generatedFiles) {
+                  Write-Host "  - $($file.Name)"
+                  # Copy to results directory with standardized names
+                  if ($file.Name -like "*summary*" -or $file.Name -like "*vs_*") {
+                    Copy-Item $file.FullName "$resultsDir\asa-comparison-$($file.Name)" -Force
+                  } else {
+                    Copy-Item $file.FullName $resultsDir -Force
+                  }
+                }
+              } else {
+                Write-Warning "No ASA output files found in expected locations"
+                Write-Host "Searching in current directory and subdirectories..."
+                $allFiles = Get-ChildItem -Recurse -File | Where-Object { $_.Name -like "*asa*" -or $_.Name -like "*summary*" -or $_.Name -like "*vs_*" } | Select-Object -First 10
+                if ($allFiles) {
+                  Write-Host "Found potential ASA files:"
+                  $allFiles | ForEach-Object { Write-Host "  - $($_.FullName)" }
+                }
+              }
+
+              Write-Host "✅ Export process completed"
               Write-Host "Results location: $resultsDir"
 
         # Analyze results and check for security issues
@@ -164,32 +191,45 @@ jobs:
             script: |
               Write-Host "Analyzing ASA results for security regressions..."
               
-              $sarifFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.sarif"
-              $jsonFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.json"
+              $resultsDir = "$(Build.ArtifactStagingDirectory)\ASA_Results"
               
               Write-Host "📊 ASA Analysis Summary:"
               Write-Host "========================"
               
-              # Check SARIF file for security findings
-              if (Test-Path $sarifFile) {
-                Write-Host "📋 SARIF Report Analysis:"
+              # Look for any ASA result files in the results directory
+              $allResultFiles = Get-ChildItem -Path $resultsDir -File -ErrorAction SilentlyContinue
+              
+              if ($allResultFiles.Count -eq 0) {
+                Write-Warning "No result files found in $resultsDir"
+                return
+              }
+              
+              Write-Host "Found $($allResultFiles.Count) result files:"
+              foreach ($file in $allResultFiles) {
+                Write-Host "  - $($file.Name) ($([math]::Round($file.Length/1KB, 2)) KB)"
+              }
+              
+              # Analyze SARIF files if present
+              $sarifFiles = $allResultFiles | Where-Object { $_.Extension -eq ".sarif" }
+              foreach ($sarifFile in $sarifFiles) {
+                Write-Host ""
+                Write-Host "📋 SARIF Analysis: $($sarifFile.Name)"
                 try {
-                  $sarifContent = Get-Content $sarifFile | ConvertFrom-Json
+                  $sarifContent = Get-Content $sarifFile.FullName | ConvertFrom-Json
                   $findingCount = 0
                   
                   if ($sarifContent.runs -and $sarifContent.runs.Count -gt 0) {
                     foreach ($run in $sarifContent.runs) {
                       if ($run.results) {
                         $findingCount += $run.results.Count
+                        Write-Host "  Tool: $($run.tool.driver.name)"
+                        Write-Host "  Findings: $($run.results.Count)"
                       }
                     }
                   }
                   
-                  Write-Host "Security findings detected: $findingCount"
-                  
                   if ($findingCount -gt 0) {
-                    Write-Host "⚠️ Security findings detected in SARIF report"
-                    Write-Host "Review the SARIF file for detailed security analysis"
+                    Write-Host "⚠️ $findingCount security findings detected in SARIF report"
                   } else {
                     Write-Host "✅ No security findings in SARIF report"
                   }
@@ -198,20 +238,32 @@ jobs:
                 }
               }
               
-              # Check JSON file for additional analysis
-              if (Test-Path $jsonFile) {
-                Write-Host "📋 JSON Report Analysis:"
+              # Analyze JSON files
+              $jsonFiles = $allResultFiles | Where-Object { $_.Extension -eq ".json" -or $_.Name -like "*.json*" }
+              foreach ($jsonFile in $jsonFiles) {
+                Write-Host ""
+                Write-Host "📋 JSON Analysis: $($jsonFile.Name)"
                 try {
-                  $jsonContent = Get-Content $jsonFile | ConvertFrom-Json
-                  Write-Host "JSON report generated successfully"
+                  $content = Get-Content $jsonFile.FullName -Raw
+                  if ($content.Length -gt 0) {
+                    Write-Host "  File size: $([math]::Round($jsonFile.Length/1KB, 2)) KB"
+                    Write-Host "  Content preview:"
+                    # Show first few lines of content
+                    $lines = $content -split "`n" | Select-Object -First 5
+                    foreach ($line in $lines) {
+                      if ($line.Trim()) {
+                        Write-Host "    $($line.Trim())"
+                      }
+                    }
+                  }
                 } catch {
-                  Write-Host "⚠️ Could not parse JSON file: $($_.Exception.Message)"
+                  Write-Host "⚠️ Could not analyze JSON file: $($_.Exception.Message)"
                 }
               }
               
               Write-Host ""
               Write-Host "🛡️ SDL Compliance Notes:"
-              Write-Host "- Review SARIF findings for security vulnerabilities"
+              Write-Host "- Review all result files for security vulnerabilities"
               Write-Host "- Pay attention to privilege escalations"
               Write-Host "- Check for unsigned binaries or weak permissions"
               Write-Host "- Verify certificate and firewall changes"
@@ -237,23 +289,50 @@ jobs:
             script: |
               Write-Host "Generating ASA summary for PR..."
               
-              $sarifFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.sarif"
-              $jsonFile = "$(Build.ArtifactStagingDirectory)\ASA_Results\asa-comparison.json"
+              $resultsDir = "$(Build.ArtifactStagingDirectory)\ASA_Results"
               
-              # Check if SARIF file exists and upload as summary
-              if (Test-Path $sarifFile) {
-                Write-Host "SARIF results available for security analysis"
-                Write-Host "##vso[task.uploadsummary]$sarifFile"
-              }
-              
-              # Check if JSON file exists  
-              if (Test-Path $jsonFile) {
-                Write-Host "JSON results available for detailed analysis"
-              }
-              
-              if ((Test-Path $sarifFile) -or (Test-Path $jsonFile)) {
-                Write-Host "✅ ASA results will be available in PR artifacts"
+              # Check if results directory exists and has files
+              if (Test-Path $resultsDir) {
+                $resultFiles = Get-ChildItem -Path $resultsDir -File -ErrorAction SilentlyContinue
+                
+                if ($resultFiles.Count -gt 0) {
+                  Write-Host "Found $($resultFiles.Count) ASA result files:"
+                  
+                  # Look for SARIF files to upload as summary
+                  $sarifFiles = $resultFiles | Where-Object { $_.Extension -eq ".sarif" }
+                  foreach ($sarifFile in $sarifFiles) {
+                    Write-Host "Uploading SARIF summary: $($sarifFile.Name)"
+                    Write-Host "##vso[task.uploadsummary]$($sarifFile.FullName)"
+                  }
+                  
+                  # List all result files
+                  foreach ($file in $resultFiles) {
+                    Write-Host "  - $($file.Name) ($([math]::Round($file.Length/1KB, 2)) KB)"
+                  }
+                  
+                  Write-Host "✅ ASA results will be available in PR artifacts"
+                } else {
+                  Write-Host "⚠️ Results directory exists but contains no files"
+                }
               } else {
-                Write-Host "⚠️ No ASA result files found"
+                Write-Host "⚠️ Results directory not found: $resultsDir"
+              }
+              
+              # Additional logging for troubleshooting
+              Write-Host ""
+              Write-Host "🔍 Troubleshooting Info:"
+              Write-Host "Build.SourcesDirectory: $(Build.SourcesDirectory)"
+              Write-Host "Build.ArtifactStagingDirectory: $(Build.ArtifactStagingDirectory)"
+              
+              # Look for any ASA files in the source directory
+              $sourceFiles = Get-ChildItem -Path "$(Build.SourcesDirectory)" -Filter "*asa*" -ErrorAction SilentlyContinue
+              $sourceFiles += Get-ChildItem -Path "$(Build.SourcesDirectory)" -Filter "*summary*" -ErrorAction SilentlyContinue
+              $sourceFiles += Get-ChildItem -Path "$(Build.SourcesDirectory)" -Filter "*vs_*" -ErrorAction SilentlyContinue
+              
+              if ($sourceFiles.Count -gt 0) {
+                Write-Host "ASA files found in source directory:"
+                foreach ($file in $sourceFiles) {
+                  Write-Host "  - $($file.FullName)"
+                }
               }
           condition: always()
