@@ -10688,9 +10688,9 @@ scheduler@^0.23.2:
     loose-envify "^1.1.0"
 
 screenshot-desktop@^1.12.2:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.15.0.tgz#62109463865cdb1bbe61dff39003cd06ac404fb0"
-  integrity sha512-CLaZNBDEXU+KJ6BGsO8jSbKI7Zck7gQmFJHjzluBdwrVP0jOemP2avpD3ufWu81yqzwB92u2AMv+K9IlaslRsg==
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.15.2.tgz#f7df08ae16ad7b9d40c1bc0f6e33d48dcda62cf9"
+  integrity sha512-rBYJU4dCK8C7sLe9VXbnq7dA7P7rj8EECtcCl6BJ6cOtFJNYlJGWE6LFxaTLrGM71GjJ27ARaZGXGWBKhCl7Rw==
   dependencies:
     temp "^0.9.4"
 
