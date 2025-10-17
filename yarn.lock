@@ -6399,11 +6399,6 @@ flow-api-translator@0.30.0:
     hermes-transform "0.30.0"
     typescript "5.3.2"
 
-flow-bin@^0.272.0:
-  version "0.272.2"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.272.2.tgz#918fc58dc7a99725a83314f453d3e49a56aebdc5"
-  integrity sha512-Rf8UG1biRBUGGh6qN7Ua2Y2lJRpR8Pbzby5kfHQ5m5SgjC5eOPw3Qjbrheb9ec5oU4L1gCOXRYbkbpr02PRUBw==
-
 flow-bin@^0.274.2:
   version "0.274.2"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.274.2.tgz#79cff569aab38eb04f6b1e64b899c932a51444a4"

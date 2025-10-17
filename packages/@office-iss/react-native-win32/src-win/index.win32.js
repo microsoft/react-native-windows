@@ -106,6 +106,7 @@ import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimension
 import typeof Vibration from './Libraries/Vibration/Vibration';
 import typeof DevMenu from './src/private/devsupport/devmenu/DevMenu';
 import typeof registerCallableModule from './Libraries/Core/registerCallableModule';
+import typeof ReactNativeVersion from './Libraries/Core/ReactNativeVersion';
 // Windows]]
 
 const warnOnce = require('./Libraries/Utilities/warnOnce').default;
