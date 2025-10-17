@@ -98,6 +98,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/tracing/RuntimeSamplingProfileTraceEventSerializer.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/tracing/RuntimeSamplingProfileTraceEventSerializer.cpp",
+      "baseHash": "cba5466055f9089a93cfd7968b0001354df95e60",
+      "issue": 15256
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/Utf8.h",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
       "baseHash": "1d81aa08f37619a8e9e05c2cf3d76f8f878fb9df",
@@ -191,6 +198,13 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSTokenizer.h",
       "baseHash": "1580353c281d9c4a6548564ab32af7a3a2c8247e",
       "issue": 14665
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/primitives.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/primitives.h",
+      "baseHash": "74cee7804fa62964c9ecc3fafd475d09b0ed6375",
+      "issue": 15263
     },
     {
       "type": "patch",

@@ -441,6 +441,7 @@ void HermesJSRuntime::disableSamplingProfiler() {
 facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesJSRuntime::collectSamplingProfile() {
   return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
       "stubbed_impl",
+        1234,
       std::vector<facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile::Sample>{},
       nullptr); // [Windows TODO: stubbed implementation #14700]
 }
