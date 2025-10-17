@@ -1853,7 +1853,9 @@ TEST_P(JSITest, CastInterface) {
   auto randomUuid = facebook::jsi::UUID{0xf2cd96cfu, 0x455eu, 0x42d9u, 0x850au, 0x13e2cde59b8bull};
   auto ptr = rd.castInterface(randomUuid);
 
-  EXPECT_EQ(ptr, nullptr);
+  // Use == instead of EXPECT_EQ to avoid ambiguous operator usage due to the
+  // type of 'ptr'.
+  EXPECT_TRUE(ptr == nullptr);
 }
 
 INSTANTIATE_TEST_CASE_P(

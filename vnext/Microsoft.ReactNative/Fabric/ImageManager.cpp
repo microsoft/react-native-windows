@@ -18,10 +18,6 @@ ImageManager::~ImageManager() {
   delete (Microsoft::ReactNative::WindowsImageManager *)self_;
 }
 
-ImageRequest ImageManager::requestImage(const ImageSource &imageSource, SurfaceId surfaceId) const {
-  return ((Microsoft::ReactNative::WindowsImageManager *)self_)->requestImage(imageSource, surfaceId);
-}
-
 ImageRequest ImageManager::requestImage(
     const ImageSource &imageSource,
     SurfaceId surfaceId,
