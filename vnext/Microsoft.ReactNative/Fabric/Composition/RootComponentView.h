@@ -64,7 +64,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
 
-  winrt::Windows::Foundation::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
+  winrt::Windows::Foundation::IUnknown UiaProviderFromPoint(const POINT &ptPixels, const POINT &ptScreen) noexcept;
 
   RootComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
