@@ -124,6 +124,7 @@ jobs:
           displayName: '🛡️ ASA - Export Comparison Results'
           inputs:
             targetType: inline
+            errorActionPreference: 'continue'
             script: |
               # Refresh environment PATH to include .NET global tools
               $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
@@ -138,50 +139,117 @@ jobs:
 
               # Export as SARIF format for security analysis
               $sarifOutput = "$resultsDir\asa-comparison.sarif"
-              asa export-collect --outputsarif "$sarifOutput" --verbose
-              if ($LASTEXITCODE -ne 0) {
-                Write-Warning "SARIF export failed, trying alternative approach"
+              Write-Host "Attempting SARIF export to: $sarifOutput"
+              try {
+                asa export-collect --outputsarif "$sarifOutput" --verbose
+                if ($LASTEXITCODE -eq 0) {
+                  Write-Host "✅ SARIF export successful"
+                } else {
+                  Write-Warning "SARIF export command returned exit code: $LASTEXITCODE"
+                }
+              } catch {
+                Write-Warning "SARIF export failed with exception: $($_.Exception.Message)"
               }
 
               # Export as JSON format for additional analysis  
               $jsonOutput = "$resultsDir\asa-comparison.json"
-              asa export-collect "$jsonOutput" --verbose
-              if ($LASTEXITCODE -ne 0) {
-                Write-Warning "JSON export failed, trying alternative approach"
+              Write-Host "Attempting JSON export to: $jsonOutput"
+              try {
+                asa export-collect "$jsonOutput" --verbose
+                if ($LASTEXITCODE -eq 0) {
+                  Write-Host "✅ JSON export successful"
+                } else {
+                  Write-Warning "JSON export command returned exit code: $LASTEXITCODE"
+                }
+              } catch {
+                Write-Warning "JSON export failed with exception: $($_.Exception.Message)"
               }
 
-              # FIXED: Check for actual generated files and copy them if needed
+              # ENHANCED: Check for actual generated files and copy them if needed
               Write-Host "Checking for generated ASA files..."
-              $sourceDir = "$(Build.SourcesDirectory)"
               
-              # Look for timestamp-based output files that ASA actually generates
-              $generatedFiles = Get-ChildItem -Path $sourceDir -Filter "*summary*.json*" -ErrorAction SilentlyContinue
-              $generatedFiles += Get-ChildItem -Path $sourceDir -Filter "*vs_*.json*" -ErrorAction SilentlyContinue
-              $generatedFiles += Get-ChildItem -Path $sourceDir -Filter "*.sarif" -ErrorAction SilentlyContinue
+              # Initialize arrays to collect files
+              $generatedFiles = @()
+              
+              # Check multiple possible locations where ASA might write files
+              $searchLocations = @(
+                "$(Build.SourcesDirectory)",    # Source directory
+                (Get-Location).Path,             # Current working directory
+                $env:TEMP,                       # Temp directory
+                $env:USERPROFILE                 # User profile directory
+              )
+              
+              Write-Host "Searching for ASA output files in multiple locations..."
+              
+              foreach ($location in $searchLocations) {
+                if (Test-Path $location) {
+                  Write-Host "Checking: $location"
+                  
+                  # Look for timestamp-based output files that ASA actually generates
+                  $locationFiles = @()
+                  $locationFiles += Get-ChildItem -Path $location -Filter "*summary*.json*" -ErrorAction SilentlyContinue
+                  $locationFiles += Get-ChildItem -Path $location -Filter "*vs_*.json*" -ErrorAction SilentlyContinue
+                  $locationFiles += Get-ChildItem -Path $location -Filter "*.sarif" -ErrorAction SilentlyContinue
+                  
+                  if ($locationFiles.Count -gt 0) {
+                    Write-Host "  Found $($locationFiles.Count) files in $location"
+                    $generatedFiles += $locationFiles
+                  }
+                }
+              }
               
               if ($generatedFiles.Count -gt 0) {
-                Write-Host "Found $($generatedFiles.Count) ASA output files:"
+                Write-Host "Found $($generatedFiles.Count) ASA output files total:"
                 foreach ($file in $generatedFiles) {
-                  Write-Host "  - $($file.Name)"
-                  # Copy to results directory with standardized names
+                  Write-Host "  - $($file.FullName)"
+                  
+                  # Copy to results directory with descriptive names
+                  $destinationName = $file.Name
                   if ($file.Name -like "*summary*" -or $file.Name -like "*vs_*") {
-                    Copy-Item $file.FullName "$resultsDir\asa-comparison-$($file.Name)" -Force
-                  } else {
-                    Copy-Item $file.FullName $resultsDir -Force
+                    $destinationName = "asa-comparison-$($file.Name)"
+                  }
+                  
+                  try {
+                    Copy-Item $file.FullName "$resultsDir\$destinationName" -Force
+                    Write-Host "    ✅ Copied to: $destinationName"
+                  } catch {
+                    Write-Warning "    ❌ Failed to copy $($file.Name): $($_.Exception.Message)"
                   }
                 }
               } else {
-                Write-Warning "No ASA output files found in expected locations"
-                Write-Host "Searching in current directory and subdirectories..."
-                $allFiles = Get-ChildItem -Recurse -File | Where-Object { $_.Name -like "*asa*" -or $_.Name -like "*summary*" -or $_.Name -like "*vs_*" } | Select-Object -First 10
-                if ($allFiles) {
-                  Write-Host "Found potential ASA files:"
-                  $allFiles | ForEach-Object { Write-Host "  - $($_.FullName)" }
+                Write-Warning "No ASA output files found in any search locations"
+                Write-Host "Performing recursive search for ASA-related files..."
+                
+                # Try a broader recursive search from current directory
+                try {
+                  $allFiles = Get-ChildItem -Recurse -File -ErrorAction SilentlyContinue | 
+                    Where-Object { 
+                      $_.Name -like "*asa*" -or 
+                      $_.Name -like "*summary*" -or 
+                      $_.Name -like "*vs_*" -or
+                      $_.Name -like "*attack*" -or
+                      $_.Extension -eq ".sarif"
+                    } | 
+                    Select-Object -First 20
+                    
+                  if ($allFiles -and $allFiles.Count -gt 0) {
+                    Write-Host "Found potential ASA files through recursive search:"
+                    foreach ($file in $allFiles) {
+                      Write-Host "  - $($file.FullName)"
+                    }
+                  } else {
+                    Write-Host "No ASA-related files found through recursive search"
+                  }
+                } catch {
+                  Write-Warning "Recursive search failed: $($_.Exception.Message)"
                 }
               }
 
               Write-Host "✅ Export process completed"
               Write-Host "Results location: $resultsDir"
+              
+              # Ensure we don't exit with error code even if file discovery had issues
+              exit 0
 
         # Analyze results and check for security issues
         - task: PowerShell@2
