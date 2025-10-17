@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add Attack Surface Analyzer (ASA) integration to CI pipeline for SDL compliance",
+  "packageName": "react-native-windows",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
