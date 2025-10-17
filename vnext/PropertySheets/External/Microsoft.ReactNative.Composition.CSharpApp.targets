@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL Win32 C# app projects (both inside
+  and outside of this repo) that build on top of Microsoft.ReactNative.
+  Do not make any changes here unless it applies to ALL such projects.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Check that the correct props have already been imported. -->
+  <Target Name="EnsureRnwExternalPropsLoadedTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwExternalPropsLoaded)'!='Microsoft.ReactNative.Composition.CSharpApp.props'">
+    <Warning Text="Property `RnwExternalPropsLoaded` was incorrectly set to '$(RnwExternalPropsLoaded)'. Please ensure your project imports 'Microsoft.ReactNative.Composition.CSharpApp.props' before importing this prop sheet." />
+  </Target>
+
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Common.targets" />
+
+  <!-- Due to visual studio unconditionally showing references, we have to trick it by making it impossible for VS to find the reference differences between building as source and building as NuGet -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.CSharp.ProjectReferences.props" Condition="!$(UseExperimentalNuget)" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.CSharp.PackageReferences.props" Condition="$(UseExperimentalNuget)" />
+
+  <ItemGroup>
+    <!-- <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" /> -->
+    <!-- <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" /> -->
+    <!-- WinUI package name and version are set by WinUI.props -->
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
+    <!-- Hermes version is set by JSEngine.props -->
+    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" Condition="$(UseHermes)" />
+  </ItemGroup>
+
+  <!-- The props file for bundling is not set up to be just defaults, it assumes to be run at the end of the project. -->
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.targets" />
+  <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets"
+          Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
+
+  <Import Project="$(AppxPackageRecipe)"
+          Condition="Exists('$(AppxPackageRecipe)') And '$(DeployLayout)'=='true'" />
+  <Target Name="Deploy" Condition="'$(DeployLayout)'=='true'">
+    <Error Condition="!Exists('$(AppxPackageRecipe)')"
+           Text="You must first build the project before deploying it. Did not find: $(AppxPackageRecipe)" />
+    <Copy SourceFiles="%(AppxPackagedFile.Identity)"
+          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
+    <Copy SourceFiles="%(AppXManifest.Identity)"
+          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxManifest.PackagePath)"
+          Condition="'%(AppxManifest.SubType)'!='Designer'"/>
+    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(MSBuildProjectDirectory)\$(OutputPath)Appx\AppxManifest.xml"
+          ContinueOnError="false" />
+  </Target>
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\OutputMSBuildProperties.targets" />
+</Project>
