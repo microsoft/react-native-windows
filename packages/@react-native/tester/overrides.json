@@ -269,14 +269,6 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/OSSLibraryExample",
-      "baseDirectory": "packages/rn-tester/js/examples/OSSLibraryExample",
-      "baseVersion": "0.82.0-nightly-20250806-5936f29d6",
-      "baseHash": "5e81207c1955cdd2c2e3c307785d614f74ff858f",
-      "issue": 4054
-    },
-    {
-      "type": "copy",
       "directory": "js/examples/PanResponder",
       "baseDirectory": "packages/rn-tester/js/examples/PanResponder",
       "baseHash": "0dcad06c7958cd62119b4bc963947d8653b38ed5",
@@ -471,7 +463,7 @@
       "issue": 14292
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "js/examples/TextInput/TextInputSharedExamples.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
       "baseHash": "9aa9bb1abe070483e9f2563e3354168121523ae0",
@@ -589,14 +581,14 @@
       "issue": 4054
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "8cd219abae140e98f9578432954fc9ef62421308",
       "issue": 13228
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
       "baseHash": "6872f4b3f0d2495a64c33fdd4328272d547f9108",
