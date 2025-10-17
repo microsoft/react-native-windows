@@ -459,9 +459,23 @@ $requirements = @(
         Install = {
             $ProgressPreference = 'Ignore';
             $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
+            $downloadPath = "$env:TEMP\WindowsApplicationDriver.msi"
             Write-Verbose "Downloading WinAppDriver from $url";
-            Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\WindowsApplicationDriver.msi
-            & $env:TEMP\WindowsApplicationDriver.msi /q
+            Invoke-WebRequest -UseBasicParsing $url -OutFile $downloadPath
+            
+            # SDL Compliance: Verify signature (Work Item 58386093)
+            $signature = Get-AuthenticodeSignature $downloadPath
+            if ($signature.Status -ne "Valid") {
+                Remove-Item $downloadPath -ErrorAction SilentlyContinue
+                throw "WinAppDriver signature verification failed"
+            }
+            if ($signature.SignerCertificate.Subject -notlike "*Microsoft*") {
+                Remove-Item $downloadPath -ErrorAction SilentlyContinue  
+                throw "WinAppDriver not signed by Microsoft"
+            }
+            
+            & $downloadPath /q
+            Remove-Item $downloadPath -ErrorAction SilentlyContinue
         };
         HasVerboseOutput = $true;
         Optional = $true;
