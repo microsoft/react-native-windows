@@ -377,14 +377,10 @@ module.exports = {
   ) => HostComponent<T> {
     return require('./Libraries/ReactNative/requireNativeComponent').default;
   },
-<<<<<<< Upstream
-  get ReactNativeVersion() {
+  get ReactNativeVersion(): ReactNativeVersion {
     return require('./Libraries/Core/ReactNativeVersion').default;
   },
-  get RootTagContext() {
-=======
   get RootTagContext(): RootTagContext {
->>>>>>> Override
     return require('./Libraries/ReactNative/RootTag').RootTagContext;
   },
   get Settings(): Settings {

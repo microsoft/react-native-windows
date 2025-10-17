@@ -153,15 +153,6 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
-<<<<<<< Upstream
-=======
-  /*
-  {
-    key: 'OSSLibraryExample',
-    module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
-  },
-  */
->>>>>>> Override
   ...RNTesterListFbInternal.Components,
 ];
 

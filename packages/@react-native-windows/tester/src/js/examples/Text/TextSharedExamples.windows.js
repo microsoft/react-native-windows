@@ -110,7 +110,6 @@ function NumberOfLinesTextLayoutExample(): React.Node {
   );
 }
 
-<<<<<<< Upstream
 component RtlInlineViewExample(
   label: string,
   testID: string,
@@ -190,17 +189,13 @@ component RtlAndInlineViewsExample() {
   );
 }
 
-export default [
-=======
 const examples = [
->>>>>>> Override
   {
     title: 'Empty Text',
     name: 'emptyText',
     render: EmptyTextExample,
   },
   {
-<<<<<<< Upstream
     title: 'TextInlineViewsExample',
     name: 'inlineViews',
     description:
@@ -216,8 +211,6 @@ const examples = [
     render: RtlAndInlineViewsExample,
   },
   {
-=======
->>>>>>> Override
     title: 'numberOfLines with onTextLayout',
     name: 'numberOfLinesLayout',
     description:

@@ -123,12 +123,10 @@ type PressableBaseProps = $ReadOnly<{
   onPressOut?: ?(event: GestureResponderEvent) => mixed,
 
   /**
-<<<<<<< Upstream
    * Whether to prevent any other native components from becoming responder
    * while this pressable is responder.
    */
   blockNativeResponder?: ?boolean,
-=======
    * Called after the element loses focus.
    */
   onBlur?: ?(event: BlurEvent) => mixed,
@@ -167,7 +165,6 @@ type PressableBaseProps = $ReadOnly<{
    * Called in the tunneling phase after a key up event is detected.
    */
   onKeyUpCapture?: ?(event: KeyEvent) => void,
->>>>>>> Override
 
   /**
    * Either view styles or a function that receives a boolean reflecting whether
@@ -356,14 +353,11 @@ function Pressable({
           onPressOut(event);
         }
       },
-<<<<<<< Upstream
       blockNativeResponder,
-=======
       // [Windows
       onKeyDown,
       onKeyUp,
       // Windows]
->>>>>>> Override
     }),
     [
       android_disableSound,

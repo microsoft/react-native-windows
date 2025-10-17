@@ -291,8 +291,6 @@ function PressableDisabled() {
   );
 }
 
-<<<<<<< Upstream
-=======
 function PressableHoverStyle() {
   const [hovered, setHovered] = useState(false);
   return (
@@ -459,7 +457,6 @@ function PressWithKeyCapture() {
   );
 }
 
->>>>>>> Override
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
@@ -755,9 +752,7 @@ const examples = [
       return <PressableAriaLabel />;
     },
   },
-<<<<<<< Upstream
   ...PressableExampleFbInternal.examples,
-=======
   {
     title: 'Focusability in Pressable',
     description:
@@ -1113,7 +1108,6 @@ const examples = [
     },
   },
   // Windows]
->>>>>>> Override
 ];
 
 module.exports = ({

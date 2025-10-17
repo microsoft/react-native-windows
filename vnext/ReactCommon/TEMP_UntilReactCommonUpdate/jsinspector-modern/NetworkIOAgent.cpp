@@ -404,11 +404,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
         "Invalid params: handle is missing or not a string."));
     return;
   }
-<<<<<<< Upstream
   std::optional<int64_t> size = std::nullopt;
-=======
-  std::optional<int64_t> size = std::nullopt; // [Windows #13587]
->>>>>>> Override
   if ((req.params.count("size") != 0u) && req.params.at("size").isInt()) {
     size = req.params.at("size").asInt();
 

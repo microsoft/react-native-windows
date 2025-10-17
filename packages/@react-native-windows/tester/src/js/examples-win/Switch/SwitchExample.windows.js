@@ -390,17 +390,13 @@ exports.examples = [
       return <ContainerBackgroundColorStyleExample />;
     },
   },
-<<<<<<< Upstream
-] as Array<RNTesterModuleExample>;
-=======
   {
     title: 'Switches can have customized accessibility',
     render(): React.Element<any> {
       return <AccessibilitySwitchExample />;
     },
   },
-];
->>>>>>> Override
+] as Array<RNTesterModuleExample>;
 
 if (Platform.OS === 'ios') {
   exports.examples.push({

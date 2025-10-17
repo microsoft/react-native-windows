@@ -233,9 +233,6 @@ exports.examples = [
       );
     },
   },
-<<<<<<< Upstream
-] as Array<RNTesterModuleExample>;
-=======
   {
     title: 'Button with Accessible and Focusable Prop',
     render: function (): React.Node {
@@ -279,8 +276,7 @@ exports.examples = [
       );
     },
   },
-];
->>>>>>> Override
+] as Array<RNTesterModuleExample>;
 
 const styles = StyleSheet.create({
   container: {
