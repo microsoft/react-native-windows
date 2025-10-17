@@ -127,6 +127,8 @@ type PressableBaseProps = $ReadOnly<{
    * while this pressable is responder.
    */
   blockNativeResponder?: ?boolean,
+
+  /**
    * Called after the element loses focus.
    */
   onBlur?: ?(event: BlurEvent) => mixed,
@@ -295,7 +297,7 @@ function Pressable({
   };
 
   const accessibilityLiveRegion =
-    ariaLive === 'off' ? 'none' : (ariaLive ?? props.accessibilityLiveRegion);
+    ariaLive === 'off' ? 'none' : ariaLive ?? props.accessibilityLiveRegion;
 
   const accessibilityLabel = ariaLabel ?? props.accessibilityLabel;
   const restPropsWithDefaults: React.ElementConfig<typeof View> = {

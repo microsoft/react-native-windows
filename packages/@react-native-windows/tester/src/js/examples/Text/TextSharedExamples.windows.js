@@ -110,11 +110,15 @@ function NumberOfLinesTextLayoutExample(): React.Node {
   );
 }
 
-component RtlInlineViewExample(
+function RtlInlineViewExample({
+  label,
+  testID,
+  children,
+}: {
   label: string,
   testID: string,
   children: React.Node,
-) {
+}): React.Node {
   return (
     <View testID={testID} style={{flexDirection: 'row', flexGrow: 1}}>
       <RNTesterText variant="label" style={{width: 100, fontSize: 10}}>
@@ -125,7 +129,7 @@ component RtlInlineViewExample(
   );
 }
 
-component RtlAndInlineViewsExample() {
+function RtlAndInlineViewsExample(): React.Node {
   return (
     <View style={{rowGap: 5}}>
       <RtlInlineViewExample

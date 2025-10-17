@@ -10,7 +10,7 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import TextAncestorContext from '../../Text/TextAncestorContext';
+import TextAncestor from '../../Text/TextAncestor';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]

@@ -10,7 +10,7 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import TextAncestorContext from '../../Text/TextAncestorContext';
+import TextAncestor from '../../Text/TextAncestor';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import {use} from 'react';
@@ -63,7 +63,7 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-component View(
+export default component View(
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) {
@@ -264,7 +264,8 @@ component View(
     accessibilityElementsHidden === true
       ? 'no-hide-descendants'
       : importantForAccessibility;
-
+  let actualView;
+  if (ReactNativeFeatureFlags.reduceDefaultPropsInView()) {
     //Destructured props at function scope, just create processedProps
     const processedProps = otherProps as {...PropsWithRef};
 
@@ -273,21 +274,21 @@ component View(
       processedProps.accessibilityLabelledBy = parsedAriaLabelledBy;
     }
 
-  if (ariaLabel !== undefined) {
-    processedProps.accessibilityLabel = ariaLabel;
-  }
-
-  if (ariaLive !== undefined) {
-    processedProps.accessibilityLiveRegion =
-      ariaLive === 'off' ? 'none' : ariaLive;
-  }
-
-  if (ariaHidden !== undefined) {
-    processedProps.accessibilityElementsHidden = ariaHidden;
-    if (ariaHidden === true) {
-      processedProps.importantForAccessibility = 'no-hide-descendants';
+    if (ariaLabel !== undefined) {
+      processedProps.accessibilityLabel = ariaLabel;
     }
-  }
+
+    if (ariaLive !== undefined) {
+      processedProps.accessibilityLiveRegion =
+        ariaLive === 'off' ? 'none' : ariaLive;
+    }
+
+    if (ariaHidden !== undefined) {
+      processedProps.accessibilityElementsHidden = ariaHidden;
+      if (ariaHidden === true) {
+        processedProps.importantForAccessibility = 'no-hide-descendants';
+      }
+    }
 
     // Windows accessibility properties
     if (ariaLevel !== undefined) {
@@ -338,9 +339,9 @@ component View(
       processedProps.nativeID = id;
     }
 
-  if (tabIndex !== undefined) {
-    processedProps.focusable = !tabIndex;
-  }
+    if (tabIndex !== undefined) {
+      processedProps.focusable = !tabIndex;
+    }
 
     if (
       accessibilityState != null ||
@@ -366,20 +367,20 @@ component View(
       };
     }
 
-  if (
-    accessibilityValue != null ||
-    ariaValueMax != null ||
-    ariaValueMin != null ||
-    ariaValueNow != null ||
-    ariaValueText != null
-  ) {
-    processedProps.accessibilityValue = {
-      max: ariaValueMax ?? accessibilityValue?.max,
-      min: ariaValueMin ?? accessibilityValue?.min,
-      now: ariaValueNow ?? accessibilityValue?.now,
-      text: ariaValueText ?? accessibilityValue?.text,
-    };
-  }
+    if (
+      accessibilityValue != null ||
+      ariaValueMax != null ||
+      ariaValueMin != null ||
+      ariaValueNow != null ||
+      ariaValueText != null
+    ) {
+      processedProps.accessibilityValue = {
+        max: ariaValueMax ?? accessibilityValue?.max,
+        min: ariaValueMin ?? accessibilityValue?.min,
+        now: ariaValueNow ?? accessibilityValue?.now,
+        text: ariaValueText ?? accessibilityValue?.text,
+      };
+    }
 
     // [Windows key event processing and accessible property
     if (otherProps.keyDownEvents || otherProps.onKeyDown) {
@@ -510,75 +511,75 @@ component View(
       />
     );
 
-  // [Windows - Paper doesn't support Views in Text while Fabric does
-  if (global.RN$Bridgeless !== true) {
-    return (
-      // [Windows
-      // In core this is a TextAncestor.Provider value={false} See
-      // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
-      // But since Views are not currently supported in Text, we do not need the extra provider
-      <TextAncestor.Consumer>
-        {consumerHasTextAncestor => {
-          invariant(
-            !hasTextAncestor,
-            'Nesting of <View> within <Text> is not currently supported.',
-          );
-          return (
-            <ViewNativeComponent
-              {...otherProps}
-              accessibilityLiveRegion={
-                ariaLive === 'off'
-                  ? 'none'
-                  : ariaLive ?? accessibilityLiveRegion
-              }
-              accessibilityLabel={ariaLabel ?? accessibilityLabel}
-              accessibilityLevel={ariaLevel ?? accessibilityLevel}
-              accessibilityDescription={
-                ariaDescription ?? accessibilityDescription
-              }
-              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
-              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
-              focusable={_focusable}
-              disabled={disabled}
-              accessibilityState={_accessibilityState}
-              accessibilityElementsHidden={
-                ariaHidden ?? accessibilityElementsHidden
-              }
-              accessibilityLabelledBy={_accessibilityLabelledBy}
-              accessibilityValue={_accessibilityValue}
-              importantForAccessibility={computedImportantForAccessibility}
-              nativeID={id ?? nativeID}
-              ref={ref}
-              onKeyDown={_keyDown}
-              onKeyDownCapture={_keyDownCapture}
-              onKeyUp={_keyUp}
-              onKeyUpCapture={_keyUpCapture}
-              // [Windows
-              accessible={_accessible}
-              children={
-                computedImportantForAccessibility === 'no-hide-descendants'
-                  ? childrenWithImportantForAccessibility(otherProps.children)
-                  : otherProps.children
-              }
-              // Windows]
-            />
-          );
-        }}
-      </TextAncestor.Consumer>
-      // Windows]
-    );
+    // [Windows - Paper doesn't support Views in Text while Fabric does
+    if (global.RN$Bridgeless !== true) {
+      return (
+        // [Windows
+        // In core this is a TextAncestor.Provider value={false} See
+        // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
+        // But since Views are not currently supported in Text, we do not need the extra provider
+        <TextAncestor.Consumer>
+          {consumerHasTextAncestor => {
+            invariant(
+              !hasTextAncestor,
+              'Nesting of <View> within <Text> is not currently supported.',
+            );
+            return (
+              <ViewNativeComponent
+                {...otherProps}
+                accessibilityLiveRegion={
+                  ariaLive === 'off'
+                    ? 'none'
+                    : ariaLive ?? accessibilityLiveRegion
+                }
+                accessibilityLabel={ariaLabel ?? accessibilityLabel}
+                accessibilityLevel={ariaLevel ?? accessibilityLevel}
+                accessibilityDescription={
+                  ariaDescription ?? accessibilityDescription
+                }
+                accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
+                accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
+                focusable={_focusable}
+                disabled={disabled}
+                accessibilityState={_accessibilityState}
+                accessibilityElementsHidden={
+                  ariaHidden ?? accessibilityElementsHidden
+                }
+                accessibilityLabelledBy={_accessibilityLabelledBy}
+                accessibilityValue={_accessibilityValue}
+                importantForAccessibility={computedImportantForAccessibility}
+                nativeID={id ?? nativeID}
+                ref={ref}
+                onKeyDown={_keyDown}
+                onKeyDownCapture={_keyDownCapture}
+                onKeyUp={_keyUp}
+                onKeyUpCapture={_keyUpCapture}
+                // [Windows
+                accessible={_accessible}
+                children={
+                  computedImportantForAccessibility === 'no-hide-descendants'
+                    ? childrenWithImportantForAccessibility(otherProps.children)
+                    : otherProps.children
+                }
+                // Windows]
+              />
+            );
+          }}
+        </TextAncestor.Consumer>
+        // Windows]
+      );
+    }
+    // Windows]
+
+    // Fabric supports Views in Text, so we can use the TextAncestor context
+    // [Windows
+    if (hasTextAncestor) {
+      return <TextAncestor value={false}>{actualView}</TextAncestor>;
+    }
+    // Windows]
+
+    return actualView;
   }
-  // Windows]
 
-  // Fabric supports Views in Text, so we can use the TextAncestor context
-  // [Windows
-  if (hasTextAncestor) {
-    return <TextAncestor value={false}>{actualView}</TextAncestor>;
-  }
-  // Windows]
-
-  return actualView;
-
-View.displayName = 'View';
-
-export default View;
+  View.displayName = 'View';
+}

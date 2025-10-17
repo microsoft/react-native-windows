@@ -171,8 +171,4 @@ untyped-import
 untyped-type-import
 
 [version]
-<<<<<<< Upstream
 ^0.278.0
-=======
-^0.274.2
->>>>>>> Override
