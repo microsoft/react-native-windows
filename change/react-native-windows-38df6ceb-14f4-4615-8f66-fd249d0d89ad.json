@@ -1,0 +1,7 @@
+{
+  "comment": "Theme aware platform color for text.",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
