@@ -7,6 +7,7 @@
 #include "TextDrawing.h"
 
 #include <AutoDraw.h>
+#include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
 #include <Utils/ValueUtils.h>
 #include <unicode.h>
 #include <windows.ui.composition.interop.h>
@@ -39,7 +40,16 @@ void RenderText(
     auto color = theme.D2DColor(*textAttributes.foregroundColor);
     winrt::check_hresult(deviceContext.CreateSolidColorBrush(color, brush.put()));
   } else {
-    winrt::check_hresult(deviceContext.CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
+    // Use theme-aware default text color (TextFillColorPrimary) instead of hardcoded black
+    // This ensures text adapts to light/dark mode and high contrast themes
+    auto defaultTextColor = facebook::react::GetDefaultTextColor();
+    if (defaultTextColor) {
+      auto color = theme.D2DColor(*defaultTextColor);
+      winrt::check_hresult(deviceContext.CreateSolidColorBrush(color, brush.put()));
+    } else {
+      // Fallback to black if GetDefaultTextColor fails
+      winrt::check_hresult(deviceContext.CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
+    }
   }
 
   if (textAttributes.textDecorationLineType) {
@@ -76,8 +86,16 @@ void RenderText(
         auto color = theme.D2DColor(*fragment.textAttributes.foregroundColor);
         winrt::check_hresult(deviceContext.CreateSolidColorBrush(color, fragmentBrush.put()));
       } else {
-        winrt::check_hresult(
-            deviceContext.CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), fragmentBrush.put()));
+        // Use theme-aware default text color for fragments without explicit color
+        auto defaultTextColor = facebook::react::GetDefaultTextColor();
+        if (defaultTextColor) {
+          auto color = theme.D2DColor(*defaultTextColor);
+          winrt::check_hresult(deviceContext.CreateSolidColorBrush(color, fragmentBrush.put()));
+        } else {
+          // Fallback to black if GetDefaultTextColor fails
+          winrt::check_hresult(
+              deviceContext.CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), fragmentBrush.put()));
+        }
       }
 
       if (fragment.textAttributes.textDecorationLineType) {
