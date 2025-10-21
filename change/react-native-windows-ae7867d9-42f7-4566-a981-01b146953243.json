@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add signature verification for SDL compliance (Work Item 58386093)",
-  "packageName": "react-native-windows",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "none"
-}
