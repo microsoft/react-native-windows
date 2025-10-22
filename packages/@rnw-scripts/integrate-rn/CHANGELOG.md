@@ -1,8 +1,38 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Oct 2025 05:28:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.65
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Patches
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+
+## 1.4.64
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Patches
+
+- Update communitycli template version (hmalothu@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.97
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @react-native-windows/package-utils to v0.0.0-canary.94
+- Bump react-native-platform-override to v1.9.59
+- Bump @rnw-scripts/just-task to v2.3.56
+
+## 1.4.63
+
+Fri, 19 Sep 2025 05:29:14 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.9.58
 
 ## 1.4.62
 

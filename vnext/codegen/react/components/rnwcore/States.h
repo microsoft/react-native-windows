@@ -8,94 +8,25 @@
  */
 #pragma once
 
-#ifdef ANDROID
+#include <react/renderer/core/StateData.h>
+#ifdef RN_SERIALIZABLE_STATE
 #include <folly/dynamic.h>
 #endif
 
 namespace facebook::react {
 
-class ActivityIndicatorViewState {
-public:
-  ActivityIndicatorViewState() = default;
+using ActivityIndicatorViewState = StateData;
 
-#ifdef ANDROID
-  ActivityIndicatorViewState(ActivityIndicatorViewState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
+using AndroidDrawerLayoutState = StateData;
 
-class AndroidDrawerLayoutState {
-public:
-  AndroidDrawerLayoutState() = default;
+using AndroidSwipeRefreshLayoutState = StateData;
 
-#ifdef ANDROID
-  AndroidDrawerLayoutState(AndroidDrawerLayoutState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
+using DebuggingOverlayState = StateData;
 
-class AndroidSwipeRefreshLayoutState {
-public:
-  AndroidSwipeRefreshLayoutState() = default;
+using PullToRefreshViewState = StateData;
 
-#ifdef ANDROID
-  AndroidSwipeRefreshLayoutState(AndroidSwipeRefreshLayoutState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
+using SwitchState = StateData;
 
-class DebuggingOverlayState {
-public:
-  DebuggingOverlayState() = default;
-
-#ifdef ANDROID
-  DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
-
-class PullToRefreshViewState {
-public:
-  PullToRefreshViewState() = default;
-
-#ifdef ANDROID
-  PullToRefreshViewState(PullToRefreshViewState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
-
-class SwitchState {
-public:
-  SwitchState() = default;
-
-#ifdef ANDROID
-  SwitchState(SwitchState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
-
-class UnimplementedNativeViewState {
-public:
-  UnimplementedNativeViewState() = default;
-
-#ifdef ANDROID
-  UnimplementedNativeViewState(UnimplementedNativeViewState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
+using UnimplementedNativeViewState = StateData;
 
 } // namespace facebook::react

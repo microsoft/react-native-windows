@@ -1658,10 +1658,7 @@ TEST_P(JSITest, CreateFromUtf16Test) {
   auto cp = eval("loneSurrogate.charCodeAt(0)").getNumber();
   EXPECT_EQ(cp, 55357); // 0xD83D in decimal
 }
-Windows] */
 
-/*
-[Windows 
 TEST_P(JSITest, GetStringDataTest) {
   // This Runtime Decorator is used to test the default getStringData
   // implementation for VMs that do not provide their own implementation
@@ -1751,6 +1748,113 @@ TEST_P(JSITest, ObjectCreateWithPrototype) {
   EXPECT_TRUE(child.getPrototype(rd).isNull());
 }
 Windows] */
+
+TEST_P(JSITest, SetRuntimeData) {
+  class RD : public RuntimeDecorator<Runtime, Runtime> {
+   public:
+    explicit RD(Runtime& rt) : RuntimeDecorator(rt) {}
+
+    void setRuntimeDataImpl(
+        const facebook::jsi::UUID& uuid,
+        const void* data,
+        void (*deleter)(const void* data)) override {
+      Runtime::setRuntimeDataImpl(uuid, data, deleter);
+    }
+
+    const void* getRuntimeDataImpl(const facebook::jsi::UUID& uuid) override {
+      return Runtime::getRuntimeDataImpl(uuid);
+    }
+  };
+
+  RD rd1 = RD(rt);
+  facebook::jsi::UUID uuid1{0xe67ab3d6u, 0x09a0u, 0x11f0u, 0xa641u, 0x325096b39f47ull};
+  auto str = std::make_shared<std::string>("hello world");
+  rd1.setRuntimeData(uuid1, str);
+
+  facebook::jsi::UUID uuid2{0xa12f99fcu, 0x09a2u, 0x11f0u, 0x84deu, 0x325096b39f47ull};
+  auto obj1 = std::make_shared<Object>(rd1);
+  rd1.setRuntimeData(uuid2, obj1);
+
+  auto storedStr =
+      std::static_pointer_cast<std::string>(rd1.getRuntimeData(uuid1));
+  auto storedObj = std::static_pointer_cast<Object>(rd1.getRuntimeData(uuid2));
+  EXPECT_EQ(storedStr, str);
+  EXPECT_EQ(storedObj, obj1);
+
+  // Override the existing value at uuid1
+  auto weakOldStr = std::weak_ptr<std::string>(str);
+  str = std::make_shared<std::string>("goodbye world");
+  rd1.setRuntimeData(uuid1, str);
+  storedStr = std::static_pointer_cast<std::string>(rd1.getRuntimeData(uuid1));
+  EXPECT_EQ(str, storedStr);
+  // Verify that the old data was not held on after it was overwritten.
+  EXPECT_EQ(weakOldStr.use_count(), 0);
+
+  auto rt2 = factory();
+  RD* rd2 = new RD(*rt2);
+  facebook::jsi::UUID uuid3{0x16f55892u, 0x1034u, 0x11f0u, 0x8f65u, 0x325096b39f47ull};
+  auto obj2 = std::make_shared<Object>(*rd2);
+  rd2->setRuntimeData(uuid3, obj2);
+
+  auto storedObj2 =
+      std::static_pointer_cast<Object>(rd2->getRuntimeData(uuid3));
+  EXPECT_EQ(storedObj2, obj2);
+
+  // UUID1 is for some data in runtime rd1, not rd2
+  EXPECT_FALSE(rd2->getRuntimeData(uuid1));
+
+  // Verify that when runtime is deleted, its runtime data map gets removed from
+  // the global map. So nothing should be holding on to the stored data.
+  auto weakObj2 = std::weak_ptr<Object>(obj2);
+  obj2.reset();
+  storedObj2.reset();
+  delete rd2;
+  rt2.reset();
+  EXPECT_EQ(weakObj2.use_count(), 0);
+
+  // Only the second runtime was destroyed, so custom data from the first
+  // runtime should remain unaffected.
+  storedStr = std::static_pointer_cast<std::string>(rd1.getRuntimeData(uuid1));
+  EXPECT_EQ(storedStr, str);
+
+  // Overwrite Object.defineProperty, which is called in the default
+  // implementation of setRuntimeDataImpl, to test that even if the JSI
+  // operations on this secret property fail, we are still able to properly
+  // clean up the custom data.
+  auto rt3 = factory();
+  RD* rd3 = new RD(*rt3);
+  facebook::jsi::UUID uuid4{0xa5682986u, 0x1edcu, 0x11f0u, 0xa4fau, 0x325096b39f47ull};
+  rd3->global()
+      .getPropertyAsObject(*rd3, "Object")
+      .setProperty(*rd3, "defineProperty", Value(false));
+
+  auto obj3 = std::make_shared<Object>(*rd3);
+  auto weakObj3 = std::weak_ptr<Object>(obj3);
+  EXPECT_THROW(rd3->setRuntimeData(uuid4, obj3), JSIException);
+  obj3.reset();
+  delete rd3;
+  rt3.reset();
+  EXPECT_EQ(weakObj3.use_count(), 0);
+}
+
+TEST_P(JSITest, CastInterface) {
+  // This Runtime Decorator is used to test the default implementation of
+  // jsi::Runtime::castInterface
+  class RD : public RuntimeDecorator<Runtime, Runtime> {
+   public:
+    explicit RD(Runtime& rt) : RuntimeDecorator(rt) {}
+
+    ICast* castInterface(const facebook::jsi::UUID& interfaceUuid) override {
+      return Runtime::castInterface(interfaceUuid);
+    }
+  };
+
+  RD rd = RD(rt);
+  auto randomUuid = facebook::jsi::UUID{0xf2cd96cfu, 0x455eu, 0x42d9u, 0x850au, 0x13e2cde59b8bull};
+  auto ptr = rd.castInterface(randomUuid);
+
+  EXPECT_EQ(ptr, nullptr);
+}
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,

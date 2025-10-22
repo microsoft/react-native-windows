@@ -62,8 +62,36 @@ if ($tagsToInclude.Contains('rnwDev')) {
     $tagsToInclude.Add('appDev') | Out-null;
 }
 
+# Detect processor architecture to select appropriate VC Tools component
+$ProcessorArchitecture = $Env:Processor_Architecture
+
+# Getting $Env:Processor_Architecture on arm64 machines will return x86.  So check if the environment
+# variable "ProgramFiles(Arm)" is also set, if it is we know the actual processor architecture is arm64.
+# The value will also be x86 on amd64 machines when running the x86 version of PowerShell.
+if ($ProcessorArchitecture -eq "x86")
+{
+    if ($null -ne ${Env:ProgramFiles(Arm)})
+    {
+        $ProcessorArchitecture = "arm64"
+    }
+    elseif ($null -ne ${Env:ProgramFiles(x86)})
+    {
+        $ProcessorArchitecture = "amd64"
+    }
+}
+
+# Select the appropriate VC Tools component based on processor architecture
+if ($ProcessorArchitecture -eq "arm64")
+{
+    $vcToolsComponent = 'Microsoft.VisualStudio.Component.VC.Tools.ARM64'
+}
+else
+{
+    $vcToolsComponent = 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64'
+}
+
 $vsComponents = @('Microsoft.Component.MSBuild',
-    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
+    $vcToolsComponent,
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
     'Microsoft.VisualStudio.Component.Windows10SDK.19041',
@@ -460,9 +488,23 @@ $requirements = @(
         Install = {
             $ProgressPreference = 'Ignore';
             $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
+            $downloadPath = "$env:TEMP\WindowsApplicationDriver.msi"
             Write-Verbose "Downloading WinAppDriver from $url";
-            Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\WindowsApplicationDriver.msi
-            & $env:TEMP\WindowsApplicationDriver.msi /q
+            Invoke-WebRequest -UseBasicParsing $url -OutFile $downloadPath
+            
+            # SDL Compliance: Verify signature (Work Item 58386093)
+            $signature = Get-AuthenticodeSignature $downloadPath
+            if ($signature.Status -ne "Valid") {
+                Remove-Item $downloadPath -ErrorAction SilentlyContinue
+                throw "WinAppDriver signature verification failed"
+            }
+            if ($signature.SignerCertificate.Subject -notlike "*Microsoft*") {
+                Remove-Item $downloadPath -ErrorAction SilentlyContinue  
+                throw "WinAppDriver not signed by Microsoft"
+            }
+            
+            & $downloadPath /q
+            Remove-Item $downloadPath -ErrorAction SilentlyContinue
         };
         HasVerboseOutput = $true;
         Optional = $true;

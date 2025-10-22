@@ -70,7 +70,7 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
     return shadowNode;
   }
 
-  facebook::react::ShadowNode::Unshared cloneShadowNode(
+  std::shared_ptr<facebook::react::ShadowNode> cloneShadowNode(
       const facebook::react::ShadowNode &sourceShadowNode,
       const facebook::react::ShadowNodeFragment &fragment) const override {
     auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
@@ -83,8 +83,8 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
   }
 
   void appendChild(
-      const facebook::react::ShadowNode::Shared &parentShadowNode,
-      const facebook::react::ShadowNode::Shared &childShadowNode) const override {
+      const std::shared_ptr<const facebook::react::ShadowNode> &parentShadowNode,
+      const std::shared_ptr<const facebook::react::ShadowNode> &childShadowNode) const override {
     auto concreteParentShadowNode = std::static_pointer_cast<const ShadowNodeT>(parentShadowNode);
     auto concreteNonConstParentShadowNode = std::const_pointer_cast<ShadowNodeT>(concreteParentShadowNode);
     concreteNonConstParentShadowNode->appendChild(childShadowNode);

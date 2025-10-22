@@ -80,6 +80,12 @@ void WindowsTextLayoutManager::GetTextLayout(
     TextMeasurement::Attachments &attachments) noexcept {
   const auto &attributedString = attributedStringBox.getValue();
   auto fragments = attributedString.getFragments();
+
+  // Check if fragments is empty to avoid out-of-bounds access
+  if (fragments.empty()) {
+    return;
+  }
+
   auto outerFragment = fragments[0];
 
   DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
@@ -375,47 +381,45 @@ TextMeasurement TextLayoutManager::measure(
   TextMeasurement measurement{};
   auto &attributedString = attributedStringBox.getValue();
 
-  measurement = textMeasureCache_.get(
-      {attributedString, paragraphAttributes, layoutConstraints}, [&](TextMeasureCacheKey const &key) {
-        auto telemetry = TransactionTelemetry::threadLocalTelemetry();
-        if (telemetry) {
-          telemetry->willMeasureText();
+  measurement = textMeasureCache_.get({attributedString, paragraphAttributes, layoutConstraints}, [&]() {
+    auto telemetry = TransactionTelemetry::threadLocalTelemetry();
+    if (telemetry) {
+      telemetry->willMeasureText();
+    }
+
+    winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+
+    TextMeasurement::Attachments attachments;
+    WindowsTextLayoutManager::GetTextLayout(
+        attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+
+    if (spTextLayout) {
+      auto maxHeight = std::numeric_limits<float>().max();
+      if (paragraphAttributes.maximumNumberOfLines > 0) {
+        std::vector<DWRITE_LINE_METRICS> lineMetrics;
+        uint32_t actualLineCount;
+        spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
+        lineMetrics.resize(static_cast<size_t>(actualLineCount));
+        winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
+        maxHeight = 0;
+        const auto count = std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount);
+        for (uint32_t i = 0; i < count; ++i) {
+          maxHeight += lineMetrics[i].height;
         }
+      }
 
-        winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+      DWRITE_TEXT_METRICS dtm{};
+      winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
+      measurement.size = {dtm.width, std::min(dtm.height, maxHeight)};
+      measurement.attachments = attachments;
+    }
 
-        TextMeasurement::Attachments attachments;
-        WindowsTextLayoutManager::GetTextLayout(
-            attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+    if (telemetry) {
+      telemetry->didMeasureText();
+    }
 
-        if (spTextLayout) {
-          auto maxHeight = std::numeric_limits<float>().max();
-          if (paragraphAttributes.maximumNumberOfLines > 0) {
-            std::vector<DWRITE_LINE_METRICS> lineMetrics;
-            uint32_t actualLineCount;
-            spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
-            lineMetrics.resize(static_cast<size_t>(actualLineCount));
-            winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
-            maxHeight = 0;
-            const auto count =
-                std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount);
-            for (uint32_t i = 0; i < count; ++i) {
-              maxHeight += lineMetrics[i].height;
-            }
-          }
-
-          DWRITE_TEXT_METRICS dtm{};
-          winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
-          measurement.size = {dtm.width, std::min(dtm.height, maxHeight)};
-          measurement.attachments = attachments;
-        }
-
-        if (telemetry) {
-          telemetry->didMeasureText();
-        }
-
-        return measurement;
-      });
+    return measurement;
+  });
   return measurement;
 }
 

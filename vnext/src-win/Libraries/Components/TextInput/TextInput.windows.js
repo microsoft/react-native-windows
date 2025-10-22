@@ -11,6 +11,8 @@
 import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
+  BlurEvent,
+  FocusEvent,
   KeyEvent, // Windows
   MouseEvent, // Windows
   GestureResponderEvent,
@@ -64,7 +66,7 @@ import TextInputState from './TextInputState';
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
 import * as React from 'react';
-import {useCallback, useLayoutEffect, useRef, useState} from 'react';
+import {useCallback, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 let AndroidTextInput;
 let AndroidTextInputCommands;
@@ -100,10 +102,12 @@ else if (Platform.OS === 'windows') {
 
 export type {
   AutoCapitalize,
+  BlurEvent,
   EnterKeyHintType,
   EnterKeyHintTypeAndroid,
   EnterKeyHintTypeIOS,
   EnterKeyHintTypeOptions,
+  FocusEvent,
   InputModeOptions,
   KeyboardType,
   KeyboardTypeAndroid,
@@ -472,6 +476,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
       */
       if (instance != null) {
         // $FlowFixMe[prop-missing] - See the explanation above.
+        // $FlowFixMe[unsafe-object-assign] - Intentional mutation of ref instance
         Object.assign(instance, {
           clear(): void {
             if (inputRef.current != null) {
@@ -549,14 +554,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     });
   };
 
-  const _onFocus = (event: TextInputFocusEvent) => {
+  const _onFocus = (event: FocusEvent) => {
     TextInputState.focusInput(inputRef.current);
     if (props.onFocus) {
       props.onFocus(event);
     }
   };
 
-  const _onBlur = (event: TextInputBlurEvent) => {
+  const _onBlur = (event: BlurEvent) => {
     TextInputState.blurInput(inputRef.current);
     if (props.onBlur) {
       props.onBlur(event);
@@ -613,7 +618,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     rejectResponderTermination,
   } = props;
 
-  const config = React.useMemo(
+  const config = useMemo(
     () => ({
       hitSlop,
       onPress: (event: GestureResponderEvent) => {
@@ -655,6 +660,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
           el.handledEventPhase === eventPhase.Bubbling
         ) {
           event.stopPropagation();
@@ -668,7 +677,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code === el.code && el.handledEventPhase === 3) {
+        if (
+          event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+          el.handledEventPhase === 3
+        ) {
           event.stopPropagation();
         }
       }
@@ -680,7 +696,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
-        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
+        if (
+          event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+          el.handledEventPhase === 1
+        ) {
           event.stopPropagation();
         }
       }
@@ -692,7 +715,14 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
+        if (
+          event.nativeEvent.code === el.code &&
+          event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+          event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+          event.nativeEvent.altKey === Boolean(el.altKey) &&
+          event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+          el.handledEventPhase === 1
+        ) {
           event.stopPropagation();
         }
       }
@@ -929,7 +959,7 @@ const enterKeyHintToReturnTypeMap = {
   previous: 'previous',
   search: 'search',
   send: 'send',
-};
+} as const;
 
 const inputModeToKeyboardTypeMap = {
   none: 'default',
@@ -937,10 +967,11 @@ const inputModeToKeyboardTypeMap = {
   decimal: 'decimal-pad',
   numeric: 'number-pad',
   tel: 'phone-pad',
-  search: Platform.OS === 'ios' ? 'web-search' : 'default',
+  search:
+    Platform.OS === 'ios' ? ('web-search' as const) : ('default' as const),
   email: 'email-address',
   url: 'url',
-};
+} as const;
 
 // Map HTML autocomplete values to Android autoComplete values
 const autoCompleteWebToAutoCompleteAndroidMap = {
@@ -974,7 +1005,7 @@ const autoCompleteWebToAutoCompleteAndroidMap = {
   'tel-country-code': 'tel-country-code',
   'tel-national': 'tel-national',
   username: 'username',
-};
+} as const;
 
 // Map HTML autocomplete values to iOS textContentType values
 const autoCompleteWebToTextContentTypeMap = {
@@ -1014,29 +1045,30 @@ const autoCompleteWebToTextContentTypeMap = {
   tel: 'telephoneNumber',
   url: 'URL',
   username: 'username',
-};
+} as const;
 
-const ExportedForwardRef: component(
+const TextInput: component(
   ref?: React.RefSetter<TextInputInstance>,
   ...props: React.ElementConfig<typeof InternalTextInput>
-) = React.forwardRef(function TextInput(
-  {
-    allowFontScaling = true,
-    rejectResponderTermination = true,
-    underlineColorAndroid = 'transparent',
-    autoComplete,
-    textContentType,
-    readOnly,
-    editable,
-    enterKeyHint,
-    returnKeyType,
-    inputMode,
-    showSoftInputOnFocus,
-    keyboardType,
-    ...restProps
-  },
-  forwardedRef: React.RefSetter<TextInputInstance>,
-) {
+) = function TextInput({
+  ref: forwardedRef,
+  allowFontScaling = true,
+  rejectResponderTermination = true,
+  underlineColorAndroid = 'transparent',
+  autoComplete,
+  textContentType,
+  readOnly,
+  editable,
+  enterKeyHint,
+  returnKeyType,
+  inputMode,
+  showSoftInputOnFocus,
+  keyboardType,
+  ...restProps
+}: {
+  ref?: React.RefSetter<TextInputInstance>,
+  ...React.ElementConfig<typeof InternalTextInput>,
+}) {
   return (
     <InternalTextInput
       allowFontScaling={allowFontScaling}
@@ -1065,8 +1097,7 @@ const ExportedForwardRef: component(
           : Platform.OS === 'ios' &&
               autoComplete &&
               autoComplete in autoCompleteWebToTextContentTypeMap
-            ? // $FlowFixMe[invalid-computed-prop]
-              // $FlowFixMe[prop-missing]
+            ? // $FlowFixMe[prop-missing]
               autoCompleteWebToTextContentTypeMap[autoComplete]
             : textContentType
       }
@@ -1074,12 +1105,12 @@ const ExportedForwardRef: component(
       forwardedRef={forwardedRef}
     />
   );
-});
+};
 
-ExportedForwardRef.displayName = 'TextInput';
+TextInput.displayName = 'TextInput';
 
 // $FlowFixMe[prop-missing]
-ExportedForwardRef.State = {
+TextInput.State = {
   currentlyFocusedInput: TextInputState.currentlyFocusedInput,
 
   currentlyFocusedField: TextInputState.currentlyFocusedField,
@@ -1105,7 +1136,7 @@ const verticalAlignToTextAlignVerticalMap = {
   top: 'top',
   bottom: 'bottom',
   middle: 'center',
-};
+} as const;
 
 // $FlowFixMe[unclear-type] Unclear type. Using `any` type is not safe.
-export default ExportedForwardRef as any as TextInputType;
+export default TextInput as any as TextInputType;

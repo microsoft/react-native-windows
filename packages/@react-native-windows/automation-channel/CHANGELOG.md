@@ -1,8 +1,85 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Wed, 17 Sep 2025 05:27:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Oct 2025 05:28:10 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.340
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Patches
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1000
+
+## 0.12.339
+
+Thu, 09 Oct 2025 05:28:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.999
+
+## 0.12.338
+
+Wed, 08 Oct 2025 05:27:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.998
+
+## 0.12.337
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Patches
+
+- Update tester files (hmalothu@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.56
+- Bump react-native-windows to v0.0.0-canary.997
+
+## 0.12.336
+
+Wed, 01 Oct 2025 05:25:55 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.996
+
+## 0.12.335
+
+Tue, 30 Sep 2025 05:27:15 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.995
+
+## 0.12.334
+
+Fri, 26 Sep 2025 05:31:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.994
+
+## 0.12.333
+
+Fri, 19 Sep 2025 05:29:13 GMT
+
+### Patches
+
+- fix (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.993
+
+## 0.12.332
+
+Thu, 18 Sep 2025 05:34:35 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.992
 
 ## 0.12.331
 

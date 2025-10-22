@@ -24,7 +24,7 @@ import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
 import {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import * as React from 'react';
-import {useMemo} from 'react';
+import {cloneElement, useMemo} from 'react';
 import Animated from '../../Animated/Animated'; // Windows
 
 export type TouchableWithoutFeedbackPropsIOS = {};
@@ -175,7 +175,7 @@ const PASSTHROUGH_PROPS = [
   'onMouseLeave', // [Windows]
   'tabIndex', // [Windows]
   'tooltip', // [Windows]
-];
+] as const;
 
 /**
  * Do not use unless you have a very good reason.
@@ -323,7 +323,7 @@ const TouchableWithoutFeedback: React.AbstractComponent<
   }
 
   // $FlowFixMe[incompatible-call]
-  return React.cloneElement(element, {...elementProps, ref}, ...children);
+  return cloneElement(element, {...elementProps, ref}, ...children);
 });
 
 export default TouchableWithoutFeedback;

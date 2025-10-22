@@ -48,7 +48,7 @@ virtual State::Shared createInitialState(
       if (getThemeData(
               fabricUIManager, surfaceId, defaultTextInputPaddingArray)) {
         jfloat* defaultTextInputPadding =
-            env->GetFloatArrayElements(defaultTextInputPaddingArray, 0);
+            env->GetFloatArrayElements(defaultTextInputPaddingArray, nullptr);
         theme.start = defaultTextInputPadding[0];
         theme.end = defaultTextInputPadding[1];
         theme.top = defaultTextInputPadding[2];
@@ -59,8 +59,8 @@ virtual State::Shared createInitialState(
       }
 
     return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
-        std::make_shared<const AndroidTextInputState>(AndroidTextInputState(
-            0, {}, {}, {}, theme.start, theme.end, theme.top, theme.bottom)),
+        std::make_shared<const AndroidTextInputState>(
+            AndroidTextInputState({}, {}, {}, 0)),
         family);
   }
   */
