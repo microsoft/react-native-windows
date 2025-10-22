@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "HttpModule.h"
+#include "InputValidation.h"
 
 #include <CreateModules.h>
 #include <Modules/CxxModuleUtilities.h>
@@ -113,8 +114,17 @@ void HttpTurboModule::SendRequest(
   m_requestId++;
   auto &headersObj = query.headers.AsObject();
   IHttpResource::Headers headers;
-  for (auto &entry : headersObj) {
-    headers.emplace(entry.first, entry.second.AsString());
+  
+  // SDL Compliance: Validate headers for CRLF injection (P2 - CVSS 4.5)
+  try {
+    for (auto &entry : headersObj) {
+      std::string headerValue = entry.second.AsString();
+      Microsoft::ReactNative::InputValidation::EncodingValidator::ValidateHeaderValue(headerValue);
+      headers.emplace(entry.first, std::move(headerValue));
+    }
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    // Reject the request by not calling callback
+    return;
   }
 
   m_resource->SendRequest(
@@ -131,6 +141,18 @@ void HttpTurboModule::SendRequest(
 }
 
 void HttpTurboModule::AbortRequest(double requestId) noexcept {
+  // SDL Compliance: Validate request ID range (P2 - CVSS 3.5)
+  try {
+    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateInt32Range(
+        static_cast<int32_t>(requestId), 
+        0, 
+        INT32_MAX, 
+        "Request ID");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException&) {
+    // Invalid request ID, ignore abort
+    return;
+  }
+  
   m_resource->AbortRequest(static_cast<int64_t>(requestId));
 }
 

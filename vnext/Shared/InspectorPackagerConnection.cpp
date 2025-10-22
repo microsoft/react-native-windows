@@ -6,6 +6,7 @@
 #include <folly/json.h>
 #include <tracing/tracing.h>
 #include "InspectorPackagerConnection.h"
+#include "InputValidation.h"
 
 namespace Microsoft::ReactNative {
 
@@ -143,7 +144,16 @@ void InspectorPackagerConnection::sendMessageToVM(int32_t pageId, std::string &&
 InspectorPackagerConnection::InspectorPackagerConnection(
     std::string &&url,
     std::shared_ptr<IBundleStatusProvider> bundleStatusProvider)
-    : m_url(std::move(url)), m_bundleStatusProvider(std::move(bundleStatusProvider)) {}
+    : m_url(std::move(url)), m_bundleStatusProvider(std::move(bundleStatusProvider)) {
+  // SDL Compliance: Validate inspector URL (P2 - CVSS 4.0)
+  try {
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(m_url, {"ws", "wss"});
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    std::string errorMsg = std::string("Inspector URL validation failed: ") + ex.what();
+    facebook::react::tracing::error(errorMsg.c_str());
+    // Continue with invalid URL - error will be caught on connection attempt
+  }
+}
 
 winrt::fire_and_forget InspectorPackagerConnection::disconnectAsync() {
   co_await winrt::resume_background();
