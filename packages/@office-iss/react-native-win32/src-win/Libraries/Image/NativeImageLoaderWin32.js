@@ -10,4 +10,5 @@
 
 export * from '../../src/private/specs_DEPRECATED/modules/NativeImageLoaderWin32';
 import NativeImageLoaderWin32 from '../../src/private/specs_DEPRECATED/modules/NativeImageLoaderWin32';
+
 export default NativeImageLoaderWin32;

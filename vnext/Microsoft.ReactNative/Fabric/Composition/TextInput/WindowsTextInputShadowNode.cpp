@@ -125,8 +125,8 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
 
-  setStateData(facebook::react::TextInputState{
-      AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
+  setStateData(
+      WindowsTextInputState{AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
@@ -181,24 +181,28 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const
   return (!treeAttributedStringChanged ? state.attributedStringBox.getValue() : reactTreeAttributedString);
 }
 
-// For measurement purposes, we want to make sure that there's at least a
-// single character in the string so that the measured height is greater
-// than zero. Otherwise, empty TextInputs with no placeholder don't
-// display at all.
-// TODO T67606511: We will redefine the measurement of empty strings as part
-// of T67606511
 AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(const LayoutContext &layoutContext) const {
-  const auto &props = BaseShadowNode::getConcreteProps();
+  const auto &props = getConcreteProps();
 
   AttributedString attributedString;
-  auto placeholderString = !props.placeholder.empty() ? props.placeholder : BaseTextShadowNode::getEmptyPlaceholder();
-  auto textAttributes = TextAttributes::defaultTextAttributes();
-  textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
-  textAttributes.apply(props.textAttributes);
-  attributedString.appendFragment(
-      {.string = std::move(placeholderString),
-       .textAttributes = textAttributes,
-       .parentShadowView = ShadowView(*this)});
+  //[windows
+  if (!props.placeholder.empty()) {
+    auto textAttributes = TextAttributes::defaultTextAttributes();
+    textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
+    textAttributes.apply(props.textAttributes);
+
+    /*
+     * These props are applied to `View`, therefore they must not be a part of
+     * base text attributes.
+     */
+    textAttributes.backgroundColor = clearColor();
+    textAttributes.opacity = 1;
+
+    attributedString.appendFragment(
+        {.string = props.placeholder, .textAttributes = textAttributes, .parentShadowView = ShadowView(*this)});
+  }
+  // windows]
+
   return attributedString;
 }
 

@@ -4,14 +4,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import type {PartialViewConfigWithoutName} from './PlatformBaseViewConfig';
 
 import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
-import NativeReactNativeFeatureFlags from '../../src/private/featureflags/specs/NativeReactNativeFeatureFlags';
 import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
 import {
   ConditionallyIgnoredEventHandlers,
@@ -225,20 +224,12 @@ const validAttributesForNonEventProps = {
   hitSlop: {diff: require('../Utilities/differ/insetsDiffer').default},
   collapsable: true,
   collapsableChildren: true,
-  experimental_filter:
-    NativeReactNativeFeatureFlags != null &&
-    ReactNativeFeatureFlags.enableNativeCSSParsing()
-      ? true
-      : {
-          process: require('../StyleSheet/processFilter').default,
-        },
-  boxShadow:
-    NativeReactNativeFeatureFlags != null &&
-    ReactNativeFeatureFlags.enableNativeCSSParsing()
-      ? true
-      : {
-          process: require('../StyleSheet/processBoxShadow').default,
-        },
+  experimental_filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
+    ? (true as const)
+    : {process: require('../StyleSheet/processFilter').default},
+  boxShadow: ReactNativeFeatureFlags.enableNativeCSSParsing()
+    ? (true as const)
+    : {process: require('../StyleSheet/processBoxShadow').default},
   mixBlendMode: true,
   isolation: true,
 
@@ -359,7 +350,7 @@ const validAttributesForNonEventProps = {
   direction: true,
 
   style: ReactNativeStyleAttributes,
-};
+} as const;
 
 // Props for bubbling and direct events
 const validAttributesForEventProps = ConditionallyIgnoredEventHandlers({
