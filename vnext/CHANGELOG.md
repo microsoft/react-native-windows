@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 09 Oct 2025 05:28:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Oct 2025 05:28:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1000
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Changes
+
+- Add Attack Surface Analyzer (ASA) integration to CI pipeline for SDL compliance (copilot@github.com)
+- Implement SDL /GS crash detection and analysis tooling for stack buffer overrun monitoring (copilot@github.com)
+- Fix ARM64 support in rnw-dependencies.ps1 by detecting processor architecture and installing the correct Visual Studio VC Tools component (ARM64 vs x86.x64) (copilot@github.com)
+- fix: stricter checks against key events (sanajmi@microsoft.com)
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.278
 
 ## 0.0.0-canary.999
 

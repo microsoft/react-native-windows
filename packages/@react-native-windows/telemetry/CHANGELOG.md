@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Oct 2025 05:28:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.126
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Changes
+
+- rever passing localid to telmetry pipeline (hmalothu@microsoft.com)
 
 ## 0.0.0-canary.125
 

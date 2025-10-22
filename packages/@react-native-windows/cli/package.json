@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.277",
+  "version": "0.0.0-canary.278",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -20,7 +20,7 @@
     "@react-native-windows/codegen": "0.0.0-canary.126",
     "@react-native-windows/fs": "^0.0.0-canary.68",
     "@react-native-windows/package-utils": "^0.0.0-canary.94",
-    "@react-native-windows/telemetry": "^0.0.0-canary.125",
+    "@react-native-windows/telemetry": "^0.0.0-canary.126",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",

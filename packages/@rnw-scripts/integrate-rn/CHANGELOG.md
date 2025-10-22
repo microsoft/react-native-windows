@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Oct 2025 05:28:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.65
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Patches
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
 
 ## 1.4.64
 

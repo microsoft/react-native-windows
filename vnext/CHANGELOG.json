@@ -2,6 +2,83 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 Oct 2025 05:28:11 GMT",
+      "version": "0.0.0-canary.1000",
+      "tag": "react-native-windows_v0.0.0-canary.1000",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "copilot@github.com",
+            "package": "react-native-windows",
+            "commit": "b5ea4f21e08d42574b6cc32243b8db1ed3427015",
+            "comment": "Add Attack Surface Analyzer (ASA) integration to CI pipeline for SDL compliance"
+          },
+          {
+            "author": "copilot@github.com",
+            "package": "react-native-windows",
+            "commit": "74476f34367a9fefefa99c2e279200f3903ec993",
+            "comment": "Implement SDL /GS crash detection and analysis tooling for stack buffer overrun monitoring"
+          },
+          {
+            "author": "copilot@github.com",
+            "package": "react-native-windows",
+            "commit": "2b24344edc42425f8ec9fc47f7f7c89877911053",
+            "comment": "Fix ARM64 support in rnw-dependencies.ps1 by detecting processor architecture and installing the correct Visual Studio VC Tools component (ARM64 vs x86.x64)"
+          },
+          {
+            "author": "sanajmi@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d7e33bb26a640f99bc7bd52d8d9513dd069fe2e1",
+            "comment": "fix: stricter checks against key events"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eaf0c6003f400bd35ff80fd880a3a1c004ab500a",
+            "comment": "Integrate 0.81.0-nightly-20250709-6892dde36"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f504d86a0bb2ee7e3e9b64e6a318be50981329d5",
+            "comment": "Integrate 0.81.0-nightly-20250702-b41b924b2"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.278",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "839fe60de9cb862776824ffbb3d7e0f34225a034",
+            "comment": "Add symbol publishing compliance for Work Item 59264834"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "46d82e7b29b3d9cf5e3c4780fa8fc6ab9805bd1e",
+            "comment": "Add signature verification for SDL compliance (Work Item 58386093)"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "79cb3bf360544b5df9641cf9bcce1f37f4d5dafe",
+            "comment": "Add comprehensive security documentation for SDL compliance"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "75210fd9b536c0792848fd1239a596510cf793c7",
+            "comment": "SDL mandatory warnings - Configured all 20 SDL mandatory warnings as errors"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Oct 2025 05:28:12 GMT",
       "version": "0.0.0-canary.999",
       "tag": "react-native-windows_v0.0.0-canary.999",
