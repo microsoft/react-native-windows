@@ -135,9 +135,9 @@ TEST(PathValidatorTest, BlobIDLengthLimit) {
 
 TEST(PathValidatorTest, BundlePathTraversalBlocked) {
   // SDL: Block path traversal in bundle paths
-  EXPECT_THROW(PathValidator::ValidateBundlePath("../../etc/passwd"), ValidationException);
-  EXPECT_THROW(PathValidator::ValidateBundlePath("..\\..\\windows"), ValidationException);
-  EXPECT_THROW(PathValidator::ValidateBundlePath("%2e%2e%2f"), ValidationException);
+  EXPECT_THROW(PathValidator::ValidateFilePath("../../etc/passwd", "C:\\app"), ValidationException);
+  EXPECT_THROW(PathValidator::ValidateFilePath("..\\..\\windows", "C:\\app"), ValidationException);
+  EXPECT_THROW(PathValidator::ValidateFilePath("%2e%2e%2f", "C:\\app"), ValidationException);
 }
 
 // ============================================================================
