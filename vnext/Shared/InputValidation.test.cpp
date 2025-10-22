@@ -15,7 +15,7 @@ TEST(URLValidatorTest, AllowsHTTPSchemesOnly) {
   // Positive: http and https allowed
   EXPECT_NO_THROW(URLValidator::ValidateURL("http://example.com", {"http", "https"}));
   EXPECT_NO_THROW(URLValidator::ValidateURL("https://example.com", {"http", "https"}));
-  
+
   // Negative: file, ftp, javascript blocked
   EXPECT_THROW(URLValidator::ValidateURL("file:///etc/passwd", {"http", "https"}), ValidationException);
   EXPECT_THROW(URLValidator::ValidateURL("ftp://example.com", {"http", "https"}), ValidationException);
@@ -44,7 +44,8 @@ TEST(URLValidatorTest, BlocksIPv6Loopback) {
 
 TEST(URLValidatorTest, BlocksAWSMetadata) {
   // SDL Test Case: Block 169.254.169.254
-  EXPECT_THROW(URLValidator::ValidateURL("http://169.254.169.254/latest/meta-data/", {"http", "https"}), ValidationException);
+  EXPECT_THROW(
+      URLValidator::ValidateURL("http://169.254.169.254/latest/meta-data/", {"http", "https"}), ValidationException);
 }
 
 TEST(URLValidatorTest, BlocksPrivateIPRanges) {
@@ -83,7 +84,8 @@ TEST(URLValidatorTest, BlocksDecimalEncodedIPs) {
 TEST(URLValidatorTest, DecodesDoubleEncodedURLs) {
   // SDL Requirement: Decode URLs until no further decoding possible
   // %252e%252e = %2e%2e = .. (double encoded)
-  EXPECT_THROW(URLValidator::ValidateURL("https://example.com/%252e%252e/etc/passwd", {"http", "https"}), ValidationException);
+  EXPECT_THROW(
+      URLValidator::ValidateURL("https://example.com/%252e%252e/etc/passwd", {"http", "https"}), ValidationException);
 }
 
 TEST(URLValidatorTest, EnforcesMaxLength) {
@@ -147,7 +149,7 @@ TEST(PathValidatorTest, BlobIDLengthLimit) {
   // SDL: Max 128 characters
   std::string validLength(128, 'a');
   EXPECT_NO_THROW(PathValidator::ValidateBlobId(validLength));
-  
+
   std::string tooLong(129, 'a');
   EXPECT_THROW(PathValidator::ValidateBlobId(tooLong), ValidationException);
 }
@@ -171,13 +173,16 @@ TEST(PathValidatorTest, FilePathDriveLettersBlocked) {
 TEST(SizeValidatorTest, EnforcesMaxBlobSize) {
   // SDL: 100MB max
   EXPECT_NO_THROW(SizeValidator::ValidateSize(100 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"));
-  EXPECT_THROW(SizeValidator::ValidateSize(101 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"), ValidationException);
+  EXPECT_THROW(
+      SizeValidator::ValidateSize(101 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"), ValidationException);
 }
 
 TEST(SizeValidatorTest, EnforcesMaxWebSocketFrame) {
   // SDL: 256MB max
   EXPECT_NO_THROW(SizeValidator::ValidateSize(256 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"));
-  EXPECT_THROW(SizeValidator::ValidateSize(257 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"), ValidationException);
+  EXPECT_THROW(
+      SizeValidator::ValidateSize(257 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"),
+      ValidationException);
 }
 
 TEST(SizeValidatorTest, EnforcesCloseReasonLimit) {
@@ -191,7 +196,7 @@ TEST(SizeValidatorTest, ValidatesInt32Range) {
   EXPECT_NO_THROW(SizeValidator::ValidateInt32Range(0, 0, 100, "Test"));
   EXPECT_NO_THROW(SizeValidator::ValidateInt32Range(50, 0, 100, "Test"));
   EXPECT_NO_THROW(SizeValidator::ValidateInt32Range(100, 0, 100, "Test"));
-  
+
   EXPECT_THROW(SizeValidator::ValidateInt32Range(-1, 0, 100, "Test"), ValidationException);
   EXPECT_THROW(SizeValidator::ValidateInt32Range(101, 0, 100, "Test"), ValidationException);
 }
@@ -200,7 +205,7 @@ TEST(SizeValidatorTest, ValidatesUInt32Range) {
   // SDL: Unsigned range validation
   EXPECT_NO_THROW(SizeValidator::ValidateUInt32Range(0, 0, 1000, "Test"));
   EXPECT_NO_THROW(SizeValidator::ValidateUInt32Range(1000, 0, 1000, "Test"));
-  
+
   EXPECT_THROW(SizeValidator::ValidateUInt32Range(1001, 0, 1000, "Test"), ValidationException);
 }
 
@@ -252,7 +257,7 @@ TEST(EncodingValidatorTest, HeaderLengthLimit) {
   // SDL: Header max 8KB
   std::string validHeader(8192, 'a');
   EXPECT_NO_THROW(EncodingValidator::ValidateHeaderValue(validHeader));
-  
+
   std::string tooLong(8193, 'a');
   EXPECT_THROW(EncodingValidator::ValidateHeaderValue(tooLong), ValidationException);
 }
@@ -265,20 +270,20 @@ TEST(LoggingTest, LogsValidationFailures) {
   bool logged = false;
   std::string loggedCategory;
   std::string loggedMessage;
-  
-  SetValidationLogger([&](const std::string& category, const std::string& message) {
+
+  SetValidationLogger([&](const std::string &category, const std::string &message) {
     logged = true;
     loggedCategory = category;
     loggedMessage = message;
   });
-  
+
   // Trigger validation failure
   try {
     URLValidator::ValidateURL("https://localhost/", {"http", "https"});
   } catch (...) {
     // Expected
   }
-  
+
   // Verify logging occurred
   EXPECT_TRUE(logged);
   EXPECT_EQ(loggedCategory, "SSRF_ATTEMPT");
