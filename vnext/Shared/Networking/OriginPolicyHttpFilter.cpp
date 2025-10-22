@@ -758,7 +758,8 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
     if (originPolicy == OriginPolicy::CrossOriginResourceSharing) {
       // If inner filter can AllowRedirect, disable for preflight.
       winrt::impl::com_ref<IHttpBaseProtocolFilter> baseFilter;
-      if (baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+      baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>();
+      if (baseFilter) {
         baseFilter.AllowAutoRedirect(false);
       }
 

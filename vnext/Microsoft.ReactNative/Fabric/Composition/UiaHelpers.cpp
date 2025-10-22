@@ -48,7 +48,8 @@ HRESULT UiaNavigateHelper(
         uint32_t index = children.Size() - 1;
         do {
           auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-          if (uiaProvider = child->EnsureUiaProvider()) {
+          uiaProvider = child->EnsureUiaProvider();
+          if (uiaProvider) {
             break;
           }
         } while (index-- != 0);
@@ -60,7 +61,8 @@ HRESULT UiaNavigateHelper(
         uint32_t index = 0;
         do {
           auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-          if (uiaProvider = child->EnsureUiaProvider()) {
+          uiaProvider = child->EnsureUiaProvider();
+          if (uiaProvider) {
             break;
           }
         } while (++index != children.Size());
@@ -74,7 +76,8 @@ HRESULT UiaNavigateHelper(
 
         while (++it != children.end()) {
           auto nextchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-          if (uiaProvider = nextchild->EnsureUiaProvider()) {
+          uiaProvider = nextchild->EnsureUiaProvider();
+          if (uiaProvider) {
             break;
           }
         }
@@ -91,7 +94,8 @@ HRESULT UiaNavigateHelper(
           do {
             it--;
             auto prevchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-            if (uiaProvider = prevchild->EnsureUiaProvider()) {
+            uiaProvider = prevchild->EnsureUiaProvider();
+            if (uiaProvider) {
               break;
             }
           } while (it != children.begin());
