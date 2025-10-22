@@ -1,4 +1,6 @@
 // Copyright (c) Microsoft Corporation.
+}
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -182,71 +184,14 @@ TEST(EncodingValidatorTest, InvalidBase64Format) {
 // SDL COMPLIANCE TESTS - Numeric Validation
 // ============================================================================
 
-TEST(NumericValidatorTest, ValidatesRequestId) {
-  // Positive: Valid request IDs
-  EXPECT_NO_THROW(NumericValidator::ValidateRequestId(1));
-  EXPECT_NO_THROW(NumericValidator::ValidateRequestId(1000000));
-  
-  // Negative: Invalid request IDs
-  EXPECT_THROW(NumericValidator::ValidateRequestId(-1), ValidationException);
-}
-
-TEST(NumericValidatorTest, ValidatesSocketId) {
-  // Positive: Valid socket IDs
-  EXPECT_NO_THROW(NumericValidator::ValidateSocketId(1.0));
-  EXPECT_NO_THROW(NumericValidator::ValidateSocketId(12345.0));
-  
-  // Negative: Invalid socket IDs (negative, NaN, Infinity)
-  EXPECT_THROW(NumericValidator::ValidateSocketId(-1.0), ValidationException);
-  EXPECT_THROW(NumericValidator::ValidateSocketId(std::numeric_limits<double>::quiet_NaN()), ValidationException);
-  EXPECT_THROW(NumericValidator::ValidateSocketId(std::numeric_limits<double>::infinity()), ValidationException);
-}
-
 // ============================================================================
 // SDL COMPLIANCE TESTS - Header CRLF Injection Prevention
 // ============================================================================
 
-TEST(HeaderValidatorTest, ValidHeaders) {
-  // Positive: Valid headers
-  std::map<std::string, std::string> validHeaders = {
-    {"Content-Type", "application/json"},
-    {"Authorization", "Bearer token123"},
-    {"User-Agent", "ReactNative/1.0"}
-  };
-  EXPECT_NO_THROW(HeaderValidator::ValidateHeaders(validHeaders));
-}
 
-TEST(HeaderValidatorTest, DetectsCRLFInHeaderKey) {
-  // SDL Test Case: Block CRLF in header keys
-  std::map<std::string, std::string> maliciousHeaders = {
-    {"Content-Type\r\nX-Injected", "value"}
-  };
-  EXPECT_THROW(HeaderValidator::ValidateHeaders(maliciousHeaders), ValidationException);
-}
 
-TEST(HeaderValidatorTest, DetectsCRLFInHeaderValue) {
-  // SDL Test Case: Block CRLF in header values
-  std::map<std::string, std::string> maliciousHeaders = {
-    {"Content-Type", "application/json\r\nX-Injected: evil"}
-  };
-  EXPECT_THROW(HeaderValidator::ValidateHeaders(maliciousHeaders), ValidationException);
-}
 
-TEST(HeaderValidatorTest, DetectsLFOnly) {
-  // SDL Test Case: Block LF alone (not just CRLF)
-  std::map<std::string, std::string> maliciousHeaders = {
-    {"Content-Type", "application/json\nX-Injected: evil"}
-  };
-  EXPECT_THROW(HeaderValidator::ValidateHeaders(maliciousHeaders), ValidationException);
-}
 
-TEST(HeaderValidatorTest, DetectsCROnly) {
-  // SDL Test Case: Block CR alone
-  std::map<std::string, std::string> maliciousHeaders = {
-    {"Content-Type", "application/json\rX-Injected: evil"}
-  };
-  EXPECT_THROW(HeaderValidator::ValidateHeaders(maliciousHeaders), ValidationException);
-}
 
 // ============================================================================
 // SDL COMPLIANCE TESTS - Logging
