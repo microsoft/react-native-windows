@@ -9,10 +9,10 @@
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
-#include <react/renderer/components/textinput/TextInputState.h>
-#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
+#include <react/renderer/components/textinput/TextInputState.h>
+#include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
