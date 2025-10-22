@@ -20,6 +20,64 @@ import TextInputSharedExamples from './TextInputSharedExamples';
 import React, {useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
 
+const TextInputSubmitTest = () => {
+  const [value1, setValue1] = React.useState('');
+  const [value2, setValue2] = React.useState('');
+  const [submissions, setSubmissions] = React.useState([]);
+
+  const addSubmission = (text, method) => {
+    setSubmissions(prev => [...prev, `${method}: "${text}"`]);
+  };
+
+  return (
+    <View testID="textinput-submit-setvalue">
+      <Text style={styles.label}>
+        Test for setValue('') during onSubmitEditing - should clear input after
+        Enter
+      </Text>
+
+      <Text style={styles.label}>Manual setValue on submit:</Text>
+      <ExampleTextInput
+        style={styles.singleLine}
+        placeholder="Type text and press Enter - should clear"
+        value={value1}
+        onChangeText={setValue1}
+        onSubmitEditing={() => {
+          if (value1 !== '') {
+            addSubmission(value1, 'Manual');
+            setValue1(''); // This should clear the input
+          }
+        }}
+        testID="textinput-manual-setvalue"
+      />
+
+      <Text style={styles.label}>Using clearTextOnSubmit prop:</Text>
+      <ExampleTextInput
+        style={styles.singleLine}
+        placeholder="Type text and press Enter - should clear automatically"
+        value={value2}
+        onChangeText={setValue2}
+        clearTextOnSubmit={true}
+        onSubmitEditing={() => {
+          if (value2 !== '') {
+            addSubmission(value2, 'clearTextOnSubmit');
+          }
+        }}
+        testID="textinput-clearonsubmit"
+      />
+
+      <Text style={styles.label}>Submissions:</Text>
+      <View style={{backgroundColor: '#f0f0f0', padding: 10, maxHeight: 100}}>
+        {submissions.map((submission, index) => (
+          <Text key={index} style={{fontSize: 12}}>
+            {submission}
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
+};
+
 const ToggleDefaultPaddingExample = (): React.Node => {
   const [hasPadding, setHasPadding] = React.useState(false);
 
@@ -903,6 +961,12 @@ const examples: Array<RNTesterModuleExample> = [
           />
         </View>
       );
+    },
+  },
+  {
+    title: 'setValue during onSubmitEditing (Issue #15168)',
+    render: function (): React.Node {
+      return <TextInputSubmitTest />;
     },
   },
   // Windows]
