@@ -38,10 +38,9 @@ void BaseFileReaderResource::ReadAsText(
       Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
           static_cast<size_t>(size),
           Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE,
-          "FileReader blob"
-      );
+          "FileReader blob");
     }
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     return rejecter(ex.what());
   }
 
@@ -80,10 +79,9 @@ void BaseFileReaderResource::ReadAsDataUrl(
       Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
           static_cast<size_t>(size),
           Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE,
-          "FileReader data URL blob"
-      );
+          "FileReader data URL blob");
     }
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     return rejecter(ex.what());
   }
 

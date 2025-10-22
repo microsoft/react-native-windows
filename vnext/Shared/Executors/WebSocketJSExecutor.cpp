@@ -6,8 +6,8 @@
 #include <Utils/CppWinrtLessExceptions.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/RAMBundleRegistry.h>
-#include "WebSocketJSExecutor.h"
 #include "../InputValidation.h"
+#include "WebSocketJSExecutor.h"
 
 #include <folly/dynamic.h>
 #include <folly/json.h>
@@ -90,11 +90,11 @@ void WebSocketJSExecutor::loadBundle(
     if (!sourceURL.empty()) {
       Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"});
     }
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     OnHitError(std::string("Source URL validation failed: ") + ex.what());
     return;
   }
-  
+
   int requestId = ++m_requestId;
 
   if (!IsRunning()) {
@@ -118,11 +118,11 @@ void WebSocketJSExecutor::registerBundle(uint32_t bundleId, const std::string &b
   // SDL Compliance: Validate bundle path (P1 - CVSS 5.5)
   try {
     Microsoft::ReactNative::InputValidation::PathValidator::ValidateFilePath(bundlePath, "");
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     OnHitError(std::string("Bundle path validation failed: ") + ex.what());
     return;
   }
-  
+
   // NYI
   std::terminate();
 }

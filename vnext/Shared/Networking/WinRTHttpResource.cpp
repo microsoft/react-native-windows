@@ -12,11 +12,11 @@
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
 #include <utilities.h>
+#include "../InputValidation.h"
 #include "IRedirectEventSource.h"
 #include "Networking/NetworkPropertyIds.h"
 #include "OriginPolicyHttpFilter.h"
 #include "RedirectHttpFilter.h"
-#include "../InputValidation.h"
 
 // Boost Libraries
 #include <boost/algorithm/string.hpp>
@@ -285,7 +285,7 @@ void WinRTHttpResource::SendRequest(
   //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.1)
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"http", "https"});
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     if (m_onError) {
       m_onError(requestId, ex.what(), false);
     }
@@ -333,15 +333,12 @@ void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
   // SDL Compliance: Validate request ID range (P2 - CVSS 3.5)
   try {
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateInt32Range(
-        static_cast<int32_t>(requestId), 
-        0, 
-        INT32_MAX, 
-        "Request ID");
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException&) {
+        static_cast<int32_t>(requestId), 0, INT32_MAX, "Request ID");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &) {
     // Invalid request ID, ignore abort
     return;
   }
-  
+
   ResponseOperation request{nullptr};
 
   {
