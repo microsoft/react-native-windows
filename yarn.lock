@@ -2176,9 +2176,9 @@
   integrity sha512-IG/c4NhNzUjpME9GAIOTTetkvZ3gJgvwuDkgv58cePHbCjDENS5+oyIR/iPNBjZfmF2PG/WVyINDajD9BezXQg==
 
 "@react-native-picker/picker@^2.5.1":
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.3.tgz#60ed5d55de430136dcfa1c8a9d0194ad09d1c58d"
-  integrity sha512-aknxi+6dmNrSk0Bev+cnhsUAwi3Iz7KTj8lSHnGNcU+P9VkCGN6QQDcU0e2gnWLY3zhS3HzV+DBTmzR9ia6kTg==
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
+  integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
 "@react-native/assets-registry@0.82.0-nightly-20250806-5936f29d6":
   version "0.82.0-nightly-20250806-5936f29d6"
@@ -2983,9 +2983,9 @@
     form-data "^4.0.4"
 
 "@types/node@*", "@types/node@^22.0.0", "@types/node@^22.14.0":
-  version "22.18.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.18.10.tgz#37f0ac8d2ec41af7bba06f162c85ff409e4e3420"
-  integrity sha512-anNG/V/Efn/YZY4pRzbACnKxNKoBng2VTFydVu8RRs5hQjikP8CQfaeAV59VFSCzKNp90mXiVXW2QzV56rwMrg==
+  version "22.18.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.18.12.tgz#e165d87bc25d7bf6d3657035c914db7485de84fb"
+  integrity sha512-BICHQ67iqxQGFSzfCFTT7MRQ5XcBjG5aeKh5Ok38UBbPe5fxTyE+aHFxwVrGyr8GNlqFMLKD1D3P2K/1ks8tog==
   dependencies:
     undici-types "~6.21.0"
 
@@ -5531,9 +5531,9 @@ env-paths@^2.2.1:
   integrity sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
 
 envinfo@^7.13.0, envinfo@^7.5.0, envinfo@^7.8.1:
-  version "7.18.0"
-  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.18.0.tgz#38793d9dab9a5dec7b2a3146ed094cda8e754ed8"
-  integrity sha512-02QGCLRW+Jb8PC270ic02lat+N57iBaWsvHjcJViqp6UVupRB+Vsg7brYPTqEFXvsdTql3KnSczv5ModZFpl8Q==
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.19.0.tgz#b4b4507a27e9900b0175f556167fd3a95f8623f1"
+  integrity sha512-DoSM9VyG6O3vqBf+p3Gjgr/Q52HYBBtO3v+4koAxt1MnWr+zEnxE+nke/yXS4lt2P4SYCHQ4V3f1i88LQVOpAw==
 
 err-code@^2.0.2:
   version "2.0.3"
@@ -7394,10 +7394,10 @@ is-callable@^1.1.3, is-callable@^1.1.4, is-callable@^1.2.7:
   resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.2.7.tgz#3bc2a85ea742d9e36205dcacdd72ca1fdc51b055"
   integrity sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==
 
-is-core-module@^2.12.0, is-core-module@^2.13.0, is-core-module@^2.16.0:
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.16.0.tgz#6c01ffdd5e33c49c1d2abfa93334a85cb56bd81c"
-  integrity sha512-urTSINYfAYgcbLb0yDQ6egFm6h3Mo1DcF9EkyXSRjjzdHbsulg01qhwWuXdOoUBuTkbQ80KDboXa0vFJ+BDH+g==
+is-core-module@^2.12.0, is-core-module@^2.13.0, is-core-module@^2.16.1:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.16.1.tgz#2a98801a849f43e2add644fbb6bc6229b19a4ef4"
+  integrity sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==
   dependencies:
     hasown "^2.0.2"
 
@@ -11085,7 +11085,7 @@ resolve@^1.1.6, resolve@^1.10.1, resolve@^1.14.2, resolve@^1.19.0, resolve@^1.20
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.10.tgz#b663e83ffb09bbf2386944736baae803029b8b39"
   integrity sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==
   dependencies:
-    is-core-module "^2.16.0"
+    is-core-module "^2.16.1"
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
@@ -11275,9 +11275,9 @@ scheduler@^0.25.0:
   integrity sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==
 
 screenshot-desktop@^1.12.2:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.15.2.tgz#21489e1b4ac779659460cf65dc8db6f84023f30d"
-  integrity sha512-/uf8xhq3n/Ym7oOKT4XF1uLAYP9njABB9zMw7kkOaDVr8XOO1HBQsNJXT8lUvzD26Uj8IYkwQX46UMZG4Y/dIQ==
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.15.3.tgz#59c1abd904e21a5870d8930263db591923cc2eae"
+  integrity sha512-bHztitCmaa+A+ssxRa3LDNepQzCHEEAkz1FaJjoZx2yDMkHIkHLKKcc5xMgkGNas97wSGboSB2BoO0c4RnjlJw==
   dependencies:
     temp "^0.9.4"
 

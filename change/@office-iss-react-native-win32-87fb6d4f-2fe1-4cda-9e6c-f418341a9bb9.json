@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix: stricter checks against key events",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "sanajmi@microsoft.com",
-  "dependentChangeType": "patch"
-}
