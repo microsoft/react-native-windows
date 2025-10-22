@@ -1,6 +1,4 @@
 // Copyright (c) Microsoft Corporation.
-}
-// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -184,13 +182,10 @@ TEST(EncodingValidatorTest, InvalidBase64Format) {
 // SDL COMPLIANCE TESTS - Numeric Validation
 // ============================================================================
 
+
 // ============================================================================
 // SDL COMPLIANCE TESTS - Header CRLF Injection Prevention
 // ============================================================================
-
-
-
-
 
 
 // ============================================================================
@@ -209,3 +204,4 @@ TEST(ValidationLoggerTest, LogsFailures) {
     EXPECT_TRUE(message.find("localhost") != std::string::npos || message.find("SSRF") != std::string::npos);
   }
 }
+
