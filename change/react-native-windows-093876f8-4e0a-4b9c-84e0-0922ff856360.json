@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adding fix for textInput clear on submit",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
