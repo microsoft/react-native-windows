@@ -335,7 +335,7 @@ void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, 
   //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"});
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     Fail(ex.what(), ErrorType::Connection);
     return;
   }
@@ -654,7 +654,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
   //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"});
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     if (m_errorHandler) {
       m_errorHandler({ex.what(), ErrorType::Connection});
     }

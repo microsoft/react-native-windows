@@ -20,8 +20,8 @@
 
 #include "Chakra/ChakraHelpers.h"
 #include "Chakra/ChakraUtils.h"
-#include "JSI/RuntimeHolder.h"
 #include "InputValidation.h"
+#include "JSI/RuntimeHolder.h"
 
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>
@@ -96,13 +96,13 @@ void LoadRemoteUrlScript(
   // SDL Compliance: Validate bundle path for traversal attacks
   try {
     Microsoft::ReactNative::InputValidation::PathValidator::ValidateFilePath(jsBundleRelativePath, "");
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     if (devSettings && devSettings->errorCallback) {
       devSettings->errorCallback(std::string("Bundle path validation failed: ") + ex.what());
     }
     return;
   }
-  
+
   // First attempt to get download the Js locally, to catch any bundling
   // errors before attempting to load the actual script.
 
@@ -569,7 +569,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
   try {
     // SDL Compliance: Validate bundle path before loading
     Microsoft::ReactNative::InputValidation::PathValidator::ValidateFilePath(jsBundleRelativePath, "");
-    
+
     if (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback != nullptr ||
         m_devSettings->useFastRefresh) {
       Microsoft::ReactNative::LoadRemoteUrlScript(

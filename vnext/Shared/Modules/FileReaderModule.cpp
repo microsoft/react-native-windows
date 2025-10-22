@@ -5,8 +5,8 @@
 
 #include <CreateModules.h>
 #include <ReactPropertyBag.h>
-#include "Networking/NetworkPropertyIds.h"
 #include "InputValidation.h"
+#include "Networking/NetworkPropertyIds.h"
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
@@ -54,10 +54,8 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
   // SDL Compliance: Validate size (P1 - CVSS 5.0)
   try {
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-        static_cast<size_t>(size), 
-        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE, 
-        "Blob");
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+        static_cast<size_t>(size), Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE, "Blob");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(winrt::to_hstring(ex.what()).c_str());
     return;
   }
@@ -107,26 +105,33 @@ void FileReaderTurboModule::ReadAsText(
   try {
     // Allowlist of safe encodings
     std::vector<std::string> allowedEncodings = {
-        "UTF-8", "utf-8", "utf8",
-        "UTF-16", "utf-16", "utf16",
-        "ASCII", "ascii",
-        "ISO-8859-1", "iso-8859-1",
+        "UTF-8",
+        "utf-8",
+        "utf8",
+        "UTF-16",
+        "utf-16",
+        "utf16",
+        "ASCII",
+        "ascii",
+        "ISO-8859-1",
+        "iso-8859-1",
         "" // Empty is allowed (defaults to UTF-8)
     };
-    
+
     if (!encoding.empty()) {
       bool isAllowed = false;
-      for (const auto& allowed : allowedEncodings) {
+      for (const auto &allowed : allowedEncodings) {
         if (encoding == allowed) {
           isAllowed = true;
           break;
         }
       }
       if (!isAllowed) {
-        throw Microsoft::ReactNative::InputValidation::ValidationException("Encoding '" + encoding + "' not in allowlist");
+        throw Microsoft::ReactNative::InputValidation::ValidationException(
+            "Encoding '" + encoding + "' not in allowlist");
       }
     }
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(winrt::to_hstring(ex.what()).c_str());
     return;
   }

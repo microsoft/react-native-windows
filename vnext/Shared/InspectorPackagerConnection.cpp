@@ -5,8 +5,8 @@
 
 #include <folly/json.h>
 #include <tracing/tracing.h>
-#include "InspectorPackagerConnection.h"
 #include "InputValidation.h"
+#include "InspectorPackagerConnection.h"
 
 namespace Microsoft::ReactNative {
 
@@ -148,7 +148,7 @@ InspectorPackagerConnection::InspectorPackagerConnection(
   // SDL Compliance: Validate inspector URL (P2 - CVSS 4.0)
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(m_url, {"ws", "wss"});
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     std::string errorMsg = std::string("Inspector URL validation failed: ") + ex.what();
     facebook::react::tracing::error(errorMsg.c_str());
     // Continue with invalid URL - error will be caught on connection attempt

@@ -83,10 +83,7 @@ void BlobTurboModule::SendOverSocket(msrn::JSValue &&blob, double socketID) noex
       int64_t size = blob[blobKeys.Size].AsInt64();
       if (size > 0) {
         Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-            static_cast<size_t>(size),
-            Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE,
-            "Blob"
-        );
+            static_cast<size_t>(size), Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE, "Blob");
       }
     }
 
@@ -95,7 +92,7 @@ void BlobTurboModule::SendOverSocket(msrn::JSValue &&blob, double socketID) noex
         blob[blobKeys.Offset].AsInt64(),
         blob[blobKeys.Size].AsInt64(),
         static_cast<int64_t>(socketID));
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     Modules::SendEvent(m_context, L"blobFailed", {std::string(ex.what())});
   }
 }
@@ -107,19 +104,16 @@ void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> &&parts, string &&wi
 
     //  VALIDATE Total Size - DoS PROTECTION
     size_t totalSize = 0;
-    for (const auto& part : parts) {
+    for (const auto &part : parts) {
       if (part.AsObject().count("data") > 0) {
         totalSize += part["data"].AsString().length();
       }
     }
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-        totalSize,
-        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE,
-        "Blob parts total"
-    );
+        totalSize, Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE, "Blob parts total");
 
     m_resource->CreateFromParts(std::move(parts), std::move(withId));
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     Modules::SendEvent(m_context, L"blobFailed", {std::string(ex.what())});
   }
 }
@@ -129,7 +123,7 @@ void BlobTurboModule::Release(string &&blobId) noexcept {
   try {
     Microsoft::ReactNative::InputValidation::PathValidator::ValidateBlobId(blobId);
     m_resource->Release(std::move(blobId));
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException&) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &) {
     // Log but don't propagate - release is best-effort
   }
 }

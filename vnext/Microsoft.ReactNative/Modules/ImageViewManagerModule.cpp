@@ -20,8 +20,8 @@
 #include "XamlUtils.h"
 #endif // USE_FABRIC
 #include <winrt/Windows.Storage.Streams.h>
-#include "Unicode.h"
 #include "../../Shared/InputValidation.h"
+#include "Unicode.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -110,7 +110,7 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
     if (uri.find("data:") != 0) {
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(ex.what());
     return;
   }
@@ -144,11 +144,11 @@ void ImageLoader::getSizeWithHeaders(
     if (uri.find("data:") != 0) {
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(ex.what());
     return;
   }
-  
+
   m_context.UIDispatcher().Post([context = m_context,
                                  uri = std::move(uri),
                                  headers = std::move(headers),
@@ -176,7 +176,7 @@ void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&res
     if (uri.find("data:") != 0) {
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(ex.what());
     return;
   }
@@ -196,11 +196,11 @@ void ImageLoader::prefetchImageWithMetadata(
     if (uri.find("data:") != 0) {
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(ex.what());
     return;
   }
-  
+
   // NYI
   result.Resolve(true);
 }

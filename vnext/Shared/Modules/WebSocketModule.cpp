@@ -10,8 +10,8 @@
 #include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
-#include "Networking/NetworkPropertyIds.h"
 #include "InputValidation.h"
+#include "Networking/NetworkPropertyIds.h"
 
 // fmt
 #include <fmt/format.h>
@@ -136,7 +136,7 @@ void WebSocketTurboModule::Connect(
   //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"});
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(socketID)}, {"message", ex.what()}});
     return;
   }
@@ -175,9 +175,8 @@ void WebSocketTurboModule::Close(double code, string &&reason, double socketID) 
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
         reason.length(),
         Microsoft::ReactNative::InputValidation::SizeValidator::MAX_CLOSE_REASON,
-        "WebSocket close reason"
-    );
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+        "WebSocket close reason");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(socketID)}, {"message", ex.what()}});
     return;
   }
@@ -199,9 +198,8 @@ void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
         message.length(),
         Microsoft::ReactNative::InputValidation::SizeValidator::MAX_WEBSOCKET_FRAME,
-        "WebSocket message"
-    );
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+        "WebSocket message");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
     return;
   }
@@ -229,9 +227,8 @@ void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID)
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
         estimatedSize,
         Microsoft::ReactNative::InputValidation::SizeValidator::MAX_WEBSOCKET_FRAME,
-        "WebSocket binary frame"
-    );
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+        "WebSocket binary frame");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
     return;
   }
