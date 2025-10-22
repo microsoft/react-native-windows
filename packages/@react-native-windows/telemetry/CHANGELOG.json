@@ -2,6 +2,42 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 21 Oct 2025 05:28:11 GMT",
+      "version": "0.0.0-canary.126",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.126",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "df86d5b3e7fd83b3f75a7769e39945c86bba57b6",
+            "comment": "rever passing localid to telmetry pipeline"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Oct 2025 05:27:28 GMT",
+      "version": "0.0.0-canary.125",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.125",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.68",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.56",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Aug 2025 05:30:41 GMT",
       "version": "0.0.0-canary.124",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.124",

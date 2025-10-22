@@ -14,6 +14,40 @@
 
 namespace facebook::react {
 
+VirtualViewProps::VirtualViewProps(
+    const PropsParserContext &context,
+    const VirtualViewProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    initialHidden(convertRawProp(context, rawProps, "initialHidden", sourceProps.initialHidden, {false})),
+    renderState(convertRawProp(context, rawProps, "renderState", sourceProps.renderState, {0})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName VirtualViewProps::getDiffPropsImplementationTarget() const {
+  return "VirtualView";
+}
+
+folly::dynamic VirtualViewProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = VirtualViewProps();
+  const VirtualViewProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const VirtualViewProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (initialHidden != oldProps->initialHidden) {
+    result["initialHidden"] = initialHidden;
+  }
+    
+  if (renderState != oldProps->renderState) {
+    result["renderState"] = renderState;
+  }
+  return result;
+}
+#endif
 ActivityIndicatorViewProps::ActivityIndicatorViewProps(
     const PropsParserContext &context,
     const ActivityIndicatorViewProps &sourceProps,
@@ -22,8 +56,42 @@ ActivityIndicatorViewProps::ActivityIndicatorViewProps(
     hidesWhenStopped(convertRawProp(context, rawProps, "hidesWhenStopped", sourceProps.hidesWhenStopped, {true})),
     animating(convertRawProp(context, rawProps, "animating", sourceProps.animating, {true})),
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
-    size(convertRawProp(context, rawProps, "size", sourceProps.size, {ActivityIndicatorViewSize::Small}))
-      {}
+    size(convertRawProp(context, rawProps, "size", sourceProps.size, {ActivityIndicatorViewSize::Small})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName ActivityIndicatorViewProps::getDiffPropsImplementationTarget() const {
+  return "ActivityIndicatorView";
+}
+
+folly::dynamic ActivityIndicatorViewProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = ActivityIndicatorViewProps();
+  const ActivityIndicatorViewProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const ActivityIndicatorViewProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (hidesWhenStopped != oldProps->hidesWhenStopped) {
+    result["hidesWhenStopped"] = hidesWhenStopped;
+  }
+    
+  if (animating != oldProps->animating) {
+    result["animating"] = animating;
+  }
+    
+  if (color != oldProps->color) {
+    result["color"] = *color;
+  }
+    
+  if (size != oldProps->size) {
+    result["size"] = toDynamic(size);
+  }
+  return result;
+}
+#endif
 AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     const PropsParserContext &context,
     const AndroidDrawerLayoutProps &sourceProps,
@@ -34,15 +102,79 @@ AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     drawerPosition(convertRawProp(context, rawProps, "drawerPosition", sourceProps.drawerPosition, {AndroidDrawerLayoutDrawerPosition::Left})),
     drawerWidth(convertRawProp(context, rawProps, "drawerWidth", sourceProps.drawerWidth, {})),
     drawerLockMode(convertRawProp(context, rawProps, "drawerLockMode", sourceProps.drawerLockMode, {AndroidDrawerLayoutDrawerLockMode::Unlocked})),
-    statusBarBackgroundColor(convertRawProp(context, rawProps, "statusBarBackgroundColor", sourceProps.statusBarBackgroundColor, {}))
-      {}
+    statusBarBackgroundColor(convertRawProp(context, rawProps, "statusBarBackgroundColor", sourceProps.statusBarBackgroundColor, {})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName AndroidDrawerLayoutProps::getDiffPropsImplementationTarget() const {
+  return "AndroidDrawerLayout";
+}
+
+folly::dynamic AndroidDrawerLayoutProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = AndroidDrawerLayoutProps();
+  const AndroidDrawerLayoutProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const AndroidDrawerLayoutProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (keyboardDismissMode != oldProps->keyboardDismissMode) {
+    result["keyboardDismissMode"] = toDynamic(keyboardDismissMode);
+  }
+    
+  if (drawerBackgroundColor != oldProps->drawerBackgroundColor) {
+    result["drawerBackgroundColor"] = *drawerBackgroundColor;
+  }
+    
+  if (drawerPosition != oldProps->drawerPosition) {
+    result["drawerPosition"] = toDynamic(drawerPosition);
+  }
+    
+  if ((drawerWidth != oldProps->drawerWidth) && !(std::isnan(drawerWidth) && std::isnan(oldProps->drawerWidth))) {
+    result["drawerWidth"] = drawerWidth;
+  }
+    
+  if (drawerLockMode != oldProps->drawerLockMode) {
+    result["drawerLockMode"] = toDynamic(drawerLockMode);
+  }
+    
+  if (statusBarBackgroundColor != oldProps->statusBarBackgroundColor) {
+    result["statusBarBackgroundColor"] = *statusBarBackgroundColor;
+  }
+  return result;
+}
+#endif
 AndroidHorizontalScrollContentViewProps::AndroidHorizontalScrollContentViewProps(
     const PropsParserContext &context,
     const AndroidHorizontalScrollContentViewProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    removeClippedSubviews(convertRawProp(context, rawProps, "removeClippedSubviews", sourceProps.removeClippedSubviews, {false}))
-      {}
+    removeClippedSubviews(convertRawProp(context, rawProps, "removeClippedSubviews", sourceProps.removeClippedSubviews, {false})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName AndroidHorizontalScrollContentViewProps::getDiffPropsImplementationTarget() const {
+  return "AndroidHorizontalScrollContentView";
+}
+
+folly::dynamic AndroidHorizontalScrollContentViewProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = AndroidHorizontalScrollContentViewProps();
+  const AndroidHorizontalScrollContentViewProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const AndroidHorizontalScrollContentViewProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (removeClippedSubviews != oldProps->removeClippedSubviews) {
+    result["removeClippedSubviews"] = removeClippedSubviews;
+  }
+  return result;
+}
+#endif
 AndroidSwipeRefreshLayoutProps::AndroidSwipeRefreshLayoutProps(
     const PropsParserContext &context,
     const AndroidSwipeRefreshLayoutProps &sourceProps,
@@ -53,8 +185,50 @@ AndroidSwipeRefreshLayoutProps::AndroidSwipeRefreshLayoutProps(
     progressBackgroundColor(convertRawProp(context, rawProps, "progressBackgroundColor", sourceProps.progressBackgroundColor, {})),
     size(convertRawProp(context, rawProps, "size", sourceProps.size, {AndroidSwipeRefreshLayoutSize::Default})),
     progressViewOffset(convertRawProp(context, rawProps, "progressViewOffset", sourceProps.progressViewOffset, {0.0})),
-    refreshing(convertRawProp(context, rawProps, "refreshing", sourceProps.refreshing, {false}))
-      {}
+    refreshing(convertRawProp(context, rawProps, "refreshing", sourceProps.refreshing, {false})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName AndroidSwipeRefreshLayoutProps::getDiffPropsImplementationTarget() const {
+  return "AndroidSwipeRefreshLayout";
+}
+
+folly::dynamic AndroidSwipeRefreshLayoutProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = AndroidSwipeRefreshLayoutProps();
+  const AndroidSwipeRefreshLayoutProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const AndroidSwipeRefreshLayoutProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (enabled != oldProps->enabled) {
+    result["enabled"] = enabled;
+  }
+    
+  if (colors != oldProps->colors) {
+    result["colors"] = toDynamic(colors);
+  }
+    
+  if (progressBackgroundColor != oldProps->progressBackgroundColor) {
+    result["progressBackgroundColor"] = *progressBackgroundColor;
+  }
+    
+  if (size != oldProps->size) {
+    result["size"] = toDynamic(size);
+  }
+    
+  if ((progressViewOffset != oldProps->progressViewOffset) && !(std::isnan(progressViewOffset) && std::isnan(oldProps->progressViewOffset))) {
+    result["progressViewOffset"] = progressViewOffset;
+  }
+    
+  if (refreshing != oldProps->refreshing) {
+    result["refreshing"] = refreshing;
+  }
+  return result;
+}
+#endif
 AndroidSwitchProps::AndroidSwitchProps(
     const PropsParserContext &context,
     const AndroidSwitchProps &sourceProps,
@@ -68,15 +242,88 @@ AndroidSwitchProps::AndroidSwitchProps(
     value(convertRawProp(context, rawProps, "value", sourceProps.value, {false})),
     on(convertRawProp(context, rawProps, "on", sourceProps.on, {false})),
     thumbTintColor(convertRawProp(context, rawProps, "thumbTintColor", sourceProps.thumbTintColor, {})),
-    trackTintColor(convertRawProp(context, rawProps, "trackTintColor", sourceProps.trackTintColor, {}))
-      {}
+    trackTintColor(convertRawProp(context, rawProps, "trackTintColor", sourceProps.trackTintColor, {})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName AndroidSwitchProps::getDiffPropsImplementationTarget() const {
+  return "AndroidSwitch";
+}
+
+folly::dynamic AndroidSwitchProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = AndroidSwitchProps();
+  const AndroidSwitchProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const AndroidSwitchProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (disabled != oldProps->disabled) {
+    result["disabled"] = disabled;
+  }
+    
+  if (enabled != oldProps->enabled) {
+    result["enabled"] = enabled;
+  }
+    
+  if (thumbColor != oldProps->thumbColor) {
+    result["thumbColor"] = *thumbColor;
+  }
+    
+  if (trackColorForFalse != oldProps->trackColorForFalse) {
+    result["trackColorForFalse"] = *trackColorForFalse;
+  }
+    
+  if (trackColorForTrue != oldProps->trackColorForTrue) {
+    result["trackColorForTrue"] = *trackColorForTrue;
+  }
+    
+  if (value != oldProps->value) {
+    result["value"] = value;
+  }
+    
+  if (on != oldProps->on) {
+    result["on"] = on;
+  }
+    
+  if (thumbTintColor != oldProps->thumbTintColor) {
+    result["thumbTintColor"] = *thumbTintColor;
+  }
+    
+  if (trackTintColor != oldProps->trackTintColor) {
+    result["trackTintColor"] = *trackTintColor;
+  }
+  return result;
+}
+#endif
 DebuggingOverlayProps::DebuggingOverlayProps(
     const PropsParserContext &context,
     const DebuggingOverlayProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
 
+     {}
     
-      {}
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName DebuggingOverlayProps::getDiffPropsImplementationTarget() const {
+  return "DebuggingOverlay";
+}
+
+folly::dynamic DebuggingOverlayProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = DebuggingOverlayProps();
+  const DebuggingOverlayProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const DebuggingOverlayProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  return result;
+}
+#endif
 AndroidProgressBarProps::AndroidProgressBarProps(
     const PropsParserContext &context,
     const AndroidProgressBarProps &sourceProps,
@@ -88,8 +335,54 @@ AndroidProgressBarProps::AndroidProgressBarProps(
     progress(convertRawProp(context, rawProps, "progress", sourceProps.progress, {0.0})),
     animating(convertRawProp(context, rawProps, "animating", sourceProps.animating, {true})),
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
-    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {""}))
-      {}
+    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {""})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName AndroidProgressBarProps::getDiffPropsImplementationTarget() const {
+  return "AndroidProgressBar";
+}
+
+folly::dynamic AndroidProgressBarProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = AndroidProgressBarProps();
+  const AndroidProgressBarProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const AndroidProgressBarProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (styleAttr != oldProps->styleAttr) {
+    result["styleAttr"] = styleAttr;
+  }
+    
+  if (typeAttr != oldProps->typeAttr) {
+    result["typeAttr"] = typeAttr;
+  }
+    
+  if (indeterminate != oldProps->indeterminate) {
+    result["indeterminate"] = indeterminate;
+  }
+    
+  if ((progress != oldProps->progress) && !(std::isnan(progress) && std::isnan(oldProps->progress))) {
+    result["progress"] = progress;
+  }
+    
+  if (animating != oldProps->animating) {
+    result["animating"] = animating;
+  }
+    
+  if (color != oldProps->color) {
+    result["color"] = *color;
+  }
+    
+  if (testID != oldProps->testID) {
+    result["testID"] = testID;
+  }
+  return result;
+}
+#endif
 PullToRefreshViewProps::PullToRefreshViewProps(
     const PropsParserContext &context,
     const PullToRefreshViewProps &sourceProps,
@@ -99,15 +392,75 @@ PullToRefreshViewProps::PullToRefreshViewProps(
     titleColor(convertRawProp(context, rawProps, "titleColor", sourceProps.titleColor, {})),
     title(convertRawProp(context, rawProps, "title", sourceProps.title, {})),
     progressViewOffset(convertRawProp(context, rawProps, "progressViewOffset", sourceProps.progressViewOffset, {0.0})),
-    refreshing(convertRawProp(context, rawProps, "refreshing", sourceProps.refreshing, {false}))
-      {}
+    refreshing(convertRawProp(context, rawProps, "refreshing", sourceProps.refreshing, {false})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName PullToRefreshViewProps::getDiffPropsImplementationTarget() const {
+  return "PullToRefreshView";
+}
+
+folly::dynamic PullToRefreshViewProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = PullToRefreshViewProps();
+  const PullToRefreshViewProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const PullToRefreshViewProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (tintColor != oldProps->tintColor) {
+    result["tintColor"] = *tintColor;
+  }
+    
+  if (titleColor != oldProps->titleColor) {
+    result["titleColor"] = *titleColor;
+  }
+    
+  if (title != oldProps->title) {
+    result["title"] = title;
+  }
+    
+  if ((progressViewOffset != oldProps->progressViewOffset) && !(std::isnan(progressViewOffset) && std::isnan(oldProps->progressViewOffset))) {
+    result["progressViewOffset"] = progressViewOffset;
+  }
+    
+  if (refreshing != oldProps->refreshing) {
+    result["refreshing"] = refreshing;
+  }
+  return result;
+}
+#endif
 InputAccessoryProps::InputAccessoryProps(
     const PropsParserContext &context,
     const InputAccessoryProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    backgroundColor(convertRawProp(context, rawProps, "backgroundColor", sourceProps.backgroundColor, {}))
-      {}
+    backgroundColor(convertRawProp(context, rawProps, "backgroundColor", sourceProps.backgroundColor, {})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName InputAccessoryProps::getDiffPropsImplementationTarget() const {
+  return "InputAccessory";
+}
+
+folly::dynamic InputAccessoryProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = InputAccessoryProps();
+  const InputAccessoryProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const InputAccessoryProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (backgroundColor != oldProps->backgroundColor) {
+    result["backgroundColor"] = *backgroundColor;
+  }
+  return result;
+}
+#endif
 ModalHostViewProps::ModalHostViewProps(
     const PropsParserContext &context,
     const ModalHostViewProps &sourceProps,
@@ -121,17 +474,103 @@ ModalHostViewProps::ModalHostViewProps(
     hardwareAccelerated(convertRawProp(context, rawProps, "hardwareAccelerated", sourceProps.hardwareAccelerated, {false})),
     visible(convertRawProp(context, rawProps, "visible", sourceProps.visible, {false})),
     animated(convertRawProp(context, rawProps, "animated", sourceProps.animated, {false})),
+    allowSwipeDismissal(convertRawProp(context, rawProps, "allowSwipeDismissal", sourceProps.allowSwipeDismissal, {false})),
     supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", ModalHostViewSupportedOrientationsMaskWrapped{ .value = sourceProps.supportedOrientations }, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)}).value),
     identifier(convertRawProp(context, rawProps, "identifier", sourceProps.identifier, {0})),
-    title(convertRawProp(context, rawProps, "title", sourceProps.title, {}))
-      {}
+    title(convertRawProp(context, rawProps, "title", sourceProps.title, {})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName ModalHostViewProps::getDiffPropsImplementationTarget() const {
+  return "ModalHostView";
+}
+
+folly::dynamic ModalHostViewProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = ModalHostViewProps();
+  const ModalHostViewProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const ModalHostViewProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (animationType != oldProps->animationType) {
+    result["animationType"] = toDynamic(animationType);
+  }
+    
+  if (presentationStyle != oldProps->presentationStyle) {
+    result["presentationStyle"] = toDynamic(presentationStyle);
+  }
+    
+  if (transparent != oldProps->transparent) {
+    result["transparent"] = transparent;
+  }
+    
+  if (statusBarTranslucent != oldProps->statusBarTranslucent) {
+    result["statusBarTranslucent"] = statusBarTranslucent;
+  }
+    
+  if (navigationBarTranslucent != oldProps->navigationBarTranslucent) {
+    result["navigationBarTranslucent"] = navigationBarTranslucent;
+  }
+    
+  if (hardwareAccelerated != oldProps->hardwareAccelerated) {
+    result["hardwareAccelerated"] = hardwareAccelerated;
+  }
+    
+  if (visible != oldProps->visible) {
+    result["visible"] = visible;
+  }
+    
+  if (animated != oldProps->animated) {
+    result["animated"] = animated;
+  }
+    
+  if (allowSwipeDismissal != oldProps->allowSwipeDismissal) {
+    result["allowSwipeDismissal"] = allowSwipeDismissal;
+  }
+    
+  if (supportedOrientations != oldProps->supportedOrientations) {
+    result["supportedOrientations"] = toDynamic(supportedOrientations);
+  }
+    
+  if (identifier != oldProps->identifier) {
+    result["identifier"] = identifier;
+  }
+    
+  if (title != oldProps->title) {
+    result["title"] = title;
+  }
+  return result;
+}
+#endif
 SafeAreaViewProps::SafeAreaViewProps(
     const PropsParserContext &context,
     const SafeAreaViewProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
 
+     {}
     
-      {}
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName SafeAreaViewProps::getDiffPropsImplementationTarget() const {
+  return "SafeAreaView";
+}
+
+folly::dynamic SafeAreaViewProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = SafeAreaViewProps();
+  const SafeAreaViewProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const SafeAreaViewProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  return result;
+}
+#endif
 SwitchProps::SwitchProps(
     const PropsParserContext &context,
     const SwitchProps &sourceProps,
@@ -144,14 +583,86 @@ SwitchProps::SwitchProps(
     thumbTintColor(convertRawProp(context, rawProps, "thumbTintColor", sourceProps.thumbTintColor, {})),
     thumbColor(convertRawProp(context, rawProps, "thumbColor", sourceProps.thumbColor, {})),
     trackColorForFalse(convertRawProp(context, rawProps, "trackColorForFalse", sourceProps.trackColorForFalse, {})),
-    trackColorForTrue(convertRawProp(context, rawProps, "trackColorForTrue", sourceProps.trackColorForTrue, {}))
-      {}
+    trackColorForTrue(convertRawProp(context, rawProps, "trackColorForTrue", sourceProps.trackColorForTrue, {})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName SwitchProps::getDiffPropsImplementationTarget() const {
+  return "Switch";
+}
+
+folly::dynamic SwitchProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = SwitchProps();
+  const SwitchProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const SwitchProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (disabled != oldProps->disabled) {
+    result["disabled"] = disabled;
+  }
+    
+  if (value != oldProps->value) {
+    result["value"] = value;
+  }
+    
+  if (tintColor != oldProps->tintColor) {
+    result["tintColor"] = *tintColor;
+  }
+    
+  if (onTintColor != oldProps->onTintColor) {
+    result["onTintColor"] = *onTintColor;
+  }
+    
+  if (thumbTintColor != oldProps->thumbTintColor) {
+    result["thumbTintColor"] = *thumbTintColor;
+  }
+    
+  if (thumbColor != oldProps->thumbColor) {
+    result["thumbColor"] = *thumbColor;
+  }
+    
+  if (trackColorForFalse != oldProps->trackColorForFalse) {
+    result["trackColorForFalse"] = *trackColorForFalse;
+  }
+    
+  if (trackColorForTrue != oldProps->trackColorForTrue) {
+    result["trackColorForTrue"] = *trackColorForTrue;
+  }
+  return result;
+}
+#endif
 UnimplementedNativeViewProps::UnimplementedNativeViewProps(
     const PropsParserContext &context,
     const UnimplementedNativeViewProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    name(convertRawProp(context, rawProps, "name", sourceProps.name, {""}))
-      {}
+    name(convertRawProp(context, rawProps, "name", sourceProps.name, {""})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName UnimplementedNativeViewProps::getDiffPropsImplementationTarget() const {
+  return "UnimplementedNativeView";
+}
+
+folly::dynamic UnimplementedNativeViewProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = UnimplementedNativeViewProps();
+  const UnimplementedNativeViewProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const UnimplementedNativeViewProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (name != oldProps->name) {
+    result["name"] = name;
+  }
+  return result;
+}
+#endif
 
 } // namespace facebook::react

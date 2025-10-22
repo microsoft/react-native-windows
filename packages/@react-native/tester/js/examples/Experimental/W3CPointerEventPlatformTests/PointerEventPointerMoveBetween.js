@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import type {PlatformTestComponentBaseProps} from '../PlatformTest/RNTesterPlatformTestTypes';
@@ -47,7 +47,7 @@ const relevantEvents = [
   'pointerLeave',
 ];
 
-const expected = [
+const expected: Array<{optional?: boolean, target: string, type: string}> = [
   {type: 'pointerOver', target: 'a'},
   {type: 'pointerEnter', target: 'a'},
   {type: 'pointerMove', target: 'a', optional: true},

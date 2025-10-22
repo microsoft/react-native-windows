@@ -37,8 +37,8 @@ class AbiComponentDescriptor : public facebook::react::ComponentDescriptor {
       const facebook::react::ShadowNodeFragment &fragment) const override;
 
   void appendChild(
-      const facebook::react::ShadowNode::Shared &parentShadowNode,
-      const facebook::react::ShadowNode::Shared &childShadowNode) const override;
+      const std::shared_ptr<const facebook::react::ShadowNode> &parentShadowNode,
+      const std::shared_ptr<const facebook::react::ShadowNode> &childShadowNode) const override;
   virtual facebook::react::Props::Shared cloneProps(
       const facebook::react::PropsParserContext &context,
       const facebook::react::Props::Shared &props,

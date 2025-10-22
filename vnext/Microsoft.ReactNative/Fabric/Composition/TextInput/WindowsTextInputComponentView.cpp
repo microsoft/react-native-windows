@@ -8,6 +8,7 @@
 #include <AutoDraw.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
+#include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
@@ -1690,8 +1691,20 @@ void WindowsTextInputComponentView::DrawText() noexcept {
           auto color = theme()->D2DColor(*props.placeholderTextColor);
           winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
         } else {
-          winrt::check_hresult(
-              d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
+          // Use theme-aware placeholder color based on focus state and background
+          // Color selection follows Windows 11 design system semantic colors:
+          // - High contrast: System GrayText for accessibility
+          // - Light backgrounds: Darker grays for better contrast
+          // - Dark backgrounds: Lighter grays for readability
+          winrt::Windows::UI::Color backgroundColor = {};
+          if (facebook::react::isColorMeaningful(props.backgroundColor)) {
+            auto bgColor = (*props.backgroundColor).AsWindowsColor();
+            backgroundColor = bgColor;
+          }
+
+          auto placeholderColor = facebook::react::GetTextInputPlaceholderColor(m_hasFocus, backgroundColor);
+          auto d2dColor = theme()->D2DColor(*placeholderColor);
+          winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(d2dColor, brush.put()));
         }
 
         // Create placeholder text layout

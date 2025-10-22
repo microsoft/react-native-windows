@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
 
 'use strict';
@@ -38,7 +38,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import infoLog from 'react-native/Libraries/Utilities/infoLog';
 
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 3000,
@@ -234,7 +233,7 @@ export function SectionList_scrollable(Props: {...}): React.MixedElement {
   }) => {
     // Impressions can be logged here
     if (logViewable) {
-      infoLog(
+      console.log(
         'onViewableItemsChanged: ',
         info.changed.map((v: Object) => ({
           ...v,

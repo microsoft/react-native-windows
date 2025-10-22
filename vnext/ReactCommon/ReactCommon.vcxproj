@@ -184,6 +184,7 @@
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserver.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryKeyedBuffer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\BoundedRequestBuffer.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -217,14 +218,13 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\ShadowViewNodePair.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\TinyMap.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Rect.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\timing\primitives.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Folly\Folly.vcxproj">

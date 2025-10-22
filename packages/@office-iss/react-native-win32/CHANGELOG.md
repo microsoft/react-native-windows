@@ -1,8 +1,28 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Fri, 19 Sep 2025 05:29:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Oct 2025 05:28:10 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.299
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Changes
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- fix: stricter checks against key events (sanajmi@microsoft.com)
+
+## 0.0.0-canary.298
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Changes
+
+- Update tester files (hmalothu@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.56
+- Bump react-native-platform-override to v1.9.59
 
 ## 0.0.0-canary.297
 

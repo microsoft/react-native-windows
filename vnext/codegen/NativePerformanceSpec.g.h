@@ -95,21 +95,24 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       SyncMethod<double() noexcept>{0, L"now"},
       SyncMethod<double(std::string, double) noexcept>{1, L"markWithResult"},
-      SyncMethod<std::vector<double>(std::string, double, double, double, std::string, std::string) noexcept>{2, L"measureWithResult"},
-      Method<void(std::string) noexcept>{3, L"clearMarks"},
-      Method<void(std::string) noexcept>{4, L"clearMeasures"},
-      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>() noexcept>{5, L"getEntries"},
-      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>(std::string, std::optional<double>) noexcept>{6, L"getEntriesByName"},
-      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>(double) noexcept>{7, L"getEntriesByType"},
-      SyncMethod<::React::JSValueArray() noexcept>{8, L"getEventCounts"},
-      SyncMethod<::React::JSValue() noexcept>{9, L"getSimpleMemoryInfo"},
-      SyncMethod<::React::JSValue() noexcept>{10, L"getReactNativeStartupTiming"},
-      SyncMethod<(Callback<>) noexcept>{11, L"createObserver"},
-      SyncMethod<double() noexcept>{12, L"getDroppedEntriesCount"},
-      Method<void(, PerformanceSpec_PerformanceObserverInit) noexcept>{13, L"observe"},
-      Method<void() noexcept>{14, L"disconnect"},
-      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>(, bool) noexcept>{15, L"takeRecords"},
-      SyncMethod<std::vector<double>() noexcept>{16, L"getSupportedPerformanceEntryTypes"},
+      SyncMethod<std::vector<double>(std::string, double, double, double, std::string, std::string) noexcept>{2, L"measure"},
+      SyncMethod<std::vector<double>(std::string, double, double, double, std::string, std::string) noexcept>{3, L"measureWithResult"},
+      Method<void(std::string) noexcept>{4, L"clearMarks"},
+      Method<void(std::string) noexcept>{5, L"clearMeasures"},
+      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>() noexcept>{6, L"getEntries"},
+      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>(std::string, std::optional<double>) noexcept>{7, L"getEntriesByName"},
+      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>(double) noexcept>{8, L"getEntriesByType"},
+      SyncMethod<::React::JSValueArray() noexcept>{9, L"getEventCounts"},
+      SyncMethod<::React::JSValue() noexcept>{10, L"getSimpleMemoryInfo"},
+      SyncMethod<::React::JSValue() noexcept>{11, L"getReactNativeStartupTiming"},
+      SyncMethod<(Callback<>) noexcept>{12, L"createObserver"},
+      SyncMethod<double() noexcept>{13, L"getDroppedEntriesCount"},
+      Method<void(, PerformanceSpec_PerformanceObserverInit) noexcept>{14, L"observe"},
+      Method<void() noexcept>{15, L"disconnect"},
+      SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>(, bool) noexcept>{16, L"takeRecords"},
+      SyncMethod<std::vector<double>() noexcept>{17, L"getSupportedPerformanceEntryTypes"},
+      Method<void(double) noexcept>{18, L"setCurrentTimeStampForTesting"},
+      Method<void() noexcept>{19, L"clearEventCountsForTesting"},
   };
 
   template <class TModule>
@@ -128,79 +131,94 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_SYNC_METHOD(markWithResult) static double markWithResult(std::string name, double startTime) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
+          "measure",
+          "    REACT_SYNC_METHOD(measure) std::vector<double> measure(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(measure) static std::vector<double> measure(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          3,
           "measureWithResult",
           "    REACT_SYNC_METHOD(measureWithResult) std::vector<double> measureWithResult(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(measureWithResult) static std::vector<double> measureWithResult(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          3,
+          4,
           "clearMarks",
           "    REACT_METHOD(clearMarks) void clearMarks(std::string entryName) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(clearMarks) static void clearMarks(std::string entryName) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
+          5,
           "clearMeasures",
           "    REACT_METHOD(clearMeasures) void clearMeasures(std::string entryName) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(clearMeasures) static void clearMeasures(std::string entryName) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          5,
+          6,
           "getEntries",
           "    REACT_SYNC_METHOD(getEntries) std::vector<PerformanceSpec_RawPerformanceEntry> getEntries() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getEntries) static std::vector<PerformanceSpec_RawPerformanceEntry> getEntries() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          6,
+          7,
           "getEntriesByName",
           "    REACT_SYNC_METHOD(getEntriesByName) std::vector<PerformanceSpec_RawPerformanceEntry> getEntriesByName(std::string entryName, std::optional<double> entryType) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getEntriesByName) static std::vector<PerformanceSpec_RawPerformanceEntry> getEntriesByName(std::string entryName, std::optional<double> entryType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          7,
+          8,
           "getEntriesByType",
           "    REACT_SYNC_METHOD(getEntriesByType) std::vector<PerformanceSpec_RawPerformanceEntry> getEntriesByType(double entryType) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getEntriesByType) static std::vector<PerformanceSpec_RawPerformanceEntry> getEntriesByType(double entryType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          8,
+          9,
           "getEventCounts",
           "    REACT_SYNC_METHOD(getEventCounts) ::React::JSValueArray getEventCounts() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getEventCounts) static ::React::JSValueArray getEventCounts() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          9,
+          10,
           "getSimpleMemoryInfo",
           "    REACT_SYNC_METHOD(getSimpleMemoryInfo) ::React::JSValue getSimpleMemoryInfo() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getSimpleMemoryInfo) static ::React::JSValue getSimpleMemoryInfo() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          10,
+          11,
           "getReactNativeStartupTiming",
           "    REACT_SYNC_METHOD(getReactNativeStartupTiming) ::React::JSValue getReactNativeStartupTiming() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getReactNativeStartupTiming) static ::React::JSValue getReactNativeStartupTiming() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          11,
+          12,
           "createObserver",
           "    REACT_SYNC_METHOD(createObserver)  createObserver(std::function<void()> const & callback) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(createObserver) static  createObserver(std::function<void()> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          12,
+          13,
           "getDroppedEntriesCount",
           "    REACT_SYNC_METHOD(getDroppedEntriesCount) double getDroppedEntriesCount( observer) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getDroppedEntriesCount) static double getDroppedEntriesCount( observer) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          13,
+          14,
           "observe",
           "    REACT_METHOD(observe) void observe( observer, PerformanceSpec_PerformanceObserverInit && options) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(observe) static void observe( observer, PerformanceSpec_PerformanceObserverInit && options) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          14,
+          15,
           "disconnect",
           "    REACT_METHOD(disconnect) void disconnect( observer) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(disconnect) static void disconnect( observer) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          15,
+          16,
           "takeRecords",
           "    REACT_SYNC_METHOD(takeRecords) std::vector<PerformanceSpec_RawPerformanceEntry> takeRecords( observer, bool sort) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(takeRecords) static std::vector<PerformanceSpec_RawPerformanceEntry> takeRecords( observer, bool sort) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          16,
+          17,
           "getSupportedPerformanceEntryTypes",
           "    REACT_SYNC_METHOD(getSupportedPerformanceEntryTypes) std::vector<double> getSupportedPerformanceEntryTypes() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getSupportedPerformanceEntryTypes) static std::vector<double> getSupportedPerformanceEntryTypes() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          18,
+          "setCurrentTimeStampForTesting",
+          "    REACT_METHOD(setCurrentTimeStampForTesting) void setCurrentTimeStampForTesting(double timeStamp) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setCurrentTimeStampForTesting) static void setCurrentTimeStampForTesting(double timeStamp) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          19,
+          "clearEventCountsForTesting",
+          "    REACT_METHOD(clearEventCountsForTesting) void clearEventCountsForTesting() noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(clearEventCountsForTesting) static void clearEventCountsForTesting() noexcept { /* implementation */ }\n");
   }
 };
 

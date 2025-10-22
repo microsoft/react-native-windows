@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:41 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.68
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.56
 
 ## 0.0.0-canary.67
 

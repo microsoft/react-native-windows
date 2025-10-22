@@ -41,6 +41,13 @@ stages:
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: true
 
+      # Attack Surface Analyzer for SDL compliance
+      - template: jobs/attack-surface-analyzer.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
+          complianceWarnOnly: true
+
   - stage: IntegrationTests
     displayName: Tests 🧪
     dependsOn: Setup

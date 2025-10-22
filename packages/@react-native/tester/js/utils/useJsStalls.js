@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import type {RNTesterJsStallsState} from '../types/RNTesterTypes';
@@ -56,8 +56,7 @@ const useJsStalls = (): ({
   }, []);
 
   const onEnableJsStallsTracking = useCallback(() => {
-    const JSEventLoopWatchdog =
-      require('react-native/Libraries/Interaction/JSEventLoopWatchdog').default;
+    const JSEventLoopWatchdog = require('./JSEventLoopWatchdog').default;
 
     JSEventLoopWatchdog.install({thresholdMS: 25});
 
