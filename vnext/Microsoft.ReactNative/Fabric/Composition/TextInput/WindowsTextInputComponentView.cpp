@@ -11,6 +11,8 @@
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
+#include <react/renderer/attributedstring/AttributedString.h>
+#include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -537,7 +539,10 @@ void WindowsTextInputComponentView::HandleCommand(
     std::optional<winrt::hstring> text;
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
-    if (eventCount >= m_nativeEventCount) {
+    // Allow text updates that are very close to the current native event count
+    // This handles the case where JavaScript immediately calls setValue during onSubmitEditing
+    // In that case, eventCount might be one less than m_nativeEventCount due to timing
+    if (eventCount >= m_nativeEventCount - 1) {
       m_comingFromJS = true;
       {
         if (text.has_value()) {
@@ -957,6 +962,14 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     if (m_clearTextOnSubmit) {
       // clear text from RichEdit
       m_textServices->TxSetText(L"");
+
+      // Also update the state to reflect the cleared text
+      // This ensures consistency between native and JS state
+      auto data = facebook::react::TextInputState{};
+      data.attributedStringBox = facebook::react::AttributedStringBox{facebook::react::AttributedString{}};
+      data.mostRecentEventCount = m_nativeEventCount;
+
+      m_state->updateState(std::move(data));
     }
     return;
   }
