@@ -6,6 +6,7 @@
 #include <CreateModules.h>
 #include <ReactPropertyBag.h>
 #include "Networking/NetworkPropertyIds.h"
+#include "InputValidation.h"
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
@@ -50,6 +51,17 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
 
+  // SDL Compliance: Validate size (P1 - CVSS 5.0)
+  try {
+    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+        static_cast<size_t>(size), 
+        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE, 
+        "Blob");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    result.Reject(winrt::to_hstring(ex.what()).c_str());
+    return;
+  }
+
   auto typeItr = blob.find("type");
   string type{};
   if (typeItr == blob.end()) {
@@ -90,6 +102,34 @@ void FileReaderTurboModule::ReadAsText(
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
+
+  // SDL Compliance: Validate encoding (P1 - CVSS 5.5)
+  try {
+    // Allowlist of safe encodings
+    std::vector<std::string> allowedEncodings = {
+        "UTF-8", "utf-8", "utf8",
+        "UTF-16", "utf-16", "utf16",
+        "ASCII", "ascii",
+        "ISO-8859-1", "iso-8859-1",
+        "" // Empty is allowed (defaults to UTF-8)
+    };
+    
+    if (!encoding.empty()) {
+      bool isAllowed = false;
+      for (const auto& allowed : allowedEncodings) {
+        if (encoding == allowed) {
+          isAllowed = true;
+          break;
+        }
+      }
+      if (!isAllowed) {
+        throw Microsoft::ReactNative::InputValidation::ValidationException("Encoding '" + encoding + "' not in allowlist");
+      }
+    }
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    result.Reject(winrt::to_hstring(ex.what()).c_str());
+    return;
+  }
 
   m_resource->ReadAsText(
       std::move(blobId),

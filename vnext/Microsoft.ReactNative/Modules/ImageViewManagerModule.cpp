@@ -21,6 +21,7 @@
 #endif // USE_FABRIC
 #include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
+#include "../../Shared/InputValidation.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -103,6 +104,17 @@ void ImageLoader::Initialize(React::ReactContext const &reactContext) noexcept {
 }
 
 void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<double>> &&result) noexcept {
+  // VALIDATE URI - file:// abuse PROTECTION (P0 Critical - CVSS 7.8)
+  try {
+    // Allow data: URIs and http/https only
+    if (uri.find("data:") != 0) {
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+    }
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    result.Reject(ex.what());
+    return;
+  }
+
   m_context.UIDispatcher().Post(
       [context = m_context, uri = std::move(uri), result = std::move(result)]() mutable noexcept {
         GetImageSizeAsync(
@@ -126,6 +138,17 @@ void ImageLoader::getSizeWithHeaders(
     React::JSValue &&headers,
     React::ReactPromise<Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType>
         &&result) noexcept {
+  // SDL Compliance: Validate URI for SSRF (P0 Critical - CVSS 7.8)
+  try {
+    // Allow data: URIs and http/https only
+    if (uri.find("data:") != 0) {
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+    }
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    result.Reject(ex.what());
+    return;
+  }
+  
   m_context.UIDispatcher().Post([context = m_context,
                                  uri = std::move(uri),
                                  headers = std::move(headers),
@@ -147,6 +170,17 @@ void ImageLoader::getSizeWithHeaders(
 }
 
 void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&result) noexcept {
+  // VALIDATE URI - file:// abuse PROTECTION (P0 Critical - CVSS 7.8)
+  try {
+    // Allow data: URIs and http/https only
+    if (uri.find("data:") != 0) {
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+    }
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    result.Reject(ex.what());
+    return;
+  }
+
   // NYI
   result.Resolve(true);
 }
@@ -156,6 +190,17 @@ void ImageLoader::prefetchImageWithMetadata(
     std::string queryRootName,
     double rootTag,
     React::ReactPromise<bool> &&result) noexcept {
+  // SDL Compliance: Validate URI for SSRF (P0 Critical - CVSS 7.8)
+  try {
+    // Allow data: URIs and http/https only
+    if (uri.find("data:") != 0) {
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+    }
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    result.Reject(ex.what());
+    return;
+  }
+  
   // NYI
   result.Resolve(true);
 }

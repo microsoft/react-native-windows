@@ -275,6 +275,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)InputValidation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\NetworkPropertyIds.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.cpp" />
@@ -434,6 +435,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InputValidation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />

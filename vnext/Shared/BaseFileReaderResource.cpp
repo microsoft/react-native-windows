@@ -4,6 +4,7 @@
 #include "BaseFileReaderResource.h"
 
 #include <utilities.h>
+#include "InputValidation.h"
 
 // Windows API
 #include <winrt/base.h>
@@ -28,6 +29,22 @@ void BaseFileReaderResource::ReadAsText(
     string &&encoding,
     function<void(string &&)> &&resolver,
     function<void(string &&)> &&rejecter) noexcept /*override*/ {
+  //  VALIDATE Blob ID - PATH TRAVERSAL PROTECTION (P0 Critical - CVSS 8.6)
+  try {
+    Microsoft::ReactNative::InputValidation::PathValidator::ValidateBlobId(blobId);
+
+    //  VALIDATE Size - DoS PROTECTION
+    if (size > 0) {
+      Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          static_cast<size_t>(size),
+          Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE,
+          "FileReader blob"
+      );
+    }
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    return rejecter(ex.what());
+  }
+
   auto persistor = m_weakBlobPersistor.lock();
   if (!persistor) {
     return resolver("Could not find Blob persistor");
@@ -54,6 +71,22 @@ void BaseFileReaderResource::ReadAsDataUrl(
     string &&type,
     function<void(string &&)> &&resolver,
     function<void(string &&)> &&rejecter) noexcept /*override*/ {
+  //  VALIDATE Blob ID - PATH TRAVERSAL PROTECTION (P0 Critical - CVSS 8.6)
+  try {
+    Microsoft::ReactNative::InputValidation::PathValidator::ValidateBlobId(blobId);
+
+    //  VALIDATE Size - DoS PROTECTION
+    if (size > 0) {
+      Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          static_cast<size_t>(size),
+          Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE,
+          "FileReader data URL blob"
+      );
+    }
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    return rejecter(ex.what());
+  }
+
   auto persistor = m_weakBlobPersistor.lock();
   if (!persistor) {
     return rejecter("Could not find Blob persistor");

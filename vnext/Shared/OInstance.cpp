@@ -21,6 +21,7 @@
 #include "Chakra/ChakraHelpers.h"
 #include "Chakra/ChakraUtils.h"
 #include "JSI/RuntimeHolder.h"
+#include "InputValidation.h"
 
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>
@@ -92,6 +93,16 @@ void LoadRemoteUrlScript(
     std::string &&jsBundleRelativePath,
     std::function<void(std::unique_ptr<const facebook::react::JSBigStdString> script, const std::string &sourceURL)>
         fnLoadScriptCallback) noexcept {
+  // SDL Compliance: Validate bundle path for traversal attacks
+  try {
+    Microsoft::ReactNative::InputValidation::PathValidator::ValidateFilePath(jsBundleRelativePath, "");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException& ex) {
+    if (devSettings && devSettings->errorCallback) {
+      devSettings->errorCallback(std::string("Bundle path validation failed: ") + ex.what());
+    }
+    return;
+  }
+  
   // First attempt to get download the Js locally, to catch any bundling
   // errors before attempting to load the actual script.
 
@@ -556,6 +567,9 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 
 void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously) {
   try {
+    // SDL Compliance: Validate bundle path before loading
+    Microsoft::ReactNative::InputValidation::PathValidator::ValidateFilePath(jsBundleRelativePath, "");
+    
     if (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback != nullptr ||
         m_devSettings->useFastRefresh) {
       Microsoft::ReactNative::LoadRemoteUrlScript(
@@ -570,6 +584,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       auto bundleString = Microsoft::ReactNative::JsBigStringFromPath(m_devSettings, jsBundleRelativePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(jsBundleRelativePath), synchronously);
     }
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    m_devSettings->errorCallback(std::string("Bundle validation failed: ") + ex.what());
   } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
   } catch (const winrt::hresult_error &hrerr) {
