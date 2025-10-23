@@ -286,6 +286,12 @@ void WinRTHttpResource::SendRequest(
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"http", "https"});
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    // Call callback first (if provided)
+    if (callback) {
+      callback(requestId);
+    }
+    
+    // Then trigger error
     if (m_onError) {
       m_onError(requestId, ex.what(), false);
     }
