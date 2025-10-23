@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Tue, 21 Oct 2025 05:28:11 GMT",
+      "version": "1.4.65",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.65",
+      "comments": {
+        "patch": [
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "eaf0c6003f400bd35ff80fd880a3a1c004ab500a",
+            "comment": "Integrate 0.81.0-nightly-20250709-6892dde36"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "f504d86a0bb2ee7e3e9b64e6a318be50981329d5",
+            "comment": "Integrate 0.81.0-nightly-20250702-b41b924b2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Oct 2025 05:27:27 GMT",
       "version": "1.4.64",
       "tag": "@rnw-scripts/integrate-rn_v1.4.64",

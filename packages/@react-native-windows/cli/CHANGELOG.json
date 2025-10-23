@@ -2,6 +2,29 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 21 Oct 2025 05:28:10 GMT",
+      "version": "0.0.0-canary.278",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.278",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4be87f438c771f6b609acd782347b4a1bb7c436a",
+            "comment": "Security fix: Remediate PowerShell injection vulnerabilities (SDL CE.10116)"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.126",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Oct 2025 05:27:28 GMT",
       "version": "0.0.0-canary.277",
       "tag": "@react-native-windows/cli_v0.0.0-canary.277",
