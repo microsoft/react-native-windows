@@ -1,0 +1,7 @@
+{
+  "comment": "adding fix for TextInput",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
