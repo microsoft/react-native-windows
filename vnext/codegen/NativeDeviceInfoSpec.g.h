@@ -38,6 +38,7 @@ struct DeviceInfoSpec_DimensionsPayload {
 
 struct DeviceInfoSpec_DeviceInfoConstants {
     DeviceInfoSpec_DimensionsPayload Dimensions;
+    std::optional<bool> isEdgeToEdge;
     std::optional<bool> isIPhoneX_deprecated;
 };
 
@@ -76,6 +77,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DeviceInfoSpec_Dime
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DeviceInfoSpec_DeviceInfoConstants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"Dimensions", &DeviceInfoSpec_DeviceInfoConstants::Dimensions},
+        {L"isEdgeToEdge", &DeviceInfoSpec_DeviceInfoConstants::isEdgeToEdge},
         {L"isIPhoneX_deprecated", &DeviceInfoSpec_DeviceInfoConstants::isIPhoneX_deprecated},
     };
     return fieldMap;

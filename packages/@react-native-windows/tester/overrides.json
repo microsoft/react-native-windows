@@ -5,66 +5,66 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.80.0-nightly-20250506-3ac16dd6a",
+  "baseVersion": "0.81.0-nightly-20250709-6892dde36",
   "overrides": [
     {
       "type": "copy",
       "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
       "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseHash": "f54f9e74fbe883c58a5ea6a6425b5ad548134940",
+      "baseHash": "5219751d36d3f2581e075d835424aa2f20c9809f",
       "issue": 14844
     },
     {
       "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
-      "baseHash": "74a0b8d26ba5e62ea6e39e17a9fc9bc2d5c235fa"
+      "baseHash": "c3ef9781d473fa5fd4d0a93842ee875536b19eb2"
     },
     {
       "type": "derived",
       "file": "src/js/examples-win/Button/ButtonExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
-      "baseHash": "e03b21d229ecb631c12e4ac04ddf73fbe6059da7"
+      "baseHash": "c44c83e48760fddc1129751debbf3a3ba1ec3fac"
     },
     {
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "314dacf1e200ddc9dc414bd9be1a21ee77ae097a"
+      "baseHash": "a5314bc9384402a96a8bb5190e5513a785925f90"
     },
     {
       "type": "patch",
       "file": "src/js/examples/ActivityIndicator/ActivityIndicatorExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/ActivityIndicator/ActivityIndicatorExample.js",
-      "baseHash": "4dbb1a7e0f970ab6987d83899b4c87b6408c7e2c",
+      "baseHash": "f8ef473352cc6bc67ef28df8eb1889d394d8e481",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/BaseFlatListExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
-      "baseHash": "44b784dbde64d0ca1616f0e31a07f232939d8dd7",
+      "baseHash": "533b9b1c2889c22af9ba923e17a8951ffbbfe3d7",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "a10d3f1b947f00cd11f33644e374d04bf5417a04",
+      "baseHash": "c523e6ea68a0ec0e754f4bea57f598200112a3c1",
       "issue": 12869
     },
     {
       "type": "copy",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "51da04f9ee49f1a5fd857db17361443636d73bca",
+      "baseHash": "d65899720b46246b721e583b9a9920d7601b5221",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-nested.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-nested.js",
-      "baseHash": "c5f4c76741ff490c10c4c18db45bacfecd1b8a12",
+      "baseHash": "58f95a964352c4ee884af4b027010fb54e4c1e39",
       "issue": 12869
     },
     {
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "20dec87a4f2c4c098adf9e3becc0969fb2b3036c",
+      "baseHash": "9381aa0a0b1d084fda30e13c3b35eac653b28625",
       "issue": 12869
     },
     {
@@ -98,64 +98,65 @@
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "93c88f75903188f1b5671a288fbf6eb333ea8acb"
+      "baseHash": "e33fdbe5b91b49ba913117e5f816d7034db308b0"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "63fce542a05c17e8115c03ab81b3d633083ff08c",
+      "baseHash": "c6dd35fb59d439ee655844b2baa16f1711b70619",
       "issue": 6240
     },
     {
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "b40001649bf2c261009213ba56c7bc0bf2998419"
+      "baseHash": "55b0983ac2f69f38284e5014d77533eb0e2e9ff6"
     },
     {
-      "type": "derived",
-      "file": "src/js/examples/Text/TextInlineViewsExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/Text/TextInlineViewsExample.js",
-      "baseHash": "63088038921558214c480b323dd2099698911f3f"
+      "type": "patch",
+      "file": "src/js/examples/Text/TextSharedExamples.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Text/TextSharedExamples.js",
+      "baseHash": "af0e1fb5bf6deebad7fc0de41242a27652bafdac",
+      "issue": 15125
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "8cc115a30795ee2fcf174e91f9cdbf56f4513a93",
+      "baseHash": "e2ec4b71e3cd614682d9be1551b3a2994ea51823",
       "issue": 5688
     },
     {
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "e65c182f60ca77bbba3e7d42318850dc936efb2c"
+      "baseHash": "453404f69c1754b4a434bc128c745fbca0492433"
     },
     {
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "a005538f6ea294fb44d0f6265c1bc75bd893ab56"
+      "baseHash": "3e16d172b5b5cac74c4733662d83bc2b2107bc4f"
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "728c93153aa91aa7091345a17631fa0fe4e37b0c"
+      "baseHash": "8f02aec2ad43cf4a32db1604e3b60e1b41aed919"
     },
     {
       "type": "copy",
       "file": "src/js/RNTesterApp.windows.js",
       "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
-      "baseHash": "5e73edb50a1156756f2d1bec70d95a92f701ec22",
+      "baseHash": "987893a4df686425670b7897881b61e485960191",
       "issue": 4586
     },
     {
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "aded9dd37f3ac325aa1cc095f6d217114c45a8b9"
+      "baseHash": "c89e65c8063b338c86ec9db173b05b96c589f69e"
     }
   ]
 }

@@ -1,8 +1,82 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Wed, 17 Sep 2025 05:27:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Oct 2025 05:28:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.3.422
+
+Tue, 21 Oct 2025 05:28:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.340
+
+## 0.3.421
+
+Thu, 09 Oct 2025 05:28:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.339
+
+## 0.3.420
+
+Wed, 08 Oct 2025 05:27:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.338
+
+## 0.3.419
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.337
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @rnw-scripts/just-task to v2.3.56
+
+## 0.3.418
+
+Wed, 01 Oct 2025 05:25:55 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.336
+
+## 0.3.417
+
+Tue, 30 Sep 2025 05:27:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.335
+
+## 0.3.416
+
+Fri, 26 Sep 2025 05:31:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.334
+
+## 0.3.415
+
+Fri, 19 Sep 2025 05:29:14 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.333
+
+## 0.3.414
+
+Thu, 18 Sep 2025 05:34:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.332
 
 ## 0.3.413
 

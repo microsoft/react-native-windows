@@ -18,7 +18,7 @@ export type PlatformOSType =
   | 'native';
 
 type OptionalPlatformSelectSpec<T> = {
-  [_key in PlatformOSType]?: T,
+  [key in PlatformOSType]?: T, // eslint-disable-line no-unused-vars
 };
 
 export type PlatformSelectSpec<T> =
@@ -215,7 +215,7 @@ type WebPlatform = {
   select: <T>(spec: PlatformSelectSpec<T>) => T,
 };
 
-export type Platform =
+export type PlatformType =
   | IOSPlatform
   | AndroidPlatform
   | WindowsPlatform

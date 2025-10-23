@@ -148,7 +148,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopReporter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\fusebox\FuseboxTracer.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
@@ -184,6 +184,7 @@
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserver.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryKeyedBuffer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\BoundedRequestBuffer.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -206,22 +207,24 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\basePrimitives.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\TextInputState.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\BaseTextInputProps.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textlayoutmanager\TextLayoutManager.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx\react\renderer\imagemanager\ImageRequestParams.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\conversions.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\CullingContext.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\sliceChildShadowNodeViewPairs.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\ShadowViewNodePair.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\internal\TinyMap.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Rect.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\timing\primitives.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Folly\Folly.vcxproj">
@@ -239,20 +242,11 @@
   </PropertyGroup>
   <Target Name="DownloadNodeApiJsi" BeforeTargets="PrepareForBuild" Inputs="$(NodeApiJsiZipFile)" Outputs="$(NodeApiJsiZipFile)">
     <Message Text="Downloading node-api-jsi..." Importance="High" />
-    <DownloadFile
-      SourceUrl="https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip"
-      DestinationFileName="$(NodeApiJsiZipFile)"
-      DestinationFolder="$(NodeApiJsiZipDir)"
-      Retries="10" />
+    <DownloadFile SourceUrl="https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip" DestinationFileName="$(NodeApiJsiZipFile)" DestinationFolder="$(NodeApiJsiZipDir)" Retries="10" />
   </Target>
   <Target Name="UnzipNodeApiJsi" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi">
-    <Message Text="Unzipping node-api-jsi to $([MSBuild]::NormalizePath($(NodeApiJsiDir)..))." Importance="High"
-      Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" />
-    <Unzip
-      Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')"
-      SourceFiles="$(NodeApiJsiZipFile)"
-      DestinationFolder="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))"
-      OverwriteReadOnlyFiles="true" />
+    <Message Text="Unzipping node-api-jsi to $([MSBuild]::NormalizePath($(NodeApiJsiDir)..))." Importance="High" Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" />
+    <Unzip Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" SourceFiles="$(NodeApiJsiZipFile)" DestinationFolder="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi" Inputs="$(NodeApiJsiZipFile)" Outputs="$(CGManifestFile)">
     <PropertyGroup>
@@ -273,10 +267,7 @@
 }</CGManifestText>
     </PropertyGroup>
     <Message Text="Generating $(CGManifestFile)." Importance="High" />
-    <WriteLinesToFile
-      File="$(CGManifestFile)"
-      Overwrite="true"
-      Lines="$(CGManifestText)" />
+    <WriteLinesToFile File="$(CGManifestFile)" Overwrite="true" Lines="$(CGManifestText)" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(ReactNativeDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />

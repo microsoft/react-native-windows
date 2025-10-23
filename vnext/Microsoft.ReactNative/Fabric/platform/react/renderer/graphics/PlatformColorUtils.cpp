@@ -3,11 +3,14 @@
 
 #include "PlatformColorUtils.h"
 #include <UI.Xaml.Media.h>
+#include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #ifndef CORE_ABI
 #include <XamlUtils.h>
 #endif // CORE_ABI
+#include <react/renderer/graphics/Color.h>
 #include <winrt/Windows.UI.ViewManagement.h>
+#include "HostPlatformColor.h"
 
 namespace facebook::react {
 
@@ -140,6 +143,50 @@ winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &s
 
   // Default to transparent color
   return {};
+}
+
+SharedColor GetTextInputPlaceholderColor(bool isFocused, const winrt::Windows::UI::Color &backgroundColor) {
+  // In high contrast mode, always use system GrayText for accessibility
+  auto accessibilitySettings{winrt::Windows::UI::ViewManagement::AccessibilitySettings()};
+  if (accessibilitySettings.HighContrast()) {
+    auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
+    auto grayText = uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::GrayText);
+    return hostPlatformColorFromRGBA(grayText.R, grayText.G, grayText.B, grayText.A);
+  }
+
+  // When no background color provided (transparent), use Windows system default
+  if (backgroundColor.A == 0) {
+    // Use system WindowText for default placeholder - matches RN Core behavior
+    auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
+    auto windowText = uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::WindowText);
+    // Make placeholder text lighter (60% opacity)
+    return hostPlatformColorFromRGBA(
+        windowText.R, windowText.G, windowText.B, static_cast<uint8_t>(windowText.A * 0.6f));
+  }
+
+  // Use ITU-R BT.601 luminance calculation to determine background brightness
+  bool isLightBackground = Microsoft::ReactNative::IsColorLight(backgroundColor);
+
+  // Use Windows 11 design system semantic colors for optimal contrast and consistency
+  // Light backgrounds: TextFillColorPrimary (darker) for focus, TextFillColorSecondary for unfocused
+  // Dark backgrounds: TextFillColorPrimary (lighter) for focus, TextFillColorSecondary for unfocused
+  if (isLightBackground) {
+    if (isFocused) {
+      auto color = ResolvePlatformColor({"TextFillColorPrimary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    } else {
+      auto color = ResolvePlatformColor({"TextFillColorSecondary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    }
+  } else {
+    if (isFocused) {
+      auto color = ResolvePlatformColor({"TextFillColorPrimary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    } else {
+      auto color = ResolvePlatformColor({"TextFillColorSecondary"});
+      return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
+    }
+  }
 }
 
 } // namespace facebook::react
