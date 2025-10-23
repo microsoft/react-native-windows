@@ -64,10 +64,7 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-export default component View(
-  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
-  ...props: ViewProps
-) {
+function View(props) {
   const hasTextAncestor = use(TextAncestor);
 
   // Extract common props needed by all paths
@@ -108,6 +105,7 @@ export default component View(
     importantForAccessibility,
     nativeID,
     tabIndex,
+    ref,
     ...otherProps
   } = props;
 
@@ -583,3 +581,5 @@ export default component View(
 
   return actualView;
 }
+
+export default View;
