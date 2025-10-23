@@ -117,7 +117,9 @@
     <ClInclude Include="ReactModuleBuilderMock.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Shared\InputValidation.cpp" />
+    <ClCompile Include="..\Shared\InputValidation.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="InputValidationTest.cpp" />
     <ClCompile Include="JsiTest.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
