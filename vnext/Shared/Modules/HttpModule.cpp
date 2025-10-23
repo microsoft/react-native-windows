@@ -112,6 +112,17 @@ void HttpTurboModule::SendRequest(
     ReactNativeSpecs::NetworkingIOSSpec_sendRequest_query &&query,
     function<void(double)> const &callback) noexcept {
   m_requestId++;
+
+  // SDL Compliance: Validate URL for SSRF (P0 - CVSS 9.1)
+  try {
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(query.url, {"http", "https"});
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    int64_t requestId = m_requestId;
+    callback({static_cast<double>(requestId)});
+    SendEvent(m_context, completedResponseW, msrn::JSValueArray{requestId, ex.what()});
+    return;
+  }
+
   auto &headersObj = query.headers.AsObject();
   IHttpResource::Headers headers;
 

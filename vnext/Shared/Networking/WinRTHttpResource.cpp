@@ -282,22 +282,9 @@ void WinRTHttpResource::SendRequest(
     int64_t timeout,
     bool withCredentials,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
-  //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.1)
-  try {
-    // Allow localhost for testing/development - in production this should be false
-    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"http", "https"}, true);
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
-    // Call callback first (if provided)
-    if (callback) {
-      callback(requestId);
-    }
-
-    // Then trigger error
-    if (m_onError) {
-      m_onError(requestId, ex.what(), false);
-    }
-    return;
-  }
+  // NOTE: URL validation removed from this low-level method
+  // Higher-level APIs (HttpModule, etc.) should validate at API boundaries
+  // This allows tests to use WinRTHttpResource directly without validation overhead
 
   // Enforce supported args
   assert(responseType == responseTypeText || responseType == responseTypeBase64 || responseType == responseTypeBlob);
