@@ -27,7 +27,11 @@ class URLValidator {
  public:
   // Validate URL with scheme allowlist (SDL compliant)
   // Includes: URL decoding loop, DNS resolution, private IP blocking
-  static void ValidateURL(const std::string &url, const std::vector<std::string> &allowedSchemes = {"http", "https"});
+  // allowLocalhost: Set to true for testing/development scenarios only
+  static void ValidateURL(
+      const std::string &url,
+      const std::vector<std::string> &allowedSchemes = {"http", "https"},
+      bool allowLocalhost = false);
 
   // Check if hostname is private IP/localhost (expanded for SDL)
   static bool IsPrivateOrLocalhost(const std::string &hostname);

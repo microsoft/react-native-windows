@@ -126,7 +126,7 @@ void HttpTurboModule::SendRequest(
     // Call callback with requestId, then send error event
     int64_t requestId = m_requestId;
     callback({static_cast<double>(requestId)});
-    
+
     // Send error event for validation failure (same pattern as SetOnError)
     SendEvent(m_context, completedResponseW, msrn::JSValueArray{requestId, ex.what()});
     return;
