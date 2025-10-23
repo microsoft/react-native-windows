@@ -114,8 +114,9 @@ void HttpTurboModule::SendRequest(
   m_requestId++;
 
   // SDL Compliance: Validate URL for SSRF (P0 - CVSS 9.1)
+  // Allow localhost for testing/development scenarios
   try {
-    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(query.url, {"http", "https"});
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(query.url, {"http", "https"}, true);
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     int64_t requestId = m_requestId;
     callback({static_cast<double>(requestId)});
