@@ -349,7 +349,7 @@ void PathValidator::ValidateBlobId(const std::string &blobId) {
 // Validate file path with canonicalization (SDL requirement)
 void PathValidator::ValidateFilePath(const std::string &path, const std::string &baseDir) {
   (void)baseDir; // Reserved for future canonicalization implementation
-  
+
   if (path.empty()) {
     LogValidationFailure("FILE_PATH_EMPTY", "Empty file path");
     throw ValidationException("File path cannot be empty");
