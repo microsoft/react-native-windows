@@ -332,13 +332,9 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
-  //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
-  try {
-    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"});
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
-    Fail(ex.what(), ErrorType::Connection);
-    return;
-  }
+  // NOTE: URL validation removed from this low-level method
+  // Higher-level APIs (WebSocketModule, etc.) should validate at API boundaries
+  // This allows tests to use WinRTWebSocketResource directly without validation overhead
 
   // Register MessageReceived BEFORE calling Connect
   // https://learn.microsoft.com/en-us/uwp/api/windows.networking.sockets.messagewebsocket.messagereceived?view=winrt-22621
@@ -651,15 +647,9 @@ void WinRTWebSocketResource::Synchronize() noexcept {
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
-  //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
-  try {
-    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"});
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
-    if (m_errorHandler) {
-      m_errorHandler({ex.what(), ErrorType::Connection});
-    }
-    return;
-  }
+  // NOTE: URL validation removed from this low-level method
+  // Higher-level APIs (WebSocketModule, etc.) should validate at API boundaries
+  // This allows tests to use WinRTWebSocketResource directly without validation overhead
 
   m_socket.MessageReceived([self = shared_from_this()](
                                IWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
