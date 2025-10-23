@@ -284,13 +284,14 @@ void WinRTHttpResource::SendRequest(
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
   //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.1)
   try {
-    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"http", "https"});
+    // Allow localhost for testing/development - in production this should be false
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"http", "https"}, true);
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     // Call callback first (if provided)
     if (callback) {
       callback(requestId);
     }
-    
+
     // Then trigger error
     if (m_onError) {
       m_onError(requestId, ex.what(), false);

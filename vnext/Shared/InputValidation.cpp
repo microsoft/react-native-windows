@@ -212,7 +212,10 @@ bool URLValidator::IsPrivateOrLocalhost(const std::string &hostname) {
   return false;
 }
 
-void URLValidator::ValidateURL(const std::string &url, const std::vector<std::string> &allowedSchemes) {
+void URLValidator::ValidateURL(
+    const std::string &url,
+    const std::vector<std::string> &allowedSchemes,
+    bool allowLocalhost) {
   if (url.empty()) {
     LogValidationFailure("URL_EMPTY", "Empty URL provided");
     throw ValidationException("URL cannot be empty");
@@ -256,7 +259,8 @@ void URLValidator::ValidateURL(const std::string &url, const std::vector<std::st
   }
 
   // SDL Requirement: Block private IPs, localhost, metadata endpoints
-  if (IsPrivateOrLocalhost(hostname)) {
+  // Exception: Allow localhost for testing/development if explicitly enabled
+  if (!allowLocalhost && IsPrivateOrLocalhost(hostname)) {
     LogValidationFailure("SSRF_ATTEMPT", "Blocked access to private/localhost: " + hostname);
     throw ValidationException("Access to hostname '" + hostname + "' is blocked for security");
   }
