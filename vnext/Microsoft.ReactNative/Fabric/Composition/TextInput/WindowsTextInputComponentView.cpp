@@ -970,7 +970,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
 
       // Also update the state to reflect the cleared text
       // This ensures consistency between native and JS state
-      auto data = facebook::react::TextInputState{};
+      auto data = m_state->getData();
       data.attributedStringBox = facebook::react::AttributedStringBox{facebook::react::AttributedString{}};
       data.mostRecentEventCount = m_nativeEventCount;
 
