@@ -45,11 +45,18 @@ HermesRuntimeAgentDelegate::HermesRuntimeAgentDelegate(
           // RuntimeTask takes a HermesRuntime whereas our RuntimeExecutor takes a jsi::Runtime.
           AsFunctor<hermes_enqueue_runtime_task_functor>([runtimeExecutor = std::move(runtimeExecutor),
                                                           runtime](hermes_runtime_task_functor runtimeTask) {
+            OutputDebugStringA("[RNW] Enqueuing runtime task for CDP operation\n");
             runtimeExecutor([runtime, fn = std::make_shared<FunctorWrapper<hermes_runtime_task_functor>>(runtimeTask)](
-                                auto &) { (*fn)(runtime); });
+                                auto &) { 
+              OutputDebugStringA("[RNW] Executing runtime task on JS thread\n");
+              (*fn)(runtime); 
+            });
           }),
           AsFunctor<hermes_enqueue_frontend_message_functor>(
               [frontendChannel = std::move(frontendChannel)](const char *json_utf8, size_t json_size) {
+                std::string message(json_utf8, json_size);
+                std::string logMsg = "[RNW] Sending CDP message to DevTools: " + message.substr(0, std::min(size_t(100), json_size)) + "\n";
+                OutputDebugStringA(logMsg.c_str());
                 frontendChannel(std::string_view(json_utf8, json_size));
               }),
           HermesStateWrapper::unwrapDestructively(previouslyExportedState.get()).release())) {
@@ -67,7 +74,9 @@ HermesRuntimeAgentDelegate::HermesRuntimeAgentDelegate(
   }
 }
 
-HermesRuntimeAgentDelegate::~HermesRuntimeAgentDelegate() = default;
+HermesRuntimeAgentDelegate::~HermesRuntimeAgentDelegate() {
+  OutputDebugStringA("[RNW] HermesRuntimeAgentDelegate destructor called - CDP agent will be released\n");
+}
 
 bool HermesRuntimeAgentDelegate::handleRequest(const cdp::PreparsedRequest &req) {
   if (req.method.starts_with("Log.")) {

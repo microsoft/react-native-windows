@@ -57,7 +57,6 @@ HermesApi &initHermesApi() noexcept {
   static HermesFuncResolver funcResolver;
   static HermesApi s_hermesApi(&funcResolver);
   HermesApi::setCurrent(&s_hermesApi);
-  CRASH_ON_ERROR(s_hermesApi.hermes_set_inspector(&addInspectorPage, &removeInspectorPage));
   return s_hermesApi;
 }
 
@@ -280,6 +279,10 @@ class HermesLocalConnection : public facebook::react::jsinspector_modern::ILocal
 };
 
 int32_t NAPI_CDECL addInspectorPage(const char *title, const char *vm, void *connectFunc) noexcept {
+  // Set capabilities to enable native page reloads for React Native DevTools
+  facebook::react::jsinspector_modern::InspectorTargetCapabilities capabilities;
+  capabilities.nativePageReloads = true;
+  
   return facebook::react::jsinspector_modern::getInspectorInstance().addPage(
       title,
       vm,
@@ -287,7 +290,8 @@ int32_t NAPI_CDECL addInspectorPage(const char *title, const char *vm, void *con
           std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remoteConnection) {
         HermesApi::Scope apiScope(hermesApi);
         return std::make_unique<HermesLocalConnection>(std::move(remoteConnection), connectFunc);
-      });
+      },
+      capabilities);
 }
 
 void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept {
@@ -309,9 +313,9 @@ HermesRuntimeHolder::HermesRuntimeHolder(
       m_preparedScriptStore(std::move(preparedScriptStore)) {}
 
 HermesRuntimeHolder::~HermesRuntimeHolder() {
-  if (m_runtime) {
-    CRASH_ON_ERROR(getHermesApi().jsr_delete_runtime(m_runtime));
-  }
+  // if (m_runtime) {
+  //   CRASH_ON_ERROR(getHermesApi().jsr_delete_runtime(m_runtime));
+  // }
 }
 
 void HermesRuntimeHolder::initRuntime() noexcept {
@@ -324,7 +328,8 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   jsr_config config{};
   CRASH_ON_ERROR(api.jsr_create_config(&config));
   CRASH_ON_ERROR(api.hermes_config_enable_default_crash_handler(config, devSettings->enableDefaultCrashHandler));
-  CRASH_ON_ERROR(api.jsr_config_enable_inspector(config, devSettings->useDirectDebugger));
+  CRASH_ON_ERROR(api.jsr_config_enable_inspector(config, false)); // NO: devSettings->useDirectDebugger
+  OutputDebugStringA("[HermesRuntimeHolder] Old inspector disabled - using HostTarget for CDP debugging\n");
   CRASH_ON_ERROR(api.jsr_config_set_inspector_runtime_name(config, devSettings->debuggerRuntimeName.c_str()));
   CRASH_ON_ERROR(api.jsr_config_set_inspector_port(config, devSettings->debuggerPort));
   CRASH_ON_ERROR(api.jsr_config_set_inspector_break_on_start(config, devSettings->debuggerBreakOnNextLine));
@@ -340,6 +345,9 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   jsr_runtime runtime{};
   CRASH_ON_ERROR(api.jsr_create_runtime(config, &runtime));
   CRASH_ON_ERROR(api.jsr_delete_config(config));
+
+  // Store the runtime for later use (e.g., CDP debugging)
+  m_runtime = runtime;
 
   napi_env env{};
   CRASH_ON_ERROR(api.jsr_runtime_get_node_api_env(runtime, &env));
@@ -369,6 +377,9 @@ std::shared_ptr<facebook::jsi::Runtime> HermesRuntimeHolder::getRuntime() noexce
 const std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate> &
 HermesRuntimeHolder::getSharedRuntimeTargetDelegate() {
   if (!m_targetDelegate) {
+    // Ensure runtime is initialized before creating the target delegate
+    std::call_once(m_onceFlag, [this]() { initRuntime(); });
+    
     hermes_api_vtable vtable = facebook::hermes::getHermesApiVTable();
     
     if (vtable != nullptr) {
@@ -420,10 +431,51 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
 /*static*/ void HermesRuntimeHolder::dumpSampledTraceToFile(const std::string &fileName) noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_dump_to_file(fileName.c_str()));
 }
-
+// TODO: lazy loading using getHermesApi
 hermes_runtime HermesRuntimeHolder::getHermesRuntime() noexcept {
-  // TODO: (@vmoroz) Implement
-  return nullptr;
+  OutputDebugStringA("[HermesRuntimeHolder] getHermesRuntime() called\n");
+  
+  if (!m_runtime) {
+    OutputDebugStringA("[HermesRuntimeHolder] ERROR: m_runtime is null!\n");
+    return nullptr;
+  }
+  
+  char logBuffer[256];
+  sprintf_s(logBuffer, "[HermesRuntimeHolder] m_runtime=%p, about to call jsr_runtime_get_hermes_runtime\n", m_runtime);
+  OutputDebugStringA(logBuffer);
+  
+  // Load jsr_runtime_get_hermes_runtime using GetProcAddress directly (just like hermes_get_cdp_vtable)
+  // This bypasses the delay-loading mechanism which may be resolving to the wrong function
+  static HMODULE hermesModule = LoadLibraryAsPeerFirst(L"hermes.dll");
+  if (!hermesModule) {
+    OutputDebugStringA("[HermesRuntimeHolder] ERROR: Failed to load hermes.dll!\n");
+    return nullptr;
+  }
+  
+  typedef napi_status (*jsr_runtime_get_hermes_runtime_func)(jsr_runtime, hermes_runtime*);
+  static jsr_runtime_get_hermes_runtime_func getHermesRuntimeFunc = 
+      (jsr_runtime_get_hermes_runtime_func)GetProcAddress(hermesModule, "jsr_runtime_get_hermes_runtime");
+  
+  if (getHermesRuntimeFunc == nullptr) {
+    OutputDebugStringA("[HermesRuntimeHolder] ERROR: GetProcAddress failed for jsr_runtime_get_hermes_runtime!\n");
+    return nullptr;
+  }
+  
+  OutputDebugStringA("[HermesRuntimeHolder] Using GetProcAddress-loaded function pointer, calling it now...\n");
+  
+  hermes_runtime hermesRt = nullptr;
+  napi_status status = getHermesRuntimeFunc(m_runtime, &hermesRt);
+  
+  if (status != napi_ok) {
+    sprintf_s(logBuffer, "[HermesRuntimeHolder] ERROR: jsr_runtime_get_hermes_runtime failed with status=%d\n", status);
+    OutputDebugStringA(logBuffer);
+    return nullptr;
+  }
+  
+  sprintf_s(logBuffer, "[HermesRuntimeHolder] Successfully got hermes_runtime=%p from jsr_runtime=%p\n", hermesRt, m_runtime);
+  OutputDebugStringA(logBuffer);
+  
+  return hermesRt;
 }
 
 //==============================================================================
