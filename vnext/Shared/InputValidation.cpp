@@ -97,17 +97,17 @@ std::string URLValidator::ExtractHostname(const std::string &url) {
 
   std::string hostname = url.substr(hostStart, hostEnd - hostStart);
 
-  // Remove port if present
-  size_t portPos = hostname.find(':');
-  if (portPos != std::string::npos) {
-    hostname = hostname.substr(0, portPos);
-  }
-
-  // Remove IPv6 brackets
+  // Handle IPv6 addresses first (they have brackets)
   if (!hostname.empty() && hostname[0] == '[') {
     size_t bracketEnd = hostname.find(']');
     if (bracketEnd != std::string::npos) {
       hostname = hostname.substr(1, bracketEnd - 1);
+    }
+  } else {
+    // For non-IPv6, remove port if present (only after first colon)
+    size_t portPos = hostname.find(':');
+    if (portPos != std::string::npos) {
+      hostname = hostname.substr(0, portPos);
     }
   }
 
