@@ -103,8 +103,8 @@ void FileReaderTurboModule::ReadAsText(
 
   // SDL Compliance: Validate encoding (P1 - CVSS 5.5)
   try {
-    // Allowlist of safe encodings
-    std::vector<std::string> allowedEncodings = {
+    // Allowlist of safe encodings (static to avoid repeated allocations)
+    static const std::vector<std::string> allowedEncodings = {
         "UTF-8",
         "utf-8",
         "utf8",

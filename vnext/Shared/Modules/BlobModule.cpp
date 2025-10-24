@@ -124,7 +124,7 @@ void BlobTurboModule::Release(string &&blobId) noexcept {
     Microsoft::ReactNative::InputValidation::PathValidator::ValidateBlobId(blobId);
     m_resource->Release(std::move(blobId));
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &) {
-    // Log but don't propagate - release is best-effort
+    // Silently ignore validation errors - release is best-effort and non-critical
   }
 }
 

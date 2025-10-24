@@ -151,7 +151,7 @@ InspectorPackagerConnection::InspectorPackagerConnection(
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     std::string errorMsg = std::string("Inspector URL validation failed: ") + ex.what();
     facebook::react::tracing::error(errorMsg.c_str());
-    // Continue with invalid URL - error will be caught on connection attempt
+    throw; // Prevent construction with invalid URL
   }
 }
 
