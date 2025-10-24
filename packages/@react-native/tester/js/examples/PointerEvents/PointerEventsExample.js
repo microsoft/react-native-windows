@@ -125,7 +125,7 @@ class NoneStyleExample extends React.Component<$FlowFixMeProps> {
 }
 
 /**
- * Special demo text that makes itself untouchable so that it doesn't destroy
+ * Special demo text that makes itself non-interactive so that it doesn't destroy
  * the experiment and confuse the output.
  */
 class DemoText extends React.Component<$FlowFixMeProps> {
