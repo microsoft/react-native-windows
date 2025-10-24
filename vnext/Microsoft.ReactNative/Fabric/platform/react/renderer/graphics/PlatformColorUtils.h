@@ -17,4 +17,7 @@ winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &s
 // Get appropriate placeholder text color for TextInput based on focus state and background
 SharedColor GetTextInputPlaceholderColor(bool isFocused, const winrt::Windows::UI::Color &backgroundColor = {});
 
+// Get default text foreground color for Text component (theme-aware)
+SharedColor GetDefaultTextColor();
+
 } // namespace facebook::react

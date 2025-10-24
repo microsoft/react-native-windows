@@ -319,8 +319,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
     switch (nIndex) {
       case COLOR_WINDOWTEXT:
-        if (m_outer->windowsTextInputProps().textAttributes.foregroundColor)
-          return (*m_outer->windowsTextInputProps().textAttributes.foregroundColor).AsColorRefNoAlpha();
+        if (m_outer->windowsTextInputProps().textAttributes.foregroundColor) {
+          auto color = m_outer->theme()->Color(*m_outer->windowsTextInputProps().textAttributes.foregroundColor);
+          return RGB(color.R, color.G, color.B);
+        }
         // cr = 0x000000FF;
         break;
       case COLOR_WINDOW:
@@ -329,8 +331,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
         break;
 
       case COLOR_HIGHLIGHT:
-        if (m_outer->windowsTextInputProps().selectionColor)
-          return (*m_outer->windowsTextInputProps().selectionColor).AsColorRefNoAlpha();
+        if (m_outer->windowsTextInputProps().selectionColor) {
+          auto color = m_outer->theme()->Color(*m_outer->windowsTextInputProps().selectionColor);
+          return RGB(color.R, color.G, color.B);
+        }
         break;
 
       case COLOR_HIGHLIGHTTEXT:
