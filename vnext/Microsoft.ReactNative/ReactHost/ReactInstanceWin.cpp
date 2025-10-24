@@ -300,17 +300,6 @@ ReactInstanceWin::ReactInstanceWin(
 }
 
 ReactInstanceWin::~ReactInstanceWin() noexcept {
-#ifdef USE_FABRIC
-  if (m_bridgelessReactInstance && m_options.InspectorTarget) {
-    auto messageDispatchQueue =
-        Mso::React::MessageDispatchQueue(::Microsoft::ReactNative::ReactInspectorThread::Instance(), nullptr);
-    messageDispatchQueue.runOnQueueSync([weakBridgelessReactInstance = std::weak_ptr(m_bridgelessReactInstance)]() {
-      if (auto bridgelessReactInstance = weakBridgelessReactInstance.lock()) {
-        bridgelessReactInstance->unregisterFromInspector();
-      }
-    });
-  }
-#endif
 
   std::scoped_lock lock{s_registryMutex};
   auto it = std::find(s_instanceRegistry.begin(), s_instanceRegistry.end(), this);
@@ -1124,6 +1113,13 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   if (m_bridgelessReactInstance) {
     if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
       jsMessageThread->runOnQueueSync([&]() noexcept {
+        // Unregister from inspector BEFORE shutting down JS thread
+        if (m_bridgelessReactInstance && m_options.InspectorTarget) {
+          OutputDebugStringA("[ReactInstanceWin] Destroy: About to call unregisterFromInspector\n");
+          m_bridgelessReactInstance->unregisterFromInspector();
+          OutputDebugStringA("[ReactInstanceWin] Destroy: unregisterFromInspector completed successfully\n");
+        }
+        
         {
           // Release the JSI runtime
           std::scoped_lock lock{m_mutex};

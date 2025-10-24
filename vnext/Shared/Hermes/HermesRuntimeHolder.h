@@ -109,10 +109,7 @@ struct HermesCdpDebuggerDeleter {
 
 struct HermesCdpAgentDeleter {
   void operator()(hermes_cdp_agent cdp_agent) {
-    // Skip deletion for stub/dummy values to prevent crashes
-    if (cdp_agent == nullptr || 
-        cdp_agent == (hermes_cdp_agent)0x1 || 
-        cdp_agent == (hermes_cdp_agent)0x2) {
+    if (cdp_agent == nullptr){
       return;
     }
     
@@ -126,9 +123,7 @@ struct HermesCdpAgentDeleter {
 struct HermesCdpStateDeleter {
   void operator()(hermes_cdp_state cdp_state) {
     // Skip deletion for stub/dummy values to prevent crashes
-    if (cdp_state == nullptr || 
-        cdp_state == (hermes_cdp_state)0x1 || 
-        cdp_state == (hermes_cdp_state)0x2) {
+    if (cdp_state == nullptr) {
       return;
     }
     
@@ -142,9 +137,7 @@ struct HermesCdpStateDeleter {
 struct HermesStackTraceDeleter {
   void operator()(hermes_stack_trace stack_trace) {
     // Skip deletion for stub/dummy values to prevent crashes
-    if (stack_trace == nullptr || 
-        stack_trace == (hermes_stack_trace)0x1 || 
-        stack_trace == (hermes_stack_trace)0x2) {
+    if (stack_trace == nullptr) {
       return;
     }
     

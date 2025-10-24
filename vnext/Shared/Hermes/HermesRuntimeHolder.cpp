@@ -102,7 +102,8 @@ class HermesTask {
 class HermesTaskRunner {
  public:
   static void Create(jsr_config config, std::shared_ptr<facebook::react::MessageQueueThread> queue) {
-    CRASH_ON_ERROR(getHermesApi().jsr_config_set_task_runner(
+    CRASH_ON_ERROR(
+      getHermesApi().jsr_config_set_task_runner(
         config, new HermesTaskRunner(std::move(queue)), &PostTask, &Delete, nullptr));
   }
 
@@ -168,7 +169,8 @@ struct HermesJsiBuffer : facebook::jsi::Buffer {
 class HermesScriptCache {
  public:
   static void Create(jsr_config config, std::shared_ptr<facebook::jsi::PreparedScriptStore> scriptStore) {
-    CRASH_ON_ERROR(getHermesApi().jsr_config_set_script_cache(
+    CRASH_ON_ERROR(
+      getHermesApi().jsr_config_set_script_cache(
         config, new HermesScriptCache(std::move(scriptStore)), &LoadScript, &StoreScript, &Delete, nullptr));
   }
 
@@ -239,7 +241,8 @@ class HermesLocalConnection : public facebook::react::jsinspector_modern::ILocal
   HermesLocalConnection(
       std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remoteConnection,
       void *connectFunc) noexcept {
-    CRASH_ON_ERROR(getHermesApi().hermes_create_local_connection(
+    CRASH_ON_ERROR(
+      getHermesApi().hermes_create_local_connection(
         connectFunc,
         reinterpret_cast<hermes_remote_connection>(remoteConnection.release()),
         &OnRemoteConnectionSendMessage,
