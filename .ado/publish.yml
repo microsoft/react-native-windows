@@ -453,6 +453,20 @@ extends:
                 - platform: ARM64EC
                   configuration: Debug
 
+          # Symbol Publishing for Work Item 59264834 - MSRC Compliance
+          - task: PublishSymbols@2
+            displayName: 'Publish Symbols to Microsoft Symbol Server'
+            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
+            inputs:
+              SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'
+              SearchPattern: '**/*.pdb'
+              SymbolServerType: 'TeamServices'
+              SymbolsProduct: 'ReactNativeWindows'
+              SymbolsVersion: '$(Build.BuildNumber)'
+              SymbolsArtifactName: 'ReactNativeWindows-Symbols'
+              DetailedLog: true
+              TreatNotIndexedAsWarning: false
+
           templateContext:
             sdl:
               binskim:
