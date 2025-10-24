@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Oct 2025 05:26:22 GMT",
+      "version": "0.0.0-canary.1001",
+      "tag": "react-native-windows_v0.0.0-canary.1001",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fbfc00dd60f4f6784a91aee2edca881c3d080470",
+            "comment": "Theme aware platform color for text."
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8a441d21fd06b8757eed38c14fbdc97adee6e7da",
+            "comment": "Handling platform color with accent color"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Oct 2025 05:28:11 GMT",
       "version": "0.0.0-canary.1000",
       "tag": "react-native-windows_v0.0.0-canary.1000",
