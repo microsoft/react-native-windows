@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 06 Oct 2025 15:30:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 24 Oct 2025 02:43:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.9
+
+Fri, 24 Oct 2025 02:43:59 GMT
+
+### Changes
+
+- Add Attack Surface Analyzer (ASA) integration to CI pipeline for SDL compliance (copilot@github.com)
+- Upgrade dotnet version (10109130+sharath2727@users.noreply.github.com)
+- Add UIA HeadingLevel behaviour for Fabric architecture (kvineeth@microsoft.com)
+- Added UIA Event Triggers for accessibilityAnnotation Property Changes (gsaran252000@gmail.com)
+- [Fabric] Fixing Clipped Property for Modal Component (kvineeth@microsoft.com)
+- adding UIA event handler changes for navigator (protikbiswas100@microsoft.com)
+- Bump @react-native-windows/cli to v0.80.0-preview.7
 
 ## 0.80.0-preview.8
 

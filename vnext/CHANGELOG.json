@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Oct 2025 02:43:59 GMT",
+      "version": "0.80.0-preview.9",
+      "tag": "react-native-windows_v0.80.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "copilot@github.com",
+            "package": "react-native-windows",
+            "commit": "1b026c07b5e6f8a4ce73164aed620e4199567f22",
+            "comment": "Add Attack Surface Analyzer (ASA) integration to CI pipeline for SDL compliance"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9325df8f9f0cf534ba75c171e7f9be1042850b6e",
+            "comment": "Upgrade dotnet version"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8420be70c3e04e856567d531fef641f77fdbc1fd",
+            "comment": "Add UIA HeadingLevel behaviour for Fabric architecture"
+          },
+          {
+            "author": "gsaran252000@gmail.com",
+            "package": "react-native-windows",
+            "commit": "9325df8f9f0cf534ba75c171e7f9be1042850b6e",
+            "comment": "Added UIA Event Triggers for accessibilityAnnotation Property Changes"
+          },
+          {
+            "author": "kvineeth@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7ce0f316cb3984fdd1fa446191478a41d3a2899b",
+            "comment": "[Fabric] Fixing Clipped Property for Modal Component"
+          },
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9325df8f9f0cf534ba75c171e7f9be1042850b6e",
+            "comment": "adding UIA event handler changes for navigator"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.80.0-preview.7",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Oct 2025 15:30:40 GMT",
       "version": "0.80.0-preview.8",
       "tag": "react-native-windows_v0.80.0-preview.8",
