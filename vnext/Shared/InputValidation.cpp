@@ -203,6 +203,11 @@ bool URLValidator::IsPrivateOrLocalhost(const std::string &hostname) {
     return true;
   }
 
+  // Check IPv6 loopback in expanded form (0:0:0:0:0:0:0:1)
+  if (hostname == "0:0:0:0:0:0:0:1") {
+    return true;
+  }
+
   // Check for encoded IPv4 formats (SDL requirement)
   if (IsOctalIPv4(hostname) || IsHexIPv4(hostname) || IsDecimalIPv4(hostname)) {
     LogValidationFailure("ENCODED_IP", "Blocked encoded IP format: " + hostname);
