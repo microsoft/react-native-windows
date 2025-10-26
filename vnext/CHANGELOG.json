@@ -2,6 +2,71 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 26 Oct 2025 13:47:08 GMT",
+      "version": "0.80.0-preview.10",
+      "tag": "react-native-windows_v0.80.0-preview.10",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Add symbol publishing compliance for Work Item 59264834"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Add signature verification for SDL compliance (Work Item 58386093)"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "745af1bf80c450554801004e8bbbb716173f32c1",
+            "comment": "Fix PoliCheck compliance - Replace non-inclusive terminology"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Add comprehensive security documentation for SDL compliance"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "SDL mandatory warnings - Configured all 20 SDL mandatory warnings as errors"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Theme aware platform color for text."
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Removing Platform brush instead using proper caret brush"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Handling platform color with accent color"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Fix for hardcoded Textinput text holder as gray.GIssue:15129"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Oct 2025 02:43:59 GMT",
       "version": "0.80.0-preview.9",
       "tag": "react-native-windows_v0.80.0-preview.9",

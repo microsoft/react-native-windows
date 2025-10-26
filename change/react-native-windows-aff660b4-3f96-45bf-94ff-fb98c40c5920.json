@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix PoliCheck compliance - Replace non-inclusive terminology",
-  "packageName": "react-native-windows",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "none"
-}

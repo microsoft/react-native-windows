@@ -1,7 +1,0 @@
-{
-  "comment": "Handling platform color with accent color",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "patch"
-}

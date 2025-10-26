@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 26 Oct 2025 13:47:08 GMT",
+      "version": "0.80.0-preview.7",
+      "tag": "@react-native-windows/cli_v0.80.0-preview.7",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "2530ca4d8042fc6a5a69944e66ee7321dca6f8d2",
+            "comment": "Security fix: Remediate PowerShell injection vulnerabilities (SDL CE.10116)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Oct 2025 02:43:59 GMT",
       "version": "0.80.0-preview.7",
       "tag": "@react-native-windows/cli_v0.80.0-preview.7",

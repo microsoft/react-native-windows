@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 24 Oct 2025 02:43:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 26 Oct 2025 13:47:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0-preview.10
+
+Sun, 26 Oct 2025 13:47:08 GMT
+
+### Changes
+
+- Theme aware platform color for text. (nitchaudhary@microsoft.com)
+- Removing Platform brush instead using proper caret brush (nitchaudhary@microsoft.com)
+- Handling platform color with accent color (nitchaudhary@microsoft.com)
+- Fix for hardcoded Textinput text holder as gray.GIssue:15129 (nitchaudhary@microsoft.com)
 
 ## 0.80.0-preview.9
 
