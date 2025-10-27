@@ -1,7 +1,7 @@
 const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
 const fs = require('fs');
-const path = require('path');
+const path = require('node:path');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const rnwPath = fs.realpathSync(
