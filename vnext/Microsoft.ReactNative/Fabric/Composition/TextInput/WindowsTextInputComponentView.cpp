@@ -539,10 +539,13 @@ void WindowsTextInputComponentView::HandleCommand(
     std::optional<winrt::hstring> text;
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
-    // Allow text updates that are very close to the current native event count
-    // This handles the case where JavaScript immediately calls setValue during onSubmitEditing
-    // In that case, eventCount might be one less than m_nativeEventCount due to timing
-    if (eventCount >= m_nativeEventCount - 1) {
+    // Accept text updates that match current event count, or clear text operations
+    // that are one event behind (to handle immediate setValue('') during onSubmitEditing)
+    bool isEmptyTextUpdate = text.has_value() && text.value().empty();
+    bool isValidEventCount = eventCount >= m_nativeEventCount;
+    bool isRecentClearText = isEmptyTextUpdate && (eventCount >= m_nativeEventCount - 1);
+    
+    if (isValidEventCount || isRecentClearText) {
       m_comingFromJS = true;
       {
         if (text.has_value()) {
