@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 10 Jun 2025 18:35:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 27 Oct 2025 15:29:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.1
+
+Mon, 27 Oct 2025 15:29:11 GMT
+
+### Patches
+
+- Promote 0.79 to legacy (54227869+anupriya13@users.noreply.github.com)
 
 ## 0.79.0
 

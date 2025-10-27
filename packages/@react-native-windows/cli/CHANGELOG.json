@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 27 Oct 2025 15:29:11 GMT",
+      "version": "0.79.4",
+      "tag": "@react-native-windows/cli_v0.79.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4d44a3129df930692caee55808ba97f6e6be8fb4",
+            "comment": "Promote 0.79 to legacy"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "64ea8cc031d48868b51db9b52d9fa74ffed1bfde",
+            "comment": "upgrade to dotnet8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.79.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.79.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.79.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.79.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Aug 2025 15:27:17 GMT",
       "version": "0.79.3",
       "tag": "@react-native-windows/cli_v0.79.3",

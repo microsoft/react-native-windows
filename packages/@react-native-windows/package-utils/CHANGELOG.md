@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Tue, 10 Jun 2025 18:35:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 27 Oct 2025 15:29:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.1
+
+Mon, 27 Oct 2025 15:29:12 GMT
+
+### Patches
+
+- Promote 0.79 to legacy (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.79.1
+- Bump @react-native-windows/fs to v0.79.1
 
 ## 0.79.0
 

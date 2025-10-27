@@ -2,6 +2,33 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Mon, 27 Oct 2025 15:29:12 GMT",
+      "version": "0.79.1",
+      "tag": "@react-native-windows/package-utils_v0.79.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "4d44a3129df930692caee55808ba97f6e6be8fb4",
+            "comment": "Promote 0.79 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.79.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.79.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Jun 2025 18:35:18 GMT",
       "version": "0.79.0",
       "tag": "@react-native-windows/package-utils_v0.79.0",

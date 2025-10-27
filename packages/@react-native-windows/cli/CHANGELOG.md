@@ -1,8 +1,21 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 11 Aug 2025 15:27:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 27 Oct 2025 15:29:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.4
+
+Mon, 27 Oct 2025 15:29:11 GMT
+
+### Patches
+
+- Promote 0.79 to legacy (54227869+anupriya13@users.noreply.github.com)
+- upgrade to dotnet8 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.79.1
+- Bump @react-native-windows/fs to v0.79.1
+- Bump @react-native-windows/package-utils to v0.79.1
+- Bump @react-native-windows/telemetry to v0.79.2
 
 ## 0.79.3
 

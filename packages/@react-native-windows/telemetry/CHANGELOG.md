@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Mon, 21 Jul 2025 15:44:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 27 Oct 2025 15:29:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.2
+
+Mon, 27 Oct 2025 15:29:12 GMT
+
+### Patches
+
+- Promote 0.79 to legacy (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.79.1
 
 ## 0.79.1
 
