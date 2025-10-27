@@ -16,6 +16,13 @@
        specific language governing permissions and limitations
        under the License.
 #>
+
+# SDL CE.10116 SECURITY FIX: Removed PowerShell injection vulnerabilities
+# - Replaced Invoke-Expression with direct cmdlet invocation
+# - Implemented parameterized ScriptBlock pattern for elevated execution
+# - Added input validation for package IDs and paths
+# Date: October 14, 2025
+
 $code = @"
 using System;
 using System.Runtime.CompilerServices;
@@ -53,21 +60,150 @@ namespace StoreAppRunner
 }
 "@
 
+#region Security Helper Functions
+
+<#
+.SYNOPSIS
+    Validates package identifier format to prevent injection attacks.
+.DESCRIPTION
+    Ensures package ID contains only safe characters and matches expected format.
+    SDL CE.10116 compliance - prevents PowerShell injection via package names.
+#>
+function Validate-PackageIdentifier {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$PackageId
+    )
+    
+    # Valid format: alphanumeric, dots, hyphens, underscores only
+    if ($PackageId -notmatch '^[a-zA-Z0-9\.\-_]+$') {
+        throw "Invalid package identifier format. Only alphanumeric characters, dots, hyphens, and underscores are allowed."
+    }
+    
+    # Prevent common injection patterns
+    $dangerousPatterns = @(';', '|', '&', '$', '`', '<', '>', "`n", "`r", '(', ')', '{', '}')
+    foreach ($pattern in $dangerousPatterns) {
+        if ($PackageId.Contains($pattern)) {
+            throw "Package identifier contains forbidden characters: $pattern"
+        }
+    }
+    
+    return $true
+}
+
+<#
+.SYNOPSIS
+    Validates and canonicalizes script path to prevent path traversal attacks.
+.DESCRIPTION
+    Ensures path is a valid .ps1 file and resolves to canonical path.
+    SDL CE.10116 compliance - prevents path injection attacks.
+#>
+function Validate-ScriptPath {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Path
+    )
+    
+    # Check file exists
+    if (!(Test-Path $Path -PathType Leaf)) {
+        throw "Script path does not exist: $Path"
+    }
+    
+    # Check .ps1 extension
+    if ([System.IO.Path]::GetExtension($Path) -ne '.ps1') {
+        throw "Path must reference a PowerShell script (.ps1)"
+    }
+    
+    # Get canonical path (prevents ../ traversal)
+    $canonicalPath = [System.IO.Path]::GetFullPath($Path)
+    
+    return $canonicalPath
+}
+
+<#
+.SYNOPSIS
+    Executes a ScriptBlock with optional elevation using parameterized approach.
+.DESCRIPTION
+    SDL CE.10116 compliant - uses ScriptBlock with ArgumentList instead of string concatenation.
+    Prevents PowerShell injection attacks by properly isolating parameters.
+#>
+function Invoke-ElevatedScriptBlock {
+    param(
+        [Parameter(Mandatory=$true)]
+        [ScriptBlock]$ScriptBlock,
+        
+        [Parameter(Mandatory=$false)]
+        [object[]]$ArgumentList = @()
+    )
+    
+    if (!(IsElevated)) {
+        # Serialize ScriptBlock and arguments for elevated execution
+        $encodedCommand = [Convert]::ToBase64String(
+            [System.Text.Encoding]::Unicode.GetBytes($ScriptBlock.ToString())
+        )
+        
+        $encodedArgs = [Convert]::ToBase64String(
+            [System.Text.Encoding]::Unicode.GetBytes(
+                ($ArgumentList | ConvertTo-Json -Compress -Depth 10)
+            )
+        )
+        
+        # Create secure argument list (no string interpolation)
+        $startArgs = @(
+            '-NoProfile',
+            '-NonInteractive',
+            '-Command',
+            "& ([ScriptBlock]::Create([System.Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('$encodedCommand')))) @(ConvertFrom-Json ([System.Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('$encodedArgs'))))"
+        )
+        
+        $process = Start-Process PowerShell -ArgumentList $startArgs `
+            -Verb RunAs -Wait -PassThru -WindowStyle Hidden -ErrorAction Stop
+        
+        if ($process.ExitCode -ne 0) {
+            throw "Elevated command failed with exit code $($process.ExitCode)"
+        }
+    }
+    else {
+        # Already elevated, execute directly with splatting
+        & $ScriptBlock @ArgumentList
+    }
+}
+
+#endregion
+
+#region Core Functions
+
+<#
+.SYNOPSIS
+    Uninstalls an AppX package by package identifier.
+.DESCRIPTION
+    SDL CE.10116 FIX: Replaced Invoke-Expression with direct Remove-AppxPackage cmdlet.
+    Uses parameterized ScriptBlock for elevated execution.
+#>
 function Uninstall-App {
     param(
         [Parameter(Mandatory=$true, Position=0, ValueFromPipelineByPropertyName=$true)]
         [string] $ID <# package.appxmanifest//Identity@name #>
     )
 
+    # SDL FIX: Validate package ID to prevent injection
+    Validate-PackageIdentifier -PackageId $ID | Out-Null
+
     $package = Get-AppxPackage $ID
 
     if($package) {
         $pfn = $package.PackageFullName
-        $command = "Remove-AppxPackage $pfn -ErrorAction Stop"
+        
+        # SDL FIX: Direct cmdlet invocation instead of Invoke-Expression
         try {
-            Invoke-Expression $command
+            Remove-AppxPackage $pfn -ErrorAction Stop
         } catch {
-            Invoke-Expression-MayElevate $command -ErrorAction Stop
+            # SDL FIX: Use parameterized ScriptBlock for elevation
+            $scriptBlock = {
+                param($PackageFullName)
+                Remove-AppxPackage $PackageFullName -ErrorAction Stop
+            }
+            Invoke-ElevatedScriptBlock -ScriptBlock $scriptBlock -ArgumentList @($pfn)
         }
     }
 }
@@ -91,44 +227,60 @@ function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
 }
 
-function RunElevatedPowerShellSync([string]$Command) {
-    $process = Start-Process Powershell -ArgumentList "$Command" -Verb RunAs -ErrorAction Stop -PassThru
-    if ($process -ne $null) {
-        $process.WaitForExit();
-        if ($process.ExitCode -ne 0) {
-            $code = $process.ExitCode;
-            throw "Command exited with code $code";
-        }
-    } else {
-        throw "Process creation failed for $Command";
-    }
-}
-
-function Invoke-Expression-MayElevate([string]$Command) {
-    if (!(IsElevated))
-    {
-        RunElevatedPowerShellSync($Command) -ErrorAction Stop
-    }
-    else
-    {
-        Invoke-Expression ("& $Command") -ErrorAction Stop
-    }
-}
-
+<#
+.SYNOPSIS
+    Enables developer mode by setting registry keys.
+.DESCRIPTION
+    SDL CE.10116 FIX: Replaced Invoke-Expression-MayElevate with direct cmdlet calls
+    and parameterized ScriptBlock for elevation.
+#>
 function EnableDevmode {
     $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
     
+    # Create registry key if it doesn't exist
     if (-not(Test-Path -Path $RegistryKeyPath)) {
-        New-Item -Path $RegistryKeyPath -ItemType Directory -Force
+        if (!(IsElevated)) {
+            $scriptBlock = {
+                param($Path)
+                New-Item -Path $Path -ItemType Directory -Force | Out-Null
+            }
+            Invoke-ElevatedScriptBlock -ScriptBlock $scriptBlock -ArgumentList @($RegistryKeyPath)
+        }
+        else {
+            New-Item -Path $RegistryKeyPath -ItemType Directory -Force | Out-Null
+        }
     }
 
-    $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
+    # SDL FIX: Direct cmdlet invocation for AllowDevelopmentWithoutDevLicense
+    $value = Get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
     if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
-        Invoke-Expression-MayElevate("Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop") -ErrorAction Stop;
+        if (!(IsElevated)) {
+            $scriptBlock = {
+                param($Path, $Name, $Value)
+                Set-ItemProperty -Path $Path -Name $Name -Value $Value -ErrorAction Stop
+            }
+            Invoke-ElevatedScriptBlock -ScriptBlock $scriptBlock `
+                -ArgumentList @($RegistryKeyPath, 'AllowDevelopmentWithoutDevLicense', 1)
+        }
+        else {
+            Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
+        }
     }
-    $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -ErrorAction SilentlyContinue
+    
+    # SDL FIX: Direct cmdlet invocation for AllowAllTrustedApps
+    $value = Get-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -ErrorAction SilentlyContinue
     if (($value -eq $null) -or ($value.AllowAllTrustedApps -ne 1)) {
-        Invoke-Expression-MayElevate("Set-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -Value 1 -ErrorAction Stop") -ErrorAction Stop;
+        if (!(IsElevated)) {
+            $scriptBlock = {
+                param($Path, $Name, $Value)
+                Set-ItemProperty -Path $Path -Name $Name -Value $Value -ErrorAction Stop
+            }
+            Invoke-ElevatedScriptBlock -ScriptBlock $scriptBlock `
+                -ArgumentList @($RegistryKeyPath, 'AllowAllTrustedApps', 1)
+        }
+        else {
+            Set-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -Value 1 -ErrorAction Stop
+        }
     }
 }
 
@@ -174,22 +326,44 @@ function CheckIfNeedInstallCertificate
     return (-not $Valid)
 }
 
+<#
+.SYNOPSIS
+    Installs an app package using Add-AppDevPackage.ps1 script.
+.DESCRIPTION
+    SDL CE.10116 FIX: Replaced Invoke-Expression with call operator (&) and
+    parameterized ScriptBlock for elevated execution.
+#>
 function Install-App {
     param(
         [Parameter(Mandatory=$true, Position=0, ValueFromPipelineByPropertyName=$true)]
         [string] $Path, <# Full path to Add-AppDevPackage.ps1 #>
         [switch] $Force = $false
     )
-    $needInstallCertificate = CheckIfNeedInstallCertificate (Join-Path $Path "..");
+    
+    # SDL FIX: Validate script path
+    $Path = Validate-ScriptPath -Path $Path
+    
+    $needInstallCertificate = CheckIfNeedInstallCertificate (Join-Path $Path "..")
+    
     if (!$Force -and ((CheckIfNeedDeveloperLicense) -or ($needInstallCertificate)))
     {
-        # we can't run the script with -force param if license/certificate installation step is required
-        Invoke-Expression ("& `"$Path`"")
+        # SDL FIX: Use call operator (&) instead of Invoke-Expression
+        # No user input in path (validated above), so safe to execute
+        & $Path
     }
     else
     {
-        $Path = [System.IO.Path]::GetFullPath($Path);
-        Invoke-Expression-MayElevate("`"$Path`" -force") -ErrorAction Stop;
+        # SDL FIX: Use parameterized ScriptBlock for elevation
+        if (!(IsElevated)) {
+            $scriptBlock = {
+                param($ScriptPath)
+                & $ScriptPath -Force
+            }
+            Invoke-ElevatedScriptBlock -ScriptBlock $scriptBlock -ArgumentList @($Path)
+        }
+        else {
+            & $Path -Force
+        }
     }
 }
 
@@ -220,6 +394,9 @@ function Start-Locally {
         [string[]] $argv
     )
 
+    # SDL FIX: Validate package ID
+    Validate-PackageIdentifier -PackageId $ID | Out-Null
+
     $package = Get-AppxPackage $ID
     $manifest = Get-appxpackagemanifest $package
     $applicationUserModelId = $package.PackageFamilyName + "!" + $manifest.package.applications.application.id
@@ -239,7 +416,6 @@ function Start-Locally {
         }
     }
 }
-
 
 function Map-PackageNameToPackage {
     param([Parameter(Mandatory=$true)] [string]$DependenciesPath)
@@ -272,3 +448,18 @@ function Install-AppDependencies {
     $packagePaths = $packageNamesToInstall | % { $map[$_] }
     $packagePaths | % { Add-AppxPackage -Path $_ }
 }
+
+#endregion
+
+# Export functions
+Export-ModuleMember -Function @(
+    'Uninstall-App',
+    'EnableDevmode',
+    'CheckIfNeedDeveloperLicense',
+    'CheckIfNeedInstallCertificate',
+    'Install-App',
+    'Install-AppFromDirectory',
+    'Install-AppFromAppx',
+    'Start-Locally',
+    'Install-AppDependencies'
+)

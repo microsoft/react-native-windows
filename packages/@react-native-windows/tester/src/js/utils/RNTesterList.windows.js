@@ -1,8 +1,11 @@
 /**
- * Copyright (c) Microsoft Corporation.
- * Licensed under the MIT License.
- * @format
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @flow
+ * @format
  */
 
 'use strict';
@@ -302,6 +305,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/DisplayContents/DisplayContentsExample')
       .default,
   },
+  /*{
+    key: 'FocusEventsExample',
+    module: require('../examples/FocusEventsExample/FocusEventsExample')
+      .default,
+  },*/
   // Only show the link for the example if the API is available.
   // E2E Tests failing when this test is enabled
   // {

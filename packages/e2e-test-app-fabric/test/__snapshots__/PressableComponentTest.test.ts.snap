@@ -28,7 +28,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
-        "LiveSetting": "Polite",
         "LocalizedControlType": "group",
         "PositionInSet": 2,
         "SizeofSet": 3,
@@ -46,7 +45,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
-        "LiveSetting": "Assertive",
         "LocalizedControlType": "group",
         "PositionInSet": 3,
         "SizeofSet": 3,
@@ -118,12 +116,12 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "916, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -333,17 +331,17 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
     },
     "Comment": "style-change-pressable",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "76, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "426, 6, 0",
-        "Size": "64, 23",
+        "Offset": "6, 6, 0",
+        "Size": "64, 22",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "64, 23",
+            "Size": "64, 22",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -634,7 +632,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
-    "Name": "pressable feedback events",
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
@@ -649,7 +646,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "pressable feedback events",
       "TestId": "pressable_feedback_events_button",
     },
     "__Children": [
@@ -784,7 +780,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 1`]
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
-    "Name": "pressable feedback events",
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
@@ -799,7 +794,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 1`]
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "AccessibilityLabel": "pressable feedback events",
       "TestId": "pressable_feedback_events_button",
     },
     "__Children": [
@@ -1514,12 +1508,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1540,12 +1534,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1566,12 +1560,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1592,12 +1586,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],

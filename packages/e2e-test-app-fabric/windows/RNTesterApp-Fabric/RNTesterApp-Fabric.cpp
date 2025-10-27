@@ -521,6 +521,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int positionInSet = 0;
   int sizeOfSet = 0;
   int level = 0;
+  int headingLevel = 0;
   LiveSetting liveSetting = LiveSetting::Off;
   BSTR itemStatus;
   BSTR itemType;
@@ -551,6 +552,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (SUCCEEDED(hr) && pTarget6) {
     pTarget6->get_CurrentFullDescription(&description);
   }
+  IUIAutomationElement8 *pTarget8;
+  hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement8), reinterpret_cast<void **>(&pTarget8));
+  if (SUCCEEDED(hr) && pTarget8) {
+    pTarget8->get_CurrentHeadingLevel(&headingLevel);
+  }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
   InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
@@ -560,6 +566,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
       L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
+  InsertIntValueIfNotDefault(result, L"HeadingLevel", headingLevel, HeadingLevel_None);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
   InsertIntValueIfNotDefault(result, L"Level", level);
   InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);

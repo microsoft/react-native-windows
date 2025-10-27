@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <atomic>
+#include <chrono>
 #include <queue>
 
 namespace Microsoft::React::Test {

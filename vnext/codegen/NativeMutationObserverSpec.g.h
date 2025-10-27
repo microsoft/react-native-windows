@@ -50,7 +50,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MutationObserverSpe
 struct MutationObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(MutationObserverSpec_NativeMutationObserverObserveOptions) noexcept>{0, L"observe"},
-      Method<void(double, ) noexcept>{1, L"unobserve"},
+      Method<void(double) noexcept>{1, L"unobserveAll"},
       Method<void(Callback<>, Callback<>) noexcept>{2, L"connect"},
       Method<void() noexcept>{3, L"disconnect"},
       SyncMethod<std::vector<MutationObserverSpec_NativeMutationRecord>() noexcept>{4, L"takeRecords"},
@@ -67,9 +67,9 @@ struct MutationObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(observe) static void observe(MutationObserverSpec_NativeMutationObserverObserveOptions && options) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
-          "unobserve",
-          "    REACT_METHOD(unobserve) void unobserve(double mutationObserverId,  targetShadowNode) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(unobserve) static void unobserve(double mutationObserverId,  targetShadowNode) noexcept { /* implementation */ }\n");
+          "unobserveAll",
+          "    REACT_METHOD(unobserveAll) void unobserveAll(double mutationObserverId) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(unobserveAll) static void unobserveAll(double mutationObserverId) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "connect",

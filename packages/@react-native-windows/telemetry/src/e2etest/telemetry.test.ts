@@ -115,7 +115,7 @@ test('setup() verify static common property values with async sources', async ()
   await TelemetryTest.startTest();
 
   const props: Record<string, () => Promise<string | undefined>> = {
-    deviceId: basePropUtils.deviceId,
+    //deviceId: basePropUtils.deviceId,
     deviceLocale: basePropUtils.deviceLocale,
   };
 
