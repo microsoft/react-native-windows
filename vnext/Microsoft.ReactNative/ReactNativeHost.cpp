@@ -203,6 +203,11 @@ ReactNativeHostProperty() noexcept {
 }
 
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
+  // Unload existing instance first to ensure clean state
+  OutputDebugStringA("[HOST] ReloadInstance: Unloading previous instance...\n");
+  co_await make<Mso::AsyncActionFutureAdapter>(m_reactHost->UnloadInstance());
+  OutputDebugStringA("[HOST] ReloadInstance: Previous instance unloaded\n");
+
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -317,7 +322,10 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.Identity = jsBundleFile;
   reactOptions.InspectorTarget = m_inspectorTarget.get();
-  return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
+  
+  OutputDebugStringA("[HOST] ReloadInstance: Creating new instance...\n");
+  co_await make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
+  OutputDebugStringA("[HOST] ReloadInstance: New instance created successfully\n");
 }
 
 IAsyncAction ReactNativeHost::UnloadInstance() noexcept {

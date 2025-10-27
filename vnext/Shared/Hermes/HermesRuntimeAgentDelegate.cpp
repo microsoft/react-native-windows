@@ -61,25 +61,14 @@ HermesRuntimeAgentDelegate::HermesRuntimeAgentDelegate(
               }),
           HermesStateWrapper::unwrapDestructively(previouslyExportedState.get()).release())) {
   
-  // enable domain debbuger only once 
-  bool runtimeAlreadyEnabled = sessionState.isRuntimeDomainEnabled;
-  bool debuggerAlreadyEnabled = sessionState.isDebuggerDomainEnabled;
+  // This ensures Debugger.scriptParsed events are sent even on reload
+  OutputDebugStringA("[CDP] Enabling Runtime domain for new agent...\n");
+  HermesApi2().enableRuntimeDomain(hermesCdpAgent_.get());
+  OutputDebugStringA("[CDP] Runtime domain enabled\n");
   
-  if (runtimeAlreadyEnabled) {
-    OutputDebugStringA("WARNING: Runtime domain was ALREADY enabled - skipping re-enable\n");
-  } else {
-    OutputDebugStringA("Enabling Runtime domain for first time\n");
-    HermesApi2().enableRuntimeDomain(hermesCdpAgent_.get());
-    OutputDebugStringA("Runtime domain enabled successfully\n");
-  }
-  
-  if (debuggerAlreadyEnabled) {
-    OutputDebugStringA("WARNING: Debugger domain was ALREADY enabled - skipping re-enable\n");
-  } else {
-    OutputDebugStringA("Enabling Debugger domain for first time\n");
-    HermesApi2().enableDebuggerDomain(hermesCdpAgent_.get());
-    OutputDebugStringA("Debugger domain enabled successfully\n");
-  }
+  OutputDebugStringA("[CDP] Enabling Debugger domain for new agent...\n");
+  HermesApi2().enableDebuggerDomain(hermesCdpAgent_.get());
+  OutputDebugStringA("[CDP] Debugger domain enabled - scripts will be sent\n");
   
   OutputDebugStringA("HermesRuntimeAgentDelegate constructor COMPLETE\n");
 }
