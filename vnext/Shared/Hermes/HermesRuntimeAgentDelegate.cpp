@@ -60,18 +60,28 @@ HermesRuntimeAgentDelegate::HermesRuntimeAgentDelegate(
                 frontendChannel(std::string_view(json_utf8, json_size));
               }),
           HermesStateWrapper::unwrapDestructively(previouslyExportedState.get()).release())) {
-  // Always enable both domains for debugging
-  // TODO: move enableRuntimeDomain and enableDebuggerDomain for conditional handling
-  HermesApi2().enableRuntimeDomain(hermesCdpAgent_.get());
-  HermesApi2().enableDebuggerDomain(hermesCdpAgent_.get());
-
-  // TODO: find isRuntimeDomainEnabled and isDebuggerDomainEnabled why not enabled
-  if (sessionState.isRuntimeDomainEnabled) {
-    OutputDebugStringA("[RNW] SessionState: Runtime domain was already enabled\n");
+  
+  // enable domain debbuger only once 
+  bool runtimeAlreadyEnabled = sessionState.isRuntimeDomainEnabled;
+  bool debuggerAlreadyEnabled = sessionState.isDebuggerDomainEnabled;
+  
+  if (runtimeAlreadyEnabled) {
+    OutputDebugStringA("WARNING: Runtime domain was ALREADY enabled - skipping re-enable\n");
+  } else {
+    OutputDebugStringA("Enabling Runtime domain for first time\n");
+    HermesApi2().enableRuntimeDomain(hermesCdpAgent_.get());
+    OutputDebugStringA("Runtime domain enabled successfully\n");
   }
-  if (sessionState.isDebuggerDomainEnabled) {
-    OutputDebugStringA("[RNW] SessionState: Debugger domain was already enabled\n");
+  
+  if (debuggerAlreadyEnabled) {
+    OutputDebugStringA("WARNING: Debugger domain was ALREADY enabled - skipping re-enable\n");
+  } else {
+    OutputDebugStringA("Enabling Debugger domain for first time\n");
+    HermesApi2().enableDebuggerDomain(hermesCdpAgent_.get());
+    OutputDebugStringA("Debugger domain enabled successfully\n");
   }
+  
+  OutputDebugStringA("HermesRuntimeAgentDelegate constructor COMPLETE\n");
 }
 
 HermesRuntimeAgentDelegate::~HermesRuntimeAgentDelegate() {
