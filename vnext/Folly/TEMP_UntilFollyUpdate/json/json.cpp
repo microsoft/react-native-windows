@@ -908,7 +908,7 @@ void escapeStringImpl(
 
     if (encodeUnicode) {
       // note that this if condition captures utf8 chars
-      // with value > 127, so size > 1 byte (or they are whitelisted for
+      // with value > 127, so size > 1 byte (or they are allowlisted for
       // Unicode encoding).
       // NOTE: char32_t / char16_t are both unsigned.
       char32_t cp = utf8ToCodePoint(p, e, opts.skip_invalid_utf8);

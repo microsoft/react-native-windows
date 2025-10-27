@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 25 Oct 2025 05:28:00 GMT",
+      "version": "0.0.0-canary.1001",
+      "tag": "react-native-windows_v0.0.0-canary.1001",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ec689c30bc9f41170d164ed697d9760cea1e7554",
+            "comment": "Fix PoliCheck compliance - Replace non-inclusive terminology"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Oct 2025 05:26:22 GMT",
       "version": "0.0.0-canary.1001",
       "tag": "react-native-windows_v0.0.0-canary.1001",
