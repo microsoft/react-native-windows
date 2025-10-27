@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Oct 2025 15:27:56 GMT",
+      "version": "0.75.20",
+      "tag": "react-native-windows_v0.75.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "402351ed525278b863ea6149ba47c4aff2d9b7b6",
+            "comment": "upgrade dotnet to 8.0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.75.11",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Jul 2025 15:26:17 GMT",
       "version": "0.75.19",
       "tag": "react-native-windows_v0.75.19",

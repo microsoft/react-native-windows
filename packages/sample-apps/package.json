@@ -17,13 +17,13 @@
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^18.2.0",
     "react-native": "0.75.5",
-    "react-native-windows": "0.75.19"
+    "react-native-windows": "0.75.20"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native-windows/cli": "0.75.10",
+    "@react-native-windows/cli": "0.75.11",
     "@react-native-windows/codegen": "0.75.7",
     "@react-native/metro-config": "0.75.5",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
