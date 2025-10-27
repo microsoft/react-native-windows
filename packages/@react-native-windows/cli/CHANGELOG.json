@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 27 Oct 2025 15:28:06 GMT",
+      "version": "0.78.10",
+      "tag": "@react-native-windows/cli_v0.78.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "48123860a11e78859a71e04dbe7bfb0aa762d9f1",
+            "comment": "upgrade to dotnet8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Jul 2025 15:26:20 GMT",
       "version": "0.78.9",
       "tag": "@react-native-windows/cli_v0.78.9",
