@@ -57,6 +57,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   void updateVisualBrush() noexcept;
   void DrawText() noexcept;
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
+  bool isTextSelectableAtPoint(facebook::react::Point pt) noexcept;
 
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;

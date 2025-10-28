@@ -7,6 +7,7 @@
 
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 
+#include <sstream>
 #include <AutoDraw.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
@@ -71,6 +72,18 @@ void ParagraphComponentView::updateProps(
     m_textLayout = nullptr;
   }
 
+  // Handle selectable prop changes
+  if (oldViewProps.isSelectable != newViewProps.isSelectable) {
+    std::wstringstream logMessage;
+    // logMessage << L"[ParagraphComponentView] Text selectable: "
+    //            << (newViewProps.isSelectable ? L"enabled" : L"disabled") << L"\n";
+    // OutputDebugStringW(logMessage.str().c_str());
+    
+    // Update visual properties based on selectability
+    // This affects cursor appearance and accessibility
+    m_requireRedraw = true;
+  }
+
   Super::updateProps(props, oldProps);
 }
 
@@ -104,6 +117,9 @@ void ParagraphComponentView::FinalizeUpdates(
 
 facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPoint(
     facebook::react::Point pt) noexcept {
+  // Test if text at this point is selectable
+  bool selectable = isTextSelectableAtPoint(pt);
+  
   if (m_attributedStringBox.getValue().getFragments().size() && m_textLayout) {
     BOOL isTrailingHit = false;
     BOOL isInside = false;
@@ -129,6 +145,55 @@ void ParagraphComponentView::updateTextAlignment(
     const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept {
   // Reset text layout to force recreation with new alignment
   m_textLayout = nullptr;
+}
+
+bool ParagraphComponentView::isTextSelectableAtPoint(facebook::react::Point pt) noexcept {
+  // Check if the paragraph-level selectable prop is enabled
+  const auto &props = paragraphProps();
+  if (!props.isSelectable) {
+    // std::wstringstream logMessage;
+    // logMessage << L"[ParagraphComponentView] Text NOT selectable - paragraph prop is false\n";
+    // OutputDebugStringW(logMessage.str().c_str());
+    return false;
+  }
+
+  // Perform hit testing to find which text fragment was hit
+  if (m_attributedStringBox.getValue().getFragments().size() && m_textLayout) {
+    BOOL isTrailingHit = false;
+    BOOL isInside = false;
+    DWRITE_HIT_TEST_METRICS metrics;
+    winrt::check_hresult(m_textLayout->HitTestPoint(pt.x, pt.y, &isTrailingHit, &isInside, &metrics));
+    
+    if (isInside) {
+      uint32_t textPosition = metrics.textPosition;
+      uint32_t fragmentIndex = 0;
+
+      // Find which fragment contains this text position
+      for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
+        if (textPosition < fragment.string.length()) {
+          // Found the fragment - check its selectable property
+          // Note: Individual text fragments inherit selectability from their parent Text component
+          // The fragment.parentShadowView contains the props of the nested <Text> component
+          
+          std::wstringstream logMessage;
+          logMessage << L"[ParagraphComponentView] Hit fragment " << fragmentIndex
+                     << L" at position " << textPosition
+                     << L" - Text IS selectable\n";
+          OutputDebugStringW(logMessage.str().c_str());
+          
+          return true;
+        }
+        textPosition -= static_cast<uint32_t>(fragment.string.length());
+        fragmentIndex++;
+      }
+    } else {
+      // std::wstringstream logMessage;
+      // logMessage << L"[ParagraphComponentView] Point outside text bounds\n";
+      // OutputDebugStringW(logMessage.str().c_str());
+    }
+  }
+
+  return false;
 }
 
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
@@ -281,6 +346,12 @@ void ParagraphComponentView::DrawText() noexcept {
           viewProps()->backgroundColor ? theme()->D2DColor(*viewProps()->backgroundColor)
                                        : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
       const auto &props = paragraphProps();
+      
+      // Log the current selectable state for debugging
+      std::wstringstream logMessage;
+      logMessage << L"[ParagraphComponentView] DrawText - isSelectable: " << props.isSelectable << L"\n";
+      OutputDebugStringW(logMessage.str().c_str());
+      
       RenderText(
           *d2dDeviceContext,
           *m_textLayout,
