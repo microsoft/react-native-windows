@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sun, 26 Oct 2025 13:47:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 28 Oct 2025 23:58:54 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.0
+
+Tue, 28 Oct 2025 23:58:54 GMT
+
+### Patches
+
+- Promote 0.80 to latest (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.80.0
+- Bump @react-native-windows/codegen to v0.80.0
 
 ## 0.80.0-preview.10
 
