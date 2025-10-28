@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 28 Oct 2025 03:55:26 GMT",
+      "version": "0.80.0",
+      "tag": "@office-iss/react-native-win32_v0.80.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "54227869+anupriya13@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "45c78c8f8ca7dcf3d894156d53f437b3e496d7cc",
+            "comment": "Promote 0.80 to latest"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Jul 2025 09:21:07 GMT",
       "version": "0.80.0-preview.1",
       "tag": "@office-iss/react-native-win32_v0.80.0-preview.1",
