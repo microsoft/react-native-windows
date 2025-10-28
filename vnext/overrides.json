@@ -201,6 +201,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
+      "baseHash": "d0335398782289db2de5b350de24373458180c4d",
+      "issue": 15292
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSHexColor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSHexColor.h",
       "baseHash": "7ff0d621afc16dbee0b2959bb07c78418506b59c",
