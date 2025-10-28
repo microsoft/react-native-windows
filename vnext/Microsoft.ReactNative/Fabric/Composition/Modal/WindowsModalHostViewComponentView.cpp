@@ -35,7 +35,6 @@ struct ModalHostState
 struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::Foundation::IInspectable>,
                        ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView> {
   ~ModalHostView() {
-    OutputDebugStringW(L"→ destructor() called\n");
     if (m_popUp) {
       // Unregister closing event handler (when to handle event token )
       if (m_appWindow && m_appWindowClosingToken) {
@@ -237,7 +236,6 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   unmounts the modal window using onDismiss event
   */
   void HideWindow() noexcept {
-    OutputDebugStringW(L"→ HideWindow() called\n");
     // Hide popup
     if (m_popUp) {
       m_popUp.Hide();
