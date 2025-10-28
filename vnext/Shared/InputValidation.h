@@ -33,6 +33,13 @@ class URLValidator {
       const std::vector<std::string> &allowedSchemes = {"http", "https"},
       bool allowLocalhost = false);
 
+  // Validate URL with DNS resolution (async version for production)
+  // Resolves hostname and checks if resolved IP is private
+  static void ValidateURLWithDNS(
+      const std::string &url,
+      const std::vector<std::string> &allowedSchemes = {"http", "https"},
+      bool allowLocalhost = false);
+
   // Check if hostname is private IP/localhost (expanded for SDL)
   static bool IsPrivateOrLocalhost(const std::string &hostname);
 
@@ -44,6 +51,9 @@ class URLValidator {
 
   // Check if IP is in private range (supports IPv4/IPv6)
   static bool IsPrivateIP(const std::string &ip);
+
+  // Resolve hostname to IP addresses (for DNS rebinding protection)
+  static std::vector<std::string> ResolveHostname(const std::string &hostname);
 
  private:
   static const std::vector<std::string> BLOCKED_HOSTS;
