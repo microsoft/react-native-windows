@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Oct 2025 23:42:04 GMT",
+      "version": "0.0.0-canary.1002",
+      "tag": "react-native-windows_v0.0.0-canary.1002",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ffccdf0f0f50faf6e191b20f2c86a4b45d35aa6b",
+            "comment": "Fix C4018 warning in ShadowNode.cpp"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Oct 2025 05:28:00 GMT",
       "version": "0.0.0-canary.1001",
       "tag": "react-native-windows_v0.0.0-canary.1001",
