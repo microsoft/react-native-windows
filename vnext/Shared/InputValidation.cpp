@@ -6,6 +6,10 @@
 #include <cctype>
 #include <iomanip>
 #include <sstream>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
+#pragma comment(lib, "Ws2_32.lib")
 
 namespace Microsoft::ReactNative::InputValidation {
 
