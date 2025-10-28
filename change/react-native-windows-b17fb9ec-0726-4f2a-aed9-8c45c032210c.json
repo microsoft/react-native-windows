@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix C4018 warning in ShadowNode.cpp",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
