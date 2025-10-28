@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:microsoft/react-native-windows.git"
+    "url": "git+ssh://git@github.com/microsoft/react-native-windows.git"
   },
   "license": "MIT",
   "workspaces": {
