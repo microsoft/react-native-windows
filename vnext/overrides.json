@@ -194,6 +194,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
+      "baseHash": "b56e467ee394e08d4e0dd0a8d71a8a9919603ff9",
+      "issue": 15292
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSTokenizer.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSTokenizer.h",
       "baseHash": "1580353c281d9c4a6548564ab32af7a3a2c8247e",
@@ -205,13 +212,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/primitives.h",
       "baseHash": "74cee7804fa62964c9ecc3fafd475d09b0ed6375",
       "issue": 15263
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
-      "baseHash": "d0335398782289db2de5b350de24373458180c4d",
-      "issue": 15292
     },
     {
       "type": "patch",
