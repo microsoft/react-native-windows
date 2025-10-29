@@ -208,6 +208,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
+      "baseHash": "d0335398782289db2de5b350de24373458180c4d",
+      "issue": 15292
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
       "baseHash": "f7a058ced6474e42e0ed805a2875a99c420e8398",
