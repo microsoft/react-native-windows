@@ -6,6 +6,7 @@
 #include <Utilities.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
+#include "../InputValidation.h"
 
 // Boost Libraries
 #include <boost/algorithm/string.hpp>
@@ -331,6 +332,10 @@ IAsyncAction WinRTWebSocketResource2::PerformWrite(string &&message, bool isBina
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
+  // NOTE: URL validation removed from this low-level method
+  // Higher-level APIs (WebSocketModule, etc.) should validate at API boundaries
+  // This allows tests to use WinRTWebSocketResource directly without validation overhead
+
   // Register MessageReceived BEFORE calling Connect
   // https://learn.microsoft.com/en-us/uwp/api/windows.networking.sockets.messagewebsocket.messagereceived?view=winrt-22621
   m_socket.MessageReceived([self = shared_from_this()](
@@ -642,6 +647,10 @@ void WinRTWebSocketResource::Synchronize() noexcept {
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
+  // NOTE: URL validation removed from this low-level method
+  // Higher-level APIs (WebSocketModule, etc.) should validate at API boundaries
+  // This allows tests to use WinRTWebSocketResource directly without validation overhead
+
   m_socket.MessageReceived([self = shared_from_this()](
                                IWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
     try {

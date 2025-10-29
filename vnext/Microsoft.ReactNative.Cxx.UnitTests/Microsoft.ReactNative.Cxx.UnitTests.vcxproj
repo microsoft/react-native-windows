@@ -109,6 +109,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Shared\InputValidation.h" />
     <ClInclude Include="JsonJSValueReader.h" />
     <ClInclude Include="JsonReader.h" />
     <ClInclude Include="pch.h" />
@@ -116,6 +117,10 @@
     <ClInclude Include="ReactModuleBuilderMock.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Shared\InputValidation.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="InputValidationTest.cpp" />
     <ClCompile Include="JsiTest.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>

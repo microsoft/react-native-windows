@@ -107,6 +107,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)InputValidation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
@@ -662,6 +665,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h">
       <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)InputValidation.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h">
       <Filter>Header Files\Modules</Filter>
