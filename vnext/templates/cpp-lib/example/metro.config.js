@@ -36,16 +36,16 @@ const config = {
     blocklistRE: exclusionList(
       modules.map(
         (m) =>
-          new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/[/\\]$`)
+          new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
       ).concat([
         // This stops "npx @react-native-community/cli run-windows" from causing the metro server to crash if its already running
         new RegExp(
-          `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}[/\\]`,
+          `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
         ),
         // This prevents "npx @react-native-community/cli run-windows" from hitting: EBUSY: resource busy or locked, open msbuild.ProjectImports.zip or other files produced by msbuild
-        new RegExp(`${rnwPath}/build/[/\\]`),
-        new RegExp(`${rnwPath}/target/[/\\]`),
-        /[/\\]\.ProjectImports\.zip/,
+        new RegExp(`${rnwPath}/build/.*`),
+        new RegExp(`${rnwPath}/target/.*`),
+        /.*\.ProjectImports\.zip/,
       ])
     ),
 
