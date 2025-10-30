@@ -11,8 +11,6 @@
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
-#include <react/renderer/attributedstring/AttributedString.h>
-#include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
@@ -969,8 +967,6 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     if (m_clearTextOnSubmit) {
       // clear text from RichEdit
       m_textServices->TxSetText(L"");
-      // Also update the state to reflect the cleared text
-      // This ensures consistency between native and JS state
     }
     return;
   }
