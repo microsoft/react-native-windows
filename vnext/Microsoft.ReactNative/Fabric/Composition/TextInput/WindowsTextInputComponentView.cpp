@@ -971,11 +971,6 @@ void WindowsTextInputComponentView::OnCharacterReceived(
       m_textServices->TxSetText(L"");
       // Also update the state to reflect the cleared text
       // This ensures consistency between native and JS state
-      auto data = m_state->getData();
-      data.attributedStringBox = facebook::react::AttributedStringBox{facebook::react::AttributedString{}};
-      data.mostRecentEventCount = m_nativeEventCount;
-
-      m_state->updateState(std::move(data));
     }
     return;
   }

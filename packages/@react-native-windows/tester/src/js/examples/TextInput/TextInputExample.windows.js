@@ -762,7 +762,7 @@ const examples: Array<RNTesterModuleExample> = [
   },
   // [Windows
   {
-    title: 'Clear text on submit',
+    title: 'Clear text on submitting',
     render: function (): React.Node {
       return (
         <View>
