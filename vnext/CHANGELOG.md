@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 28 Oct 2025 23:42:04 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 30 Oct 2025 05:29:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1003
+
+Thu, 30 Oct 2025 05:29:15 GMT
+
+### Changes
+
+- Revert "Theme aware platform color for text. (#15266)" (nitchaudhary@microsoft.com)
 
 ## 0.0.0-canary.1002
 
