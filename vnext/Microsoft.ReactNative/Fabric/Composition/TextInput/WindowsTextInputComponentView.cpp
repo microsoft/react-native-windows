@@ -548,7 +548,7 @@ void WindowsTextInputComponentView::HandleCommand(
     bool isEmptyTextUpdate = text.has_value() && text.value().empty();
     bool isValidEventCount = eventCount >= m_nativeEventCount;
     bool isRecentClearText = isEmptyTextUpdate && (eventCount >= m_nativeEventCount - 1);
-    
+
     if (isValidEventCount || isRecentClearText) {
       m_comingFromJS = true;
       {
