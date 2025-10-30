@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Oct 2025 05:29:15 GMT",
+      "version": "0.0.0-canary.1003",
+      "tag": "react-native-windows_v0.0.0-canary.1003",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "553a13fbac9b1aef5db7b477a50e66a10ecfec75",
+            "comment": "Revert \"Theme aware platform color for text. (#15266)\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Oct 2025 23:42:04 GMT",
       "version": "0.0.0-canary.1002",
       "tag": "react-native-windows_v0.0.0-canary.1002",
