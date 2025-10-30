@@ -41,7 +41,8 @@ class ViewWin32Internal extends React.Component<ViewProps, ViewWin32State> {
   componentDidUpdate(prevProps: ViewProps) {
     if (
       prevProps.accessibilityLabeledBy !== this.props.accessibilityLabeledBy ||
-      prevProps.accessibilityDescribedBy !== this.props.accessibilityDescribedBy ||
+      prevProps.accessibilityDescribedBy !==
+        this.props.accessibilityDescribedBy ||
       prevProps.accessibilityControls !== this.props.accessibilityControls
     ) {
       this.updateAccessibilityTargets();
@@ -49,8 +50,12 @@ class ViewWin32Internal extends React.Component<ViewProps, ViewWin32State> {
   }
 
   updateAccessibilityTargets = () => {
-    const {accessibilityLabeledBy, accessibilityDescribedBy, accessibilityControls} = this.props;
-    
+    const {
+      accessibilityLabeledBy,
+      accessibilityDescribedBy,
+      accessibilityControls,
+    } = this.props;
+
     /**
      * Process accessibility refs into node handles after initial DOM render, before sent across the bridge.
      * This logic will update the state to assess the ref-based accessibility properties.

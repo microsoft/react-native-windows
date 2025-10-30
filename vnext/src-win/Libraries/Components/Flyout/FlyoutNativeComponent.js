@@ -5,7 +5,7 @@
  * @format
  */
 
-import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
+import type {ViewProps} from 'react-native';
 import type {HostComponent} from '../../../src/private/types/HostComponent';
 import type {
   DirectEventHandler,
@@ -13,7 +13,7 @@ import type {
   Int32,
 } from 'react-native/Libraries/Types/CodegenTypes';
 
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import {codegenNativeComponent} from 'react-native';
 
 type DismissEvent = $ReadOnly<{
   isOpen?: boolean,
