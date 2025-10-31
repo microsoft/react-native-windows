@@ -63,7 +63,7 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-function View(
+component View(
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) {
@@ -264,8 +264,9 @@ function View(
     accessibilityElementsHidden === true
       ? 'no-hide-descendants'
       : importantForAccessibility;
+
   let actualView;
-  if (ReactNativeFeatureFlags.reduceDefaultPropsInView()) {
+  if (true) {
     //Destructured props at function scope, just create processedProps
     const processedProps = otherProps as {...PropsWithRef};
 
@@ -510,78 +511,77 @@ function View(
         // Windows]
       />
     );
-
-    // [Windows - Paper doesn't support Views in Text while Fabric does
-    if (global.RN$Bridgeless !== true) {
-      return (
-        // [Windows
-        // In core this is a TextAncestor.Provider value={false} See
-        // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
-        // But since Views are not currently supported in Text, we do not need the extra provider
-        <TextAncestor.Consumer>
-          {consumerHasTextAncestor => {
-            invariant(
-              !hasTextAncestor,
-              'Nesting of <View> within <Text> is not currently supported.',
-            );
-            return (
-              <ViewNativeComponent
-                {...otherProps}
-                accessibilityLiveRegion={
-                  ariaLive === 'off'
-                    ? 'none'
-                    : ariaLive ?? accessibilityLiveRegion
-                }
-                accessibilityLabel={ariaLabel ?? accessibilityLabel}
-                accessibilityLevel={ariaLevel ?? accessibilityLevel}
-                accessibilityDescription={
-                  ariaDescription ?? accessibilityDescription
-                }
-                accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
-                accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
-                focusable={_focusable}
-                disabled={disabled}
-                accessibilityState={_accessibilityState}
-                accessibilityElementsHidden={
-                  ariaHidden ?? accessibilityElementsHidden
-                }
-                accessibilityLabelledBy={_accessibilityLabelledBy}
-                accessibilityValue={_accessibilityValue}
-                importantForAccessibility={computedImportantForAccessibility}
-                nativeID={id ?? nativeID}
-                ref={ref}
-                onKeyDown={_keyDown}
-                onKeyDownCapture={_keyDownCapture}
-                onKeyUp={_keyUp}
-                onKeyUpCapture={_keyUpCapture}
-                // [Windows
-                accessible={_accessible}
-                children={
-                  computedImportantForAccessibility === 'no-hide-descendants'
-                    ? childrenWithImportantForAccessibility(otherProps.children)
-                    : otherProps.children
-                }
-                // Windows]
-              />
-            );
-          }}
-        </TextAncestor.Consumer>
-        // Windows]
-      );
-    }
-    // Windows]
-
-    // Fabric supports Views in Text, so we can use the TextAncestor context
-    // [Windows
-    if (hasTextAncestor) {
-      return <TextAncestor value={false}>{actualView}</TextAncestor>;
-    }
-    // Windows]
-
-    return actualView;
   }
+
+  // [Windows - Paper doesn't support Views in Text while Fabric does
+  if (global.RN$Bridgeless !== true) {
+    return (
+      // [Windows
+      // In core this is a TextAncestor.Provider value={false} See
+      // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
+      // But since Views are not currently supported in Text, we do not need the extra provider
+      <TextAncestor.Consumer>
+        {consumerHasTextAncestor => {
+          invariant(
+            !hasTextAncestor,
+            'Nesting of <View> within <Text> is not currently supported.',
+          );
+          return (
+            <ViewNativeComponent
+              {...otherProps}
+              accessibilityLiveRegion={
+                ariaLive === 'off'
+                  ? 'none'
+                  : ariaLive ?? accessibilityLiveRegion
+              }
+              accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityLevel={ariaLevel ?? accessibilityLevel}
+              accessibilityDescription={
+                ariaDescription ?? accessibilityDescription
+              }
+              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
+              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
+              focusable={_focusable}
+              disabled={disabled}
+              accessibilityState={_accessibilityState}
+              accessibilityElementsHidden={
+                ariaHidden ?? accessibilityElementsHidden
+              }
+              accessibilityLabelledBy={_accessibilityLabelledBy}
+              accessibilityValue={_accessibilityValue}
+              importantForAccessibility={computedImportantForAccessibility}
+              nativeID={id ?? nativeID}
+              ref={ref}
+              onKeyDown={_keyDown}
+              onKeyDownCapture={_keyDownCapture}
+              onKeyUp={_keyUp}
+              onKeyUpCapture={_keyUpCapture}
+              // [Windows
+              accessible={_accessible}
+              children={
+                computedImportantForAccessibility === 'no-hide-descendants'
+                  ? childrenWithImportantForAccessibility(otherProps.children)
+                  : otherProps.children
+              }
+              // Windows]
+            />
+          );
+        }}
+      </TextAncestor.Consumer>
+      // Windows]
+    );
+  }
+  // Windows]
+
+  // Fabric supports Views in Text, so we can use the TextAncestor context
+  // [Windows
+  if (hasTextAncestor) {
+    return <TextAncestor value={false}>{actualView}</TextAncestor>;
+  }
+  // Windows]
+
+  return actualView;
 }
 
 View.displayName = 'View';
-
 export default View;
