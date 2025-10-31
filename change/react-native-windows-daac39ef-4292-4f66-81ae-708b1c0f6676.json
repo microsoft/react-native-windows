@@ -1,0 +1,7 @@
+{
+  "comment": "Fix TextInput clearTextOnSubmit-style behavior regression in Fabric architecture",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}

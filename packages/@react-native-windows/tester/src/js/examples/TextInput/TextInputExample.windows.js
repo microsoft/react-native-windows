@@ -762,7 +762,7 @@ const examples: Array<RNTesterModuleExample> = [
   },
   // [Windows
   {
-    title: 'Clear text on submit',
+    title: 'Clear text on submitting',
     render: function (): React.Node {
       return (
         <View>
@@ -797,6 +797,38 @@ const examples: Array<RNTesterModuleExample> = [
           />
         </View>
       );
+    },
+  },
+  {
+    title: 'Manual clear text on submit (setValue in onSubmitEditing)',
+    render: function () {
+      function ManualClearExample() {
+        const [value, setValue] = React.useState('');
+        const submitValue = () => {
+          // Simulate the regression scenario: manual setValue('') during onSubmitEditing
+          if (value !== '') {
+            setValue('');
+          }
+        };
+        return (
+          <View>
+            <Text>
+              Manual clear using setValue('') in onSubmitEditing callback:
+            </Text>
+            <ExampleTextInput
+              style={styles.singleLine}
+              value={value}
+              onChangeText={setValue}
+              onSubmitEditing={submitValue}
+              submitKeyEvents={[{code: 'Enter'}]}
+              testID="textinput-manual-clear-on-submit"
+              placeholder="Type text and press Enter to clear"
+            />
+            <Text>Current value: "{value}"</Text>
+          </View>
+        );
+      }
+      return <ManualClearExample />;
     },
   },
   {

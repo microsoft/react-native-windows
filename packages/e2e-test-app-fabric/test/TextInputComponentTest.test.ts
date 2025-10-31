@@ -414,6 +414,47 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-clear-on-submit-4');
     expect(dump).toMatchSnapshot();
   });
+  test('TextInputs can manually clear text on submit using setValue in onSubmitEditing', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-manual-clear-on-submit',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+
+    // Enter text in the input
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+
+    // Verify text was entered
+    expect(await component.getText()).toBe('Hello World');
+
+    // Press Enter to trigger onSubmitEditing which should clear the text
+    await app.waitUntil(
+      async () => {
+        await component.setValue('\uE007'); // Enter key
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Text should be cleared after pressing Enter (manual setValue('') in onSubmitEditing)`,
+      },
+    );
+
+    // Verify text was cleared
+    expect(await component.getText()).toBe('');
+
+    const dump = await dumpVisualTree('textinput-manual-clear-on-submit');
+    expect(dump).toMatchSnapshot();
+  });
   test('TextInputs can keep text on focus', async () => {
     const componentFocusFalse = await app.findElementByTestID(
       'clear-text-on-focus-false',
