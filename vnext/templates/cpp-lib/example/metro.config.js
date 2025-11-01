@@ -32,7 +32,7 @@ const config = {
   // We need to make sure that only one version is loaded for peerDependencies
   // So we block them at the root, and alias them to the versions in example's node_modules
   resolver: {
-    blocklistRE: [
+    blocklistRE: 
       modules.map(
         (m) =>
           new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
@@ -45,8 +45,7 @@ const config = {
         new RegExp(`${rnwPath}/build/.*`),
         new RegExp(`${rnwPath}/target/.*`),
         /.*\.ProjectImports\.zip/,
-      ])
-    ],
+      ]),
 
     extraNodeModules: modules.reduce((acc, name) => {
       acc[name] = path.join(__dirname, 'node_modules', name);
