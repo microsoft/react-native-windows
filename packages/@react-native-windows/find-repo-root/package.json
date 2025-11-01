@@ -17,7 +17,8 @@
   },
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0-canary.68",
-    "find-up": "^4.1.0"
+    "find-up": "^4.1.0",
+    "minimatch": "^10.0.3"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.37",

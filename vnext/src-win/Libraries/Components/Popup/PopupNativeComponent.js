@@ -6,7 +6,7 @@
  */
 
 import type {Double, DirectEventHandler, Int32} from '../../Types/CodegenTypes';
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import {codegenNativeComponent} from 'react-native';
 import type {HostComponent} from '../../../src/private/types/HostComponent';
 import type {ViewProps} from '../View/ViewPropTypes';
 

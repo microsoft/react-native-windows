@@ -25,6 +25,7 @@
     "@react-native-windows/fs": "^0.0.0-canary.68",
     "chalk": "^4.1.0",
     "globby": "^11.1.0",
+    "minimatch": "^10.0.3",
     "mustache": "^4.0.1",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

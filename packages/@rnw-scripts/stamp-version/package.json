@@ -19,6 +19,7 @@
     "@react-native-windows/package-utils": "^0.0.0-canary.94",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
+    "minimatch": "^10.0.3",
     "mustache": "^4.0.1",
     "semver": "^7.6.3",
     "source-map-support": "^0.5.19",

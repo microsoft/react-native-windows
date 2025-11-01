@@ -22,6 +22,7 @@
     "@typescript-eslint/parser": "^7.1.1",
     "async": "^3.2.3",
     "clang-format": "^1.7.0",
+    "minimatch": "^10.0.3",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {

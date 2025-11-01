@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Integrate 0.82.0-nightly-20250806-5936f29d6",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

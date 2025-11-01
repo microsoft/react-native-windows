@@ -17,7 +17,8 @@
     "directory": "packages/@react-native-windows/fs"
   },
   "dependencies": {
-    "graceful-fs": "^4.2.8"
+    "graceful-fs": "^4.2.8",
+    "minimatch": "^10.0.3"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.37",

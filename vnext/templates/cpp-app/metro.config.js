@@ -1,8 +1,7 @@
 const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
 const fs = require('fs');
-const path = require('path');
-const exclusionList = require('metro-config/src/defaults/exclusionList');
+const path = require('node:path');
 
 const rnwPath = fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
@@ -25,7 +24,7 @@ const config = {
   watchFolders: [rnwPath, rnwRootNodeModules, rnwPackages],
   // devMode]{{/devMode}}
   resolver: {
-    blockList: exclusionList([
+    blockList: [
       // This stops "npx @react-native-community/cli run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
@@ -34,7 +33,7 @@ const config = {
       new RegExp(`${rnwPath}/build/.*`),
       new RegExp(`${rnwPath}/target/.*`),
       /.*\.ProjectImports\.zip/,
-    ]),
+    ],
     //{{#devMode}} [devMode
     extraNodeModules: {
       'react-native-windows': rnwPath,

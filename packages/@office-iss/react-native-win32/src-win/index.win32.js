@@ -106,6 +106,7 @@ import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimension
 import typeof Vibration from './Libraries/Vibration/Vibration';
 import typeof DevMenu from './src/private/devsupport/devmenu/DevMenu';
 import typeof registerCallableModule from './Libraries/Core/registerCallableModule';
+import typeof ReactNativeVersion from './Libraries/Core/ReactNativeVersion';
 // Windows]]
 
 const warnOnce = require('./Libraries/Utilities/warnOnce').default;
@@ -173,14 +174,14 @@ module.exports = {
   /**
    * @deprecated SafeAreaView has been deprecated and will be removed in a future release.
    * Please use 'react-native-safe-area-context' instead.
-   * See https://github.com/th3rdwave/react-native-safe-area-context
+   * See https://github.com/AppAndFlow/react-native-safe-area-context
    */
   get SafeAreaView(): SafeAreaView {
     warnOnce(
       'safe-area-view-deprecated',
       'SafeAreaView has been deprecated and will be removed in a future release. ' +
         "Please use 'react-native-safe-area-context' instead. " +
-        'See https://github.com/th3rdwave/react-native-safe-area-context',
+        'See https://github.com/AppAndFlow/react-native-safe-area-context',
     );
     return require('./Libraries/Components/SafeAreaView/SafeAreaView').default;
   },
@@ -376,6 +377,9 @@ module.exports = {
     uiViewClassName: string,
   ) => HostComponent<T> {
     return require('./Libraries/ReactNative/requireNativeComponent').default;
+  },
+  get ReactNativeVersion(): ReactNativeVersion {
+    return require('./Libraries/Core/ReactNativeVersion').default;
   },
   get RootTagContext(): RootTagContext {
     return require('./Libraries/ReactNative/RootTag').RootTagContext;

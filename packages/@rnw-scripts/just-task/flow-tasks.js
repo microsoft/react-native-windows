@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const https = require('https');
-const minimatch = require('minimatch');
+const {minimatch} = require('minimatch');
 const path = require('path');
 const {pipeline} = require('stream');
 

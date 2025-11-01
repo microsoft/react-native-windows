@@ -10,7 +10,6 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import * as ReactNativeFeatureFlags from '../../../src/private/featureflags/ReactNativeFeatureFlags';
 import TextAncestor from '../../Text/TextAncestor';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
@@ -64,10 +63,11 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-export default component View(
+component View(
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const hasTextAncestor = use(TextAncestor);
 
   // Extract common props needed by all paths
@@ -267,7 +267,7 @@ export default component View(
       : importantForAccessibility;
 
   let actualView;
-  if (ReactNativeFeatureFlags.reduceDefaultPropsInView()) {
+  if (true) {
     //Destructured props at function scope, just create processedProps
     const processedProps = otherProps as {...PropsWithRef};
 
@@ -583,3 +583,7 @@ export default component View(
 
   return actualView;
 }
+
+// eslint-disable-next-line no-unreachable
+View.displayName = 'View';
+export default View;
