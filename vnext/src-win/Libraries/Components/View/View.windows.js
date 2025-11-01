@@ -67,6 +67,7 @@ component View(
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const hasTextAncestor = use(TextAncestor);
 
   // Extract common props needed by all paths
@@ -583,5 +584,6 @@ component View(
   return actualView;
 }
 
+// eslint-disable-next-line no-unreachable
 View.displayName = 'View';
 export default View;
