@@ -148,16 +148,14 @@ TEST(PathValidatorTest, BundlePathTraversalBlocked) {
 TEST(SizeValidatorTest, EnforcesMaxBlobSize) {
   // SDL: 100MB max
   EXPECT_NO_THROW(SizeValidator::ValidateSize(100 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"));
-  EXPECT_THROW(
-      SizeValidator::ValidateSize(101 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"), std::exception);
+  EXPECT_THROW(SizeValidator::ValidateSize(101 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"), std::exception);
 }
 
 TEST(SizeValidatorTest, EnforcesMaxWebSocketFrame) {
   // SDL: 256MB max
   EXPECT_NO_THROW(SizeValidator::ValidateSize(256 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"));
   EXPECT_THROW(
-      SizeValidator::ValidateSize(257 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"),
-      std::exception);
+      SizeValidator::ValidateSize(257 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"), std::exception);
 }
 
 TEST(SizeValidatorTest, EnforcesCloseReasonLimit) {
@@ -206,4 +204,3 @@ TEST(ValidationLoggerTest, LogsFailures) {
     EXPECT_TRUE(message.find("localhost") != std::string::npos || message.find("SSRF") != std::string::npos);
   }
 }
-
