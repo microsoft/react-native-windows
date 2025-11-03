@@ -189,21 +189,4 @@ SharedColor GetTextInputPlaceholderColor(bool isFocused, const winrt::Windows::U
   }
 }
 
-SharedColor GetDefaultTextColor() {
-  // In high contrast mode, always use system WindowText for accessibility
-  auto accessibilitySettings{winrt::Windows::UI::ViewManagement::AccessibilitySettings()};
-  if (accessibilitySettings.HighContrast()) {
-    auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
-    auto windowText = uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::WindowText);
-    return hostPlatformColorFromRGBA(windowText.R, windowText.G, windowText.B, windowText.A);
-  }
-
-  // Use Windows 11 design system semantic color TextFillColorPrimary
-  // This automatically adapts to light/dark mode themes:
-  // - Light mode: rgba(0, 0, 0, 0.894) - nearly black for good contrast
-  // - Dark mode: rgba(255, 255, 255, 1.0) - white for readability
-  auto color = ResolvePlatformColor({"TextFillColorPrimary"});
-  return hostPlatformColorFromRGBA(color.R, color.G, color.B, color.A);
-}
-
 } // namespace facebook::react

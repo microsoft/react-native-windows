@@ -7,7 +7,6 @@
 #include "TextDrawing.h"
 
 #include <AutoDraw.h>
-#include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
 #include <Utils/ValueUtils.h>
 #include <unicode.h>
 #include <windows.ui.composition.interop.h>
@@ -36,27 +35,11 @@ void RenderText(
   // to cache and reuse a brush across all text elements instead, taking care to recreate
   // it in the event of device removed.
   winrt::com_ptr<ID2D1SolidColorBrush> brush;
-
-  // Check if we should use theme-aware default color instead of hardcoded black
-  bool useDefaultColor = false;
   if (textAttributes.foregroundColor) {
-    auto &color = *textAttributes.foregroundColor;
-    // If it's black (or very dark) without explicit PlatformColor, use theme-aware color
-    if (color.m_platformColor.empty() && color.m_color.R <= 10 && color.m_color.G <= 10 && color.m_color.B <= 10) {
-      useDefaultColor = true;
-    }
-  } else {
-    useDefaultColor = true;
-  }
-
-  if (useDefaultColor) {
-    // Use theme-aware TextFillColorPrimary which adapts to light/dark mode
-    auto d2dColor = theme.D2DPlatformColor("TextFillColorPrimary");
-    winrt::check_hresult(deviceContext.CreateSolidColorBrush(d2dColor, brush.put()));
-  } else {
-    // User set explicit color or PlatformColor - use it
     auto color = theme.D2DColor(*textAttributes.foregroundColor);
     winrt::check_hresult(deviceContext.CreateSolidColorBrush(color, brush.put()));
+  } else {
+    winrt::check_hresult(deviceContext.CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
   }
 
   if (textAttributes.textDecorationLineType) {
@@ -89,27 +72,12 @@ void RenderText(
             (fragment.textAttributes.foregroundColor != textAttributes.foregroundColor) ||
         !isnan(fragment.textAttributes.opacity)) {
       winrt::com_ptr<ID2D1SolidColorBrush> fragmentBrush;
-
-      // Check if we should use theme-aware default color for this fragment
-      bool useFragmentDefaultColor = false;
       if (fragment.textAttributes.foregroundColor) {
-        auto &color = *fragment.textAttributes.foregroundColor;
-        // If it's black (or very dark) without explicit PlatformColor, use theme-aware color
-        if (color.m_platformColor.empty() && color.m_color.R <= 10 && color.m_color.G <= 10 && color.m_color.B <= 10) {
-          useFragmentDefaultColor = true;
-        }
-      } else {
-        useFragmentDefaultColor = true;
-      }
-
-      if (useFragmentDefaultColor) {
-        // Use theme-aware TextFillColorPrimary which adapts to light/dark mode
-        auto d2dColor = theme.D2DPlatformColor("TextFillColorPrimary");
-        winrt::check_hresult(deviceContext.CreateSolidColorBrush(d2dColor, fragmentBrush.put()));
-      } else {
-        // User set explicit color or PlatformColor - use it
         auto color = theme.D2DColor(*fragment.textAttributes.foregroundColor);
         winrt::check_hresult(deviceContext.CreateSolidColorBrush(color, fragmentBrush.put()));
+      } else {
+        winrt::check_hresult(
+            deviceContext.CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), fragmentBrush.put()));
       }
 
       if (fragment.textAttributes.textDecorationLineType) {
