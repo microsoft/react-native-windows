@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Nov 2025 16:31:24 GMT",
+      "version": "0.80.1",
+      "tag": "react-native-windows_v0.80.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "220e035c393ea33ba5ddbbf668a576f4334b8928",
+            "comment": "Revert \"Theme aware platform color for text. (#15266)\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Oct 2025 23:58:54 GMT",
       "version": "0.80.0",
       "tag": "react-native-windows_v0.80.0",

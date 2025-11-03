@@ -1,7 +1,0 @@
-{
-  "comment": "Revert \"Theme aware platform color for text. (#15266)\"",
-  "type": "patch",
-  "packageName": "react-native-windows",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "patch"
-}

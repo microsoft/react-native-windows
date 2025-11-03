@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 28 Oct 2025 23:58:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Nov 2025 16:31:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.1
+
+Mon, 03 Nov 2025 16:31:24 GMT
+
+### Patches
+
+- Revert "Theme aware platform color for text. (#15266)" (nitchaudhary@microsoft.com)
 
 ## 0.80.0
 
