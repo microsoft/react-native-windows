@@ -99,7 +99,7 @@ async function getFileMappings(config = {}, options = {}) {
   let firstSpecName = null;
   if (existsSync(codegenPath)) {
     try {
-      const specFiles = await glob('*Spec.g.h', { cwd: codegenPath });
+      const specFiles = await glob('*Spec.g.h', {cwd: codegenPath});
       existingSpecFiles = specFiles;
       if (specFiles.length > 0) {
         // Extract the spec name from filename (e.g., "NativeMyModuleSpec.g.h" -> "MyModuleSpec")
