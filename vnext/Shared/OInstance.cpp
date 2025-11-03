@@ -97,8 +97,8 @@ void LoadRemoteUrlScript(
   try {
     Microsoft::ReactNative::InputValidation::PathValidator::ValidateFilePath(jsBundleRelativePath, "");
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
-    if (m_devSettings && m_devSettings->errorCallback) {
-      m_devSettings->errorCallback(std::string("Bundle path validation failed: ") + ex.what());
+    if (devSettings && devSettings->errorCallback) {
+      devSettings->errorCallback(std::string("Bundle path validation failed: ") + ex.what());
     }
     return;
   }
