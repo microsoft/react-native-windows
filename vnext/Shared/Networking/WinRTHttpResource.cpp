@@ -324,11 +324,8 @@ void WinRTHttpResource::SendRequest(
 }
 
 void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
-  // SDL Compliance: Validate request ID range (P2 - CVSS 3.5)
-  try {
-    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateInt32Range(
-        static_cast<int32_t>(requestId), 0, INT32_MAX, "Request ID");
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &) {
+  // SDL Compliance: Validate request ID range BEFORE casting (P2 - CVSS 3.5)
+  if (requestId < 0 || requestId > INT32_MAX) {
     // Invalid request ID, ignore abort
     return;
   }

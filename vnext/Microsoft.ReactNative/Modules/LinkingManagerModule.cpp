@@ -54,7 +54,7 @@ LinkingManager::~LinkingManager() noexcept {
   try {
     std::string urlUtf8 = Utf16ToUtf8(url);
     ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
-        urlUtf8, {"http", "https", "mailto", "tel", "ms-settings"});
+        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES);
   } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(ex.what());
     co_return;
@@ -118,7 +118,7 @@ void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
   try {
     std::string uriUtf8 = winrt::to_string(uri);
     ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
-        uriUtf8, {"http", "https", "mailto", "tel", "ms-settings"});
+        uriUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES);
   } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &) {
     // Silently ignore invalid URIs to prevent crashes
     return;

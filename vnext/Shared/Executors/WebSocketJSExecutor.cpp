@@ -86,6 +86,9 @@ void WebSocketJSExecutor::loadBundle(
     std::unique_ptr<const facebook::react::JSBigString> script,
     std::string sourceURL) {
   // SDL Compliance: Validate source URL (P1 - CVSS 5.5)
+  // NOTE: 'file' scheme is allowed here because WebSocketJSExecutor is ONLY used in development/debugging scenarios.
+  // This executor connects to Metro bundler during development and is never used in production builds.
+  // Production apps use Hermes or Chakra with secure bundle loading that doesn't allow file:// URIs.
   try {
     if (!sourceURL.empty()) {
       Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"});

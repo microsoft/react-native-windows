@@ -41,10 +41,16 @@ class InvalidURLException : public std::logic_error {
 // Centralized allowlists for encodings
 namespace AllowedEncodings {
 static const std::vector<std::string> FILE_READER_ENCODINGS = {
-    "UTF-8", "utf-8", "utf8",
-    "UTF-16", "utf-16", "utf16",
-    "ASCII", "ascii",
-    "ISO-8859-1", "iso-8859-1",
+    "UTF-8",
+    "utf-8",
+    "utf8",
+    "UTF-16",
+    "utf-16",
+    "utf16",
+    "ASCII",
+    "ascii",
+    "ISO-8859-1",
+    "iso-8859-1",
     "" // Empty is allowed (defaults to UTF-8)
 };
 } // namespace AllowedEncodings
@@ -54,7 +60,7 @@ namespace AllowedSchemes {
 static const std::vector<std::string> HTTP_SCHEMES = {"http", "https"};
 static const std::vector<std::string> WEBSOCKET_SCHEMES = {"ws", "wss"};
 static const std::vector<std::string> FILE_SCHEMES = {"file"};
-static const std::vector<std::string> LINKING_SCHEMES = {"http", "https", "mailto", "tel"};
+static const std::vector<std::string> LINKING_SCHEMES = {"http", "https", "mailto", "tel", "ms-settings"};
 static const std::vector<std::string> IMAGE_SCHEMES = {"http", "https"};
 static const std::vector<std::string> DEBUG_SCHEMES = {"http", "https", "file"};
 } // namespace AllowedSchemes

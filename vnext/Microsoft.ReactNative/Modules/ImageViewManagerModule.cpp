@@ -106,8 +106,12 @@ void ImageLoader::Initialize(React::ReactContext const &reactContext) noexcept {
 void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<double>> &&result) noexcept {
   // VALIDATE URI - file:// abuse PROTECTION (P0 Critical - CVSS 7.8)
   try {
-    // Allow data: URIs and http/https only
-    if (uri.find("data:") != 0) {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+    } else {
+      // Allow http/https only for non-data URIs
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
   } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
@@ -140,8 +144,12 @@ void ImageLoader::getSizeWithHeaders(
         &&result) noexcept {
   // SDL Compliance: Validate URI for SSRF (P0 Critical - CVSS 7.8)
   try {
-    // Allow data: URIs and http/https only
-    if (uri.find("data:") != 0) {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+    } else {
+      // Allow http/https only for non-data URIs
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
   } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
@@ -172,8 +180,12 @@ void ImageLoader::getSizeWithHeaders(
 void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&result) noexcept {
   // VALIDATE URI - file:// abuse PROTECTION (P0 Critical - CVSS 7.8)
   try {
-    // Allow data: URIs and http/https only
-    if (uri.find("data:") != 0) {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+    } else {
+      // Allow http/https only for non-data URIs
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
   } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
@@ -192,8 +204,12 @@ void ImageLoader::prefetchImageWithMetadata(
     React::ReactPromise<bool> &&result) noexcept {
   // SDL Compliance: Validate URI for SSRF (P0 Critical - CVSS 7.8)
   try {
-    // Allow data: URIs and http/https only
-    if (uri.find("data:") != 0) {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+    } else {
+      // Allow http/https only for non-data URIs
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
     }
   } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
