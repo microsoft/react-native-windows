@@ -137,7 +137,7 @@ void HttpTurboModule::SendRequest(
       Microsoft::ReactNative::InputValidation::EncodingValidator::ValidateHeaderValue(headerValue);
       headers.emplace(std::move(headerName), std::move(headerValue));
     }
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+  } catch (const std::exception &ex) {
     // Call callback with requestId, then send error event
     int64_t requestId = m_requestId;
     callback({static_cast<double>(requestId)});

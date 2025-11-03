@@ -7,6 +7,7 @@
 #include <regex>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace Microsoft::ReactNative::InputValidation {
@@ -155,11 +156,14 @@ class EncodingValidator {
   // Validate base64 string format
   static bool IsValidBase64(const std::string &str);
 
+  // Estimate decoded size of base64 string
+  static size_t EstimateBase64DecodedSize(std::string_view base64String);
+
   // Check for CRLF injection in headers (SDL requirement)
-  static bool ContainsCRLF(const std::string &str);
+  static bool ContainsCRLF(std::string_view str);
 
   // Validate header value (no CRLF, length limit)
-  static void ValidateHeaderValue(const std::string &value);
+  static void ValidateHeaderValue(std::string_view value);
 
  private:
   static const std::regex BASE64_REGEX;

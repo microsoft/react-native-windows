@@ -220,16 +220,17 @@ void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID)
   //  VALIDATE Base64 Format - DoS PROTECTION (P0 Critical - CVSS 7.0)
   try {
     if (!Microsoft::ReactNative::InputValidation::EncodingValidator::IsValidBase64(base64String)) {
-      throw Microsoft::ReactNative::InputValidation::ValidationException("Invalid base64 format");
+      throw Microsoft::ReactNative::InputValidation::InvalidEncodingException("Invalid base64 format");
     }
 
     //  VALIDATE Size - DoS PROTECTION
-    size_t estimatedSize = (base64String.length() * 3) / 4;
+    size_t estimatedSize =
+        Microsoft::ReactNative::InputValidation::EncodingValidator::EstimateBase64DecodedSize(base64String);
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
         estimatedSize,
         Microsoft::ReactNative::InputValidation::SizeValidator::MAX_WEBSOCKET_FRAME,
         "WebSocket binary frame");
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+  } catch (const std::exception &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
     return;
   }

@@ -174,46 +174,53 @@ bool URLValidator::IsPrivateOrLocalhost(const std::string &hostname) {
   if (hostname.empty())
     return false;
 
+  // Normalize hostname to lowercase for case-insensitive comparison
+  std::string lowerHostname = hostname;
+  std::transform(lowerHostname.begin(), lowerHostname.end(), lowerHostname.begin(), [](unsigned char c) {
+    return static_cast<char>(std::tolower(c));
+  });
+
   // Check for blocked hosts (exact match or substring)
   for (const auto &blocked : BLOCKED_HOSTS) {
-    if (hostname == blocked || hostname.find(blocked) != std::string::npos) {
+    if (lowerHostname == blocked || lowerHostname.find(blocked) != std::string::npos) {
       return true;
     }
   }
 
   // Check IPv4 private ranges (10.x, 192.168.x, 172.16-31.x, 127.x)
-  if (hostname.find("10.") == 0 || hostname.find("192.168.") == 0 || hostname.find("127.") == 0) {
+  if (lowerHostname.find("10.") == 0 || lowerHostname.find("192.168.") == 0 || lowerHostname.find("127.") == 0) {
     return true;
   }
 
   // Check 172.16-31.x range
-  if (hostname.find("172.") == 0) {
-    size_t dotPos = hostname.find('.', 4);
-    if (dotPos != std::string::npos) {
-      std::string secondOctet = hostname.substr(4, dotPos - 4);
+  if (lowerHostname.find("172.") == 0) {
+    size_t dotPos = lowerHostname.find('.', 4);
+    if (dotPos != std::string::npos && dotPos > 4) {
+      std::string secondOctet = lowerHostname.substr(4, dotPos - 4);
       try {
         int octet = std::stoi(secondOctet);
         if (octet >= 16 && octet <= 31) {
           return true;
         }
       } catch (...) {
+        // Invalid format, not a valid IP
       }
     }
   }
 
   // Check IPv6 private ranges
-  if (hostname.find("fc00:") == 0 || hostname.find("fe80:") == 0 || hostname.find("fd00:") == 0 ||
-      hostname.find("ff00:") == 0) {
+  if (lowerHostname.find("fc00:") == 0 || lowerHostname.find("fe80:") == 0 || lowerHostname.find("fd00:") == 0 ||
+      lowerHostname.find("ff00:") == 0) {
     return true;
   }
 
   // Check IPv6 loopback in expanded form (0:0:0:0:0:0:0:1)
-  if (hostname == "0:0:0:0:0:0:0:1") {
+  if (lowerHostname == "0:0:0:0:0:0:0:1") {
     return true;
   }
 
   // Check for encoded IPv4 formats (SDL requirement)
-  if (IsOctalIPv4(hostname) || IsHexIPv4(hostname) || IsDecimalIPv4(hostname)) {
+  if (IsOctalIPv4(lowerHostname) || IsHexIPv4(lowerHostname) || IsDecimalIPv4(lowerHostname)) {
     LogValidationFailure("ENCODED_IP", "Blocked encoded IP format: " + hostname);
     return true;
   }
@@ -227,12 +234,12 @@ void URLValidator::ValidateURL(
     bool allowLocalhost) {
   if (url.empty()) {
     LogValidationFailure("URL_EMPTY", "Empty URL provided");
-    throw ValidationException("URL cannot be empty");
+    throw InvalidURLException("URL cannot be empty");
   }
 
   if (url.length() > SizeValidator::MAX_URL_LENGTH) {
     LogValidationFailure("URL_LENGTH", "URL exceeds max length: " + std::to_string(url.length()));
-    throw ValidationException("URL exceeds maximum length (" + std::to_string(SizeValidator::MAX_URL_LENGTH) + ")");
+    throw InvalidSizeException("URL exceeds maximum length (" + std::to_string(SizeValidator::MAX_URL_LENGTH) + ")");
   }
 
   // SDL Requirement: Decode URL until no further decoding possible
@@ -247,7 +254,7 @@ void URLValidator::ValidateURL(
   size_t schemeEnd = decodedUrl.find("://");
   if (schemeEnd == std::string::npos) {
     LogValidationFailure("URL_SCHEME", "Invalid URL format (no scheme): " + url);
-    throw ValidationException("Invalid URL: missing scheme");
+    throw InvalidURLException("Invalid URL: missing scheme");
   }
 
   std::string scheme = decodedUrl.substr(0, schemeEnd);
@@ -257,21 +264,21 @@ void URLValidator::ValidateURL(
   // SDL Requirement: Allowlist approach for schemes
   if (std::find(allowedSchemes.begin(), allowedSchemes.end(), scheme) == allowedSchemes.end()) {
     LogValidationFailure("URL_SCHEME_BLOCKED", "Scheme '" + scheme + "' not in allowlist");
-    throw ValidationException("URL scheme '" + scheme + "' not allowed");
+    throw InvalidURLException("URL scheme '" + scheme + "' not allowed");
   }
 
   // Extract hostname from DECODED URL
   std::string hostname = ExtractHostname(decodedUrl);
   if (hostname.empty()) {
     LogValidationFailure("URL_HOSTNAME", "Could not extract hostname from: " + url);
-    throw ValidationException("Invalid URL: could not extract hostname");
+    throw InvalidURLException("Invalid URL: could not extract hostname");
   }
 
   // SDL Requirement: Block private IPs, localhost, metadata endpoints
   // Exception: Allow localhost for testing/development if explicitly enabled
   if (!allowLocalhost && IsPrivateOrLocalhost(hostname)) {
     LogValidationFailure("SSRF_ATTEMPT", "Blocked access to private/localhost: " + hostname);
-    throw ValidationException("Access to hostname '" + hostname + "' is blocked for security");
+    throw InvalidURLException("Access to hostname '" + hostname + "' is blocked for security");
   }
 
   // TODO: SDL Requirement - DNS resolution check
@@ -339,23 +346,23 @@ bool PathValidator::ContainsTraversal(const std::string &path) {
 void PathValidator::ValidateBlobId(const std::string &blobId) {
   if (blobId.empty()) {
     LogValidationFailure("BLOB_ID_EMPTY", "Empty blob ID");
-    throw ValidationException("Blob ID cannot be empty");
+    throw InvalidPathException("Blob ID cannot be empty");
   }
 
   if (blobId.length() > 128) {
     LogValidationFailure("BLOB_ID_LENGTH", "Blob ID too long: " + std::to_string(blobId.length()));
-    throw ValidationException("Blob ID exceeds maximum length (128)");
+    throw InvalidSizeException("Blob ID exceeds maximum length (128)");
   }
 
   // SDL Requirement: Allowlist approach - only alphanumeric + dash/underscore
   if (!std::regex_match(blobId, BLOB_ID_REGEX)) {
     LogValidationFailure("BLOB_ID_FORMAT", "Invalid blob ID format: " + blobId);
-    throw ValidationException("Invalid blob ID format - must be alphanumeric, underscore, or dash");
+    throw InvalidPathException("Invalid blob ID format - must be alphanumeric, underscore, or dash");
   }
 
   if (ContainsTraversal(blobId)) {
     LogValidationFailure("BLOB_ID_TRAVERSAL", "Blob ID contains traversal: " + blobId);
-    throw ValidationException("Blob ID contains path traversal sequences");
+    throw InvalidPathException("Blob ID contains path traversal sequences");
   }
 }
 
@@ -365,7 +372,7 @@ void PathValidator::ValidateFilePath(const std::string &path, const std::string 
 
   if (path.empty()) {
     LogValidationFailure("FILE_PATH_EMPTY", "Empty file path");
-    throw ValidationException("File path cannot be empty");
+    throw InvalidPathException("File path cannot be empty");
   }
 
   // Decode path (SDL requirement)
@@ -374,19 +381,19 @@ void PathValidator::ValidateFilePath(const std::string &path, const std::string 
   // Check for traversal in both original and decoded
   if (ContainsTraversal(path) || ContainsTraversal(decoded)) {
     LogValidationFailure("FILE_PATH_TRAVERSAL", "Path traversal detected: " + path);
-    throw ValidationException("File path contains directory traversal sequences");
+    throw InvalidPathException("File path contains directory traversal sequences");
   }
 
   // Check for absolute paths (security risk)
   if (!decoded.empty() && (decoded[0] == '/' || decoded[0] == '\\')) {
     LogValidationFailure("FILE_PATH_ABSOLUTE", "Absolute path not allowed: " + path);
-    throw ValidationException("Absolute file paths are not allowed");
+    throw InvalidPathException("Absolute file paths are not allowed");
   }
 
   // Check for drive letters (Windows)
   if (decoded.length() >= 2 && decoded[1] == ':') {
     LogValidationFailure("FILE_PATH_DRIVE", "Drive letter path not allowed: " + path);
-    throw ValidationException("Drive letter paths are not allowed");
+    throw InvalidPathException("Drive letter paths are not allowed");
   }
 
   // TODO: Add full path canonicalization with GetFullPathName on Windows
@@ -445,7 +452,7 @@ bool EncodingValidator::IsValidBase64(const std::string &str) {
 }
 
 // SDL Requirement: CRLF injection prevention
-bool EncodingValidator::ContainsCRLF(const std::string &str) {
+bool EncodingValidator::ContainsCRLF(std::string_view str) {
   for (size_t i = 0; i < str.length(); ++i) {
     char c = str[i];
     if (c == '\r' || c == '\n') {
@@ -453,7 +460,7 @@ bool EncodingValidator::ContainsCRLF(const std::string &str) {
     }
     // Check for URL-encoded CRLF
     if (c == '%' && i + 2 < str.length()) {
-      std::string encoded = str.substr(i, 3);
+      std::string_view encoded = str.substr(i, 3);
       if (encoded == "%0D" || encoded == "%0d" || encoded == "%0A" || encoded == "%0a") {
         return true;
       }
@@ -462,21 +469,42 @@ bool EncodingValidator::ContainsCRLF(const std::string &str) {
   return false;
 }
 
-void EncodingValidator::ValidateHeaderValue(const std::string &value) {
+// Estimate decoded size of base64 string (for validation before decoding)
+size_t EncodingValidator::EstimateBase64DecodedSize(std::string_view base64String) {
+  if (base64String.empty()) {
+    return 0;
+  }
+
+  size_t length = base64String.length();
+  size_t padding = 0;
+
+  // Count padding characters
+  if (length >= 1 && base64String[length - 1] == '=') {
+    padding++;
+  }
+  if (length >= 2 && base64String[length - 2] == '=') {
+    padding++;
+  }
+
+  // Estimated decoded size: (length * 3) / 4 - padding
+  return (length * 3) / 4 - padding;
+}
+
+void EncodingValidator::ValidateHeaderValue(std::string_view value) {
   if (value.empty()) {
     return; // Empty headers are allowed
   }
 
   if (value.length() > SizeValidator::MAX_HEADER_LENGTH) {
     LogValidationFailure("HEADER_LENGTH", "Header exceeds max length: " + std::to_string(value.length()));
-    throw ValidationException(
+    throw InvalidSizeException(
         "Header value exceeds maximum length (" + std::to_string(SizeValidator::MAX_HEADER_LENGTH) + ")");
   }
 
   // SDL Requirement: Prevent CRLF injection (response splitting)
   if (ContainsCRLF(value)) {
     LogValidationFailure("CRLF_INJECTION", "CRLF detected in header value");
-    throw ValidationException("Header value contains CRLF sequences (security risk)");
+    throw InvalidEncodingException("Header value contains CRLF sequences (security risk)");
   }
 }
 
