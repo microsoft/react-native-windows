@@ -541,13 +541,9 @@ void WindowsTextInputComponentView::HandleCommand(
     std::optional<winrt::hstring> text;
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
-    // Accept text updates that match current event count, or clear text operations
-    // that are one event behind (to handle immediate setValue('') during onSubmitEditing)
-    bool isEmptyTextUpdate = text.has_value() && text.value().empty();
-    bool isValidEventCount = eventCount >= m_nativeEventCount;
-    bool isRecentClearText = isEmptyTextUpdate && (eventCount >= m_nativeEventCount - 1);
-
-    if (isValidEventCount || isRecentClearText) {
+    // Only accept text updates that match the current native event count
+    // This prevents race conditions and maintains proper state synchronization  
+    if (eventCount >= m_nativeEventCount) {
       m_comingFromJS = true;
       {
         if (text.has_value()) {
@@ -960,8 +956,12 @@ void WindowsTextInputComponentView::OnCharacterReceived(
       auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
       facebook::react::WindowsTextInputEventEmitter::OnSubmitEditing onSubmitEditingArgs;
       onSubmitEditingArgs.text = GetTextFromRichEdit();
-      onSubmitEditingArgs.eventCount = ++m_nativeEventCount;
+      // Don't increment event count yet - let JS respond with current count first
+      onSubmitEditingArgs.eventCount = m_nativeEventCount;
       emitter->onSubmitEditing(onSubmitEditingArgs);
+      
+      // Increment after emitting to allow JS to respond with matching count
+      ++m_nativeEventCount;
     }
 
     if (m_clearTextOnSubmit) {
