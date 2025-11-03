@@ -81312,6 +81312,51 @@ exports[`snapshotAllPages TextInput 43`] = `
 `;
 
 exports[`snapshotAllPages TextInput 44`] = `
+<View_withRef>
+  <Text>
+    Manual clear using setValue('') in onSubmitEditing callback:
+  </Text>
+  <TextInput
+    onChangeText={[Function]}
+    onSubmitEditing={[Function]}
+    placeholder="Type text and press Enter to clear"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    submitKeyEvents={
+      [
+        {
+          "code": "Enter",
+        },
+      ]
+    }
+    testID="textinput-manual-clear-on-submit"
+    value=""
+  />
+  <Text>
+    Current value: "
+    "
+  </Text>
+</View_withRef>
+`;
+
+exports[`snapshotAllPages TextInput 45`] = `
 [
   <View_withRef
     focusable={true}
@@ -81377,7 +81422,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -81426,7 +81471,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View_withRef>
   <Text>
     CaretHidden
@@ -81458,7 +81503,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 </View_withRef>
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View_withRef>
   <Text>
     Cursorcolor
@@ -81490,7 +81535,7 @@ exports[`snapshotAllPages TextInput 47`] = `
 </View_withRef>
 `;
 
-exports[`snapshotAllPages TextInput 48`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View_withRef>
   <Text>
     Shadow
@@ -81528,7 +81573,7 @@ exports[`snapshotAllPages TextInput 48`] = `
 </View_withRef>
 `;
 
-exports[`snapshotAllPages TextInput 49`] = `
+exports[`snapshotAllPages TextInput 50`] = `
 <View_withRef
   accessible={true}
   testID="textinput-set"
@@ -81611,7 +81656,7 @@ exports[`snapshotAllPages TextInput 49`] = `
 </View_withRef>
 `;
 
-exports[`snapshotAllPages TextInput 50`] = `
+exports[`snapshotAllPages TextInput 51`] = `
 <View_withRef
   accessible={true}
   testID="textinput-searchbox"

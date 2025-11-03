@@ -333,7 +333,7 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
   "Visual Tree": {
     "Comment": "textinput-cursorColor",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1153,7 +1153,7 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
   "Visual Tree": {
     "Comment": "textinput-set",
     "Offset": "0, 0, 0",
-    "Size": "916, 94",
+    "Size": "916, 93",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1222,12 +1222,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
       },
       {
         "Offset": "0, 31, 0",
-        "Size": "916, 32",
+        "Size": "916, 33",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 32",
+            "Size": "916, 33",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1286,12 +1286,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
       },
       {
         "Offset": "0, 62, 0",
-        "Size": "916, 33",
+        "Size": "916, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 33",
+            "Size": "916, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2757,7 +2757,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
   "Visual Tree": {
     "Comment": "textinput-carethidden",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4333,7 +4333,7 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "textinput-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6041,17 +6041,17 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
   "Visual Tree": {
     "Comment": "textinput-searchbox",
     "Offset": "0, 0, 0",
-    "Size": "916, 31",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 33",
+        "Size": "916, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 33",
+            "Size": "916, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
