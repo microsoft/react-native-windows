@@ -78,6 +78,8 @@ New-Item $MSRNCxxTargetRoot\node-api -ItemType Directory -Force
 Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_native_api.h -Destination $MSRNCxxTargetRoot\node-api\
 Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_native_api_types.h -Destination $MSRNCxxTargetRoot\node-api\
 Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_runtime_api.h -Destination $MSRNCxxTargetRoot\node-api\
+Copy-Item -Force -Path $NodeApiJsiRoot\node-api\node_api.h -Destination $MSRNCxxTargetRoot\node-api\
+Copy-Item -Force -Path $NodeApiJsiRoot\node-api\node_api_types.h -Destination $MSRNCxxTargetRoot\node-api\
 
 # Microsoft.ReactNative.CXX project Node-API JSI files
 New-Item $MSRNCxxTargetRoot\ApiLoaders -ItemType Directory -Force
