@@ -130,9 +130,12 @@ void HttpTurboModule::SendRequest(
   // SDL Compliance: Validate headers for CRLF injection (P2 - CVSS 4.5)
   try {
     for (auto &entry : headersObj) {
+      std::string headerName = entry.first;
       std::string headerValue = entry.second.AsString();
+      // Validate both header name and value for CRLF injection
+      Microsoft::ReactNative::InputValidation::EncodingValidator::ValidateHeaderValue(headerName);
       Microsoft::ReactNative::InputValidation::EncodingValidator::ValidateHeaderValue(headerValue);
-      headers.emplace(entry.first, std::move(headerValue));
+      headers.emplace(std::move(headerName), std::move(headerValue));
     }
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     // Call callback with requestId, then send error event

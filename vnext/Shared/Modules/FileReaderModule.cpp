@@ -103,24 +103,9 @@ void FileReaderTurboModule::ReadAsText(
 
   // SDL Compliance: Validate encoding (P1 - CVSS 5.5)
   try {
-    // Allowlist of safe encodings (static to avoid repeated allocations)
-    static const std::vector<std::string> allowedEncodings = {
-        "UTF-8",
-        "utf-8",
-        "utf8",
-        "UTF-16",
-        "utf-16",
-        "utf16",
-        "ASCII",
-        "ascii",
-        "ISO-8859-1",
-        "iso-8859-1",
-        "" // Empty is allowed (defaults to UTF-8)
-    };
-
     if (!encoding.empty()) {
       bool isAllowed = false;
-      for (const auto &allowed : allowedEncodings) {
+      for (const auto &allowed : Microsoft::ReactNative::InputValidation::AllowedEncodings::FILE_READER_ENCODINGS) {
         if (encoding == allowed) {
           isAllowed = true;
           break;

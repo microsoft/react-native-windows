@@ -11,11 +11,53 @@
 
 namespace Microsoft::ReactNative::InputValidation {
 
-// Security exception for validation failures
+// Security exceptions for validation failures
 class ValidationException : public std::runtime_error {
  public:
   explicit ValidationException(const std::string &message) : std::runtime_error(message) {}
 };
+
+// Specific validation exception types
+class InvalidSizeException : public std::logic_error {
+ public:
+  explicit InvalidSizeException(const std::string &message) : std::logic_error(message) {}
+};
+
+class InvalidEncodingException : public std::logic_error {
+ public:
+  explicit InvalidEncodingException(const std::string &message) : std::logic_error(message) {}
+};
+
+class InvalidPathException : public std::logic_error {
+ public:
+  explicit InvalidPathException(const std::string &message) : std::logic_error(message) {}
+};
+
+class InvalidURLException : public std::logic_error {
+ public:
+  explicit InvalidURLException(const std::string &message) : std::logic_error(message) {}
+};
+
+// Centralized allowlists for encodings
+namespace AllowedEncodings {
+static const std::vector<std::string> FILE_READER_ENCODINGS = {
+    "UTF-8", "utf-8", "utf8",
+    "UTF-16", "utf-16", "utf16",
+    "ASCII", "ascii",
+    "ISO-8859-1", "iso-8859-1",
+    "" // Empty is allowed (defaults to UTF-8)
+};
+} // namespace AllowedEncodings
+
+// Centralized URL scheme allowlists
+namespace AllowedSchemes {
+static const std::vector<std::string> HTTP_SCHEMES = {"http", "https"};
+static const std::vector<std::string> WEBSOCKET_SCHEMES = {"ws", "wss"};
+static const std::vector<std::string> FILE_SCHEMES = {"file"};
+static const std::vector<std::string> LINKING_SCHEMES = {"http", "https", "mailto", "tel"};
+static const std::vector<std::string> IMAGE_SCHEMES = {"http", "https"};
+static const std::vector<std::string> DEBUG_SCHEMES = {"http", "https", "file"};
+} // namespace AllowedSchemes
 
 // Logging callback for validation failures (SDL requirement)
 using ValidationLogger = std::function<void(const std::string &category, const std::string &message)>;
@@ -98,6 +140,7 @@ class SizeValidator {
   static constexpr size_t MAX_CLOSE_REASON = 123; // WebSocket spec
   static constexpr size_t MAX_URL_LENGTH = 2048; // URL max
   static constexpr size_t MAX_HEADER_LENGTH = 8192; // Header max
+  static constexpr size_t MAX_DATA_URI_SIZE = 10 * 1024 * 1024; // 10MB for data URIs
 };
 
 // Encoding Validation - Protects against malformed data (SDL compliant)

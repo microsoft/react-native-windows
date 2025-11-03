@@ -65,7 +65,7 @@ std::string URLValidator::DecodeURL(const std::string &url) {
         char *end;
         long value = strtol(hex, &end, 16);
         if (end == hex + 2 && value >= 0 && value <= 255) {
-          temp += static_cast<char>(value & 0xFF);
+          temp += static_cast<char>(static_cast<unsigned char>(value & 0xFF));
           i += 2;
           continue;
         }
@@ -305,7 +305,7 @@ std::string PathValidator::DecodePath(const std::string &path) {
         char *end;
         long value = strtol(hex, &end, 16);
         if (end == hex + 2 && value >= 0 && value <= 255) {
-          temp += static_cast<char>(value & 0xFF);
+          temp += static_cast<char>(static_cast<unsigned char>(value & 0xFF));
           i += 2;
           continue;
         }
