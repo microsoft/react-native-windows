@@ -6,6 +6,7 @@
 #include <Utils/CppWinrtLessExceptions.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/RAMBundleRegistry.h>
+#include "../InputValidation.h"
 #include "WebSocketJSExecutor.h"
 
 #include <folly/dynamic.h>
@@ -84,6 +85,19 @@ void WebSocketJSExecutor::initializeRuntime() {
 void WebSocketJSExecutor::loadBundle(
     std::unique_ptr<const facebook::react::JSBigString> script,
     std::string sourceURL) {
+  // SDL Compliance: Validate source URL (P1 - CVSS 5.5)
+  // NOTE: 'file' scheme is allowed here because WebSocketJSExecutor is ONLY used in development/debugging scenarios.
+  // This executor connects to Metro bundler during development and is never used in production builds.
+  // Production apps use Hermes or Chakra with secure bundle loading that doesn't allow file:// URIs.
+  try {
+    if (!sourceURL.empty()) {
+      Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"});
+    }
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    OnHitError(std::string("Source URL validation failed: ") + ex.what());
+    return;
+  }
+
   int requestId = ++m_requestId;
 
   if (!IsRunning()) {
@@ -104,6 +118,14 @@ void WebSocketJSExecutor::loadBundle(
 void WebSocketJSExecutor::setBundleRegistry(std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry) {}
 
 void WebSocketJSExecutor::registerBundle(uint32_t bundleId, const std::string &bundlePath) {
+  // SDL Compliance: Validate bundle path (P1 - CVSS 5.5)
+  try {
+    Microsoft::ReactNative::InputValidation::PathValidator::ValidateFilePath(bundlePath, "");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    OnHitError(std::string("Bundle path validation failed: ") + ex.what());
+    return;
+  }
+
   // NYI
   std::terminate();
 }

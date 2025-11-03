@@ -5,6 +5,7 @@
 
 #include <CreateModules.h>
 #include <ReactPropertyBag.h>
+#include "InputValidation.h"
 #include "Networking/NetworkPropertyIds.h"
 
 // Windows API
@@ -50,6 +51,15 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
 
+  // SDL Compliance: Validate size (P1 - CVSS 5.0)
+  try {
+    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+        static_cast<size_t>(size), Microsoft::ReactNative::InputValidation::SizeValidator::MAX_BLOB_SIZE, "Blob");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    result.Reject(winrt::to_hstring(ex.what()).c_str());
+    return;
+  }
+
   auto typeItr = blob.find("type");
   string type{};
   if (typeItr == blob.end()) {
@@ -90,6 +100,26 @@ void FileReaderTurboModule::ReadAsText(
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
+
+  // SDL Compliance: Validate encoding (P1 - CVSS 5.5)
+  try {
+    if (!encoding.empty()) {
+      bool isAllowed = false;
+      for (const auto &allowed : Microsoft::ReactNative::InputValidation::AllowedEncodings::FILE_READER_ENCODINGS) {
+        if (encoding == allowed) {
+          isAllowed = true;
+          break;
+        }
+      }
+      if (!isAllowed) {
+        throw Microsoft::ReactNative::InputValidation::ValidationException(
+            "Encoding '" + encoding + "' not in allowlist");
+      }
+    }
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    result.Reject(winrt::to_hstring(ex.what()).c_str());
+    return;
+  }
 
   m_resource->ReadAsText(
       std::move(blobId),

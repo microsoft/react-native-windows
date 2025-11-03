@@ -5,6 +5,7 @@
 
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.System.h>
+#include "../../Shared/InputValidation.h"
 #include "LinkingManagerModule.h"
 #include "Unicode.h"
 
@@ -49,6 +50,16 @@ LinkingManager::~LinkingManager() noexcept {
 }
 
 /*static*/ fire_and_forget LinkingManager::canOpenURL(std::wstring url, ::React::ReactPromise<bool> result) noexcept {
+  // SDL Compliance: Validate URL (P0 - CVSS 6.5)
+  try {
+    std::string urlUtf8 = Utf16ToUtf8(url);
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
+        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES);
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    result.Reject(ex.what());
+    co_return;
+  }
+
   winrt::Windows::Foundation::Uri uri(url);
   auto status = co_await Launcher::QueryUriSupportAsync(uri, LaunchQuerySupportType::Uri);
   if (status == LaunchQuerySupportStatus::Available) {
@@ -73,6 +84,15 @@ fire_and_forget openUrlAsync(std::wstring url, ::React::ReactPromise<void> resul
 }
 
 void LinkingManager::openURL(std::wstring &&url, ::React::ReactPromise<void> &&result) noexcept {
+  // VALIDATE URL - arbitrary launch PROTECTION (P0 Critical - CVSS 7.5)
+  try {
+    std::string urlUtf8 = Utf16ToUtf8(url);
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(urlUtf8, {"http", "https", "mailto", "tel"});
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    result.Reject(ex.what());
+    return;
+  }
+
   m_context.UIDispatcher().Post(
       [url = std::move(url), result = std::move(result)]() { openUrlAsync(std::move(url), std::move(result)); });
 }
@@ -94,6 +114,16 @@ void LinkingManager::openURL(std::wstring &&url, ::React::ReactPromise<void> &&r
 }
 
 void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
+  // SDL Compliance: Validate URI before emitting event (P2 - CVSS 4.0)
+  try {
+    std::string uriUtf8 = winrt::to_string(uri);
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
+        uriUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES);
+  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &) {
+    // Silently ignore invalid URIs to prevent crashes
+    return;
+  }
+
   m_context.EmitJSEvent(L"RCTDeviceEventEmitter", L"url", React::JSValueObject{{"url", winrt::to_string(uri)}});
 }
 

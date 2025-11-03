@@ -10,6 +10,7 @@
 #include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
+#include "InputValidation.h"
 #include "Networking/NetworkPropertyIds.h"
 
 // fmt
@@ -132,6 +133,15 @@ void WebSocketTurboModule::Connect(
     std::optional<vector<string>> protocols,
     ReactNativeSpecs::WebSocketModuleSpec_connect_options &&options,
     double socketID) noexcept {
+  //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
+  // Allow localhost for testing/development scenarios
+  try {
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"}, true);
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(socketID)}, {"message", ex.what()}});
+    return;
+  }
+
   IWebSocketResource::Protocols rcProtocols;
   for (const auto &protocol : protocols.value_or(vector<string>{})) {
     rcProtocols.push_back(protocol);
@@ -161,6 +171,17 @@ void WebSocketTurboModule::Connect(
 }
 
 void WebSocketTurboModule::Close(double code, string &&reason, double socketID) noexcept {
+  //  VALIDATE Reason Length - WebSocket Spec (P1 - CVSS 5.0)
+  try {
+    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+        reason.length(),
+        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_CLOSE_REASON,
+        "WebSocket close reason");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(socketID)}, {"message", ex.what()}});
+    return;
+  }
+
   auto rcItr = m_resourceMap.find(socketID);
   if (rcItr == m_resourceMap.cend()) {
     return; // TODO: Send error instead?
@@ -173,6 +194,17 @@ void WebSocketTurboModule::Close(double code, string &&reason, double socketID) 
 }
 
 void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
+  //  VALIDATE Size - DoS PROTECTION (P0 Critical - CVSS 7.0)
+  try {
+    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+        message.length(),
+        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_WEBSOCKET_FRAME,
+        "WebSocket message");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
+    return;
+  }
+
   auto rcItr = m_resourceMap.find(forSocketID);
   if (rcItr == m_resourceMap.cend()) {
     return; // TODO: Send error instead?
@@ -185,6 +217,24 @@ void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
 }
 
 void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID) noexcept {
+  //  VALIDATE Base64 Format - DoS PROTECTION (P0 Critical - CVSS 7.0)
+  try {
+    if (!Microsoft::ReactNative::InputValidation::EncodingValidator::IsValidBase64(base64String)) {
+      throw Microsoft::ReactNative::InputValidation::InvalidEncodingException("Invalid base64 format");
+    }
+
+    //  VALIDATE Size - DoS PROTECTION
+    size_t estimatedSize =
+        Microsoft::ReactNative::InputValidation::EncodingValidator::EstimateBase64DecodedSize(base64String);
+    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+        estimatedSize,
+        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_WEBSOCKET_FRAME,
+        "WebSocket binary frame");
+  } catch (const std::exception &ex) {
+    SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
+    return;
+  }
+
   auto rcItr = m_resourceMap.find(forSocketID);
   if (rcItr == m_resourceMap.cend()) {
     return; // TODO: Send error instead?
