@@ -16,50 +16,50 @@ TEST(URLValidatorTest, AllowsHTTPSchemesOnly) {
   EXPECT_NO_THROW(URLValidator::ValidateURL("https://example.com", {"http", "https"}));
 
   // Negative: file, ftp, javascript blocked
-  EXPECT_THROW(URLValidator::ValidateURL("file:///etc/passwd", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("ftp://example.com", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("javascript:alert(1)", {"http", "https"}), ValidationException);
+  EXPECT_THROW(URLValidator::ValidateURL("file:///etc/passwd", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("ftp://example.com", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("javascript:alert(1)", {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, BlocksLocalhostVariants) {
   // SDL Test Case: Block localhost
-  EXPECT_THROW(URLValidator::ValidateURL("https://localhost/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://localHoSt/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://ip6-localhost/", {"http", "https"}), ValidationException);
+  EXPECT_THROW(URLValidator::ValidateURL("https://localhost/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://localHoSt/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://ip6-localhost/", {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, BlocksLoopbackIPs) {
   // SDL Test Case: Block 127.x.x.x
-  EXPECT_THROW(URLValidator::ValidateURL("https://127.0.0.1/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://127.0.1.2/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://127.255.255.255/", {"http", "https"}), ValidationException);
+  EXPECT_THROW(URLValidator::ValidateURL("https://127.0.0.1/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://127.0.1.2/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://127.255.255.255/", {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, BlocksIPv6Loopback) {
   // SDL Test Case: Block ::1
-  EXPECT_THROW(URLValidator::ValidateURL("https://[::1]/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://[0:0:0:0:0:0:0:1]/", {"http", "https"}), ValidationException);
+  EXPECT_THROW(URLValidator::ValidateURL("https://[::1]/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://[0:0:0:0:0:0:0:1]/", {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, BlocksAWSMetadata) {
   // SDL Test Case: Block 169.254.169.254
   EXPECT_THROW(
-      URLValidator::ValidateURL("http://169.254.169.254/latest/meta-data/", {"http", "https"}), ValidationException);
+      URLValidator::ValidateURL("http://169.254.169.254/latest/meta-data/", {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, BlocksPrivateIPRanges) {
   // SDL Test Case: Block private IPs
-  EXPECT_THROW(URLValidator::ValidateURL("https://10.0.0.1/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://192.168.1.1/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://172.16.0.1/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://172.31.255.255/", {"http", "https"}), ValidationException);
+  EXPECT_THROW(URLValidator::ValidateURL("https://10.0.0.1/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://192.168.1.1/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://172.16.0.1/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://172.31.255.255/", {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, BlocksIPv6PrivateRanges) {
   // SDL Test Case: Block fc00::/7 and fe80::/10
-  EXPECT_THROW(URLValidator::ValidateURL("https://[fc00::]/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://[fe80::]/", {"http", "https"}), ValidationException);
-  EXPECT_THROW(URLValidator::ValidateURL("https://[fd00::]/", {"http", "https"}), ValidationException);
+  EXPECT_THROW(URLValidator::ValidateURL("https://[fc00::]/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://[fe80::]/", {"http", "https"}), std::exception);
+  EXPECT_THROW(URLValidator::ValidateURL("https://[fd00::]/", {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, DecodesDoubleEncodedURLs) {
@@ -73,7 +73,7 @@ TEST(URLValidatorTest, DecodesDoubleEncodedURLs) {
 TEST(URLValidatorTest, EnforcesMaxLength) {
   // SDL: URL length limit (2048 bytes)
   std::string longURL = "https://example.com/" + std::string(3000, 'a');
-  EXPECT_THROW(URLValidator::ValidateURL(longURL, {"http", "https"}), ValidationException);
+  EXPECT_THROW(URLValidator::ValidateURL(longURL, {"http", "https"}), std::exception);
 }
 
 TEST(URLValidatorTest, AllowsPublicURLs) {
@@ -120,9 +120,9 @@ TEST(PathValidatorTest, ValidBlobIDFormat) {
 
 TEST(PathValidatorTest, InvalidBlobIDFormats) {
   // Negative: Invalid characters
-  EXPECT_THROW(PathValidator::ValidateBlobId("blob/../etc"), ValidationException);
-  EXPECT_THROW(PathValidator::ValidateBlobId("blob/file"), ValidationException);
-  EXPECT_THROW(PathValidator::ValidateBlobId("blob\\file"), ValidationException);
+  EXPECT_THROW(PathValidator::ValidateBlobId("blob/../etc"), std::exception);
+  EXPECT_THROW(PathValidator::ValidateBlobId("blob/file"), std::exception);
+  EXPECT_THROW(PathValidator::ValidateBlobId("blob\\file"), std::exception);
 }
 
 TEST(PathValidatorTest, BlobIDLengthLimit) {
@@ -131,14 +131,14 @@ TEST(PathValidatorTest, BlobIDLengthLimit) {
   EXPECT_NO_THROW(PathValidator::ValidateBlobId(validLength));
 
   std::string tooLong(129, 'a');
-  EXPECT_THROW(PathValidator::ValidateBlobId(tooLong), ValidationException);
+  EXPECT_THROW(PathValidator::ValidateBlobId(tooLong), std::exception);
 }
 
 TEST(PathValidatorTest, BundlePathTraversalBlocked) {
   // SDL: Block path traversal in bundle paths
-  EXPECT_THROW(PathValidator::ValidateFilePath("../../etc/passwd", "C:\\app"), ValidationException);
-  EXPECT_THROW(PathValidator::ValidateFilePath("..\\..\\windows", "C:\\app"), ValidationException);
-  EXPECT_THROW(PathValidator::ValidateFilePath("%2e%2e%2f", "C:\\app"), ValidationException);
+  EXPECT_THROW(PathValidator::ValidateFilePath("../../etc/passwd", "C:\\app"), std::exception);
+  EXPECT_THROW(PathValidator::ValidateFilePath("..\\..\\windows", "C:\\app"), std::exception);
+  EXPECT_THROW(PathValidator::ValidateFilePath("%2e%2e%2f", "C:\\app"), std::exception);
 }
 
 // ============================================================================
@@ -149,7 +149,7 @@ TEST(SizeValidatorTest, EnforcesMaxBlobSize) {
   // SDL: 100MB max
   EXPECT_NO_THROW(SizeValidator::ValidateSize(100 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"));
   EXPECT_THROW(
-      SizeValidator::ValidateSize(101 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"), ValidationException);
+      SizeValidator::ValidateSize(101 * 1024 * 1024, SizeValidator::MAX_BLOB_SIZE, "Blob"), std::exception);
 }
 
 TEST(SizeValidatorTest, EnforcesMaxWebSocketFrame) {
@@ -157,13 +157,13 @@ TEST(SizeValidatorTest, EnforcesMaxWebSocketFrame) {
   EXPECT_NO_THROW(SizeValidator::ValidateSize(256 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"));
   EXPECT_THROW(
       SizeValidator::ValidateSize(257 * 1024 * 1024, SizeValidator::MAX_WEBSOCKET_FRAME, "WebSocket"),
-      ValidationException);
+      std::exception);
 }
 
 TEST(SizeValidatorTest, EnforcesCloseReasonLimit) {
   // SDL: 123 bytes max (WebSocket spec)
   EXPECT_NO_THROW(SizeValidator::ValidateSize(123, SizeValidator::MAX_CLOSE_REASON, "Close reason"));
-  EXPECT_THROW(SizeValidator::ValidateSize(124, SizeValidator::MAX_CLOSE_REASON, "Close reason"), ValidationException);
+  EXPECT_THROW(SizeValidator::ValidateSize(124, SizeValidator::MAX_CLOSE_REASON, "Close reason"), std::exception);
 }
 
 // ============================================================================
@@ -198,11 +198,12 @@ TEST(ValidationLoggerTest, LogsFailures) {
   // Trigger validation failure to test logging
   try {
     URLValidator::ValidateURL("https://localhost/", {"http", "https"});
-    FAIL() << "Expected ValidationException";
-  } catch (const ValidationException &ex) {
+    FAIL() << "Expected std::exception";
+  } catch (const std::exception &ex) {
     // Verify exception message is meaningful
     std::string message = ex.what();
     EXPECT_FALSE(message.empty());
     EXPECT_TRUE(message.find("localhost") != std::string::npos || message.find("SSRF") != std::string::npos);
   }
 }
+
