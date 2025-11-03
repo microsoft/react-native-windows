@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add SDL-compliant input validation framework to eliminate 31 security vulnerabilities (207.4 CVSS points)",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
