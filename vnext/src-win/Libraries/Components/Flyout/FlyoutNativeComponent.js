@@ -44,7 +44,7 @@ type NativeProps = $ReadOnly<{
 }>;
 
 type NativeType = HostComponent<NativeProps>;
-
+// $FlowFixMe[nonpolymorphic-type-arg]
 export default (codegenNativeComponent<NativeProps>('RCTFlyout', {
   interfaceOnly: true,
 }): NativeType);
