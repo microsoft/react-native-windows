@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 #include "pch.h"
 
+#include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
+#include <winrt/Microsoft.UI.Xaml.Automation.h>
 #include "XamlApplication.h"
 #include "XamlHost.h"
-#include <winrt/Microsoft.UI.Xaml.Automation.h>
-#include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
 
 #if defined(RNW_NEW_ARCH)
 

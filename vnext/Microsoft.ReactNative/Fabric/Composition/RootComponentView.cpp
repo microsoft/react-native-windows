@@ -8,8 +8,8 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include <winrt/Microsoft.UI.Input.h>
-#include "CompositionRootAutomationProvider.h"
 #include "CompositionDynamicAutomationProvider.h"
+#include "CompositionRootAutomationProvider.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
 
@@ -312,9 +312,10 @@ winrt::IUnknown RootComponentView::UiaProviderFromPoint(const POINT &ptPixels, c
       // architecture work).
       if (auto fragmentRoot = childProvider.try_as<IRawElementProviderFragmentRoot>()) {
         com_ptr<IRawElementProviderFragment> frag;
-        //WinUI then does its own hitTest inside the XAML tree.
+        // WinUI then does its own hitTest inside the XAML tree.
         fragmentRoot->ElementProviderFromPoint(
-            ptScreen.x, // Note since we're going through IRawElementProviderFragment the coordinates are in screen space.
+            ptScreen
+                .x, // Note since we're going through IRawElementProviderFragment the coordinates are in screen space.
             ptScreen.y,
             frag.put());
         // We return the specific child provider(frag) when hosted XAML has an element
