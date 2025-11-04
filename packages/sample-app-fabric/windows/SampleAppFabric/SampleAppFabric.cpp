@@ -8,15 +8,12 @@
 
 #include "NativeModules.h"
 
-#include "../../../../vnext/Microsoft.ReactNative/XamlHost.h"
-
 // A PackageProvider containing any turbo modules you define within this app project
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
-    RegisterXamlHostComponentView(packageBuilder);
   }
 };
 

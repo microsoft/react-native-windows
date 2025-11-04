@@ -13,6 +13,7 @@ type XamlHostProps = $ReadOnly<{|
   ...ViewProps,
 
   // Props
+  // TODO: Remove it if not required. Temporarily used for completeness.
   label?: string,
 |}>;
 
