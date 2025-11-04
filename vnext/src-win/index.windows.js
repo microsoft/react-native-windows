@@ -108,6 +108,7 @@ import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimension
 import typeof Vibration from './Libraries/Vibration/Vibration';
 import typeof DevMenu from './src/private/devsupport/devmenu/DevMenu';
 import typeof ReactNativeVersion from './Libraries/Core/ReactNativeVersion';
+export type {TurboModule} from './Libraries/TurboModule/RCTExport';
 
 export type {HostComponent, HostInstance};
 // Windows]]

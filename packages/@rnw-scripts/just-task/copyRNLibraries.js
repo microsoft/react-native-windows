@@ -54,6 +54,11 @@ exports.copyTask = baseDir => {
       dest: base('src'),
     }),
     copyTask({
+  paths: reactNative('src/private/webapis/performance/UserTimingExtensibility.js.flow'),
+  dest: base('src/private/webapis/performance'),
+  rename: 'UserTimingExtensibility.js', // Rename .js.flow to .js
+}),
+    copyTask({
       paths: reactNative('index.js', 'interface.js', 'rn-get-polyfills.js'),
       dest: base('.'),
     }),
