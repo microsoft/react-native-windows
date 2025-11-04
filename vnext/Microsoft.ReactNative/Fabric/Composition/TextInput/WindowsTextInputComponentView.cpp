@@ -541,9 +541,12 @@ void WindowsTextInputComponentView::HandleCommand(
     std::optional<winrt::hstring> text;
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
-    // Only accept text updates that match the current native event count
-    // This prevents race conditions and maintains proper state synchronization
-    if (eventCount >= m_nativeEventCount) {
+    // Accept text updates that match current event count, or are within a reasonable 
+    // tolerance for async JS responses to recent events (like onSubmitEditing)
+    bool isCurrentEvent = eventCount >= m_nativeEventCount;
+    bool isRecentAsyncResponse = (m_nativeEventCount - eventCount) <= 2; // Allow up to 2 events behind
+    
+    if (isCurrentEvent || isRecentAsyncResponse) {
       m_comingFromJS = true;
       {
         if (text.has_value()) {
@@ -956,12 +959,8 @@ void WindowsTextInputComponentView::OnCharacterReceived(
       auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
       facebook::react::WindowsTextInputEventEmitter::OnSubmitEditing onSubmitEditingArgs;
       onSubmitEditingArgs.text = GetTextFromRichEdit();
-      // Don't increment event count yet - let JS respond with current count first
-      onSubmitEditingArgs.eventCount = m_nativeEventCount;
+      onSubmitEditingArgs.eventCount = ++m_nativeEventCount;
       emitter->onSubmitEditing(onSubmitEditingArgs);
-
-      // Increment after emitting to allow JS to respond with matching count
-      ++m_nativeEventCount;
     }
 
     if (m_clearTextOnSubmit) {
