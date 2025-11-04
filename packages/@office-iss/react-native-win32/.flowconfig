@@ -50,6 +50,8 @@
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
+; Ignore all flow directory contents in node_modules
+.*/flow/.*
 
 ; Ignore react-native-windows' build output. Flow is not compiled with long path support and after running unittests these folders have long paths
 .*/node_modules/react-native-windows/build/.*
