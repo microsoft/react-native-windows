@@ -541,11 +541,11 @@ void WindowsTextInputComponentView::HandleCommand(
     std::optional<winrt::hstring> text;
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
-    // Accept text updates that match current event count, or are within a reasonable 
+    // Accept text updates that match current event count, or are within a reasonable
     // tolerance for async JS responses to recent events (like onSubmitEditing)
     bool isCurrentEvent = eventCount >= m_nativeEventCount;
     bool isRecentAsyncResponse = (m_nativeEventCount - eventCount) <= 2; // Allow up to 2 events behind
-    
+
     if (isCurrentEvent || isRecentAsyncResponse) {
       m_comingFromJS = true;
       {
