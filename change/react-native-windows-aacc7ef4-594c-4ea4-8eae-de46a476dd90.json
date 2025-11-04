@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix metro config property name in cpp-lib template",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "none"
+}
