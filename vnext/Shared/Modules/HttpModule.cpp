@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "HttpModule.h"
+#include "InputValidation.h"
 
 #include <CreateModules.h>
 #include <Modules/CxxModuleUtilities.h>
@@ -111,10 +112,39 @@ void HttpTurboModule::SendRequest(
     ReactNativeSpecs::NetworkingIOSSpec_sendRequest_query &&query,
     function<void(double)> const &callback) noexcept {
   m_requestId++;
+
+  // SDL Compliance: Validate URL for SSRF (P0 - CVSS 9.1)
+  // Allow localhost for testing/development scenarios
+  try {
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(query.url, {"http", "https"}, true);
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+    int64_t requestId = m_requestId;
+    callback({static_cast<double>(requestId)});
+    SendEvent(m_context, completedResponseW, msrn::JSValueArray{requestId, ex.what()});
+    return;
+  }
+
   auto &headersObj = query.headers.AsObject();
   IHttpResource::Headers headers;
-  for (auto &entry : headersObj) {
-    headers.emplace(entry.first, entry.second.AsString());
+
+  // SDL Compliance: Validate headers for CRLF injection (P2 - CVSS 4.5)
+  try {
+    for (auto &entry : headersObj) {
+      std::string headerName = entry.first;
+      std::string headerValue = entry.second.AsString();
+      // Validate both header name and value for CRLF injection
+      Microsoft::ReactNative::InputValidation::EncodingValidator::ValidateHeaderValue(headerName);
+      Microsoft::ReactNative::InputValidation::EncodingValidator::ValidateHeaderValue(headerValue);
+      headers.emplace(std::move(headerName), std::move(headerValue));
+    }
+  } catch (const std::exception &ex) {
+    // Call callback with requestId, then send error event
+    int64_t requestId = m_requestId;
+    callback({static_cast<double>(requestId)});
+
+    // Send error event for validation failure (same pattern as SetOnError)
+    SendEvent(m_context, completedResponseW, msrn::JSValueArray{requestId, ex.what()});
+    return;
   }
 
   m_resource->SendRequest(
@@ -131,6 +161,15 @@ void HttpTurboModule::SendRequest(
 }
 
 void HttpTurboModule::AbortRequest(double requestId) noexcept {
+  // SDL Compliance: Validate request ID range (P2 - CVSS 3.5)
+  try {
+    Microsoft::ReactNative::InputValidation::SizeValidator::ValidateInt32Range(
+        static_cast<int32_t>(requestId), 0, INT32_MAX, "Request ID");
+  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &) {
+    // Invalid request ID, ignore abort
+    return;
+  }
+
   m_resource->AbortRequest(static_cast<int64_t>(requestId));
 }
 
