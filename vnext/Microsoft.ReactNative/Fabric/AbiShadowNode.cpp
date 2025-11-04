@@ -27,7 +27,8 @@ winrt::Microsoft::ReactNative::IComponentProps AbiProps::UserProps() const noexc
   return m_componentProps;
 }
 
-ShadowNode::ShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept : m_shadowNode(shadowNode) {}
+ShadowNode::ShadowNode(std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept
+    : m_shadowNode(shadowNode) {}
 
 void ShadowNode::EnsureUnsealed() noexcept {
   if (auto shadowNode = m_shadowNode.lock()) {

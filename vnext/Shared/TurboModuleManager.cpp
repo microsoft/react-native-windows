@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "TurboModuleManager.h"
-#include "ReactCommon/SampleTurboCxxModule.h"
 
 #ifdef USE_FABRIC
 #include <react/nativemodule/defaults/DefaultTurboModules.h>

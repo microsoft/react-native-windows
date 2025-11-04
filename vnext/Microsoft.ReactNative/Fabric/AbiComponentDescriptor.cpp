@@ -69,8 +69,8 @@ std::shared_ptr<facebook::react::ShadowNode> AbiComponentDescriptor::cloneShadow
 }
 
 void AbiComponentDescriptor::appendChild(
-    const facebook::react::ShadowNode::Shared &parentShadowNode,
-    const facebook::react::ShadowNode::Shared &childShadowNode) const {
+    const std::shared_ptr<const facebook::react::ShadowNode> &parentShadowNode,
+    const std::shared_ptr<const facebook::react::ShadowNode> &childShadowNode) const {
   auto concreteParentShadowNode = std::static_pointer_cast<const ShadowNodeT>(parentShadowNode);
   auto concreteNonConstParentShadowNode = std::const_pointer_cast<ShadowNodeT>(concreteParentShadowNode);
   concreteNonConstParentShadowNode->appendChild(childShadowNode);

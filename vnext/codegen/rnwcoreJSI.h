@@ -23,13 +23,14 @@ public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
   virtual bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) = 0;
   virtual bool animatedShouldSignalBatch(jsi::Runtime &rt) = 0;
-  virtual bool avoidCeilingAvailableAndroidTextWidth(jsi::Runtime &rt) = 0;
   virtual bool cxxNativeAnimatedEnabled(jsi::Runtime &rt) = 0;
+  virtual bool cxxNativeAnimatedRemoveJsSync(jsi::Runtime &rt) = 0;
   virtual bool disableMainQueueSyncDispatchIOS(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
   virtual bool disableTextLayoutManagerCacheAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAccessibilityOrder(jsi::Runtime &rt) = 0;
   virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableAndroidTextMeasurementOptimizations(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCppPropsIteratorSetter(jsi::Runtime &rt) = 0;
   virtual bool enableCustomFocusSearchOnClippedElementsAndroid(jsi::Runtime &rt) = 0;
@@ -42,7 +43,7 @@ public:
   virtual bool enableFontScaleChangesUpdatingLayout(jsi::Runtime &rt) = 0;
   virtual bool enableIOSTextBaselineOffsetPerLine(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
-  virtual bool enableIntersectionObserverEventLoopIntegration(jsi::Runtime &rt) = 0;
+  virtual bool enableInteropViewManagerClassLookUpOptimizationIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableMainQueueCoordinatorOnIOS(jsi::Runtime &rt) = 0;
@@ -59,14 +60,17 @@ public:
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecyclingForText(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecyclingForView(jsi::Runtime &rt) = 0;
+  virtual bool enableVirtualViewDebugFeatures(jsi::Runtime &rt) = 0;
+  virtual bool enableVirtualViewRenderState(jsi::Runtime &rt) = 0;
+  virtual bool enableVirtualViewWindowFocusDetection(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) = 0;
-  virtual bool incorporateMaxLinesDuringAndroidLayout(jsi::Runtime &rt) = 0;
+  virtual bool hideOffscreenVirtualViewsOnIOS(jsi::Runtime &rt) = 0;
+  virtual double preparedTextCacheSize(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool updateRuntimeShadowNodeReferencesOnCommit(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
-  virtual bool useAndroidTextLayoutWidthDirectly(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
@@ -129,14 +133,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::animatedShouldSignalBatch, jsInvoker_, instance_);
     }
-    bool avoidCeilingAvailableAndroidTextWidth(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::avoidCeilingAvailableAndroidTextWidth) == 1,
-          "Expected avoidCeilingAvailableAndroidTextWidth(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::avoidCeilingAvailableAndroidTextWidth, jsInvoker_, instance_);
-    }
     bool cxxNativeAnimatedEnabled(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::cxxNativeAnimatedEnabled) == 1,
@@ -144,6 +140,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::cxxNativeAnimatedEnabled, jsInvoker_, instance_);
+    }
+    bool cxxNativeAnimatedRemoveJsSync(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::cxxNativeAnimatedRemoveJsSync) == 1,
+          "Expected cxxNativeAnimatedRemoveJsSync(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::cxxNativeAnimatedRemoveJsSync, jsInvoker_, instance_);
     }
     bool disableMainQueueSyncDispatchIOS(jsi::Runtime &rt) override {
       static_assert(
@@ -184,6 +188,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableAccumulatedUpdatesInRawPropsAndroid, jsInvoker_, instance_);
+    }
+    bool enableAndroidTextMeasurementOptimizations(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableAndroidTextMeasurementOptimizations) == 1,
+          "Expected enableAndroidTextMeasurementOptimizations(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableAndroidTextMeasurementOptimizations, jsInvoker_, instance_);
     }
     bool enableBridgelessArchitecture(jsi::Runtime &rt) override {
       static_assert(
@@ -281,13 +293,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableIOSViewClipToPaddingBox, jsInvoker_, instance_);
     }
-    bool enableIntersectionObserverEventLoopIntegration(jsi::Runtime &rt) override {
+    bool enableInteropViewManagerClassLookUpOptimizationIOS(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableIntersectionObserverEventLoopIntegration) == 1,
-          "Expected enableIntersectionObserverEventLoopIntegration(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableInteropViewManagerClassLookUpOptimizationIOS) == 1,
+          "Expected enableInteropViewManagerClassLookUpOptimizationIOS(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableIntersectionObserverEventLoopIntegration, jsInvoker_, instance_);
+          rt, &T::enableInteropViewManagerClassLookUpOptimizationIOS, jsInvoker_, instance_);
     }
     bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -417,6 +429,30 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableViewRecyclingForView, jsInvoker_, instance_);
     }
+    bool enableVirtualViewDebugFeatures(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableVirtualViewDebugFeatures) == 1,
+          "Expected enableVirtualViewDebugFeatures(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableVirtualViewDebugFeatures, jsInvoker_, instance_);
+    }
+    bool enableVirtualViewRenderState(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableVirtualViewRenderState) == 1,
+          "Expected enableVirtualViewRenderState(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableVirtualViewRenderState, jsInvoker_, instance_);
+    }
+    bool enableVirtualViewWindowFocusDetection(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableVirtualViewWindowFocusDetection) == 1,
+          "Expected enableVirtualViewWindowFocusDetection(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableVirtualViewWindowFocusDetection, jsInvoker_, instance_);
+    }
     bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::fixMappingOfEventPrioritiesBetweenFabricAndReact) == 1,
@@ -441,13 +477,21 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fuseboxNetworkInspectionEnabled, jsInvoker_, instance_);
     }
-    bool incorporateMaxLinesDuringAndroidLayout(jsi::Runtime &rt) override {
+    bool hideOffscreenVirtualViewsOnIOS(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::incorporateMaxLinesDuringAndroidLayout) == 1,
-          "Expected incorporateMaxLinesDuringAndroidLayout(...) to have 1 parameters");
+          bridging::getParameterCount(&T::hideOffscreenVirtualViewsOnIOS) == 1,
+          "Expected hideOffscreenVirtualViewsOnIOS(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::incorporateMaxLinesDuringAndroidLayout, jsInvoker_, instance_);
+          rt, &T::hideOffscreenVirtualViewsOnIOS, jsInvoker_, instance_);
+    }
+    double preparedTextCacheSize(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::preparedTextCacheSize) == 1,
+          "Expected preparedTextCacheSize(...) to have 1 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::preparedTextCacheSize, jsInvoker_, instance_);
     }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -472,14 +516,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useAlwaysAvailableJSErrorHandling, jsInvoker_, instance_);
-    }
-    bool useAndroidTextLayoutWidthDirectly(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useAndroidTextLayoutWidthDirectly) == 1,
-          "Expected useAndroidTextLayoutWidthDirectly(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useAndroidTextLayoutWidthDirectly, jsInvoker_, instance_);
     }
     bool useFabricInterop(jsi::Runtime &rt) override {
       static_assert(
@@ -2415,69 +2451,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeBugReportingCxxSpecJSI : public TurboModule {
-protected:
-  NativeBugReportingCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void startReportAProblemFlow(jsi::Runtime &rt) = 0;
-  virtual void setExtraData(jsi::Runtime &rt, jsi::Object extraData, jsi::Object extraFiles) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeBugReportingCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "BugReporting";
-
-protected:
-  NativeBugReportingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeBugReportingCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeBugReportingCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeBugReportingCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void startReportAProblemFlow(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::startReportAProblemFlow) == 1,
-          "Expected startReportAProblemFlow(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startReportAProblemFlow, jsInvoker_, instance_);
-    }
-    void setExtraData(jsi::Runtime &rt, jsi::Object extraData, jsi::Object extraFiles) override {
-      static_assert(
-          bridging::getParameterCount(&T::setExtraData) == 3,
-          "Expected setExtraData(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setExtraData, jsInvoker_, instance_, std::move(extraData), std::move(extraFiles));
-    }
-
-  private:
-    friend class NativeBugReportingCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativeClipboardCxxSpecJSI : public TurboModule {
 protected:
   NativeClipboardCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -2607,12 +2580,13 @@ private:
   
 #pragma mark - NativeDeviceInfoDeviceInfoConstants
 
-template <typename P0, typename P1>
+template <typename P0, typename P1, typename P2>
 struct NativeDeviceInfoDeviceInfoConstants {
   P0 Dimensions;
-  P1 isIPhoneX_deprecated;
+  P1 isEdgeToEdge;
+  P2 isIPhoneX_deprecated;
   bool operator==(const NativeDeviceInfoDeviceInfoConstants &other) const {
-    return Dimensions == other.Dimensions && isIPhoneX_deprecated == other.isIPhoneX_deprecated;
+    return Dimensions == other.Dimensions && isEdgeToEdge == other.isEdgeToEdge && isIPhoneX_deprecated == other.isIPhoneX_deprecated;
   }
 };
 
@@ -2626,12 +2600,17 @@ struct NativeDeviceInfoDeviceInfoConstantsBridging {
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     T result{
       bridging::fromJs<decltype(types.Dimensions)>(rt, value.getProperty(rt, "Dimensions"), jsInvoker),
+      bridging::fromJs<decltype(types.isEdgeToEdge)>(rt, value.getProperty(rt, "isEdgeToEdge"), jsInvoker),
       bridging::fromJs<decltype(types.isIPhoneX_deprecated)>(rt, value.getProperty(rt, "isIPhoneX_deprecated"), jsInvoker)};
     return result;
   }
 
 #ifdef DEBUG
   static jsi::Object DimensionsToJs(jsi::Runtime &rt, decltype(types.Dimensions) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool isEdgeToEdgeToJs(jsi::Runtime &rt, decltype(types.isEdgeToEdge) value) {
     return bridging::toJs(rt, value);
   }
 
@@ -2646,6 +2625,9 @@ struct NativeDeviceInfoDeviceInfoConstantsBridging {
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     result.setProperty(rt, "Dimensions", bridging::toJs(rt, value.Dimensions, jsInvoker));
+    if (value.isEdgeToEdge) {
+      result.setProperty(rt, "isEdgeToEdge", bridging::toJs(rt, value.isEdgeToEdge.value(), jsInvoker));
+    }
     if (value.isIPhoneX_deprecated) {
       result.setProperty(rt, "isIPhoneX_deprecated", bridging::toJs(rt, value.isIPhoneX_deprecated.value(), jsInvoker));
     }
@@ -8302,14 +8284,15 @@ struct NativeIntersectionObserverNativeIntersectionObserverEntryBridging {
 
 #pragma mark - NativeIntersectionObserverNativeIntersectionObserverObserveOptions
 
-template <typename P0, typename P1, typename P2, typename P3>
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
 struct NativeIntersectionObserverNativeIntersectionObserverObserveOptions {
   P0 intersectionObserverId;
-  P1 targetShadowNode;
-  P2 thresholds;
-  P3 rootThresholds;
+  P1 rootShadowNode;
+  P2 targetShadowNode;
+  P3 thresholds;
+  P4 rootThresholds;
   bool operator==(const NativeIntersectionObserverNativeIntersectionObserverObserveOptions &other) const {
-    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds && rootThresholds == other.rootThresholds;
+    return intersectionObserverId == other.intersectionObserverId && rootShadowNode == other.rootShadowNode && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds && rootThresholds == other.rootThresholds;
   }
 };
 
@@ -8323,6 +8306,7 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     T result{
       bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
+      bridging::fromJs<decltype(types.rootShadowNode)>(rt, value.getProperty(rt, "rootShadowNode"), jsInvoker),
       bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
       bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker),
       bridging::fromJs<decltype(types.rootThresholds)>(rt, value.getProperty(rt, "rootThresholds"), jsInvoker)};
@@ -8331,6 +8315,10 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
 
 #ifdef DEBUG
   static double intersectionObserverIdToJs(jsi::Runtime &rt, decltype(types.intersectionObserverId) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::Value> rootShadowNodeToJs(jsi::Runtime &rt, decltype(types.rootShadowNode) value) {
     return bridging::toJs(rt, value);
   }
 
@@ -8353,6 +8341,9 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
+    if (value.rootShadowNode) {
+      result.setProperty(rt, "rootShadowNode", bridging::toJs(rt, value.rootShadowNode.value(), jsInvoker));
+    }
     result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
     result.setProperty(rt, "thresholds", bridging::toJs(rt, value.thresholds, jsInvoker));
     if (value.rootThresholds) {
@@ -8960,6 +8951,7 @@ protected:
 public:
   virtual double now(jsi::Runtime &rt) = 0;
   virtual double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) = 0;
+  virtual jsi::Array measure(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime, std::optional<double> endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
   virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
@@ -8975,6 +8967,8 @@ public:
   virtual void disconnect(jsi::Runtime &rt, jsi::Value observer) = 0;
   virtual jsi::Array takeRecords(jsi::Runtime &rt, jsi::Value observer, bool sort) = 0;
   virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
+  virtual void setCurrentTimeStampForTesting(jsi::Runtime &rt, double timeStamp) = 0;
+  virtual void clearEventCountsForTesting(jsi::Runtime &rt) = 0;
 
 };
 
@@ -9020,6 +9014,14 @@ private:
 
       return bridging::callFromJs<double>(
           rt, &T::markWithResult, jsInvoker_, instance_, std::move(name), std::move(startTime));
+    }
+    jsi::Array measure(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime, std::optional<double> endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
+      static_assert(
+          bridging::getParameterCount(&T::measure) == 7,
+          "Expected measure(...) to have 7 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
     }
     jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
       static_assert(
@@ -9140,6 +9142,22 @@ private:
 
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getSupportedPerformanceEntryTypes, jsInvoker_, instance_);
+    }
+    void setCurrentTimeStampForTesting(jsi::Runtime &rt, double timeStamp) override {
+      static_assert(
+          bridging::getParameterCount(&T::setCurrentTimeStampForTesting) == 2,
+          "Expected setCurrentTimeStampForTesting(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setCurrentTimeStampForTesting, jsInvoker_, instance_, std::move(timeStamp));
+    }
+    void clearEventCountsForTesting(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearEventCountsForTesting) == 1,
+          "Expected clearEventCountsForTesting(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::clearEventCountsForTesting, jsInvoker_, instance_);
     }
 
   private:

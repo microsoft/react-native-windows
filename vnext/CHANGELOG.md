@@ -1,8 +1,56 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 08 Oct 2025 05:27:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 30 Oct 2025 05:29:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1003
+
+Thu, 30 Oct 2025 05:29:15 GMT
+
+### Changes
+
+- Revert "Theme aware platform color for text. (#15266)" (nitchaudhary@microsoft.com)
+
+## 0.0.0-canary.1002
+
+Tue, 28 Oct 2025 23:42:04 GMT
+
+### Changes
+
+- Fix C4018 warning in ShadowNode.cpp (jthysell@microsoft.com)
+
+## 0.0.0-canary.1001
+
+Fri, 24 Oct 2025 05:26:22 GMT
+
+### Changes
+
+- Theme aware platform color for text. (nitchaudhary@microsoft.com)
+- Handling platform color with accent color (nitchaudhary@microsoft.com)
+
+## 0.0.0-canary.1000
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Changes
+
+- Add Attack Surface Analyzer (ASA) integration to CI pipeline for SDL compliance (copilot@github.com)
+- Implement SDL /GS crash detection and analysis tooling for stack buffer overrun monitoring (copilot@github.com)
+- Fix ARM64 support in rnw-dependencies.ps1 by detecting processor architecture and installing the correct Visual Studio VC Tools component (ARM64 vs x86.x64) (copilot@github.com)
+- fix: stricter checks against key events (sanajmi@microsoft.com)
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.278
+
+## 0.0.0-canary.999
+
+Thu, 09 Oct 2025 05:28:12 GMT
+
+### Changes
+
+- fix for watson (hmalothu@microsoft.com)
+- Add UIA HeadingLevel behaviour for Fabric architecture (kvineeth@microsoft.com)
 
 ## 0.0.0-canary.998
 

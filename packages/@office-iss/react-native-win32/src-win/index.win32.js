@@ -170,7 +170,18 @@ module.exports = {
     return require('./Libraries/Components/RefreshControl/RefreshControl')
       .default;
   },
+  /**
+   * @deprecated SafeAreaView has been deprecated and will be removed in a future release.
+   * Please use 'react-native-safe-area-context' instead.
+   * See https://github.com/th3rdwave/react-native-safe-area-context
+   */
   get SafeAreaView(): SafeAreaView {
+    warnOnce(
+      'safe-area-view-deprecated',
+      'SafeAreaView has been deprecated and will be removed in a future release. ' +
+        "Please use 'react-native-safe-area-context' instead. " +
+        'See https://github.com/th3rdwave/react-native-safe-area-context',
+    );
     return require('./Libraries/Components/SafeAreaView/SafeAreaView').default;
   },
   get ScrollView(): ScrollView {
@@ -220,7 +231,6 @@ module.exports = {
   get VirtualizedSectionList(): VirtualizedSectionList {
     return require('./Libraries/Lists/VirtualizedSectionList').default;
   },
-  // #endregion
   // #region APIs
   get AccessibilityInfo(): AccessibilityInfo {
     return require('./Libraries/Components/AccessibilityInfo/AccessibilityInfo')
@@ -417,6 +427,7 @@ module.exports = {
   get Vibration(): Vibration {
     return require('./Libraries/Vibration/Vibration').default;
   },
+  // #endregion
   // Win32 Types (Typescript components exported as flow any)
   get ColorGradientWin32(): ColorGradientWin32 {
     return require('./Libraries/StyleSheet/PlatformColorValueTypesWin32')

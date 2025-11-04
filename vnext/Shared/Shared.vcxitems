@@ -639,7 +639,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKeyMap.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsParser.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNode.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamily.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFragment.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeTraits.cpp" />

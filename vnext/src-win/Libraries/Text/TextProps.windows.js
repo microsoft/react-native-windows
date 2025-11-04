@@ -32,7 +32,7 @@ export type PressRetentionOffset = $ReadOnly<{
   right: number,
 }>;
 
-type PointerEventProps = $ReadOnly<{
+type TextPointerEventProps = $ReadOnly<{
   onPointerEnter?: (event: PointerEvent) => void,
   onPointerLeave?: (event: PointerEvent) => void,
   onPointerMove?: (event: PointerEvent) => void,
@@ -279,7 +279,7 @@ type TextBaseProps = $ReadOnly<{
  * @see https://reactnative.dev/docs/text#reference
  */
 export type TextProps = $ReadOnly<{
-  ...PointerEventProps,
+  ...TextPointerEventProps,
   ...TextPropsIOS,
   ...TextPropsAndroid,
   ...TextBaseProps,
