@@ -13,7 +13,7 @@
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {HostComponent} from 'react-native';
 import type {DirectEventHandler} from 'react-native/Libraries/Types/CodegenTypes';
-import { codegenNativeComponent } from 'react-native';
+import {codegenNativeComponent} from 'react-native';
 
 type MyEventEvent = $ReadOnly<{|
   value: boolean,
