@@ -18,5 +18,6 @@
   "engines": {
     "node": ">= 22"
   },
-  "type": "module"
+  "type": "module",
+  "private": true
 }
