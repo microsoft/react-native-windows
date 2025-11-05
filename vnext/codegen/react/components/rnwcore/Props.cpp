@@ -672,6 +672,10 @@ XamlHostProps::XamlHostProps(
      {}
     
 #ifdef RN_SERIALIZABLE_STATE
+ComponentName XamlHostProps::getDiffPropsImplementationTarget() const {
+  return "XamlHost";
+}
+
 folly::dynamic XamlHostProps::getDiffProps(
     const Props* prevProps) const {
   static const auto defaultProps = XamlHostProps();
