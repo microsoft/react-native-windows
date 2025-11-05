@@ -27,7 +27,6 @@
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
-<PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Image/resolveAssetSource.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js

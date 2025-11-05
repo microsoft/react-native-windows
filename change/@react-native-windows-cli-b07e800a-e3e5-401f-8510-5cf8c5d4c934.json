@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix PowerShell Export-ModuleMember error",
-  "packageName": "@react-native-windows/cli",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "none"
-}
