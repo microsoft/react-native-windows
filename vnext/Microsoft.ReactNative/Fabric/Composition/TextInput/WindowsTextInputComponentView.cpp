@@ -545,12 +545,21 @@ void WindowsTextInputComponentView::HandleCommand(
     std::optional<winrt::hstring> text;
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
-    // Accept text updates that match current event count, or are within a reasonable
-    // tolerance for async JS responses to recent events (like onSubmitEditing)
+    
+    // Standard synchronization check
     bool isCurrentEvent = eventCount >= m_nativeEventCount;
-    bool isRecentAsyncResponse = (m_nativeEventCount - eventCount) <= 2; // Allow up to 2 events behind
+    
+    // Special case: Allow setValue('') if it's responding to a recent onSubmitEditing event
+    // This is safe because clearing text doesn't depend on intermediate state
+    bool isSubmitClearResponse = false;
+    if (!isCurrentEvent && text.has_value() && winrt::to_string(text.value()).empty()) {
+      // Check if this could be a response to a recent onSubmitEditing event
+      // Only allow if the event is recent (within last 3 events) and we have clearTextOnSubmit behavior
+      isSubmitClearResponse = (m_nativeEventCount - eventCount) <= 3 && 
+                             (m_clearTextOnSubmit || m_lastSubmitEventCount == eventCount);
+    }
 
-    if (isCurrentEvent || isRecentAsyncResponse) {
+    if (isCurrentEvent || isSubmitClearResponse) {
       m_comingFromJS = true;
       {
         if (text.has_value()) {
@@ -964,6 +973,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
       facebook::react::WindowsTextInputEventEmitter::OnSubmitEditing onSubmitEditingArgs;
       onSubmitEditingArgs.text = GetTextFromRichEdit();
       onSubmitEditingArgs.eventCount = ++m_nativeEventCount;
+      m_lastSubmitEventCount = m_nativeEventCount;  // Track this submit event
       emitter->onSubmitEditing(onSubmitEditingArgs);
     }
 
