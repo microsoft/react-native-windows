@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.81.0-nightly-20250709-6892dde36",
+  "baseVersion": "0.81.0-rc.0",
   "overrides": [
     {
       "type": "copy",
@@ -494,7 +494,7 @@
       "type": "copy",
       "directory": "js/examples/Touchable",
       "baseDirectory": "packages/rn-tester/js/examples/Touchable",
-      "baseHash": "52d0d4e3698c0d9a96bb07e75accddb4cb19271a",
+      "baseHash": "c7e77472680734c2bb7ae31018978d019cf2c3a5",
       "issue": 4054
     },
     {
@@ -515,7 +515,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "cd1e1d008f6827d58a128b58cc258fd50c6a2b71",
+      "baseHash": "c226e869c7cecc46179e261625abf8e82d9dfe16",
       "issue": 4054
     },
     {
@@ -668,7 +668,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "e847b2b1a87e2db14460c3df73c17e5368ad9d7a",
+      "baseHash": "fb2e64d27c070a5b8cba25260a1a9a61afb0692d",
       "issue": 13228
     },
     {

@@ -8951,7 +8951,6 @@ protected:
 public:
   virtual double now(jsi::Runtime &rt) = 0;
   virtual double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) = 0;
-  virtual jsi::Array measure(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime, std::optional<double> endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
   virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
@@ -8967,8 +8966,6 @@ public:
   virtual void disconnect(jsi::Runtime &rt, jsi::Value observer) = 0;
   virtual jsi::Array takeRecords(jsi::Runtime &rt, jsi::Value observer, bool sort) = 0;
   virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
-  virtual void setCurrentTimeStampForTesting(jsi::Runtime &rt, double timeStamp) = 0;
-  virtual void clearEventCountsForTesting(jsi::Runtime &rt) = 0;
 
 };
 
@@ -9014,14 +9011,6 @@ private:
 
       return bridging::callFromJs<double>(
           rt, &T::markWithResult, jsInvoker_, instance_, std::move(name), std::move(startTime));
-    }
-    jsi::Array measure(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime, std::optional<double> endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
-      static_assert(
-          bridging::getParameterCount(&T::measure) == 7,
-          "Expected measure(...) to have 7 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
     }
     jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
       static_assert(
@@ -9142,22 +9131,6 @@ private:
 
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getSupportedPerformanceEntryTypes, jsInvoker_, instance_);
-    }
-    void setCurrentTimeStampForTesting(jsi::Runtime &rt, double timeStamp) override {
-      static_assert(
-          bridging::getParameterCount(&T::setCurrentTimeStampForTesting) == 2,
-          "Expected setCurrentTimeStampForTesting(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setCurrentTimeStampForTesting, jsInvoker_, instance_, std::move(timeStamp));
-    }
-    void clearEventCountsForTesting(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::clearEventCountsForTesting) == 1,
-          "Expected clearEventCountsForTesting(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::clearEventCountsForTesting, jsInvoker_, instance_);
     }
 
   private:

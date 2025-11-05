@@ -13,24 +13,10 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          - Name: X64Release
-            BuildPlatform: x64
-            BuildConfiguration: Release
-            DeployOptions:
-      - BuildEnvironment: Continuous
-        Matrix:
           - Name: Arm64Debug
             BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
-          - Name: X64WebDebug
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            DeployOptions:
-          - Name: X86WebDebug
-            BuildPlatform: x86
-            BuildConfiguration: Debug
-            DeployOptions:
           - Name: X64Release
             BuildPlatform: x64
             BuildConfiguration: Release
@@ -39,16 +25,20 @@ parameters:
             BuildPlatform: x86
             BuildConfiguration: Release
             DeployOptions:
-          - Name: X64ReleaseChakra
+      - BuildEnvironment: Continuous
+        Matrix:
+          - Name: Arm64Debug
+            BuildPlatform: ARM64
+            BuildConfiguration: Debug
+            DeployOptions: --no-deploy # We don't have Arm agents
+          - Name: X64Release
             BuildPlatform: x64
             BuildConfiguration: Release
             DeployOptions:
-            UseChakra: true
-          - Name: X86ReleaseChakra
+          - Name: X86Release
             BuildPlatform: x86
             BuildConfiguration: Release
             DeployOptions:
-            UseChakra: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:

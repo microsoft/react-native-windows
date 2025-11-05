@@ -12,7 +12,7 @@ parameters:
 
   - name: versions
     type: object
-    default: [22]
+    default: [18]
 
 jobs:
   - ${{ each nodeVersion in parameters.versions }}:

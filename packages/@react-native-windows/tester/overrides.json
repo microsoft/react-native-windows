@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.81.0-nightly-20250709-6892dde36",
+  "baseVersion": "0.81.0-rc.0",
   "overrides": [
     {
       "type": "copy",
@@ -131,7 +131,7 @@
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "453404f69c1754b4a434bc128c745fbca0492433"
+      "baseHash": "838aa97d99b1a4deb26cd92b7dbd3824e5818cb5"
     },
     {
       "type": "patch",
