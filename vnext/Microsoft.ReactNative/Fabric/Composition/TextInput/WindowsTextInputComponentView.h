@@ -134,7 +134,7 @@ struct WindowsTextInputComponentView
   float m_fontSizeMultiplier{1.0};
   int64_t m_mostRecentEventCount{0};
   int m_nativeEventCount{0};
-  int m_lastSubmitEventCount{-1};  // Track the event count of the last onSubmitEditing
+  int m_lastSubmitEventCount{-1}; // Track the event count of the last onSubmitEditing
   bool m_comingFromJS{false};
   bool m_comingFromState{false};
   int m_cDrawBlock{0};
