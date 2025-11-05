@@ -8,10 +8,12 @@ exports[`Accessibility Tests Accessibility data for Label and Level 1`] = `
     "HeadingLevel": 80052,
     "Level": 2,
     "LocalizedControlType": "text",
+    "Name": "A hint for the red box.",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "A hint for the red box.",
       "TestId": "accessibility-base-view-2",
     },
   },
@@ -44,10 +46,12 @@ exports[`Accessibility Tests Accessibility data for Label,Level and Hint 1`] = `
     "ItemType": "comment",
     "Level": 1,
     "LocalizedControlType": "text",
+    "Name": "A blue box",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "A blue box",
       "TestId": "accessibility-base-view-1",
     },
   },
@@ -219,6 +223,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to fal
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
+    "Name": "Selectable item 1",
     "__Children": [
       {
         "AutomationId": "",
@@ -232,6 +237,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to fal
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Selectable item 1",
       "TestId": "Selectable item 1",
     },
     "__Children": [
@@ -275,6 +281,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
+    "Name": "Selectable item 1",
     "SelectionItemPattern.IsSelected": true,
     "__Children": [
       {
@@ -289,6 +296,7 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Selectable item 1",
       "TestId": "Selectable item 1",
     },
     "__Children": [
@@ -331,6 +339,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
     "AutomationId": "selection-container",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Selection Container",
     "SelectionPattern.CanSelectMultiple": true,
     "SelectionPattern.IsSelectionRequired": true,
     "__Children": [
@@ -345,6 +354,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "ControlType": 50000,
             "IsKeyboardFocusable": true,
             "LocalizedControlType": "button",
+            "Name": "Selectable item 1",
             "__Children": [
               {
                 "AutomationId": "",
@@ -360,6 +370,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "ControlType": 50000,
             "IsKeyboardFocusable": true,
             "LocalizedControlType": "button",
+            "Name": "Selectable item 2",
             "__Children": [
               {
                 "AutomationId": "",
@@ -375,6 +386,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "ControlType": 50000,
             "IsKeyboardFocusable": true,
             "LocalizedControlType": "button",
+            "Name": "Selectable item 3",
             "__Children": [
               {
                 "AutomationId": "",
@@ -392,6 +404,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Selection Container",
       "TestId": "selection-container",
     },
     "__Children": [
@@ -408,6 +421,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
               {
                 "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
                 "_Props": {
+                  "AccessibilityLabel": "Selectable item 1",
                   "TestId": "Selectable item 1",
                 },
                 "__Children": [
@@ -420,6 +434,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
               {
                 "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
                 "_Props": {
+                  "AccessibilityLabel": "Selectable item 2",
                   "TestId": "Selectable item 2",
                 },
                 "__Children": [
@@ -432,6 +447,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
               {
                 "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
                 "_Props": {
+                  "AccessibilityLabel": "Selectable item 3",
                   "TestId": "Selectable item 3",
                 },
                 "__Children": [
