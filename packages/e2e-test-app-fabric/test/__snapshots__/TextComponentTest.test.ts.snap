@@ -342,6 +342,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
     "AutomationId": "advanced-borders",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Advanced Border Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -369,6 +370,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Advanced Border Example",
       "TestId": "advanced-borders",
     },
     "__Children": [
@@ -685,6 +687,7 @@ exports[`Text Tests Text can have borders 1`] = `
     "AutomationId": "text-border",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Border Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -716,6 +719,7 @@ exports[`Text Tests Text can have borders 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Border Example",
       "TestId": "text-border",
     },
     "__Children": [
