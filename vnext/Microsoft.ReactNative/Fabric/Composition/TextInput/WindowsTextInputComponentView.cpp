@@ -546,17 +546,15 @@ void WindowsTextInputComponentView::HandleCommand(
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
     
-    // Standard synchronization check
+    // Standard synchronization check - only accept current or future events
     bool isCurrentEvent = eventCount >= m_nativeEventCount;
     
-    // Special case: Allow setValue('') if it's responding to a recent onSubmitEditing event
+    // Special case: Allow setValue('') if it's responding to the exact onSubmitEditing event
     // This is safe because clearing text doesn't depend on intermediate state
     bool isSubmitClearResponse = false;
     if (!isCurrentEvent && text.has_value() && winrt::to_string(text.value()).empty()) {
-      // Check if this could be a response to a recent onSubmitEditing event
-      // Only allow if the event is recent (within last 3 events) and we have clearTextOnSubmit behavior
-      isSubmitClearResponse = (m_nativeEventCount - eventCount) <= 3 && 
-                             (m_clearTextOnSubmit || m_lastSubmitEventCount == eventCount);
+      // Only allow if this is responding to the exact submit event we fired
+      isSubmitClearResponse = (m_lastSubmitEventCount != -1 && eventCount == m_lastSubmitEventCount);
     }
 
     if (isCurrentEvent || isSubmitClearResponse) {
@@ -576,6 +574,11 @@ void WindowsTextInputComponentView::HandleCommand(
         LRESULT res;
         winrt::check_hresult(
             m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(begin), static_cast<LPARAM>(end), &res));
+      }
+
+      // Clear the submit event count after using it to prevent reuse
+      if (isSubmitClearResponse) {
+        m_lastSubmitEventCount = -1;
       }
 
       m_comingFromJS = false;
