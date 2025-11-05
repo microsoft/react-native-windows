@@ -56,7 +56,7 @@ if (NativeAppTheme) {
   );
 }
 
-module.exports = {
+export const AppTheme = {
   // $FlowFixMe[unsafe-getters-setters]
   get isHighContrast(): boolean {
     return _isHighContrast;
