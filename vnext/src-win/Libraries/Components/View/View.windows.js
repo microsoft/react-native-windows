@@ -74,14 +74,6 @@ export default component View(
   let actualView;
   if (ReactNativeFeatureFlags.reduceDefaultPropsInView()) {
     const {
-      accessibilityElementsHidden,
-      accessibilityLabel,
-      accessibilityLabelledBy,
-      accessibilityLevel, // Windows
-      accessibilityDescription, //Windows
-      accessibilityLiveRegion,
-      accessibilityPosInSet, // Windows
-      accessibilitySetSize, // Windows
       accessibilityState,
       accessibilityValue,
       'aria-busy': ariaBusy,
@@ -104,11 +96,7 @@ export default component View(
       'aria-valuemin': ariaValueMin,
       'aria-valuenow': ariaValueNow,
       'aria-valuetext': ariaValueText,
-      focusable,
-      disabled,
       id,
-      importantForAccessibility,
-      nativeID,
       tabIndex,
       ...otherProps
     } = props;
@@ -140,42 +128,22 @@ export default component View(
     // Windows accessibility properties
     if (ariaLevel !== undefined) {
       processedProps.accessibilityLevel = ariaLevel;
-    } else if (accessibilityLevel !== undefined) {
-      processedProps.accessibilityLevel = accessibilityLevel;
     }
 
     if (ariaDescription !== undefined) {
       processedProps.accessibilityDescription = ariaDescription;
-    } else if (accessibilityDescription !== undefined) {
-      processedProps.accessibilityDescription = accessibilityDescription;
     }
 
     if (ariaPosinset !== undefined) {
       processedProps.accessibilityPosInSet = ariaPosinset;
-    } else if (accessibilityPosInSet !== undefined) {
-      processedProps.accessibilityPosInSet = accessibilityPosInSet;
     }
 
     if (ariaSetsize !== undefined) {
       processedProps.accessibilitySetSize = ariaSetsize;
-    } else if (accessibilitySetSize !== undefined) {
-      processedProps.accessibilitySetSize = accessibilitySetSize;
-    }
-
-    // Windows base properties
-    if (importantForAccessibility !== undefined) {
-      processedProps.importantForAccessibility = importantForAccessibility;
     }
 
     // On paper we do some messy work to handle no-hide-descendants
     if (global.RN$Bridgeless !== true) {
-      processedProps.importantForAccessibility =
-        ariaHidden === true ||
-        importantForAccessibility === 'no-hide-descendants' ||
-        accessibilityElementsHidden === true
-          ? 'no-hide-descendants'
-          : importantForAccessibility;
-
       processedProps.children =
         processedProps.importantForAccessibility === 'no-hide-descendants'
           ? childrenWithImportantForAccessibility(otherProps.children)
