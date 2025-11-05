@@ -114,9 +114,14 @@ void HttpTurboModule::SendRequest(
   m_requestId++;
 
   // SDL Compliance: Validate URL for SSRF (P0 - CVSS 9.1)
-  // Allow localhost for testing/development scenarios
+  // Allow localhost in debug builds for Metro bundler development
+#ifdef _DEBUG
+  bool allowLocalhost = true;
+#else
+  bool allowLocalhost = false;
+#endif
   try {
-    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(query.url, {"http", "https"}, true);
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(query.url, {"http", "https"}, allowLocalhost);
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     int64_t requestId = m_requestId;
     callback({static_cast<double>(requestId)});

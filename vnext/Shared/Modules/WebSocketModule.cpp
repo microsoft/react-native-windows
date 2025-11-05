@@ -134,9 +134,14 @@ void WebSocketTurboModule::Connect(
     ReactNativeSpecs::WebSocketModuleSpec_connect_options &&options,
     double socketID) noexcept {
   //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
-  // Allow localhost for testing/development scenarios
+  // Allow localhost in debug builds for Metro bundler development
+#ifdef _DEBUG
+  bool allowLocalhost = true;
+#else
+  bool allowLocalhost = false;
+#endif
   try {
-    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"}, true);
+    Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"}, allowLocalhost);
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(socketID)}, {"message", ex.what()}});
     return;
