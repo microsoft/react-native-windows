@@ -25,16 +25,13 @@ struct XamlHostProps : winrt::implements<XamlHostProps, winrt::Microsoft::ReactN
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<XamlHostProps>();
-       label = cloneFromProps->label;  
+  
      }
   }
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
-
-  REACT_FIELD(label)
-  std::optional<std::string> label;
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

@@ -1,15 +1,14 @@
 #include "pch.h"
 #include "XamlApplication.h"
-#include "XamlApplication.g.cpp"
+#include "Xaml.XamlApplication.g.cpp"
 
 #include "winrt/Microsoft.UI.Xaml.XamlTypeInfo.h"
 
-namespace winrt::Microsoft::ReactNative::implementation {
+namespace winrt::Microsoft::ReactNative::Xaml::implementation {
 using namespace ::winrt::Microsoft::UI::Xaml;
 using namespace ::winrt::Microsoft::UI::Xaml::Markup;
 using namespace ::winrt::Windows::UI::Xaml::Interop;
 XamlApplication::XamlApplication() {
-  // m_providers.push_back(winrt::make_self<XamlMetaDataProvider>().as<winrt::Microsoft::UI::Xaml::Markup::IXamlMetadataProvider>());
   s_current = *this;
 
   // TODO: It's probably not a good idea to only load the controls pri file, there are other ones too.
@@ -22,7 +21,7 @@ XamlApplication::XamlApplication() {
   winrt::Microsoft::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();
 
   m_providers.push_back(
-      winrt::make_self<XamlMetaDataProvider>()
+      winrt::make_self<winrt::Microsoft::ReactNative::implementation::XamlMetaDataProvider>()
           .as<winrt::Microsoft::UI::Xaml::Markup::IXamlMetadataProvider>()); // Default generated provider
   m_providers.push_back(winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider());
 
@@ -70,5 +69,5 @@ com_array<winrt::Microsoft::UI::Xaml::Markup::XmlnsDefinition> XamlApplication::
       allDefinitions.begin(), allDefinitions.end());
 }
 
-winrt::Microsoft::ReactNative::XamlApplication XamlApplication::s_current{nullptr};
-} // namespace winrt::Microsoft::ReactNative::implementation
+winrt::Microsoft::ReactNative::Xaml::XamlApplication XamlApplication::s_current{nullptr};
+} // namespace winrt::Microsoft::ReactNative::Xaml::implementation

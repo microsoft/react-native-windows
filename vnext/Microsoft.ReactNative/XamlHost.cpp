@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 #include "pch.h"
 
-#include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>
-#include <winrt/Microsoft.UI.Xaml.Automation.h>
 #include "XamlApplication.h"
 #include "XamlHost.h"
 
@@ -17,7 +15,7 @@ struct XamlHostComponentView : public winrt::implements<XamlHostComponentView, w
                                ::Microsoft::ReactNativeSpecs::BaseXamlHost<XamlHostComponentView> {
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-    winrt::Microsoft::ReactNative::implementation::XamlApplication::EnsureCreated();
+    winrt::Microsoft::ReactNative::Xaml::implementation::XamlApplication::EnsureCreated();
 
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
 
@@ -28,7 +26,7 @@ struct XamlHostComponentView : public winrt::implements<XamlHostComponentView, w
       const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept override {
     // Add the xaml child to the m_xamlIsland here.
-    auto childXamlControl = args.Child().UserData().as<winrt::Microsoft::ReactNative::IXamlControl>();
+    auto childXamlControl = args.Child().UserData().as<winrt::Microsoft::ReactNative::Xaml::IXamlControl>();
     if (childXamlControl) {
       auto xamlElement = childXamlControl.GetXamlElement();
       m_xamlIsland.Content(xamlElement);

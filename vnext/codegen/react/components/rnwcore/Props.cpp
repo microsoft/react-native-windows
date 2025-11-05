@@ -667,9 +667,9 @@ folly::dynamic UnimplementedNativeViewProps::getDiffProps(
 XamlHostProps::XamlHostProps(
     const PropsParserContext &context,
     const XamlHostProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
 
-    label(convertRawProp(context, rawProps, "label", sourceProps.label, {})) {}
+     {}
     
 #ifdef RN_SERIALIZABLE_STATE
 folly::dynamic XamlHostProps::getDiffProps(
@@ -683,9 +683,6 @@ folly::dynamic XamlHostProps::getDiffProps(
   }
   folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
   
-  if (label != oldProps->label) {
-    result["label"] = label;
-  }
   return result;
 }
 #endif

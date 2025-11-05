@@ -16,13 +16,15 @@ namespace Microsoft.ReactNative
       "Use the @IReactPackageBuilder to register custom native modules and view managers.")
     void CreatePackage(IReactPackageBuilder packageBuilder);
   };
+} // namespace Microsoft.ReactNative
 
+namespace Microsoft.ReactNative.Xaml
+{
   [webhosthidden]
   interface IXamlControl
   {
     DOC_STRING(
-	  "Native components that want to be Xaml-based can implement IXamlControl to allow their object to be parented to a XamlHost.")
+      "Native components that want to be Xaml-based can implement IXamlControl to allow their object to be parented to a XamlHost.")
     Microsoft.UI.Xaml.UIElement GetXamlElement();
   };
-
-} // namespace Microsoft.ReactNative
+} // namespace Microsoft.ReactNative.Xaml

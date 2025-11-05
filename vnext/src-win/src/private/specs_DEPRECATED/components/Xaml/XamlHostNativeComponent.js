@@ -7,14 +7,14 @@
 
 'use strict';
 
+import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type {HostComponent} from '../../../../../src/private/types/HostComponent';
 
 type XamlHostProps = $ReadOnly<{|
   ...ViewProps,
-
-  // Props
-  // TODO: Remove it if not required. Temporarily used for completeness.
-  label?: string,
 |}>;
 
-export default codegenNativeComponent<XamlHostProps>('XamlHost');
+type NativeType = HostComponent<XamlHostProps>;
+
+export default (codegenNativeComponent<XamlHostProps>('XamlHost'): NativeType);

@@ -540,7 +540,7 @@ class XamlHostProps final : public ViewProps {
 
 #pragma mark - Props
 
-  std::string label{};
+  
 
   #ifdef RN_SERIALIZABLE_STATE
   folly::dynamic getDiffProps(const Props* prevProps) const override;
