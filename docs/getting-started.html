@@ -64,17 +64,11 @@
 <p>This guide will help you get started on setting up your very first React Native for Windows app.</p>
 <p>Make sure you have installed all of the <a href="/react-native-windows/docs/rnw-dependencies">development dependencies</a>.</p>
 <p>For information around how to set up React Native, see the <a href="https://reactnative.dev/docs/getting-started">React Native Getting Started Guide</a>.</p>
-<blockquote>
-<p><strong>Interested in migrating to <a href="https://reactnative.dev/architecture/landing-page">React Native's New Architecture</a>?</strong> New Architecture support in React Native for Windows is now available to preview in 0.76. Note there are several key changes, so if you’d like to be an early adopter, check out the information in the <a href="/react-native-windows/docs/new-architecture">New Architecture Guide</a>.</p>
-</blockquote>
 <h2><a class="anchor" aria-hidden="true" id="create-a-new-react-native-project"></a><a href="#create-a-new-react-native-project" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create a new React Native project</h2>
-<blockquote>
-<p><strong>Prerequisites:</strong> Before creating your React Native for Windows project, ensure you have completed all the <a href="/react-native-windows/docs/rnw-dependencies">development dependencies setup</a>. This includes installing Visual Studio with the required workloads, Windows SDK, Node.js, and other essential tools.</p>
-</blockquote>
 <p>Call the following from the place where you want your project directory to live:</p>
-<!-- Note, make sure both `@react-native-community/cli@ABC` and `--version "XYZ"` are pointing to the correct NPM tags in the command below. -->
-<!-- 1. For the next version (i.e. in docs/getting-started.md) use "next" for the CLI and "nightly" for the RN version -->
-<!-- 2. For stable versions in versioned_docs use "latest" for the CLI and the semantic version, i.e. "^0.73.0" for the RN version -->
+<!-- Note, make sure both `@react-native-community/cli@ABC` and `--version XYZ` are pointing to the correct NPM tags in the command below. -->
+<!-- 1. For the next version (i.e. in docs/getting-started.md) use `next` for the CLI and `nightly` for the RN version -->
+<!-- 2. For stable versions in versioned_docs use `latest` for the CLI and the semantic version, i.e. `^0.73.0` for the RN version -->
 <!-- See https://www.npmjs.com/package/@react-native-community/cli?activeTab=versions for the CLI version tags. -->
 <!-- See https://www.npmjs.com/package/react-native?activeTab=versions for the RN version tags. -->
 <pre><code class="hljs css language-bat">npx --yes @react-native-community/cli@latest init &lt;projectName&gt; --version "^<span class="hljs-number">0</span>.<span class="hljs-number">80</span>.<span class="hljs-number">0</span>"
@@ -84,21 +78,22 @@
 <pre><code class="hljs css language-bat"><span class="hljs-built_in">cd</span> &lt;projectName&gt;
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="add-react-native-windows-to-your-projects-dependencies"></a><a href="#add-react-native-windows-to-your-projects-dependencies" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Add React Native Windows to your project's dependencies</h3>
-<!-- Note, make sure "version" is pointing to the correct react-native-windows NPM tag in the command below. -->
-<!-- 1. For the next version (i.e. in docs/getting-started.md) use "canary" -->
-<!-- 2. For other versions in versioned_docs use the version in the format "^0.XY.0" -->
-<p>Next you'll want to add <code>react-native-windows</code> as a dependency. This step adds the React Native for Windows platform-specific implementation to your project, which provides the Windows-specific native components, modules, and build tools needed to run your React Native app on Windows.</p>
-<div class="tabs"><div class="nav-tabs"><div id="tab-group-50-tab-51" class="nav-link active" data-group="group_50" data-tab="tab-group-50-content-51">Using Yarn (Recommended)</div><div id="tab-group-50-tab-52" class="nav-link" data-group="group_50" data-tab="tab-group-50-content-52">Using NPM</div></div><div class="tab-content"><div id="tab-group-50-content-51" class="tab-pane active" data-group="group_50" tabindex="-1"><div><span><p>This command uses Yarn to add the React Native for Windows package to your project's dependencies. Yarn provides faster and more reliable dependency management:</p>
-<pre><code class="hljs css language-bat">yarn add react-native-windows@^<span class="hljs-number">0</span>.<span class="hljs-number">80</span>.<span class="hljs-number">0</span><br /></code></pre>
-</span></div></div><div id="tab-group-50-content-52" class="tab-pane" data-group="group_50" tabindex="-1"><div><span><p>This command uses NPM to install and save the React Native for Windows package to your project's dependencies. The <code>--save</code> flag ensures the package is added to your <code>package.json</code> file:</p>
-<pre><code class="hljs css language-bat">npm install --save react-native-windows@^<span class="hljs-number">0</span>.<span class="hljs-number">80</span>.<span class="hljs-number">0</span><br /></code></pre>
+<!-- Note, make sure `version` is pointing to the correct react-native-windows NPM tag in the command below. -->
+<!-- 1. For the next version (i.e. in docs/getting-started.md) use `canary` -->
+<!-- 2. For other versions in versioned_docs use the version in the format `^0.XY.0` -->
+<p>Next you'll want to add <code>react-native-windows</code> as a dependency:</p>
+<div class="tabs"><div class="nav-tabs"><div id="tab-group-50-tab-51" class="nav-link active" data-group="group_50" data-tab="tab-group-50-content-51">Using Yarn (Recommended)</div><div id="tab-group-50-tab-52" class="nav-link" data-group="group_50" data-tab="tab-group-50-content-52">Using NPM</div></div><div class="tab-content"><div id="tab-group-50-content-51" class="tab-pane active" data-group="group_50" tabindex="-1"><div><span><pre><code class="hljs css language-bat">yarn add react-native-windows@^<span class="hljs-number">0</span>.<span class="hljs-number">80</span>.<span class="hljs-number">0</span><br /></code></pre>
+</span></div></div><div id="tab-group-50-content-52" class="tab-pane" data-group="group_50" tabindex="-1"><div><span><pre><code class="hljs css language-bat">npm install --save react-native-windows@^<span class="hljs-number">0</span>.<span class="hljs-number">80</span>.<span class="hljs-number">0</span><br /></code></pre>
 </span></div></div></div></div>
 <h3><a class="anchor" aria-hidden="true" id="initialize-the-react-native-windows-native-code-and-projects"></a><a href="#initialize-the-react-native-windows-native-code-and-projects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Initialize the React Native Windows native code and projects</h3>
-<p>Lastly, initialize the React Native for Windows application with the <a href="/react-native-windows/docs/init-windows-cli">init-windows command</a>. This command generates the Windows-specific native project files, including Visual Studio solution files, C++ or C# project templates, and platform-specific configuration needed to build and run your app on Windows:</p>
+<p>Lastly, initialize the React Native for Windows application with the <a href="/react-native-windows/docs/init-windows-cli">init-windows command</a>:</p>
 <pre><code class="hljs css language-bat">npx react-native init-windows --overwrite
 </code></pre>
 <blockquote>
-<p><strong>Note:</strong> RNW templates contain a customized <code>metro.config.js</code> file, which is meant to merge cleanly into the default config provided by the standard React Native project template. If you are starting a new app, overwriting <code>metro.config.js</code> should have no impact. However, if you are adding Windows to an existing app with an already modified <code>metro.config.js</code> file, please make sure to back up and re-apply your modifications after adding RNW.</p>
+<p><strong>Architecture Note:</strong> The default React Native for Windows template for <em>new</em> projects targets <a href="https://reactnative.dev/architecture/landing-page">React Native's New Architecture</a>. For more information, including options for continuing to use the Old Architecture, see <a href="/react-native-windows/docs/new-architecture">New vs. Old Architecture</a>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Metro Note:</strong> React Native Windows overwrites the app project's <code>metro.config.js</code> file to enable Windows support. If you are starting a new project, overwriting React Native's default <code>metro.config.js</code> should have no impact. However, if you have previously modified your <code>metro.config.js</code> file, please make sure to back up and re-apply your modifications after adding React Native Windows.</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="running-a-react-native-windows-app"></a><a href="#running-a-react-native-windows-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running a React Native Windows App</h2>
 <blockquote>
@@ -121,10 +116,10 @@ Also ensure your system meets all the <a href="/react-native-windows/docs/rnw-de
 <li>Run <code>yarn start</code> (or <code>npm start</code>) from your project directory, and wait for the React Native packager to report success.</li>
 <li>Click the <code>Run</code> button to the right of the platform combo box control in VS, or select the <code>Debug</code>-&gt;<code>Start without Debugging</code> menu item. You now see your new app and Chrome should have loaded <code>http://localhost:8081/debugger-ui/</code> in a new tab. Press <code>F12</code> or <code>Ctrl+Shift+I</code> in Chrome to open its Developer Tools. :tada:</li>
 </ul></li>
-<li><p>With Visual Studio Code</p>
+<li><p>With VS Code</p>
 <ul>
-<li>Open your applications folder in Visual Studio Code.</li>
-<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native">React Native Tools</a> plugin for Visual Studio Code.</li>
+<li>Open your applications folder in VS Code.</li>
+<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native">React Native Tools</a> plugin for VS Code.</li>
 <li>Create a new file in the applications root directory, <code>.vscode/launch.json</code> and paste the following configuration:</li>
 </ul>
 <pre><code class="hljs css language-json"><span class="token punctuation">{</span>
