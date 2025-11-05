@@ -91,9 +91,14 @@ void WebSocketJSExecutor::loadBundle(
   // Production apps use Hermes or Chakra with secure bundle loading that doesn't allow file:// URIs.
   try {
     if (!sourceURL.empty()) {
-      Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"});
+#ifdef _DEBUG
+      // Allow localhost in debug builds for Metro development
+      Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"}, true);
+#else
+      Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"}, false);
+#endif
     }
-  } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+  } catch (const std::exception &ex) {
     OnHitError(std::string("Source URL validation failed: ") + ex.what());
     return;
   }

@@ -53,9 +53,15 @@ LinkingManager::~LinkingManager() noexcept {
   // SDL Compliance: Validate URL (P0 - CVSS 6.5)
   try {
     std::string urlUtf8 = Utf16ToUtf8(url);
+#ifdef _DEBUG
+    // Allow localhost in debug builds for Metro development
     ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
-        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES);
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, true);
+#else
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
+        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, false);
+#endif
+  } catch (const std::exception &ex) {
     result.Reject(ex.what());
     co_return;
   }
@@ -87,8 +93,15 @@ void LinkingManager::openURL(std::wstring &&url, ::React::ReactPromise<void> &&r
   // VALIDATE URL - arbitrary launch PROTECTION (P0 Critical - CVSS 7.5)
   try {
     std::string urlUtf8 = Utf16ToUtf8(url);
-    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(urlUtf8, {"http", "https", "mailto", "tel"});
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+#ifdef _DEBUG
+    // Allow localhost in debug builds for Metro development
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
+        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, true);
+#else
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
+        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, false);
+#endif
+  } catch (const std::exception &ex) {
     result.Reject(ex.what());
     return;
   }
@@ -117,9 +130,15 @@ void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
   // SDL Compliance: Validate URI before emitting event (P2 - CVSS 4.0)
   try {
     std::string uriUtf8 = winrt::to_string(uri);
+#ifdef _DEBUG
+    // Allow localhost in debug builds for Metro development
     ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
-        uriUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES);
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &) {
+        uriUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, true);
+#else
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
+        uriUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, false);
+#endif
+  } catch (const std::exception &) {
     // Silently ignore invalid URIs to prevent crashes
     return;
   }

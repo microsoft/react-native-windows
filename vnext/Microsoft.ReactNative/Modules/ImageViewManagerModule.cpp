@@ -111,10 +111,15 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
-      // Allow http/https only for non-data URIs
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+      // Allow http/https for non-data URIs
+#ifdef _DEBUG
+      // Allow localhost in debug builds for Metro development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#else
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#endif
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+  } catch (const std::exception &ex) {
     result.Reject(ex.what());
     return;
   }
@@ -149,10 +154,15 @@ void ImageLoader::getSizeWithHeaders(
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
-      // Allow http/https only for non-data URIs
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+      // Allow http/https for non-data URIs
+#ifdef _DEBUG
+      // Allow localhost in debug builds for Metro development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#else
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#endif
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+  } catch (const std::exception &ex) {
     result.Reject(ex.what());
     return;
   }
@@ -185,10 +195,15 @@ void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&res
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
-      // Allow http/https only for non-data URIs
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+      // Allow http/https for non-data URIs
+#ifdef _DEBUG
+      // Allow localhost in debug builds for Metro development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#else
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#endif
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+  } catch (const std::exception &ex) {
     result.Reject(ex.what());
     return;
   }
@@ -209,10 +224,15 @@ void ImageLoader::prefetchImageWithMetadata(
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
-      // Allow http/https only for non-data URIs
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"});
+      // Allow http/https for non-data URIs
+#ifdef _DEBUG
+      // Allow localhost in debug builds for Metro development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#else
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#endif
     }
-  } catch (const ::Microsoft::ReactNative::InputValidation::ValidationException &ex) {
+  } catch (const std::exception &ex) {
     result.Reject(ex.what());
     return;
   }
