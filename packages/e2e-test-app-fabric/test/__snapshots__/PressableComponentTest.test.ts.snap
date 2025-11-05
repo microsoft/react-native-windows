@@ -28,6 +28,7 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
+        "LiveSetting": "Polite",
         "LocalizedControlType": "group",
         "PositionInSet": 2,
         "SizeofSet": 3,
@@ -45,6 +46,7 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
+        "LiveSetting": "Assertive",
         "LocalizedControlType": "group",
         "PositionInSet": 3,
         "SizeofSet": 3,
@@ -632,6 +634,7 @@ exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
+    "Name": "pressable feedback events",
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
@@ -646,6 +649,7 @@ exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "pressable feedback events",
       "TestId": "pressable_feedback_events_button",
     },
     "__Children": [
@@ -780,6 +784,7 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 1`]
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
+    "Name": "pressable feedback events",
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
@@ -794,6 +799,7 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 1`]
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "pressable feedback events",
       "TestId": "pressable_feedback_events_button",
     },
     "__Children": [

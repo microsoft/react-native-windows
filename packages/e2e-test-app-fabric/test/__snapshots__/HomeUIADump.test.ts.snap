@@ -107,6 +107,7 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Accessibility Examples of using Accessibility APIs.",
     "__Children": [
       {
         "AutomationId": "",
@@ -127,6 +128,7 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Accessibility Examples of using Accessibility APIs.",
       "TestId": "Accessibility",
     },
     "__Children": [
@@ -186,6 +188,7 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Accessibility Windows Usage of accessibility properties.",
     "__Children": [
       {
         "AutomationId": "",
@@ -206,6 +209,7 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Accessibility Windows Usage of accessibility properties.",
       "TestId": "Accessibility Windows",
     },
     "__Children": [
@@ -265,6 +269,7 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "AccessibilityInfo Examples of using AccessibilityInfo APIs.",
     "__Children": [
       {
         "AutomationId": "",
@@ -285,6 +290,7 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "AccessibilityInfo Examples of using AccessibilityInfo APIs.",
       "TestId": "AccessibilityInfo",
     },
     "__Children": [
@@ -344,6 +350,7 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "ActivityIndicator Animated loading indicators.",
     "__Children": [
       {
         "AutomationId": "",
@@ -364,6 +371,7 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "ActivityIndicator Animated loading indicators.",
       "TestId": "ActivityIndicator",
     },
     "__Children": [
@@ -423,6 +431,7 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Alerts Alerts display a concise and informative message and prompt the user to make a decision.",
     "__Children": [
       {
         "AutomationId": "",
@@ -443,6 +452,7 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Alerts Alerts display a concise and informative message and prompt the user to make a decision.",
       "TestId": "Alerts",
     },
     "__Children": [
@@ -502,6 +512,7 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Animated - Gratuitous App Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
     "__Children": [
       {
         "AutomationId": "",
@@ -522,6 +533,7 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Animated - Gratuitous App Bunch of Animations - tap a circle to open a view with more animations, or longPress and drag to reorder circles.",
       "TestId": "Animated - Gratuitous App",
     },
     "__Children": [
@@ -581,6 +593,7 @@ exports[`Home UIA Tree Dump Animated 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Animated Library designed to make animations fluid, powerful, and painless to build and maintain.",
     "__Children": [
       {
         "AutomationId": "",
@@ -601,6 +614,7 @@ exports[`Home UIA Tree Dump Animated 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Animated Library designed to make animations fluid, powerful, and painless to build and maintain.",
       "TestId": "Animated",
     },
     "__Children": [
@@ -660,6 +674,7 @@ exports[`Home UIA Tree Dump AppState 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "AppState app background status",
     "__Children": [
       {
         "AutomationId": "",
@@ -680,6 +695,7 @@ exports[`Home UIA Tree Dump AppState 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "AppState app background status",
       "TestId": "AppState",
     },
     "__Children": [
@@ -739,6 +755,7 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Appearance Light and dark user interface examples.",
     "__Children": [
       {
         "AutomationId": "",
@@ -759,6 +776,7 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Appearance Light and dark user interface examples.",
       "TestId": "Appearance",
     },
     "__Children": [
@@ -818,6 +836,7 @@ exports[`Home UIA Tree Dump Border 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Border Demonstrates some of the border styles available to Views.",
     "__Children": [
       {
         "AutomationId": "",
@@ -838,6 +857,7 @@ exports[`Home UIA Tree Dump Border 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Border Demonstrates some of the border styles available to Views.",
       "TestId": "Border",
     },
     "__Children": [
@@ -897,6 +917,7 @@ exports[`Home UIA Tree Dump Button 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Button Simple React Native button component.",
     "__Children": [
       {
         "AutomationId": "",
@@ -917,6 +938,7 @@ exports[`Home UIA Tree Dump Button 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Button Simple React Native button component.",
       "TestId": "Button",
     },
     "__Children": [
@@ -1116,6 +1138,7 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Composition Bugs Example See bugs in UI.Composition driven native animations",
     "__Children": [
       {
         "AutomationId": "",
@@ -1136,6 +1159,7 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Composition Bugs Example See bugs in UI.Composition driven native animations",
       "TestId": "Composition Bugs Example",
     },
     "__Children": [
@@ -1195,6 +1219,7 @@ exports[`Home UIA Tree Dump ContentURLAndroid 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "ContentURLAndroid Android specific fetch content:// scheme urls as blob.",
     "__Children": [
       {
         "AutomationId": "",
@@ -1215,6 +1240,7 @@ exports[`Home UIA Tree Dump ContentURLAndroid 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "ContentURLAndroid Android specific fetch content:// scheme urls as blob.",
       "TestId": "ContentURLAndroid",
     },
     "__Children": [
@@ -1274,6 +1300,7 @@ exports[`Home UIA Tree Dump Crash 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Crash Crash examples.",
     "__Children": [
       {
         "AutomationId": "",
@@ -1294,6 +1321,7 @@ exports[`Home UIA Tree Dump Crash 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Crash Crash examples.",
       "TestId": "Crash",
     },
     "__Children": [
@@ -1353,6 +1381,7 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Cxx TurboModule Usage of Cxx TurboModule",
     "__Children": [
       {
         "AutomationId": "",
@@ -1373,6 +1402,7 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Cxx TurboModule Usage of Cxx TurboModule",
       "TestId": "Cxx TurboModule",
     },
     "__Children": [
@@ -1432,6 +1462,7 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "DevSettings Customize the development settings",
     "__Children": [
       {
         "AutomationId": "",
@@ -1452,6 +1483,7 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "DevSettings Customize the development settings",
       "TestId": "DevSettings",
     },
     "__Children": [
@@ -1511,6 +1543,7 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Dimensions Dimensions of the viewport",
     "__Children": [
       {
         "AutomationId": "",
@@ -1531,6 +1564,7 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Dimensions Dimensions of the viewport",
       "TestId": "Dimensions",
     },
     "__Children": [
@@ -1590,6 +1624,7 @@ exports[`Home UIA Tree Dump Display: contents 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Display: contents Demonstrates various ways display: contents may be used in the tree",
     "__Children": [
       {
         "AutomationId": "",
@@ -1610,6 +1645,7 @@ exports[`Home UIA Tree Dump Display: contents 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Display: contents Demonstrates various ways display: contents may be used in the tree",
       "TestId": "Display: contents",
     },
     "__Children": [
@@ -1669,6 +1705,7 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Display:none Style Style prop which will collapse the element in XAML tree.",
     "__Children": [
       {
         "AutomationId": "",
@@ -1689,6 +1726,7 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Display:none Style Style prop which will collapse the element in XAML tree.",
       "TestId": "Display:none Style",
     },
     "__Children": [
@@ -1748,6 +1786,7 @@ exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Drawing Island Example Sample Fabric Native Component that contains a custom ContentIsland",
     "__Children": [
       {
         "AutomationId": "",
@@ -1768,6 +1807,7 @@ exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Drawing Island Example Sample Fabric Native Component that contains a custom ContentIsland",
       "TestId": "Drawing Island Example",
     },
     "__Children": [
@@ -1827,6 +1867,7 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Fabric Native Component Sample Fabric Native Component that sizes based on max desired size of native XAML contained within",
     "__Children": [
       {
         "AutomationId": "",
@@ -1847,6 +1888,7 @@ exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Fabric Native Component Sample Fabric Native Component that sizes based on max desired size of native XAML contained within",
       "TestId": "Fabric Native Component",
     },
     "__Children": [
@@ -1906,6 +1948,7 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Fabric Native Component Yoga Sample Fabric Native Component that places native XAML inside a container sized by yoga",
     "__Children": [
       {
         "AutomationId": "",
@@ -1926,6 +1969,7 @@ exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Fabric Native Component Yoga Sample Fabric Native Component that places native XAML inside a container sized by yoga",
       "TestId": "Fabric Native Component Yoga",
     },
     "__Children": [
@@ -1985,6 +2029,7 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Fast Path Texts Examples of performant fast path texts, turn on IsTextPerformanceVisualizationEnabled to visualize examples",
     "__Children": [
       {
         "AutomationId": "",
@@ -2005,6 +2050,7 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Fast Path Texts Examples of performant fast path texts, turn on IsTextPerformanceVisualizationEnabled to visualize examples",
       "TestId": "Fast Path Texts",
     },
     "__Children": [
@@ -2064,6 +2110,7 @@ exports[`Home UIA Tree Dump Filter 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Filter A set of graphical effects that can be applied to a view.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2084,6 +2131,7 @@ exports[`Home UIA Tree Dump Filter 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Filter A set of graphical effects that can be applied to a view.",
       "TestId": "Filter",
     },
     "__Children": [
@@ -2143,6 +2191,7 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "FlatList Performant, scrollable list of data.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2163,6 +2212,7 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "FlatList Performant, scrollable list of data.",
       "TestId": "FlatList",
     },
     "__Children": [
@@ -2222,6 +2272,7 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Flyout Displays content on top of existing content, within the bounds of the application window.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2242,6 +2293,7 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Flyout Displays content on top of existing content, within the bounds of the application window.",
       "TestId": "Flyout",
     },
     "__Children": [
@@ -2301,6 +2353,7 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Glyph UWP Usage of Glyph control.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2321,6 +2374,7 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Glyph UWP Usage of Glyph control.",
       "TestId": "Glyph UWP",
     },
     "__Children": [
@@ -2380,6 +2434,7 @@ exports[`Home UIA Tree Dump Image 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Image Base component for displaying different types of images.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2400,6 +2455,7 @@ exports[`Home UIA Tree Dump Image 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Image Base component for displaying different types of images.",
       "TestId": "Image",
     },
     "__Children": [
@@ -2459,6 +2515,7 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Keyboard Demonstrates usage of the "Keyboard" static API",
     "__Children": [
       {
         "AutomationId": "",
@@ -2479,6 +2536,7 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Keyboard Demonstrates usage of the "Keyboard" static API",
       "TestId": "Keyboard",
     },
     "__Children": [
@@ -2538,6 +2596,7 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Keyboard Demonstrates usage of the "Keyboard" static API",
     "__Children": [
       {
         "AutomationId": "",
@@ -2558,6 +2617,7 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Keyboard Demonstrates usage of the "Keyboard" static API",
       "TestId": "Keyboard",
     },
     "__Children": [
@@ -2617,6 +2677,7 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Keyboard Focus Example Demo of keyboard focus.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2637,6 +2698,7 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Keyboard Focus Example Demo of keyboard focus.",
       "TestId": "Keyboard Focus Example",
     },
     "__Children": [
@@ -2696,6 +2758,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Keyboard extension Example Demo of keyboard properties.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2716,6 +2779,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Keyboard extension Example Demo of keyboard properties.",
       "TestId": "Keyboard extension Example",
     },
     "__Children": [
@@ -2775,6 +2839,7 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Layout - Flexbox Examples of using the flexbox API to layout views.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2795,6 +2860,7 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Layout - Flexbox Examples of using the flexbox API to layout views.",
       "TestId": "Layout - Flexbox",
     },
     "__Children": [
@@ -2854,6 +2920,7 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Layout Events Examples that show how Layout events can be used to measure view size and position.",
     "__Children": [
       {
         "AutomationId": "",
@@ -2874,6 +2941,7 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Layout Events Examples that show how Layout events can be used to measure view size and position.",
       "TestId": "Layout Events",
     },
     "__Children": [
@@ -2933,6 +3001,7 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Legacy Native Module Usage of legacy Native Module",
     "__Children": [
       {
         "AutomationId": "",
@@ -2953,6 +3022,7 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Legacy Native Module Usage of legacy Native Module",
       "TestId": "Legacy Native Module",
     },
     "__Children": [
@@ -3012,6 +3082,7 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "LegacyControlStyleTest Legacy e2e test for Control Styles",
     "__Children": [
       {
         "AutomationId": "",
@@ -3032,6 +3103,7 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "LegacyControlStyleTest Legacy e2e test for Control Styles",
       "TestId": "LegacyControlStyleTest",
     },
     "__Children": [
@@ -3091,6 +3163,7 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "LegacyImageTest Legacy e2e test for Image",
     "__Children": [
       {
         "AutomationId": "",
@@ -3111,6 +3184,7 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "LegacyImageTest Legacy e2e test for Image",
       "TestId": "LegacyImageTest",
     },
     "__Children": [
@@ -3170,6 +3244,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "LegacyLoginTest Legacy e2e test for TextInput with password",
     "__Children": [
       {
         "AutomationId": "",
@@ -3190,6 +3265,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "LegacyLoginTest Legacy e2e test for TextInput with password",
       "TestId": "LegacyLoginTest",
     },
     "__Children": [
@@ -3249,6 +3325,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "LegacySelectableTextTest Legacy e2e test for selectable Text hit testing",
     "__Children": [
       {
         "AutomationId": "",
@@ -3269,6 +3346,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "LegacySelectableTextTest Legacy e2e test for selectable Text hit testing",
       "TestId": "LegacySelectableTextTest",
     },
     "__Children": [
@@ -3328,6 +3406,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "LegacyTextHitTestTest Legacy e2e test for Text hit testing",
     "__Children": [
       {
         "AutomationId": "",
@@ -3348,6 +3427,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "LegacyTextHitTestTest Legacy e2e test for Text hit testing",
       "TestId": "LegacyTextHitTestTest",
     },
     "__Children": [
@@ -3407,6 +3487,7 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "LegacyTextInputTest Legacy e2e test for TextInput",
     "__Children": [
       {
         "AutomationId": "",
@@ -3427,6 +3508,7 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "LegacyTextInputTest Legacy e2e test for TextInput",
       "TestId": "LegacyTextInputTest",
     },
     "__Children": [
@@ -3486,6 +3568,7 @@ exports[`Home UIA Tree Dump Linking 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Linking Shows how to use Linking to open URLs.",
     "__Children": [
       {
         "AutomationId": "",
@@ -3506,6 +3589,7 @@ exports[`Home UIA Tree Dump Linking 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Linking Shows how to use Linking to open URLs.",
       "TestId": "Linking",
     },
     "__Children": [
@@ -3565,6 +3649,7 @@ exports[`Home UIA Tree Dump Modal 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Modal Component for presenting modal views.",
     "__Children": [
       {
         "AutomationId": "",
@@ -3585,6 +3670,7 @@ exports[`Home UIA Tree Dump Modal 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Modal Component for presenting modal views.",
       "TestId": "Modal",
     },
     "__Children": [
@@ -3644,6 +3730,7 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Mouse Click Events Tests that mouse click events work on intended components",
     "__Children": [
       {
         "AutomationId": "",
@@ -3664,6 +3751,7 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Mouse Click Events Tests that mouse click events work on intended components",
       "TestId": "Mouse Click Events",
     },
     "__Children": [
@@ -3723,6 +3811,7 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Mouse Events Tests that mouse events can be observed",
     "__Children": [
       {
         "AutomationId": "",
@@ -3743,6 +3832,7 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Mouse Events Tests that mouse events can be observed",
       "TestId": "Mouse Events",
     },
     "__Children": [
@@ -3802,6 +3892,7 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Moving Light Example Sample Custom Fabric Native Component",
     "__Children": [
       {
         "AutomationId": "",
@@ -3822,6 +3913,7 @@ exports[`Home UIA Tree Dump Moving Light Example 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Moving Light Example Sample Custom Fabric Native Component",
       "TestId": "Moving Light Example",
     },
     "__Children": [
@@ -3881,6 +3973,7 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Native Animated Example Test out Native Animations",
     "__Children": [
       {
         "AutomationId": "",
@@ -3901,6 +3994,7 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Native Animated Example Test out Native Animations",
       "TestId": "Native Animated Example",
     },
     "__Children": [
@@ -3960,6 +4054,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "New App Screen Displays the content of the new app screen",
     "__Children": [
       {
         "AutomationId": "",
@@ -3980,6 +4075,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "New App Screen Displays the content of the new app screen",
       "TestId": "New App Screen",
     },
     "__Children": [
@@ -4039,6 +4135,7 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "PanResponder Sample Shows the Use of PanResponder to provide basic gesture handling",
     "__Children": [
       {
         "AutomationId": "",
@@ -4059,6 +4156,7 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "PanResponder Sample Shows the Use of PanResponder to provide basic gesture handling",
       "TestId": "PanResponder Sample",
     },
     "__Children": [
@@ -4118,6 +4216,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Performance Comparison Examples Compare performance with bad and good examples. Use React DevTools to highlight re-renders is recommended.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4138,6 +4237,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Performance Comparison Examples Compare performance with bad and good examples. Use React DevTools to highlight re-renders is recommended.",
       "TestId": "Performance Comparison Examples",
     },
     "__Children": [
@@ -4197,6 +4297,7 @@ exports[`Home UIA Tree Dump PixelRatio 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "PixelRatio Gives access to device's pixel density and font scale",
     "__Children": [
       {
         "AutomationId": "",
@@ -4217,6 +4318,7 @@ exports[`Home UIA Tree Dump PixelRatio 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "PixelRatio Gives access to device's pixel density and font scale",
       "TestId": "PixelRatio",
     },
     "__Children": [
@@ -4276,6 +4378,7 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "PlatformColor Examples that show how PlatformColors may be used in an app.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4296,6 +4399,7 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "PlatformColor Examples that show how PlatformColors may be used in an app.",
       "TestId": "PlatformColor",
     },
     "__Children": [
@@ -4355,6 +4459,7 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Pointer Events Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4375,6 +4480,7 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Pointer Events Demonstrates the use of the pointerEvents prop of a View to control how touches should be handled.",
       "TestId": "Pointer Events",
     },
     "__Children": [
@@ -4434,6 +4540,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Popup Displays content on top of existing content, within the bounds of the application window.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4454,6 +4561,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Popup Displays content on top of existing content, within the bounds of the application window.",
       "TestId": "Popup",
     },
     "__Children": [
@@ -4513,6 +4621,7 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Pressable Component for making views pressable.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4533,6 +4642,7 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Pressable Component for making views pressable.",
       "TestId": "Pressable",
     },
     "__Children": [
@@ -4592,6 +4702,7 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "RTLExample Examples to show how to apply components to RTL layout.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4612,6 +4723,7 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "RTLExample Examples to show how to apply components to RTL layout.",
       "TestId": "RTLExample",
     },
     "__Children": [
@@ -4671,6 +4783,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "ScrollView Component that enables scrolling through child components",
     "__Children": [
       {
         "AutomationId": "",
@@ -4691,6 +4804,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "ScrollView Component that enables scrolling through child components",
       "TestId": "ScrollView",
     },
     "__Children": [
@@ -4750,6 +4864,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "ScrollViewAnimated Component that is animated when ScrollView is offset.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4770,6 +4885,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "ScrollViewAnimated Component that is animated when ScrollView is offset.",
       "TestId": "ScrollViewAnimated",
     },
     "__Children": [
@@ -4829,6 +4945,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "ScrollViewSimpleExample Component that enables scrolling through child components.",
     "__Children": [
       {
         "AutomationId": "",
@@ -4849,6 +4966,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "ScrollViewSimpleExample Component that enables scrolling through child components.",
       "TestId": "ScrollViewSimpleExample",
     },
     "__Children": [
@@ -5018,6 +5136,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "SectionList Performant, scrollable list of data.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5038,6 +5157,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "SectionList Performant, scrollable list of data.",
       "TestId": "SectionList",
     },
     "__Children": [
@@ -5097,6 +5217,7 @@ exports[`Home UIA Tree Dump Share 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Share Share data with other Apps.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5117,6 +5238,7 @@ exports[`Home UIA Tree Dump Share 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Share Share data with other Apps.",
       "TestId": "Share",
     },
     "__Children": [
@@ -5176,6 +5298,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "SwipeableCard Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5196,6 +5319,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "SwipeableCard Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
       "TestId": "SwipeableCard",
     },
     "__Children": [
@@ -5255,6 +5379,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Switch Native boolean input",
     "__Children": [
       {
         "AutomationId": "",
@@ -5275,6 +5400,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Switch Native boolean input",
       "TestId": "Switch",
     },
     "__Children": [
@@ -5334,6 +5460,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Text Base component for rendering styled text.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5354,6 +5481,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Text Base component for rendering styled text.",
       "TestId": "Text",
     },
     "__Children": [
@@ -5413,6 +5541,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "TextInput Single and multi-line text inputs.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5433,6 +5562,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "TextInput Single and multi-line text inputs.",
       "TestId": "TextInput",
     },
     "__Children": [
@@ -5492,6 +5622,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "TextInputs with key prop Periodically render large number of TextInputs with key prop without a Runtime Error",
     "__Children": [
       {
         "AutomationId": "",
@@ -5512,6 +5643,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "TextInputs with key prop Periodically render large number of TextInputs with key prop without a Runtime Error",
       "TestId": "TextInputs with key prop",
     },
     "__Children": [
@@ -5571,6 +5703,7 @@ exports[`Home UIA Tree Dump Timers 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Timers A demonstration of Timers in React Native.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5591,6 +5724,7 @@ exports[`Home UIA Tree Dump Timers 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Timers A demonstration of Timers in React Native.",
       "TestId": "Timers",
     },
     "__Children": [
@@ -5650,6 +5784,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Touchable* and onPress Touchable and onPress examples.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5670,6 +5805,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Touchable* and onPress Touchable and onPress examples.",
       "TestId": "Touchable* and onPress",
     },
     "__Children": [
@@ -5729,6 +5865,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "TransferProperties Some tests that change the backing XAML element to see if transfer properties is working.",
     "__Children": [
       {
         "AutomationId": "",
@@ -5749,6 +5886,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "TransferProperties Some tests that change the backing XAML element to see if transfer properties is working.",
       "TestId": "TransferProperties",
     },
     "__Children": [
@@ -5808,6 +5946,7 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Transforms View transforms",
     "__Children": [
       {
         "AutomationId": "",
@@ -5828,6 +5967,7 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Transforms View transforms",
       "TestId": "Transforms",
     },
     "__Children": [
@@ -5887,6 +6027,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "TransparentHitTestExample Transparent view receiving touch events",
     "__Children": [
       {
         "AutomationId": "",
@@ -5907,6 +6048,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "TransparentHitTestExample Transparent view receiving touch events",
       "TestId": "TransparentHitTestExample",
     },
     "__Children": [
@@ -5966,6 +6108,7 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "TurboModule Usage of TurboModule",
     "__Children": [
       {
         "AutomationId": "",
@@ -5986,6 +6129,7 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "TurboModule Usage of TurboModule",
       "TestId": "TurboModule",
     },
     "__Children": [
@@ -6045,6 +6189,7 @@ exports[`Home UIA Tree Dump URL 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "URL URL Parameters test",
     "__Children": [
       {
         "AutomationId": "",
@@ -6065,6 +6210,7 @@ exports[`Home UIA Tree Dump URL 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "URL URL Parameters test",
       "TestId": "URL",
     },
     "__Children": [
@@ -6124,6 +6270,7 @@ exports[`Home UIA Tree Dump View 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "View Basic building block of all UI, examples that demonstrate some of the many styles available.",
     "__Children": [
       {
         "AutomationId": "",
@@ -6144,6 +6291,7 @@ exports[`Home UIA Tree Dump View 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "View Basic building block of all UI, examples that demonstrate some of the many styles available.",
       "TestId": "View",
     },
     "__Children": [
@@ -6203,6 +6351,7 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "WebSocket WebSocket API",
     "__Children": [
       {
         "AutomationId": "",
@@ -6223,6 +6372,7 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "WebSocket WebSocket API",
       "TestId": "WebSocket",
     },
     "__Children": [
@@ -6282,6 +6432,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "XAML Usage of react-native-xaml controls",
     "__Children": [
       {
         "AutomationId": "",
@@ -6302,6 +6453,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "XAML Usage of react-native-xaml controls",
       "TestId": "XAML",
     },
     "__Children": [
@@ -6361,6 +6513,7 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "XMLHttpRequest Example that demonstrates upload and download requests using XMLHttpRequest.",
     "__Children": [
       {
         "AutomationId": "",
@@ -6381,6 +6534,7 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "XMLHttpRequest Example that demonstrates upload and download requests using XMLHttpRequest.",
       "TestId": "XMLHttpRequest",
     },
     "__Children": [
@@ -6440,6 +6594,7 @@ exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
+    "Name": "Xaml WinUI3 (Experimental, for Fabric) Requires UseExperimentalWinUI3 - Xaml content that works in Fabric",
     "__Children": [
       {
         "AutomationId": "",
@@ -6460,6 +6615,7 @@ exports[`Home UIA Tree Dump Xaml WinUI3 (Experimental, for Fabric) 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Xaml WinUI3 (Experimental, for Fabric) Requires UseExperimentalWinUI3 - Xaml content that works in Fabric",
       "TestId": "Xaml WinUI3 (Experimental, for Fabric)",
     },
     "__Children": [
