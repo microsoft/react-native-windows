@@ -214,30 +214,28 @@ struct WindowData {
 
               // Disable user sizing of the hwnd
               ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
-              m_compRootView.SizeChanged(
-                  [hwnd, props = InstanceSettings().Properties()](
-                      auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
-                    auto compositor =
-                        winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
-                    auto async = compositor.RequestCommitAsync();
-                    async.Completed([hwnd, size = args.Size()](
-                                        auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
-                      RECT rcClient, rcWindow;
-                      GetClientRect(hwnd, &rcClient);
-                      GetWindowRect(hwnd, &rcWindow);
+              m_compRootView.SizeChanged([hwnd, props = InstanceSettings().Properties()](
+                                             auto /*sender*/,
+                                             const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                auto compositor =
+                    winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
+                auto async = compositor.RequestCommitAsync();
+                async.Completed([hwnd, size = args.Size()](
+                                    auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
+                  RECT rcClient, rcWindow;
+                  GetClientRect(hwnd, &rcClient);
+                  GetWindowRect(hwnd, &rcWindow);
 
-                      SetWindowPos(
-                          hwnd,
-                          nullptr,
-                          0,
-                          0,
-                          static_cast<int>(size.Width) + rcClient.left - rcClient.right + rcWindow.right -
-                              rcWindow.left,
-                          static_cast<int>(size.Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
-                              rcWindow.top,
-                          SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-                    });
-                  });
+                  SetWindowPos(
+                      hwnd,
+                      nullptr,
+                      0,
+                      0,
+                      static_cast<int>(size.Width) + rcClient.left - rcClient.right + rcWindow.right - rcWindow.left,
+                      static_cast<int>(size.Height) + rcClient.top - rcClient.bottom + rcWindow.bottom - rcWindow.top,
+                      SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                });
+              });
             }
             m_compRootView.Arrange(constraints, {0, 0});
 
