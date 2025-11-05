@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 05 Nov 2025 06:32:19 GMT",
+      "version": "0.0.0-canary.278",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.278",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "not available",
+            "comment": "Fix PowerShell Export-ModuleMember error"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Nov 2025 06:07:44 GMT",
       "version": "0.0.0-canary.278",
       "tag": "@react-native-windows/cli_v0.0.0-canary.278",
