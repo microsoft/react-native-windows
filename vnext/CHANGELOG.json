@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 05 Nov 2025 06:32:19 GMT",
+      "version": "0.0.0-canary.1003",
+      "tag": "react-native-windows_v0.0.0-canary.1003",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fix metro config property name in cpp-lib template"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Nov 2025 06:07:44 GMT",
+      "version": "0.0.0-canary.1003",
+      "tag": "react-native-windows_v0.0.0-canary.1003",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cc60eece5c955e4fb4f1c8345cf999b3a2166854",
+            "comment": "Fix metro config property name in cpp-lib template"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Oct 2025 05:29:15 GMT",
       "version": "0.0.0-canary.1003",
       "tag": "react-native-windows_v0.0.0-canary.1003",
