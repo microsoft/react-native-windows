@@ -112,11 +112,13 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
       // Allow http/https for non-data URIs
-#ifdef _DEBUG
-      // Allow localhost in debug builds for Metro development
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
-#else
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
 #endif
     }
   } catch (const std::exception &ex) {
@@ -155,11 +157,13 @@ void ImageLoader::getSizeWithHeaders(
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
       // Allow http/https for non-data URIs
-#ifdef _DEBUG
-      // Allow localhost in debug builds for Metro development
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
-#else
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
 #endif
     }
   } catch (const std::exception &ex) {
@@ -196,11 +200,13 @@ void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&res
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
       // Allow http/https for non-data URIs
-#ifdef _DEBUG
-      // Allow localhost in debug builds for Metro development
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
-#else
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
 #endif
     }
   } catch (const std::exception &ex) {
@@ -225,11 +231,13 @@ void ImageLoader::prefetchImageWithMetadata(
           uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
     } else {
       // Allow http/https for non-data URIs
-#ifdef _DEBUG
-      // Allow localhost in debug builds for Metro development
-      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
-#else
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
       ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
 #endif
     }
   } catch (const std::exception &ex) {
