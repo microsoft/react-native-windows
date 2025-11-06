@@ -51,15 +51,18 @@ LinkingManager::~LinkingManager() noexcept {
 
 /*static*/ fire_and_forget LinkingManager::canOpenURL(std::wstring url, ::React::ReactPromise<bool> result) noexcept {
   // SDL Compliance: Validate URL (P0 - CVSS 6.5)
+  // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+  // Production apps can define RNW_STRICT_SDL to block localhost if needed.
   try {
     std::string urlUtf8 = Utf16ToUtf8(url);
-#ifdef _DEBUG
-    // Allow localhost in debug builds for Metro development
-    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
-        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, true);
-#else
+#ifdef RNW_STRICT_SDL
+    // Strict SDL mode: block localhost for production apps
     ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
         urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, false);
+#else
+    // Developer-friendly: allow localhost for Metro, tests, and development
+    ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(
+        urlUtf8, ::Microsoft::ReactNative::InputValidation::AllowedSchemes::LINKING_SCHEMES, true);
 #endif
   } catch (const std::exception &ex) {
     result.Reject(ex.what());

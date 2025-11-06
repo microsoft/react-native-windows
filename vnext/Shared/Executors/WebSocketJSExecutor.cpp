@@ -91,11 +91,13 @@ void WebSocketJSExecutor::loadBundle(
   // Production apps use Hermes or Chakra with secure bundle loading that doesn't allow file:// URIs.
   try {
     if (!sourceURL.empty()) {
-#ifdef _DEBUG
-      // Allow localhost in debug builds for Metro development
-      Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"}, true);
-#else
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
       Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(sourceURL, {"http", "https", "file"}, true);
 #endif
     }
   } catch (const std::exception &ex) {

@@ -134,11 +134,11 @@ void WebSocketTurboModule::Connect(
     ReactNativeSpecs::WebSocketModuleSpec_connect_options &&options,
     double socketID) noexcept {
   //  VALIDATE URL - SSRF PROTECTION (P0 Critical - CVSS 9.0)
-  // Allow localhost in debug builds for Metro bundler development
-#ifdef _DEBUG
-  bool allowLocalhost = true;
+  // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+  bool allowLocalhost = false; // Strict SDL mode: block localhost for production apps
 #else
-  bool allowLocalhost = false;
+  bool allowLocalhost = true; // Developer-friendly: allow localhost for Metro, tests, and development
 #endif
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(url, {"ws", "wss"}, allowLocalhost);

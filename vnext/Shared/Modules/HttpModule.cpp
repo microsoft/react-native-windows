@@ -114,11 +114,11 @@ void HttpTurboModule::SendRequest(
   m_requestId++;
 
   // SDL Compliance: Validate URL for SSRF (P0 - CVSS 9.1)
-  // Allow localhost in debug builds for Metro bundler development
-#ifdef _DEBUG
-  bool allowLocalhost = true;
+  // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+  bool allowLocalhost = false; // Strict SDL mode: block localhost for production apps
 #else
-  bool allowLocalhost = false;
+  bool allowLocalhost = true; // Developer-friendly: allow localhost for Metro, tests, and development
 #endif
   try {
     Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(query.url, {"http", "https"}, allowLocalhost);
