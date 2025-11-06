@@ -6,10 +6,12 @@ exports[`View Tests Views can have a hitslop region 1`] = `
     "AutomationId": "hitslop",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "HitSlop Example",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "HitSlop Example",
       "TestId": "hitslop",
     },
   },
@@ -32,6 +34,7 @@ exports[`View Tests Views can have a nativeid 1`] = `
     "AutomationId": "nativeid",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "NativeID Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -45,6 +48,7 @@ exports[`View Tests Views can have a nativeid 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "NativeID Example",
       "TestId": "nativeid",
     },
     "__Children": [
@@ -380,6 +384,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
     "AutomationId": "view-test-backface-visibility",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Backface Visibility Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -428,6 +433,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Backface Visibility Example",
       "TestId": "view-test-backface-visibility",
     },
     "__Children": [
@@ -626,6 +632,7 @@ exports[`View Tests Views can have background color 1`] = `
     "AutomationId": "view-test-background-color",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Background Color Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -639,6 +646,7 @@ exports[`View Tests Views can have background color 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Background Color Example",
       "TestId": "view-test-background-color",
     },
     "__Children": [
@@ -872,6 +880,7 @@ exports[`View Tests Views can have borders 1`] = `
     "AutomationId": "view-test-border",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Border Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -885,6 +894,7 @@ exports[`View Tests Views can have borders 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Border Example",
       "TestId": "view-test-border",
     },
     "__Children": [
@@ -966,7 +976,9 @@ exports[`View Tests Views can have customized accessibility 1`] = `
     "HelpText": "Accessibility Hint",
     "IsKeyboardFocusable": true,
     "ItemStatus": "Busy",
+    "LiveSetting": "Polite",
     "LocalizedControlType": "button",
+    "Name": "A View with accessibility values",
     "PositionInSet": 1,
     "SizeofSet": 1,
     "TogglePattern.ToggleState": "On",
@@ -1004,6 +1016,7 @@ exports[`View Tests Views can have customized accessibility 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "A View with accessibility values",
       "TestId": "accessibility",
     },
     "__Children": [
@@ -1130,6 +1143,7 @@ exports[`View Tests Views can have customized opacity 1`] = `
     "AutomationId": "view-test-opacity",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Opacity Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -1185,6 +1199,7 @@ exports[`View Tests Views can have customized opacity 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Opacity Example",
       "TestId": "view-test-opacity",
     },
     "__Children": [
@@ -1457,6 +1472,7 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
     "AutomationId": "view-test-padding-margin",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Padding/Margin Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -1491,6 +1507,7 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Padding/Margin Example",
       "TestId": "view-test-padding-margin",
     },
     "__Children": [
@@ -1855,10 +1872,12 @@ exports[`View Tests Views can have flexgap 1`] = `
     "AutomationId": "view-test-flexgap",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Flex Gap Example",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Flex Gap Example",
       "TestId": "view-test-flexgap",
     },
     "__Children": [
@@ -2876,6 +2895,7 @@ exports[`View Tests Views can have logical border colors 1`] = `
     "AutomationId": "view-test-logical-border-color",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Logical Border Color Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -2903,6 +2923,7 @@ exports[`View Tests Views can have logical border colors 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Logical Border Color Example",
       "TestId": "view-test-logical-border-color",
     },
     "__Children": [
@@ -3406,6 +3427,7 @@ exports[`View Tests Views can have overflow 1`] = `
     "AutomationId": "view-test-overflow",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Rounded Borders Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -3433,6 +3455,7 @@ exports[`View Tests Views can have overflow 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Rounded Borders Example",
       "TestId": "view-test-overflow",
     },
     "__Children": [
@@ -3697,10 +3720,12 @@ exports[`View Tests Views can have rounded borders 1`] = `
     "AutomationId": "view-test-rounded-borders",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Rounded Borders Example",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Rounded Borders Example",
       "TestId": "view-test-rounded-borders",
     },
     "__Children": [
@@ -4443,10 +4468,12 @@ exports[`View Tests Views can have rounded borders 2`] = `
     "AutomationId": "view-test-rounded-borders",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Rounded Borders Example",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Rounded Borders Example",
       "TestId": "view-test-rounded-borders",
     },
     "__Children": [
@@ -5189,10 +5216,12 @@ exports[`View Tests Views can have shadows 1`] = `
     "AutomationId": "shadow",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Shadow Example",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Shadow Example",
       "TestId": "shadow",
     },
   },
@@ -5211,6 +5240,7 @@ exports[`View Tests Views can have tooltips 1`] = `
     "AutomationId": "tool-tip",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "Name": "Tooltip Example",
     "__Children": [
       {
         "AutomationId": "",
@@ -5238,6 +5268,7 @@ exports[`View Tests Views can have tooltips 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "Tooltip Example",
       "TestId": "tool-tip",
     },
     "__Children": [

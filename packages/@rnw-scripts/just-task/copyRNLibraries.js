@@ -63,7 +63,7 @@ exports.copyTask = baseDir => {
       dest: base('.'),
     }),
 
-    copyTask({paths: src('**/*+(.d.ts|.js|.png)'), dest: base('.')}),
+    copyTask({paths: src('**/*+(.d.ts|.js|.png|.flow)'), dest: base('.')}),
 
     () => {
       const typesPath = path.resolve(baseDir, 'types/index.d.ts');

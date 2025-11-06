@@ -104,6 +104,7 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
+        "LiveSetting": "Polite",
         "LocalizedControlType": "group",
         "PositionInSet": 2,
         "SizeofSet": 3,
@@ -570,6 +571,7 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
+    "Name": "touchable feedback events",
     "ValuePattern.Value": "Press Me",
     "__Children": [
       {
@@ -584,6 +586,7 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
+      "AccessibilityLabel": "touchable feedback events",
       "TestId": "touchable_feedback_events_button",
     },
     "__Children": [

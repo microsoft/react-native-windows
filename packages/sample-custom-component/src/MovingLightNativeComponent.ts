@@ -1,5 +1,4 @@
-import {codegenNativeComponent} from 'react-native';
-import {codegenNativeCommands} from 'react-native';
+import {codegenNativeComponent, codegenNativeCommands} from 'react-native';
 import type { ColorValue, HostComponent, ViewProps } from 'react-native';
 
 import type {
