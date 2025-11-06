@@ -746,6 +746,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-  <Page Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\App.xaml" />
+  <ApplicationDefinition Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\App.xaml" />
   </ItemGroup>
 </Project>
