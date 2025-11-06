@@ -236,15 +236,15 @@
     },
     {
       "type": "derived",
-      "file": "src-win/index.windows.js.flow",
-      "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "bb6c7873aa350c235aad233dd75656237d16d79c"
-    },
-    {
-      "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
       "baseHash": "c5d0dfd40d0fb7c197790b1f23f4f8b9ca835047"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/index.windows.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "bb6c7873aa350c235aad233dd75656237d16d79c"
     },
     {
       "type": "platform",
@@ -385,6 +385,12 @@
     {
       "type": "platform",
       "file": "src-win/Libraries/Components/Popup/PopupNativeComponent.js"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/Pressable/Pressable.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.d.ts",
+      "baseHash": "d4dd8fc82436617bfeca9807be274aa5416d748c"
     },
     {
       "type": "patch",
