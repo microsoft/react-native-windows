@@ -203,7 +203,7 @@ void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
   try {
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
         message.length(),
-        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_WEBSOCKET_FRAME,
+        Microsoft::ReactNative::InputValidation::GetMaxWebSocketFrame(),
         "WebSocket message");
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
@@ -233,7 +233,7 @@ void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID)
         Microsoft::ReactNative::InputValidation::EncodingValidator::EstimateBase64DecodedSize(base64String);
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
         estimatedSize,
-        Microsoft::ReactNative::InputValidation::SizeValidator::MAX_WEBSOCKET_FRAME,
+        Microsoft::ReactNative::InputValidation::GetMaxWebSocketFrame(),
         "WebSocket binary frame");
   } catch (const std::exception &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});

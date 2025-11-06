@@ -432,6 +432,39 @@ void SizeValidator::ValidateUInt32Range(uint32_t value, uint32_t min, uint32_t m
   }
 }
 
+// Smart getters that respect RNW_STRICT_SDL flag for developer-friendly defaults
+size_t SizeValidator::GetMaxBlobSize() {
+#ifdef RNW_STRICT_SDL
+  return STRICT_MAX_BLOB_SIZE;
+#else
+  return DEV_MAX_BLOB_SIZE;
+#endif
+}
+
+size_t SizeValidator::GetMaxWebSocketFrame() {
+#ifdef RNW_STRICT_SDL
+  return STRICT_MAX_WEBSOCKET_FRAME;
+#else
+  return DEV_MAX_WEBSOCKET_FRAME;
+#endif
+}
+
+size_t SizeValidator::GetMaxDataUriSize() {
+#ifdef RNW_STRICT_SDL
+  return STRICT_MAX_DATA_URI_SIZE;
+#else
+  return DEV_MAX_DATA_URI_SIZE;
+#endif
+}
+
+size_t SizeValidator::GetMaxHeaderLength() {
+#ifdef RNW_STRICT_SDL
+  return STRICT_MAX_HEADER_LENGTH;
+#else
+  return DEV_MAX_HEADER_LENGTH;
+#endif
+}
+
 // ============================================================================
 // EncodingValidator Implementation (SDL Compliant)
 // ============================================================================
@@ -495,10 +528,10 @@ void EncodingValidator::ValidateHeaderValue(std::string_view value) {
     return; // Empty headers are allowed
   }
 
-  if (value.length() > SizeValidator::MAX_HEADER_LENGTH) {
+  if (value.length() > GetMaxHeaderLength()) {
     LogValidationFailure("HEADER_LENGTH", "Header exceeds max length: " + std::to_string(value.length()));
     throw InvalidSizeException(
-        "Header value exceeds maximum length (" + std::to_string(SizeValidator::MAX_HEADER_LENGTH) + ")");
+        "Header value exceeds maximum length (" + std::to_string(GetMaxHeaderLength()) + ")");
   }
 
   // SDL Requirement: Prevent CRLF injection (response splitting)

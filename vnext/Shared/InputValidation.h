@@ -141,13 +141,33 @@ class SizeValidator {
   static void ValidateInt32Range(int32_t value, int32_t min, int32_t max, const char *context);
   static void ValidateUInt32Range(uint32_t value, uint32_t min, uint32_t max, const char *context);
 
-  // Constants for different types
-  static constexpr size_t MAX_BLOB_SIZE = 100 * 1024 * 1024; // 100MB
-  static constexpr size_t MAX_WEBSOCKET_FRAME = 256 * 1024 * 1024; // 256MB
+  // Production limits (strict SDL compliance)
+  static constexpr size_t STRICT_MAX_BLOB_SIZE = 50 * 1024 * 1024; // 50MB
+  static constexpr size_t STRICT_MAX_WEBSOCKET_FRAME = 64 * 1024 * 1024; // 64MB
+  static constexpr size_t STRICT_MAX_DATA_URI_SIZE = 5 * 1024 * 1024; // 5MB
+  static constexpr size_t STRICT_MAX_HEADER_LENGTH = 4096; // 4KB
+
+  // Developer-friendly limits (platform default)
+  static constexpr size_t DEV_MAX_BLOB_SIZE = 500 * 1024 * 1024; // 500MB
+  static constexpr size_t DEV_MAX_WEBSOCKET_FRAME = 1024 * 1024 * 1024; // 1GB
+  static constexpr size_t DEV_MAX_DATA_URI_SIZE = 100 * 1024 * 1024; // 100MB
+  static constexpr size_t DEV_MAX_HEADER_LENGTH = 32768; // 32KB
+
+  // Fixed constants (not configurable)
   static constexpr size_t MAX_CLOSE_REASON = 123; // WebSocket spec
   static constexpr size_t MAX_URL_LENGTH = 2048; // URL max
-  static constexpr size_t MAX_HEADER_LENGTH = 8192; // Header max
-  static constexpr size_t MAX_DATA_URI_SIZE = 10 * 1024 * 1024; // 10MB for data URIs
+
+  // Legacy constants (deprecated - use GetMaxBlobSize() etc.)
+  static constexpr size_t MAX_BLOB_SIZE = DEV_MAX_BLOB_SIZE;
+  static constexpr size_t MAX_WEBSOCKET_FRAME = DEV_MAX_WEBSOCKET_FRAME;
+  static constexpr size_t MAX_HEADER_LENGTH = DEV_MAX_HEADER_LENGTH;
+  static constexpr size_t MAX_DATA_URI_SIZE = DEV_MAX_DATA_URI_SIZE;
+
+  // Smart getters that respect RNW_STRICT_SDL flag
+  static size_t GetMaxBlobSize();
+  static size_t GetMaxWebSocketFrame();
+  static size_t GetMaxDataUriSize();
+  static size_t GetMaxHeaderLength();
 };
 
 // Encoding Validation - Protects against malformed data (SDL compliant)

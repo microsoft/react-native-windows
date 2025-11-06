@@ -109,7 +109,7 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
     if (uri.find("data:") == 0) {
       // Validate data URI size to prevent DoS through memory exhaustion
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
     } else {
       // Allow http/https for non-data URIs
       // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
@@ -154,7 +154,7 @@ void ImageLoader::getSizeWithHeaders(
     if (uri.find("data:") == 0) {
       // Validate data URI size to prevent DoS through memory exhaustion
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
     } else {
       // Allow http/https for non-data URIs
       // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
@@ -197,7 +197,7 @@ void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&res
     if (uri.find("data:") == 0) {
       // Validate data URI size to prevent DoS through memory exhaustion
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
     } else {
       // Allow http/https for non-data URIs
       // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
@@ -228,7 +228,7 @@ void ImageLoader::prefetchImageWithMetadata(
     if (uri.find("data:") == 0) {
       // Validate data URI size to prevent DoS through memory exhaustion
       ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-          uri.length(), ::Microsoft::ReactNative::InputValidation::SizeValidator::MAX_DATA_URI_SIZE, "Data URI");
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
     } else {
       // Allow http/https for non-data URIs
       // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
