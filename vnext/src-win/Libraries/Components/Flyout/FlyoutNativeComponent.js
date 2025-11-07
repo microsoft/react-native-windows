@@ -5,7 +5,7 @@
  * @format
  */
 
-import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
+import type {ViewProps} from '../View/ViewPropTypes';
 import type {HostComponent} from '../../../src/private/types/HostComponent';
 import type {
   DirectEventHandler,
@@ -44,7 +44,7 @@ type NativeProps = $ReadOnly<{
 }>;
 
 type NativeType = HostComponent<NativeProps>;
-
+// $FlowFixMe[nonpolymorphic-type-arg]
 export default (codegenNativeComponent<NativeProps>('RCTFlyout', {
   interfaceOnly: true,
 }): NativeType);

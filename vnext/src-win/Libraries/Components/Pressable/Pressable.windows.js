@@ -130,6 +130,12 @@ type PressableBaseProps = $ReadOnly<{
   onPressOut?: ?(event: GestureResponderEvent) => mixed,
 
   /**
+   * Whether to prevent any other native components from becoming responder
+   * while this pressable is responder.
+   */
+  blockNativeResponder?: ?boolean,
+
+  /**
    * Called after the element loses focus.
    */
   onBlur?: ?(event: BlurEvent) => mixed,
@@ -236,6 +242,7 @@ function Pressable({
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
+    blockNativeResponder,
     'aria-readonly': ariaReadOnly,
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
@@ -369,6 +376,7 @@ function Pressable({
           onPressOut(event);
         }
       },
+      blockNativeResponder,
       // [Windows
       onKeyDown,
       onKeyUp,
@@ -377,6 +385,7 @@ function Pressable({
     [
       android_disableSound,
       android_rippleConfig,
+      blockNativeResponder,
       cancelable,
       delayHoverIn,
       delayHoverOut,
