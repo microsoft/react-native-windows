@@ -522,6 +522,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpMetricsReporter.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpInteractionTypes.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollEvent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\featureflags\ReactNativeFeatureFlags.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\featureflags\ReactNativeFeatureFlagsAccessor.cpp" />
@@ -543,6 +545,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\NetworkIOAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\TracingAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\ReactPerfettoLogger.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatPosix.cpp" />
@@ -585,7 +588,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphEventEmitter.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphProps.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseParagraphProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphShadowNode.cpp" DisableSpecificWarnings="4305;5028;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextShadowNode.cpp" />
