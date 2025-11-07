@@ -40,7 +40,7 @@ void XamlApplication::AddMetadataProvider(
 
 winrt::Microsoft::UI::Xaml::Markup::IXamlType XamlApplication::GetXamlType(
     winrt::Windows::UI::Xaml::Interop::TypeName const &type) {
-  for (auto &&provider : m_providers) {
+  for (const auto &provider : m_providers) {
     if (auto result = provider.GetXamlType(type)) {
       return result;
     }
@@ -49,7 +49,7 @@ winrt::Microsoft::UI::Xaml::Markup::IXamlType XamlApplication::GetXamlType(
 }
 
 winrt::Microsoft::UI::Xaml::Markup::IXamlType XamlApplication::GetXamlType(hstring const &fullName) {
-  for (auto &&provider : m_providers) {
+  for (const auto &provider : m_providers) {
     if (auto result = provider.GetXamlType(fullName)) {
       return result;
     }
