@@ -126,13 +126,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModule.h",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModule.h",
-      "baseHash": "e82eb139eab8a6e122421416fb724811bfadd6fb",
-      "issue": 14128
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleWithJSIBindings.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleWithJSIBindings.cpp",
       "baseHash": "7976153776eee72a33af8e7ef3a24153f38e05d8",
