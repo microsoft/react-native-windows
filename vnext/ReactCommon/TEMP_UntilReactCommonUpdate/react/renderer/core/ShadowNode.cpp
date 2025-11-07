@@ -163,7 +163,7 @@ std::shared_ptr<ShadowNode> ShadowNode::clone(
   }
 }
 
-ContextContainer::Shared ShadowNode::getContextContainer() const {
+std::shared_ptr<const ContextContainer> ShadowNode::getContextContainer() const {
   return family_->componentDescriptor_.getContextContainer();
 }
 

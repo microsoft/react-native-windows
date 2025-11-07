@@ -21,6 +21,7 @@
     "@react-native-windows/fs": "^0.0.0-canary.68",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
+    "minimatch": "^10.0.3",
     "screenshot-desktop": "^1.12.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
