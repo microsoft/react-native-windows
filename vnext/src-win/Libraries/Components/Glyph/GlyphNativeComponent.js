@@ -25,7 +25,7 @@ type NativeProps = $ReadOnly<{|
 |}>;
 
 type NativeType = HostComponent<NativeProps>;
-
+// $FlowFixMe[nonpolymorphic-type-arg]
 export default (codegenNativeComponent<NativeProps>('PLYIcon', {
   interfaceOnly: true,
 }): NativeType);
