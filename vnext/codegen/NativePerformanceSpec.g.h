@@ -94,9 +94,9 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceSpec_Rea
 struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       SyncMethod<double() noexcept>{0, L"now"},
-      SyncMethod<double(std::string, double) noexcept>{1, L"markWithResult"},
-      SyncMethod<std::vector<double>(std::string, double, double, double, std::string, std::string) noexcept>{2, L"measure"},
-      SyncMethod<std::vector<double>(std::string, double, double, double, std::string, std::string) noexcept>{3, L"measureWithResult"},
+      Method<void(std::string, double, ) noexcept>{1, L"reportMark"},
+      Method<void(std::string, double, double, ) noexcept>{2, L"reportMeasure"},
+      SyncMethod<std::optional<double>(std::string) noexcept>{3, L"getMarkTime"},
       Method<void(std::string) noexcept>{4, L"clearMarks"},
       Method<void(std::string) noexcept>{5, L"clearMeasures"},
       SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>() noexcept>{6, L"getEntries"},
@@ -111,8 +111,7 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void() noexcept>{15, L"disconnect"},
       SyncMethod<std::vector<PerformanceSpec_RawPerformanceEntry>(, bool) noexcept>{16, L"takeRecords"},
       SyncMethod<std::vector<double>() noexcept>{17, L"getSupportedPerformanceEntryTypes"},
-      Method<void(double) noexcept>{18, L"setCurrentTimeStampForTesting"},
-      Method<void() noexcept>{19, L"clearEventCountsForTesting"},
+      Method<void() noexcept>{18, L"clearEventCountsForTesting"},
   };
 
   template <class TModule>
@@ -126,19 +125,19 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_SYNC_METHOD(now) static double now() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
-          "markWithResult",
-          "    REACT_SYNC_METHOD(markWithResult) double markWithResult(std::string name, double startTime) noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(markWithResult) static double markWithResult(std::string name, double startTime) noexcept { /* implementation */ }\n");
+          "reportMark",
+          "    REACT_METHOD(reportMark) void reportMark(std::string name, double startTime,  entry) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(reportMark) static void reportMark(std::string name, double startTime,  entry) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
-          "measure",
-          "    REACT_SYNC_METHOD(measure) std::vector<double> measure(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(measure) static std::vector<double> measure(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n");
+          "reportMeasure",
+          "    REACT_METHOD(reportMeasure) void reportMeasure(std::string name, double startTime, double duration,  entry) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(reportMeasure) static void reportMeasure(std::string name, double startTime, double duration,  entry) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
-          "measureWithResult",
-          "    REACT_SYNC_METHOD(measureWithResult) std::vector<double> measureWithResult(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(measureWithResult) static std::vector<double> measureWithResult(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n");
+          "getMarkTime",
+          "    REACT_SYNC_METHOD(getMarkTime) std::optional<double> getMarkTime(std::string name) noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getMarkTime) static std::optional<double> getMarkTime(std::string name) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "clearMarks",
@@ -211,11 +210,6 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_SYNC_METHOD(getSupportedPerformanceEntryTypes) static std::vector<double> getSupportedPerformanceEntryTypes() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           18,
-          "setCurrentTimeStampForTesting",
-          "    REACT_METHOD(setCurrentTimeStampForTesting) void setCurrentTimeStampForTesting(double timeStamp) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(setCurrentTimeStampForTesting) static void setCurrentTimeStampForTesting(double timeStamp) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          19,
           "clearEventCountsForTesting",
           "    REACT_METHOD(clearEventCountsForTesting) void clearEventCountsForTesting() noexcept { /* implementation */ }\n"
           "    REACT_METHOD(clearEventCountsForTesting) static void clearEventCountsForTesting() noexcept { /* implementation */ }\n");

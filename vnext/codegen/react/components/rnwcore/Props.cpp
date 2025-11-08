@@ -14,12 +14,47 @@
 
 namespace facebook::react {
 
+VirtualViewExperimentalProps::VirtualViewExperimentalProps(
+    const PropsParserContext &context,
+    const VirtualViewExperimentalProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    initialHidden(convertRawProp(context, rawProps, "initialHidden", sourceProps.initialHidden, {false})),
+    renderState(convertRawProp(context, rawProps, "renderState", sourceProps.renderState, {0})) {}
+    
+#ifdef RN_SERIALIZABLE_STATE
+ComponentName VirtualViewExperimentalProps::getDiffPropsImplementationTarget() const {
+  return "VirtualViewExperimental";
+}
+
+folly::dynamic VirtualViewExperimentalProps::getDiffProps(
+    const Props* prevProps) const {
+  static const auto defaultProps = VirtualViewExperimentalProps();
+  const VirtualViewExperimentalProps* oldProps = prevProps == nullptr
+      ? &defaultProps
+      : static_cast<const VirtualViewExperimentalProps*>(prevProps);
+  if (this == oldProps) {
+    return folly::dynamic::object();
+  }
+  folly::dynamic result = HostPlatformViewProps::getDiffProps(prevProps);
+  
+  if (initialHidden != oldProps->initialHidden) {
+    result["initialHidden"] = initialHidden;
+  }
+    
+  if (renderState != oldProps->renderState) {
+    result["renderState"] = renderState;
+  }
+  return result;
+}
+#endif
 VirtualViewProps::VirtualViewProps(
     const PropsParserContext &context,
     const VirtualViewProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
     initialHidden(convertRawProp(context, rawProps, "initialHidden", sourceProps.initialHidden, {false})),
+    removeClippedSubviews(convertRawProp(context, rawProps, "removeClippedSubviews", sourceProps.removeClippedSubviews, {false})),
     renderState(convertRawProp(context, rawProps, "renderState", sourceProps.renderState, {0})) {}
     
 #ifdef RN_SERIALIZABLE_STATE
@@ -40,6 +75,10 @@ folly::dynamic VirtualViewProps::getDiffProps(
   
   if (initialHidden != oldProps->initialHidden) {
     result["initialHidden"] = initialHidden;
+  }
+    
+  if (removeClippedSubviews != oldProps->removeClippedSubviews) {
+    result["removeClippedSubviews"] = removeClippedSubviews;
   }
     
   if (renderState != oldProps->renderState) {
@@ -335,7 +374,7 @@ AndroidProgressBarProps::AndroidProgressBarProps(
     progress(convertRawProp(context, rawProps, "progress", sourceProps.progress, {0.0})),
     animating(convertRawProp(context, rawProps, "animating", sourceProps.animating, {true})),
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
-    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {""})) {}
+    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {std::string{""}})) {}
     
 #ifdef RN_SERIALIZABLE_STATE
 ComponentName AndroidProgressBarProps::getDiffPropsImplementationTarget() const {
@@ -640,7 +679,7 @@ UnimplementedNativeViewProps::UnimplementedNativeViewProps(
     const UnimplementedNativeViewProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    name(convertRawProp(context, rawProps, "name", sourceProps.name, {""})) {}
+    name(convertRawProp(context, rawProps, "name", sourceProps.name, {std::string{""}})) {}
     
 #ifdef RN_SERIALIZABLE_STATE
 ComponentName UnimplementedNativeViewProps::getDiffPropsImplementationTarget() const {

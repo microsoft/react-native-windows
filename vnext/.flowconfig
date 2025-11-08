@@ -145,11 +145,8 @@ module.system.haste.module_ref_prefix=m#
 
 react.runtime=automatic
 
-suppress_type=$FlowIssue
+experimental.error_code_migration=new
 suppress_type=$FlowFixMe
-suppress_type=$FlowFixMeProps
-suppress_type=$FlowFixMeState
-suppress_type=$FlowFixMeEmpty
 
 ban_spread_key_props=true
 sharedmemory.hash_table_pow=21
@@ -175,4 +172,8 @@ untyped-import
 untyped-type-import
 
 [version]
+<<<<<<< Upstream
+^0.279.0
+=======
 ^0.274.2
+>>>>>>> Override

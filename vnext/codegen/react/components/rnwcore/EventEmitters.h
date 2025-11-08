@@ -13,6 +13,31 @@
 
 
 namespace facebook::react {
+class VirtualViewExperimentalEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnModeChangeTargetRect {
+      double x;
+    double y;
+    double width;
+    double height;
+    };
+
+  struct OnModeChangeThresholdRect {
+      double x;
+    double y;
+    double width;
+    double height;
+    };
+
+  struct OnModeChange {
+      int mode;
+    OnModeChangeTargetRect targetRect;
+    OnModeChangeThresholdRect thresholdRect;
+    };
+  void onModeChange(OnModeChange value) const;
+};
 class VirtualViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

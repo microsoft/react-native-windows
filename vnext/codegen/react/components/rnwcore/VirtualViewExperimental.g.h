@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from VirtualViewNativeComponent spec file in flow / TypeScript.
+ * This file is auto-generated from VirtualViewExperimentalNativeComponent spec file in flow / TypeScript.
  */
 // clang-format off
 #pragma once
@@ -18,15 +18,14 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(VirtualViewProps)
-struct VirtualViewProps : winrt::implements<VirtualViewProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  VirtualViewProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+REACT_STRUCT(VirtualViewExperimentalProps)
+struct VirtualViewExperimentalProps : winrt::implements<VirtualViewExperimentalProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  VirtualViewExperimentalProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
     : ViewProps(props)
   {
      if (cloneFrom) {
-       auto cloneFromProps = cloneFrom.as<VirtualViewProps>();
+       auto cloneFromProps = cloneFrom.as<VirtualViewExperimentalProps>();
        initialHidden = cloneFromProps->initialHidden;
-       removeClippedSubviews = cloneFromProps->removeClippedSubviews;
        renderState = cloneFromProps->renderState;  
      }
   }
@@ -38,34 +37,31 @@ struct VirtualViewProps : winrt::implements<VirtualViewProps, winrt::Microsoft::
   REACT_FIELD(initialHidden)
   std::optional<bool> initialHidden{};
 
-  REACT_FIELD(removeClippedSubviews)
-  std::optional<bool> removeClippedSubviews{};
-
   REACT_FIELD(renderState)
   int32_t renderState{};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(VirtualView_OnModeChange)
-struct VirtualView_OnModeChange {
+REACT_STRUCT(VirtualViewExperimental_OnModeChange)
+struct VirtualViewExperimental_OnModeChange {
   REACT_FIELD(mode)
   int32_t mode{};
 
   REACT_FIELD(targetRect)
-  VirtualViewSpec_onModeChange2 targetRect;
+  VirtualViewExperimentalSpec_onModeChange2 targetRect;
 
   REACT_FIELD(thresholdRect)
-  VirtualViewSpec_onModeChange3 thresholdRect;
+  VirtualViewExperimentalSpec_onModeChange3 thresholdRect;
 };
 
-struct VirtualViewEventEmitter {
-  VirtualViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
+struct VirtualViewExperimentalEventEmitter {
+  VirtualViewExperimentalEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnModeChange = VirtualView_OnModeChange;
-  using OnModeChange2 = VirtualView_OnModeChange2;
-  using OnModeChange3 = VirtualView_OnModeChange3;
+  using OnModeChange = VirtualViewExperimental_OnModeChange;
+  using OnModeChange2 = VirtualViewExperimental_OnModeChange2;
+  using OnModeChange3 = VirtualViewExperimental_OnModeChange3;
 
   void onModeChange(OnModeChange &value) const {
     m_eventEmitter.DispatchEvent(L"modeChange", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
@@ -78,12 +74,12 @@ struct VirtualViewEventEmitter {
 };
 
 template<typename TUserData>
-struct BaseVirtualView {
+struct BaseVirtualViewExperimental {
 
   virtual void UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
-    const winrt::com_ptr<VirtualViewProps> &newProps,
-    const winrt::com_ptr<VirtualViewProps> &/*oldProps*/) noexcept {
+    const winrt::com_ptr<VirtualViewExperimentalProps> &newProps,
+    const winrt::com_ptr<VirtualViewExperimentalProps> &/*oldProps*/) noexcept {
     m_props = newProps;
   }
 
@@ -100,7 +96,7 @@ struct BaseVirtualView {
     const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
   }
 
-  virtual void UpdateEventEmitter(const std::shared_ptr<VirtualViewEventEmitter> &eventEmitter) noexcept {
+  virtual void UpdateEventEmitter(const std::shared_ptr<VirtualViewExperimentalEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
@@ -130,32 +126,32 @@ struct BaseVirtualView {
 
   
 
-  const std::shared_ptr<VirtualViewEventEmitter>& EventEmitter() const { return m_eventEmitter; }
-  const winrt::com_ptr<VirtualViewProps>& Props() const { return m_props; }
+  const std::shared_ptr<VirtualViewExperimentalEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<VirtualViewExperimentalProps>& Props() const { return m_props; }
 
 private:
-  winrt::com_ptr<VirtualViewProps> m_props;
-  std::shared_ptr<VirtualViewEventEmitter> m_eventEmitter;
+  winrt::com_ptr<VirtualViewExperimentalProps> m_props;
+  std::shared_ptr<VirtualViewExperimentalEventEmitter> m_eventEmitter;
 };
 
 template <typename TUserData>
-void RegisterVirtualViewNativeComponent(
+void RegisterVirtualViewExperimentalNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"VirtualView", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+      L"VirtualViewExperimental", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
                               const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
-            return winrt::make<VirtualViewProps>(props, cloneFrom); 
+            return winrt::make<VirtualViewExperimentalProps>(props, cloneFrom); 
         });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
-            userData->UpdateProps(view, newProps ? newProps.as<VirtualViewProps>() : nullptr, oldProps ? oldProps.as<VirtualViewProps>() : nullptr);
+            userData->UpdateProps(view, newProps ? newProps.as<VirtualViewExperimentalProps>() : nullptr, oldProps ? oldProps.as<VirtualViewExperimentalProps>() : nullptr);
         });
 
         compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -168,10 +164,10 @@ void RegisterVirtualViewNativeComponent(
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->UpdateEventEmitter(std::make_shared<VirtualViewEventEmitter>(eventEmitter));
+          userData->UpdateEventEmitter(std::make_shared<VirtualViewExperimentalEventEmitter>(eventEmitter));
         });
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseVirtualView<TUserData>::FinalizeUpdate) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::FinalizeUpdate != &BaseVirtualViewExperimental<TUserData>::FinalizeUpdate) {
             builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -179,7 +175,7 @@ void RegisterVirtualViewNativeComponent(
           });
         } 
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseVirtualView<TUserData>::UpdateState) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UpdateState != &BaseVirtualViewExperimental<TUserData>::UpdateState) {
           builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -187,7 +183,7 @@ void RegisterVirtualViewNativeComponent(
           });
         }
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseVirtualView<TUserData>::MountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::MountChildComponentView != &BaseVirtualViewExperimental<TUserData>::MountChildComponentView) {
           builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -195,7 +191,7 @@ void RegisterVirtualViewNativeComponent(
           });
         }
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseVirtualView<TUserData>::UnmountChildComponentView) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::UnmountChildComponentView != &BaseVirtualViewExperimental<TUserData>::UnmountChildComponentView) {
           builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                       const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
             auto userData = view.UserData().as<TUserData>();
@@ -205,13 +201,13 @@ void RegisterVirtualViewNativeComponent(
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
-          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseVirtualView<TUserData>::Initialize) {
+          if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::Initialize != &BaseVirtualViewExperimental<TUserData>::Initialize) {
             userData->Initialize(view);
           }
           view.UserData(*userData);
         });
 
-        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseVirtualView<TUserData>::CreateVisual) {
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateVisual != &BaseVirtualViewExperimental<TUserData>::CreateVisual) {
           compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
             auto userData = view.UserData().as<TUserData>();
             return userData->CreateVisual(view);

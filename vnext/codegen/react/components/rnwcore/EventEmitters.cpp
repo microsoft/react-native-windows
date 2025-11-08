@@ -13,6 +13,31 @@
 
 namespace facebook::react {
 
+void VirtualViewExperimentalEventEmitter::onModeChange(OnModeChange event) const {
+  dispatchEvent("modeChange", [event=std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    payload.setProperty(runtime, "mode", event.mode);
+{
+  auto targetRect = jsi::Object(runtime);
+  targetRect.setProperty(runtime, "x", event.targetRect.x);
+  targetRect.setProperty(runtime, "y", event.targetRect.y);
+  targetRect.setProperty(runtime, "width", event.targetRect.width);
+  targetRect.setProperty(runtime, "height", event.targetRect.height);
+  payload.setProperty(runtime, "targetRect", targetRect);
+}
+{
+  auto thresholdRect = jsi::Object(runtime);
+  thresholdRect.setProperty(runtime, "x", event.thresholdRect.x);
+  thresholdRect.setProperty(runtime, "y", event.thresholdRect.y);
+  thresholdRect.setProperty(runtime, "width", event.thresholdRect.width);
+  thresholdRect.setProperty(runtime, "height", event.thresholdRect.height);
+  payload.setProperty(runtime, "thresholdRect", thresholdRect);
+}
+    return payload;
+  });
+}
+
+
 void VirtualViewEventEmitter::onModeChange(OnModeChange event) const {
   dispatchEvent("modeChange", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);

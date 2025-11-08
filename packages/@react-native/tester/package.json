@@ -1,6 +1,10 @@
 {
   "name": "@react-native/tester",
+<<<<<<< Upstream
+  "version": "0.82.0-main",
+=======
   "version": "0.80.0-main",
+>>>>>>> Override
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -10,7 +14,11 @@
     "directory": "packages/rn-tester"
   },
   "engines": {
+<<<<<<< Upstream
+    "node": ">= 20.19.4"
+=======
     "node": ">=22"
+>>>>>>> Override
   },
   "scripts": {
     "start": "npx @react-native-community/cli start",
@@ -26,14 +34,19 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
+<<<<<<< Upstream
+    "@react-native/new-app-screen": "0.82.0-main",
+    "@react-native/popup-menu-android": "0.82.0-main",
+=======
     "@react-native/new-app-screen": "0.81.0-nightly-20250709-6892dde36",
     "@react-native/popup-menu-android": "0.81.0-nightly-20250709-6892dde36",
+>>>>>>> Override
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "19.1.0",
+    "react": "19.1.1",
     "react-native": "*"
   },
   "codegenConfig": {
@@ -57,9 +70,15 @@
     }
   },
   "devDependencies": {
+<<<<<<< Upstream
+    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli-platform-android": "20.0.0",
+    "@react-native-community/cli-platform-ios": "20.0.0",
+=======
     "@react-native-community/cli": "17.0.0",
     "@react-native-community/cli-platform-android": "17.0.0",
     "@react-native-community/cli-platform-ios": "17.0.0",
+>>>>>>> Override
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"
