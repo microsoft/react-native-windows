@@ -20,6 +20,7 @@
 #include "XamlUtils.h"
 #endif // USE_FABRIC
 #include <winrt/Windows.Storage.Streams.h>
+#include "../../Shared/InputValidation.h"
 #include "Unicode.h"
 
 namespace winrt {
@@ -103,6 +104,28 @@ void ImageLoader::Initialize(React::ReactContext const &reactContext) noexcept {
 }
 
 void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<double>> &&result) noexcept {
+  // VALIDATE URI - file:// abuse PROTECTION (P0 Critical - CVSS 7.8)
+  try {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
+    } else {
+      // Allow http/https for non-data URIs
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#endif
+    }
+  } catch (const std::exception &ex) {
+    result.Reject(ex.what());
+    return;
+  }
+
   m_context.UIDispatcher().Post(
       [context = m_context, uri = std::move(uri), result = std::move(result)]() mutable noexcept {
         GetImageSizeAsync(
@@ -126,6 +149,28 @@ void ImageLoader::getSizeWithHeaders(
     React::JSValue &&headers,
     React::ReactPromise<Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType>
         &&result) noexcept {
+  // SDL Compliance: Validate URI for SSRF (P0 Critical - CVSS 7.8)
+  try {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
+    } else {
+      // Allow http/https for non-data URIs
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#endif
+    }
+  } catch (const std::exception &ex) {
+    result.Reject(ex.what());
+    return;
+  }
+
   m_context.UIDispatcher().Post([context = m_context,
                                  uri = std::move(uri),
                                  headers = std::move(headers),
@@ -147,6 +192,28 @@ void ImageLoader::getSizeWithHeaders(
 }
 
 void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&result) noexcept {
+  // VALIDATE URI - file:// abuse PROTECTION (P0 Critical - CVSS 7.8)
+  try {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
+    } else {
+      // Allow http/https for non-data URIs
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#endif
+    }
+  } catch (const std::exception &ex) {
+    result.Reject(ex.what());
+    return;
+  }
+
   // NYI
   result.Resolve(true);
 }
@@ -156,6 +223,28 @@ void ImageLoader::prefetchImageWithMetadata(
     std::string queryRootName,
     double rootTag,
     React::ReactPromise<bool> &&result) noexcept {
+  // SDL Compliance: Validate URI for SSRF (P0 Critical - CVSS 7.8)
+  try {
+    if (uri.find("data:") == 0) {
+      // Validate data URI size to prevent DoS through memory exhaustion
+      ::Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
+          uri.length(), ::Microsoft::ReactNative::InputValidation::GetMaxDataUriSize(), "Data URI");
+    } else {
+      // Allow http/https for non-data URIs
+      // RNW is a developer platform - allow localhost by default for Metro, tests, and dev scenarios.
+#ifdef RNW_STRICT_SDL
+      // Strict SDL mode: block localhost for production apps
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, false);
+#else
+      // Developer-friendly: allow localhost for Metro, tests, and development
+      ::Microsoft::ReactNative::InputValidation::URLValidator::ValidateURL(uri, {"http", "https"}, true);
+#endif
+    }
+  } catch (const std::exception &ex) {
+    result.Reject(ex.what());
+    return;
+  }
+
   // NYI
   result.Resolve(true);
 }
