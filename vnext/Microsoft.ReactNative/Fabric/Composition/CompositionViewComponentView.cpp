@@ -1142,6 +1142,21 @@ void ViewComponentView::updateProps(
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateTransformProps(oldViewProps, newViewProps, Visual());
+
+  // Handle overflow property changes
+  if (oldViewProps.yogaStyle.overflow() != newViewProps.yogaStyle.overflow()) {
+    auto compVisual =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+            Visual());
+    if (compVisual) {
+      if (newViewProps.yogaStyle.overflow() == facebook::yoga::Overflow::Hidden) {
+        compVisual.Clip(Compositor().CreateInsetClip(0.0f, 0.0f, 0.0f, 0.0f));
+      } else {
+        compVisual.Clip(nullptr);
+      }
+    }
+  }
+
   base_type::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
@@ -1319,6 +1334,23 @@ void ViewComponentView::updateLayoutMetrics(
   Visual().Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  // Apply overflow clipping
+  if (m_props && m_props->yogaStyle.overflow() == facebook::yoga::Overflow::Hidden) {
+    auto compVisual =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+            Visual());
+    if (compVisual) {
+      compVisual.Clip(Compositor().CreateInsetClip(0.0f, 0.0f, 0.0f, 0.0f));
+    }
+  } else if (m_props) {
+    auto compVisual =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+            Visual());
+    if (compVisual) {
+      compVisual.Clip(nullptr);
+    }
+  }
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
