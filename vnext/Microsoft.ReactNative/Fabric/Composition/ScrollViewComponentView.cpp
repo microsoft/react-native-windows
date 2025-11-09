@@ -814,6 +814,10 @@ void ScrollViewComponentView::updateProps(
     }
     m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
   }
+
+  if (!oldProps || oldViewProps.pagingEnabled != newViewProps.pagingEnabled) {
+    m_scrollVisual.PagingEnabled(newViewProps.pagingEnabled);
+  }
 }
 
 void ScrollViewComponentView::updateState(

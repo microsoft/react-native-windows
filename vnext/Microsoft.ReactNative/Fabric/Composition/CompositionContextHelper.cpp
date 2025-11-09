@@ -913,6 +913,11 @@ struct CompScrollerVisual : winrt::implements<
     ConfigureSnapInertiaModifiers();
   }
 
+  void PagingEnabled(bool pagingEnabled) noexcept {
+    m_pagingEnabled = pagingEnabled;
+    ConfigureSnapInertiaModifiers();
+  }
+
   void Opacity(float opacity) noexcept {
     m_visual.Opacity(opacity);
   }
@@ -1155,11 +1160,30 @@ struct CompScrollerVisual : winrt::implements<
     // Collect and deduplicate all snap positions
     std::vector<float> snapPositions;
 
-    if (m_snapToStart) {
-      snapPositions.push_back(0.0f);
+    // Handle pagingEnabled - generate snap points at viewport intervals
+    if (m_pagingEnabled) {
+      float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
+      float maxScroll =
+          m_horizontal ? std::max(contentSize.x - visualSize.x, 0.0f) : std::max(contentSize.y - visualSize.y, 0.0f);
+
+      // Add snap points at each page (viewport size) interval
+      for (float position = 0.0f; position <= maxScroll; position += viewportSize) {
+        snapPositions.push_back(position);
+      }
+
+      // Ensure the end position is included if not already
+      if (!snapPositions.empty() && snapPositions.back() < maxScroll) {
+        snapPositions.push_back(maxScroll);
+      }
+    } else {
+      // Use explicit snap points when not using paging
+      if (m_snapToStart) {
+        snapPositions.push_back(0.0f);
+      }
+
+      snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
     }
 
-    snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
     std::sort(snapPositions.begin(), snapPositions.end());
     snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
 
@@ -1286,6 +1310,7 @@ struct CompScrollerVisual : winrt::implements<
   bool m_horizontal{false};
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
+  bool m_pagingEnabled{false};
   std::vector<float> m_snapToOffsets;
   bool m_inertia{false};
   bool m_custom{false};
