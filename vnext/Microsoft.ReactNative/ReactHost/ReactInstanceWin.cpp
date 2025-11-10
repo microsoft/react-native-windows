@@ -66,6 +66,7 @@
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
 #include <react/threading/MessageQueueThreadImpl.h>
+#include "Inspector/ReactInspectorThread.h"
 #endif
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -546,6 +547,8 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
 
   devSettings->useRuntimeScheduler = useRuntimeScheduler;
 
+  devSettings->inspectorHostTarget = m_options.InspectorHostTarget;
+
   return devSettings;
 }
 
@@ -656,16 +659,21 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               };
 
               if (devSettings->useDirectDebugger) {
-                ::Microsoft::ReactNative::GetSharedDevManager()->EnsureHermesInspector(
-                    devSettings->sourceBundleHost, devSettings->sourceBundlePort);
+                ::Microsoft::ReactNative::GetSharedDevManager()->EnsureInspectorPackagerConnection(
+                    devSettings->sourceBundleHost, devSettings->sourceBundlePort, devSettings->bundleAppId);
               }
 
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
                   devSettings, jsMessageThread, CreatePreparedScriptStore());
               auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
               jsRuntime->getRuntime();
-              m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
-                  std::move(jsRuntime), jsMessageThread, timerManager, jsErrorHandlingFunc);
+
+              m_bridgelessReactInstance = std::make_shared<facebook::react::ReactInstance>(
+                  std::move(jsRuntime),
+                  jsMessageThread,
+                  timerManager,
+                  jsErrorHandlingFunc,
+                  m_options.InspectorHostTarget);
 
               auto bufferedRuntimeExecutor = m_bridgelessReactInstance->getBufferedRuntimeExecutor();
               timerManager->setRuntimeExecutor(bufferedRuntimeExecutor);
@@ -687,6 +695,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
 
             facebook::react::ReactInstance::JSRuntimeFlags options;
+
             m_bridgelessReactInstance->initializeRuntime(
                 options,
                 [=, onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext](
@@ -740,7 +749,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
             LoadJSBundlesBridgeless(devSettings);
             SetupHMRClient();
-
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
             OnErrorWithMessage("ReactInstanceWin: Failed to create React Instance.");
@@ -1082,6 +1090,17 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   if (m_bridgelessReactInstance) {
     if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
       jsMessageThread->runOnQueueSync([&]() noexcept {
+        // Unregister from inspector BEFORE shutting down JS thread
+        if (m_bridgelessReactInstance && m_options.InspectorHostTarget) {
+          Mso::React::MessageDispatchQueue messageDispatchQueue{
+              ::Microsoft::ReactNative::ReactInspectorThread::Instance(), nullptr};
+          messageDispatchQueue.runOnQueueSync(
+              [weakBridgelessReactInstance = std::weak_ptr(m_bridgelessReactInstance)]() {
+                if (auto bridgelessReactInstance = weakBridgelessReactInstance.lock()) {
+                  bridgelessReactInstance->unregisterFromInspector();
+                }
+              });
+        }
         {
           // Release the JSI runtime
           std::scoped_lock lock{m_mutex};

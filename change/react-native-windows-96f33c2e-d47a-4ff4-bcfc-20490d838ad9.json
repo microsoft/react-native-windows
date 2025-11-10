@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added support for modern inspector",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
