@@ -151,6 +151,7 @@ module.system.haste.module_ref_prefix=m#
 
 react.runtime=automatic
 
+experimental.error_code_migration=new
 suppress_type=$FlowFixMe
 
 ban_spread_key_props=true
@@ -178,4 +179,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.278.0
+^0.279.0
