@@ -58,7 +58,9 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
       /* rightWidth: */ int,
       /* bottomWidth: */ int,
       /* leftWidth: */ int>
-  getBorderWidth(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
+  getBorderWidth(
+      jsi::Runtime& rt,
+      std::shared_ptr<const ShadowNode> shadowNode);
 
   std::tuple<
       /* x: */ double,
@@ -75,15 +77,21 @@ class NativeDOM : public NativeDOMCxxSpec<NativeDOM> {
       std::shared_ptr<const ShadowNode> shadowNode);
 
   std::tuple</* scrollLeft: */ double, /* scrollTop: */ double>
-  getScrollPosition(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
+  getScrollPosition(
+      jsi::Runtime& rt,
+      std::shared_ptr<const ShadowNode> shadowNode);
 
   std::tuple</* scrollWidth: */ int, /* scrollHeight */ int> getScrollSize(
       jsi::Runtime& rt,
       std::shared_ptr<const ShadowNode> shadowNode);
 
-  std::string getTagName(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
+  std::string getTagName(
+      jsi::Runtime& rt,
+      std::shared_ptr<const ShadowNode> shadowNode);
 
-  std::string getTextContent(jsi::Runtime& rt, std::shared_ptr<const ShadowNode> shadowNode);
+  std::string getTextContent(
+      jsi::Runtime& rt,
+      std::shared_ptr<const ShadowNode> shadowNode);
 
   bool hasPointerCapture(
       jsi::Runtime& rt,

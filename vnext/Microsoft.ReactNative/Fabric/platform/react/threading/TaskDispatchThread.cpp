@@ -12,8 +12,11 @@
 
 #include <folly/portability/SysResource.h>
 #include <folly/system/ThreadName.h>
-#include <chrono>
+#include <condition_variable>
 #include <future>
+#include <mutex>
+#include <queue>
+#include <thread>
 #include <utility>
 
 #include <glog/logging.h>
@@ -25,40 +28,88 @@
 
 namespace facebook::react {
 
-TaskDispatchThread::TaskDispatchThread(std::string threadName, int priorityOffset) noexcept
-    : threadName_(std::move(threadName)) {
-#ifdef ANDROID
-  // Attaches the thread to JVM just in case anything calls out to Java
-  thread_ = std::thread([&]() {
-    facebook::jni::ThreadScope::WithClassLoader([&]() {
-      int result = setpriority(PRIO_PROCESS, static_cast<pid_t>(::syscall(SYS_gettid)), priorityOffset);
+class TaskDispatchThread::Impl : public std::enable_shared_from_this<TaskDispatchThread::Impl> {
+ public:
+  Impl(std::string &&threadName) noexcept;
+  ~Impl() noexcept;
 
-      if (result != 0) {
-        LOG(INFO) << " setCurrentThreadPriority failed with pri errno: " << errno;
-      }
+  void start() noexcept;
+  bool isOnThread() noexcept;
+  bool isRunning() noexcept;
+  void runAsync(TaskFn &&task, std::chrono::milliseconds delayMs = std::chrono::milliseconds::zero()) noexcept;
+  void runSync(TaskFn &&task) noexcept;
+  void quit() noexcept;
+  void loop() noexcept;
 
-      loop();
-    });
-  });
+ private:
+  struct Task {
+    TimePoint dispatchTime;
+    TaskFn fn;
 
-#else
-  thread_ = std::thread(&TaskDispatchThread::loop, this);
-#endif
+    Task(TimePoint dispatchTime, TaskFn &&fn) : dispatchTime(dispatchTime), fn(std::move(fn)) {}
+
+    bool operator<(const Task &other) const {
+      // Have the earliest tasks be at the front of the queue.
+      return dispatchTime > other.dispatchTime;
+    }
+  };
+
+  std::mutex queueLock_;
+  std::condition_variable loopCv_;
+  std::priority_queue<Task> queue_;
+  std::atomic<bool> running_{true};
+  std::string threadName_;
+  std::thread thread_;
+};
+
+TaskDispatchThread::TaskDispatchThread(std::string threadName, int /*priorityOffset*/) noexcept
+    : impl_(std::make_shared<Impl>(std::move(threadName))) {
+  impl_->start();
 }
 
 TaskDispatchThread::~TaskDispatchThread() noexcept {
-  quit();
+  impl_->quit();
 }
 
 bool TaskDispatchThread::isOnThread() noexcept {
-  return std::this_thread::get_id() == thread_.get_id();
+  return impl_->isOnThread();
 }
 
 bool TaskDispatchThread::isRunning() noexcept {
-  return running_;
+  return impl_->isRunning();
 }
 
 void TaskDispatchThread::runAsync(TaskFn &&task, std::chrono::milliseconds delayMs) noexcept {
+  impl_->runAsync(std::move(task), delayMs);
+}
+
+void TaskDispatchThread::runSync(TaskFn &&task) noexcept {
+  impl_->runSync(std::move(task));
+}
+
+void TaskDispatchThread::quit() noexcept {
+  impl_->quit();
+}
+
+TaskDispatchThread::Impl::Impl(std::string &&threadName) noexcept : threadName_(std::move(threadName)) {}
+
+TaskDispatchThread::Impl::~Impl() noexcept {
+  quit();
+}
+
+void TaskDispatchThread::Impl::start() noexcept {
+  thread_ = std::thread([self = shared_from_this()]() { self->loop(); });
+}
+
+bool TaskDispatchThread::Impl::isOnThread() noexcept {
+  return std::this_thread::get_id() == thread_.get_id();
+}
+
+bool TaskDispatchThread::Impl::isRunning() noexcept {
+  return running_;
+}
+
+void TaskDispatchThread::Impl::runAsync(TaskFn &&task, std::chrono::milliseconds delayMs) noexcept {
   if (!running_) {
     return;
   }
@@ -68,7 +119,7 @@ void TaskDispatchThread::runAsync(TaskFn &&task, std::chrono::milliseconds delay
   loopCv_.notify_one();
 }
 
-void TaskDispatchThread::runSync(TaskFn &&task) noexcept {
+void TaskDispatchThread::Impl::runSync(TaskFn &&task) noexcept {
   std::promise<void> promise;
   runAsync([&]() {
     if (running_) {
@@ -79,7 +130,7 @@ void TaskDispatchThread::runSync(TaskFn &&task) noexcept {
   promise.get_future().wait();
 }
 
-void TaskDispatchThread::quit() noexcept {
+void TaskDispatchThread::Impl::quit() noexcept {
   if (!running_) {
     return;
   }
@@ -94,7 +145,7 @@ void TaskDispatchThread::quit() noexcept {
   }
 }
 
-void TaskDispatchThread::loop() noexcept {
+void TaskDispatchThread::Impl::loop() noexcept {
   if (!threadName_.empty()) {
     folly::setThreadName(threadName_);
   }
