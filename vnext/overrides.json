@@ -219,12 +219,6 @@
       "baseHash": "8ee0df254428851107836dbb7a2fa9033c92216e"
     },
     {
-      "type": "derived",
-      "file": "src-win/index.windows.js.flow",
-      "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "bb6c7873aa350c235aad233dd75656237d16d79c"
-    },
-    {
       "type": "platform",
       "file": "src-win/IntegrationTests/BlobTest.js"
     },
