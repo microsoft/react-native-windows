@@ -23,6 +23,12 @@ enum AnimationClass {
   SwitchThumb,
 };
 
+enum SnapPointsAlignment {
+  Near = 0, // Start alignment (left/top)
+  Center = 1, // Center alignment
+  Far = 2, // End alignment (right/bottom)
+};
+
 [webhosthidden][uuid("172def51-9e1a-4e3c-841a-e5a470065acc")] // uuid needed for empty interfaces
                [version(0)][experimental] interface IBrush {}
 
@@ -112,6 +118,8 @@ enum AnimationClass {
   void SetSnapPoints(
       Boolean snapToStart, Boolean snapToEnd, Windows.Foundation.Collections.IVectorView<Single> offsets);
   void PagingEnabled(Boolean pagingEnabled);
+  void SnapToInterval(Single interval);
+  void SnapToAlignment(SnapPointsAlignment alignment);
 }
 
 [webhosthidden][experimental] interface IActivityVisual
