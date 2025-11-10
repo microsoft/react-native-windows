@@ -1846,10 +1846,11 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
   bool hasSelection = selection.cpMin != selection.cpMax;
   bool isEmpty = GetTextFromRichEdit().empty();
   bool isReadOnly = windowsTextInputProps().editable == false;
+  bool canPaste = !isReadOnly && IsClipboardFormatAvailable(CF_UNICODETEXT);
 
   AppendMenuW(menu, MF_STRING | (hasSelection && !isReadOnly ? 0 : MF_GRAYED), 1, L"Cut");
   AppendMenuW(menu, MF_STRING | (hasSelection ? 0 : MF_GRAYED), 2, L"Copy");
-  AppendMenuW(menu, MF_STRING | (!isReadOnly ? 0 : MF_GRAYED), 3, L"Paste");
+  AppendMenuW(menu, MF_STRING | (canPaste ? 0 : MF_GRAYED), 3, L"Paste");
   AppendMenuW(menu, MF_STRING | (!isEmpty && !isReadOnly ? 0 : MF_GRAYED), 4, L"Select All");
 
   POINT cursorPos;
