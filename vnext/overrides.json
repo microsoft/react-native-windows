@@ -84,6 +84,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/network/HttpUtils.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/network/HttpUtils.cpp",
+      "baseHash": "fcec9bc75ff320e964dd8072dab3f0635fe935a5",
+      "issue": 13587
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.cpp",
       "baseHash": "898517c74357e110025445fa0698ca7343b16018",
@@ -98,31 +105,10 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/tracing/RuntimeSamplingProfileTraceEventSerializer.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/tracing/RuntimeSamplingProfileTraceEventSerializer.cpp",
-      "baseHash": "cba5466055f9089a93cfd7968b0001354df95e60",
-      "issue": 15256
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/Utf8.h",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
       "baseHash": "1d81aa08f37619a8e9e05c2cf3d76f8f878fb9df",
       "issue": 13587
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseHash": "3e9e300ac2c01ed2b3bfa7e5afe7b5961d3e9080",
-      "issue": 13172
     },
     {
       "type": "patch",
@@ -212,13 +198,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/primitives.h",
       "baseHash": "74cee7804fa62964c9ecc3fafd475d09b0ed6375",
       "issue": 15263
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "f7a058ced6474e42e0ed805a2875a99c420e8398",
-      "issue": 13172
     },
     {
       "type": "copy",
