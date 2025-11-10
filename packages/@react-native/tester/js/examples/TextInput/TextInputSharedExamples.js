@@ -1233,6 +1233,7 @@ module.exports = ([
             enablesReturnKeyAutomatically={true}
             returnKeyType="done"
             style={{maxHeight: 400, minHeight: 20, backgroundColor: '#eeeeee'}}>
+            generic generic generic
             <Text style={{fontSize: 6, color: 'red'}}>
               small small small small small small
             </Text>
@@ -1240,6 +1241,7 @@ module.exports = ([
             <Text style={{fontSize: 30, color: 'green'}}>
               huge huge huge huge huge
             </Text>
+            generic generic generic
           </AutogrowingTextInputExample>
         </View>
       );

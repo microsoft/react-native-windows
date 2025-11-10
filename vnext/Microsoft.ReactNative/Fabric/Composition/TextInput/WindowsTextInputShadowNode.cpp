@@ -15,9 +15,12 @@
 namespace facebook::react {
 
 <<<<<<< Upstream
+<<<<<<< HEAD
 =======
 <<<<<<< Upstream
 >>>>>>> Override
+=======
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
 // NOLINTNEXTLINE(modernize-avoid-c-arrays)
 extern const char AndroidTextInputComponentName[] = "AndroidTextInput";
 =======

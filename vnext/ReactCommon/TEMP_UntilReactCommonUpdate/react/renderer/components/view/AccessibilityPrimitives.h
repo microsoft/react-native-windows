@@ -96,15 +96,21 @@ struct AccessibilityState {
 <<<<<<< Upstream
   enum CheckedState { Unchecked, Checked, Mixed, None } checked{None};
 =======
+<<<<<<< HEAD
 <<<<<<< Upstream
   enum CheckedState { Unchecked, Checked, Mixed, None } checked{None};
 =======
+=======
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
   std::optional<bool> readOnly{std::nullopt}; // [Windows] - Do not remove; required for Windows IRangeValueProvider and IValueProvider Implementation
   std::optional<bool> multiselectable{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
   std::optional<bool> required{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
   enum { Unchecked, Checked, Mixed, None } checked{None};
 >>>>>>> Override
+<<<<<<< HEAD
 >>>>>>> Override
+=======
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
 };
 
 constexpr bool operator==(

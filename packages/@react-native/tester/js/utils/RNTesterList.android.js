@@ -145,6 +145,7 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
+<<<<<<< HEAD
 <<<<<<< Upstream
 =======
   /*
@@ -154,6 +155,8 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   */
 >>>>>>> Override
+=======
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
   ...RNTesterListFbInternal.Components,
 ];
 

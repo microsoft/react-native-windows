@@ -226,11 +226,16 @@ AccessibilityProps::AccessibilityProps(
   // this case and not regress the more common cases.
 <<<<<<< Upstream
 =======
+<<<<<<< HEAD
 <<<<<<< Upstream
 =======
   // [Windows ##14845
 >>>>>>> Override
 >>>>>>> Override
+=======
+  // [Windows ##14845
+>>>>>>> Override
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
   if (ReactNativeFeatureFlags::enableCppPropsIteratorSetter()) {
     accessibilityRole = sourceProps.accessibilityRole;
     role = sourceProps.role;
@@ -238,11 +243,16 @@ AccessibilityProps::AccessibilityProps(
   } else {
 <<<<<<< Upstream
 =======
+<<<<<<< HEAD
 <<<<<<< Upstream
 =======
     // Windows]
 >>>>>>> Override
 >>>>>>> Override
+=======
+    // Windows]
+>>>>>>> Override
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
     auto* accessibilityRoleValue =
         rawProps.at("accessibilityRole", nullptr, nullptr);
     auto* roleValue = rawProps.at("role", nullptr, nullptr);

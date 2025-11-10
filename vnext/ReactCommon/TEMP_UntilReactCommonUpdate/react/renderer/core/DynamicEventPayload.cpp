@@ -35,14 +35,20 @@ std::optional<double> DynamicEventPayload::extractValue(const std::vector<std::s
 <<<<<<< Upstream
     return static_cast<double>(dynamic.asInt());
 =======
+<<<<<<< HEAD
 <<<<<<< Upstream
     return static_cast<double>(dynamic.asInt());
 =======
+=======
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
     // [Windows ##14797
     return static_cast<double>(dynamic.asInt());
     // Windows]
 >>>>>>> Override
+<<<<<<< HEAD
 >>>>>>> Override
+=======
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
   }
   return std::nullopt;
 }

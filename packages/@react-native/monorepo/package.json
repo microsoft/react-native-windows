@@ -13,6 +13,10 @@
     "flow": "flow",
     "format-check": "prettier --list-different \"./**/*.{js,md,yml,ts,tsx}\"",
     "format": "npm run prettier && npm run clang-format",
+<<<<<<< HEAD
+=======
+<<<<<<< Upstream
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
     "featureflags": "yarn --cwd packages/react-native featureflags",
     "js-api-diff": "node ./scripts/js-api/diff-api-snapshot",
     "lint-ci": "./.github/workflow-scripts/analyze_code.sh && yarn shellcheck",
@@ -20,6 +24,14 @@
     "lint-kotlin": "./gradlew ktfmtFormat",
     "lint-markdown": "markdownlint-cli2 2>&1",
     "lint": "eslint --max-warnings 0 .",
+<<<<<<< HEAD
+=======
+=======
+    "featureflags": "cd packages/react-native && yarn featureflags",
+    "lint-ci": "./scripts/circleci/analyze_code.sh && yarn shellcheck",
+    "lint-java": "node ./scripts/lint-java.js",
+>>>>>>> Override
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
     "prettier": "prettier --write \"./**/*.{js,md,yml,ts,tsx}\"",
     "print-packages": "node ./scripts/monorepo/print",
     "shellcheck": "./scripts/circleci/analyze_scripts.sh",
@@ -51,11 +63,20 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-flow": "^7.24.7",
     "@jest/create-cache-key-function": "^29.7.0",
+<<<<<<< Upstream
+    "@microsoft/api-extractor": "^7.52.2",
+    "@react-native/metro-babel-transformer": "0.82.0-main",
+    "@react-native/metro-config": "0.82.0-main",
+    "@tsconfig/node22": "22.0.2",
+    "@types/react": "^19.1.0",
+    "@typescript-eslint/parser": "^8.36.0",
+=======
     "@react-native/metro-babel-transformer": "0.81.0-nightly-20250709-6892dde36",
     "@react-native/metro-config": "0.81.0-nightly-20250709-6892dde36",
     "@tsconfig/node18": "1.0.1",
     "@types/react": "^19.0.0",
     "@typescript-eslint/parser": "^7.1.1",
+>>>>>>> Override
     "ansi-styles": "^4.2.1",
     "babel-plugin-minify-dead-code-elimination": "^0.5.2",
     "babel-plugin-syntax-hermes-parser": "0.31.2",
@@ -76,12 +97,29 @@
     "eslint-plugin-react-native": "^4.0.0",
     "eslint-plugin-redundant-undefined": "^0.4.0",
     "eslint-plugin-relay": "^1.8.3",
+<<<<<<< HEAD
     "flow-api-translator": "0.31.2",
     "flow-bin": "^0.279.0",
     "glob": "^7.1.1",
     "hermes-eslint": "0.31.2",
     "hermes-transform": "0.31.2",
     "ini": "^5.0.0",
+=======
+<<<<<<< Upstream
+    "flow-api-translator": "0.31.2",
+    "flow-bin": "^0.279.0",
+    "glob": "^7.1.1",
+    "hermes-eslint": "0.31.2",
+    "hermes-transform": "0.31.2",
+    "ini": "^5.0.0",
+=======
+    "flow-api-translator": "0.29.1",
+    "flow-bin": "^0.274.2",
+    "glob": "^7.1.1",
+    "hermes-eslint": "0.29.1",
+    "hermes-transform": "0.29.1",
+>>>>>>> Override
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
     "inquirer": "^7.1.0",
     "jest": "^29.7.0",
     "jest-config": "^29.7.0",
@@ -90,9 +128,21 @@
     "jest-snapshot": "^29.7.0",
     "markdownlint-cli2": "^0.17.2",
     "markdownlint-rule-relative-links": "^3.0.0",
+<<<<<<< HEAD
     "memfs": "^4.7.7",
     "metro-babel-register": "^0.83.1",
     "metro-transform-plugins": "^0.83.1",
+=======
+<<<<<<< Upstream
+    "memfs": "^4.7.7",
+    "metro-babel-register": "^0.83.1",
+    "metro-transform-plugins": "^0.83.1",
+=======
+    "metro-babel-register": "^0.82.4",
+    "metro-memory-fs": "^0.82.4",
+    "metro-transform-plugins": "^0.82.4",
+>>>>>>> Override
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
     "micromatch": "^4.0.4",
     "node-fetch": "^2.2.0",
     "nullthrows": "^1.1.1",
@@ -105,9 +155,21 @@
     "signedsource": "^1.0.0",
     "supports-color": "^7.1.0",
     "temp-dir": "^2.0.0",
+<<<<<<< HEAD
     "tinybench": "^4.1.0",
     "typescript": "5.8.3",
     "ws": "^6.2.3"
+=======
+<<<<<<< Upstream
+    "tinybench": "^4.1.0",
+    "typescript": "5.8.3",
+    "ws": "^6.2.3"
+=======
+    "tinybench": "^3.1.0",
+    "typescript": "5.0.4",
+    "ws": "^6.2.2"
+>>>>>>> Override
+>>>>>>> 923b1fa618d99a145a0081df94a00fc9404b2a21
   },
   "resolutions": {
     "eslint-plugin-react-hooks": "6.1.0-canary-12bc60f5-20250613",
