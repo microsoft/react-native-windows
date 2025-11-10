@@ -697,10 +697,10 @@ void WindowsTextInputComponentView::OnPointerPressed(
   }
 
   if (m_textServices && msg) {
-    if (msg == WM_RBUTTONDOWN && !windowsTextInputProps().contextMenuHidden) {
+    if (msg == WM_RBUTTONUP && !windowsTextInputProps().contextMenuHidden) {
       ShowContextMenu(position);
       args.Handled(true);
-    } else if (msg == WM_RBUTTONDOWN && windowsTextInputProps().contextMenuHidden) {
+    } else if (msg == WM_RBUTTONUP && windowsTextInputProps().contextMenuHidden) {
       args.Handled(true);
     } else {
       LRESULT lresult;
