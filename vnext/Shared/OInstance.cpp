@@ -175,9 +175,7 @@ void LoadRemoteUrlScript(
 #undef __SAFEADD__
   } else {
     // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
-    fnLoadScriptCallback(
-        std::make_unique<const facebook::react::JSBigStdString>(jsBundleString),
-        bundleUrl);
+    fnLoadScriptCallback(std::make_unique<const facebook::react::JSBigStdString>(jsBundleString), bundleUrl);
   }
 }
 
@@ -497,7 +495,7 @@ InstanceImpl::InstanceImpl(
     auto turboModuleManager = std::make_shared<TurboModuleManager>(
         turboModuleRegistry,
         runtimeScheduler ? std::make_shared<RuntimeSchedulerCallInvoker>(runtimeScheduler)
-                          : innerInstance->getJSCallInvoker());
+                         : innerInstance->getJSCallInvoker());
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
     // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
@@ -517,8 +515,9 @@ InstanceImpl::InstanceImpl(
 
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.
-  const bool isNativeModulesProxyAvailable = ((m_devSettings->jsiRuntimeHolder != nullptr) ||
-                                              (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default));
+  const bool isNativeModulesProxyAvailable =
+      ((m_devSettings->jsiRuntimeHolder != nullptr) ||
+       (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default));
   if (!isNativeModulesProxyAvailable) {
     folly::dynamic configArray = folly::dynamic::array;
     for (auto const &moduleName : m_moduleRegistry->moduleNames()) {
@@ -542,8 +541,7 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 
 void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously) {
   try {
-    if (m_devSettings->liveReloadCallback != nullptr ||
-        m_devSettings->useFastRefresh) {
+    if (m_devSettings->liveReloadCallback != nullptr || m_devSettings->useFastRefresh) {
       Microsoft::ReactNative::LoadRemoteUrlScript(
           m_devSettings,
           m_devManager,

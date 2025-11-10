@@ -32,11 +32,11 @@ ReactPackageBuilder::ReactPackageBuilder(
 #endif
       m_turboModulesProvider{turboModulesProvider}
 #ifdef USE_FABRIC
-,
+      ,
       m_componentRegistry{componentRegistry},
       m_uriImageManager{uriImageManager}
 #endif
- {
+{
 }
 
 void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept {
@@ -54,7 +54,7 @@ void ReactPackageBuilder::AddViewManager(
 void ReactPackageBuilder::AddTurboModule(
     hstring const &moduleName,
     ReactModuleProvider const &moduleProvider) noexcept {
-    m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
+  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
 }
 
 #ifdef USE_FABRIC

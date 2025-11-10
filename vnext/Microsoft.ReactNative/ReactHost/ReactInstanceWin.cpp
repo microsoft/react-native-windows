@@ -390,18 +390,17 @@ void ReactInstanceWin::LoadModules(
   hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
-  std::string bundleUrl = devSettings->liveReloadCallback
-      ? facebook::react::DevServerHelper::get_BundleUrl(
-            devSettings->sourceBundleHost,
-            devSettings->sourceBundlePort,
-            devSettings->debugBundlePath,
-            devSettings->platformName,
-            devSettings->bundleAppId,
-            devSettings->devBundle,
-            devSettings->useFastRefresh,
-            devSettings->inlineSourceMap,
-            hermesBytecodeVersion)
-      : devSettings->bundleRootPath;
+  std::string bundleUrl = devSettings->liveReloadCallback ? facebook::react::DevServerHelper::get_BundleUrl(
+                                                                devSettings->sourceBundleHost,
+                                                                devSettings->sourceBundlePort,
+                                                                devSettings->debugBundlePath,
+                                                                devSettings->platformName,
+                                                                devSettings->bundleAppId,
+                                                                devSettings->devBundle,
+                                                                devSettings->useFastRefresh,
+                                                                devSettings->inlineSourceMap,
+                                                                hermesBytecodeVersion)
+                                                          : devSettings->bundleRootPath;
   ::Microsoft::ReactNative::SourceCode::SetScriptUrl(
       winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), bundleUrl);
 
