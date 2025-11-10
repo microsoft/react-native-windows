@@ -63,9 +63,6 @@ const Platform: PlatformType = {
     return false;
   },
   select: <T>(spec: PlatformSelectSpec<T>): T =>
-    'android' in spec
-      ? // $FlowFixMe[incompatible-type]
-        spec.android
     'windows' in spec
       ? // $FlowFixMe[incompatible-return]
         spec.windows

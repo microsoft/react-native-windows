@@ -408,41 +408,7 @@ const Button: component(
     importantForAccessibility === 'no'
       ? 'no-hide-descendants'
       : importantForAccessibility;
-<<<<<<< Upstream
 
-  return (
-    <NativeTouchable
-      accessible={accessible}
-      accessibilityActions={accessibilityActions}
-      onAccessibilityAction={onAccessibilityAction}
-      accessibilityLabel={ariaLabel || accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityLanguage={accessibilityLanguage}
-      accessibilityRole="button"
-      accessibilityState={_accessibilityState}
-      importantForAccessibility={_importantForAccessibility}
-      hasTVPreferredFocus={hasTVPreferredFocus}
-      nextFocusDown={nextFocusDown}
-      nextFocusForward={nextFocusForward}
-      nextFocusLeft={nextFocusLeft}
-      nextFocusRight={nextFocusRight}
-      nextFocusUp={nextFocusUp}
-      testID={testID}
-      disabled={disabled}
-      onPress={onPress}
-      touchSoundDisabled={touchSoundDisabled}
-      // $FlowFixMe[incompatible-exact]
-      // $FlowFixMe[prop-missing]
-      // $FlowFixMe[incompatible-type]
-      ref={ref}>
-      <View style={buttonStyles}>
-        <Text style={textStyles} disabled={disabled}>
-          {formattedTitle}
-        </Text>
-      </View>
-    </NativeTouchable>
-  );
-=======
   // [Windows
   if (Platform.OS === 'windows') {
     return (
@@ -569,7 +535,7 @@ const Button: component(
         touchSoundDisabled={touchSoundDisabled}
         // $FlowFixMe[incompatible-exact]
         // $FlowFixMe[prop-missing]
-        // $FlowFixMe[incompatible-type-arg]
+        // $FlowFixMe[incompatible-type]
         ref={ref}>
         <View style={buttonStyles}>
           <Text style={textStyles} disabled={disabled}>
@@ -580,7 +546,6 @@ const Button: component(
     );
   }
   // Windows]
->>>>>>> Override
 };
 
 Button.displayName = 'Button';
