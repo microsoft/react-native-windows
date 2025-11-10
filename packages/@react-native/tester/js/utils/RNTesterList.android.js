@@ -13,7 +13,6 @@
 import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
 import * as RNTesterListFbInternal from './RNTesterListFbInternal';
-import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const Components: Array<RNTesterModuleInfo> = [
   {
@@ -146,12 +145,15 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
+<<<<<<< Upstream
+=======
   /*
   {
     key: 'OSSLibraryExample',
     module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
   },
   */
+>>>>>>> Override
   ...RNTesterListFbInternal.Components,
 ];
 
@@ -372,14 +374,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
   },
   ...RNTesterListFbInternal.APIs,
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
-
-if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
-  APIs.push({
-    key: 'W3C PointerEvents',
-    category: 'Experimental',
-    module: require('../examples/Experimental/W3CPointerEventsExample').default,
-  });
-}
 
 const Playgrounds: Array<RNTesterModuleInfo> = [
   {

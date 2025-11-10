@@ -220,7 +220,7 @@ const TouchableWithoutFeedback: React.AbstractComponent<
       disabled:
         disabled !== null
           ? disabled
-          : ariaDisabled ?? accessibilityState?.disabled,
+          : (ariaDisabled ?? accessibilityState?.disabled),
       hitSlop: hitSlop,
       delayLongPress: delayLongPress,
       delayPressIn: delayPressIn,
@@ -312,7 +312,7 @@ const TouchableWithoutFeedback: React.AbstractComponent<
         ? 'no-hide-descendants'
         : props.importantForAccessibility,
     accessibilityLiveRegion:
-      ariaLive === 'off' ? 'none' : ariaLive ?? props.accessibilityLiveRegion,
+      ariaLive === 'off' ? 'none' : (ariaLive ?? props.accessibilityLiveRegion),
     nativeID: props.id ?? props.nativeID,
   };
 
@@ -322,9 +322,15 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     }
   }
 
+<<<<<<< Upstream
+  // $FlowFixMe[incompatible-type]
+  return cloneElement(element, elementProps, ...children);
+}
+=======
   // $FlowFixMe[incompatible-call]
   return cloneElement(element, {...elementProps, ref}, ...children);
 });
 
 export default TouchableWithoutFeedback;
 // Windows]
+>>>>>>> Override
