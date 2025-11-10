@@ -327,14 +327,10 @@ module.exports = {
   get NativeAppEventEmitter(): RCTNativeAppEventEmitter {
     return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter').default;
   },
-<<<<<<< Upstream
   get NativeComponentRegistry() {
     return require('./Libraries/NativeComponent/NativeComponentRegistry');
   },
   get NativeDialogManagerAndroid() {
-=======
-  get NativeDialogManagerAndroid(): NativeDialogManagerAndroid {
->>>>>>> Override
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')
       .default;
   },

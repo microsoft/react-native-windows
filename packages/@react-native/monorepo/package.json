@@ -104,15 +104,9 @@
     "signedsource": "^1.0.0",
     "supports-color": "^7.1.0",
     "temp-dir": "^2.0.0",
-<<<<<<< Upstream
-    "tinybench": "^4.1.0",
-    "typescript": "5.8.3",
-    "ws": "^6.2.3"
-=======
     "tinybench": "^3.1.0",
     "typescript": "5.0.4",
     "ws": "^6.2.2"
->>>>>>> Override
   },
   "resolutions": {
     "eslint-plugin-react-hooks": "6.1.0-canary-12bc60f5-20250613",
