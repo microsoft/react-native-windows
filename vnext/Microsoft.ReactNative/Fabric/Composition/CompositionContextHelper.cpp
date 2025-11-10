@@ -910,6 +910,10 @@ struct CompScrollerVisual : winrt::implements<
         m_snapToOffsets.push_back(offset);
       }
     }
+    // Match Paper behavior: snapToOffsets disables pagingEnabled
+    if (!m_snapToOffsets.empty()) {
+      m_pagingEnabled = false;
+    }
     ConfigureSnapInertiaModifiers();
   }
 
@@ -939,9 +943,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    bool sizeChanged = (m_visualSize.x != size.x || m_visualSize.y != size.y);
     m_visualSize = size;
     m_visual.Size(size);
     UpdateMaxPosition();
+    if (sizeChanged && m_pagingEnabled) {
+      ConfigureSnapInertiaModifiers();
+    }
   }
 
   void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
@@ -1051,9 +1059,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    bool sizeChanged = (m_contentSize.x != size.x || m_contentSize.y != size.y);
     m_contentSize = size;
     m_contentVisual.Size(size);
     UpdateMaxPosition();
+    if (sizeChanged && m_pagingEnabled) {
+      ConfigureSnapInertiaModifiers();
+    }
   }
 
   winrt::Windows::Foundation::Numerics::float3 ScrollPosition() const noexcept {
@@ -1166,14 +1178,20 @@ struct CompScrollerVisual : winrt::implements<
       float maxScroll =
           m_horizontal ? std::max(contentSize.x - visualSize.x, 0.0f) : std::max(contentSize.y - visualSize.y, 0.0f);
 
-      // Add snap points at each page (viewport size) interval
-      for (float position = 0.0f; position <= maxScroll; position += viewportSize) {
-        snapPositions.push_back(position);
-      }
+      // Only generate paging snap points if viewport size is valid
+      if (viewportSize > 0 && maxScroll > 0) {
+        // Add snap points at each page (viewport size) interval
+        for (float position = 0.0f; position <= maxScroll; position += viewportSize) {
+          snapPositions.push_back(position);
+        }
 
-      // Ensure the end position is included if not already
-      if (!snapPositions.empty() && snapPositions.back() < maxScroll) {
-        snapPositions.push_back(maxScroll);
+        // Ensure the end position is included if not already
+        if (!snapPositions.empty() && snapPositions.back() < maxScroll) {
+          snapPositions.push_back(maxScroll);
+        }
+      } else {
+        // If content fits in viewport or invalid size, just snap to start
+        snapPositions.push_back(0.0f);
       }
     } else {
       // Use explicit snap points when not using paging
@@ -1246,7 +1264,8 @@ struct CompScrollerVisual : winrt::implements<
       restingValues.push_back(restingValue);
     }
 
-    if (m_snapToEnd) {
+    // Only add snapToEnd handling when NOT using pagingEnabled (paging already includes end position)
+    if (m_snapToEnd && !m_pagingEnabled) {
       auto endRestingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
 
       // Create property sets to dynamically compute content - visual size
