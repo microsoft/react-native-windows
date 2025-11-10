@@ -85,7 +85,6 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
     // Note, further configuration should be done in each Windows variant's
     // TestRunner implementation.
     shared_ptr<DevSettings> devSettings = make_shared<DevSettings>();
-    devSettings->useWebDebugger = GetRuntimeOptionBool("RNTester.UseWebDebugger");
     devSettings->liveReloadCallback = []() {}; // Enables ChakraExecutor
     devSettings->errorCallback = [&result](string message) {
       result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(message);

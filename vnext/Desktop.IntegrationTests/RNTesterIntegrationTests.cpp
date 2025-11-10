@@ -26,9 +26,6 @@ TEST_MODULE_INITIALIZE(InitModule) {
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
   SetRuntimeOptionBool("WebSocket.ResourceV2", true); // Use WinRTWebSocketResource2
-
-  // WebSocketJSExecutor can't register native log hooks.
-  SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
 }
 
 TEST_CLASS (RNTesterIntegrationTests) {

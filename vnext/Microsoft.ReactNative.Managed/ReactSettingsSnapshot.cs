@@ -30,10 +30,6 @@ namespace Microsoft.ReactNative.Managed
 
     public bool UseFastRefresh => IsValid ? Handle.UseFastRefresh : false;
 
-    #pragma warning disable 612, 618 // Deprecated
-    public bool UseWebDebugger => IsValid ? Handle.UseWebDebugger : false;
-    #pragma warning restore 612, 618
-
     public bool RequestDevBundle => IsValid ? Handle.RequestDevBundle : true;
 
     public IReactSettingsSnapshot Handle { get; }

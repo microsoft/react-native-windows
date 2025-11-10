@@ -112,7 +112,6 @@
     <ClCompile Include="StringConversionTest_Desktop.cpp" />
     <ClCompile Include="UIManagerModuleTest.cpp" />
     <ClCompile Include="UtilsTest.cpp" />
-    <ClCompile Include="WebSocketJSExecutorTest.cpp" />
     <ClCompile Include="WebSocketMocks.cpp" />
     <ClCompile Include="WinRTNetworkingMocks.cpp" />
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp" />

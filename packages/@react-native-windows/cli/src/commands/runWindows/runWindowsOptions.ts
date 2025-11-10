@@ -40,7 +40,6 @@ export interface RunWindowsOptions {
   emulator?: boolean;
   device?: boolean;
   target?: string;
-  remoteDebugging?: string;
   logging?: boolean;
   packager?: boolean;
   bundle?: boolean;

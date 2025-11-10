@@ -222,8 +222,7 @@ struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<I
         });
     // Only show Configure Bundler when connected to a bundler
     devMenu.ConfigBundler().Visibility(
-        (Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ||
-         Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()))
+        Mso::React::ReactOptions::UseFastRefresh(m_context->Properties())
             ? xaml::Visibility::Visible
             : xaml::Visibility::Collapsed);
 

@@ -38,7 +38,6 @@
 #include <ReactPropertyBag.h>
 #include <SchedulerSettings.h>
 #include <Shlwapi.h>
-#include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
 #include "Inspector/ReactInspectorThread.h"
 #include "PackagerConnection.h"
@@ -177,8 +176,7 @@ void LoadRemoteUrlScript(
   } else {
     // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
     fnLoadScriptCallback(
-        std::make_unique<const facebook::react::JSBigStdString>(
-            devSettings->useWebDebugger ? bundleUrl : jsBundleString),
+        std::make_unique<const facebook::react::JSBigStdString>(jsBundleString),
         bundleUrl);
   }
 }
@@ -392,99 +390,79 @@ InstanceImpl::InstanceImpl(
 
   // Choose JSExecutor
   std::shared_ptr<JSExecutorFactory> jsef;
-  if (m_devSettings->useWebDebugger) {
-    try {
-      auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings, [weakthis = weak_from_this()]() {
-        if (auto strongThis = weakthis.lock()) {
-          strongThis->SetInError();
-        }
-      });
+  if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
+    Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
+  }
 
-      if ((jseFunc == nullptr) || m_isInError) {
-        m_devSettings->errorCallback("Failed to create JavaScript Executor.");
-        return;
-      }
-
-      jsef = std::make_shared<WebSocketJSExecutorFactory>(std::move(jseFunc));
-    } catch (std::exception &e) {
-      m_devSettings->errorCallback(e.what());
-      return;
-    }
+  // If the consumer gives us a JSI runtime, then  use it.
+  if (m_devSettings->jsiRuntimeHolder) {
+    assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
+    jsef = std::make_shared<OJSIExecutorFactory>(
+        m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
+  } else if (m_devSettings->jsExecutorFactoryDelegate != nullptr) {
+    jsef = m_devSettings->jsExecutorFactoryDelegate(m_innerInstance->getJSCallInvoker());
   } else {
-    if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
-      Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
-    }
+    assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
+    switch (m_devSettings->jsiEngineOverride) {
+      case JSIEngineOverride::Hermes: {
+        std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
-    // If the consumer gives us a JSI runtime, then  use it.
-    if (m_devSettings->jsiRuntimeHolder) {
-      assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
-      jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
-    } else if (m_devSettings->jsExecutorFactoryDelegate != nullptr) {
-      jsef = m_devSettings->jsExecutorFactoryDelegate(m_innerInstance->getJSCallInvoker());
-    } else {
-      assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
-      switch (m_devSettings->jsiEngineOverride) {
-        case JSIEngineOverride::Hermes: {
-          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
-
-          wchar_t tempPath[MAX_PATH];
-          if (GetTempPathW(MAX_PATH, tempPath)) {
-            preparedScriptStore =
-                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
-          }
-
-          m_devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
-              m_devSettings, m_jsThread, std::move(preparedScriptStore));
-          break;
+        wchar_t tempPath[MAX_PATH];
+        if (GetTempPathW(MAX_PATH, tempPath)) {
+          preparedScriptStore =
+              std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
         }
-        case JSIEngineOverride::V8: {
-#if defined(USE_V8)
-          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
-          wchar_t tempPath[MAX_PATH];
-          if (GetTempPathW(MAX_PATH, tempPath)) {
-            preparedScriptStore =
-                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
-          }
-
-          m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-              m_devSettings, m_jsThread, nullptr, std::move(preparedScriptStore), /*multithreading*/ false);
-          break;
-#else
-          assert(false); // V8 is not available in this build, fallthrough
-          [[fallthrough]];
-#endif
-        }
-        case JSIEngineOverride::V8NodeApi: {
-#if defined(USE_V8)
-          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
-
-          wchar_t tempPath[MAX_PATH];
-          if (GetTempPathW(MAX_PATH, tempPath)) {
-            preparedScriptStore =
-                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
-          }
-
-          m_devSettings->jsiRuntimeHolder = make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
-              m_devSettings, m_jsThread, std::move(preparedScriptStore), false);
-          break;
-#else
-          if (m_devSettings->errorCallback)
-            m_devSettings->errorCallback("JSI/V8/NAPI engine is not available in this build");
-          assert(false);
-          [[fallthrough]];
-#endif
-        }
-        case JSIEngineOverride::Chakra:
-        default: // TODO: Add other engines once supported
-          m_devSettings->jsiRuntimeHolder =
-              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
-          break;
+        m_devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
+            m_devSettings, m_jsThread, std::move(preparedScriptStore));
+        break;
       }
-      jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
+      case JSIEngineOverride::V8: {
+#if defined(USE_V8)
+        std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+
+        wchar_t tempPath[MAX_PATH];
+        if (GetTempPathW(MAX_PATH, tempPath)) {
+          preparedScriptStore =
+              std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+        }
+
+        m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+            m_devSettings, m_jsThread, nullptr, std::move(preparedScriptStore), /*multithreading*/ false);
+        break;
+#else
+        assert(false); // V8 is not available in this build, fallthrough
+        [[fallthrough]];
+#endif
+      }
+      case JSIEngineOverride::V8NodeApi: {
+#if defined(USE_V8)
+        std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+
+        wchar_t tempPath[MAX_PATH];
+        if (GetTempPathW(MAX_PATH, tempPath)) {
+          preparedScriptStore =
+              std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+        }
+
+        m_devSettings->jsiRuntimeHolder = make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+            m_devSettings, m_jsThread, std::move(preparedScriptStore), false);
+        break;
+#else
+        if (m_devSettings->errorCallback)
+          m_devSettings->errorCallback("JSI/V8/NAPI engine is not available in this build");
+        assert(false);
+        [[fallthrough]];
+#endif
+      }
+      case JSIEngineOverride::Chakra:
+      default: // TODO: Add other engines once supported
+        m_devSettings->jsiRuntimeHolder =
+            std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
+        break;
     }
+    jsef = std::make_shared<OJSIExecutorFactory>(
+        m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
   }
 
   m_innerInstance->initializeBridge(
@@ -493,57 +471,54 @@ InstanceImpl::InstanceImpl(
   // For RuntimeScheduler to work properly, we need to install TurboModuleManager with RuntimeSchedulerCallbackInvoker.
   // To be able to do that, we need to be able to call m_innerInstance->getRuntimeExecutor(), which we can only do after
   // m_innerInstance->initializeBridge(...) is called.
-  if (!m_devSettings->useWebDebugger) {
-    const auto runtimeExecutor = m_innerInstance->getRuntimeExecutor();
+  const auto runtimeExecutor = m_innerInstance->getRuntimeExecutor();
 #ifdef USE_FABRIC
-    Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeExecutor);
+  Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeExecutor);
 #endif
-    if (m_devSettings->useRuntimeScheduler) {
-      m_runtimeScheduler = std::make_shared<RuntimeScheduler>(runtimeExecutor);
-      Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), m_runtimeScheduler);
-    }
-
-    // Using runOnQueueSync because initializeBridge calls createJSExecutor with runOnQueueSync,
-    // so this is an attempt to keep the same semantics for exiting this method with TurboModuleManager
-    // initialized.
-    m_jsThread->runOnQueueSync([propertyBag,
-                                innerInstance = m_innerInstance,
-                                runtimeHolder = m_devSettings->jsiRuntimeHolder,
-                                runtimeScheduler = m_runtimeScheduler,
-                                turboModuleRegistry = m_turboModuleRegistry,
-                                longLivedObjectCollection = m_longLivedObjectCollection]() {
-      if (runtimeScheduler) {
-        RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
-      }
-      auto turboModuleManager = std::make_shared<TurboModuleManager>(
-          turboModuleRegistry,
-          runtimeScheduler ? std::make_shared<RuntimeSchedulerCallInvoker>(runtimeScheduler)
-                           : innerInstance->getJSCallInvoker());
-
-      // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-      // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
-      // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
-      auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
-        return turboModuleManager->getModule(name);
-      };
-
-      TurboModuleBinding::install(
-          *runtimeHolder->getRuntime(), std::function(binding), nullptr, longLivedObjectCollection);
-
-      // init TurboModule
-      for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
-        turboModuleManager->getModule(moduleName);
-      }
-    });
+  if (m_devSettings->useRuntimeScheduler) {
+    m_runtimeScheduler = std::make_shared<RuntimeScheduler>(runtimeExecutor);
+    Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), m_runtimeScheduler);
   }
+
+  // Using runOnQueueSync because initializeBridge calls createJSExecutor with runOnQueueSync,
+  // so this is an attempt to keep the same semantics for exiting this method with TurboModuleManager
+  // initialized.
+  m_jsThread->runOnQueueSync([propertyBag,
+                              innerInstance = m_innerInstance,
+                              runtimeHolder = m_devSettings->jsiRuntimeHolder,
+                              runtimeScheduler = m_runtimeScheduler,
+                              turboModuleRegistry = m_turboModuleRegistry,
+                              longLivedObjectCollection = m_longLivedObjectCollection]() {
+    if (runtimeScheduler) {
+      RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
+    }
+    auto turboModuleManager = std::make_shared<TurboModuleManager>(
+        turboModuleRegistry,
+        runtimeScheduler ? std::make_shared<RuntimeSchedulerCallInvoker>(runtimeScheduler)
+                          : innerInstance->getJSCallInvoker());
+
+    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+    // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
+    // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
+    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
+      return turboModuleManager->getModule(name);
+    };
+
+    TurboModuleBinding::install(
+        *runtimeHolder->getRuntime(), std::function(binding), nullptr, longLivedObjectCollection);
+
+    // init TurboModule
+    for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
+      turboModuleManager->getModule(moduleName);
+    }
+  });
 
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.
   const bool isNativeModulesProxyAvailable = ((m_devSettings->jsiRuntimeHolder != nullptr) ||
-                                              (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default)) &&
-      !m_devSettings->useWebDebugger;
+                                              (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default));
   if (!isNativeModulesProxyAvailable) {
     folly::dynamic configArray = folly::dynamic::array;
     for (auto const &moduleName : m_moduleRegistry->moduleNames()) {
@@ -567,7 +542,7 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 
 void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously) {
   try {
-    if (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback != nullptr ||
+    if (m_devSettings->liveReloadCallback != nullptr ||
         m_devSettings->useFastRefresh) {
       Microsoft::ReactNative::LoadRemoteUrlScript(
           m_devSettings,

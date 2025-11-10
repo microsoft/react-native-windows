@@ -109,12 +109,13 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
       viewManagersProvider,
 #endif
-      turboModulesProvider,
+      turboModulesProvider
 #ifdef USE_FABRIC
+      ,
       componentregistry,
-      uriImageManager,
+      uriImageManager
 #endif
-      m_instanceSettings.UseWebDebugger());
+  );
 
 #ifdef USE_FABRIC
   winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
@@ -133,7 +134,6 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.Notifications = m_instanceSettings.Notifications();
   reactOptions.SetUseDeveloperSupport(m_instanceSettings.UseDeveloperSupport());
   reactOptions.DeveloperSettings.SourceBundleName = to_string(m_instanceSettings.DebugBundlePath());
-  reactOptions.SetUseWebDebugger(m_instanceSettings.UseWebDebugger());
   reactOptions.SetUseDirectDebugger(m_instanceSettings.UseDirectDebugger());
   reactOptions.SetDebuggerBreakOnNextLine(m_instanceSettings.DebuggerBreakOnNextLine());
   reactOptions.SetUseFastRefresh(m_instanceSettings.UseFastRefresh());
