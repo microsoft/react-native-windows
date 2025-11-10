@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix CI linter issues caused by unbroken errors",
+  "packageName": "@react-native-windows/codegen",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
