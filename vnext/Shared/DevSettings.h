@@ -23,6 +23,10 @@ struct RuntimeHolderLazyInit;
 namespace facebook {
 namespace react {
 
+namespace jsinspector_modern {
+class HostTarget;
+} // namespace jsinspector_modern
+
 enum class JSIEngineOverride : int32_t {
   Default = 0, // No JSI, will use the legacy ExecutorFactory
   Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
@@ -111,6 +115,9 @@ struct DevSettings {
 
   // Enable concurrent mode by installing runtimeScheduler
   bool useRuntimeScheduler{false};
+
+  // The HostTarget instance for Fusebox
+  facebook::react::jsinspector_modern::HostTarget *inspectorHostTarget;
 };
 
 } // namespace react
