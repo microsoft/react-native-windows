@@ -688,6 +688,18 @@
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativePlatformConstantsWindows.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "365c5df75b38b129d364af3f6700cb206ce5bd2a"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/Xaml/XamlHost.d.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/Xaml/XamlHost.windows.js"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/src/private/specs_DEPRECATED/components/Xaml/XamlHostNativeComponent.js"
     }
   ]
 }
