@@ -374,8 +374,7 @@ void ReactInstanceWin::Initialize() noexcept {
 }
 
 void ReactInstanceWin::InitDevMenu() noexcept {
-  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
-  });
+  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {});
 }
 
 void ReactInstanceWin::InitUIDependentCalls() noexcept {
@@ -774,7 +773,6 @@ void ReactInstanceWin::InitUIQueue() noexcept {
   m_uiQueue = winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatchQueue2(m_options.Properties);
   VerifyElseCrashSz(m_uiQueue, "No UI Dispatcher provided");
 }
-
 
 facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexcept {
   if (m_options.OnLogging) {

@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.h>
 #include <react/renderer/graphics/Color.h>
+#include <winrt/Windows.UI.h>
 
 namespace Microsoft::ReactNative {
 

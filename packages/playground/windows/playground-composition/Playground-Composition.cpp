@@ -357,27 +357,16 @@ struct WindowData {
     return FALSE;
   }
 
-  static constexpr std::wstring_view g_bundleFiles[] = {
-      LR"(Samples\rntester)",
-      LR"(Samples\accessible)",
-      LR"(Samples\callbackTest)",
-      LR"(Samples\calculator)",
-      LR"(Samples\click)",
-      LR"(Samples\control)",
-      LR"(Samples\flexbox)",
-      LR"(Samples\focusTest)",
-      LR"(Samples\geosample)",
-      LR"(Samples\image)",
-      LR"(Samples\index)",
-      LR"(Samples\nativeFabricComponent)",
-      LR"(Samples\mouse)",
-      LR"(Samples\scrollViewSnapSample)",
-      LR"(Samples\simple)",
-      LR"(Samples\text)",
-      LR"(Samples\textinput)",
-      LR"(Samples\ticTacToe)",
-      LR"(Samples\view)",
-      LR"(Samples\debugTest01)"};
+  static constexpr std::wstring_view g_bundleFiles[] = {LR"(Samples\rntester)",     LR"(Samples\accessible)",
+                                                        LR"(Samples\callbackTest)", LR"(Samples\calculator)",
+                                                        LR"(Samples\click)",        LR"(Samples\control)",
+                                                        LR"(Samples\flexbox)",      LR"(Samples\focusTest)",
+                                                        LR"(Samples\geosample)",    LR"(Samples\image)",
+                                                        LR"(Samples\index)",        LR"(Samples\nativeFabricComponent)",
+                                                        LR"(Samples\mouse)",        LR"(Samples\scrollViewSnapSample)",
+                                                        LR"(Samples\simple)",       LR"(Samples\text)",
+                                                        LR"(Samples\textinput)",    LR"(Samples\ticTacToe)",
+                                                        LR"(Samples\view)",         LR"(Samples\debugTest01)"};
 
   static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
     switch (message) {

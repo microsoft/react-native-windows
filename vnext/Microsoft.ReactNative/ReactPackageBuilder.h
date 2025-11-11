@@ -2,26 +2,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "NativeModulesProvider.h"
-#include "TurboModulesProvider.h"
-#include "winrt/Microsoft.ReactNative.h"
 #include <Fabric/Composition/UriImageManager.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
+#include "NativeModulesProvider.h"
+#include "TurboModulesProvider.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
 
-struct ReactPackageBuilder : winrt::implements<
-                                 ReactPackageBuilder,
-                                 IReactPackageBuilder,
-                                 IReactPackageBuilderFabric> {
+struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackageBuilder, IReactPackageBuilderFabric> {
   ReactPackageBuilder(
       std::shared_ptr<NativeModulesProvider> const &modulesProvider,
       std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
       std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
       std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> const
-          &uriImageManager
-      ) noexcept;
+          &uriImageManager) noexcept;
 
  public: // IReactPackageBuilder
   void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;

@@ -289,9 +289,7 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
   }
 }
 
-
-void PropsAnimatedNode::CommitProps() {
-}
+void PropsAnimatedNode::CommitProps() {}
 
 PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
   if (auto fabricuiManager = FabricUIManager::FromProperties(m_context.Properties())) {

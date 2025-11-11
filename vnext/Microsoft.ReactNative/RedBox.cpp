@@ -18,18 +18,18 @@
 
 #include <ReactCoreInjection.h>
 #include <Shobjidl.h>
-#include <Utils/Helpers.h>
-#include <winrt/Windows.UI.Popups.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Markup.h>
 #include <UI.Xaml.Media.h>
+#include <Utils/Helpers.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.UI.Popups.h>
 #include <winrt/Windows.Web.Http.h>
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
@@ -120,8 +120,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(m_propBag.Handle()));
     auto initializeWithWindow{msg.as<::IInitializeWithWindow>()};
     initializeWithWindow->Initialize(hwnd);
-    msg.Commands().Append(
-        winrt::Windows::UI::Popups::UICommand(L"Dismiss", [](winrt::Windows::UI::Popups::IUICommand const &command){}));
+    msg.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+        L"Dismiss", [](winrt::Windows::UI::Popups::IUICommand const &command) {}));
     msg.Commands().Append(winrt::Windows::UI::Popups::UICommand(
         L"Reload", [wkHost = m_weakReactHost](winrt::Windows::UI::Popups::IUICommand const &command) {
           if (auto reactHost = wkHost.GetStrongPtr()) {
@@ -234,8 +234,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     if (Microsoft::ReactNative::IsFabricEnabled(m_propBag.Handle())) {
       ShowNewJsErrorUsingMessageDialog();
-    } else
-    {
+    } else {
       ShowNewJSErrorUsingXaml();
     }
   }

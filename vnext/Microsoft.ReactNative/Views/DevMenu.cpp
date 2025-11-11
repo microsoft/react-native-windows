@@ -143,8 +143,7 @@ struct WindowsPopupMenuDevMenu : public IDevMenu, public std::enable_shared_from
 
 DevMenuManager::DevMenuManager(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
 
-void DevMenuManager::Init() noexcept {
-}
+void DevMenuManager::Init() noexcept {}
 
 /*static*/ void DevMenuManager::InitDevMenu(
     Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
