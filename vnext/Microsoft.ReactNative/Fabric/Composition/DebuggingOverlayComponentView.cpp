@@ -103,9 +103,9 @@ void DebuggingOverlayComponentView::HandleCommand(
       auto rootVisual = root->OuterVisual();
 
       while (m_activeOverlays != 0) {
+        --m_activeOverlays;
         auto visual = rootVisual.GetAt(root->overlayIndex() + m_activeOverlays);
         rootVisual.Remove(visual);
-        --m_activeOverlays;
       }
     }
     return;

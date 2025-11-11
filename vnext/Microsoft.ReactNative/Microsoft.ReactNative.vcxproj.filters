@@ -313,6 +313,9 @@
     <ClInclude Include="ReactHost\AsyncActionQueue.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
+    <ClInclude Include="ReactHost\DebuggerNotifications.h">
+      <Filter>ReactHost</Filter>
+    </ClInclude>    
     <ClInclude Include="ReactHost\InstanceFactory.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
