@@ -363,7 +363,6 @@ struct WindowData {
       LR"(Samples\callbackTest)",
       LR"(Samples\calculator)",
       LR"(Samples\click)",
-      LR"(Samples\customViewManager)",
       LR"(Samples\control)",
       LR"(Samples\flexbox)",
       LR"(Samples\focusTest)",

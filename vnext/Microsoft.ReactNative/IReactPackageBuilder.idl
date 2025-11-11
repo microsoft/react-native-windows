@@ -3,9 +3,6 @@
 
 import "IReactContext.idl";
 import "IReactModuleBuilder.idl";
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-import "IViewManager.idl";
-#endif
 
 #include "DocString.h"
 
@@ -13,11 +10,6 @@ namespace Microsoft.ReactNative
 {
   DOC_STRING("Provides information about a custom native module. See @IReactModuleBuilder.")
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  DOC_STRING("Provides information about a custom view manager. See @IViewManager.")
-  delegate IViewManager ReactViewManagerProvider();
-#endif
 
   [webhosthidden]
   DOC_STRING("Builds ReactNative package with the set of native modules and view managers.")
@@ -29,10 +21,5 @@ namespace Microsoft.ReactNative
     DOC_STRING("Adds a custom native module. See @ReactModuleProvider. This will register the"
     "module as a TurboModule.")
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-    DOC_STRING("Adds a custom view manager. See @ReactViewManagerProvider.")
-    void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
-#endif
   }
 } // namespace Microsoft.ReactNative

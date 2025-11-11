@@ -151,8 +151,6 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilder.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageProvider.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IViewManager.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IViewManagerCore.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiApi.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactInstanceSettings.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeHost.idl" />

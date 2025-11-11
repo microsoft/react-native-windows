@@ -222,22 +222,6 @@ public sealed class SampleModule
 }
 ```
 
-### View Manager Development
-
-**C++ View Manager Pattern**:
-```cpp
-class SampleViewManager : public ViewManagerBase {
- public:
-  SampleViewManager(IReactContext const &reactContext);
-  
-  const char *GetName() const override;
-  winrt::FrameworkElement CreateView() noexcept override;
-  
-  void GetNativeProps(NativePropsBuilder const &builder) const override;
-  void UpdateProperties(ShadowNodeBase const &shadowNode, winrt::FrameworkElement const &view) override;
-};
-```
-
 ## Common Patterns and Best Practices
 
 ### Error Handling

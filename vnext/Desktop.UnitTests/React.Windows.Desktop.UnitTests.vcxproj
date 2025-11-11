@@ -100,7 +100,6 @@
   <ItemGroup>
     <ClCompile Include="BaseFileReaderResourceUnitTest.cpp" />
     <ClCompile Include="BytecodeUnitTests.cpp" />
-    <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
     <ClCompile Include="InstanceMocks.cpp" />
@@ -110,14 +109,12 @@
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />
     <ClCompile Include="StringConversionTest_Desktop.cpp" />
-    <ClCompile Include="UIManagerModuleTest.cpp" />
     <ClCompile Include="UtilsTest.cpp" />
     <ClCompile Include="WebSocketMocks.cpp" />
     <ClCompile Include="WinRTNetworkingMocks.cpp" />
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EmptyUIManagerModule.h" />
     <ClInclude Include="InstanceMocks.h" />
     <ClInclude Include="UnicodeTestStrings.h" />
     <ClInclude Include="WebSocketMocks.h" />

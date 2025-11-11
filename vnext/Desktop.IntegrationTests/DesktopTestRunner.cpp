@@ -10,7 +10,6 @@
 #include "Modules/TestImageLoaderModule.h"
 #include "TestInstance.h"
 #include "TestModule.h"
-#include "TestRootView.h"
 
 using namespace facebook::react;
 using namespace facebook::xplat::module;

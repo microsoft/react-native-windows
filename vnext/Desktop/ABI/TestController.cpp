@@ -93,12 +93,9 @@ msrn::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
   auto turboModulesProvider = std::make_shared<msrn::TurboModulesProvider>();
   return make<msrn::ReactPackageBuilder>(
       nativeModulesProvider,
-      turboModulesProvider
-#ifdef USE_FABRIC
-      ,
+      turboModulesProvider,
       std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>{},
       std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager>{}
-#endif
   );
 }
 
