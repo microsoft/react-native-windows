@@ -182,7 +182,6 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
       expect(workflow.buildDebug).toBe('yarn windows');
       expect(workflow.buildRelease).toBe('yarn windows --release');
     });
-
   });
 
   describe('Documentation and Example Validation', () => {
@@ -202,7 +201,6 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
       expect(procedure.steps[2]).toContain('yarn windows');
       expect(procedure.steps[3]).toContain('yarn windows --release');
     });
-
   });
 });
 
@@ -337,6 +335,5 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
       expect(procedure.steps[2]).toContain('yarn windows');
       expect(procedure.steps[3]).toContain('yarn windows --release');
     });
-
   });
 });
