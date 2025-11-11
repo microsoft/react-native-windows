@@ -123,7 +123,7 @@
 
                 - template: ../templates/publish-build-artifacts.yml
                   parameters:
-                    artifactName: ReactWindowsFabric
+                    artifactName: ReactWindows
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
                     contents: |
@@ -172,10 +172,10 @@
                     arguments: -NoPrompt -Tags buildLab
 
                 - task: DownloadPipelineArtifact@1
-                  displayName: Download "ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
+                  displayName: Download "ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                    artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
 
                 - task: BinSkim@4
                   displayName: Run Binskim Analysis

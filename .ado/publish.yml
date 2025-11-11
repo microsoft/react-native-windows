@@ -303,7 +303,7 @@ extends:
             - template: .ado/templates/publish-build-artifacts.yml@self
               parameters:
                 oneESMode: true ## Files are only copied to staging, not published
-                artifactName: ReactWindowsFabric
+                artifactName: ReactWindows
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
@@ -337,9 +337,9 @@ extends:
                 targetPath: '$(CrashDumpRootPath)'
                 artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
               - output: pipelineArtifact
-                displayName: 'Publish Artifact: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}'
-                artifactName: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
-                targetPath: $(Build.StagingDirectory)/NuGet/ReactWindowsFabric/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                displayName: 'Publish Artifact: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}'
+                artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                targetPath: $(Build.StagingDirectory)/NuGet/ReactWindows/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
         - job: RNWNuget
           dependsOn:
@@ -366,7 +366,7 @@ extends:
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
-              artifactName: ReactWindowsFabric
+              artifactName: ReactWindows
               publishCommitId: $(publishCommitId)
               npmVersion: $(npmVersion)
               packMicrosoftReactNative: true
