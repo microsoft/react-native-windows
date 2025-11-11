@@ -72,12 +72,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool RequestDevBundle() noexcept;
   void RequestDevBundle(bool value) noexcept;
 
-  //! Should the instance run in a remote environment such as within a browser
-  //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
-  //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
-  bool UseWebDebugger() noexcept;
-  void UseWebDebugger(bool value) noexcept;
-
   //! Should the instance trigger the hot reload logic when it first loads the instance
   //! Most edits should be visible within a second or two without the instance having to reload
   //! Non-compatible changes still cause full reloads

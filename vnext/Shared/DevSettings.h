@@ -53,7 +53,6 @@ struct DevSettings {
   std::function<void()> liveReloadCallback;
   std::function<void(std::string)> errorCallback;
   std::function<void()> waitingForDebuggerCallback;
-  std::function<void()> debuggerAttachCallback;
   NativeLoggingHook loggingCallback;
   std::shared_ptr<Mso::React::IRedBoxHandler> redboxHandler;
 
@@ -77,12 +76,6 @@ struct DevSettings {
 
   /// For direct debugging, name of runtime instance, or empty for default.
   std::string debuggerRuntimeName;
-
-  /// Enables debugging by running the JavaScript in a web browser (Chrome)
-  /// using http://localhost:8081/debugger-ui from the React Native packager
-  /// (Metro / Haul). Debugging will start as soon as the React Native instance
-  /// is loaded.
-  bool useWebDebugger{false};
 
   bool useFastRefresh{false};
 

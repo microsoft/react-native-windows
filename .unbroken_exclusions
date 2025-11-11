@@ -1,7 +1,9 @@
 URL not found https://docs.github.com/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model while parsing CONTRIBUTING.md (HTTP 403)
 URL not found https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks while parsing CONTRIBUTING.md (HTTP 403)
 URL not found https://docs.github.com/get-started/quickstart while parsing CONTRIBUTING.md (HTTP 403)
-File not found edge:/inspect while parsing packages/playground/README_composition.md
+URL not found https://www.npmjs.com/org/rnw-scripts while parsing packages/README.md (HTTP 403)
+URL not found https://www.npmjs.com/package/mustache while parsing docs/react-native-windows-init.md (HTTP 403)
+URL not found https://aka.ms/watson while parsing docs/sdl-gs-crash-monitoring.md (HTTP 401)
 !**/node_modules
 !vnext/packages
 !vnext/ReactCopies

@@ -265,8 +265,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeAgentDelegate.cpp" />
@@ -485,7 +483,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CxxMessageQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DevServerHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
@@ -515,7 +512,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\PlatformConstantsWinModule.cpp" />

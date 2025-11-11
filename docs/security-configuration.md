@@ -337,8 +337,8 @@ Security compliance is documented through:
 ### Security Documentation
 
 - [Microsoft Security Development Lifecycle](https://www.microsoft.com/securityengineering/sdl)
-- [Windows Security APIs](https://docs.microsoft.com/en-us/uwp/api/windows.security)
-- [WebView2 Security Guide](https://docs.microsoft.com/en-us/microsoft-edge/webview2/concepts/security)
+- [Windows UWP Security Docs](https://learn.microsoft.com/en-us/windows/uwp/security/)
+- [WebView2 Security Guide](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/security)
 
 ### React Native Windows Security Implementation
 

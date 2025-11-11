@@ -19,23 +19,24 @@ ReactPackageBuilder::ReactPackageBuilder(
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
     std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
-    std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
+    std::shared_ptr<TurboModulesProvider> const &turboModulesProvider
 #ifdef USE_FABRIC
+    ,
     std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
-    std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> const &uriImageManager,
+    std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> const &uriImageManager
 #endif
-    bool isWebDebugging) noexcept
+    ) noexcept
     : m_modulesProvider{modulesProvider},
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
       m_viewManagersProvider{viewManagersProvider},
 #endif
-      m_turboModulesProvider{turboModulesProvider},
+      m_turboModulesProvider{turboModulesProvider}
 #ifdef USE_FABRIC
+      ,
       m_componentRegistry{componentRegistry},
-      m_uriImageManager{uriImageManager},
+      m_uriImageManager{uriImageManager}
 #endif
-
-      m_isWebDebugging{isWebDebugging} {
+{
 }
 
 void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept {
@@ -53,10 +54,7 @@ void ReactPackageBuilder::AddViewManager(
 void ReactPackageBuilder::AddTurboModule(
     hstring const &moduleName,
     ReactModuleProvider const &moduleProvider) noexcept {
-  if (m_isWebDebugging)
-    m_modulesProvider->AddModuleProvider(moduleName, moduleProvider);
-  else
-    m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
+  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
 }
 
 #ifdef USE_FABRIC

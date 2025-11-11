@@ -19,7 +19,6 @@ export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
- *    remote-debugging: Boolean - Run using remote JS proxy
  *    logging: Boolean - Enables logging
  *    no-packager: Boolean - Do not launch packager while building
  *    bundle: Boolean - Enable Bundle configuration.
@@ -40,7 +39,6 @@ export interface RunWindowsOptions {
   emulator?: boolean;
   device?: boolean;
   target?: string;
-  remoteDebugging?: string;
   logging?: boolean;
   packager?: boolean;
   bundle?: boolean;
@@ -90,10 +88,6 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--target [string]',
     description: 'Deploys the app to the specified GUID for a device',
-  },
-  {
-    name: '--remote-debugging',
-    description: '(Deprecated) Deploys the app in remote debugging mode',
   },
   {
     name: '--logging',

@@ -156,58 +156,26 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
     if (auto instance = m_wkInstance.GetStrongPtr()) {
       auto state = instance->State();
       if (state != ReactInstanceState::HasError && state != ReactInstanceState::Unloaded) {
-        if (instance->UseWebDebugger()) {
-          // While using a CxxModule for UIManager (which we do when running under webdebugger)
-          // We need to post the batch complete to the NativeQueue to ensure that the UIManager
-          // has posted everything from this batch into its queue before we complete the batch.
-          instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
-            if (auto instance = wkInstance.GetStrongPtr()) {
-              instance->m_batchingUIThread->runOnQueue([wkInstance]() {
-                if (auto instance = wkInstance.GetStrongPtr()) {
-                  auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-                  if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                                                      UIBatchCompleteCallbackProperty())) {
-                    (*callback)(instance->m_reactContext->Properties());
-                  }
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-                  if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                    uiManager->onBatchComplete();
-                  }
-#endif
-                }
-              });
-
-              // For UWP we use a batching message queue to optimize the usage
-              // of the CoreDispatcher.  Win32 already has an optimized queue.
-              facebook::react::BatchingMessageQueueThread *batchingUIThread =
-                  static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-              if (batchingUIThread != nullptr) {
-                batchingUIThread->onBatchComplete();
-              }
+        instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
+          if (auto instance = wkInstance.GetStrongPtr()) {
+            auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
+            if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                UIBatchCompleteCallbackProperty())) {
+              (*callback)(instance->m_reactContext->Properties());
             }
-          });
-        } else {
-          instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
-            if (auto instance = wkInstance.GetStrongPtr()) {
-              auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-              if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                                                  UIBatchCompleteCallbackProperty())) {
-                (*callback)(instance->m_reactContext->Properties());
-              }
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
-              if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                uiManager->onBatchComplete();
-              }
-#endif
+            if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+              uiManager->onBatchComplete();
             }
-          });
-          // For UWP we use a batching message queue to optimize the usage
-          // of the CoreDispatcher.  Win32 already has an optimized queue.
-          facebook::react::BatchingMessageQueueThread *batchingUIThread =
-              static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-          if (batchingUIThread != nullptr) {
-            batchingUIThread->onBatchComplete();
+#endif
           }
+        });
+        // For UWP we use a batching message queue to optimize the usage
+        // of the CoreDispatcher.  Win32 already has an optimized queue.
+        facebook::react::BatchingMessageQueueThread *batchingUIThread =
+            static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+        if (batchingUIThread != nullptr) {
+          batchingUIThread->onBatchComplete();
         }
       }
     }
@@ -240,7 +208,6 @@ ReactInstanceWin::ReactInstanceWin(
       m_isFastReloadEnabled(options.UseFastRefresh()),
       m_isLiveReloadEnabled(options.UseLiveReload()),
       m_updateUI{std::move(updateUI)},
-      m_useWebDebugger(options.UseWebDebugger()),
       m_useDirectDebugger(options.UseDirectDebugger()),
       m_debuggerBreakOnNextLine(options.DebuggerBreakOnNextLine()),
       m_reactContext{Mso::Make<ReactContext>(
@@ -337,11 +304,7 @@ void ReactInstanceWin::LoadModules(
     const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
   auto registerTurboModule = [this, &nativeModulesProvider, &turboModulesProvider](
                                  const wchar_t *name, const ReactModuleProvider &provider) noexcept {
-    if (m_options.UseWebDebugger()) {
-      nativeModulesProvider->AddModuleProvider(name, provider);
-    } else {
-      turboModulesProvider->AddModuleProvider(name, provider, false);
-    }
+    turboModulesProvider->AddModuleProvider(name, provider, false);
   };
 
 #ifdef USE_FABRIC
@@ -404,12 +367,10 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
-  if (!m_options.UseWebDebugger()) {
-    turboModulesProvider->AddModuleProvider(
-        L"SampleTurboModule",
-        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>(),
-        false);
-  }
+  turboModulesProvider->AddModuleProvider(
+      L"SampleTurboModule",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>(),
+      false);
 
   ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
       winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
@@ -429,18 +390,17 @@ void ReactInstanceWin::LoadModules(
   hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
-  std::string bundleUrl = (devSettings->useWebDebugger || devSettings->liveReloadCallback)
-      ? facebook::react::DevServerHelper::get_BundleUrl(
-            devSettings->sourceBundleHost,
-            devSettings->sourceBundlePort,
-            devSettings->debugBundlePath,
-            devSettings->platformName,
-            devSettings->bundleAppId,
-            devSettings->devBundle,
-            devSettings->useFastRefresh,
-            devSettings->inlineSourceMap,
-            hermesBytecodeVersion)
-      : devSettings->bundleRootPath;
+  std::string bundleUrl = devSettings->liveReloadCallback ? facebook::react::DevServerHelper::get_BundleUrl(
+                                                                devSettings->sourceBundleHost,
+                                                                devSettings->sourceBundlePort,
+                                                                devSettings->debugBundlePath,
+                                                                devSettings->platformName,
+                                                                devSettings->bundleAppId,
+                                                                devSettings->devBundle,
+                                                                devSettings->useFastRefresh,
+                                                                devSettings->inlineSourceMap,
+                                                                hermesBytecodeVersion)
+                                                          : devSettings->bundleRootPath;
   ::Microsoft::ReactNative::SourceCode::SetScriptUrl(
       winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), bundleUrl);
 
@@ -525,13 +485,10 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
   devSettings->debuggerBreakOnNextLine = m_debuggerBreakOnNextLine;
   devSettings->debuggerPort = m_options.DeveloperSettings.DebuggerPort;
   devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
-  devSettings->useWebDebugger = m_useWebDebugger;
   devSettings->useFastRefresh = m_isFastReloadEnabled;
   devSettings->bundleRootPath = BundleRootPath();
   devSettings->platformName =
       winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(m_reactContext->Properties());
-  devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
-  devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
   devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
   devSettings->bundleAppId = BundleAppId();
   devSettings->devBundle = RequestDevBundle();
@@ -963,7 +920,7 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
   // The OnReactInstanceLoaded internally only accepts the first call and ignores others.
   //
 
-  if (m_useWebDebugger || m_isFastReloadEnabled) {
+  if (m_isFastReloadEnabled) {
     // Getting bundle from the packager, so do everything async.
     auto instanceWrapper = m_instanceWrapper.LoadWithLock();
     instanceWrapper->loadBundle(Mso::Copy(JavaScriptBundleFile()));
@@ -1341,14 +1298,6 @@ void ReactInstanceWin::OnLiveReload() noexcept {
   }
 }
 
-std::function<void()> ReactInstanceWin::GetWaitingForDebuggerCallback() noexcept {
-  if (m_useWebDebugger) {
-    return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnWaitingForDebugger);
-  }
-
-  return {};
-}
-
 void ReactInstanceWin::OnWaitingForDebugger() noexcept {
   auto state = m_state.load();
   while (state == ReactInstanceState::Loading) {
@@ -1358,14 +1307,6 @@ void ReactInstanceWin::OnWaitingForDebugger() noexcept {
   }
 
   m_updateUI();
-}
-
-std::function<void()> ReactInstanceWin::GetDebuggerAttachCallback() noexcept {
-  if (m_useWebDebugger) {
-    return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnDebuggerAttach);
-  }
-
-  return {};
 }
 
 void ReactInstanceWin::OnDebuggerAttach() noexcept {
@@ -1483,7 +1424,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
 
   assert(!useFabric);
 #ifndef CORE_ABI
-  if (!useFabric || m_useWebDebugger) {
+  if (!useFabric) {
     int64_t rootTag = -1;
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -1513,7 +1454,7 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
   folly::dynamic params = folly::dynamic::array(rootTag);
 
 #ifdef USE_FABRIC
-  if (useFabric && !m_useWebDebugger) {
+  if (useFabric) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
@@ -1542,10 +1483,6 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
     Mso::VoidFunctor &&updateUI) noexcept {
   return Mso::Make<ReactInstanceWin, IReactInstanceInternal>(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
-}
-
-bool ReactInstanceWin::UseWebDebugger() const noexcept {
-  return m_useWebDebugger;
 }
 
 bool ReactInstanceWin::UseFastRefresh() const noexcept {
