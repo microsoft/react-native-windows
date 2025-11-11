@@ -62,8 +62,6 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/macos-tests.yml
-
       - template: jobs/playground.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
@@ -93,3 +91,5 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: false
+
+      - template: jobs/macos-tests.yml
