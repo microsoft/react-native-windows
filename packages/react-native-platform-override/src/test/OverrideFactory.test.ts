@@ -116,9 +116,9 @@ test.each(<TestCall<ReturnsPromise>[]>[
   testCall(factory.createDerivedOverride, ['nope.windows.js', 'foo.js', 1245]),
   testCall(factory.createPatchOverride, ['nope.windows.js', 'foo.js', 1245]),
   testCall(factory.createDirectoryCopyOverride, ['nope', 'bar', 1245]),
-])('%s - No Override', (_, fn, params) => {
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  expect(fn.apply(params)).rejects.toThrow();
+])('%s - No Override', async (_, fn, params) => {
+   
+  await expect(fn.apply(params)).rejects.toThrow();
 });
 
 test.each(<TestCall<ReturnsPromise>[]>[
@@ -127,6 +127,6 @@ test.each(<TestCall<ReturnsPromise>[]>[
   testCall(factory.createPatchOverride, ['foo.windows.js', 'nope.js', 1245]),
   testCall(factory.createDirectoryCopyOverride, ['src-win/bar', 'nope', 1245]),
 ])('%s - No Base', (_, fn, params) => {
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  expect(fn.apply(params)).rejects.toThrow();
+   
+  await expect(fn.apply(params)).rejects.toThrow();
 });
