@@ -62,8 +62,6 @@ struct ReactPackageBuilder : winrt::implements<
   std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> m_componentRegistry;
   std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> m_uriImageManager;
 #endif
-
-  const bool m_isWebDebugging;
 };
 
 } // namespace winrt::Microsoft::ReactNative
