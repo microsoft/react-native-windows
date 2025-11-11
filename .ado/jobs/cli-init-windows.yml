@@ -180,7 +180,6 @@ jobs:
                   platform: ${{ matrix.platform }}
                   additionalInitArguments: ${{ matrix.additionalInitArguments }}
                   additionalRunArguments: ${{ matrix.additionalRunArguments }}
-                  runWack: ${{ coalesce(matrix.runWack, false) }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
                   useChakra: ${{ coalesce(matrix.useChakra, false) }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}

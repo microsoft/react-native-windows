@@ -67,11 +67,6 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/sample-apps.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
-
       - template: jobs/e2e-test.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}

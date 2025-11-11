@@ -26,8 +26,7 @@ React Native Windows is a Microsoft-maintained implementation of React Native th
 ├── docs/             # Documentation
 ├── packages/         # Monorepo packages
 │   ├── @react-native-windows/  # Core RNW packages
-│   ├── @rnw-scripts/           # Build and development tools
-│   └── sample-apps/            # Example applications
+│   └── @rnw-scripts/           # Build and development tools
 ├── vnext/            # Main C++/C# implementation
 └── tools/            # Development utilities
 ```

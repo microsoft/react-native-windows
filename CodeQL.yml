@@ -22,7 +22,6 @@ path_classifiers:
     - "**/packages/e2e-test-app-fabric"
     - "**/packages/integration-test-app"
     - "**/packages/playground"
-    - "**/packages/sample-apps"
     - "**/packages/sample-app-fabric"
     - "**/vnext/Desktop.ABITests"
     - "**/vnext/Desktop.IntegrationTests"
