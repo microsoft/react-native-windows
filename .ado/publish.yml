@@ -366,8 +366,7 @@ extends:
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
-              artifactName: ReactWindows
-              artifactName2: ReactWindowsFabric
+              artifactName: ReactWindowsFabric
               publishCommitId: $(publishCommitId)
               npmVersion: $(npmVersion)
               packMicrosoftReactNative: true
