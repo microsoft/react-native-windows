@@ -65,13 +65,16 @@ const Platform: PlatformType = {
     return false;
   },
   select: <T>(spec: PlatformSelectSpec<T>): T =>
+    'android' in spec
+      ? // $FlowFixMe[incompatible-type]
+        spec.android
     'win32' in spec
       ? // $FlowFixMe[incompatible-return]
         spec.win32
       : 'native' in spec
-        ? // $FlowFixMe[incompatible-return]
+        ? // $FlowFixMe[incompatible-type]
           spec.native
-        : // $FlowFixMe[incompatible-return]
+        : // $FlowFixMe[incompatible-type]
           spec.default,
 };
 
