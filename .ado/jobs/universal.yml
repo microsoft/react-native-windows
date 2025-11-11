@@ -147,7 +147,7 @@
                   value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
-                - UniversalBuild${{ matrix.Name }}
+                - UniversalBuild${{ matrix.Name }}Fabric
 
               pool: ${{ parameters.AgentPool.Medium }}
               timeoutInMinutes: 60
