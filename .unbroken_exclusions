@@ -10,7 +10,6 @@ URL not found https://aka.ms/watson while parsing docs/sdl-gs-crash-monitoring.m
 !packages/react-native-platform-override/node_modules
 !packages/override-tools/node_modules
 !packages/@office-iss/react-native-win32/node_modules
-!packages/e2e-test-app/node_modules
 !packages/e2e-test-app-fabric/node_modules
 !packages/sample-app-fabric/node_modules
 !packages/playground/node_modules

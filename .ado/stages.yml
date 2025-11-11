@@ -72,11 +72,6 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/integration-test.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
-
   - stage: CLI
     displayName: Cli 🖥
     dependsOn: Setup

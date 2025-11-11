@@ -18,7 +18,6 @@ path_classifiers:
     - "**/packages/@react-native/tester"
     - "**/packages/@react-native-windows/tester"
     - "**/packages/debug-test"
-    - "**/packages/e2e-test-app"
     - "**/packages/e2e-test-app-fabric"
     - "**/packages/integration-test-app"
     - "**/packages/playground"
