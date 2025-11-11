@@ -1,0 +1,7 @@
+{
+  "comment": "Merge branch 'integrate-nightly-2025819' of https://github.com/protikbiswas100/react-native-windows into integrate-nightly-2025819",
+  "type": "prerelease",
+  "packageName": "react-native-platform-override",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
