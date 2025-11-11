@@ -26,12 +26,9 @@
 
 #include <Shared/IReactRootView.h>
 
-#include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/UriImageManager.h>
-#endif
 
 namespace facebook::react::jsinspector_modern {
 class HostTarget;
@@ -171,11 +168,6 @@ struct NativeModuleProvider2 {
       std::shared_ptr<facebook::react::MessageQueueThread> const &defaultQueueThread) = 0;
 };
 
-struct ViewManagerProvider2 {
-  virtual std::vector<std::unique_ptr<::Microsoft::ReactNative::IViewManager>> GetViewManagers(
-      Mso::CntPtr<IReactContext> const &reactContext) = 0;
-};
-
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
@@ -184,11 +176,8 @@ struct ReactOptions {
   winrt::Microsoft::ReactNative::IReactNotificationService Notifications;
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
-  std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;
   std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> TurboModuleProvider;
-#ifdef USE_FABRIC
   std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> UriImageManager;
-#endif
 
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;

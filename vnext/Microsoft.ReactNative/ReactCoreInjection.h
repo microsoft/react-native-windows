@@ -6,7 +6,6 @@
 #include "ReactCoreInjection.g.h"
 #include "ReactViewOptions.g.h"
 
-#include "INativeUIManager.h"
 #include "React.h"
 #include "ReactHost/React.h"
 #include "ReactPropertyBag.h"

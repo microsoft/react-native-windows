@@ -59,25 +59,16 @@ TEST_CLASS (JsiSimpleTurboModuleTests) {
                 TestEventService::LogEvent("Instance created event", nullptr);
                 // Save this thread as the js thread
                 jsThreadId = std::this_thread::get_id();
-#if !USE_FABRIC
-                TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
-#endif
               });
           host.InstanceSettings().InstanceLoaded(
               [&](IInspectable const & /*sender*/, InstanceLoadedEventArgs const &args) {
                 TestEventService::LogEvent("Instance loaded event", nullptr);
                 TestCheck(jsThreadId == std::this_thread::get_id());
-#if !USE_FABRIC
-                TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
-#endif
               });
           host.InstanceSettings().InstanceDestroyed(
               [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const &args) {
                 TestEventService::LogEvent("Instance destroyed event", nullptr);
                 TestCheck(jsThreadId == std::this_thread::get_id());
-#if !USE_FABRIC
-                TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
-#endif
               });
         });
 

@@ -46,7 +46,6 @@
 
     <file src="$nugetroot$\inc\Shared\AbiSafe.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\DevSettings.h" target="inc"/>
-    <file src="$nugetroot$\inc\ReactWin32\INativeUIManagerLegacy.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IDevSupportManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>

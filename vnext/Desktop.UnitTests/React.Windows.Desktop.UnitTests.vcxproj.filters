@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="EmptyUIManagerModule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InstanceMocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -17,9 +14,6 @@
       <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="StringConversionTest_Desktop.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManagerModuleTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="UnicodeConversionTest.cpp">
@@ -65,9 +59,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EmptyUIManagerModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UnicodeTestStrings.h">
       <Filter>Header Files</Filter>
     </ClInclude>

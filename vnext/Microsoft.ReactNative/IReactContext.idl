@@ -5,10 +5,6 @@ import "IJSValueWriter.idl"; // The import is to be deprecated with IReactContex
 import "IReactNotificationService.idl";
 import "IReactPropertyBag.idl";
 
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-#include "NamespaceRedirect.h" // The include is to be deprecated with IReactContext::DispatchEvent
-#endif
-
 #include "DocString.h"
 
 namespace Microsoft.ReactNative
@@ -190,12 +186,6 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("used to schedule work on the JS runtime. Most direct usage of this should be avoided by using ReactContext.CallInvoker.")
     CallInvoker CallInvoker { get; };
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-    [deprecated("Use @XamlUIService.DispatchEvent instead", deprecate, 1)]
-    DOC_STRING("Deprecated property. Use @XamlUIService.DispatchEvent instead. It will be removed in a future version.")
-    void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
-#endif
 
     DOC_STRING(
       "Calls the JavaScript function named `methodName` of `moduleName` with the `paramsArgWriter`.\n"
