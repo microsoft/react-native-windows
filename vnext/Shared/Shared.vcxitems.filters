@@ -40,12 +40,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp">
-      <Filter>Source Files\Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp">
-      <Filter>Source Files\Executors</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp">
       <Filter>Source Files\Threading</Filter>
     </ClCompile>
@@ -559,12 +553,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h">
-      <Filter>Header Files\Executors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
       <Filter>Header Files</Filter>

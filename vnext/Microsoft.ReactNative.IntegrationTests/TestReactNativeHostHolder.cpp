@@ -71,7 +71,6 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     m_host.InstanceSettings().BundleRootPath(testBinaryPath);
     m_host.InstanceSettings().JavaScriptBundleFile(jsBundle);
     m_host.InstanceSettings().UseDeveloperSupport(false);
-    m_host.InstanceSettings().UseWebDebugger(false);
     m_host.InstanceSettings().UseFastRefresh(false);
     m_host.InstanceSettings().UseLiveReload(false);
     m_host.InstanceSettings().EnableDeveloperMenu(false);
