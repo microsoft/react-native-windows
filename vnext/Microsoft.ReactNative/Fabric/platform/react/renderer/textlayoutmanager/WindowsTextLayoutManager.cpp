@@ -137,29 +137,26 @@ void WindowsTextLayoutManager::GetTextLayout(
   }
 
   // Set reading direction (RTL/LTR) based on baseWritingDirection
-  DWRITE_READING_DIRECTION readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+  // Only set reading direction if explicitly specified to avoid breaking existing layouts
+  bool isRTL = false;
   if (outerFragment.textAttributes.baseWritingDirection.has_value()) {
+    DWRITE_READING_DIRECTION readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
     if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
       readingDirection = DWRITE_READING_DIRECTION_RIGHT_TO_LEFT;
+      isRTL = true;
     } else if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::LeftToRight) {
       readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+      isRTL = false;
     } else if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::Natural) {
       // Natural uses the layout direction from textAttributes
-      readingDirection = (outerFragment.textAttributes.layoutDirection == facebook::react::LayoutDirection::RightToLeft)
-          ? DWRITE_READING_DIRECTION_RIGHT_TO_LEFT
-          : DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+      isRTL = (outerFragment.textAttributes.layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+      readingDirection = isRTL ? DWRITE_READING_DIRECTION_RIGHT_TO_LEFT : DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
     }
-  } else {
-    // No explicit writing direction - use layout direction from text attributes
-    readingDirection = (outerFragment.textAttributes.layoutDirection == facebook::react::LayoutDirection::RightToLeft)
-        ? DWRITE_READING_DIRECTION_RIGHT_TO_LEFT
-        : DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+    winrt::check_hresult(spTextFormat->SetReadingDirection(readingDirection));
   }
-  winrt::check_hresult(spTextFormat->SetReadingDirection(readingDirection));
 
   // Set text alignment
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-  bool isRTL = (readingDirection == DWRITE_READING_DIRECTION_RIGHT_TO_LEFT);
   if (outerFragment.textAttributes.alignment) {
     switch (*outerFragment.textAttributes.alignment) {
       case facebook::react::TextAlignment::Center:
@@ -175,7 +172,7 @@ void WindowsTextLayoutManager::GetTextLayout(
         alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
         break;
       case facebook::react::TextAlignment::Natural:
-        // Natural alignment respects reading direction
+        // Natural alignment respects reading direction if baseWritingDirection was set
         alignment = isRTL ? DWRITE_TEXT_ALIGNMENT_TRAILING : DWRITE_TEXT_ALIGNMENT_LEADING;
         break;
       default:
