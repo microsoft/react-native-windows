@@ -60,10 +60,8 @@ winrt::Microsoft::UI::Xaml::Markup::IXamlType XamlApplication::GetXamlType(hstri
 com_array<winrt::Microsoft::UI::Xaml::Markup::XmlnsDefinition> XamlApplication::GetXmlnsDefinitions() {
   std::vector<::winrt::Microsoft::UI::Xaml::Markup::XmlnsDefinition> allDefinitions;
   for (const auto &provider : m_providers) {
-    auto definitionsCurrentProvider = provider.GetXmlnsDefinitions();
-    for (const auto &definition : definitionsCurrentProvider) {
-      allDefinitions.insert(allDefinitions.begin(), definition);
-    }
+    const auto &definitions = provider.GetXmlnsDefinitions();
+    allDefinitions.insert(allDefinitions.cend(), definitions.cbegin(), definitions.cend());
   }
   return winrt::com_array<::winrt::Microsoft::UI::Xaml::Markup::XmlnsDefinition>(
       allDefinitions.begin(), allDefinitions.end());

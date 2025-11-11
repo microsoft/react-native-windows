@@ -87,7 +87,6 @@ ReactUWP/Folly/Generated Files/
 *.suo
 *.nupkg
 *.swp
-/vnext/fmt/packages.lock.json
 
 temp
 
