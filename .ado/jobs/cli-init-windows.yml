@@ -139,7 +139,6 @@ parameters:
             platform: ARM64
             additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
             useNuGet: true
-
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
@@ -150,7 +149,6 @@ jobs:
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
-                - UniversalBuild${{ matrix.platform }}Release
                 - UniversalBuild${{ matrix.platform }}ReleaseFabric
 
             variables: [template: ../variables/windows.yml]
