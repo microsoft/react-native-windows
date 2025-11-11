@@ -31,9 +31,6 @@
     <ClCompile Include="UtilsTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
-    <ClCompile Include="WebSocketJSExecutorTest.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>

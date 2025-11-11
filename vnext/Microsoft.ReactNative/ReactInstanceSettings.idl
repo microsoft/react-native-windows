@@ -122,15 +122,6 @@ namespace Microsoft.ReactNative
     Boolean RequestDevBundle { get; set; };
 
     DOC_STRING(
-      "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
-      "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
-      "Debugging will start as soon as the react native instance is loaded.")
-    [deprecated(
-      "Debugging should be done using DirectDebugging rather than WebDebugger.  Web debugging changes the app behavior "
-      "and will be removed in a future version.", deprecate, 1)]
-    Boolean UseWebDebugger { get; set; };
-
-    DOC_STRING(
       "Controls whether the instance triggers the hot module reload logic when it first loads the instance.\n"
       "Most edits should be visible within a second or two without the instance having to reload.\n"
       "Non-compatible changes still cause full reloads.\n"
@@ -238,28 +229,26 @@ namespace Microsoft.ReactNative
     IReactDispatcher UIDispatcher { get; set; };
 
     DOC_STRING(
-      "When using @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server hostname "
+      "When using @.UseFastRefresh or @.UseLiveReload this is the server hostname "
       "that will be used to load the bundle from.")
     DOC_DEFAULT("localhost")
     String SourceBundleHost { get; set; };
 
     DOC_STRING(
-      "When using @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server port "
+      "When using @.UseFastRefresh or @.UseLiveReload this is the server port "
       "that will be used to load the bundle from.")
     DOC_DEFAULT("8081")
     UInt16 SourceBundlePort { get; set; };
 
     DOC_STRING(
-      "When using @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this controls whether the bundler should include inline source maps."
+      "When using @.UseFastRefresh or @.UseLiveReload this controls whether the bundler should include inline source maps."
       "If set, the bundler will include the source maps inline (this will improve debugging experience, but for very large bundles it could have a significant performance hit)")
     DOC_DEFAULT("true")
     Boolean RequestInlineSourceMap { get; set; };
 
     DOC_STRING(
       "The @JSIEngine override to be used with the React instance.\n"
-      "In order for the override to work, Microsoft.ReactNative must be compiled with support of that engine. "
-      "This override will be ignored when @.UseWebDebugger is set to true, since the browser must use its own "
-      "engine to debug correctly.")
+      "In order for the override to work, Microsoft.ReactNative must be compiled with support of that engine. ")
     DOC_DEFAULT("JSIEngine.Chakra")
     JSIEngine JSIEngineOverride { get; set; };
 

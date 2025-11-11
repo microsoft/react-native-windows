@@ -98,7 +98,6 @@ struct IReactInstance : IUnknown {
 
 MSO_GUID(IReactSettingsSnapshot, "6652bb2e-4c5e-49f7-b642-e817b0fef4de")
 struct IReactSettingsSnapshot : IUnknown {
-  virtual bool UseWebDebugger() const noexcept = 0;
   virtual bool UseFastRefresh() const noexcept = 0;
   virtual bool UseDirectDebugger() const noexcept = 0;
   virtual bool DebuggerBreakOnNextLine() const noexcept = 0;
@@ -229,7 +228,6 @@ struct ReactOptions {
   //! ReactNative Infrastructure Error
   //! Error types include:
   //! * Any call to Javascript function after Global Exception has been raised
-  //! * Any WebServer error when DeveloperSettings.UseWebDebugger is true
   //! Note: Default callback generates ShipAssert.
   OnErrorCallback OnError{GetDefaultOnErrorHandler()};
 
@@ -292,16 +290,6 @@ struct ReactOptions {
   bool UseLiveReload() const noexcept;
   static void SetUseLiveReload(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties, bool value) noexcept;
   static bool UseLiveReload(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
-
-  //! Should the instance run in a remote environment such as within a browser
-  //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
-  //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
-  void SetUseWebDebugger(bool enabled) noexcept;
-  bool UseWebDebugger() const noexcept;
-  static void SetUseWebDebugger(
-      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
-      bool value) noexcept;
-  static bool UseWebDebugger(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
   //! For direct debugging, whether to break on the next line of JavaScript that is executed.
   void SetDebuggerBreakOnNextLine(bool enable) noexcept;
