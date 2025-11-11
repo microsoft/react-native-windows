@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Use hermes-windows version 0.0.0-2511.3001-9e4cf518",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

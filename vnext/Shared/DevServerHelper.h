@@ -76,12 +76,20 @@ class DevServerHelper {
       const std::string &packagerHost,
       const uint16_t packagerPort,
       const std::string &deviceName,
-      const std::string &packageName) {
+      const std::string &packageName,
+      const std::string &deviceId) {
     return string_format(
         InspectorDeviceUrlFormat,
         GetDeviceLocalHost(packagerHost, packagerPort).c_str(),
         deviceName.c_str(),
-        packageName.c_str());
+        packageName.c_str(),
+        deviceId.c_str());
+  }
+
+  static std::string
+  get_OpenDebuggerUrl(const std::string &packagerHost, const uint16_t packagerPort, const std::string &deviceId) {
+    return string_format(
+        OpenDebuggerUrlFormat, GetDeviceLocalHost(packagerHost, packagerPort).c_str(), deviceId.c_str());
   }
 
   static constexpr const char DefaultPackagerHost[] = "localhost";
@@ -105,11 +113,13 @@ class DevServerHelper {
   static constexpr const char PackagerConnectionUrlFormat[] = "ws://%s/message";
   static constexpr const char PackagerStatusUrlFormat[] = "http://%s/status";
   static constexpr const char PackagerOpenStackFrameUrlFormat[] = "https://%s/open-stack-frame";
-  static constexpr const char InspectorDeviceUrlFormat[] = "ws://%s/inspector/device?name=%s&app=%s";
+  static constexpr const char InspectorDeviceUrlFormat[] = "ws://%s/inspector/device?name=%s&app=%s&device=%s";
+  static constexpr const char OpenDebuggerUrlFormat[] = "http://%s/open-debugger?device=%s";
 
   static constexpr const char PackagerOkStatus[] = "packager-status:running";
   const int LongPollFailureDelayMs = 5000;
 
+  // TODO: [vmoroz]  avoid using vaiadic args for the format and move it to a utility class.
   template <typename... Args>
   static std::string string_format(const char *format, Args... args) {
     size_t size = snprintf(nullptr, 0, format, args...) + 1;

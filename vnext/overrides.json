@@ -84,6 +84,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/network/HttpUtils.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/network/HttpUtils.cpp",
+      "baseHash": "056a6f027e56c6df47c85a27f0b251d1134c11ae",
+      "issue": 13587
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.cpp",
       "baseHash": "d8cf95191866699c484f1ab71201974fbe661239",
@@ -102,20 +109,6 @@
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
       "baseHash": "d961f37983356cbc64622db6194cd4b2a9a4e05c",
       "issue": 13587
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseHash": "3e9e300ac2c01ed2b3bfa7e5afe7b5961d3e9080",
-      "issue": 13172
     },
     {
       "type": "patch",
@@ -221,13 +214,6 @@
       "issue": 14665
     },
     {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "afe347f12a7e291a1207f5f1f55facd9c5a83ba8",
-      "issue": 13172
-    },
-    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
@@ -236,15 +222,15 @@
     },
     {
       "type": "derived",
-      "file": "src-win/index.windows.js.flow",
-      "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "bb6c7873aa350c235aad233dd75656237d16d79c"
-    },
-    {
-      "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
       "baseHash": "c5d0dfd40d0fb7c197790b1f23f4f8b9ca835047"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/index.windows.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "bb6c7873aa350c235aad233dd75656237d16d79c"
     },
     {
       "type": "platform",
