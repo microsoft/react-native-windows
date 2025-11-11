@@ -527,10 +527,10 @@ facebook::react::RectangleEdges<bool> ComponentView::focusNudges() const noexcep
 
   Assert(m_componentHostingFocusVisual);
 
-  if (layoutMetrics.frame.origin.x < 0) {
+  if (layoutMetrics.frame.origin.x < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.x) {
     nudgeEdges.left = true;
   }
-  if (layoutMetrics.frame.origin.y < 0) {
+  if (layoutMetrics.frame.origin.y < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.y) {
     nudgeEdges.top = true;
   }
   if (layoutMetrics.frame.getMaxX() > m_componentHostingFocusVisual->m_layoutMetrics.frame.getMaxX()) {

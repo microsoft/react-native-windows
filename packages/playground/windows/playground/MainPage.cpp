@@ -73,7 +73,6 @@ void MainPage::OnLoadClick(
       host.InstanceSettings(), L"React Native Windows Playground");
 
   host.InstanceSettings().UseDeveloperSupport(true);
-  host.InstanceSettings().UseWebDebugger(x_UseWebDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseDirectDebugger(x_UseDirectDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
@@ -90,35 +89,31 @@ void MainPage::OnLoadClick(
     }
   }
 
-  host.InstanceSettings().InstanceCreated([wkThis = get_weak()](
-                                              auto sender,
-                                              winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
-    if (auto strongThis = wkThis.get()) {
-      args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
+  host.InstanceSettings().InstanceCreated(
+      [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
         if (auto strongThis = wkThis.get()) {
-          strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseWebDebugger());
-          strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
-          strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
-          strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
-          auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
-          for (auto item : strongThis->x_entryPointCombo().Items()) {
-            if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
-              strongThis->x_entryPointCombo().SelectedItem(item);
-              break;
+          args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
+            if (auto strongThis = wkThis.get()) {
+              strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
+              strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
+              strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
+              auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
+              for (auto item : strongThis->x_entryPointCombo().Items()) {
+                if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
+                  strongThis->x_entryPointCombo().SelectedItem(item);
+                  break;
+                }
+              }
+              strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
+              if (strongThis->RequestedTheme() == xaml::ElementTheme::Light) {
+                xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(
+                    xaml::ElementTheme::Default);
+                strongThis->x_themeDefault().IsSelected(true);
+              }
             }
-          }
-          strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
-          if (context.SettingsSnapshot().UseWebDebugger()) {
-            xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(xaml::ElementTheme::Light);
-            strongThis->x_themeLight().IsSelected(true);
-          } else if (strongThis->RequestedTheme() == xaml::ElementTheme::Light) {
-            xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(xaml::ElementTheme::Default);
-            strongThis->x_themeDefault().IsSelected(true);
-          }
+          });
         }
       });
-    }
-  });
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
 }
@@ -143,34 +138,6 @@ void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionCha
         x_rootComponentNameCombo().SelectedIndex(1);
       }
     }
-  }
-}
-
-void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Checked(
-    winrt::Windows::Foundation::IInspectable const & /*sender*/,
-    winrt::Windows::Foundation::IInspectable const & /*e*/) {
-  if (x_JsEngine()) {
-    x_JsEngine().IsEnabled(false);
-  }
-  if (x_DebuggerPort()) {
-    x_DebuggerPort().IsEnabled(false);
-  }
-  if (x_BreakOnFirstLineCheckBox()) {
-    x_BreakOnFirstLineCheckBox().IsEnabled(false);
-  }
-}
-
-void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Unchecked(
-    winrt::Windows::Foundation::IInspectable const & /*sender*/,
-    winrt::Windows::Foundation::IInspectable const & /*e*/) {
-  if (x_JsEngine()) {
-    x_JsEngine().IsEnabled(true);
-  }
-  if (x_DebuggerPort()) {
-    x_DebuggerPort().IsEnabled(true);
-  }
-  if (x_BreakOnFirstLineCheckBox()) {
-    x_BreakOnFirstLineCheckBox().IsEnabled(true);
   }
 }
 

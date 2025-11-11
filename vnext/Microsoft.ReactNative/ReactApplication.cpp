@@ -145,14 +145,10 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
       else if (token == L"--direct-debugging") {
         if (std::getline(argumentStream, token, delimiter)) {
           const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
-          hostImpl->InstanceSettings().UseWebDebugger(false);
           hostImpl->InstanceSettings().UseDirectDebugger(true);
           hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
           hostImpl->InstanceSettings().DebuggerPort(port);
         }
-      } else if (token == L"--remote-debugging") {
-        hostImpl->InstanceSettings().UseWebDebugger(true);
-        hostImpl->InstanceSettings().UseDirectDebugger(false);
       }
 #endif
     }

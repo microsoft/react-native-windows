@@ -53,17 +53,6 @@ namespace Microsoft.ReactNative
   interface IReactSettingsSnapshot
   {
     DOC_STRING(
-      "A read-only snapshot of the @ReactInstanceSettings.UseWebDebugger property value "
-      "at the time when the React instance was created.\n"
-      "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
-      "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
-      "Debugging will start as soon as the react native instance is loaded.")
-    [deprecated(
-      "Debugging should be done using DirectDebugging rather than WebDebugger.  Web debugging changes the app behavior "
-      "and will be removed in a future version.", deprecate, 1)]
-    Boolean UseWebDebugger { get; };
-
-    DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.UseFastRefresh property value "
       "at the time when the React instance was created.\n"
       "Controls whether the instance triggers the hot module reload logic when it first loads the instance.\n"
@@ -111,14 +100,14 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.SourceBundleHost property value "
       "at the time when the React instance was created.\n"
-      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server hostname "
+      "When using @ReactInstanceSettings.UseFastRefresh or @ReactInstanceSettings.UseLiveReload this is the server hostname "
       "that will be used to load the bundle from.")
     String SourceBundleHost { get; };
 
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.SourceBundlePort property value "
       "at the time when the React instance was created.\n"
-      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server port "
+      "When using @ReactInstanceSettings.UseFastRefresh or @ReactInstanceSettings.UseLiveReload this is the server port "
       "that will be used to load the bundle from.")
     UInt16 SourceBundlePort { get; };
 

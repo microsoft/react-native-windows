@@ -18,7 +18,6 @@ class ReactSettingsSnapshot final : public Mso::UnknownObject<IReactSettingsSnap
   ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept;
 
  public: // IReactSettingsSnapshot
-  bool UseWebDebugger() const noexcept override;
   bool UseFastRefresh() const noexcept override;
   bool UseDirectDebugger() const noexcept override;
   bool DebuggerBreakOnNextLine() const noexcept override;

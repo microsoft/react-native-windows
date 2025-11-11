@@ -72,7 +72,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept;
   bool IsLoaded() const noexcept;
 
-  bool UseWebDebugger() const noexcept;
   bool UseFastRefresh() const noexcept;
   bool UseDirectDebugger() const noexcept;
   bool DebuggerBreakOnNextLine() const noexcept;
@@ -134,8 +133,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::function<void(std::string)> GetErrorCallback() noexcept;
   facebook::react::NativeLoggingHook GetLoggingCallback() noexcept;
   std::shared_ptr<Mso::React::IRedBoxHandler> GetRedBoxHandler() noexcept;
-  std::function<void()> GetWaitingForDebuggerCallback() noexcept;
-  std::function<void()> GetDebuggerAttachCallback() noexcept;
 
   void OnError(const Mso::ErrorCode &errorcode) noexcept;
   void OnErrorWithMessage(const std::string &errorMessage) noexcept;
@@ -175,7 +172,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   const bool m_isFastReloadEnabled : 1;
   const bool m_isLiveReloadEnabled : 1;
   const bool m_useDirectDebugger : 1;
-  const bool m_useWebDebugger : 1;
 
   const Mso::CntPtr<::Mso::React::ReactContext> m_reactContext;
 

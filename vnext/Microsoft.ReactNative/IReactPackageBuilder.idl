@@ -27,9 +27,7 @@ namespace Microsoft.ReactNative
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
 
     DOC_STRING("Adds a custom native module. See @ReactModuleProvider. This will register the"
-    "module as a TurboModule unless the application is running using @ReactInstanceSettings.UseWebDebugger,"
-    "in which case it will revert to a legacy NativeModule.\n"
-    "NOTE: TurboModules using JSI directly will not run correctly while using @ReactInstanceSettings.UseWebDebugger")
+    "module as a TurboModule.")
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
