@@ -1550,6 +1550,8 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   auto &baseWritingDirection = windowsTextInputProps().textAttributes.baseWritingDirection;
 
   // Handle writingDirection (baseWritingDirection)
+  // For WritingDirection::Natural, use the computed layout direction from the layout tree
+  // since direction can be overridden at any point in the tree
   bool isRTL = false;
   if (baseWritingDirection.has_value()) {
     if (*baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
@@ -1560,8 +1562,25 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
       isRTL = false;
       // Ensure RTL flag is not set
       m_pf.wEffects &= ~PFE_RTLPARA;
+    } else if (*baseWritingDirection == facebook::react::WritingDirection::Natural) {
+      // Natural uses the layout direction computed from the tree
+      isRTL = (layoutMetrics().layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+      if (isRTL) {
+        m_pf.dwMask |= PFM_RTLPARA;
+        m_pf.wEffects |= PFE_RTLPARA;
+      } else {
+        m_pf.wEffects &= ~PFE_RTLPARA;
+      }
     }
-    // WritingDirection::Natural uses default behavior (no specific RTL setting)
+  } else {
+    // No explicit writing direction set - use layout direction from tree
+    isRTL = (layoutMetrics().layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+    if (isRTL) {
+      m_pf.dwMask |= PFM_RTLPARA;
+      m_pf.wEffects |= PFE_RTLPARA;
+    } else {
+      m_pf.wEffects &= ~PFE_RTLPARA;
+    }
   }
 
   // Handle textAlign
