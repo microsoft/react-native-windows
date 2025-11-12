@@ -64,7 +64,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     'aria-posinset': ariaPosinset, // Windows
     'aria-setsize': ariaSetsize, // Windows
     'aria-readonly': ariaReadOnly, //Windows
-    'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
     children,
     ellipsizeMode,
@@ -99,7 +98,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
     const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
     const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
-      let _accessibilityState: ?TextProps['accessibilityState'] =
+    let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
     if (
       ariaBusy != null ||
@@ -119,9 +118,9 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           expanded: ariaExpanded ?? _accessibilityState.expanded,
           selected: ariaSelected ?? _accessibilityState.selected,
           readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
-        multiselectable:
-          ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
-        required: ariaRequired ?? _accessibilityState.required, // Windows
+          multiselectable:
+            ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
+          required: ariaRequired ?? _accessibilityState.required, // Windows
         };
       } else {
         _accessibilityState = {
@@ -261,7 +260,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       };
     }
 
-    const hasTextAncestor = useContext(TextAncestorContext);
+    const hasTextAncestor = useContext(TextAncestor);
     if (hasTextAncestor) {
       processedProps.disabled = disabled;
       processedProps.children = children;
@@ -322,7 +321,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       return nativeText;
     }
 
-    return <TextAncestorContext value={true}>{nativeText}</TextAncestorContext>;
+    return <TextAncestor value={true}>{nativeText}</TextAncestor>;
   };
   _TextImpl = TextImplNoDefaultProps;
 } else {
@@ -460,7 +459,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
 
     const _nativeID = id ?? nativeID;
 
-    const hasTextAncestor = useContext(TextAncestorContext);
+    const hasTextAncestor = useContext(TextAncestor);
     if (hasTextAncestor) {
       if (isPressable) {
         return (
@@ -605,7 +604,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         {children}
       </NativeVirtualText>
     );
-  }
+  };
 
   // If the disabled prop and accessibilityState.disabled are out of sync but not both in
   // falsy states we need to update the accessibilityState object to use the disabled prop.
@@ -725,11 +724,14 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       return nativeText;
     }
 
-  return (
-    <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
-  );
-};
+    return (
+      <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
+    );
+  }
+  _TextImpl = TextImplLegacy;
+}
 
+const TextImpl = _TextImpl;
 TextImpl.displayName = 'Text';
 
 type TextPressabilityProps = $ReadOnly<{
