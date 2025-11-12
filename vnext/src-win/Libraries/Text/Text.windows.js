@@ -39,7 +39,6 @@ type TextForwardRef = React.ElementRef<
  *
  * @see https://reactnative.dev/docs/text
  */
-<<<<<<< Upstream
 let _TextImpl;
 if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
   const TextImplNoDefaultProps: component(
@@ -49,12 +48,22 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ref: forwardedRef,
     accessible,
     accessibilityLabel,
+    accessibilityLevel, // Windows
+    accessibilityPosInSet, // Windows
+    accessibilitySetSize, // Windows
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
+    'aria-multiselectable': ariaMultiselectable, // Windows
+    'aria-required': ariaRequired, // Windows
+    'aria-label': ariaLabel,
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
+    'aria-readonly': ariaReadOnly, //Windows
     'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
     children,
@@ -87,14 +96,20 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       ...NativeTextProps,
     };
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    let _accessibilityState: ?TextProps['accessibilityState'] =
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
+    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
+      let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
     if (
       ariaBusy != null ||
       ariaChecked != null ||
       ariaDisabled != null ||
       ariaExpanded != null ||
-      ariaSelected != null
+      ariaSelected != null ||
+      ariaReadOnly != null || // Windows
+      ariaMultiselectable != null || // Windows
+      ariaRequired != null // Windows
     ) {
       if (_accessibilityState != null) {
         _accessibilityState = {
@@ -103,6 +118,10 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
           selected: ariaSelected ?? _accessibilityState.selected,
+          readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
+        multiselectable:
+          ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
+        required: ariaRequired ?? _accessibilityState.required, // Windows
         };
       } else {
         _accessibilityState = {
@@ -111,6 +130,9 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           disabled: ariaDisabled,
           expanded: ariaExpanded,
           selected: ariaSelected,
+          readOnly: ariaReadOnly, // Windows
+          multiselectable: ariaMultiselectable, // Windows
+          required: ariaRequired, // Windows
         };
       }
     }
@@ -236,97 +258,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         onStartShouldSetResponder,
         pressRetentionOffset,
         suppressHighlighting,
-=======
-const TextImpl: component(
-  ref?: React.RefSetter<TextForwardRef>,
-  ...props: TextProps
-) = ({
-  ref: forwardedRef,
-  accessible,
-  accessibilityLabel,
-  accessibilityLevel, // Windows
-  accessibilityPosInSet, // Windows
-  accessibilitySetSize, // Windows
-  accessibilityState,
-  allowFontScaling,
-  'aria-busy': ariaBusy,
-  'aria-checked': ariaChecked,
-  'aria-disabled': ariaDisabled,
-  'aria-expanded': ariaExpanded,
-  'aria-multiselectable': ariaMultiselectable, // Windows
-  'aria-required': ariaRequired, // Windows
-  'aria-label': ariaLabel,
-  'aria-level': ariaLevel, // Windows
-  'aria-posinset': ariaPosinset, // Windows
-  'aria-setsize': ariaSetsize, // Windows
-  'aria-readonly': ariaReadOnly, //Windows
-  'aria-selected': ariaSelected,
-  children,
-  ellipsizeMode,
-  disabled,
-  id,
-  nativeID,
-  numberOfLines,
-  onLongPress,
-  onPress,
-  onPressIn,
-  onPressOut,
-  onResponderGrant,
-  onResponderMove,
-  onResponderRelease,
-  onResponderTerminate,
-  onResponderTerminationRequest,
-  onStartShouldSetResponder,
-  pressRetentionOffset,
-  selectable,
-  selectionColor,
-  suppressHighlighting,
-  style,
-  ...restProps
-}: {
-  ref?: React.RefSetter<TextForwardRef>,
-  ...TextProps,
-}) => {
-  const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-  const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
-  const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
-  const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
-
-  let _accessibilityState: ?TextProps['accessibilityState'] =
-    accessibilityState;
-  if (
-    ariaBusy != null ||
-    ariaChecked != null ||
-    ariaDisabled != null ||
-    ariaExpanded != null ||
-    ariaSelected != null ||
-    ariaReadOnly != null || // Windows
-    ariaMultiselectable != null || // Windows
-    ariaRequired != null // Windows
-  ) {
-    if (_accessibilityState != null) {
-      _accessibilityState = {
-        busy: ariaBusy ?? _accessibilityState.busy,
-        checked: ariaChecked ?? _accessibilityState.checked,
-        disabled: ariaDisabled ?? _accessibilityState.disabled,
-        expanded: ariaExpanded ?? _accessibilityState.expanded,
-        selected: ariaSelected ?? _accessibilityState.selected,
-        readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
-        multiselectable:
-          ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
-        required: ariaRequired ?? _accessibilityState.required, // Windows
-      };
-    } else {
-      _accessibilityState = {
-        busy: ariaBusy,
-        checked: ariaChecked,
-        disabled: ariaDisabled,
-        expanded: ariaExpanded,
-        selected: ariaSelected,
-        readOnly: ariaReadOnly, // Windows
-        multiselectable: ariaMultiselectable, // Windows
-        required: ariaRequired, // Windows
->>>>>>> Override
       };
     }
 
@@ -602,12 +533,7 @@ const TextImpl: component(
       default: accessible,
     });
 
-<<<<<<< Upstream
     let nativeText = null;
-=======
-  const hasTextAncestor = useContext(TextAncestor);
-  if (hasTextAncestor) {
->>>>>>> Override
     if (isPressable) {
       nativeText = (
         <NativePressableText
@@ -616,17 +542,10 @@ const TextImpl: component(
             ...restProps,
             accessibilityLabel: _accessibilityLabel,
             accessibilityState: _accessibilityState,
-<<<<<<< Upstream
-            accessible: _accessible,
-            allowFontScaling: allowFontScaling !== false,
-            disabled: _disabled,
-            ellipsizeMode: ellipsizeMode ?? 'tail',
-=======
             accessibilityLevel: _accessibilityLevel, // Windows
             accessibilityPosInSet: _accessibilityPosInSet, // Windows
             accessibilitySetSize: _accessibilitySetSize, // Windows
             ellipsizeMode: ellipsizeMode ?? 'tail', // Windows
->>>>>>> Override
             nativeID: _nativeID,
             numberOfLines: _numberOfLines,
             selectable: _selectable,
@@ -671,10 +590,6 @@ const TextImpl: component(
       );
     }
 
-<<<<<<< Upstream
-    if (children == null) {
-      return nativeText;
-=======
     return (
       <NativeVirtualText
         {...restProps}
@@ -787,7 +702,6 @@ const TextImpl: component(
         hasNonTextChild = true;
         break;
       }
->>>>>>> Override
     }
 
     // If the children do not contain a JSX element it would not be possible to have a
@@ -811,22 +725,10 @@ const TextImpl: component(
       return nativeText;
     }
 
-<<<<<<< Upstream
-    return <TextAncestorContext value={true}>{nativeText}</TextAncestorContext>;
-  };
-  _TextImpl = TextImplLegacy;
-}
-
-const TextImpl: component(
-  ref?: React.RefSetter<TextForwardRef>,
-  ...props: TextProps
-) = _TextImpl;
-=======
   return (
     <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
   );
 };
->>>>>>> Override
 
 TextImpl.displayName = 'Text';
 

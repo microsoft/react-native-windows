@@ -755,16 +755,6 @@ const examples: Array<RNTesterModuleExample> = [
     },
   },
   {
-<<<<<<< Upstream
-    title: 'Accessibility',
-    render: function (): React.Node {
-      return (
-        <View>
-          <Text>accessibilityLabel prop</Text>
-          <ExampleTextInput accessibilityLabel="This is Accessibility Label" />
-          <Text>aria-label prop</Text>
-          <ExampleTextInput aria-label="This is Aria Label" />
-=======
     title: 'onPressIn, onPressOut events',
     render: function (): React.Node {
       return <PressInOutEvents />;
@@ -914,15 +904,11 @@ const examples: Array<RNTesterModuleExample> = [
             accessibilityRole="searchbox"
             defaultValue="Search"
           />
->>>>>>> Override
         </View>
       );
     },
   },
-<<<<<<< Upstream
-=======
   // Windows]
->>>>>>> Override
 ];
 
 module.exports = ({
