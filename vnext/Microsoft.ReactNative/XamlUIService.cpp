@@ -6,7 +6,6 @@
 #include "XamlUIService.g.cpp"
 
 #include "DynamicWriter.h"
-#include "XamlView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

@@ -32,8 +32,7 @@ winrt::fire_and_forget GetImageSizeAsync(
     std::string uriString,
     winrt::Microsoft::ReactNative::JSValue &&headers,
     Mso::Functor<void(int32_t width, int32_t height)> successCallback,
-    Mso::Functor<void()> errorCallback,
-    bool useFabric) {
+    Mso::Functor<void()> errorCallback) {
   bool succeeded{false};
 
   try {
@@ -56,26 +55,14 @@ winrt::fire_and_forget GetImageSizeAsync(
     } else if (inlineData) {
       memoryStream = co_await GetImageInlineDataAsync(source);
     }
-
-    if (!useFabric) {
-      winrt::BitmapImage bitmap;
-      if (memoryStream) {
-        co_await bitmap.SetSourceAsync(memoryStream);
-      }
-      if (bitmap) {
-        successCallback(bitmap.PixelWidth(), bitmap.PixelHeight());
+    auto result = wicBitmapSourceFromStream(memoryStream);
+    if (!std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
+      auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
+      auto wicBmpSource = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
+      UINT width, height;
+      if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
+        successCallback(width, height);
         succeeded = true;
-      }
-    } else {
-      auto result = wicBitmapSourceFromStream(memoryStream);
-      if (!std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
-        auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
-        auto wicBmpSource = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
-        UINT width, height;
-        if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
-          successCallback(width, height);
-          succeeded = true;
-        }
       }
     }
   } catch (winrt::hresult_error const &) {
@@ -101,8 +88,7 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
             [result](double width, double height) noexcept {
               result.Resolve(std::vector<double>{width, height});
             },
-            [result]() noexcept { result.Reject("Failed"); },
-            IsFabricEnabled(context.Properties().Handle()));
+            [result]() noexcept { result.Reject("Failed"); });
       });
 }
 
@@ -122,8 +108,7 @@ void ImageLoader::getSizeWithHeaders(
         [result](double width, double height) noexcept {
           result.Resolve(Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
         },
-        [result]() noexcept { result.Reject("Failed"); },
-        IsFabricEnabled(context.Properties().Handle()));
+        [result]() noexcept { result.Reject("Failed"); });
   });
 }
 
