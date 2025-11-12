@@ -1,0 +1,7 @@
+{
+  "comment": "Add keyboardType prop support to Fabric TextInput for parity with Paper",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
