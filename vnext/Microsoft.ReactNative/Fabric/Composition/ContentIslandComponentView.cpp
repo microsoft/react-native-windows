@@ -210,6 +210,9 @@ void ContentIslandComponentView::prepareForRecycle() noexcept {
   Super::prepareForRecycle();
 }
 
+/*
+* TODO: The base ViewComponentView hitTest implementation hitTest should return the right tag. Commenting this code for reference
+* and will be removed once the base implementation is fixed.
 facebook::react::Tag ContentIslandComponentView::hitTest(
     facebook::react::Point pt,
     facebook::react::Point &localPt,
@@ -228,6 +231,7 @@ facebook::react::Tag ContentIslandComponentView::hitTest(
 
   return -1;
 }
+*/
 
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
   // This automation mode must be set before connecting the child ContentIsland.
