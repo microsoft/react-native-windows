@@ -280,8 +280,7 @@ void ReactInstanceWin::LoadModules(
 
 #else
   registerTurboModule(
-      L"ImageLoader",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+      L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
 
   registerTurboModule(
       L"NativeAnimatedModule",
