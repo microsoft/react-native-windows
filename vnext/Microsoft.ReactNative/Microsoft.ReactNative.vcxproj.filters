@@ -165,7 +165,6 @@
     <ClCompile Include="Utils\BatchingEventEmitter.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="ReactPointerEventArgs.cpp" />
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
@@ -465,7 +464,6 @@
     <ClInclude Include="Views\Text\TextVisitors.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
-    <ClInclude Include="ReactPointerEventArgs.h" />
     <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\ReactViewInstance.h" />
     <ClInclude Include="Utils\KeyboardUtils.h" />
@@ -489,7 +487,6 @@
     </Midl>
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
-    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

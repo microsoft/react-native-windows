@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <Utils/Helpers.h>
-#include <Views/XamlFeatures.h>
 #include "NativeAnimatedNodeManager.h"
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
