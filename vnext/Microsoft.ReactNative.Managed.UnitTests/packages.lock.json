@@ -56,8 +56,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.1.23",
-        "contentHash": "cA9t1GjY4Yo0JD1AfA//e1lOwk48hLANfuX6GXrikmEBNZVr2TIX5ONJt5tqCnpZyLz6xGiPDgTfFNKbSfb21g=="
+        "resolved": "0.0.0-2511.7001-d7ca19b3",
+        "contentHash": "/EGy/gbTWpFZPZ4Z81QxbGQxpZhqiOE3qrnSokZRgXAyHivl15s7zZkRLOy9daDmVyEfanq7YBCOMi0ha58uQA=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -264,7 +264,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1"
@@ -332,7 +332,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.23, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2511.7001-d7ca19b3, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
           "ReactCommon": "[1.0.0, )",
@@ -500,7 +500,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1",
@@ -719,7 +719,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1",
@@ -950,7 +950,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1",
@@ -1159,7 +1159,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1",
@@ -1378,7 +1378,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1",
@@ -1587,7 +1587,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1",
@@ -1806,7 +1806,7 @@
       "System.Runtime": {
         "type": "Transitive",
         "resolved": "4.1.0",
-        "contentHash": "v6c/4Yaa9uWsq+JMhnOFewrYkgdNHNG2eMKuNqRn8P733rNXeRCGvV5FkkjBXn2dbVkPXOsO0xjsEeM1q2zC0g==",
+        "contentHash": "SwXraLtIWEZwfE/jOT+WFtP/tsX2KhIdgRQt330CQckx/pbRk7e/Aigak2hFjgdkRmdmVXz6lwkDXcdtj913Bg==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
           "Microsoft.NETCore.Targets": "1.0.1",

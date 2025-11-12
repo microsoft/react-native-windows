@@ -18,7 +18,7 @@
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\bridging</Bridging_SourcePath>
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)react\bridging\CallbackWrapper.h')">$(MSBuildThisFileDirectory)react\bridging</Bridging_SourcePath>
 
-    <NodeApiJsiCommitHash>83cfef428a97627c9185c73da097e42742de56eb</NodeApiJsiCommitHash>
+    <NodeApiJsiCommitHash>21b47f08b762b21b1d4d970940ab23f59f43249c</NodeApiJsiCommitHash>
     <NodeApiJsiLocal Condition="Exists('$(MSBuildThisFileDirectory)NodeApiJsiRuntime.cpp')">true</NodeApiJsiLocal>
     <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(NodeApiJsiLocal)' == 'true'">$(MSBuildThisFileDirectory)</NodeApiJsiDir>
     <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)\</NodeApiJsiDir>
