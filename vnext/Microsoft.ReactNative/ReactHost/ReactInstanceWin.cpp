@@ -69,7 +69,6 @@
 #ifndef CORE_ABI
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#include "ConfigureBundlerDlg.h"
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
@@ -79,8 +78,6 @@
 #include "Modules/I18nManagerModule.h"
 #include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
-#else
-#include "Modules/DesktopTimingModule.h"
 #endif
 #include "Modules/ExceptionsManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
@@ -244,11 +241,9 @@ void ReactInstanceWin::LoadModules(
     turboModulesProvider->AddModuleProvider(name, provider, false);
   };
 
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
-        L"FabricUIManagerBinding",
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
-  }
+  registerTurboModule(
+      L"FabricUIManagerBinding",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
 
 #ifndef CORE_ABI
   registerTurboModule(
@@ -284,15 +279,13 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
 
 #else
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
-        L"ImageLoader",
-        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+  registerTurboModule(
+      L"ImageLoader",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
 
-    registerTurboModule(
-        L"NativeAnimatedModule",
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
-  }
+  registerTurboModule(
+      L"NativeAnimatedModule",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
 #endif
 
   turboModulesProvider->AddModuleProvider(
@@ -345,17 +338,9 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"LinkingManager",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
+#endif
 
   registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
-#else
-
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
-        L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
-  } else {
-    registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::facebook::react::Timing>());
-  }
-#endif
 
   registerTurboModule(
       ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
@@ -1008,54 +993,6 @@ std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() 
 
 bool ReactInstanceWin::IsLoaded() const noexcept {
   return m_state == ReactInstanceState::Loaded;
-}
-
-void ReactInstanceWin::AttachMeasuredRootView(
-    facebook::react::IReactRootView *rootView,
-    const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
-    bool useFabric) noexcept {
-  if (State() == ReactInstanceState::HasError)
-    return;
-
-  assert(!useFabric);
-#ifndef CORE_ABI
-  if (!useFabric) {
-    int64_t rootTag = -1;
-
-    std::string jsMainModuleName = rootView->JSComponentName();
-    folly::dynamic params = folly::dynamic::array(
-        std::move(jsMainModuleName),
-        folly::dynamic::object("initialProps", DynamicWriter::ToDynamic(initialProps))("rootTag", rootTag)(
-            "fabric", false));
-    CallJsFunction("AppRegistry", "runApplication", std::move(params));
-  }
-#endif
-}
-
-void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept {
-  if (State() == ReactInstanceState::HasError)
-    return;
-
-  auto rootTag = rootView->GetTag();
-  folly::dynamic params = folly::dynamic::array(rootTag);
-
-  if (useFabric) {
-    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
-    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
-  } else {
-    CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
-  }
-
-  // QUIRK: Legacy sync behavior can be re-enabled via EnableSyncDetachRootView option
-  // The sync call was removed to prevent deadlocks with Hermes GC operations
-  bool useSyncCall = winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRunOnQueueSync(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
-  if (useSyncCall) {
-    // Legacy behavior: wait for JS thread to finish executing (can cause deadlocks)
-    m_jsMessageThread.Load()->runOnQueueSync([]() {});
-  }
-  // Default behavior: no synchronization call to prevent deadlocks
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
