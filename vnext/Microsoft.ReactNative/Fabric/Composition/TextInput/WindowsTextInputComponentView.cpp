@@ -1636,7 +1636,8 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   }
 
   bool isZeroSized =
-      m_layoutMetrics.frame.size.width <= (m_layoutMetrics.contentInsets.left + m_layoutMetrics.contentInsets.right);
+      m_layoutMetrics.frame.size.width <= (m_layoutMetrics.contentInsets.left + m_layoutMetrics.contentInsets.right) ||
+      m_layoutMetrics.frame.size.height <= (m_layoutMetrics.contentInsets.top + m_layoutMetrics.contentInsets.bottom);
   if (!m_drawingSurface || isZeroSized)
     return;
 

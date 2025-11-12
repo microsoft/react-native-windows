@@ -67,9 +67,9 @@ const Platform: PlatformType = {
       ? // $FlowFixMe[incompatible-return]
         spec.windows
       : 'native' in spec
-        ? // $FlowFixMe[incompatible-return]
+        ? // $FlowFixMe[incompatible-type]
           spec.native
-        : // $FlowFixMe[incompatible-return]
+        : // $FlowFixMe[incompatible-type]
           spec.default,
 };
 

@@ -20,10 +20,6 @@ namespace winrt::Microsoft::ReactNative::implementation {
 ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::CntPtr<const Mso::React::IReactSettingsSnapshot> &&settings) noexcept
     : m_settings{std::move(settings)} {}
 
-bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
-  return m_settings->UseWebDebugger();
-}
-
 bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
   return m_settings->UseFastRefresh();
 }
