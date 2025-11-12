@@ -205,7 +205,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
 
 #ifdef USE_FABRIC
   // Bridgeless
-  std::unique_ptr<facebook::react::ReactInstance> m_bridgelessReactInstance;
+  std::shared_ptr<facebook::react::ReactInstance> m_bridgelessReactInstance;
 #endif
 
   std::atomic<ReactInstanceState> m_state{ReactInstanceState::Loading};
