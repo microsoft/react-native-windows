@@ -470,8 +470,10 @@ InstanceImpl::InstanceImpl(
   // To be able to do that, we need to be able to call m_innerInstance->getRuntimeExecutor(), which we can only do after
   // m_innerInstance->initializeBridge(...) is called.
   const auto runtimeExecutor = m_innerInstance->getRuntimeExecutor();
+#ifdef USE_FABRIC
   Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
       winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeExecutor);
+#endif
   if (m_devSettings->useRuntimeScheduler) {
     m_runtimeScheduler = std::make_shared<RuntimeScheduler>(runtimeExecutor);
     Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(

@@ -91,8 +91,18 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   ::Microsoft::ReactNative::WindowsComponentDescriptorRegistry::AddToProperties(
       ReactPropertyBag(m_instanceSettings.Properties()), componentregistry);
 
-  m_packageBuilder =
-      make<ReactPackageBuilder>(modulesProvider, turboModulesProvider, componentregistry, uriImageManager);
+  m_packageBuilder = make<ReactPackageBuilder>(
+      modulesProvider,
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
+      viewManagersProvider,
+#endif
+      turboModulesProvider
+#ifdef USE_FABRIC
+      ,
+      componentregistry,
+      uriImageManager
+#endif
+  );
 
   winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
 

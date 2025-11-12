@@ -14,6 +14,7 @@ import type {GestureResponderEvent} from '../Types/CoreEventTypes';
 import type {NativeTextProps} from './TextNativeComponent';
 import type {PressRetentionOffset, TextProps} from './TextProps';
 
+import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
@@ -169,7 +170,7 @@ const TextImpl: component(
     if (typeof processedStyle.fontWeight === 'number') {
       overrides = overrides || ({}: {...TextStyleInternal});
       overrides.fontWeight =
-        // $FlowFixMe[incompatible-cast]
+        // $FlowFixMe[incompatible-type]
         (processedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']);
     }
 
@@ -204,10 +205,6 @@ const TextImpl: component(
             ...restProps,
             accessibilityLabel: _accessibilityLabel,
             accessibilityState: _accessibilityState,
-            accessibilityLevel: _accessibilityLevel, // Windows
-            accessibilityPosInSet: _accessibilityPosInSet, // Windows
-            accessibilitySetSize: _accessibilitySetSize, // Windows
-            ellipsizeMode: ellipsizeMode ?? 'tail', // Windows
             nativeID: _nativeID,
             numberOfLines: _numberOfLines,
             selectable: _selectable,

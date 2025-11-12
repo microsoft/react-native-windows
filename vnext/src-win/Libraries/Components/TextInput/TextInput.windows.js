@@ -517,7 +517,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     [mostRecentEventCount, viewCommands],
   );
 
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   const ref = useMergeRefs<HostInstance>(setLocalRef, props.forwardedRef);
 
   const _onChange = (event: TextInputChangeEvent) => {
@@ -734,6 +734,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
   const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
 
+  const _accessibilityLabel =
+    props?.['aria-label'] ?? props?.accessibilityLabel;
+
   let _accessibilityState;
   if (
     accessibilityState != null ||
@@ -767,7 +770,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (typeof flattenedStyle?.fontWeight === 'number') {
       overrides = overrides || ({}: {...TextStyleInternal});
       overrides.fontWeight =
-        // $FlowFixMe[incompatible-cast]
+        // $FlowFixMe[incompatible-type]
         (flattenedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']);
     }
 
@@ -804,6 +807,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...eventHandlers}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
+        accessibilityLabel={_accessibilityLabel}
         accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessible={accessible}
@@ -868,6 +872,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...colorProps}
         {...eventHandlers}
+        accessibilityLabel={_accessibilityLabel}
         accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessibilityLabelledBy={_accessibilityLabelledBy}
@@ -888,7 +893,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match
          * up exactly with the props for TextInput. This will need to get fixed
          */
-        /* $FlowFixMe[incompatible-type-arg] the types for AndroidTextInput
+        /* $FlowFixMe[incompatible-type] the types for AndroidTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */
         onScroll={_onScroll}
