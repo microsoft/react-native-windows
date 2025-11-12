@@ -119,6 +119,7 @@ struct WindowsTextInputComponentView
   void updateAutoCorrect(bool value) noexcept;
   void updateSpellCheck(bool value) noexcept;
   void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
+  void updateKeyboardType(const std::string &keyboardType) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
@@ -148,6 +149,7 @@ struct WindowsTextInputComponentView
   HCURSOR m_hcursor{nullptr};
   std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
+  std::string m_keyboardType{};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
