@@ -205,6 +205,10 @@ const TextImpl: component(
             ...restProps,
             accessibilityLabel: _accessibilityLabel,
             accessibilityState: _accessibilityState,
+            accessibilityLevel: _accessibilityLevel, // Windows
+            accessibilityPosInSet: _accessibilityPosInSet, // Windows
+            accessibilitySetSize: _accessibilitySetSize, // Windows
+            ellipsizeMode: ellipsizeMode ?? 'tail', // Windows
             nativeID: _nativeID,
             numberOfLines: _numberOfLines,
             selectable: _selectable,

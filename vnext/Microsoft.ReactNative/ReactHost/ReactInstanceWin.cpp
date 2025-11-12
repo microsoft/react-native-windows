@@ -125,6 +125,45 @@ struct LoadedCallbackGuard {
   Mso::CntPtr<ReactInstanceWin> m_reactInstance;
 };
 
+struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCallback {
+  BridgeUIBatchInstanceCallback(Mso::WeakPtr<ReactInstanceWin> wkInstance) : m_wkInstance(wkInstance) {}
+  virtual ~BridgeUIBatchInstanceCallback() = default;
+  void onBatchComplete() override {
+    if (auto instance = m_wkInstance.GetStrongPtr()) {
+      auto state = instance->State();
+      if (state != ReactInstanceState::HasError && state != ReactInstanceState::Unloaded) {
+        instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
+          if (auto instance = wkInstance.GetStrongPtr()) {
+            auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
+            if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                UIBatchCompleteCallbackProperty())) {
+              (*callback)(instance->m_reactContext->Properties());
+            }
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
+            if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+              uiManager->onBatchComplete();
+            }
+#endif
+          }
+        });
+        // For UWP we use a batching message queue to optimize the usage
+        // of the CoreDispatcher.  Win32 already has an optimized queue.
+        facebook::react::BatchingMessageQueueThread *batchingUIThread =
+            static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+        if (batchingUIThread != nullptr) {
+          batchingUIThread->onBatchComplete();
+        }
+      }
+    }
+  }
+  void incrementPendingJSCalls() override {}
+  void decrementPendingJSCalls() override {}
+
+  Mso::WeakPtr<ReactInstanceWin> m_wkInstance;
+  Mso::CntPtr<Mso::React::ReactContext> m_context;
+  std::weak_ptr<facebook::react::MessageQueueThread> m_uiThread;
+};
+
 //=============================================================================================
 // ReactInstanceWin implementation
 //=============================================================================================
