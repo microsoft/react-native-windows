@@ -5,13 +5,6 @@
 #include "XamlUIService.h"
 #include "XamlUIService.g.cpp"
 
-#ifndef USE_FABRIC
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
-#include "ShadowNodeBase.h"
-#include "Views/ShadowNodeBase.h"
-#endif
-
 #include "DynamicWriter.h"
 #include "XamlView.h"
 
@@ -24,52 +17,6 @@ XamlUIService::XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) n
       .Get(XamlUIService::XamlUIServiceProperty().Handle())
       .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
 }
-
-#ifndef USE_FABRIC
-xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noexcept {
-  if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
-    auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(reactTag);
-    if (!shadowNode)
-      return nullptr;
-
-    return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
-  }
-  return nullptr;
-}
-
-void XamlUIService::DispatchEvent(
-    xaml::FrameworkElement const &view,
-    hstring const &eventName,
-    JSValueArgWriter const &eventDataArgWriter) noexcept {
-  auto paramsWriter = winrt::make_self<DynamicWriter>();
-  paramsWriter->WriteArrayBegin();
-  paramsWriter->WriteInt64(::Microsoft::ReactNative::GetTag(view));
-  paramsWriter->WriteString(eventName);
-  if (eventDataArgWriter) {
-    eventDataArgWriter(*paramsWriter);
-  } else {
-    paramsWriter->WriteNull();
-  }
-  paramsWriter->WriteArrayEnd();
-  auto params = paramsWriter->TakeValue();
-  m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
-}
-
-winrt::Microsoft::ReactNative::ReactRootView XamlUIService::GetReactRootView(
-    xaml::FrameworkElement const &view) noexcept {
-  if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
-    const auto reactTag = ::Microsoft::ReactNative::GetTag(view);
-    if (auto shadowNode = static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(
-            uiManager->getHost()->FindShadowNodeForTag(reactTag))) {
-      if (auto rootNode = static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(
-              uiManager->getHost()->FindShadowNodeForTag(shadowNode->m_rootTag))) {
-        return rootNode->GetView().as<winrt::Microsoft::ReactNative::ReactRootView>();
-      }
-    }
-  }
-  return nullptr;
-}
-#endif
 
 /*static*/ ReactPropertyId<XamlUIService> XamlUIService::XamlUIServiceProperty() noexcept {
   static ReactPropertyId<XamlUIService> uiManagerProperty{L"ReactNative.UIManager", L"XamlUIManager"};

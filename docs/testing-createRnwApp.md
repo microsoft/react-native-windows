@@ -44,34 +44,6 @@ cd TestAppFabric*
 yarn windows --release
 ```
 
-### Old Architecture (Paper/UWP) Testing
-
-#### Debug Mode
-```bash
-# Step 1: Create new app with UWP/Paper architecture
-# For stable version:
-creaternwapp.cmd /rnw latest /t old/uwp-cpp-app TestAppPaperStable
-# For preview version:
-creaternwapp.cmd /rnw preview /t old/uwp-cpp-app TestAppPaperPreview
-
-# Step 2: Navigate to app directory
-cd TestAppPaper*
-
-# Step 3: Start Metro bundler
-yarn start
-
-# Step 4: In a new terminal, build and run in debug mode
-cd TestAppPaper*
-yarn windows
-```
-
-#### Release Mode
-```bash
-# Using the same app created above, build in release mode
-cd TestAppPaper*
-yarn windows --release
-```
-
 ## Validation Checklist
 
 ### App Creation Validation
@@ -94,11 +66,6 @@ yarn windows --release
 - [ ] Uses modern Fabric renderer
 - [ ] Supports new architecture features
 - [ ] Compatible with latest React Native patterns
-
-#### Paper/UWP (Old Architecture)
-- [ ] Uses legacy Paper renderer
-- [ ] UWP-specific features work correctly
-- [ ] Compatible with existing UWP applications
 
 ## Expected Outcomes
 

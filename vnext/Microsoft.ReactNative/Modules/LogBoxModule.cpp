@@ -9,32 +9,24 @@
 #include "ReactNativeHost.h"
 #include "Utils/Helpers.h"
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <winrt/Windows.UI.Composition.h>
-#else
-#include <UI.Xaml.Controls.Primitives.h>
-#include "XamlUtils.h"
-#endif
 
 namespace Microsoft::ReactNative {
 
 LogBox::~LogBox() {
-#ifdef USE_FABRIC
   if (m_hwnd) {
     m_context.UIDispatcher().Post([hwnd = m_hwnd]() { DestroyWindow(hwnd); });
     m_hwnd = nullptr;
   }
-#endif
 }
 
-#ifdef USE_FABRIC
 constexpr PCWSTR c_logBoxWindowClassName = L"MS_REACTNATIVE_LOGBOX";
 constexpr auto CompHostProperty = L"CompHost";
 const int LOGBOX_DEFAULT_WIDTH = 700;
 const int LOGBOX_DEFAULT_HEIGHT = 1000;
-#endif // USE_FABRIC
+
 void LogBox::Show() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
     return;
@@ -55,7 +47,6 @@ void LogBox::Hide() noexcept {
   });
 }
 
-#ifdef USE_FABRIC
 LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   auto data = reinterpret_cast<::IUnknown *>(GetProp(hwnd, CompHostProperty));
   winrt::com_ptr<winrt::IUnknown> spunk;
@@ -116,112 +107,49 @@ void LogBox::RegisterWndClass() noexcept {
 
   registered = true;
 }
-#endif // USE_FABRIC
 
 void LogBox::ShowOnUIThread() noexcept {
   auto host = React::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
   if (!host)
     return;
-#ifndef USE_FABRIC
-  if (!IsFabricEnabled(m_context.Properties().Handle())) {
-    m_logBoxContent = React::ReactRootView();
-    m_logBoxContent.ComponentName(L"LogBox");
-    m_logBoxContent.ReactNativeHost(host);
 
-    m_popup = xaml::Controls::Primitives::Popup{};
-    xaml::FrameworkElement root{nullptr};
+  RegisterWndClass();
 
-    if (Is19H1OrHigher()) {
-      // XamlRoot added in 19H1 - is required to be set for XamlIsland scenarios
-      if (auto xamlRoot = React::XamlUIService::GetXamlRoot(m_context.Properties().Handle())) {
-        m_popup.XamlRoot(xamlRoot);
-        root = xamlRoot.Content().as<xaml::FrameworkElement>();
-      }
-    }
+  if (!m_hwnd) {
+    auto CompositionHwndHost = React::CompositionHwndHost();
+    winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+    viewOptions.ComponentName(L"LogBox");
+    CompositionHwndHost.ReactViewHost(
+        winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
+    winrt::com_ptr<::IUnknown> spunk;
+    CompositionHwndHost.as(spunk);
+    spunk->AddRef(); // Will be stored in windowData
 
-    if (!root) {
-      auto window = xaml::Window::Current();
-      root = window.Content().as<xaml::FrameworkElement>();
-    }
-
-    m_logBoxContent.MaxHeight(root.ActualHeight());
-    m_logBoxContent.Height(root.ActualHeight());
-    m_logBoxContent.MaxWidth(root.ActualWidth());
-    m_logBoxContent.Width(root.ActualWidth());
-    m_logBoxContent.UpdateLayout();
-
-    m_sizeChangedRevoker = root.SizeChanged(
-        winrt::auto_revoke,
-        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
-          if (auto strongThis = wkThis.lock()) {
-            strongThis->m_logBoxContent.MaxHeight(args.NewSize().Height);
-            strongThis->m_logBoxContent.Height(args.NewSize().Height);
-            strongThis->m_logBoxContent.MaxWidth(args.NewSize().Width);
-            strongThis->m_logBoxContent.Width(args.NewSize().Width);
-          }
-        });
-
-    m_tokenClosed = m_popup.Closed(
-        [wkThis = weak_from_this()](auto const & /*sender*/, winrt::IInspectable const & /*args*/) noexcept {
-          if (auto strongThis = wkThis.lock()) {
-            strongThis->HideOnUIThread();
-          }
-        });
-
-    m_popup.Child(m_logBoxContent);
-    m_popup.IsOpen(true);
+    m_hwnd = CreateWindow(
+        c_logBoxWindowClassName,
+        L"React-Native LogBox",
+        WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        LOGBOX_DEFAULT_WIDTH,
+        LOGBOX_DEFAULT_HEIGHT,
+        nullptr,
+        nullptr,
+        hInstance,
+        spunk.get());
   }
-#else
-  else {
-    RegisterWndClass();
 
-    if (!m_hwnd) {
-      auto CompositionHwndHost = React::CompositionHwndHost();
-      winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-      viewOptions.ComponentName(L"LogBox");
-      CompositionHwndHost.ReactViewHost(
-          winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-      HINSTANCE hInstance = GetModuleHandle(NULL);
-      winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
-      winrt::com_ptr<::IUnknown> spunk;
-      CompositionHwndHost.as(spunk);
-      spunk->AddRef(); // Will be stored in windowData
-
-      m_hwnd = CreateWindow(
-          c_logBoxWindowClassName,
-          L"React-Native LogBox",
-          WS_OVERLAPPEDWINDOW,
-          CW_USEDEFAULT,
-          CW_USEDEFAULT,
-          LOGBOX_DEFAULT_WIDTH,
-          LOGBOX_DEFAULT_HEIGHT,
-          nullptr,
-          nullptr,
-          hInstance,
-          spunk.get());
-    }
-
-    ShowWindow(m_hwnd, SW_NORMAL);
-    BringWindowToTop(m_hwnd);
-    SetFocus(m_hwnd);
-  }
-#endif // USE_FABRIC
+  ShowWindow(m_hwnd, SW_NORMAL);
+  BringWindowToTop(m_hwnd);
+  SetFocus(m_hwnd);
 }
 
 void LogBox::HideOnUIThread() noexcept {
-#ifdef USE_FABRIC
   if (m_hwnd) {
     ::ShowWindow(m_hwnd, SW_HIDE);
   }
-#else // USE_FABRIC
-  if (m_popup) {
-    m_popup.Closed(m_tokenClosed);
-    m_sizeChangedRevoker.revoke();
-    m_popup.IsOpen(false);
-    m_popup = nullptr;
-    m_logBoxContent = nullptr;
-  }
-#endif // USE_FABRIC
 }
 
 void LogBox::Initialize(React::ReactContext const &reactContext) noexcept {

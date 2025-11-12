@@ -156,7 +156,6 @@
     <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="ABI\TestController.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MessageQueueShim.cpp">

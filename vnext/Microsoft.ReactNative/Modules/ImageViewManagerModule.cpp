@@ -10,17 +10,14 @@
 
 #include "ImageViewManagerModule.h"
 
-#include <UI.Xaml.Media.Imaging.h>
-#include <Views/Image/ReactImage.h>
-#include <cxxreact/JsArgumentHelpers.h>
-#ifdef USE_FABRIC
 #include <Fabric/WindowsImageManager.h>
+#include <UI.Xaml.Media.Imaging.h>
 #include <Utils/Helpers.h>
+#include <cxxreact/JsArgumentHelpers.h>
 #include <wincodec.h>
-#include "XamlUtils.h"
-#endif // USE_FABRIC
 #include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
+#include "XamlUtils.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -35,12 +32,8 @@ winrt::fire_and_forget GetImageSizeAsync(
     std::string uriString,
     winrt::Microsoft::ReactNative::JSValue &&headers,
     Mso::Functor<void(int32_t width, int32_t height)> successCallback,
-    Mso::Functor<void()> errorCallback
-#ifdef USE_FABRIC
-    ,
-    bool useFabric
-#endif // USE_FABRIC
-) {
+    Mso::Functor<void()> errorCallback,
+    bool useFabric) {
   bool succeeded{false};
 
   try {
@@ -64,9 +57,7 @@ winrt::fire_and_forget GetImageSizeAsync(
       memoryStream = co_await GetImageInlineDataAsync(source);
     }
 
-#ifdef USE_FABRIC
     if (!useFabric) {
-#endif // USE_FABRIC
       winrt::BitmapImage bitmap;
       if (memoryStream) {
         co_await bitmap.SetSourceAsync(memoryStream);
@@ -75,7 +66,6 @@ winrt::fire_and_forget GetImageSizeAsync(
         successCallback(bitmap.PixelWidth(), bitmap.PixelHeight());
         succeeded = true;
       }
-#ifdef USE_FABRIC
     } else {
       auto result = wicBitmapSourceFromStream(memoryStream);
       if (!std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
@@ -88,7 +78,6 @@ winrt::fire_and_forget GetImageSizeAsync(
         }
       }
     }
-#endif // USE_FABRIC
   } catch (winrt::hresult_error const &) {
   }
 
@@ -112,12 +101,8 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
             [result](double width, double height) noexcept {
               result.Resolve(std::vector<double>{width, height});
             },
-            [result]() noexcept { result.Reject("Failed"); }
-#ifdef USE_FABRIC
-            ,
-            IsFabricEnabled(context.Properties().Handle())
-#endif // USE_FABRIC
-        );
+            [result]() noexcept { result.Reject("Failed"); },
+            IsFabricEnabled(context.Properties().Handle()));
       });
 }
 
@@ -137,12 +122,8 @@ void ImageLoader::getSizeWithHeaders(
         [result](double width, double height) noexcept {
           result.Resolve(Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
         },
-        [result]() noexcept { result.Reject("Failed"); }
-#ifdef USE_FABRIC
-        ,
-        IsFabricEnabled(context.Properties().Handle())
-#endif // USE_FABRIC
-    );
+        [result]() noexcept { result.Reject("Failed"); },
+        IsFabricEnabled(context.Properties().Handle()));
   });
 }
 

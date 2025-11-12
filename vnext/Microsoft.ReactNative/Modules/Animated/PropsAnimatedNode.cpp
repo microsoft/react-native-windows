@@ -3,23 +3,15 @@
 
 #include "pch.h"
 
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
-#include <Views/ShadowNodeBase.h>
-#endif
-
 #include <Utils/Helpers.h>
 #include <Views/XamlFeatures.h>
 #include "NativeAnimatedNodeManager.h"
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/FabricUIManagerModule.h>
-#endif
 
 namespace Microsoft::ReactNative {
 PropsAnimatedNode::PropsAnimatedNode(
@@ -84,11 +76,6 @@ void PropsAnimatedNode::DisconnectFromView(int64_t viewTag) {
     }
 
     if (m_centerPointAnimation) {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-      if (const auto target = GetUIElement()) {
-        target.StopAnimation(m_centerPointAnimation);
-      }
-#endif
       m_centerPointAnimation = nullptr;
     }
     m_needsCenterPointAnimation = false;
@@ -142,33 +129,11 @@ void PropsAnimatedNode::UpdateView() {
   }
 }
 
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-static void EnsureUIElementDirtyForRender(xaml::UIElement uiElement) {
-  auto compositeMode = uiElement.CompositeMode();
-  switch (compositeMode) {
-    case xaml::Media::ElementCompositeMode::SourceOver:
-    case xaml::Media::ElementCompositeMode::MinBlend:
-      uiElement.CompositeMode(xaml::Media::ElementCompositeMode::Inherit);
-      break;
-    default:
-      uiElement.CompositeMode(xaml::Media::ElementCompositeMode::SourceOver);
-      break;
-  }
-  uiElement.CompositeMode(compositeMode);
-}
-#endif
-
 void PropsAnimatedNode::StartAnimations() {
   assert(m_useComposition);
   if (m_expressionAnimations.size()) {
     AnimationView view = GetAnimationView();
     if (view) {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-      // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
-      if (view.m_element) {
-        EnsureUIElementDirtyForRender(view.m_element);
-      }
-#endif
       for (const auto &anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
           m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
@@ -183,11 +148,6 @@ void PropsAnimatedNode::StartAnimations() {
           m_subchannelPropertySet.StartAnimation(L"ScaleY", anim.second);
           StartAnimation(view, m_scaleCombined);
         } else if (anim.second.Target() == L"Rotation") {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-          if (view.m_element) {
-            view.m_element.RotationAxis(m_rotationAxis);
-          }
-#else
           if (view.m_componentView) {
             auto visual =
                 winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(
@@ -196,7 +156,6 @@ void PropsAnimatedNode::StartAnimations() {
                         ->Visual());
             visual.RotationAxis(m_rotationAxis);
           }
-#endif
           StartAnimation(view, anim.second);
         } else {
           StartAnimation(view, anim.second);
@@ -330,49 +289,9 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
   }
 }
 
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-Microsoft::ReactNative::ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
-  if (const auto uiManager = Microsoft::ReactNative::GetNativeUIManager(m_context).lock()) {
-    if (const auto nativeUIManagerHost = uiManager->getHost()) {
-      return static_cast<Microsoft::ReactNative::ShadowNodeBase *>(
-          nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
-    }
-  }
-  return nullptr;
-}
-
-xaml::UIElement PropsAnimatedNode::GetUIElement() {
-  if (IsRS5OrHigher()) {
-    if (const auto shadowNodeBase = GetShadowNodeBase()) {
-      if (const auto shadowNodeView = shadowNodeBase->GetView()) {
-        return shadowNodeView.as<xaml::UIElement>();
-      }
-    }
-  }
-  return nullptr;
-}
-#endif
-
-void PropsAnimatedNode::CommitProps() {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  if (const auto node = GetShadowNodeBase()) {
-    if (!node->m_zombie) {
-      node->updateProperties(m_props);
-    }
-  }
-#endif
-}
+void PropsAnimatedNode::CommitProps() {}
 
 PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  if (IsRS5OrHigher()) {
-    if (const auto shadowNodeBase = GetShadowNodeBase()) {
-      if (const auto shadowNodeView = shadowNodeBase->GetView()) {
-        return {shadowNodeView.as<xaml::UIElement>()};
-      }
-    }
-  }
-#else
   if (auto fabricuiManager = FabricUIManager::FromProperties(m_context.Properties())) {
     auto componentView = fabricuiManager->GetViewRegistry().findComponentViewWithTag(
         static_cast<facebook::react::Tag>(m_connectedViewTag));
@@ -380,18 +299,12 @@ PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
       return {componentView};
     }
   }
-#endif
   return {nullptr};
 }
 
 void PropsAnimatedNode::StartAnimation(
     const AnimationView &view,
     const comp::CompositionAnimation &animation) noexcept {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  if (view.m_element) {
-    view.m_element.StartAnimation(animation);
-  }
-#else
   if (view.m_componentView) {
     auto baseComponentView =
         view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
@@ -413,20 +326,13 @@ void PropsAnimatedNode::StartAnimation(
       visual.StartAnimation(targetProp, animation);
     }
   }
-#endif
 }
 
 comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(const AnimationView &view) noexcept {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  if (view.m_element) {
-    return GetShadowNodeBase()->EnsureTransformPS();
-  }
-#else
   if (view.m_componentView) {
     return view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
         ->EnsureCenterPointPropertySet();
   }
-#endif
   return nullptr;
 }
 

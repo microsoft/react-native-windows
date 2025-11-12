@@ -13,113 +13,50 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
-            - Name: X64Debug
-              BuildConfiguration: Debug
-              BuildPlatform: x64
-              UseFabric: false
-              CreateApiDocs: true
-            - Name: X64Release
-              BuildConfiguration: Release
-              BuildPlatform: x64
-              UseFabric: false
-            - Name: X86Debug
-              BuildConfiguration: Debug
-              BuildPlatform: x86
-              UseFabric: false
-            - Name: X86Release
-              BuildConfiguration: Release
-              BuildPlatform: x86
-              UseFabric: false
-            - Name: Arm64Release
-              BuildConfiguration: Release
-              BuildPlatform: ARM64
-              UseFabric: false
             - Name: X64DebugFabric
               BuildConfiguration: Debug
               BuildPlatform: x64
-              UseFabric: true
               CreateApiDocs: true
             - Name: X64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: x64
-              UseFabric: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
-              UseFabric: true
             - Name: Arm64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: ARM64
-              UseFabric: true
         - BuildEnvironment: SecurePullRequest
           Matrix:
-            - Name: X64Release
-              BuildConfiguration: Release
-              BuildPlatform: x64
-              UseFabric: false
-              UseExperimentalWinUI3: true
             - Name: X64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: x64
-              UseFabric: true
               UseExperimentalWinUI3: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
-              UseFabric: true
               UseExperimentalWinUI3: true
         - BuildEnvironment: Continuous
           Matrix:
-            - Name: X64Debug
-              BuildConfiguration: Debug
-              BuildPlatform: x64
-              UseFabric: false
-              CreateApiDocs: true
-            - Name: X64Release
-              BuildConfiguration: Release
-              BuildPlatform: x64
-              UseFabric: false
-            - Name: X86Debug
-              BuildConfiguration: Debug
-              BuildPlatform: x86
-              UseFabric: false
-            - Name: X86Release
-              BuildConfiguration: Release
-              BuildPlatform: x86
-              UseFabric: false
-            - Name: Arm64Debug
-              BuildConfiguration: Debug
-              BuildPlatform: ARM64
-              UseFabric: false
-            - Name: Arm64Release
-              BuildConfiguration: Release
-              BuildPlatform: ARM64
-              UseFabric: false
             - Name: X64DebugFabric
               BuildConfiguration: Debug
               BuildPlatform: x64
-              UseFabric: true
               CreateApiDocs: true
             - Name: X64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: x64
-              UseFabric: true
             - Name: X86DebugFabric
               BuildConfiguration: Debug
               BuildPlatform: x86
-              UseFabric: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
-              UseFabric: true
             - Name: Arm64DebugFabric
               BuildConfiguration: Debug
               BuildPlatform: ARM64
-              UseFabric: true
             - Name: Arm64ReleaseFabric
               BuildConfiguration: Release
               BuildPlatform: ARM64
-              UseFabric: true
 
   jobs:
     - ${{ each config in parameters.buildMatrix }}:
@@ -158,10 +95,7 @@
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
-                    ${{ if eq(matrix.UseFabric, true) }}:
-                      solutionName: Microsoft.ReactNative.NewArch.sln
-                    ${{ else }}:
-                      solutionName: Microsoft.ReactNative.sln
+                    solutionName: Microsoft.ReactNative.NewArch.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
 
@@ -190,10 +124,7 @@
 
                 - template: ../templates/publish-build-artifacts.yml
                   parameters:
-                    ${{ if eq(matrix.UseFabric, true) }}:
-                      artifactName: ReactWindowsFabric
-                    ${{ else }}:
-                      artifactName: ReactWindows
+                    artifactName: ReactWindows
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
                     contents: |
@@ -242,16 +173,10 @@
                     arguments: -NoPrompt -Tags buildLab
 
                 - task: DownloadPipelineArtifact@1
-                  ${{ if eq(matrix.UseFabric, true) }}:
-                    displayName: Download "ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
-                  ${{ else }}:
-                    displayName: Download "ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
+                  displayName: Download "ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    ${{ if eq(matrix.UseFabric, true) }}:
-                      artifactName: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
-                    ${{ else }}:
-                      artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                    artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
 
                 - task: BinSkim@4
                   displayName: Run Binskim Analysis
@@ -270,10 +195,7 @@
                   displayName: Restore NuGet packages
                   # Should be kept in sync with UniversalBuild - template: ../templates/msbuild-sln.yml
                   inputs:
-                    ${{ if eq(matrix.UseFabric, true) }}:
-                      solution: vnext/Microsoft.ReactNative.NewArch.sln
-                    ${{ else }}:
-                      solution: vnext/Microsoft.ReactNative.sln
+                    solution: vnext/Microsoft.ReactNative.NewArch.sln
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
                     msbuildArchitecture: x64
@@ -321,39 +243,3 @@
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
                   condition: and(succeeded(), and(eq('${{ matrix.BuildConfiguration }}', 'Debug'), eq('${{ matrix.BuildPlatform }}', 'x64')))
-
-                - task: VSTest@2
-                  displayName: Run Universal Unit Tests (UWP)
-                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
-                  inputs:
-                    testSelector: testAssemblies
-                    testAssemblyVer2: |
-                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
-                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    runTestsInIsolation: true
-                    platform: ${{ matrix.BuildPlatform }}
-                    configuration: ${{ matrix.BuildConfiguration }}
-                    publishRunAttachments: true
-                    codeCoverageEnabled: true
-                    collectDumpOn: onAbortOnly
-                    vsTestVersion: latest
-                    failOnMinTestsNotRun: true
-                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')), eq('${{ matrix.UseFabric }}', 'false'))
-
-                - task: VSTest@2
-                  displayName: Run Universal Unit Tests (NetCore)
-                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
-                  inputs:
-                    testSelector: testAssemblies
-                    testAssemblyVer2: |
-                      Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
-                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    runTestsInIsolation: true
-                    platform: ${{ matrix.BuildPlatform }}
-                    configuration: ${{ matrix.BuildConfiguration }}
-                    publishRunAttachments: true
-                    codeCoverageEnabled: true
-                    collectDumpOn: onAbortOnly
-                    vsTestVersion: latest
-                    failOnMinTestsNotRun: true
-                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.UseFabric }}', 'false'))

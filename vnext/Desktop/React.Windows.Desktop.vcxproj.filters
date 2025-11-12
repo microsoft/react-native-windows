@@ -45,9 +45,6 @@
     <Midl Include="ABI\TestController.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
-      <Filter>ABI</Filter>
-    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
