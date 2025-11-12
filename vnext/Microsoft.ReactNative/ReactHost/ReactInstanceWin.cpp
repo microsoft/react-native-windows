@@ -125,6 +125,45 @@ struct LoadedCallbackGuard {
   Mso::CntPtr<ReactInstanceWin> m_reactInstance;
 };
 
+struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCallback {
+  BridgeUIBatchInstanceCallback(Mso::WeakPtr<ReactInstanceWin> wkInstance) : m_wkInstance(wkInstance) {}
+  virtual ~BridgeUIBatchInstanceCallback() = default;
+  void onBatchComplete() override {
+    if (auto instance = m_wkInstance.GetStrongPtr()) {
+      auto state = instance->State();
+      if (state != ReactInstanceState::HasError && state != ReactInstanceState::Unloaded) {
+        instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
+          if (auto instance = wkInstance.GetStrongPtr()) {
+            auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
+            if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                UIBatchCompleteCallbackProperty())) {
+              (*callback)(instance->m_reactContext->Properties());
+            }
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
+            if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+              uiManager->onBatchComplete();
+            }
+#endif
+          }
+        });
+        // For UWP we use a batching message queue to optimize the usage
+        // of the CoreDispatcher.  Win32 already has an optimized queue.
+        facebook::react::BatchingMessageQueueThread *batchingUIThread =
+            static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+        if (batchingUIThread != nullptr) {
+          batchingUIThread->onBatchComplete();
+        }
+      }
+    }
+  }
+  void incrementPendingJSCalls() override {}
+  void decrementPendingJSCalls() override {}
+
+  Mso::WeakPtr<ReactInstanceWin> m_wkInstance;
+  Mso::CntPtr<Mso::React::ReactContext> m_context;
+  std::weak_ptr<facebook::react::MessageQueueThread> m_uiThread;
+};
+
 //=============================================================================================
 // ReactInstanceWin implementation
 //=============================================================================================
@@ -662,6 +701,65 @@ void ReactInstanceWin::SetupHMRClient() noexcept {
   }
 }
 
+void ReactInstanceWin::LoadJSBundles() noexcept {
+  //
+  // We use m_jsMessageThread to load JS bundles synchronously. In that case we only load
+  // them if the m_jsMessageThread is not shut down (quitSynchronous() is not called).
+  // After the load we call OnReactInstanceLoaded callback on native queue.
+  //
+  // Note that the instance could be destroyed while we are loading JS Bundles.
+  // Though, the JS engine is not destroyed until this work item is not finished.
+  // Thus, we check the m_isDestroyed flag to see if we should do an early exit.
+  // Also, since we have to guarantee that the OnReactInstanceLoaded callback is called before
+  // the OnReactInstanceDestroyed callback, the OnReactInstanceLoaded is called right before the
+  // OnReactInstanceDestroyed callback in the Destroy() method. In that case any OnReactInstanceLoaded
+  // calls after we finish this JS message queue work item is ignored.
+  //
+  // The LoadedCallbackGuard is used for the case when runOnQueue does not execute the lambda
+  // before destroying it. It may happen if the m_jsMessageThread is already shutdown.
+  // In that case, the LoadedCallbackGuard notifies about cancellation by calling OnReactInstanceLoaded.
+  // The OnReactInstanceLoaded internally only accepts the first call and ignores others.
+  //
+
+  if (m_isFastReloadEnabled) {
+    // Getting bundle from the packager, so do everything async.
+    auto instanceWrapper = m_instanceWrapper.LoadWithLock();
+    instanceWrapper->loadBundle(Mso::Copy(JavaScriptBundleFile()));
+
+    m_jsMessageThread.Load()->runOnQueue(
+        [weakThis = Mso::WeakPtr{this},
+         loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})]() noexcept {
+          if (auto strongThis = weakThis.GetStrongPtr()) {
+            if (strongThis->State() != ReactInstanceState::HasError) {
+              strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+            }
+          }
+        });
+  } else {
+    m_jsMessageThread.Load()->runOnQueue(
+        [weakThis = Mso::WeakPtr{this},
+         loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})]() noexcept {
+          if (auto strongThis = weakThis.GetStrongPtr()) {
+            auto instance = strongThis->m_instance.LoadWithLock();
+            auto instanceWrapper = strongThis->m_instanceWrapper.LoadWithLock();
+            if (!instance || !instanceWrapper) {
+              return;
+            }
+
+            try {
+              instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
+              if (strongThis->State() != ReactInstanceState::HasError) {
+                strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+              }
+            } catch (...) {
+              strongThis->OnReactInstanceLoaded(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
+            }
+          }
+        });
+  }
+}
+
+#ifdef USE_FABRIC
 void ReactInstanceWin::LoadJSBundlesBridgeless(std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept {
   if (m_isFastReloadEnabled) {
     // Getting bundle from the packager, so do everything async.
@@ -1039,6 +1137,7 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
   auto rootTag = rootView->GetTag();
   folly::dynamic params = folly::dynamic::array(rootTag);
 
+#ifdef USE_FABRIC
   if (useFabric) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
