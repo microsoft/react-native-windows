@@ -372,6 +372,9 @@ module.exports = {
   get AppTheme() {
     return require('./Libraries/AppTheme/AppTheme').AppTheme;
   },
+  get XamlHost() {
+    return require('./Libraries/Components/Xaml/XamlHost').default;
+  },
 } as ReactNativePublicAPI;
 
 if (__DEV__) {
