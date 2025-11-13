@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Realign View.js with upstream",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
