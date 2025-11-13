@@ -91,7 +91,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -142,7 +142,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;Dwmapi.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>
         api-ms-win-core-file-l1-2-0.dll;
         api-ms-win-core-windowserrorreporting-l1-1-0.dll;
@@ -153,9 +153,6 @@
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
-    </Link>
-    <Link Condition="'$(UseFabric)' == 'true'">
-      <AdditionalDependencies>User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -336,36 +333,6 @@
       <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
-  <!-- Paper-only ClInclude -->
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <ClInclude Include="DevMenuControl.h">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="LayoutService.h">
-      <DependentUpon>LayoutService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="Modules\NativeUIManager.h" />
-    <ClInclude Include="ReactPointerEventArgs.h">
-      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="Utils\AccessibilityUtils.h" />
-    <ClInclude Include="Views\ExpressionAnimationStore.h" />
-    <ClInclude Include="Views\Image\Effects.h" />
-    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h" />
-    <ClInclude Include="Views\IXamlRootView.h" />
-    <ClInclude Include="Views\KeyboardEventHandler.h" />
-    <ClInclude Include="Views\ReactViewInstance.h" />
-    <ClInclude Include="Views\XamlFeatures.h" />
-    <ClInclude Include="XamlHelper.h">
-      <DependentUpon>XamlHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="XamlLoadState.h" />
-    <ClInclude Include="XamlView.h" />
-  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
@@ -421,58 +388,12 @@
       <SubType>Code</SubType>
     </ClCompile>
   </ItemGroup>
-  <!-- Paper-only ClCompile -->
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <ClCompile Include="Base\CoreUIManagers.cpp" />
-    <ClCompile Include="DevMenuControl.cpp">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="LayoutService.cpp">
-      <DependentUpon>LayoutService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactPointerEventArgs.cpp">
-      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="Utils\AccessibilityUtils.cpp" />
-    <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
-    <ClCompile Include="Views\DynamicValueProvider.cpp" />
-    <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
-    <ClCompile Include="Views\KeyboardEventHandler.cpp" />
-    <ClCompile Include="Views\ReactViewInstance.cpp" />
-    <ClCompile Include="Views\XamlFeatures.cpp" />
-    <ClCompile Include="XamlHelper.cpp">
-      <DependentUpon>XamlHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="XamlLoadState.cpp" />
-    <ClCompile Include="XamlView.cpp" />
-  </ItemGroup>
   <ItemGroup>
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="DocString.idl" />
     <Midl Include="XamlUIService.idl">
       <SubType>Designer</SubType>
     </Midl>
-  </ItemGroup>
-  <!-- Paper-only Midl -->
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <Midl Include="DevMenuControl.idl">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
-    <Midl Include="LayoutService.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactPointerEventArgs.idl" />
-    <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
-    <Midl Include="Views\cppwinrt\Effects.idl" />
-    <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
-    <Midl Include="Views\cppwinrt\ViewPanel.idl" />
-    <Midl Include="XamlHelper.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
@@ -510,11 +431,6 @@
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <Page Include="DevMenuControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />

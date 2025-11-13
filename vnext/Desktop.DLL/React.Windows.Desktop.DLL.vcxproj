@@ -106,7 +106,9 @@
         Shlwapi.lib;
         Version.lib;
         Dwmapi.lib;
+        windowscodecs.lib;
         WindowsApp_downlevel.lib;
+        dxguid.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
       <AdditionalDependencies Condition="'$(Platform)' == 'ARM64EC'">
@@ -120,11 +122,7 @@
         ShCore.lib;
         Uiautomationcore.lib
       </AdditionalDependencies>
-      <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
-    </Link>
-    <Link Condition="'$(UseFabric)' == 'true'">
-      <AdditionalDependencies>windowscodecs.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>Windowscodecs.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>Chakra.dll;Windowscodecs.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
