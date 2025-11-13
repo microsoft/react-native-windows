@@ -136,7 +136,7 @@
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -177,13 +177,12 @@
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
-    <ClCompile Include="Modules\DesktopTimingModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
-  <ItemGroup Condition="'$(UseFabric)' == 'true'">
+  <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedPlatformConfig.cpp" />
@@ -262,7 +261,6 @@
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
-    <ClInclude Include="Modules\DesktopTimingModule.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

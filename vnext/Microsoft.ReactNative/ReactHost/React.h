@@ -85,12 +85,6 @@ struct IReactInstance : IUnknown {
   virtual ReactInstanceState State() const noexcept = 0;
 
   virtual Mso::React::IReactContext &GetReactContext() const noexcept = 0;
-
-  virtual void AttachMeasuredRootView(
-      facebook::react::IReactRootView *rootView,
-      const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
-      bool useFabric) noexcept = 0;
-  virtual void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept = 0;
 };
 
 MSO_GUID(IReactSettingsSnapshot, "6652bb2e-4c5e-49f7-b642-e817b0fef4de")

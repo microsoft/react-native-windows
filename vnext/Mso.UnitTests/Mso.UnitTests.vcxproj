@@ -76,7 +76,7 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="PropertySheet.props" />
   </ImportGroup>
-  <ImportGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
+  <ImportGroup Condition=" '$(UseWinUI3)' == 'true' ">
     <Import Project="..\PropertySheets\WinUI.props" />
   </ImportGroup>
   <!-- Added since we build this project with Paper/Fabric. -->
@@ -188,7 +188,7 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)"
       PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
+  <ItemGroup Condition=" '$(UseWinUI3)' == 'true' ">
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)"
       Condition="'$(OverrideWinUIPackage)'!='true'" />
   </ItemGroup>

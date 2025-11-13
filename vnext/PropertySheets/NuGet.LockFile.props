@@ -8,7 +8,7 @@
        -->
 
   <PropertyGroup>
-    <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">true</RestoreLockedMode>
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">false</RestoreLockedMode>
 
     <!-- RnwNewArchOnly is for projects that always build with RnwNewArch so they don't add .newarch to the filename. -->
     <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(SolutionName)'=='ReactWindows-Desktop'">true</RnwNewArchOnly>
