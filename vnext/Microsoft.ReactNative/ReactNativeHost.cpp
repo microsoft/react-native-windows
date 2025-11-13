@@ -19,6 +19,8 @@
 #include <ReactPackageBuilder.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 
+#include "XamlHost.h"
+
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -95,6 +97,8 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       make<ReactPackageBuilder>(modulesProvider, turboModulesProvider, componentregistry, uriImageManager);
 
   winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
+
+  RegisterXamlHostComponentView(m_packageBuilder);
 
   if (auto packageProviders = InstanceSettings().PackageProviders()) {
     for (auto const &packageProvider : packageProviders) {
