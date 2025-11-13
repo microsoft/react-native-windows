@@ -142,7 +142,7 @@
     </ClCompile>
       <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlHost.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true' OR '$(SupportWinUI3Islands)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlHost.idl</DependentUpon>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
