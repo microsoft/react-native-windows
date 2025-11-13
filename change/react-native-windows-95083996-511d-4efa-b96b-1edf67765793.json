@@ -1,7 +1,0 @@
-{
-  "comment": "Implement context menu support for Fabric TextInput with Cut, Copy, Paste, and Select All options",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "patch"
-}
