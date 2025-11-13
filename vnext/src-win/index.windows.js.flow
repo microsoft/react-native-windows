@@ -471,6 +471,7 @@ export {HandledEventPhase } from './Libraries/Components/View/ViewPropTypes'
 
 export {default as ViewWindows} from './Libraries/Components/View/View';
 export {AppTheme} from './Libraries/AppTheme/AppTheme';
+export {default as XamlHost} from './Libraries/Components/Xaml/XamlHost';
 // End Windows Specific exports
 
 // #endregion

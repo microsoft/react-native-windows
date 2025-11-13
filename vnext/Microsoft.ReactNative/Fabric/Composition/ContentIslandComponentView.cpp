@@ -178,14 +178,12 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
 void ContentIslandComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::MountChildComponentView(childComponentView, index);
 }
 
 void ContentIslandComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
@@ -262,6 +260,12 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
         args.AutomationProvider(nullptr);
         args.Handled(true);
       });
+
+  if (m_uiaProvider) {
+    auto providerImpl =
+        m_uiaProvider.as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    providerImpl->SetChildSiteLink(m_childSiteLink);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
