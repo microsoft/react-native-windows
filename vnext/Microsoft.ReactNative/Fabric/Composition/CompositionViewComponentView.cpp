@@ -381,7 +381,7 @@ void ComponentView::onGotFocus(
       focusRect.size.height += (FOCUS_VISUAL_WIDTH * 2);
       focusVisualRoot(focusRect)->hostFocusVisual(true, get_strong());
     }
-    if (m_uiaProvider) {
+    if (EnsureUiaProvider()) {
       auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
       if (spProviderSimple != nullptr) {
         winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
