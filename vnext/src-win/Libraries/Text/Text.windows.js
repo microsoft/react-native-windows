@@ -589,122 +589,12 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       );
     }
 
-    return (
-      <NativeVirtualText
-        {...restProps}
-        accessibilityLabel={_accessibilityLabel}
-        accessibilityState={_accessibilityState}
-        nativeID={_nativeID}
-        numberOfLines={_numberOfLines}
-        ref={forwardedRef}
-        selectable={_selectable}
-        selectionColor={_selectionColor}
-        style={_style}
-        disabled={disabled}>
-        {children}
-      </NativeVirtualText>
-    );
-  };
-
-  // If the disabled prop and accessibilityState.disabled are out of sync but not both in
-  // falsy states we need to update the accessibilityState object to use the disabled prop.
-  if (
-    _disabled !== _accessibilityStateDisabled &&
-    ((_disabled != null && _disabled !== false) ||
-      (_accessibilityStateDisabled != null &&
-        _accessibilityStateDisabled !== false))
-  ) {
-    _accessibilityState = {..._accessibilityState, disabled: _disabled};
-  }
-
-  const _accessible = Platform.select({
-    ios: accessible !== false,
-    android:
-      accessible == null ? onPress != null || onLongPress != null : accessible,
-    default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
-  });
-
-  let nativeText = null;
-  if (isPressable) {
-    nativeText = (
-      <NativePressableText
-        ref={forwardedRef}
-        textProps={{
-          ...restProps,
-          accessibilityLabel: _accessibilityLabel,
-          accessibilityState: _accessibilityState,
-          accessible: _accessible,
-          allowFontScaling: allowFontScaling !== false,
-          disabled: _disabled,
-          ellipsizeMode: ellipsizeMode ?? 'tail',
-          nativeID: _nativeID,
-          numberOfLines: _numberOfLines,
-          selectable: _selectable,
-          selectionColor: _selectionColor,
-          style: _style,
-          children,
-        }}
-        textPressabilityProps={{
-          onLongPress,
-          onPress,
-          onPressIn,
-          onPressOut,
-          onResponderGrant,
-          onResponderMove,
-          onResponderRelease,
-          onResponderTerminate,
-          onResponderTerminationRequest,
-          onStartShouldSetResponder,
-          pressRetentionOffset,
-          suppressHighlighting,
-        }}
-      />
-    );
-  } else {
-    nativeText = (
-      <NativeText
-        {...restProps}
-        accessibilityLabel={_accessibilityLabel}
-        accessibilityState={_accessibilityState}
-        accessibilityLevel={_accessibilityLevel} // Windows
-        accessibilityPosInSet={_accessibilityPosInSet} // Windows
-        accessibilitySetSize={_accessibilitySetSize} // Windows
-        accessible={_accessible}
-        allowFontScaling={allowFontScaling !== false}
-        disabled={_disabled}
-        ellipsizeMode={ellipsizeMode ?? 'tail'}
-        nativeID={_nativeID}
-        numberOfLines={_numberOfLines}
-        ref={forwardedRef}
-        selectable={_selectable}
-        selectionColor={_selectionColor}
-        style={_style}>
-        {children}
-      </NativeText>
-    );
-  }
-
-  if (children == null) {
-    return nativeText;
-  }
-
-  // If the children do not contain a JSX element it would not be possible to have a
-  // nested `Text` component so we can skip adding the `TextAncestor` context wrapper
-  // which has a performance overhead. Since we do this for performance reasons we need
-  // to keep the check simple to avoid regressing overall perf. For this reason the
-  // `children.length` constant is set to `3`, this should be a reasonable tradeoff
-  // to capture the majority of `Text` uses but also not make this check too expensive.
-  if (Array.isArray(children) && children.length <= 3) {
-    let hasNonTextChild = false;
-    for (let child of children) {
-      if (child != null && typeof child === 'object') {
-        hasNonTextChild = true;
-        break;
-      }
+    if (children == null) {
+      return nativeText;
     }
 
     // If the children do not contain a JSX element it would not be possible to have a
-    // nested `Text` component so we can skip adding the `TextAncestorContext` context wrapper
+    // nested `Text` component so we can skip adding the `TextAncestor` context wrapper
     // which has a performance overhead. Since we do this for performance reasons we need
     // to keep the check simple to avoid regressing overall perf. For this reason the
     // `children.length` constant is set to `3`, this should be a reasonable tradeoff
@@ -727,7 +617,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     return (
       <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
     );
-  }
+  };
   _TextImpl = TextImplLegacy;
 }
 
