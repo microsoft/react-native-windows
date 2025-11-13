@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate 0.82.0-nightly-20250806-5936f29d6",
-  "packageName": "@rnw-scripts/create-github-releases",
-  "email": "66076509+vineethkuttan@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
