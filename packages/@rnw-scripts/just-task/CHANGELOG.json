@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Wed, 12 Nov 2025 21:00:43 GMT",
+      "version": "2.3.57",
+      "tag": "@rnw-scripts/just-task_v2.3.57",
+      "comments": {
+        "patch": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "33e8489afe38fdd8b8170f750bdd5983b4f1dc7e",
+            "comment": "Integrate 0.82.0-nightly-20250806-5936f29d6"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "94a8154e1d3e12a795834de2937bb9fe91ad4434",
+            "comment": "Copy flow files for rn copy"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.38",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Oct 2025 05:27:27 GMT",
       "version": "2.3.56",
       "tag": "@rnw-scripts/just-task_v2.3.56",

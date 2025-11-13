@@ -2,6 +2,135 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Nov 2025 21:00:42 GMT",
+      "version": "0.0.0-canary.1004",
+      "tag": "react-native-windows_v0.0.0-canary.1004",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc38351877a18c44b69cdf7204a54f8e4ba50dd1",
+            "comment": "Add TSF support to TextInput"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "10898c3334711a5e2e5f46f25c586a1ce97071fa",
+            "comment": "Implement context menu support for Fabric TextInput with Cut, Copy, Paste, and Select All options"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "98c6ca89f95fa8c8be039abced03cafdb822b2d8",
+            "comment": "More cleanup now that we only run using fabric."
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "01364aad420f0e7dca1de12e704a0129e6fa42aa",
+            "comment": "Pressables should take focus on press"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dee1f00fcc745455fefee3cd64d3454436bf9afe",
+            "comment": "Remove web debugging support"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "204f569276e2b271c293c834c90648c6717d4318",
+            "comment": "TextInput is zero height when it has no content"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0fe72b72890415cab242d5e253253b819f92d8e3",
+            "comment": "Remove paper"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "94a8154e1d3e12a795834de2937bb9fe91ad4434",
+            "comment": "Disable the deep import warning"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5837f91a683a3d923e312b21edadb708d40dfb26",
+            "comment": "Use Hermes version 0.0.0-2511.7001-d7ca19b3"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c4bc29fa2c9b20c4a8645d87ab3d6a2465f64b12",
+            "comment": "Added support for modern inspector"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "01e9577712deab7a9d91def1410949c8258645e2",
+            "comment": "Use hermes-windows version 0.0.0-2511.3001-9e4cf518"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "33e8489afe38fdd8b8170f750bdd5983b4f1dc7e",
+            "comment": "Integrate 0.82.0-nightly-20250806-5936f29d6"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3163a292eaee5f950034e3a11b41e25040c70c27",
+            "comment": "Realign View.js with upstream"
+          },
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "26d93dc2fd2814da487c02ef71035d8f6ddf3f2b",
+            "comment": "Fix init-windows template to automatically detect existing codegen spec files"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.279",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.127",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.38",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.42",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.57",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.60",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Nov 2025 06:32:19 GMT",
       "version": "0.0.0-canary.1003",
       "tag": "react-native-windows_v0.0.0-canary.1003",

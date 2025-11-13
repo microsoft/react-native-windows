@@ -1,7 +1,0 @@
-{
-  "comment": "Fix init-windows template to automatically detect existing codegen spec files",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "198982749+Copilot@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
