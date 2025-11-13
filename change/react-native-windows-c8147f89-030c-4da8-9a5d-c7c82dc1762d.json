@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "More cleanup now that we only run using fabric.",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
