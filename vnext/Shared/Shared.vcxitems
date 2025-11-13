@@ -253,7 +253,7 @@
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-	<ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlHost.h">
+      <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlHost.h">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true' OR '$(SupportWinUI3Islands)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
       <SubType>Code</SubType>
