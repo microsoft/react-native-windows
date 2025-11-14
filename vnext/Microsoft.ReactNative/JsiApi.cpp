@@ -492,8 +492,8 @@ ReactNative::JsiRuntime JsiRuntime::MakeRuntime() {
   auto jsThread = std::make_shared<Mso::React::MessageDispatchQueue>(jsDispatchQueue, nullptr, nullptr);
   auto devSettings = std::make_shared<facebook::react::DevSettings>();
 
-  auto runtimeHolder = std::make_shared<::Microsoft::ReactNative::HermesRuntimeHolder>(
-      devSettings, std::move(jsThread), nullptr);
+  auto runtimeHolder =
+      std::make_shared<::Microsoft::ReactNative::HermesRuntimeHolder>(devSettings, std::move(jsThread), nullptr);
   auto runtime = runtimeHolder->getRuntime();
   return Create(runtimeHolder, runtime);
 }
