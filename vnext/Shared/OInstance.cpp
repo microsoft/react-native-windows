@@ -27,7 +27,6 @@
 #include <Utils/LocalBundleReader.h>
 #endif
 
-#include <werapi.h>
 #include <BatchingMessageQueueThread.h>
 #include <CppRuntimeOptions.h>
 #include <CreateModules.h>
@@ -38,6 +37,7 @@
 #include <SchedulerSettings.h>
 #include <Shlwapi.h>
 #include <safeint.h>
+#include <werapi.h>
 #include "Inspector/ReactInspectorThread.h"
 #include "PackagerConnection.h"
 #include "Threading/MessageDispatchQueue.h"
@@ -67,7 +67,6 @@ using namespace Microsoft::JSI;
 using std::make_shared;
 using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
-
 namespace {
 
 uint32_t getPageSize() noexcept {
@@ -77,7 +76,6 @@ uint32_t getPageSize() noexcept {
 }
 
 } // namespace
-
 
 namespace Microsoft::ReactNative {
 
@@ -189,7 +187,6 @@ void LoadRemoteUrlScript(
   }
 }
 
-
 // We only support files whose size can fit within an uint32_t. Memory
 // mapping an empty or a larger file fails. If the file contents are not
 // null-terminated, file is copied into a dynamically  allocated,
@@ -234,7 +231,6 @@ class FileMappingBigString : public facebook::react::JSBigString {
   uint32_t m_fileSize;
   uint32_t m_size;
 };
-
 
 FileMappingBigString::FileMappingBigString(const std::wstring &filename, uint32_t offset)
     : JSBigString{},

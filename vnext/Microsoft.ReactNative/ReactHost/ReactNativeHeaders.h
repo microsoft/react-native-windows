@@ -36,7 +36,6 @@
 #include <cxxreact/JsArgumentHelpers.h>
 #include <folly/Json.h>
 
-
 #pragma pop_macro("_WIN32")
 #pragma pop_macro("Check")
 #pragma pop_macro("ERROR")

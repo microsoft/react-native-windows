@@ -14,7 +14,6 @@
 #include "IDevSupportManager.h"
 #include "IReactRootView.h"
 
-
 namespace Microsoft::ReactNative {
 const std::shared_ptr<facebook::react::IDevSupportManager> &GetSharedDevManager() noexcept;
 }

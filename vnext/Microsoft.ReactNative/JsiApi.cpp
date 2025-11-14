@@ -8,8 +8,8 @@
 #include <Threading/MessageDispatchQueue.h>
 #include <crash/verifyElseCrash.h>
 #include <winrt/Windows.Foundation.Collections.h>
-#include "ReactHost/MsoUtils.h"
 #include "HermesRuntimeHolder.h"
+#include "ReactHost/MsoUtils.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
