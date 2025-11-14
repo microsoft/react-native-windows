@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 Nov 2025 14:35:18 GMT",
+      "version": "0.0.0-canary.1005",
+      "tag": "react-native-windows_v0.0.0-canary.1005",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f6efeba291c1a31df63e410859db990d9f5d69bc",
+            "comment": "Introduce xamlhost component"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Nov 2025 21:00:42 GMT",
       "version": "0.0.0-canary.1004",
       "tag": "react-native-windows_v0.0.0-canary.1004",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 12 Nov 2025 21:00:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 13 Nov 2025 14:35:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1005
+
+Thu, 13 Nov 2025 14:35:18 GMT
+
+### Changes
+
+- Introduce xamlhost component (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.1004
 
