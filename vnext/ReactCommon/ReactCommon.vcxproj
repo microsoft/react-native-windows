@@ -230,6 +230,9 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\basePrimitives.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\BaseTextInputProps.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textlayoutmanager\TextLayoutManager.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\conversions.h">
+      <DisableSpecificWarnings>2220;4715</DisableSpecificWarnings>
+    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx\react\renderer\imagemanager\ImageRequestParams.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.h" />
