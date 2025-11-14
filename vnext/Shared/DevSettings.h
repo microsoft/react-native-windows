@@ -29,11 +29,6 @@ class HostTarget;
 
 enum class JSIEngineOverride : int32_t {
   Default = 0, // No JSI, will use the legacy ExecutorFactory
-  Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
-
-#if 0 // Deprecated
-  ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
-#endif
 
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
@@ -64,12 +59,6 @@ struct DevSettings {
 
   /// For direct debugging, break on the next line of JavaScript executed
   bool debuggerBreakOnNextLine{false};
-
-  /// Enable function nativePerformanceNow.
-  /// Method nativePerformanceNow() returns high resolution time info.
-  /// It is not safe to expose to Custom Function. Add this flag so we can turn
-  /// it off for Custom Function.
-  bool enableNativePerformanceNow{true};
 
   /// For direct debugging, the port number to use, or zero for the default
   uint16_t debuggerPort{0};

@@ -209,14 +209,6 @@ bool ReactContext::IsLoaded() const noexcept {
   return false;
 }
 
-std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->GetInnerInstance();
-  }
-
-  return nullptr;
-}
-
 IReactSettingsSnapshot const &ReactContext::SettingsSnapshot() const noexcept {
   return *m_settings;
 }

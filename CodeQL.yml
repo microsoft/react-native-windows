@@ -26,7 +26,6 @@ path_classifiers:
     - "**/vnext/Desktop.IntegrationTests"
     - "**/vnext/Desktop.Test.DLL"
     - "**/vnext/Desktop.UnitTests"
-    - "**/vnext/Microsoft.ReactNative.ComponentTests"
     - "**/vnext/Microsoft.ReactNative.Cxx.UnitTests"
     - "**/vnext/Microsoft.ReactNative.IntegrationTests"
     - "**/vnext/Microsoft.ReactNative.Managed.CodeGen.UnitTests"

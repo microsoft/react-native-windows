@@ -4,7 +4,7 @@
  * @format
  */
 
-import {createHash} from 'crypto';
+import { createHash } from 'crypto';
 import fs from '@react-native-windows/fs';
 import path from 'path';
 
@@ -14,7 +14,7 @@ interface ProjectInfo {
   rnwLang: 'cpp' | 'cs' | 'cpp+cs' | null;
 }
 
-export interface DependencyProjectInfo extends ProjectInfo {}
+export interface DependencyProjectInfo extends ProjectInfo { }
 
 export interface AppProjectInfo extends ProjectInfo {
   usesTS: boolean;
@@ -49,7 +49,7 @@ async function fileExists(
     const reactNativeConfigPath = path.resolve(projectRoot, fileName);
     const stats = await fs.stat(reactNativeConfigPath);
     return stats.isFile();
-  } catch {}
+  } catch { }
   return false;
 }
 
@@ -150,11 +150,7 @@ export async function configToProjectInfo(
       const usesRNConfig = await usesReactNativeConfig(
         config.project.windows.folder,
       );
-      const jsEngine = parseBoolean(
-        config.project.windows.experimentalFeatures?.UseHermes,
-      )
-        ? 'Hermes'
-        : 'Chakra';
+      const jsEngine = 'Hermes';
       const rnwSource = parseBoolean(
         config.project.windows.experimentalFeatures?.UseExperimentalNuget,
       )
@@ -204,7 +200,7 @@ export async function configToProjectInfo(
       rnwLang: null,
     };
     return dependencyInfo;
-  } catch {}
+  } catch { }
   return null;
 }
 
@@ -224,6 +220,6 @@ export function getProjectFileFromConfig(
         config.project.windows.project.projectFile,
       );
     }
-  } catch {}
+  } catch { }
   return null;
 }

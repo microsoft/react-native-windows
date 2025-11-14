@@ -52,7 +52,6 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept override;
   ReactInstanceState State() const noexcept override;
   bool IsLoaded() const noexcept override;
-  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
   IReactSettingsSnapshot const &SettingsSnapshot() const noexcept override;
 
  private:

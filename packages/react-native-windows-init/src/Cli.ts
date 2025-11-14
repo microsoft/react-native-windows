@@ -8,7 +8,7 @@
 import yargs from 'yargs';
 import fs from '@react-native-windows/fs';
 import semver from 'semver';
-import {execSync} from 'child_process';
+import { execSync } from 'child_process';
 import validUrl from 'valid-url';
 import prompts from 'prompts';
 import findUp from 'find-up';
@@ -103,12 +103,6 @@ export const windowsInitOptions = initOptions({
     hidden: true,
     default: false,
   },
-  useHermes: {
-    type: 'boolean',
-    describe:
-      '[Experimental] Use Hermes instead of Chakra as the JS engine (supported on 0.64+ for C++ projects)',
-    default: false,
-  },
   useWinUI3: {
     type: 'boolean',
     describe: '[Experimental] Use WinUI 3 (Windows App SDK)',
@@ -145,18 +139,18 @@ const yargsParser = yargs
 function getReactNativeProjectName(): string {
   console.log('Reading project name from package.json...');
   const cwd = process.cwd();
-  const pkgJsonPath = findUp.sync('package.json', {cwd});
+  const pkgJsonPath = findUp.sync('package.json', { cwd });
   if (!pkgJsonPath) {
     throw new CodedError(
       'NoPackageJson',
       'Unable to find package.json.  This should be run from within an existing react-native project.',
     );
   }
-  type PackageJson = {name: string};
+  type PackageJson = { name: string };
 
   let name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
   if (!name) {
-    const appJsonPath = findUp.sync('app.json', {cwd});
+    const appJsonPath = findUp.sync('app.json', { cwd });
     if (appJsonPath) {
       console.log('Reading project name from app.json...');
       name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
@@ -223,7 +217,7 @@ async function getLatestMatchingVersion(
   pkg: string,
   versionSemVer: string,
 ): Promise<string> {
-  const npmResponse = await npmFetch.json(pkg, {registry: NPM_REGISTRY_URL});
+  const npmResponse = await npmFetch.json(pkg, { registry: NPM_REGISTRY_URL });
 
   // Check if versionSemVer is a tag (i.e. 'canary', 'latest', 'preview', etc.)
   if ('dist-tags' in npmResponse) {
@@ -285,7 +279,7 @@ function installReactNativeWindows(
   useDevMode: boolean,
 ) {
   const cwd = process.cwd();
-  const execOptions = verbose ? {stdio: 'inherit' as 'inherit'} : {};
+  const execOptions = verbose ? { stdio: 'inherit' as 'inherit' } : {};
 
   if (useDevMode) {
     const packageCmd = isProjectUsingYarn(cwd) ? 'yarn' : 'npm';
@@ -331,7 +325,7 @@ function installReactNativeWindows(
     )}...`,
   );
 
-  const pkgJsonPath = findUp.sync('package.json', {cwd});
+  const pkgJsonPath = findUp.sync('package.json', { cwd });
   if (!pkgJsonPath) {
     throw new CodedError('NoPackageJson', 'Unable to find package.json');
   }
@@ -395,7 +389,6 @@ function optionSanitizer(key: keyof WindowsInitOptions, value: any): any {
     case 'overwrite':
     case 'projectType':
     case 'experimentalNuGetDependency':
-    case 'useHermes':
     case 'useWinUI3':
     case 'useDevMode':
       return value === undefined ? false : value;
@@ -434,7 +427,7 @@ async function startTelemetrySession(
 
   // Setup telemetry, but don't get NPM package version info right away as
   // we're going to change things and this may interfere with the resolver
-  await Telemetry.setup({populateNpmPackageVersions: false});
+  await Telemetry.setup({ populateNpmPackageVersions: false });
 
   const sanitizedOptions = yargsOptionsToOptions(
     options,
@@ -479,7 +472,7 @@ async function addProjectInfoToTelemetry() {
     if (projectFile) {
       await Telemetry.populateNuGetPackageVersions(projectFile);
     }
-  } catch {}
+  } catch { }
 }
 
 /**
@@ -539,7 +532,7 @@ function setExitProcessWithError(
  * Check if project is using Yarn (has `yarn.lock` in the tree)
  */
 function isProjectUsingYarn(cwd: string): boolean {
-  return !!findUp.sync('yarn.lock', {cwd});
+  return !!findUp.sync('yarn.lock', { cwd });
 }
 
 export async function reactNativeWindowsInit(args?: string[]) {
@@ -563,7 +556,7 @@ export async function reactNativeWindowsInit(args?: string[]) {
       throw new CodedError(
         'IncompatibleOptions',
         "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
-        {detail: 'useWinUI3 and experimentalNuGetDependency'},
+        { detail: 'useWinUI3 and experimentalNuGetDependency' },
       );
     }
 
@@ -588,11 +581,11 @@ export async function reactNativeWindowsInit(args?: string[]) {
             `
   No compatible version of ${chalk.green('react-native-windows')} found.
   The latest supported version is ${chalk.green(
-    'react-native-windows',
-  )}@${chalk.cyan(rnwLatestVersion)}.
+              'react-native-windows',
+            )}@${chalk.cyan(rnwLatestVersion)}.
   Please modify your application to use ${chalk.green(
-    'react-native',
-  )}@${chalk.cyan(
+              'react-native',
+            )}@${chalk.cyan(
               getMatchingReactNativeSemVerForReactNativeWindowsVersion(
                 rnwLatestVersion,
               ),
@@ -600,7 +593,7 @@ export async function reactNativeWindowsInit(args?: string[]) {
               'react-native',
             )} and try again.
   `,
-            {rnwLatestVersion: rnwLatestVersion},
+            { rnwLatestVersion: rnwLatestVersion },
           );
         }
       }
@@ -624,11 +617,11 @@ export async function reactNativeWindowsInit(args?: string[]) {
               rnwResolvedVersion,
             )} is a ${chalk.yellow('pre-release')} version.
   The latest supported version is ${chalk.green(
-    'react-native-windows',
-  )}@${chalk.cyan(rnwLatestVersion)}.
+              'react-native-windows',
+            )}@${chalk.cyan(rnwLatestVersion)}.
   You can either downgrade your version of ${chalk.green(
-    'react-native',
-  )} to ${chalk.cyan(
+              'react-native',
+            )} to ${chalk.cyan(
               getMatchingReactNativeSemVerForReactNativeWindowsVersion(
                 rnwLatestVersion,
               ),
@@ -673,7 +666,6 @@ export async function reactNativeWindowsInit(args?: string[]) {
       projectType: options.projectType as 'lib' | 'app',
       experimentalNuGetDependency: options.experimentalNuGetDependency,
       useWinUI3: options.useWinUI3,
-      useHermes: options.useHermes,
       useDevMode: useDevMode,
       nuGetTestVersion: options.nuGetTestVersion,
       nuGetTestFeed: options.nuGetTestFeed,

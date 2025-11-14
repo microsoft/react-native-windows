@@ -36,13 +36,6 @@
 #include <cxxreact/JsArgumentHelpers.h>
 #include <folly/Json.h>
 
-#if !MS_TARGET_APPLE
-using CxxModuleProviders = std::vector<std::tuple<
-    std::string,
-    facebook::xplat::module::CxxModule::Provider,
-    std::shared_ptr<facebook::react::MessageQueueThread>>>;
-#include <cxxreact/JSBigString.h>
-#endif
 
 #pragma pop_macro("_WIN32")
 #pragma pop_macro("Check")
