@@ -493,7 +493,7 @@ ReactNative::JsiRuntime JsiRuntime::MakeRuntime() {
   auto devSettings = std::make_shared<facebook::react::DevSettings>();
 
   auto runtimeHolder = std::make_shared<::Microsoft::ReactNative::HermesRuntimeHolder>(
-      std::move(devSettings), std::move(jsThread), nullptr);
+      devSettings, std::move(jsThread), nullptr);
   auto runtime = runtimeHolder->getRuntime();
   return Create(runtimeHolder, runtime);
 }
