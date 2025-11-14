@@ -125,6 +125,7 @@ inline std::string toString(AccessibilityState::CheckedState state) {
     case AccessibilityState::None:
       return "None";
   }
+  return "Unknown";
 }
 
 inline std::string toString(const AccessibilityState& accessibilityState) {
