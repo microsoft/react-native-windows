@@ -74,8 +74,6 @@ parameters:
 variables:
   - template: variables/windows.yml
   - group: RNW Secrets
-  - name: SkipNpmPublishArgs
-    value: ''
   - name: SkipGitPushPublishArgs
     value: ''
   - name: FailCGOnAlert
@@ -166,17 +164,34 @@ extends:
           - template: .ado/templates/configure-git.yml@self
 
           - pwsh: |
-              Write-Host "##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish"
-            displayName: Enable No-Publish (npm)
-            condition: ${{ parameters.skipNpmPublish }}
-
-          - pwsh: |
               Write-Host "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
             displayName: Enable No-Publish (git)
             condition: ${{ parameters.skipGitPush }}
 
-          - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
+          - script: |
+              if exist "$(Pipeline.Workspace)\published-packages" rd /s /q "$(Pipeline.Workspace)\published-packages"
+              mkdir "$(Pipeline.Workspace)\published-packages"
+              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(Build.SourceBranchName) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
             displayName: Beachball Publish
+
+          - script: dir /s "$(Pipeline.Workspace)\published-packages"
+            displayName: Show packaged npm artifacts
+
+          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@9'
+            displayName: 'ESRP Release to npmjs.com'
+            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }})
+            inputs:
+              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+              usemanagedidentity: false
+              keyvaultname: 'OGX-JSHost-KV'
+              authcertname: 'OGX-JSHost-Auth4'
+              signcertname: 'OGX-JSHost-Sign3'
+              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+              contenttype: npm
+              folderlocation: '$(Pipeline.Workspace)\published-packages'
+              owners: 'vmorozov@microsoft.com'
+              approvers: 'khosany@microsoft.com'
 
           # Beachball reverts to local state after publish, but we want the updates it added
           - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
@@ -201,6 +216,11 @@ extends:
 
           templateContext:
             outputs:
+              - output: pipelineArtifact
+                displayName: 'Publish npm pack artifacts'
+                condition: succeededOrFailed()
+                targetPath: $(Pipeline.Workspace)/published-packages
+                artifactName: NpmPackedTarballs
               - output: pipelineArtifact
                 displayName: "📒 Publish Manifest Npm"
                 artifactName: SBom-$(System.JobAttempt)
