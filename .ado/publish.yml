@@ -424,8 +424,6 @@ extends:
               npmVersion: $(npmVersion)
               packMicrosoftReactNative: true
               packMicrosoftReactNativeCxx: true
-              packMicrosoftReactNativeManaged: true
-              packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
                 signMicrosoft: true
               slices:
@@ -435,12 +433,6 @@ extends:
                   configuration: Release
                 - platform: ARM64
                   configuration: Release
-                - platform: x64
-                  configuration: Debug
-                - platform: x86
-                  configuration: Debug
-                - platform: ARM64
-                  configuration: Debug
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
