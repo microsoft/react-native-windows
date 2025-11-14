@@ -288,7 +288,7 @@ class ReactInspectorHostTargetDelegate : public jsinspector_modern::HostTargetDe
     jsinspector_modern::HostTargetMetadata metadata;
     metadata.integrationName = "React Native Windows (Host)";
     metadata.platform = "windows";
-    
+
     if (Mso::CntPtr<ReactHost> reactHost = m_reactHost.GetStrongPtr()) {
       auto options = reactHost->Options();
       if (!options.Identity.empty()) {
@@ -299,13 +299,13 @@ class ReactInspectorHostTargetDelegate : public jsinspector_modern::HostTargetDe
             : identity;
       }
     }
-    
+
     wchar_t computerName[MAX_COMPUTERNAME_LENGTH + 1];
     DWORD size = MAX_COMPUTERNAME_LENGTH + 1;
     if (GetComputerNameW(computerName, &size)) {
       metadata.deviceName = winrt::to_string(computerName);
     }
-    
+
     return metadata;
   }
 
@@ -607,7 +607,7 @@ void ReactHost::AddInspectorPage() noexcept {
   jsinspector_modern::InspectorTargetCapabilities capabilities;
   capabilities.nativePageReloads = true;
   capabilities.prefersFuseboxFrontend = true;
-  
+
   auto metadata = m_inspectorHostTargetDelegate->getMetadata();
   std::string pageName;
   if (metadata.appDisplayName.has_value() && !metadata.appDisplayName.value().empty()) {
@@ -618,7 +618,7 @@ void ReactHost::AddInspectorPage() noexcept {
   if (metadata.deviceName.has_value() && !metadata.deviceName.value().empty()) {
     pageName += " (" + metadata.deviceName.value() + ")";
   }
-  
+
   inspectorPageId = jsinspector_modern::getInspectorInstance().addPage(
       pageName,
       "Hermes",
