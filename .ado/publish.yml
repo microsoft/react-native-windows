@@ -84,6 +84,8 @@ variables:
     value: microsoft
   - name: ArtifactServices.Symbol.PAT
     value: $(pat-symbols-publish-microsoft)
+  - name: SourceBranchWithFolders
+    value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
 
 trigger: none
 pr: none
@@ -173,7 +175,7 @@ extends:
           - script: |
               if exist "$(Pipeline.Workspace)\published-packages" rd /s /q "$(Pipeline.Workspace)\published-packages"
               mkdir "$(Pipeline.Workspace)\published-packages"
-              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(Build.SourceBranchName) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
+              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(SourceBranchWithFolders) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
             displayName: Beachball Publish
 
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
@@ -227,7 +229,7 @@ extends:
               approvers: 'khosany@microsoft.com'
 
           # Beachball reverts to local state after publish, but we want the updates it added
-          - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
+          - script: git pull origin $(SourceBranchWithFolders)
             displayName: git pull
 
           - script: npx @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
