@@ -24,7 +24,7 @@ import {
   copyAndReplaceAll,
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
-import { GenerateOptions } from '..';
+import {GenerateOptions} from '..';
 import {
   CodedError,
   getVersionOfNpmPackage,
@@ -146,9 +146,9 @@ export async function copyProjectTemplateAndReplace(
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
 
   let mainComponentName = newProjectName;
-  const appJsonPath = await findUp('app.json', { cwd: destPath });
+  const appJsonPath = await findUp('app.json', {cwd: destPath});
   if (appJsonPath) {
-    const appJson = await fs.readJsonFile<{ name: string }>(appJsonPath);
+    const appJson = await fs.readJsonFile<{name: string}>(appJsonPath);
     mainComponentName = appJson.name;
   }
 
@@ -210,44 +210,44 @@ export async function copyProjectTemplateAndReplace(
   const commonMappings =
     projectType === 'app'
       ? [
-        // app common mappings
-        {
-          from: path.join(srcRootPath, 'metro.config.js'),
-          to: 'metro.config.js',
-        },
-        {
-          from: path.join(srcRootPath, '_gitignore'),
-          to: path.join(windowsDir, '.gitignore'),
-        },
-        {
-          from: path.join(srcRootPath, 'b_gitignore'),
-          to: path.join(windowsDir, newProjectName, '.gitignore'),
-        },
-        {
-          from: path.join(srcRootPath, 'index.windows.bundle'),
-          to: path.join(
-            windowsDir,
-            newProjectName,
-            bundleDir,
-            'index.windows.bundle',
-          ),
-        },
-        {
-          from: path.join(srcPath, projDir, 'MyApp.sln'),
-          to: path.join(windowsDir, newProjectName + '.sln'),
-        },
-      ]
+          // app common mappings
+          {
+            from: path.join(srcRootPath, 'metro.config.js'),
+            to: 'metro.config.js',
+          },
+          {
+            from: path.join(srcRootPath, '_gitignore'),
+            to: path.join(windowsDir, '.gitignore'),
+          },
+          {
+            from: path.join(srcRootPath, 'b_gitignore'),
+            to: path.join(windowsDir, newProjectName, '.gitignore'),
+          },
+          {
+            from: path.join(srcRootPath, 'index.windows.bundle'),
+            to: path.join(
+              windowsDir,
+              newProjectName,
+              bundleDir,
+              'index.windows.bundle',
+            ),
+          },
+          {
+            from: path.join(srcPath, projDir, 'MyApp.sln'),
+            to: path.join(windowsDir, newProjectName + '.sln'),
+          },
+        ]
       : [
-        // lib common mappings
-        {
-          from: path.join(srcRootPath, '_gitignore'),
-          to: path.join(windowsDir, '.gitignore'),
-        },
-        {
-          from: path.join(srcPath, projDir, 'MyLib.sln'),
-          to: path.join(windowsDir, newProjectName + '.sln'),
-        },
-      ];
+          // lib common mappings
+          {
+            from: path.join(srcRootPath, '_gitignore'),
+            to: path.join(windowsDir, '.gitignore'),
+          },
+          {
+            from: path.join(srcPath, projDir, 'MyLib.sln'),
+            to: path.join(windowsDir, newProjectName + '.sln'),
+          },
+        ];
 
   for (const mapping of commonMappings) {
     await copyAndReplaceWithChangedCallback(
@@ -263,27 +263,27 @@ export async function copyProjectTemplateAndReplace(
     const csMappings =
       projectType === 'app'
         ? [
-          // cs app mappings
-          {
-            from: path.join(srcPath, projDir, 'MyApp.csproj'),
-            to: path.join(
-              windowsDir,
-              newProjectName,
-              newProjectName + '.csproj',
-            ),
-          },
-        ]
+            // cs app mappings
+            {
+              from: path.join(srcPath, projDir, 'MyApp.csproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.csproj',
+              ),
+            },
+          ]
         : [
-          // cs lib mappings
-          {
-            from: path.join(srcPath, projDir, 'MyLib.csproj'),
-            to: path.join(
-              windowsDir,
-              newProjectName,
-              newProjectName + '.csproj',
-            ),
-          },
-        ];
+            // cs lib mappings
+            {
+              from: path.join(srcPath, projDir, 'MyLib.csproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.csproj',
+              ),
+            },
+          ];
 
     for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(
@@ -298,51 +298,51 @@ export async function copyProjectTemplateAndReplace(
     const cppMappings =
       projectType === 'app'
         ? [
-          // cpp app mappings
-          {
-            from: path.join(srcPath, projDir, 'MyApp.vcxproj'),
-            to: path.join(
-              windowsDir,
-              newProjectName,
-              newProjectName + '.vcxproj',
-            ),
-          },
-          {
-            from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'),
-            to: path.join(
-              windowsDir,
-              newProjectName,
-              newProjectName + '.vcxproj.filters',
-            ),
-          },
-        ]
+            // cpp app mappings
+            {
+              from: path.join(srcPath, projDir, 'MyApp.vcxproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj.filters',
+              ),
+            },
+          ]
         : [
-          // cpp lib mappings
-          {
-            from: path.join(srcPath, projDir, 'MyLib.vcxproj'),
-            to: path.join(
-              windowsDir,
-              newProjectName,
-              newProjectName + '.vcxproj',
-            ),
-          },
-          {
-            from: path.join(srcPath, projDir, 'MyLib.vcxproj.filters'),
-            to: path.join(
-              windowsDir,
-              newProjectName,
-              newProjectName + '.vcxproj.filters',
-            ),
-          },
-          {
-            from: path.join(srcPath, projDir, 'MyLib.def'),
-            to: path.join(
-              windowsDir,
-              newProjectName,
-              newProjectName + '.def',
-            ),
-          },
-        ];
+            // cpp lib mappings
+            {
+              from: path.join(srcPath, projDir, 'MyLib.vcxproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'MyLib.vcxproj.filters'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj.filters',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'MyLib.def'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.def',
+              ),
+            },
+          ];
 
     for (const mapping of cppMappings) {
       await copyAndReplaceWithChangedCallback(
@@ -440,7 +440,7 @@ export async function installScriptsAndDependencies(options: {
   }
 
   await projectPackage.mergeProps({
-    scripts: { windows: 'npx @react-native-community/cli run-windows' },
+    scripts: {windows: 'npx @react-native-community/cli run-windows'},
   });
 
   const rnwPackage = await findPackage('react-native-windows');
@@ -483,14 +483,14 @@ export async function installScriptsAndDependencies(options: {
 
     // Patch package.json to have proper react-native version and install
     await projectPackage.mergeProps({
-      dependencies: { 'react-native': rnPeerDependency },
+      dependencies: {'react-native': rnPeerDependency},
     });
 
     // Install dependencies using correct package manager
     const isYarn = fs.existsSync(path.join(process.cwd(), 'yarn.lock'));
     childProcess.execSync(
       isYarn ? 'yarn' : 'npm i',
-      options.verbose ? { stdio: 'inherit' } : {},
+      options.verbose ? {stdio: 'inherit'} : {},
     );
   }
 }

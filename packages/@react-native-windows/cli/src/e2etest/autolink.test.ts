@@ -5,29 +5,29 @@
  */
 
 import path from 'path';
-import { commanderNameToOptionName } from '@react-native-windows/telemetry';
-import { projectConfigWindows } from '../commands/config/projectConfig';
-import { AutoLinkWindows } from '../commands/autolinkWindows/autolinkWindows';
+import {commanderNameToOptionName} from '@react-native-windows/telemetry';
+import {projectConfigWindows} from '../commands/config/projectConfig';
+import {AutoLinkWindows} from '../commands/autolinkWindows/autolinkWindows';
 import {
   AutoLinkOptions,
   autolinkOptions,
 } from '../commands/autolinkWindows/autolinkWindowsOptions';
-import { DOMParser } from '@xmldom/xmldom';
-import { ensureCppAppProject, ensureWinUI3Project } from './projectConfig.utils';
+import {DOMParser} from '@xmldom/xmldom';
+import {ensureCppAppProject, ensureWinUI3Project} from './projectConfig.utils';
 
 test('autolink with no windows project', () => {
   expect(() => {
     // eslint-disable-next-line no-new
-    new AutoLinkTest({}, {}, { check: true, logging: false });
+    new AutoLinkTest({}, {}, {check: true, logging: false});
   }).toThrowError();
 });
 
 test('autolink with incomplete windows project', () => {
   expect(() => {
     const autolink = new AutoLinkTest(
-      { windows: {} },
+      {windows: {}},
       {},
-      { check: true, logging: false },
+      {check: true, logging: false},
     );
     autolink.validateRequiredAppProperties();
   }).toThrowError();
@@ -71,9 +71,9 @@ class AutoLinkTest extends AutoLinkWindows {
 
 test('autolink fixup sln', () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.' } },
+    {windows: {folder: __dirname, sourceDir: '.'}},
     {},
-    { check: true, logging: false, sln: 'foo' },
+    {check: true, logging: false, sln: 'foo'},
   );
   expect(autolink.getWindowsProjectConfig().solutionFile).toBeUndefined();
   expect(() => {
@@ -88,7 +88,7 @@ test('autolink fixup sln', () => {
 
 test('autolink fixup proj', async () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln' } },
+    {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {},
     {
       check: true,
@@ -114,7 +114,7 @@ test('autolink fixup proj', async () => {
 
 test('empty cpp autolink dependencies', () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln' } },
+    {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {},
     {
       check: true,
@@ -131,7 +131,7 @@ test('empty cpp autolink dependencies', () => {
 
 test('one invalid cpp autolink dependency', () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln' } },
+    {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {
       superModule: {
         name: 'superModule',
@@ -156,7 +156,7 @@ test('one invalid cpp autolink dependency', () => {
 
 test('one invalid cs autolink dependency', () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln' } },
+    {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {
       superModule: {
         name: 'superModule',
@@ -179,7 +179,7 @@ test('one invalid cs autolink dependency', () => {
 
 test('one valid cpp autolink dependency', () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln' } },
+    {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {
       superModule: {
         name: 'superModule',
@@ -215,7 +215,7 @@ test('one valid cpp autolink dependency', () => {
 
 test('one valid cs autolink dependency', () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln' } },
+    {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {
       superModule: {
         name: 'superModule',
@@ -262,7 +262,7 @@ test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=fa
   config.useWinUI3 = true;
 
   const al = new AutoLinkTest(
-    { windows: config },
+    {windows: config},
     {},
     {
       check: false,
@@ -297,7 +297,7 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   const config = projectConfigWindows(folder, rnc.project.windows)!;
   config.useWinUI3 = false;
   const al = new AutoLinkTest(
-    { windows: config },
+    {windows: config},
     {},
     {
       check: false,
@@ -332,7 +332,7 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=tru
   const config = projectConfigWindows(folder, rnc.project.windows)!;
   delete config.useWinUI3;
   const al = new AutoLinkTest(
-    { windows: config },
+    {windows: config},
     {},
     {
       check: false,
@@ -367,7 +367,7 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=fal
   const config = projectConfigWindows(folder, rnc.project.windows)!;
   delete config.useWinUI3;
   const al = new AutoLinkTest(
-    { windows: config },
+    {windows: config},
     {},
     {
       check: false,
@@ -396,7 +396,7 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=fal
 
 test('Indirect autolink dependency', () => {
   const autolink = new AutoLinkTest(
-    { windows: { folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln' } },
+    {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {
       superModule: {
         name: 'superModule',

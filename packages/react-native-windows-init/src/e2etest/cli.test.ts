@@ -5,7 +5,7 @@
  * @format
  */
 
-import { windowsInitOptions, WindowsInitOptions } from '../Cli';
+import {windowsInitOptions, WindowsInitOptions} from '../Cli';
 
 function validateOptionName(
   name: string,

@@ -407,12 +407,12 @@ function verifyTestCommandTelemetryProcessor(
         // for instance autolinking error info, build the expected CodedError.data.
         let expectedCodedErrorData = {};
         if (expectedError instanceof CustomTestError) {
-          expectedCodedErrorData = { errno: expectedError.errno };
+          expectedCodedErrorData = {errno: expectedError.errno};
         }
 
         expect(codedError.data).toStrictEqual(
           (expectedError as errorUtils.CodedError).data ??
-          expectedCodedErrorData,
+            expectedCodedErrorData,
         );
       } else {
         // If this is not error scenario, it must be a command successful event.
@@ -463,8 +463,8 @@ test('Telemetry run test command end to end, verify event fires', async () => {
 });
 
 const testTelemetryOptions = [
-  { preserveErrorMessages: false },
-  { preserveErrorMessages: true },
+  {preserveErrorMessages: false},
+  {preserveErrorMessages: true},
 ];
 
 test.each(testTelemetryOptions)(
@@ -533,7 +533,7 @@ test.each(testTelemetryOptions)(
     const expectedError = new errorUtils.CodedError(
       'MSBuildError',
       'test error',
-      { foo: 42 },
+      {foo: 42},
     );
 
     // AI eats errors thrown in telemetry processors

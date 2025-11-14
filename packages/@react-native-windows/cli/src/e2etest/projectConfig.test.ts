@@ -12,7 +12,7 @@ import {
   WindowsProjectConfig,
 } from '../commands/config/projectConfig';
 
-import { AutoLinkWindows } from '../commands/autolinkWindows/autolinkWindows';
+import {AutoLinkWindows} from '../commands/autolinkWindows/autolinkWindows';
 import {
   ensureCppAppProject,
   ensureWinUI3Project,
@@ -141,7 +141,7 @@ test.skip('useWinUI3=true in react-native.config.js, UseWinUI3=false in Experime
 
   // Run Autolink to sync the files
   const al = new AutoLinkWindows(
-    { windows: config },
+    {windows: config},
     {},
     {
       check: false,

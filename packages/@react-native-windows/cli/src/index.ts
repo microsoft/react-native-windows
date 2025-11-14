@@ -14,12 +14,12 @@ import {
 
 import * as pathHelpers from './utils/pathHelpers';
 
-import { autolinkCommand } from './commands/autolinkWindows/autolinkWindows';
-import { codegenCommand } from './commands/codegenWindows/codegenWindows';
-import { initCommand } from './commands/initWindows/initWindows';
-import { runWindowsCommand } from './commands/runWindows/runWindows';
-import { dependencyConfigWindows } from './commands/config/dependencyConfig';
-import { projectConfigWindows } from './commands/config/projectConfig';
+import {autolinkCommand} from './commands/autolinkWindows/autolinkWindows';
+import {codegenCommand} from './commands/codegenWindows/codegenWindows';
+import {initCommand} from './commands/initWindows/initWindows';
+import {runWindowsCommand} from './commands/runWindows/runWindows';
+import {dependencyConfigWindows} from './commands/config/dependencyConfig';
+import {projectConfigWindows} from './commands/config/projectConfig';
 
 /**
  * Project generation options
