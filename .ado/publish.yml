@@ -361,8 +361,6 @@ extends:
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
                   Microsoft.ReactNative\**
-                  Microsoft.ReactNative.Managed\**
-                  Microsoft.ReactNative.Managed.CodeGen\**
                   Microsoft.ReactNative.CsWinRT\**
 
             - template: .ado/templates/component-governance.yml@self
