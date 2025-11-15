@@ -131,6 +131,7 @@ class FlatListExample extends React.PureComponent<Props, State> {
   }
 
   _setBooleanValue: string => boolean => void = key => value =>
+    // $FlowFixMe[incompatible-type]
     this.setState({[key]: value});
 
   _setIsRTL: boolean => void = value => {

@@ -19,10 +19,10 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-community/template": "0.82.0-nightly-2025811-9d3d62a",
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.98",
-    "@react-native-windows/fs": "^0.0.0-canary.69",
-    "@react-native-windows/package-utils": "^0.0.0-canary.95",
+    "@react-native-community/template": "0.82.0-nightly-2025819-246871d",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.97",
+    "@react-native-windows/fs": "^0.0.0-canary.68",
+    "@react-native-windows/package-utils": "^0.0.0-canary.94",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "async": "^3.2.3",
