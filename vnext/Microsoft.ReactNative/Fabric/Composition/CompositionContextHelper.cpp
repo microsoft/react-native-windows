@@ -910,6 +910,31 @@ struct CompScrollerVisual : winrt::implements<
         m_snapToOffsets.push_back(offset);
       }
     }
+    // Match Paper behavior: snapToOffsets disables pagingEnabled and snapToInterval
+    if (!m_snapToOffsets.empty()) {
+      m_pagingEnabled = false;
+      m_snapToInterval = 0.0f;
+    }
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void PagingEnabled(bool pagingEnabled) noexcept {
+    m_pagingEnabled = pagingEnabled;
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void SnapToInterval(float interval) noexcept {
+    m_snapToInterval = interval;
+    // Match Paper behavior: snapToOffsets disables snapToInterval
+    if (!m_snapToOffsets.empty()) {
+      m_snapToInterval = 0.0f;
+    }
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void SnapToAlignment(
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment alignment) noexcept {
+    m_snapToAlignment = alignment;
     ConfigureSnapInertiaModifiers();
   }
 
@@ -934,9 +959,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    bool sizeChanged = (m_visualSize.x != size.x || m_visualSize.y != size.y);
     m_visualSize = size;
     m_visual.Size(size);
     UpdateMaxPosition();
+    if (sizeChanged && m_pagingEnabled) {
+      ConfigureSnapInertiaModifiers();
+    }
   }
 
   void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
@@ -1046,9 +1075,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    bool sizeChanged = (m_contentSize.x != size.x || m_contentSize.y != size.y);
     m_contentSize = size;
     m_contentVisual.Size(size);
     UpdateMaxPosition();
+    if (sizeChanged && m_pagingEnabled) {
+      ConfigureSnapInertiaModifiers();
+    }
   }
 
   winrt::Windows::Foundation::Numerics::float3 ScrollPosition() const noexcept {
@@ -1155,11 +1188,73 @@ struct CompScrollerVisual : winrt::implements<
     // Collect and deduplicate all snap positions
     std::vector<float> snapPositions;
 
-    if (m_snapToStart) {
-      snapPositions.push_back(0.0f);
+    // Priority: snapToOffsets > snapToInterval > pagingEnabled
+    if (!m_snapToOffsets.empty()) {
+      // Use explicit snap points when snapToOffsets is set (highest priority)
+      if (m_snapToStart) {
+        snapPositions.push_back(0.0f);
+      }
+      snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
+    } else if (m_snapToInterval > 0.0f) {
+      // Generate snap points at interval positions
+      float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
+      float maxScroll =
+          m_horizontal ? std::max(contentSize.x - visualSize.x, 0.0f) : std::max(contentSize.y - visualSize.y, 0.0f);
+
+      // Calculate alignment offset based on snapToAlignment
+      float alignmentOffset = 0.0f;
+      using SnapPointsAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment;
+      if (m_snapToAlignment == SnapPointsAlignment::Center) {
+        alignmentOffset = -viewportSize / 2.0f;
+      } else if (m_snapToAlignment == SnapPointsAlignment::Far) {
+        alignmentOffset = -viewportSize;
+      }
+      // Near (start) alignment has no offset (alignmentOffset = 0)
+
+      // Generate snap points at interval positions with alignment offset
+      for (float position = alignmentOffset; position <= maxScroll; position += m_snapToInterval) {
+        if (position >= 0.0f) { // Only include positions >= 0
+          snapPositions.push_back(position);
+        }
+      }
+
+      // Ensure we have at least the start position
+      if (snapPositions.empty() || snapPositions.front() > 0.0f) {
+        snapPositions.insert(snapPositions.begin(), 0.0f);
+      }
+
+      // Ensure the end position is included if not already
+      if (!snapPositions.empty() && snapPositions.back() < maxScroll) {
+        snapPositions.push_back(maxScroll);
+      }
+    } else if (m_pagingEnabled) {
+      // Generate snap points at viewport intervals (paging)
+      float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
+      float maxScroll =
+          m_horizontal ? std::max(contentSize.x - visualSize.x, 0.0f) : std::max(contentSize.y - visualSize.y, 0.0f);
+
+      // Only generate paging snap points if viewport size is valid
+      if (viewportSize > 0 && maxScroll > 0) {
+        // Add snap points at each page (viewport size) interval
+        for (float position = 0.0f; position <= maxScroll; position += viewportSize) {
+          snapPositions.push_back(position);
+        }
+
+        // Ensure the end position is included if not already
+        if (!snapPositions.empty() && snapPositions.back() < maxScroll) {
+          snapPositions.push_back(maxScroll);
+        }
+      } else {
+        // If content fits in viewport or invalid size, just snap to start
+        snapPositions.push_back(0.0f);
+      }
+    } else {
+      // No interval or paging - use explicit snap points only
+      if (m_snapToStart) {
+        snapPositions.push_back(0.0f);
+      }
     }
 
-    snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
     std::sort(snapPositions.begin(), snapPositions.end());
     snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
 
@@ -1222,7 +1317,8 @@ struct CompScrollerVisual : winrt::implements<
       restingValues.push_back(restingValue);
     }
 
-    if (m_snapToEnd) {
+    // Only add snapToEnd handling when NOT using pagingEnabled or snapToInterval (they already include end position)
+    if (m_snapToEnd && !m_pagingEnabled && m_snapToInterval <= 0.0f) {
       auto endRestingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
 
       // Create property sets to dynamically compute content - visual size
@@ -1286,6 +1382,10 @@ struct CompScrollerVisual : winrt::implements<
   bool m_horizontal{false};
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
+  bool m_pagingEnabled{false};
+  float m_snapToInterval{0.0f};
+  winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment m_snapToAlignment{
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment::Near};
   std::vector<float> m_snapToOffsets;
   bool m_inertia{false};
   bool m_custom{false};
