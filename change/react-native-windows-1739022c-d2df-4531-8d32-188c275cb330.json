@@ -1,0 +1,7 @@
+{
+  "comment": "Implement textAlign justify and writingDirection support (ltr/rtl/auto) for Fabric TextInput",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
