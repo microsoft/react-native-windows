@@ -70,13 +70,21 @@ extends:
                   Write-Host "Tag $tag pushed."
                 displayName: Create and push annotated tag
 
+              - script: git config --list --show-origin | findstr /I extraheader
+                displayName: Inspect git extraheader entries
+
               - pwsh: |
-                  $header = git config --get http.https://github.com/.extraheader
-                  if (-not $header) { throw "Git extraheader with auth token not found." }
-                  $encoded = ($header.Split(' ')[-1]).Trim()
+                  $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
+                  if (-not $headerLine) {
+                    Write-Host "No HTTP extraheader found; skipping PR creation."
+                    Write-Host "##vso[task.setvariable variable=CanCreatePr]false"
+                    return
+                  }
+                  $encoded = ($headerLine.Split(' ')[-1]).Trim()
                   $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
                   $token = $decoded.Split(':')[-1]
                   Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
+                  Write-Host "##vso[task.setvariable variable=CanCreatePr]true"
                 displayName: Extract GitHub OAuth token
 
               - pwsh: |
@@ -100,6 +108,7 @@ extends:
                   Write-Host "Created draft PR #$($resp.number): $($resp.html_url)"
                   Write-Host "##vso[task.setvariable variable=ProbePrNumber]$($resp.number)"
                 displayName: Create draft PR via GitHub API
+                condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'))
 
               - pwsh: |
                   $token = '$(GitHubOAuthToken)'
@@ -117,6 +126,7 @@ extends:
                     Write-Host "No PR number recorded; skipping close."
                   }
                 displayName: Close draft PR
+                condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'), ne(variables['ProbePrNumber'], ''))
 
               - script: git ls-remote --heads origin user/vmorozov/probe-$(Build.BuildId)
                 displayName: Confirm remote branch
