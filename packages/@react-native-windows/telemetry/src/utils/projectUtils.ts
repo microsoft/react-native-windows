@@ -150,11 +150,7 @@ export async function configToProjectInfo(
       const usesRNConfig = await usesReactNativeConfig(
         config.project.windows.folder,
       );
-      const jsEngine = parseBoolean(
-        config.project.windows.experimentalFeatures?.UseHermes,
-      )
-        ? 'Hermes'
-        : 'Chakra';
+      const jsEngine = 'Hermes';
       const rnwSource = parseBoolean(
         config.project.windows.experimentalFeatures?.UseExperimentalNuget,
       )

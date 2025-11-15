@@ -28,7 +28,6 @@ void* winrt_make_Microsoft_ReactNative_ReactViewOptions();
 void* winrt_make_Microsoft_ReactNative_RedBoxHelper();
 void* winrt_make_Microsoft_ReactNative_QuirkSettings();
 void* winrt_make_facebook_react_NativeLogEventSource();
-void* winrt_make_facebook_react_NativeTraceEventSource();
 
 bool __stdcall winrt_can_unload_now() noexcept
 {
@@ -136,10 +135,6 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
         return winrt_make_facebook_react_NativeLogEventSource();
     }
 
-    if (requal(name, L"facebook.react.NativeTraceEventSource"))
-    {
-        return winrt_make_facebook_react_NativeTraceEventSource();
-    }
 
     return nullptr;
 }

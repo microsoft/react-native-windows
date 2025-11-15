@@ -4,16 +4,10 @@
     <ClCompile Include="InstanceMocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BytecodeUnitTests.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
     <ClCompile Include="LayoutAnimationTests.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="MemoryMappedBufferTests.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="StringConversionTest_Desktop.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="UnicodeConversionTest.cpp">

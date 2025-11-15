@@ -23,7 +23,7 @@ struct ScriptSignature {
 };
 
 struct JSRuntimeSignature {
-  std::string runtimeName; // e.g. Chakra, V8
+  std::string runtimeName; // e.g. Hermes, V8
   JSRuntimeVersion_t version;
 };
 
