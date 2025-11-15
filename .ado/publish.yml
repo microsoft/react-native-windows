@@ -48,17 +48,18 @@ extends:
               - script: git status -sb
                 displayName: Show working tree status
 
-              - script: |
-                  set -euo pipefail
-                  BRANCH="user/vmorozov/probe-$(Build.BuildId)"
-                  echo "Creating branch $BRANCH"
-                  git checkout -b "$BRANCH"
-                  echo "release probe $(Build.BuildId)" > release-probe.txt
+              - pwsh: |
+                  $branch = "user/vmorozov/probe-$(Build.BuildId)"
+                  Write-Host "Creating branch $branch"
+                  git checkout -b $branch
+                  Set-Content -Path release-probe.txt -Value "release probe $(Build.BuildId)"
                   git add release-probe.txt
                   git status -sb
+                  git config user.name "Azure Pipelines Probe"
+                  git config user.email "azure-pipelines-probe@microsoft.com"
                   git commit -m "chore: release probe (***No CI***)"
                   git push origin HEAD
-                  echo "Branch $BRANCH pushed."
+                  Write-Host "Branch $branch pushed."
                 displayName: Create, commit, and push branch
 
               - script: git ls-remote --heads origin user/vmorozov/probe-$(Build.BuildId)
