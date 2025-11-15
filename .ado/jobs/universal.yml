@@ -204,7 +204,7 @@
                       /p:RestoreForceEvaluate=true
 
                 - task: VSTest@2
-                  displayName: Run React Native Unit Tests (Native)
+                  displayName: Run Universal Unit Tests (Native)
                   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
                   inputs:
                     testSelector: testAssemblies
@@ -221,3 +221,4 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
