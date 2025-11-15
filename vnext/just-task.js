@@ -22,6 +22,9 @@ require('@rnw-scripts/just-task/flow-tasks');
 
 const {execSync} = require('child_process');
 const fs = require('fs');
+const {
+  registerNuGetRestoreTask,
+} = require('@rnw-scripts/just-task/nuget-restore-task');
 
 option('production');
 option('clean');
@@ -71,6 +74,16 @@ task('copyReadmeAndLicenseFromRoot', () => {
 
 task('compileTsPlatformOverrides', tscTask());
 
+registerNuGetRestoreTask({
+  taskName: 'restoreNuGetPackages',
+  scriptPath: path.resolve(
+    __dirname,
+    'Scripts/NuGetRestoreForceEvaluateAllSolutions.ps1',
+  ),
+  logDirectory: path.resolve(__dirname, 'logs'),
+  scriptArguments: ['-SkipLockDeletion'],
+});
+
 task(
   'build',
   series(
@@ -79,6 +92,7 @@ task(
     'copyReadmeAndLicenseFromRoot',
     'layoutMSRNCxx',
     'compileTsPlatformOverrides',
+    'restoreNuGetPackages',
     'codegen',
   ),
 );
