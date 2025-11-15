@@ -84,6 +84,8 @@ variables:
     value: microsoft
   - name: ArtifactServices.Symbol.PAT
     value: $(pat-symbols-publish-microsoft)
+  - name: SourceBranchWithFolders
+    value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
 
 trigger: none
 pr: none
@@ -173,7 +175,7 @@ extends:
           - script: |
               if exist "$(Pipeline.Workspace)\published-packages" rd /s /q "$(Pipeline.Workspace)\published-packages"
               mkdir "$(Pipeline.Workspace)\published-packages"
-              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(Build.SourceBranchName) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
+              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(SourceBranchWithFolders) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
             displayName: Beachball Publish
 
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
@@ -227,7 +229,7 @@ extends:
               approvers: 'khosany@microsoft.com'
 
           # Beachball reverts to local state after publish, but we want the updates it added
-          - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
+          - script: git pull origin $(SourceBranchWithFolders)
             displayName: git pull
 
           - script: npx @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
@@ -361,8 +363,6 @@ extends:
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
                   Microsoft.ReactNative\**
-                  Microsoft.ReactNative.Managed\**
-                  Microsoft.ReactNative.Managed.CodeGen\**
                   Microsoft.ReactNative.CsWinRT\**
 
             - template: .ado/templates/component-governance.yml@self
@@ -424,8 +424,6 @@ extends:
               npmVersion: $(npmVersion)
               packMicrosoftReactNative: true
               packMicrosoftReactNativeCxx: true
-              packMicrosoftReactNativeManaged: true
-              packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
                 signMicrosoft: true
               slices:
@@ -435,12 +433,6 @@ extends:
                   configuration: Release
                 - platform: ARM64
                   configuration: Release
-                - platform: x64
-                  configuration: Debug
-                - platform: x86
-                  configuration: Debug
-                - platform: ARM64
-                  configuration: Debug
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:
