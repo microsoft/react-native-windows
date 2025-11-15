@@ -1,481 +1,65 @@
+# Experimental pipeline to test GitHub access via stock 1ES template
+# Mirrors the publish pipeline structure but performs only git operations
+# using the OAuth creds supplied by the GitHub service connection (no PATs).
+
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
-
-parameters:
-- name: skipNpmPublish
-  displayName: Skip Npm Publish
-  type: boolean
-  default: false
-- name: skipGitPush
-  displayName: Skip Git Push
-  type: boolean
-  default: false
-- name: stopOnNoCI
-  displayName: Stop if latest commit is ***NO_CI***
-  type: boolean
-  default: true
-- name: performBeachballCheck
-  displayName: Perform Beachball Check (Disable when promoting)
-  type: boolean
-  default: true
-- name: AgentPool
-  type: object
-  default:
-    Medium:
-      name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-vs2022-node22
-    Large:
-      name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-vs2022-node22
-
-- name: desktopBuildMatrix
-  type: object
-  default:
-    - Name: X64Debug
-      BuildConfiguration: Debug
-      BuildPlatform: x64
-    - Name: X64Release
-      BuildConfiguration: Release
-      BuildPlatform: x64
-    - Name: X86Debug
-      BuildConfiguration: Debug
-      BuildPlatform: x86
-    - Name: X86Release
-      BuildConfiguration: Release
-      BuildPlatform: x86
-    - Name: ARM64ECDebug
-      BuildConfiguration: Debug
-      BuildPlatform: ARM64EC
-    - Name: ARM64ECRelease
-      BuildConfiguration: Release
-      BuildPlatform: ARM64EC
-
-- name: universalBuildMatrix
-  type: object
-  default:
-    - Name: X64ReleaseFabric
-      BuildConfiguration: Release
-      BuildPlatform: x64
-    - Name: X86ReleaseFabric
-      BuildConfiguration: Release
-      BuildPlatform: x86
-    - Name: Arm64ReleaseFabric
-      BuildConfiguration: Release
-      BuildPlatform: ARM64
-    - Name: X64DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: x64
-    - Name: X86DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: x86
-    - Name: Arm64DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: ARM64
-
-variables:
-  - template: variables/windows.yml
-  - group: RNW Secrets
-  - name: SkipGitPushPublishArgs
-    value: ''
-  - name: FailCGOnAlert
-    value: false
-  - name: EnableCodesign
-    value: false
-  - name: ArtifactServices.Symbol.AccountName
-    value: microsoft
-  - name: ArtifactServices.Symbol.PAT
-    value: $(pat-symbols-publish-microsoft)
-  - name: SourceBranchWithFolders
-    value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
 
 trigger: none
 pr: none
 
 resources:
   repositories:
-  - repository: 1ESPipelineTemplates
-    type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/tags/release
+    - repository: 1ESPipelineTemplates
+      type: git
+      name: 1ESPipelineTemplates/1ESPipelineTemplates
+      ref: refs/tags/release
+
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
-    pool: ${{ parameters.AgentPool.Medium }}
-    customBuildTags:
-    - ES365AIMigrationTooling
+    pool:
+      name: Azure-Pipelines-1ESPT-ExDShared
+    customBuildTags: []
     sdl:
       credscan:
-          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+        enabled: false
+      binskim:
+        enabled: false
       spotBugs:
-          enabled: false # We don't have any java, but random packages in node_modules do
+        enabled: false
     stages:
-    - stage: RNWPublish
-      jobs:
-        - job: RnwPublishPrep
-          displayName: React-Native-Windows Publish Prep
-          pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 120
-          cancelTimeoutInMinutes: 5
-          steps:
-          - powershell: |
-              Write-Host "Stopping because commit message contains ***NO_CI***."
-              $uri = "https://dev.azure.com/microsoft/ReactNative/_apis/build/builds/$(Build.BuildId)?api-version=5.1"
-              $json = @{status="Cancelling"} | ConvertTo-Json -Compress
-              $build = Invoke-RestMethod -Uri $uri -Method Patch -Headers @{Authorization = "Bearer $(System.AccessToken)"} -ContentType "application/json" -Body $json
-              Write-Host $build
-              Write-Host "Waiting 60 seconds for build cancellation..."
-              Start-Sleep -Seconds 60
-            displayName: Stop pipeline if latest commit message contains ***NO_CI***
-            condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
-
-          - template: .ado/templates/checkout-full.yml@self
-            parameters:
-              persistCredentials: false # We're going to use rnbot's git creds to publish
-
-          - powershell: gci env:/BUILD_*
-            displayName: Show build information
-
-          - template: .ado/templates/prepare-js-env.yml@self
-
-          - template: .ado/templates/run-compliance-prebuild.yml@self
-
-          - script: if not exist %USERPROFILE%\AppData\Roaming\npm (mkdir %USERPROFILE%\AppData\Roaming\npm)
-            displayName: Fix missing npm config
-
-          - pwsh: |
-              npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
-              $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
-              $beachballErrors | ForEach { Write-Host "##vso[task.logissue type=error]$_" }
-              if ( $beachballErrors.Count -gt 0)  { throw "Beachball check found $($beachballErrors.Count) errors." }
-            displayName: Beachball Check
-            condition: ${{ parameters.performBeachballCheck }}
-
-        - job: RnwNpmPublish
-          displayName: React-Native-Windows Npm Build Rev Publish
-          dependsOn: RnwPublishPrep
-          pool:
-            name: Azure-Pipelines-1ESPT-ExDShared
-            image: windows-latest
-            os: windows
-          timeoutInMinutes: 120
-          cancelTimeoutInMinutes: 5
-          steps:
-          - template: .ado/templates/prepare-js-env.yml@self
-            parameters:
-              agentImage: HostedImage
-
-          - template: .ado/templates/configure-git.yml@self
-
-          - pwsh: |
-              Write-Host "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
-            displayName: Enable No-Publish (git)
-            condition: ${{ parameters.skipGitPush }}
-
-          # Beachball publishes NPM packages to the "$(Pipeline.Workspace)\published-packages" folder.
-          # It pushes NPM version updates to Git depending on the SkipGitPushPublishArgs variable derived from the skipGitPush parameter.
-          - script: |
-              if exist "$(Pipeline.Workspace)\published-packages" rd /s /q "$(Pipeline.Workspace)\published-packages"
-              mkdir "$(Pipeline.Workspace)\published-packages"
-              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(SourceBranchWithFolders) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
-            displayName: Beachball Publish
-
-          - script: dir /s "$(Pipeline.Workspace)\published-packages"
-            displayName: Show created npm packages
-
-          # Beachball usually takes care about the NPM package tagging based on the values in package.json files.
-          # We use the ESRP Release where we must provide the tag explictly (the productstate parameter).
-          # Fortunately, we just use two tags: latest and some custom tag like "canary", "v0.73-stable", etc.
-          # The npmGroupByTag.js script groups the created NPM package by these two tags into the specified folders.
-          - pwsh: |
-              node .ado/scripts/npmGroupByTag.js "$(Pipeline.Workspace)\published-packages" "$(Pipeline.Workspace)\published-packages\custom-tag" "$(Pipeline.Workspace)\published-packages\latest-tag"
-            displayName: Group npm packages by tag
-
-          - script: dir /s "$(Pipeline.Workspace)\published-packages"
-            displayName: Show grouped npm packages by tag
-
-          # Publish NPM packages using ESRP Release task with the custom tag such as "canary", "v0.73-stable", etc.
-          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
-            displayName: 'ESRP Release to npmjs.com (custom tag)'
-            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }}, eq(variables['NpmCustomFolderHasContent'], 'true'))
-            inputs:
-              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
-              usemanagedidentity: false
-              keyvaultname: 'OGX-JSHost-KV'
-              authcertname: 'OGX-JSHost-Auth4'
-              signcertname: 'OGX-JSHost-Sign3'
-              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
-              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
-              contenttype: npm
-              folderlocation: '$(NpmCustomFolder)'
-              productstate: '$(NpmCustomTag)'
-              owners: 'vmorozov@microsoft.com'
-              approvers: 'khosany@microsoft.com'
-
-          # Publish NPM packages using ESRP Release task with the "latest" tag.
-          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
-            displayName: 'ESRP Release to npmjs.com (latest)'
-            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }}, eq(variables['NpmLatestFolderHasContent'], 'true'))
-            inputs:
-              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
-              usemanagedidentity: false
-              keyvaultname: 'OGX-JSHost-KV'
-              authcertname: 'OGX-JSHost-Auth4'
-              signcertname: 'OGX-JSHost-Sign3'
-              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
-              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
-              contenttype: npm
-              folderlocation: '$(NpmLatestFolder)'
-              productstate: 'latest'
-              owners: 'vmorozov@microsoft.com'
-              approvers: 'khosany@microsoft.com'
-
-          # Beachball reverts to local state after publish, but we want the updates it added
-          - script: git pull origin $(SourceBranchWithFolders)
-            displayName: git pull
-
-          - script: npx @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
-            displayName: Create GitHub Releases (New Canary Version)
-            condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ eq(variables['Build.SourceBranchName'], 'main') }} )
-
-          - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
-            displayName: Create GitHub Releases (New Stable Version)
-            condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
-
-          - template: .ado/templates/set-version-vars.yml@self
-            parameters:
-              buildEnvironment: Continuous
-
-          - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-            displayName: 📒 Generate Manifest Npm
-            inputs:
-              BuildDropPath: $(System.DefaultWorkingDirectory)
-
-          templateContext:
-            outputs:
-              - output: pipelineArtifact
-                displayName: 'Publish npm pack artifacts'
-                condition: succeededOrFailed()
-                targetPath: $(Pipeline.Workspace)/published-packages
-                artifactName: NpmPackedTarballs
-              - output: pipelineArtifact
-                displayName: "📒 Publish Manifest Npm"
-                artifactName: SBom-$(System.JobAttempt)
-                targetPath: $(System.DefaultWorkingDirectory)/_manifest
-                sbomEnabled: false # This output is in fact an SBOM itself
-              - output: pipelineArtifact
-                displayName: 'Publish version variables'
-                targetPath: $(Build.StagingDirectory)/versionEnvVars
-                artifactName: VersionEnvVars
-
-        - ${{ each matrix in parameters.desktopBuildMatrix }}:
-          - job: RnwNativeBuildDesktop${{ matrix.Name }}
-            displayName: Build Desktop ${{ matrix.Name }}
-            dependsOn: RnwNpmPublish
-            pool: ${{ parameters.AgentPool.Large }}
-            timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
+      - stage: FakePublish
+        displayName: GitHub OAuth Capability Probe
+        jobs:
+          - job: FakeGitProbe
+            displayName: Test branch push without PAT
+            pool:
+              name: Azure-Pipelines-1ESPT-ExDShared
             steps:
-            - template: .ado/templates/prepare-js-env.yml@self
+              - checkout: self
+                persistCredentials: true   # reuse the GitHub connection OAuth token
 
-            - template: .ado/templates/prepare-build-env.yml@self
-              parameters:
-                platform: ${{ matrix.BuildPlatform }}
-                configuration: ${{ matrix.BuildConfiguration }}
-                buildEnvironment: Publish
+              - script: |
+                  echo Repository: $(Build.Repository.Name)
+                  echo Source branch: $(Build.SourceBranch)
+                  git --version
+                displayName: Show repo info
 
-            - template: .ado/templates/apply-published-version-vars.yml@self
+              - script: git status -sb
+                displayName: Show working tree status
 
-            - template: .ado/templates/msbuild-sln.yml@self
-              parameters:
-                solutionDir: vnext
-                solutionName: ReactWindows-Desktop.sln
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                buildConfiguration: ${{ matrix.BuildConfiguration }}
-                oneESMode: true ## Files are only copied to staging, not published
+              - script: |
+                  set -euo pipefail
+                  BRANCH="user/vmorozov/probe-$(Build.BuildId)"
+                  echo "Creating branch $BRANCH"
+                  git checkout -b "$BRANCH"
+                  echo "release probe $(Build.BuildId)" > release-probe.txt
+                  git add release-probe.txt
+                  git status -sb
+                  git commit -m "chore: release probe (***No CI***)"
+                  git push origin HEAD
+                  echo "Branch $BRANCH pushed."
+                displayName: Create, commit, and push branch
 
-            - template: .ado/templates/publish-build-artifacts.yml@self
-              parameters:
-                oneESMode: true ## Files are only copied to staging, not published
-                artifactName: Desktop
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                buildConfiguration: ${{ matrix.BuildConfiguration }}
-                contents: |
-                  React.Windows.Desktop\**
-                  React.Windows.Desktop.DLL\**
-                  React.Windows.Desktop.Test.DLL\**
-
-            - template: .ado/templates/component-governance.yml@self
-
-            templateContext:
-              sdl:
-                binskim:
-                  analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\React.Windows.Desktop.DLL\react-native-win32.dll'
-              outputs:
-              - output: pipelineArtifact
-                displayName: 'Upload build logs'
-                condition: succeededOrFailed()
-                targetPath: $(BuildLogDirectory)
-                artifactName: Build logs - $(Agent.JobName)-$(System.JobAttempt)
-              - output: pipelineArtifact
-                displayName: 'Upload crash dumps'
-                condition: and(succeededOrFailed(), eq(variables.HasCrashDumps, 'True'))
-                targetPath: '$(CrashDumpRootPath)'
-                artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
-              - output: pipelineArtifact
-                displayName: 'Publish Artifact: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}'
-                artifactName: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}
-                targetPath: $(Build.StagingDirectory)/NuGet/Desktop/${{matrix.buildPlatform}}/${{matrix.buildConfiguration}}
-
-        - ${{ each matrix in parameters.universalBuildMatrix }}:
-          - job: RnwNativeBuildUniversal${{ matrix.Name }}
-            displayName: Build Universal ${{ matrix.Name }}
-            dependsOn: RnwNpmPublish
-            pool: ${{ parameters.AgentPool.Large }}
-            timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
-            steps:
-            - template: .ado/templates/prepare-js-env.yml@self
-
-            - template: .ado/templates/prepare-build-env.yml@self
-              parameters:
-                platform: ${{ matrix.BuildPlatform }}
-                configuration: ${{ matrix.BuildConfiguration }}
-                buildEnvironment: Publish
-
-            - template: .ado/templates/apply-published-version-vars.yml@self
-
-            - template: .ado/templates/msbuild-sln.yml@self
-              parameters:
-                solutionDir: vnext
-                solutionName: Microsoft.ReactNative.NewArch.sln
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                buildConfiguration: ${{ matrix.BuildConfiguration }}
-                oneESMode: true ## Files are only copied to staging, not published
-
-            - task: PowerShell@2
-              displayName: Make AnyCPU Reference Assemblies
-              inputs:
-                filePath: vnext/Scripts/Tfs/Make-AnyCPU-RefAssemblies.ps1
-                arguments: -TargetRoot $(Build.SourcesDirectory)\vnext\target -BuildRoot $(Build.SourcesDirectory)\vnext\target
-
-            - template: .ado/templates/publish-build-artifacts.yml@self
-              parameters:
-                oneESMode: true ## Files are only copied to staging, not published
-                artifactName: ReactWindows
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                buildConfiguration: ${{ matrix.BuildConfiguration }}
-                contents: |
-                  Microsoft.ReactNative\**
-                  Microsoft.ReactNative.CsWinRT\**
-
-            - template: .ado/templates/component-governance.yml@self
-
-            # Make symbols available through http://symweb.
-            - task: PublishSymbols@2
-              displayName: Publish symbols
-              inputs:
-                SearchPattern: vnext/target/**/*.pdb
-                SymbolServerType: TeamServices
-
-            templateContext:
-              sdl:
-                binskim:
-                  analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
-              outputs:
-              - output: pipelineArtifact
-                displayName: 'Upload build logs'
-                condition: succeededOrFailed()
-                targetPath: $(BuildLogDirectory)
-                artifactName: Build logs - $(Agent.JobName)-$(System.JobAttempt)
-              - output: pipelineArtifact
-                displayName: 'Upload crash dumps'
-                condition: and(succeededOrFailed(), eq(variables.HasCrashDumps, 'True'))
-                targetPath: '$(CrashDumpRootPath)'
-                artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
-              - output: pipelineArtifact
-                displayName: 'Publish Artifact: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}'
-                artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
-                targetPath: $(Build.StagingDirectory)/NuGet/ReactWindows/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-
-        - job: RNWNuget
-          dependsOn:
-            - RnwNpmPublish
-            - ${{ each matrix in parameters.desktopBuildMatrix }}:
-              - RnwNativeBuildDesktop${{ matrix.Name }}
-            - ${{ each matrix in parameters.universalBuildMatrix }}:
-              - RnwNativeBuildUniversal${{ matrix.Name }}
-          displayName: Sign Binaries and Publish NuGet
-          pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 120 # Protect against the long CodeSign task
-
-          steps:
-          - template: .ado/templates/checkout-shallow.yml@self
-
-          - template: .ado/templates/prepare-js-env.yml@self
-
-          - template: .ado/templates/apply-published-version-vars.yml@self
-
-          # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
-          - task: NuGetToolInstaller@1
-            inputs:
-              versionSpec: ">=5.8.0"
-
-          - template: .ado/templates/prep-and-pack-nuget.yml@self
-            parameters:
-              artifactName: ReactWindows
-              publishCommitId: $(publishCommitId)
-              npmVersion: $(npmVersion)
-              packMicrosoftReactNative: true
-              packMicrosoftReactNativeCxx: true
-              ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: true
-              slices:
-                - platform: x64
-                  configuration: Release
-                - platform: x86
-                  configuration: Release
-                - platform: ARM64
-                  configuration: Release
-
-          - template: .ado/templates/prep-and-pack-nuget.yml@self
-            parameters:
-              artifactName: Desktop
-              publishCommitId: $(publishCommitId)
-              npmVersion: $(npmVersion)
-              packDesktop: true
-              ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: true
-              slices:
-                - platform: x64
-                  configuration: Release
-                - platform: x86
-                  configuration: Release
-                - platform: ARM64EC
-                  configuration: Release
-                - platform: x64
-                  configuration: Debug
-                - platform: x86
-                  configuration: Debug
-                - platform: ARM64EC
-                  configuration: Debug
-
-          # Symbol Publishing for Work Item 59264834 - MSRC Compliance
-          - task: PublishSymbols@2
-            displayName: 'Publish Symbols to Microsoft Symbol Server'
-            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
-            inputs:
-              SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'
-              SearchPattern: '**/*.pdb'
-              SymbolServerType: 'TeamServices'
-              SymbolsProduct: 'ReactNativeWindows'
-              SymbolsVersion: '$(Build.BuildNumber)'
-              SymbolsArtifactName: 'ReactNativeWindows-Symbols'
-              DetailedLog: true
-              TreatNotIndexedAsWarning: false
-
-          templateContext:
-            sdl:
-              binskim:
-                analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'
-            outputs:
-            - output: pipelineArtifact
-              displayName: 'Publish final nuget artifacts'
-              targetPath: $(System.DefaultWorkingDirectory)\NugetRootFinal
-              artifactName: "ReactWindows-final-nuget"
+              - script: git ls-remote --heads origin user/vmorozov/probe-$(Build.BuildId)
+                displayName: Confirm remote branch
