@@ -62,5 +62,64 @@ extends:
                   Write-Host "Branch $branch pushed."
                 displayName: Create, commit, and push branch
 
+              - pwsh: |
+                  $tag = "user-vmorozov-probe-tag-$(Build.BuildId)"
+                  Write-Host "Creating tag $tag"
+                  git tag -a $tag -m "probe tag $(Build.BuildId)"
+                  git push origin $tag
+                  Write-Host "Tag $tag pushed."
+                displayName: Create and push annotated tag
+
+              - pwsh: |
+                  $header = git config --get http.https://github.com/.extraheader
+                  if (-not $header) { throw "Git extraheader with auth token not found." }
+                  $encoded = ($header.Split(' ')[-1]).Trim()
+                  $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
+                  $token = $decoded.Split(':')[-1]
+                  Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
+                displayName: Extract GitHub OAuth token
+
+              - pwsh: |
+                  $branch = "user/vmorozov/probe-$(Build.BuildId)"
+                  $token = '$(GitHubOAuthToken)'
+                  if (-not $token) { throw "GitHub token not available." }
+                  $body = [ordered]@{
+                    title = "Probe PR $(Build.BuildId)"
+                    head  = $branch
+                    base  = "main"
+                    body  = "Automation probe to validate OAuth permissions."
+                    draft = $true
+                  } | ConvertTo-Json
+                  $headers = @{
+                    Authorization = "Bearer $token"
+                    Accept        = "application/vnd.github+json"
+                    "User-Agent"  = "azure-pipelines-probe"
+                    "X-GitHub-Api-Version" = "2022-11-28"
+                  }
+                  $resp = Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls" -Headers $headers -Body $body -ContentType 'application/json'
+                  Write-Host "Created draft PR #$($resp.number): $($resp.html_url)"
+                  Write-Host "##vso[task.setvariable variable=ProbePrNumber]$($resp.number)"
+                displayName: Create draft PR via GitHub API
+
+              - pwsh: |
+                  $token = '$(GitHubOAuthToken)'
+                  $pr = '$(ProbePrNumber)'
+                  if ($pr) {
+                    $headers = @{
+                      Authorization = "Bearer $token"
+                      Accept        = "application/vnd.github+json"
+                      "User-Agent"  = "azure-pipelines-probe"
+                      "X-GitHub-Api-Version" = "2022-11-28"
+                    }
+                    Invoke-RestMethod -Method Patch -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls/$pr" -Headers $headers -Body '{"state":"closed"}' -ContentType 'application/json' | Out-Null
+                    Write-Host "Closed draft PR #$pr"
+                  } else {
+                    Write-Host "No PR number recorded; skipping close."
+                  }
+                displayName: Close draft PR
+
               - script: git ls-remote --heads origin user/vmorozov/probe-$(Build.BuildId)
                 displayName: Confirm remote branch
+
+              - script: git ls-remote --tags origin user-vmorozov-probe-tag-$(Build.BuildId)
+                displayName: Confirm remote tag
