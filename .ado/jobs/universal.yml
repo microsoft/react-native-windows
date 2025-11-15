@@ -221,6 +221,4 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  # Issue #8003 Tracks restoring this test whose condition should be resotred disabled as it times out on releasex64...
-                  # condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
-                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x86'))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
