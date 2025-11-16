@@ -175,11 +175,6 @@ const Components: Array<RNTesterModuleInfo> = [
   //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
   //},
   {
-    key: 'XAML',
-    category: 'UI',
-    module: require('../examples-win/XAML/XAMLExample'),
-  },
-  {
     key: 'FabricXaml',
     category: 'UI',
     module: require('../examples-win/XAML/FabricXamlExample'),

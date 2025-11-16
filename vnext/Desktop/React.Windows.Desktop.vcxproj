@@ -86,7 +86,6 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
-    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
     <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
     <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   </ImportGroup>
@@ -136,7 +135,7 @@
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -154,9 +153,7 @@
   <ItemGroup>
     <Midl Include="ABI\MessageQueue.idl" />
     <Midl Include="ABI\NativeLogging.idl" />
-    <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="ABI\TestController.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
@@ -167,10 +164,6 @@
       <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="ABI\NativeTraceEventSource.cpp">
-      <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
-    </ClCompile>
     <ClCompile Include="ABI\TestController.cpp">
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClCompile>
@@ -178,13 +171,12 @@
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
-    <ClCompile Include="Modules\DesktopTimingModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
-  <ItemGroup Condition="'$(UseFabric)' == 'true'">
+  <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedPlatformConfig.cpp" />
@@ -216,9 +208,6 @@
     </ClInclude>
     <ClInclude Include="ABI\NativeLogEventSource.h">
       <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeTraceEventSource.h">
-      <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ABI\TestController.h">
       <DependentUpon>ABI\TestController.idl</DependentUpon>
@@ -263,7 +252,6 @@
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
-    <ClInclude Include="Modules\DesktopTimingModule.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

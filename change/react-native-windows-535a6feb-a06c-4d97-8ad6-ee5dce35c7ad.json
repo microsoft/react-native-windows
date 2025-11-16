@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disable the deep import warning",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

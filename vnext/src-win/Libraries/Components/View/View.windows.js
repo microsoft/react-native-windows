@@ -63,14 +63,6 @@ component View(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const hasTextAncestor = use(TextAncestorContext);
 
-  // Windows - Paper doesn't support Views in Text
-  if (global.RN$Bridgeless !== true) {
-    invariant(
-      !hasTextAncestor,
-      'Nesting of <View> within <Text> is not currently supported.',
-    );
-  }
-
   let actualView;
   const {
     accessibilityState,
@@ -140,15 +132,6 @@ component View(
   if (ariaSetsize !== undefined) {
     processedProps.accessibilitySetSize = ariaSetsize;
   }
-
-  // On paper we do some messy work to handle no-hide-descendants
-  if (global.RN$Bridgeless !== true) {
-    processedProps.children =
-      processedProps.importantForAccessibility === 'no-hide-descendants'
-        ? childrenWithImportantForAccessibility(otherProps.children)
-        : otherProps.children;
-  }
-  // Windows]
 
   if (id !== undefined) {
     processedProps.nativeID = id;

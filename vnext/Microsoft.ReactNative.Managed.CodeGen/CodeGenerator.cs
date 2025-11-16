@@ -35,12 +35,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       var registrationInvocations = new List<StatementSyntax>();
       var providerMembers = new List<MemberDeclarationSyntax>();
 
-      if (assembly.ViewManagers.Any())
-      {
-        registrationInvocations.Add(InvocationStatement(ReactNativeNames.CreateViewManagers, IdentifierName(ReactNativeNames.PackageBuilderId)));
-        providerMembers.Add(CreateViewManagers(assembly.ViewManagers));
-      }
-
       if (assembly.Modules.Any())
       {
         registrationInvocations.Add(InvocationStatement(ReactNativeNames.CreateModules, IdentifierName((ReactNativeNames.PackageBuilderId))));

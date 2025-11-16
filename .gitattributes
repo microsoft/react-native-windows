@@ -13,7 +13,6 @@
 *Spec.g.h eol=lf
 /vnext/codegen/** eol=lf
 /vnext/Microsoft.ReactNative.IntegrationTests/codegen/** eol=lf
-/packages/sample-apps/codegen/** eol=lf
 
 # Force Visual Studio project files (mostly XML) to CRLF
 #   This helps avoid conflict which occurs when Xmarian/Mac contributors with AutoCRLF=input (or off)

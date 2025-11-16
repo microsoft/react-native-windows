@@ -65,7 +65,6 @@ test('debug target properties', async () => {
   testLog.message(`executing 'debug target properties' on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
-    webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
@@ -110,7 +109,6 @@ test('enable, disable', async () => {
   testLog.message(`executing 'enable, disable' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
-    webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
@@ -135,7 +133,6 @@ test('pause, resume', async () => {
   testLog.message(`executing 'pause, resume' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
-    webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
@@ -198,7 +195,6 @@ test('set, remove breakpoint', async () => {
   testLog.message(`executing 'set, remove breakpoint' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
-    webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
@@ -245,7 +241,6 @@ test('reload after continue', async () => {
   testLog.message(`executing 'pause, resume' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
-    webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
@@ -284,7 +279,6 @@ test('execution context identifier in Debugger.scriptParsed event', async () => 
   testLog.message(`executing 'pause, resume' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
-    webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });

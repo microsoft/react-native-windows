@@ -106,13 +106,14 @@
         Shlwapi.lib;
         Version.lib;
         Dwmapi.lib;
+        windowscodecs.lib;
         WindowsApp_downlevel.lib;
+        dxguid.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
       <AdditionalDependencies Condition="'$(Platform)' == 'ARM64EC'">
         %(AdditionalDependencies);
         Bcrypt.lib;
-        Chakrart.lib;
         D2D1.lib;
         D3D11.lib;
         DWrite.lib;
@@ -120,10 +121,6 @@
         ShCore.lib;
         Uiautomationcore.lib
       </AdditionalDependencies>
-      <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
-    </Link>
-    <Link Condition="'$(UseFabric)' == 'true'">
-      <AdditionalDependencies>windowscodecs.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>Windowscodecs.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
@@ -192,7 +189,6 @@
   </Choose>
   <PropertyGroup>
     <V8JSI_NODLLCOPY />
-    <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="GetTargetFileName" Returns="$(OutDir)$(TargetName).dll" />

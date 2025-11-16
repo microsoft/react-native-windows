@@ -28,28 +28,6 @@ void* winrt_make_Microsoft_ReactNative_ReactViewOptions();
 void* winrt_make_Microsoft_ReactNative_RedBoxHelper();
 void* winrt_make_Microsoft_ReactNative_QuirkSettings();
 void* winrt_make_facebook_react_NativeLogEventSource();
-void* winrt_make_facebook_react_NativeTraceEventSource();
-
-#ifndef USE_FABRIC
-void *winrt_make_Microsoft_ReactNative_Composition_ImageFailedResponse() {
-    winrt::throw_hresult(E_NOTIMPL);
-}
-void *winrt_make_Microsoft_ReactNative_Composition_StreamImageResponse() {
-    winrt::throw_hresult(E_NOTIMPL);
-}
-void *winrt_make_Microsoft_ReactNative_Composition_Experimental_UriBrushFactoryImageResponse() {
-    winrt::throw_hresult(E_NOTIMPL);
-}
-void* winrt_make_Microsoft_ReactNative_Color() {
-    winrt::throw_hresult(E_NOTIMPL);
-}
-void* winrt_make_Microsoft_ReactNative_ReactNativeIsland() {
-    winrt::throw_hresult(E_NOTIMPL);
-}
-void *winrt_make_Microsoft_ReactNative_Composition_FocusManager() {
-    winrt::throw_hresult(E_NOTIMPL);
-}
-#endif
 
 bool __stdcall winrt_can_unload_now() noexcept
 {
@@ -157,10 +135,6 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
         return winrt_make_facebook_react_NativeLogEventSource();
     }
 
-    if (requal(name, L"facebook.react.NativeTraceEventSource"))
-    {
-        return winrt_make_facebook_react_NativeTraceEventSource();
-    }
 
     return nullptr;
 }

@@ -157,7 +157,6 @@
     <ClCompile Include="RedBoxTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
-    <ClCompile Include="NativeTraceEventTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

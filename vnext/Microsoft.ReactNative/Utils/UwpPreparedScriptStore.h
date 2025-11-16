@@ -38,8 +38,6 @@ class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile> m_byteCodeFileAsync;
 };
 
-// This is very similar to ByteArrayBuffer in ChakraJsiRuntime.h.
-// Defining this to avoid referencing types in chakra headers
 class ByteCodeBuffer final : public facebook::jsi::Buffer {
  public:
   size_t size() const override {
