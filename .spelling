@@ -70,9 +70,6 @@ CANCELLATIONEXCEPTION
 CANCELLATIONTOKEN
 canthrow
 cdebug
-chakra
-CHAKRACORE
-chakrart
 CHARFORMAT
 CHARFORMATCHANGE
 CHARFORMATW
@@ -851,7 +848,6 @@ WDIO
 WEAKPTR
 WEAKREFCOUNT
 weakthis
-webdebugger
 webdriverio
 webhosthidden
 Wexceptions

@@ -62,14 +62,6 @@ winrt::Microsoft::ReactNative::IReactPropertyName LiveReloadEnabledProperty() no
   return propName;
 }
 
-winrt::Microsoft::ReactNative::IReactPropertyName UseWebDebuggerProperty() noexcept {
-  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
-      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
-          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
-          L"UseWebDebugger");
-  return propName;
-}
-
 winrt::Microsoft::ReactNative::IReactPropertyName DebuggerBreakOnNextLineProperty() noexcept {
   static winrt::Microsoft::ReactNative::IReactPropertyName propName =
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
@@ -199,30 +191,6 @@ void ReactOptions::SetUseLiveReload(bool enabled) noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(LiveReloadEnabledProperty()), false);
 }
 
-void ReactOptions::SetUseWebDebugger(bool enabled) noexcept {
-  SetUseWebDebugger(Properties, enabled);
-}
-
-bool ReactOptions::UseWebDebugger() const noexcept {
-  return UseWebDebugger(Properties);
-}
-
-/*static*/ void ReactOptions::SetUseWebDebugger(
-    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
-    bool value) noexcept {
-  properties.Set(UseWebDebuggerProperty(), winrt::box_value(value));
-
-  if (value) {
-    // Remote debugging is incompatible with direct debugging
-    SetUseDirectDebugger(properties, false);
-  }
-}
-
-/*static*/ bool ReactOptions::UseWebDebugger(
-    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
-  return winrt::unbox_value_or<bool>(properties.Get(UseWebDebuggerProperty()), false);
-}
-
 bool ReactOptions::UseLiveReload() const noexcept {
   return UseLiveReload(Properties);
 }
@@ -258,11 +226,6 @@ bool ReactOptions::UseDirectDebugger() const noexcept {
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
     bool value) noexcept {
   properties.Set(UseDirectDebuggerProperty(), winrt::box_value(value));
-
-  if (value) {
-    // Remote debugging is incompatible with direct debugging
-    SetUseWebDebugger(properties, false);
-  }
 }
 
 /*static*/ bool ReactOptions::UseDirectDebugger(
@@ -296,11 +259,7 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
  public:
   bool enableBridgelessArchitecture() override {
-#ifdef USE_FABRIC
     return true;
-#else
-    return false;
-#endif
   }
 
   bool enableCppPropsIteratorSetter() override {
