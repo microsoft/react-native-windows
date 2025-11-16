@@ -375,11 +375,9 @@ std::string FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool f
 
 bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey) {
 #ifndef USE_WINUI3
-#if USE_FABRIC
   if (!coreWindow) {
     return GetKeyState(static_cast<int>(virtualKey)) < 0;
   }
-#endif
   auto const &keyState = coreWindow.GetKeyState(virtualKey);
 #else
   auto const &keyState = winrt::Microsoft::UI::Input::InputKeyboardSource::GetKeyStateForCurrentThread(virtualKey);

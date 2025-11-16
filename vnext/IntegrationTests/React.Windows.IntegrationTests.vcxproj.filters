@@ -12,16 +12,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestInstance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestModule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestRootView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ControllableMessageQueueThread.cpp">
@@ -29,16 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TestInstance.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TestModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestRootView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestRunner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ControllableMessageQueueThread.h">

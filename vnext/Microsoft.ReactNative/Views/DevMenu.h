@@ -21,10 +21,6 @@ struct DevMenuManager : public std::enable_shared_from_this<DevMenuManager> {
  private:
   void Init() noexcept;
   const Mso::CntPtr<Mso::React::IReactContext> m_context;
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};
-  xaml::UIElement::KeyDown_revoker m_keyDownRevoker;
-#endif
 };
 
 } // namespace Microsoft::ReactNative

@@ -7,7 +7,6 @@
 #include <Fabric/ComponentView.h>
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
-#include <Views/Image/ReactImage.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/imagemanager/ImageResponseObserver.h>
 #include <wincodec.h>

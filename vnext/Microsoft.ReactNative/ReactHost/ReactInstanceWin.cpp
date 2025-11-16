@@ -6,7 +6,6 @@
 #include <AppModelHelpers.h>
 #include <CallInvoker.h>
 #include <CppRuntimeOptions.h>
-#include <CreateInstance.h>
 #include <CreateModules.h>
 #include <JSCallInvokerScheduler.h>
 #include <OInstance.h>
@@ -17,7 +16,6 @@
 #include <Threading/MessageQueueThreadFactory.h>
 #include <TurboModuleManager.h>
 #include <Utils/Helpers.h>
-#include <Views/ViewManager.h>
 #include <appModel.h>
 #include <comUtil/qiCast.h>
 #include <dispatchQueue/dispatchQueue.h>
@@ -26,7 +24,6 @@
 #include <winrt/Windows.Storage.h>
 #include <tuple>
 #include "BaseScriptStoreImpl.h"
-#include "ChakraRuntimeHolder.h"
 #include "CrashManager.h"
 #include "DevMenu.h"
 #include "DynamicWriter.h"
@@ -53,7 +50,6 @@
 #include "RedBox.h"
 #include "Unicode.h"
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/UriImageManager.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
@@ -66,19 +62,11 @@
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
 #include <react/threading/MessageQueueThreadImpl.h>
-#endif
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-#include <LayoutService.h>
-#include <XamlUIService.h>
-#include "Modules/NativeUIManager.h"
-#include "Modules/PaperUIManagerModule.h"
-#endif
+#include "Inspector/ReactInspectorThread.h"
 
 #ifndef CORE_ABI
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#include "ConfigureBundlerDlg.h"
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
@@ -88,8 +76,6 @@
 #include "Modules/I18nManagerModule.h"
 #include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
-#else
-#include "Modules/DesktopTimingModule.h"
 #endif
 #include "Modules/ExceptionsManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
@@ -97,27 +83,13 @@
 #include "Modules/SourceCode.h"
 #include "Modules/StatusBarManager.h"
 
-#if !defined(CORE_ABI) || defined(USE_FABRIC)
 #include <Modules/ImageViewManagerModule.h>
 #include "Modules/Animated/NativeAnimatedModule.h"
-#endif
 
 #if defined(USE_V8)
 #include "JSI/V8RuntimeHolder.h"
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
-
-namespace Microsoft::ReactNative {
-
-void AddStandardViewManagers(
-    std::vector<std::unique_ptr<Microsoft::ReactNative::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext &context) noexcept;
-
-std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
-    Mso::React::IReactContext *context,
-    std::vector<Microsoft::ReactNative::IViewManager> &&viewManagers) noexcept;
-
-} // namespace Microsoft::ReactNative
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -148,77 +120,6 @@ struct LoadedCallbackGuard {
   Mso::CntPtr<ReactInstanceWin> m_reactInstance;
 };
 
-struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCallback {
-  BridgeUIBatchInstanceCallback(Mso::WeakPtr<ReactInstanceWin> wkInstance) : m_wkInstance(wkInstance) {}
-  virtual ~BridgeUIBatchInstanceCallback() = default;
-  void onBatchComplete() override {
-    if (auto instance = m_wkInstance.GetStrongPtr()) {
-      auto state = instance->State();
-      if (state != ReactInstanceState::HasError && state != ReactInstanceState::Unloaded) {
-        if (instance->UseWebDebugger()) {
-          // While using a CxxModule for UIManager (which we do when running under webdebugger)
-          // We need to post the batch complete to the NativeQueue to ensure that the UIManager
-          // has posted everything from this batch into its queue before we complete the batch.
-          instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
-            if (auto instance = wkInstance.GetStrongPtr()) {
-              instance->m_batchingUIThread->runOnQueue([wkInstance]() {
-                if (auto instance = wkInstance.GetStrongPtr()) {
-                  auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-                  if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                                                      UIBatchCompleteCallbackProperty())) {
-                    (*callback)(instance->m_reactContext->Properties());
-                  }
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-                  if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                    uiManager->onBatchComplete();
-                  }
-#endif
-                }
-              });
-
-              // For UWP we use a batching message queue to optimize the usage
-              // of the CoreDispatcher.  Win32 already has an optimized queue.
-              facebook::react::BatchingMessageQueueThread *batchingUIThread =
-                  static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-              if (batchingUIThread != nullptr) {
-                batchingUIThread->onBatchComplete();
-              }
-            }
-          });
-        } else {
-          instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
-            if (auto instance = wkInstance.GetStrongPtr()) {
-              auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-              if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                                                  UIBatchCompleteCallbackProperty())) {
-                (*callback)(instance->m_reactContext->Properties());
-              }
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-              if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                uiManager->onBatchComplete();
-              }
-#endif
-            }
-          });
-          // For UWP we use a batching message queue to optimize the usage
-          // of the CoreDispatcher.  Win32 already has an optimized queue.
-          facebook::react::BatchingMessageQueueThread *batchingUIThread =
-              static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-          if (batchingUIThread != nullptr) {
-            batchingUIThread->onBatchComplete();
-          }
-        }
-      }
-    }
-  }
-  void incrementPendingJSCalls() override {}
-  void decrementPendingJSCalls() override {}
-
-  Mso::WeakPtr<ReactInstanceWin> m_wkInstance;
-  Mso::CntPtr<Mso::React::ReactContext> m_context;
-  std::weak_ptr<facebook::react::MessageQueueThread> m_uiThread;
-};
-
 //=============================================================================================
 // ReactInstanceWin implementation
 //=============================================================================================
@@ -239,7 +140,6 @@ ReactInstanceWin::ReactInstanceWin(
       m_isFastReloadEnabled(options.UseFastRefresh()),
       m_isLiveReloadEnabled(options.UseLiveReload()),
       m_updateUI{std::move(updateUI)},
-      m_useWebDebugger(options.UseWebDebugger()),
       m_useDirectDebugger(options.UseDirectDebugger()),
       m_debuggerBreakOnNextLine(options.DebuggerBreakOnNextLine()),
       m_reactContext{Mso::Make<ReactContext>(
@@ -336,27 +236,12 @@ void ReactInstanceWin::LoadModules(
     const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
   auto registerTurboModule = [this, &nativeModulesProvider, &turboModulesProvider](
                                  const wchar_t *name, const ReactModuleProvider &provider) noexcept {
-    if (m_options.UseWebDebugger()) {
-      nativeModulesProvider->AddModuleProvider(name, provider);
-    } else {
-      turboModulesProvider->AddModuleProvider(name, provider, false);
-    }
+    turboModulesProvider->AddModuleProvider(name, provider, false);
   };
 
-#ifdef USE_FABRIC
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
-        L"FabricUIManagerBinding",
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
-  }
-#endif
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   registerTurboModule(
-      L"UIManager",
-      // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
-      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
-#endif
+      L"FabricUIManagerBinding",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
 
 #ifndef CORE_ABI
   registerTurboModule(
@@ -392,23 +277,18 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
 
 #else
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
-        L"ImageLoader",
-        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+  registerTurboModule(
+      L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
 
-    registerTurboModule(
-        L"NativeAnimatedModule",
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
-  }
+  registerTurboModule(
+      L"NativeAnimatedModule",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
 #endif
 
-  if (!m_options.UseWebDebugger()) {
-    turboModulesProvider->AddModuleProvider(
-        L"SampleTurboModule",
-        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>(),
-        false);
-  }
+  turboModulesProvider->AddModuleProvider(
+      L"SampleTurboModule",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>(),
+      false);
 
   ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
       winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
@@ -424,22 +304,21 @@ void ReactInstanceWin::LoadModules(
       L"PlatformConstants",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
   uint32_t hermesBytecodeVersion = 0;
-#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
+#if defined(ENABLE_DEVSERVER_HBCBUNDLES)
   hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
-  std::string bundleUrl = (devSettings->useWebDebugger || devSettings->liveReloadCallback)
-      ? facebook::react::DevServerHelper::get_BundleUrl(
-            devSettings->sourceBundleHost,
-            devSettings->sourceBundlePort,
-            devSettings->debugBundlePath,
-            devSettings->platformName,
-            devSettings->bundleAppId,
-            devSettings->devBundle,
-            devSettings->useFastRefresh,
-            devSettings->inlineSourceMap,
-            hermesBytecodeVersion)
-      : devSettings->bundleRootPath;
+  std::string bundleUrl = devSettings->liveReloadCallback ? facebook::react::DevServerHelper::get_BundleUrl(
+                                                                devSettings->sourceBundleHost,
+                                                                devSettings->sourceBundlePort,
+                                                                devSettings->debugBundlePath,
+                                                                devSettings->platformName,
+                                                                devSettings->bundleAppId,
+                                                                devSettings->devBundle,
+                                                                devSettings->useFastRefresh,
+                                                                devSettings->inlineSourceMap,
+                                                                hermesBytecodeVersion)
+                                                          : devSettings->bundleRootPath;
   ::Microsoft::ReactNative::SourceCode::SetScriptUrl(
       winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), bundleUrl);
 
@@ -456,17 +335,9 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"LinkingManager",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
+#endif
 
   registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
-#else
-
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
-        L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
-  } else {
-    registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::facebook::react::Timing>());
-  }
-#endif
 
   registerTurboModule(
       ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
@@ -481,22 +352,11 @@ void ReactInstanceWin::LoadModules(
 
 //! Initialize() is called from the native queue.
 void ReactInstanceWin::Initialize() noexcept {
-#ifdef USE_FABRIC
-  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    InitializeBridgeless();
-  } else
-#endif
-  {
-    InitializeWithBridge();
-  }
+  InitializeBridgeless();
 }
 
 void ReactInstanceWin::InitDevMenu() noexcept {
-  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-    Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
-#endif // CORE_ABI
-  });
+  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {});
 }
 
 void ReactInstanceWin::InitUIDependentCalls() noexcept {
@@ -524,13 +384,10 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
   devSettings->debuggerBreakOnNextLine = m_debuggerBreakOnNextLine;
   devSettings->debuggerPort = m_options.DeveloperSettings.DebuggerPort;
   devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
-  devSettings->useWebDebugger = m_useWebDebugger;
   devSettings->useFastRefresh = m_isFastReloadEnabled;
   devSettings->bundleRootPath = BundleRootPath();
   devSettings->platformName =
       winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(m_reactContext->Properties());
-  devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
-  devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
   devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
   devSettings->bundleAppId = BundleAppId();
   devSettings->devBundle = RequestDevBundle();
@@ -545,6 +402,8 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
       winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
   devSettings->useRuntimeScheduler = useRuntimeScheduler;
+
+  devSettings->inspectorHostTarget = m_options.InspectorHostTarget;
 
   return devSettings;
 }
@@ -579,8 +438,6 @@ std::unique_ptr<facebook::jsi::PreparedScriptStore> CreatePreparedScriptStore() 
   }
   return preparedScriptStore;
 }
-
-#ifdef USE_FABRIC
 
 typedef HRESULT(__stdcall *SetThreadDescriptionFn)(HANDLE, PCWSTR);
 void SetJSThreadDescription() noexcept {
@@ -656,16 +513,21 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               };
 
               if (devSettings->useDirectDebugger) {
-                ::Microsoft::ReactNative::GetSharedDevManager()->EnsureHermesInspector(
-                    devSettings->sourceBundleHost, devSettings->sourceBundlePort);
+                ::Microsoft::ReactNative::GetSharedDevManager()->EnsureInspectorPackagerConnection(
+                    devSettings->sourceBundleHost, devSettings->sourceBundlePort, devSettings->bundleAppId);
               }
 
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
                   devSettings, jsMessageThread, CreatePreparedScriptStore());
               auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
               jsRuntime->getRuntime();
-              m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
-                  std::move(jsRuntime), jsMessageThread, timerManager, jsErrorHandlingFunc);
+
+              m_bridgelessReactInstance = std::make_shared<facebook::react::ReactInstance>(
+                  std::move(jsRuntime),
+                  jsMessageThread,
+                  timerManager,
+                  jsErrorHandlingFunc,
+                  m_options.InspectorHostTarget);
 
               auto bufferedRuntimeExecutor = m_bridgelessReactInstance->getBufferedRuntimeExecutor();
               timerManager->setRuntimeExecutor(bufferedRuntimeExecutor);
@@ -687,6 +549,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
 
             facebook::react::ReactInstance::JSRuntimeFlags options;
+
             m_bridgelessReactInstance->initializeRuntime(
                 options,
                 [=, onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext](
@@ -740,7 +603,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
             LoadJSBundlesBridgeless(devSettings);
             SetupHMRClient();
-
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
             OnErrorWithMessage("ReactInstanceWin: Failed to create React Instance.");
@@ -755,7 +617,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
     }
   });
 }
-#endif
 
 void ReactInstanceWin::FireInstanceCreatedCallback() noexcept {
   // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
@@ -767,158 +628,6 @@ void ReactInstanceWin::FireInstanceCreatedCallback() noexcept {
           onCreated.Get()->Invoke(reactContext);
         }
       });
-}
-
-void ReactInstanceWin::InitializeWithBridge() noexcept {
-  InitJSMessageThread();
-  InitNativeMessageThread();
-
-  InitUIQueue();
-  InitUIMessageThread();
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  // InitUIManager uses m_legacyReactInstance
-  InitUIManager();
-#endif
-
-  InitDevMenu();
-#ifdef USE_FABRIC
-  winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Install(
-      ReactPropertyBag(m_reactContext->Properties()), m_options.UriImageManager);
-#endif
-
-  m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
-    // Objects that must be created on the UI thread
-    if (auto strongThis = weakThis.GetStrongPtr()) {
-      InitUIDependentCalls();
-      strongThis->Queue().Post([this, weakThis]() noexcept {
-        if (auto strongThis = weakThis.GetStrongPtr()) {
-          auto devSettings = strongThis->CreateDevSettings();
-
-          auto getBoolProperty = [properties = ReactPropertyBag{m_options.Properties}](
-                                     const wchar_t *ns, const wchar_t *name, bool defaultValue) noexcept -> bool {
-            ReactPropertyId<bool> propId{ns == nullptr ? ReactPropertyNamespace() : ReactPropertyNamespace(ns), name};
-            std::optional<bool> propValue = properties.Get(propId);
-            return propValue.value_or(defaultValue);
-          };
-
-          devSettings->useWebSocketTurboModule = getBoolProperty(nullptr, L"UseWebSocketTurboModule", false);
-
-          std::vector<facebook::react::NativeModuleDescription> cxxModules;
-          auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
-
-          LoadModules(devSettings, nmp, m_options.TurboModuleProvider);
-
-          auto modules = nmp->GetModules(m_reactContext, m_jsMessageThread.Load());
-          cxxModules.insert(
-              cxxModules.end(), std::make_move_iterator(modules.begin()), std::make_move_iterator(modules.end()));
-
-          if (m_options.ModuleProvider != nullptr) {
-            std::vector<facebook::react::NativeModuleDescription> customCxxModules =
-                m_options.ModuleProvider->GetModules(m_reactContext, m_jsMessageThread.Load());
-            cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
-          }
-
-          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
-
-          if (const auto jsExecutorFactoryDelegate =
-                  Microsoft::JSI::JSExecutorFactorySettings::GetJSExecutorFactoryDelegate(
-                      winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties))) {
-            devSettings->jsExecutorFactoryDelegate = jsExecutorFactoryDelegate;
-            if (m_options.JsiEngine() == JSIEngine::Hermes) {
-              devSettings->jsiEngineOverride = facebook::react::JSIEngineOverride::Hermes;
-            }
-          } else {
-            switch (m_options.JsiEngine()) {
-              case JSIEngine::Hermes: {
-                preparedScriptStore = CreatePreparedScriptStore();
-
-                auto hermesRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
-                    devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore));
-                Microsoft::ReactNative::HermesRuntimeHolder::storeTo(
-                    ReactPropertyBag(m_reactContext->Properties()), hermesRuntimeHolder);
-                devSettings->jsiRuntimeHolder = hermesRuntimeHolder;
-                break;
-              }
-              case JSIEngine::V8:
-#if defined(USE_V8)
-              {
-                preparedScriptStore = CreatePreparedScriptStore();
-                bool enableMultiThreadSupport{false};
-#ifdef USE_FABRIC
-                enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
-#endif // USE_FABRIC
-
-                if (m_options.JsiEngineV8NodeApi()) {
-                  devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
-                      devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
-                } else {
-                  devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                      devSettings,
-                      m_jsMessageThread.Load(),
-                      std::move(scriptStore),
-                      std::move(preparedScriptStore),
-                      enableMultiThreadSupport);
-                }
-
-                break;
-              }
-#endif // USE_V8
-              case JSIEngine::Chakra:
-#ifndef CORE_ABI
-                if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
-                  scriptStore = std::make_unique<Microsoft::ReactNative::UwpScriptStore>();
-                  preparedScriptStore = std::make_unique<Microsoft::ReactNative::UwpPreparedScriptStore>(
-                      winrt::to_hstring(m_options.ByteCodeFileUri));
-                }
-#endif
-                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
-                    devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-                break;
-            }
-          }
-
-          m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
-
-          try {
-            // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
-            m_options.TurboModuleProvider->SetReactContext(
-                winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
-
-            auto bundleRootPath = devSettings->bundleRootPath;
-            auto jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
-            auto instanceWrapper = facebook::react::CreateReactInstance(
-                std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
-                std::move(bundleRootPath), // bundleRootPath
-                std::move(cxxModules),
-                m_options.TurboModuleProvider,
-                m_options.TurboModuleProvider->LongLivedObjectCollection(),
-                m_reactContext->Properties(),
-                std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
-                m_jsMessageThread.Load(),
-                m_nativeMessageThread.Load(),
-                std::move(devSettings));
-
-            m_instanceWrapper.Exchange(std::move(instanceWrapper));
-
-            FireInstanceCreatedCallback();
-            LoadJSBundles();
-            SetupHMRClient();
-
-          } catch (std::exception &e) {
-            OnErrorWithMessage(e.what());
-            OnErrorWithMessage("UwpReactInstance: Failed to create React Instance.");
-          } catch (winrt::hresult_error const &e) {
-            OnErrorWithMessage(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()));
-            OnErrorWithMessage("UwpReactInstance: Failed to create React Instance.");
-          } catch (...) {
-            OnErrorWithMessage("UwpReactInstance: Failed to create React Instance.");
-          }
-        }
-      });
-    };
-  });
 }
 
 void ReactInstanceWin::SetupHMRClient() noexcept {
@@ -935,65 +644,6 @@ void ReactInstanceWin::SetupHMRClient() noexcept {
   }
 }
 
-void ReactInstanceWin::LoadJSBundles() noexcept {
-  //
-  // We use m_jsMessageThread to load JS bundles synchronously. In that case we only load
-  // them if the m_jsMessageThread is not shut down (quitSynchronous() is not called).
-  // After the load we call OnReactInstanceLoaded callback on native queue.
-  //
-  // Note that the instance could be destroyed while we are loading JS Bundles.
-  // Though, the JS engine is not destroyed until this work item is not finished.
-  // Thus, we check the m_isDestroyed flag to see if we should do an early exit.
-  // Also, since we have to guarantee that the OnReactInstanceLoaded callback is called before
-  // the OnReactInstanceDestroyed callback, the OnReactInstanceLoaded is called right before the
-  // OnReactInstanceDestroyed callback in the Destroy() method. In that case any OnReactInstanceLoaded
-  // calls after we finish this JS message queue work item is ignored.
-  //
-  // The LoadedCallbackGuard is used for the case when runOnQueue does not execute the lambda
-  // before destroying it. It may happen if the m_jsMessageThread is already shutdown.
-  // In that case, the LoadedCallbackGuard notifies about cancellation by calling OnReactInstanceLoaded.
-  // The OnReactInstanceLoaded internally only accepts the first call and ignores others.
-  //
-
-  if (m_useWebDebugger || m_isFastReloadEnabled) {
-    // Getting bundle from the packager, so do everything async.
-    auto instanceWrapper = m_instanceWrapper.LoadWithLock();
-    instanceWrapper->loadBundle(Mso::Copy(JavaScriptBundleFile()));
-
-    m_jsMessageThread.Load()->runOnQueue(
-        [weakThis = Mso::WeakPtr{this},
-         loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})]() noexcept {
-          if (auto strongThis = weakThis.GetStrongPtr()) {
-            if (strongThis->State() != ReactInstanceState::HasError) {
-              strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
-            }
-          }
-        });
-  } else {
-    m_jsMessageThread.Load()->runOnQueue(
-        [weakThis = Mso::WeakPtr{this},
-         loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})]() noexcept {
-          if (auto strongThis = weakThis.GetStrongPtr()) {
-            auto instance = strongThis->m_instance.LoadWithLock();
-            auto instanceWrapper = strongThis->m_instanceWrapper.LoadWithLock();
-            if (!instance || !instanceWrapper) {
-              return;
-            }
-
-            try {
-              instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
-              if (strongThis->State() != ReactInstanceState::HasError) {
-                strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
-              }
-            } catch (...) {
-              strongThis->OnReactInstanceLoaded(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
-            }
-          }
-        });
-  }
-}
-
-#ifdef USE_FABRIC
 void ReactInstanceWin::LoadJSBundlesBridgeless(std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept {
   if (m_isFastReloadEnabled) {
     // Getting bundle from the packager, so do everything async.
@@ -1034,7 +684,6 @@ void ReactInstanceWin::LoadJSBundlesBridgeless(std::shared_ptr<facebook::react::
         });
   }
 }
-#endif
 
 void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) noexcept {
   bool isLoadedExpected = false;
@@ -1063,25 +712,20 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   m_state = ReactInstanceState::Unloaded;
   AbandonJSCallQueue();
 
-  // Make sure that the instance is not destroyed yet
-  if (auto instance = m_instance.Exchange(nullptr)) {
-    {
-      // Release the JSI runtime
-      std::scoped_lock lock{m_mutex};
-      m_jsiRuntimeHolder = nullptr;
-      m_jsiRuntime = nullptr;
-    }
-    // Release the message queues before the ui manager and instance.
-    m_nativeMessageThread.Exchange(nullptr);
-    m_jsMessageThread.Exchange(nullptr);
-    m_instanceWrapper.Exchange(nullptr);
-    m_jsDispatchQueue.Exchange(nullptr);
-  }
-
-#ifdef USE_FABRIC
   if (m_bridgelessReactInstance) {
     if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
       jsMessageThread->runOnQueueSync([&]() noexcept {
+        // Unregister from inspector BEFORE shutting down JS thread
+        if (m_bridgelessReactInstance && m_options.InspectorHostTarget) {
+          Mso::React::MessageDispatchQueue messageDispatchQueue{
+              ::Microsoft::ReactNative::ReactInspectorThread::Instance(), nullptr};
+          messageDispatchQueue.runOnQueueSync(
+              [weakBridgelessReactInstance = std::weak_ptr(m_bridgelessReactInstance)]() {
+                if (auto bridgelessReactInstance = weakBridgelessReactInstance.lock()) {
+                  bridgelessReactInstance->unregisterFromInspector();
+                }
+              });
+        }
         {
           // Release the JSI runtime
           std::scoped_lock lock{m_mutex};
@@ -1095,7 +739,6 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
       });
     }
   }
-#endif
 
   return m_whenDestroyedResult;
 }
@@ -1108,88 +751,10 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
   return m_state;
 }
 
-void ReactInstanceWin::InitJSMessageThread() noexcept {
-  m_instance.Exchange(std::make_shared<facebook::react::Instance>());
-
-  auto callInvoker = m_instance.Load()->getJSCallInvoker();
-  auto scheduler = Mso::MakeJSCallInvokerScheduler(
-      CreateDispatchQueueSettings(m_reactContext->Notifications()),
-      std::shared_ptr<facebook::react::CallInvoker>(callInvoker),
-      Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
-      Mso::Copy(m_whenDestroyed));
-  auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
-
-  winrt::Microsoft::ReactNative::implementation::CallInvoker::SetProperties(
-      ReactPropertyBag(m_options.Properties),
-      winrt::make<winrt::Microsoft::ReactNative::implementation::CallInvoker>(
-          *m_reactContext, std::shared_ptr<facebook::react::CallInvoker>(callInvoker)));
-
-  auto jsDispatcher =
-      winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
-  m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
-
-  m_jsMessageThread.Exchange(qi_cast<Mso::IJSCallInvokerQueueScheduler>(scheduler.Get())->GetMessageQueue());
-  m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
-}
-
-void ReactInstanceWin::InitNativeMessageThread() noexcept {
-  // Native queue was already given us in constructor.
-  m_nativeMessageThread.Exchange(
-      std::make_shared<MessageDispatchQueue>(Queue(), Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
-}
-
 void ReactInstanceWin::InitUIQueue() noexcept {
   m_uiQueue = winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatchQueue2(m_options.Properties);
   VerifyElseCrashSz(m_uiQueue, "No UI Dispatcher provided");
 }
-
-void ReactInstanceWin::InitUIMessageThread() noexcept {
-  m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
-      *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
-
-  auto batchingUIThread = Microsoft::ReactNative::MakeBatchingQueueThread(m_uiMessageThread.Load());
-  m_batchingUIThread = batchingUIThread;
-
-  ReactPropertyBag(m_reactContext->Properties())
-      .Set(
-          winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueueProperty(),
-          [wkBatchingUIThread = std::weak_ptr<facebook::react::BatchingMessageQueueThread>(batchingUIThread)](
-              winrt::Microsoft::ReactNative::ReactDispatcherCallback const &callback) {
-            if (auto batchingUIThread = wkBatchingUIThread.lock()) {
-              batchingUIThread->runOnQueue(callback);
-            }
-          });
-
-  m_jsDispatchQueue.Load().Post(
-      [batchingUIThread, instance = std::weak_ptr<facebook::react::Instance>(m_instance.Load())]() noexcept {
-        batchingUIThread->decoratedNativeCallInvokerReady(instance);
-      });
-}
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-void ReactInstanceWin::InitUIManager() noexcept {
-  std::vector<std::unique_ptr<Microsoft::ReactNative::IViewManager>> viewManagers;
-
-  // Custom view managers
-  if (m_options.ViewManagerProvider) {
-    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext);
-  }
-
-  Microsoft::ReactNative::AddStandardViewManagers(viewManagers, *m_reactContext);
-
-  auto uiManagerSettings = std::make_unique<Microsoft::ReactNative::UIManagerSettings>(
-      m_batchingUIThread, m_uiMessageThread.Load(), std::move(viewManagers));
-  Microsoft::ReactNative::UIManager::SetSettings(m_reactContext->Properties(), std::move(uiManagerSettings));
-
-  m_reactContext->Properties().Set(
-      implementation::XamlUIService::XamlUIServiceProperty().Handle(),
-      winrt::make<implementation::XamlUIService>(m_reactContext));
-
-  m_reactContext->Properties().Set(
-      implementation::LayoutService::LayoutServiceProperty().Handle(),
-      winrt::make<implementation::LayoutService>(m_reactContext));
-}
-#endif
 
 facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexcept {
   if (m_options.OnLogging) {
@@ -1254,7 +819,6 @@ std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
 
 std::string ReactInstanceWin::GetBytecodeFileName() noexcept {
   // use bytecode caching if enabled and not debugging
-  // (ChakraCore debugging does not work when bytecode caching is enabled)
   // TODO: implement
   // bool useByteCode = Mso::React::BytecodeOptimizationEnabled() && !m_options.DeveloperSettings.UseDirectDebugger;
   // return useByteCode ? Mso::React::GetBytecodeFilePath(m_options.Identity) : "";
@@ -1285,7 +849,6 @@ void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   m_updateUI();
 }
 
-#ifdef USE_FABRIC
 void ReactInstanceWin::OnJSError(
     facebook::jsi::Runtime &runtime,
     const facebook::react::JsErrorHandler::ProcessedError &error) noexcept {
@@ -1314,20 +877,11 @@ void ReactInstanceWin::OnJSError(
 
   m_updateUI();
 }
-#endif
 
 void ReactInstanceWin::OnLiveReload() noexcept {
   if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
     reactHost->ReloadInstance();
   }
-}
-
-std::function<void()> ReactInstanceWin::GetWaitingForDebuggerCallback() noexcept {
-  if (m_useWebDebugger) {
-    return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnWaitingForDebugger);
-  }
-
-  return {};
 }
 
 void ReactInstanceWin::OnWaitingForDebugger() noexcept {
@@ -1339,14 +893,6 @@ void ReactInstanceWin::OnWaitingForDebugger() noexcept {
   }
 
   m_updateUI();
-}
-
-std::function<void()> ReactInstanceWin::GetDebuggerAttachCallback() noexcept {
-  if (m_useWebDebugger) {
-    return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnDebuggerAttach);
-  }
-
-  return {};
 }
 
 void ReactInstanceWin::OnDebuggerAttach() noexcept {
@@ -1367,13 +913,8 @@ void ReactInstanceWin::DrainJSCallQueue() noexcept {
       }
     }
 
-#ifdef USE_FABRIC
     if (m_bridgelessReactInstance) {
       m_bridgelessReactInstance->callFunctionOnModule(entry.ModuleName, entry.MethodName, std::move(entry.Args));
-    } else
-#endif
-        if (auto instance = m_instance.LoadWithLock()) {
-      instance->callJSFunction(std::move(entry.ModuleName), std::move(entry.MethodName), std::move(entry.Args));
     }
   }
 }
@@ -1406,13 +947,8 @@ void ReactInstanceWin::CallJsFunction(
   }
 
   if (shouldCall) {
-#ifdef USE_FABRIC
     if (m_bridgelessReactInstance) {
       m_bridgelessReactInstance->callFunctionOnModule(moduleName, method, std::move(params));
-    } else
-#endif
-        if (auto instance = m_instance.LoadWithLock()) {
-      instance->callJSFunction(std::move(moduleName), std::move(method), std::move(params));
     }
   }
 }
@@ -1447,72 +983,8 @@ winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcep
   }
 }
 
-std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {
-  return m_instance.LoadWithLock();
-}
-
 bool ReactInstanceWin::IsLoaded() const noexcept {
   return m_state == ReactInstanceState::Loaded;
-}
-
-void ReactInstanceWin::AttachMeasuredRootView(
-    facebook::react::IReactRootView *rootView,
-    const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
-    bool useFabric) noexcept {
-  if (State() == ReactInstanceState::HasError)
-    return;
-
-  assert(!useFabric);
-#ifndef CORE_ABI
-  if (!useFabric || m_useWebDebugger) {
-    int64_t rootTag = -1;
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-    if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {
-      rootTag = uiManager->AddMeasuredRootView(rootView);
-      rootView->SetTag(rootTag);
-    } else {
-      assert(false);
-    }
-#endif
-
-    std::string jsMainModuleName = rootView->JSComponentName();
-    folly::dynamic params = folly::dynamic::array(
-        std::move(jsMainModuleName),
-        folly::dynamic::object("initialProps", DynamicWriter::ToDynamic(initialProps))("rootTag", rootTag)(
-            "fabric", false));
-    CallJsFunction("AppRegistry", "runApplication", std::move(params));
-  }
-#endif
-}
-
-void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept {
-  if (State() == ReactInstanceState::HasError)
-    return;
-
-  auto rootTag = rootView->GetTag();
-  folly::dynamic params = folly::dynamic::array(rootTag);
-
-#ifdef USE_FABRIC
-  if (useFabric && !m_useWebDebugger) {
-    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
-    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
-  } else
-#endif
-  {
-    CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
-  }
-
-  // QUIRK: Legacy sync behavior can be re-enabled via EnableSyncDetachRootView option
-  // The sync call was removed to prevent deadlocks with Hermes GC operations
-  bool useSyncCall = winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRunOnQueueSync(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
-  if (useSyncCall) {
-    // Legacy behavior: wait for JS thread to finish executing (can cause deadlocks)
-    m_jsMessageThread.Load()->runOnQueueSync([]() {});
-  }
-  // Default behavior: no synchronization call to prevent deadlocks
 }
 
 Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
@@ -1523,10 +995,6 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
     Mso::VoidFunctor &&updateUI) noexcept {
   return Mso::Make<ReactInstanceWin, IReactInstanceInternal>(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
-}
-
-bool ReactInstanceWin::UseWebDebugger() const noexcept {
-  return m_useWebDebugger;
 }
 
 bool ReactInstanceWin::UseFastRefresh() const noexcept {

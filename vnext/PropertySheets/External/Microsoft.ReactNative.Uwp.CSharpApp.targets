@@ -25,7 +25,7 @@
     <!-- WinUI package name and version are set by WinUI.props -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
     <!-- Hermes version is set by JSEngine.props -->
-    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" Condition="$(UseHermes)" />
+    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
   </ItemGroup>
 
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets"
