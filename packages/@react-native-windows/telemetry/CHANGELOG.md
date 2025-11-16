@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Wed, 12 Nov 2025 21:00:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 16 Nov 2025 06:36:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.128
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.127
 

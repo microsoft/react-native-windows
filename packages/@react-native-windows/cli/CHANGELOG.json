@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 16 Nov 2025 06:36:28 GMT",
+      "version": "0.0.0-canary.280",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.280",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "986e1d7dba9c19745688269765e65ca800a84dc6",
+            "comment": "Remove chakra support and more legacy instance code"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.128",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Nov 2025 21:00:41 GMT",
       "version": "0.0.0-canary.279",
       "tag": "@react-native-windows/cli_v0.0.0-canary.279",

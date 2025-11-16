@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove chakra support and more legacy instance code",
-  "packageName": "@react-native-windows/cli",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
