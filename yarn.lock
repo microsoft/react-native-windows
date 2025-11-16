@@ -2317,12 +2317,12 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-2.1.2.tgz#0b6e2d64ff5ab1537d304bbf6bcf23ec1a862b71"
-  integrity sha512-Z4yDq5fQegnUne9QWuZI0nXoYJp+CzuFKLr1pWEBh8WkFjuxHQ/GQa6CdjnpS6S65Qg5m/84WKuZkgZToIc+Pg==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-2.2.0.tgz#8867daad76f1bd32eb89a25402b7a77a24731449"
+  integrity sha512-L3MceV9dC0f/cZhbCWPcfJaQVslFK0IlllgHym6mZS2BKQmYkxomUiKD/lqRS6W88qoV8SarGEDRQgqwYryu1g==
   dependencies:
     "@rnx-kit/tools-node" "^3.0.0"
-    "@rnx-kit/tools-react-native" "^2.0.0"
+    "@rnx-kit/tools-react-native" "^2.3.1"
     "@rnx-kit/tools-workspaces" "^0.2.0"
 
 "@rnx-kit/metro-plugin-cyclic-dependencies-detector@^1.1.1":
@@ -2431,10 +2431,10 @@
   dependencies:
     "@rnx-kit/tools-node" "^2.0.1"
 
-"@rnx-kit/tools-react-native@^2.0.0", "@rnx-kit/tools-react-native@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-2.3.0.tgz#4425d39bf697952b31efa5382b01d49df483a8e8"
-  integrity sha512-qzViF0WR6UAWxa11bajNWUACfSOPBBKEaX4jUfDtk5gAzJohgSms6vyhQQM+nbQMm+Ec93ey6dA8DzIoVbcX3A==
+"@rnx-kit/tools-react-native@^2.3.0", "@rnx-kit/tools-react-native@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-2.3.1.tgz#f6b03fae7ccf5dbe5066d7eea6af2189d914abe7"
+  integrity sha512-6XVhP6W0C9xyjDeyhMC0/bmlgk8rAfrFGEafupn36q1dOzhcN3uXVQaLVFhYW6dF29NafakKg9gzfUeRTOz7bg==
   dependencies:
     "@rnx-kit/tools-node" "^3.0.0"
 
