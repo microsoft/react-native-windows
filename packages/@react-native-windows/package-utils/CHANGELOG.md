@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 16:41:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.1
+
+Mon, 17 Nov 2025 16:41:30 GMT
+
+### Changes
+
+- Promote 0.81 to preview (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.81.0-preview.1
+- Bump @react-native-windows/fs to v0.81.0-preview.1
 
 ## 0.0.0-canary.94
 

@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 30 Oct 2025 05:29:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 16:41:31 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.1
+
+Mon, 17 Nov 2025 16:41:31 GMT
+
+### Changes
+
+- Promote 0.81 to preview (66076509+vineethkuttan@users.noreply.github.com)
+- Disable the deep import warning (30809111+acoates-ms@users.noreply.github.com)
+- Use Hermes version 0.0.0-2511.7001-d7ca19b3 (vmorozov@microsoft.com)
+- Added support for modern inspector (vmorozov@microsoft.com)
+- Use hermes-windows version 0.0.0-2511.3001-9e4cf518 (vmorozov@microsoft.com)
+- Realign View.js with upstream (30809111+acoates-ms@users.noreply.github.com)
+- Fix init-windows template to automatically detect existing codegen spec files (198982749+Copilot@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.81.0-preview.1
+- Bump @react-native-windows/codegen to v0.81.0-preview.1
 
 ## 0.0.0-canary.1003
 

@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 16:41:30 GMT",
+      "version": "0.81.0-preview.1",
+      "tag": "@react-native-windows/find-repo-root_v0.81.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "425ba5cd4e4882d1d3a8a242a943b7aefaccd066",
+            "comment": "Promote 0.81 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.81.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Oct 2025 05:27:28 GMT",
       "version": "0.0.0-canary.97",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.97",

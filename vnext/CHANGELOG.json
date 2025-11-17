@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 16:41:31 GMT",
+      "version": "0.81.0-preview.1",
+      "tag": "react-native-windows_v0.81.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "425ba5cd4e4882d1d3a8a242a943b7aefaccd066",
+            "comment": "Promote 0.81 to preview"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e23caae6662f86e9a14722001d0b6dbbed3c7229",
+            "comment": "Disable the deep import warning"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c90943314678ce91d624ceba523e50f8d35a5ea5",
+            "comment": "Use Hermes version 0.0.0-2511.7001-d7ca19b3"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c90943314678ce91d624ceba523e50f8d35a5ea5",
+            "comment": "Added support for modern inspector"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c90943314678ce91d624ceba523e50f8d35a5ea5",
+            "comment": "Use hermes-windows version 0.0.0-2511.3001-9e4cf518"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fdd2337c0fc985146bdaf1631a0690b94210de71",
+            "comment": "Realign View.js with upstream"
+          },
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3340bda33bf6c019de927a68bc9df278025b260d",
+            "comment": "Fix init-windows template to automatically detect existing codegen spec files"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.81.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Nov 2025 06:32:19 GMT",
       "version": "0.0.0-canary.1003",
       "tag": "react-native-windows_v0.0.0-canary.1003",
