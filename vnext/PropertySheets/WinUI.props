@@ -7,10 +7,10 @@
       For local testing of internal versions, modify WinUI3ExperimentalVersion, and comment out the additional nuget source in NuGet.Config
       When this version is updated, be sure to update the default for the enableInternalFeed parameter of /.ado/templates/enable-experimental-winui3.yml and the minimum version of WebView in WebView2.props
     -->
-    <WinUI3ExperimentalVersion Condition="'$(WinUI3ExperimentalVersion)'==''">1.7.250127003-experimental3</WinUI3ExperimentalVersion>
+    <WinUI3ExperimentalVersion Condition="'$(WinUI3ExperimentalVersion)'==''">1.8.251106002</WinUI3ExperimentalVersion>
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/cli/.../autolinkWindows.ts -->
     <WinUI3Version Condition="'$(WinUI3Version)'=='' AND '$(UseExperimentalWinUI3)'=='true'">$(WinUI3ExperimentalVersion)</WinUI3Version>
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.7.250401001</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.8.251106002</WinUI3Version>
     <!-- This is needed to prevent build errors with WinAppSDK >= 1.7 trying to double build WindowsAppRuntimeAutoInitializer.cpp -->
     <WindowsAppSdkAutoInitialize Condition="'$(WindowsAppSdkAutoInitialize)'=='' And $([MSBuild]::VersionGreaterThan('$(WinUI3Version)', '1.7.0'))">false</WindowsAppSdkAutoInitialize>
   </PropertyGroup>
