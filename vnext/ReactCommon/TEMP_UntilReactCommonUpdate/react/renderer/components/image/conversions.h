@@ -164,7 +164,9 @@ inline std::string toString(const ImageResizeMode &value)
     case ImageResizeMode::None:
       return "none";
   }
+  // [Windows Remove when issue #15379 is resolved (the fix goes upstream and comes back)
   return "unknown";
+  // Windows]
 }
 
 } // namespace facebook::react
