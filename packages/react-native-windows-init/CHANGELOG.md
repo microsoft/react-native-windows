@@ -1,8 +1,18 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Wed, 12 Nov 2025 21:00:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 16 Nov 2025 06:36:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.84
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Patches
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.128
+- Bump @react-native-windows/cli to v0.0.0-canary.280
 
 ## 1.4.83
 

@@ -66,5 +66,3 @@ component hierarchy for both the Paper and Composition UI stacks.
   forward requests through a Windows HTTP helper (similar to `GetJavaScriptFromServerAsync`) and
   stream results back via the provided `NetworkRequestListener`. Until this happens, the Network tab
   in DevTools stays empty.
-- **Legacy Chakra runtime** – Modern inspector support currently targets Hermes. Chakra-based apps
-  continue to rely on legacy debugging flows.

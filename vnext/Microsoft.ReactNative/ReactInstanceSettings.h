@@ -187,14 +187,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t m_sourceBundlePort{0};
   bool m_requestInlineSourceMap{true};
   LogHandler m_nativeLogger{nullptr};
-
-#if USE_HERMES
   JSIEngine m_jSIEngineOverride{JSIEngine::Hermes};
-#elif USE_V8
-  JSIEngine m_jSIEngineOverride{JSIEngine::V8};
-#else
-  JSIEngine m_jSIEngineOverride{JSIEngine::Chakra};
-#endif
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

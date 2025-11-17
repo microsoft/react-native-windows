@@ -181,7 +181,6 @@ jobs:
                   additionalInitArguments: ${{ matrix.additionalInitArguments }}
                   additionalRunArguments: ${{ matrix.additionalRunArguments }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
-                  useChakra: ${{ coalesce(matrix.useChakra, false) }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
                   useExperimentalWinUI3: ${{ coalesce(matrix.useExperimentalWinUI3, false) }}
                   publishNuGet: ${{ coalesce(matrix.publishNuGet, false) }}

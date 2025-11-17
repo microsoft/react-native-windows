@@ -84,6 +84,8 @@ variables:
     value: microsoft
   - name: ArtifactServices.Symbol.PAT
     value: $(pat-symbols-publish-microsoft)
+  - name: SourceBranchWithFolders
+    value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
 
 trigger: none
 pr: none
@@ -168,18 +170,32 @@ extends:
             displayName: Enable No-Publish (git)
             condition: ${{ parameters.skipGitPush }}
 
+          # Beachball publishes NPM packages to the "$(Pipeline.Workspace)\published-packages" folder.
+          # It pushes NPM version updates to Git depending on the SkipGitPushPublishArgs variable derived from the skipGitPush parameter.
           - script: |
               if exist "$(Pipeline.Workspace)\published-packages" rd /s /q "$(Pipeline.Workspace)\published-packages"
               mkdir "$(Pipeline.Workspace)\published-packages"
-              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(Build.SourceBranchName) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
+              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(SourceBranchWithFolders) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
             displayName: Beachball Publish
 
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
-            displayName: Show packaged npm artifacts
+            displayName: Show created npm packages
 
-          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@9'
-            displayName: 'ESRP Release to npmjs.com'
-            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }})
+          # Beachball usually takes care about the NPM package tagging based on the values in package.json files.
+          # We use the ESRP Release where we must provide the tag explictly (the productstate parameter).
+          # Fortunately, we just use two tags: latest and some custom tag like "canary", "v0.73-stable", etc.
+          # The npmGroupByTag.js script groups the created NPM package by these two tags into the specified folders.
+          - pwsh: |
+              node .ado/scripts/npmGroupByTag.js "$(Pipeline.Workspace)\published-packages" "$(Pipeline.Workspace)\published-packages\custom-tag" "$(Pipeline.Workspace)\published-packages\latest-tag"
+            displayName: Group npm packages by tag
+
+          - script: dir /s "$(Pipeline.Workspace)\published-packages"
+            displayName: Show grouped npm packages by tag
+
+          # Publish NPM packages using ESRP Release task with the custom tag such as "canary", "v0.73-stable", etc.
+          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
+            displayName: 'ESRP Release to npmjs.com (custom tag)'
+            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }}, eq(variables['NpmCustomFolderHasContent'], 'true'))
             inputs:
               connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
               usemanagedidentity: false
@@ -189,12 +205,31 @@ extends:
               clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
               domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
               contenttype: npm
-              folderlocation: '$(Pipeline.Workspace)\published-packages'
+              folderlocation: '$(NpmCustomFolder)'
+              productstate: '$(NpmCustomTag)'
+              owners: 'vmorozov@microsoft.com'
+              approvers: 'khosany@microsoft.com'
+
+          # Publish NPM packages using ESRP Release task with the "latest" tag.
+          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
+            displayName: 'ESRP Release to npmjs.com (latest)'
+            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }}, eq(variables['NpmLatestFolderHasContent'], 'true'))
+            inputs:
+              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+              usemanagedidentity: false
+              keyvaultname: 'OGX-JSHost-KV'
+              authcertname: 'OGX-JSHost-Auth4'
+              signcertname: 'OGX-JSHost-Sign3'
+              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+              contenttype: npm
+              folderlocation: '$(NpmLatestFolder)'
+              productstate: 'latest'
               owners: 'vmorozov@microsoft.com'
               approvers: 'khosany@microsoft.com'
 
           # Beachball reverts to local state after publish, but we want the updates it added
-          - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
+          - script: git pull origin $(SourceBranchWithFolders)
             displayName: git pull
 
           - script: npx @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
@@ -328,8 +363,6 @@ extends:
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
                   Microsoft.ReactNative\**
-                  Microsoft.ReactNative.Managed\**
-                  Microsoft.ReactNative.Managed.CodeGen\**
                   Microsoft.ReactNative.CsWinRT\**
 
             - template: .ado/templates/component-governance.yml@self
@@ -391,8 +424,6 @@ extends:
               npmVersion: $(npmVersion)
               packMicrosoftReactNative: true
               packMicrosoftReactNativeCxx: true
-              packMicrosoftReactNativeManaged: true
-              packMicrosoftReactNativeManagedCodeGen: true
               ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
                 signMicrosoft: true
               slices:
@@ -402,12 +433,6 @@ extends:
                   configuration: Release
                 - platform: ARM64
                   configuration: Release
-                - platform: x64
-                  configuration: Debug
-                - platform: x86
-                  configuration: Debug
-                - platform: ARM64
-                  configuration: Debug
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
             parameters:

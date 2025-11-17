@@ -60,18 +60,14 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.UseDirectDebugger property value "
       "at the time when the React instance was created.\n"
-      "Enables debugging in the JavaScript engine (if supported).\n"
-      "For Chakra this enables debugging of the JS runtime directly within the app using "
-      "Visual Studio -> Attach to process (Script)")
+      "Enables debugging in the JavaScript engine (if supported).")
     Boolean UseDirectDebugger { get; };
 
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.DebuggerBreakOnNextLine property value "
       "at the time when the React instance was created.\n"
       "For direct debugging, controls whether to break on the next line of JavaScript that is executed.\n"
-      "This can help debug issues hit early in the JavaScript bundle load.\n"
-      "***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine. "
-      "As a workaround you could add the `debugger` keyword in the beginning of the bundle.***")
+      "This can help debug issues hit early in the JavaScript bundle load.")
     Boolean DebuggerBreakOnNextLine { get; };
 
     DOC_STRING(

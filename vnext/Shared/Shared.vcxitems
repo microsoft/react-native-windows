@@ -147,7 +147,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
@@ -158,9 +157,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraJsiRuntime_edgemode.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -325,10 +321,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
@@ -361,7 +353,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BatchingMessageQueueThread.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CxxMessageQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DevServerHelper.h" />

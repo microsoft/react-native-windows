@@ -68,7 +68,6 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared" />
-  <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
   <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
   <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
@@ -143,12 +142,11 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;Dwmapi.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winsqlite3.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;Dwmapi.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>
         api-ms-win-core-file-l1-2-0.dll;
         api-ms-win-core-windowserrorreporting-l1-1-0.dll;
         ext-ms-win-uiacore-l1-1-1.dll;
-        chakra.dll;
         %(DelayLoadDLLs)
       </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>

@@ -8,6 +8,7 @@
 #include <Threading/MessageDispatchQueue.h>
 #include <crash/verifyElseCrash.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include "HermesRuntimeHolder.h"
 #include "ReactHost/MsoUtils.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -486,13 +487,13 @@ facebook::jsi::JSError const &jsError) {                             \
   return it.first->second.get();
 }
 
-ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
+ReactNative::JsiRuntime JsiRuntime::MakeRuntime() {
   auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
   auto jsThread = std::make_shared<Mso::React::MessageDispatchQueue>(jsDispatchQueue, nullptr, nullptr);
   auto devSettings = std::make_shared<facebook::react::DevSettings>();
 
-  auto runtimeHolder = std::make_shared<::Microsoft::JSI::ChakraRuntimeHolder>(
-      std::move(devSettings), std::move(jsThread), nullptr, nullptr);
+  auto runtimeHolder =
+      std::make_shared<::Microsoft::ReactNative::HermesRuntimeHolder>(devSettings, std::move(jsThread), nullptr);
   auto runtime = runtimeHolder->getRuntime();
   return Create(runtimeHolder, runtime);
 }

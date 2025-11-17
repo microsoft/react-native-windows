@@ -7,9 +7,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -55,17 +52,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraJsiRuntime_edgemode.cpp">
-      <Filter>Source Files\JSI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactorySettings.cpp">
       <Filter>Source Files\JSI</Filter>
@@ -491,9 +479,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -573,18 +558,6 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h">

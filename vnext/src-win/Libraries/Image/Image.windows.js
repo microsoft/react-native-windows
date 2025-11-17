@@ -184,67 +184,29 @@ let BaseImage: AbstractImageIOS = ({
 
   const actualRef = useWrapRefWithImageAttachedCallbacks(forwardedRef);
 
-  // [Windows - Paper doesn't support Views in Text while Fabric does
-  if (global.RN$Bridgeless !== true) {
-    return (
-      // [Windows
-      <TextAncestor.Consumer>
-        {hasTextAncestor => {
-          invariant(
-            !hasTextAncestor,
-            'Nesting of <Image> within <Text> is not currently supported.',
-          );
-          // windows]
-          return (
-            <ImageAnalyticsTagContext.Consumer>
-              {analyticTag => (
-                <ImageViewNativeComponent
-                  accessibilityState={_accessibilityState}
-                  {...restProps}
-                  accessible={props.alt !== undefined ? true : props.accessible}
-                  accessibilityLabel={accessibilityLabel ?? props.alt}
-                  accessibilityLevel={accessibilityLevel} // Windows
-                  accessibilityPosInSet={accessibilityPosInSet} // Windows
-                  accessibilitySetSize={accessibilitySetSize} // Windows
-                  ref={actualRef}
-                  style={style}
-                  resizeMode={resizeMode}
-                  tintColor={tintColor}
-                  source={sources}
-                  internal_analyticTag={analyticTag}
-                />
-              )}
-            </ImageAnalyticsTagContext.Consumer>
-          );
-        }}
-      </TextAncestor.Consumer>
-    );
-  } else {
-    return (
-      <ImageAnalyticsTagContext.Consumer>
-        {analyticTag => {
-          return (
-            <ImageViewNativeComponent
-              accessibilityState={_accessibilityState}
-              {...restProps}
-              accessible={props.alt !== undefined ? true : props.accessible}
-              accessibilityLabel={accessibilityLabel ?? props.alt}
-              accessibilityLevel={accessibilityLevel} // Windows
-              accessibilityPosInSet={accessibilityPosInSet} // Windows
-              accessibilitySetSize={accessibilitySetSize} // Windows
-              ref={actualRef}
-              style={style}
-              resizeMode={resizeMode}
-              tintColor={tintColor}
-              source={sources}
-              internal_analyticTag={analyticTag}
-            />
-          );
-        }}
-      </ImageAnalyticsTagContext.Consumer>
-    );
-    // Windows]
-  }
+  return (
+    <ImageAnalyticsTagContext.Consumer>
+      {analyticTag => {
+        return (
+          <ImageViewNativeComponent
+            accessibilityState={_accessibilityState}
+            {...restProps}
+            accessible={props.alt !== undefined ? true : props.accessible}
+            accessibilityLabel={accessibilityLabel ?? props.alt}
+            accessibilityLevel={accessibilityLevel} // Windows
+            accessibilityPosInSet={accessibilityPosInSet} // Windows
+            accessibilitySetSize={accessibilitySetSize} // Windows
+            ref={actualRef}
+            style={style}
+            resizeMode={resizeMode}
+            tintColor={tintColor}
+            source={sources}
+            internal_analyticTag={analyticTag}
+          />
+        );
+      }}
+    </ImageAnalyticsTagContext.Consumer>
+  );
 };
 
 const imageComponentDecorator = unstable_getImageComponentDecorator();
