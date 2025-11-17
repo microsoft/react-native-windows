@@ -285,18 +285,22 @@ class ReactInspectorHostTargetDelegate : public jsinspector_modern::HostTargetDe
   ReactInspectorHostTargetDelegate(Mso::WeakPtr<ReactHost> &&reactHost) noexcept : m_reactHost(std::move(reactHost)) {}
 
   jsinspector_modern::HostTargetMetadata getMetadata() override {
-    jsinspector_modern::HostTargetMetadata metadata;
+    jsinspector_modern::HostTargetMetadata metadata{};
     metadata.integrationName = "React Native Windows (Host)";
     metadata.platform = "windows";
 
     if (Mso::CntPtr<ReactHost> reactHost = m_reactHost.GetStrongPtr()) {
-      auto options = reactHost->Options();
+      const ReactOptions &options = reactHost->Options();
       if (!options.Identity.empty()) {
         std::string identity = options.Identity;
-        size_t lastSlash = identity.find_last_of("\\/");
-        metadata.appDisplayName = (lastSlash != std::string::npos && lastSlash + 1 < identity.length())
-            ? identity.substr(lastSlash + 1)
-            : identity;
+        // Replace illegal characters with underscore
+        for (char &c : identity) {
+          if (c == '\\' || c == '/' || c == ':' || c == '*' || c == '?' || c == '"' || c == '<' || c == '>' ||
+              c == '|') {
+            c = '_';
+          }
+        }
+        metadata.appDisplayName = identity;
       }
     }
 
