@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-<!-- This log was last generated on Wed, 12 Nov 2025 21:00:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.58
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Restore Nuget packages on yarn build (vmorozov@microsoft.com)
 
 ## 2.3.57
 

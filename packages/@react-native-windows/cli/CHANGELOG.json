@@ -2,6 +2,45 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 06:42:06 GMT",
+      "version": "0.0.0-canary.281",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.281",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.128",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.70",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.96",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.129",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.58",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 16 Nov 2025 06:36:28 GMT",
       "version": "0.0.0-canary.280",
       "tag": "@react-native-windows/cli_v0.0.0-canary.280",
