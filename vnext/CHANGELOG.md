@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 13 Nov 2025 14:35:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 16 Nov 2025 06:36:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1006
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.280
 
 ## 0.0.0-canary.1005
 

@@ -51,7 +51,6 @@ enum class LogLevel : int32_t {
 };
 
 enum class JSIEngine : int32_t {
-  Chakra = 0, // Use the JSIExecutorFactory with ChakraRuntime
   Hermes = 1, // Use the JSIExecutorFactory with Hermes
   V8 = 2, // Use the JSIExecutorFactory with V8
 };
@@ -114,7 +113,6 @@ struct IReactContext : IUnknown {
   virtual winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept = 0;
   virtual ReactInstanceState State() const noexcept = 0;
   virtual bool IsLoaded() const noexcept = 0;
-  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
   virtual IReactSettingsSnapshot const &SettingsSnapshot() const noexcept = 0;
 };
 
@@ -230,11 +228,6 @@ struct ReactOptions {
 
   std::string ByteCodeFileUri;
   bool EnableByteCodeCaching{true};
-
-  //! Enable function nativePerformanceNow.
-  //! Method nativePerformanceNow() returns high resolution time info.
-  //! It is not safe to expose to Custom Function. Add this flag so we can turn it off for Custom Function.
-  bool EnableNativePerformanceNow{true};
 
   ReactDevOptions DeveloperSettings = {};
 

@@ -61,7 +61,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void CallJsFunction(std::string &&moduleName, std::string &&method, folly::dynamic &&params) noexcept;
   void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept;
   winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() noexcept;
-  std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept;
   bool IsLoaded() const noexcept;
 
   bool UseFastRefresh() const noexcept;

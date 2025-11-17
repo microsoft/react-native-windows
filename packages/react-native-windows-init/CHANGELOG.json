@@ -2,6 +2,33 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sun, 16 Nov 2025 06:36:28 GMT",
+      "version": "1.4.84",
+      "tag": "react-native-windows-init_v1.4.84",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows-init",
+            "commit": "986e1d7dba9c19745688269765e65ca800a84dc6",
+            "comment": "Remove chakra support and more legacy instance code"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.128",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.280",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Nov 2025 21:00:45 GMT",
       "version": "1.4.83",
       "tag": "react-native-windows-init_v1.4.83",

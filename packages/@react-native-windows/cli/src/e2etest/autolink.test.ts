@@ -253,7 +253,7 @@ test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=fa
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
 
   // Create project with UseWinUI3 == false in ExperimentalFeatures.props
-  await ensureCppAppProject(folder, 'WithWinUI3', false, false, false);
+  await ensureCppAppProject(folder, 'WithWinUI3', false, false);
 
   const rnc = require(path.join(folder, 'react-native.config.js'));
 

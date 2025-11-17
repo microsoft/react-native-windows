@@ -6,7 +6,6 @@
 #include <AppModelHelpers.h>
 #include <CallInvoker.h>
 #include <CppRuntimeOptions.h>
-#include <CreateInstance.h>
 #include <CreateModules.h>
 #include <JSCallInvokerScheduler.h>
 #include <OInstance.h>
@@ -25,7 +24,6 @@
 #include <winrt/Windows.Storage.h>
 #include <tuple>
 #include "BaseScriptStoreImpl.h"
-#include "ChakraRuntimeHolder.h"
 #include "CrashManager.h"
 #include "DevMenu.h"
 #include "DynamicWriter.h"
@@ -306,7 +304,7 @@ void ReactInstanceWin::LoadModules(
       L"PlatformConstants",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
   uint32_t hermesBytecodeVersion = 0;
-#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
+#if defined(ENABLE_DEVSERVER_HBCBUNDLES)
   hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
@@ -821,7 +819,6 @@ std::function<void()> ReactInstanceWin::GetLiveReloadCallback() noexcept {
 
 std::string ReactInstanceWin::GetBytecodeFileName() noexcept {
   // use bytecode caching if enabled and not debugging
-  // (ChakraCore debugging does not work when bytecode caching is enabled)
   // TODO: implement
   // bool useByteCode = Mso::React::BytecodeOptimizationEnabled() && !m_options.DeveloperSettings.UseDirectDebugger;
   // return useByteCode ? Mso::React::GetBytecodeFilePath(m_options.Identity) : "";
@@ -984,10 +981,6 @@ winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcep
 
     return m_jsiRuntime;
   }
-}
-
-std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {
-  return nullptr;
 }
 
 bool ReactInstanceWin::IsLoaded() const noexcept {

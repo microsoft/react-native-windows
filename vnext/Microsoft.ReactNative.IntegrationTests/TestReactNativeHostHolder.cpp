@@ -52,11 +52,7 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
     Options &&options) noexcept {
   m_host = winrt::Microsoft::ReactNative::ReactNativeHost{};
-#ifdef USE_WINUI3
   m_queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
-#else
-  m_queueController = winrt::Windows::System::DispatcherQueueController::CreateOnDedicatedThread();
-#endif
   m_queueController.DispatcherQueue().TryEnqueue([this,
                                                   jsBundle = std::wstring{jsBundle},
                                                   hostInitializer = std::move(hostInitializer),

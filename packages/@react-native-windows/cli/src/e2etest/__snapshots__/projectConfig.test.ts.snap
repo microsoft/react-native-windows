@@ -33,7 +33,7 @@ exports[`projectConfig - SimpleCppApp (Ignore react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "SimpleCppApp",
   "project": {
@@ -60,7 +60,7 @@ exports[`projectConfig - SimpleCppApp (Use react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "SimpleCppApp",
   "project": {
@@ -87,7 +87,7 @@ exports[`projectConfig - WithExperimentalNuget (Ignore react-native.config.js) 1
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "true",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithExperimentalNuget",
   "project": {
@@ -114,7 +114,7 @@ exports[`projectConfig - WithExperimentalNuget (Use react-native.config.js) 1`] 
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "true",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithExperimentalNuget",
   "project": {
@@ -141,7 +141,7 @@ exports[`projectConfig - WithHermes (Ignore react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "true",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithHermes",
   "project": {
@@ -168,7 +168,7 @@ exports[`projectConfig - WithHermes (Use react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "true",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithHermes",
   "project": {
@@ -240,7 +240,7 @@ exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithWinUI3",
   "project": {
@@ -267,7 +267,7 @@ exports[`projectConfig - WithWinUI3 (Use react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithWinUI3",
   "project": {

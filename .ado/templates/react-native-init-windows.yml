@@ -19,9 +19,6 @@ parameters:
   - name: additionalInitArguments
     type: string
     default: ''
-  - name: useChakra
-    type: boolean
-    default: false
   - name: useNuGet
     type: boolean
     default: false
@@ -82,16 +79,6 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
-  - ${{ if eq(parameters.UseChakra, true) }}:
-    - template: set-experimental-feature.yml
-      parameters:
-        ${{ if endsWith(parameters.template, '-lib') }}:
-          workingDir: $(Agent.BuildDirectory)\testcli\example\windows
-        ${{ else }}:
-          workingDir: $(Agent.BuildDirectory)\testcli\windows
-        feature: UseHermes
-        value: false
 
   - ${{ if eq(parameters.useExperimentalWinUI3, true) }}:
     - template: ../templates/enable-experimental-winui3.yml

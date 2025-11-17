@@ -86,7 +86,6 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
-    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
     <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
     <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   </ImportGroup>
@@ -154,7 +153,6 @@
   <ItemGroup>
     <Midl Include="ABI\MessageQueue.idl" />
     <Midl Include="ABI\NativeLogging.idl" />
-    <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="ABI\TestController.idl" />
   </ItemGroup>
   <ItemGroup>
@@ -164,10 +162,6 @@
     </ClCompile>
     <ClCompile Include="ABI\NativeLogEventSource.cpp">
       <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="ABI\NativeTraceEventSource.cpp">
-      <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\TestController.cpp">
@@ -214,9 +208,6 @@
     </ClInclude>
     <ClInclude Include="ABI\NativeLogEventSource.h">
       <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeTraceEventSource.h">
-      <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ABI\TestController.h">
       <DependentUpon>ABI\TestController.idl</DependentUpon>

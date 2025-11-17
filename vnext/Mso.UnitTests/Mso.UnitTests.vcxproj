@@ -10,8 +10,6 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MsoUnitTests</RootNamespace>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
-    <!-- Ensure we have a valid lock files for all configurations -->
-    <RnwNewArchOnly>false</RnwNewArchOnly>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />

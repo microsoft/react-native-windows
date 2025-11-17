@@ -9,10 +9,6 @@
         threadingModel="both"
         xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
-        name="facebook.react.NativeTraceEventSource"
-        threadingModel="both"
-        xmlns="urn:schemas-microsoft-com:winrt.v1" />
-    <activatableClass
         name="Microsoft.Internal.TestController"
         threadingModel="both"
         xmlns="urn:schemas-microsoft-com:winrt.v1" />
