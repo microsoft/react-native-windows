@@ -5,7 +5,7 @@
     <!-- 
       Internal versions are typically only located at: https://microsoft.visualstudio.com/DefaultCollection/ProjectReunion/_artifacts/feed/Project.Reunion.nuget.internal/NuGet/Microsoft.WindowsAppSDK/versions
       For local testing of internal versions, modify WinUI3ExperimentalVersion, and comment out the additional nuget source in NuGet.Config
-      When this version is updated, be sure to update the default for the enableInternalFeed parameter of /.ado/templates/enable-experimental-winui3.yml and the minimum version of WebView in WebView2.props
+      When this version is updated, be sure to update the default for the enableInternalFeed parameter of /.ado/templates/enable-experimental-winui3.yml
     -->
     <WinUI3ExperimentalVersion Condition="'$(WinUI3ExperimentalVersion)'==''">1.8.251106002</WinUI3ExperimentalVersion>
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/cli/.../autolinkWindows.ts -->
