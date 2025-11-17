@@ -60,6 +60,7 @@
     <UseV8>true</UseV8>
     <V8AppPlatform>win32</V8AppPlatform>
     <HermesCompileRtti>false</HermesCompileRtti>
+    <DisableWindowsAppSDKMLAutoInitialize>true</DisableWindowsAppSDKMLAutoInitialize>
     <!-- Default include the Fabric interface. -->
     <IncludeFabricInterface Condition="'$(IncludeFabricInterface)'==''">true</IncludeFabricInterface>
     <!-- Default enable WinUI3, if unset but also check for IncludeFabricInterface as it requires WinUI3 now to compile. -->
