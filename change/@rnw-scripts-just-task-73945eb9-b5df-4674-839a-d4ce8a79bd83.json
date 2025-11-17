@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Restore Nuget packages on yarn build",
-  "packageName": "@rnw-scripts/just-task",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
