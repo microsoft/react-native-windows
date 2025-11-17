@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 06:42:06 GMT",
+      "version": "1.4.66",
+      "tag": "@rnw-scripts/create-github-releases_v1.4.66",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.99",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.70",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.58",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Nov 2025 21:00:46 GMT",
       "version": "1.4.65",
       "tag": "@rnw-scripts/create-github-releases_v1.4.65",

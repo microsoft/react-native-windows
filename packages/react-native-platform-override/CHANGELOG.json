@@ -2,6 +2,33 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 06:42:06 GMT",
+      "version": "1.9.61",
+      "tag": "react-native-platform-override_v1.9.61",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.70",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.96",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.58",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Nov 2025 21:00:47 GMT",
       "version": "1.9.60",
       "tag": "react-native-platform-override_v1.9.60",
