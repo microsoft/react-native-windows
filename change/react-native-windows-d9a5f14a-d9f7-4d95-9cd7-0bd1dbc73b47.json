@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Narrator doesn't follow focus",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

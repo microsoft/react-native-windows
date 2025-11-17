@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Sep 2025 15:31:50 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Nov 2025 16:33:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.48
+
+Mon, 17 Nov 2025 16:33:43 GMT
+
+### Patches
+
+- Add TSF support to TextInput (30809111+acoates-ms@users.noreply.github.com)
+- Use hermes-windows 0.0.0-2511.7001-d7ca19b3 (vmorozov@microsoft.com)
+- Narrator doesn't follow focus (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.47
 

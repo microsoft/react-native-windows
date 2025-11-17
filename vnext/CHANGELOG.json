@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 16:33:43 GMT",
+      "version": "0.74.48",
+      "tag": "react-native-windows_v0.74.48",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "727d6ff20071467f498e25172f582efb8605583c",
+            "comment": "Add TSF support to TextInput"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c591ac8692007bdddd355b2d15a209a370d91f31",
+            "comment": "Use hermes-windows 0.0.0-2511.7001-d7ca19b3"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ddef61e5c9244a04e1c34529f89bde30491ec53f",
+            "comment": "Narrator doesn't follow focus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Sep 2025 15:31:50 GMT",
       "version": "0.74.47",
       "tag": "react-native-windows_v0.74.47",
