@@ -232,7 +232,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     }
   }
 
-  /* 
+  /*
   HideWindow called on visible=false
   unmounts the modal window using onDismiss event
   */
@@ -248,7 +248,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
           m_reactContext.Properties().Handle(), m_prevWindowID);
     }
-  
+
     // Dispatch onDismiss event
     if (auto eventEmitter = EventEmitter()) {
       ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnDismiss eventArgs;
