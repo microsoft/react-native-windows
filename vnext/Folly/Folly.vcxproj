@@ -49,7 +49,7 @@
   <PropertyGroup>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
-  <ItemGroup Condition="'$(UseFabric)' == 'true'">
+  <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)\ThreadNameStub.cpp" />
     <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" />
     <ClCompile Include="$(FollyDir)\folly\concurrency\CacheLocality.cpp" />
@@ -58,8 +58,6 @@
     <ClCompile Include="$(FollyDir)\folly\synchronization\SanitizeThread.cpp" />
     <ClCompile Include="$(FollyDir)\folly\portability\SysResource.cpp" />
     <ClCompile Include="$(FollyDir)\folly\portability\Unistd.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="$(FollyDir)\folly\system\AtFork.cpp" />
     <ClCompile Include="$(FollyDir)\folly\system\ThreadId.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp" />

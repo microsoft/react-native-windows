@@ -5,10 +5,6 @@ import "IJSValueWriter.idl"; // The import is to be deprecated with IReactContex
 import "IReactNotificationService.idl";
 import "IReactPropertyBag.idl";
 
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-#include "NamespaceRedirect.h" // The include is to be deprecated with IReactContext::DispatchEvent
-#endif
-
 #include "DocString.h"
 
 namespace Microsoft.ReactNative
@@ -53,17 +49,6 @@ namespace Microsoft.ReactNative
   interface IReactSettingsSnapshot
   {
     DOC_STRING(
-      "A read-only snapshot of the @ReactInstanceSettings.UseWebDebugger property value "
-      "at the time when the React instance was created.\n"
-      "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
-      "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
-      "Debugging will start as soon as the react native instance is loaded.")
-    [deprecated(
-      "Debugging should be done using DirectDebugging rather than WebDebugger.  Web debugging changes the app behavior "
-      "and will be removed in a future version.", deprecate, 1)]
-    Boolean UseWebDebugger { get; };
-
-    DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.UseFastRefresh property value "
       "at the time when the React instance was created.\n"
       "Controls whether the instance triggers the hot module reload logic when it first loads the instance.\n"
@@ -75,18 +60,14 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.UseDirectDebugger property value "
       "at the time when the React instance was created.\n"
-      "Enables debugging in the JavaScript engine (if supported).\n"
-      "For Chakra this enables debugging of the JS runtime directly within the app using "
-      "Visual Studio -> Attach to process (Script)")
+      "Enables debugging in the JavaScript engine (if supported).")
     Boolean UseDirectDebugger { get; };
 
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.DebuggerBreakOnNextLine property value "
       "at the time when the React instance was created.\n"
       "For direct debugging, controls whether to break on the next line of JavaScript that is executed.\n"
-      "This can help debug issues hit early in the JavaScript bundle load.\n"
-      "***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine. "
-      "As a workaround you could add the `debugger` keyword in the beginning of the bundle.***")
+      "This can help debug issues hit early in the JavaScript bundle load.")
     Boolean DebuggerBreakOnNextLine { get; };
 
     DOC_STRING(
@@ -111,14 +92,14 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.SourceBundleHost property value "
       "at the time when the React instance was created.\n"
-      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server hostname "
+      "When using @ReactInstanceSettings.UseFastRefresh or @ReactInstanceSettings.UseLiveReload this is the server hostname "
       "that will be used to load the bundle from.")
     String SourceBundleHost { get; };
 
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.SourceBundlePort property value "
       "at the time when the React instance was created.\n"
-      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server port "
+      "When using @ReactInstanceSettings.UseFastRefresh or @ReactInstanceSettings.UseLiveReload this is the server port "
       "that will be used to load the bundle from.")
     UInt16 SourceBundlePort { get; };
 
@@ -201,12 +182,6 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("used to schedule work on the JS runtime. Most direct usage of this should be avoided by using ReactContext.CallInvoker.")
     CallInvoker CallInvoker { get; };
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-    [deprecated("Use @XamlUIService.DispatchEvent instead", deprecate, 1)]
-    DOC_STRING("Deprecated property. Use @XamlUIService.DispatchEvent instead. It will be removed in a future version.")
-    void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
-#endif
 
     DOC_STRING(
       "Calls the JavaScript function named `methodName` of `moduleName` with the `paramsArgWriter`.\n"

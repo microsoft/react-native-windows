@@ -67,7 +67,7 @@ React Native has [great documentation](https://reactnative.dev/docs/getting-star
 - Check the [samples repo](https://github.com/microsoft/react-native-windows-samples) for more standalone samples.
 - The [React Native Gallery](https://github.com/microsoft/react-native-gallery) app demonstrates various components in an interactive way.
 - Check out the [React Native Developer Blog](https://devblogs.microsoft.com/react-native/) to see examples from past conference talks, blog posts, and more.
-- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app/windows/RNTesterApp) in the GitHub web UI.
+- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app-fabric/windows/RNTesterApp) in the GitHub web UI.
 
 ## 📢 Contributing
 See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.

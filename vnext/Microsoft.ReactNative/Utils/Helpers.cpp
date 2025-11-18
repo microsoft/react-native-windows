@@ -9,9 +9,7 @@
 #include <appmodel.h>
 #include <processthreadsapi.h>
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionUIService.h>
-#endif // USE_FABRIC
 
 namespace winrt {
 using namespace Windows::Foundation::Metadata;
@@ -90,12 +88,8 @@ bool IsWinUI3Island() {
 }
 
 bool IsFabricEnabled(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) {
-#ifdef USE_FABRIC
   return winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
              properties) != nullptr;
-#else
-  return false;
-#endif
 }
 
 } // namespace Microsoft::ReactNative

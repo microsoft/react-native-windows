@@ -62,14 +62,6 @@ winrt::Microsoft::ReactNative::IReactPropertyName LiveReloadEnabledProperty() no
   return propName;
 }
 
-winrt::Microsoft::ReactNative::IReactPropertyName UseWebDebuggerProperty() noexcept {
-  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
-      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
-          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
-          L"UseWebDebugger");
-  return propName;
-}
-
 winrt::Microsoft::ReactNative::IReactPropertyName DebuggerBreakOnNextLineProperty() noexcept {
   static winrt::Microsoft::ReactNative::IReactPropertyName propName =
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
@@ -199,30 +191,6 @@ void ReactOptions::SetUseLiveReload(bool enabled) noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(LiveReloadEnabledProperty()), false);
 }
 
-void ReactOptions::SetUseWebDebugger(bool enabled) noexcept {
-  SetUseWebDebugger(Properties, enabled);
-}
-
-bool ReactOptions::UseWebDebugger() const noexcept {
-  return UseWebDebugger(Properties);
-}
-
-/*static*/ void ReactOptions::SetUseWebDebugger(
-    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
-    bool value) noexcept {
-  properties.Set(UseWebDebuggerProperty(), winrt::box_value(value));
-
-  if (value) {
-    // Remote debugging is incompatible with direct debugging
-    SetUseDirectDebugger(properties, false);
-  }
-}
-
-/*static*/ bool ReactOptions::UseWebDebugger(
-    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
-  return winrt::unbox_value_or<bool>(properties.Get(UseWebDebuggerProperty()), false);
-}
-
 bool ReactOptions::UseLiveReload() const noexcept {
   return UseLiveReload(Properties);
 }
@@ -258,11 +226,6 @@ bool ReactOptions::UseDirectDebugger() const noexcept {
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
     bool value) noexcept {
   properties.Set(UseDirectDebuggerProperty(), winrt::box_value(value));
-
-  if (value) {
-    // Remote debugging is incompatible with direct debugging
-    SetUseWebDebugger(properties, false);
-  }
 }
 
 /*static*/ bool ReactOptions::UseDirectDebugger(
@@ -296,11 +259,7 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
  public:
   bool enableBridgelessArchitecture() override {
-#ifdef USE_FABRIC
     return true;
-#else
-    return false;
-#endif
   }
 
   bool enableCppPropsIteratorSetter() override {
@@ -326,10 +285,32 @@ class ReactInspectorHostTargetDelegate : public jsinspector_modern::HostTargetDe
   ReactInspectorHostTargetDelegate(Mso::WeakPtr<ReactHost> &&reactHost) noexcept : m_reactHost(std::move(reactHost)) {}
 
   jsinspector_modern::HostTargetMetadata getMetadata() override {
-    // TODO: (vmoroz) provide more info
-    return {
-        .integrationName = "React Native Windows (Host)",
-    };
+    jsinspector_modern::HostTargetMetadata metadata{};
+    metadata.integrationName = "React Native Windows (Host)";
+    metadata.platform = "windows";
+
+    if (Mso::CntPtr<ReactHost> reactHost = m_reactHost.GetStrongPtr()) {
+      const ReactOptions &options = reactHost->Options();
+      if (!options.Identity.empty()) {
+        std::string identity = options.Identity;
+        // Replace illegal characters with underscore
+        for (char &c : identity) {
+          if (c == '\\' || c == '/' || c == ':' || c == '*' || c == '?' || c == '"' || c == '<' || c == '>' ||
+              c == '|') {
+            c = '_';
+          }
+        }
+        metadata.appDisplayName = identity;
+      }
+    }
+
+    wchar_t computerName[MAX_COMPUTERNAME_LENGTH + 1];
+    DWORD size = MAX_COMPUTERNAME_LENGTH + 1;
+    if (GetComputerNameW(computerName, &size)) {
+      metadata.deviceName = winrt::to_string(computerName);
+    }
+
+    return metadata;
   }
 
   void onReload(jsinspector_modern::HostTargetDelegate::PageReloadRequest const &request) override {
@@ -630,9 +611,20 @@ void ReactHost::AddInspectorPage() noexcept {
   jsinspector_modern::InspectorTargetCapabilities capabilities;
   capabilities.nativePageReloads = true;
   capabilities.prefersFuseboxFrontend = true;
-  // TODO: (vmoroz) improve the page name
+
+  auto metadata = m_inspectorHostTargetDelegate->getMetadata();
+  std::string pageName;
+  if (metadata.appDisplayName.has_value() && !metadata.appDisplayName.value().empty()) {
+    pageName = metadata.appDisplayName.value();
+  } else {
+    pageName = "React Native Windows (Experimental)";
+  }
+  if (metadata.deviceName.has_value() && !metadata.deviceName.value().empty()) {
+    pageName += " (" + metadata.deviceName.value() + ")";
+  }
+
   inspectorPageId = jsinspector_modern::getInspectorInstance().addPage(
-      "React Native Windows (Experimental)",
+      pageName,
       "Hermes",
       [weakInspectorHostTarget =
            std::weak_ptr(m_inspectorHostTarget)](std::unique_ptr<jsinspector_modern::IRemoteConnection> remote)

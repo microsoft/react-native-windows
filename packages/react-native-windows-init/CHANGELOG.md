@@ -1,8 +1,42 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Tue, 21 Oct 2025 05:28:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.85
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/telemetry to v0.0.0-canary.129
+- Bump @react-native-windows/cli to v0.0.0-canary.281
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 1.4.84
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Patches
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.128
+- Bump @react-native-windows/cli to v0.0.0-canary.280
+
+## 1.4.83
+
+Wed, 12 Nov 2025 21:00:45 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/telemetry to v0.0.0-canary.127
+- Bump @react-native-windows/cli to v0.0.0-canary.279
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
 
 ## 1.4.82
 

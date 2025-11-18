@@ -1,8 +1,36 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Tue, 21 Oct 2025 05:28:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.129
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 0.0.0-canary.128
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.127
+
+Wed, 12 Nov 2025 21:00:46 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
 
 ## 0.0.0-canary.126
 

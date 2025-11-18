@@ -242,8 +242,9 @@ namespace Microsoft.ReactNative
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   runtimeclass JsiRuntime
   {
-    // TODO : replace with a registered factory method
-    static JsiRuntime MakeChakraRuntime();
+    // Used for internal testing
+    static JsiRuntime MakeRuntime();
+
 
     JsiValueRef EvaluateJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer buffer, String sourceUrl);

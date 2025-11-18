@@ -94,11 +94,8 @@ msrn::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
   return make<msrn::ReactPackageBuilder>(
       nativeModulesProvider,
       turboModulesProvider,
-#ifdef USE_FABRIC
       std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>{},
-      std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager>{},
-#endif
-      true);
+      std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager>{});
 }
 
 msrn::IRedBoxErrorFrameInfo

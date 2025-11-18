@@ -101,20 +101,16 @@ void TimerRegistry::createRecurringTimer(uint32_t timerID, double delayMS) {
 }
 
 void TimerRegistry::callTimers(const vector<uint32_t> &ids) noexcept {
-#ifdef USE_FABRIC
   if (auto timerManager = m_timerManager.lock()) {
     for (auto id : ids) {
       timerManager->callTimer(id);
     }
   }
-#endif
 }
 
 // When running bridgeless mode timers are managed by TimerManager
 void TimerRegistry::setTimerManager(std::weak_ptr<facebook::react::TimerManager> timerManager) {
-#ifdef USE_FABRIC
   m_timerManager = timerManager;
-#endif
 }
 
 //

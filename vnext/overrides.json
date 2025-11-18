@@ -359,6 +359,12 @@
       "file": "src-win/Libraries/Components/Popup/PopupNativeComponent.js"
     },
     {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/Pressable/Pressable.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.d.ts",
+      "baseHash": "d4dd8fc82436617bfeca9807be274aa5416d748c"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
@@ -688,6 +694,18 @@
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativePlatformConstantsWindows.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "365c5df75b38b129d364af3f6700cb206ce5bd2a"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/Xaml/XamlHost.d.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/Xaml/XamlHost.windows.js"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/src/private/specs_DEPRECATED/components/Xaml/XamlHostNativeComponent.js"
     }
   ]
 }

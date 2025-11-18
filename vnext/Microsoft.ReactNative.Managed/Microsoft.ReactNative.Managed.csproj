@@ -81,7 +81,6 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CSharp.Dependencies.props" />
   <ItemGroup>
-    <Compile Include="AttributedViewManager.cs" />
     <Compile Include="IJSValueTreeReader.cs" />
     <Compile Include="IReactPromise.cs" />
     <Compile Include="JSValue.cs" />
@@ -126,8 +125,6 @@
     <Compile Include="ReactPromise.cs" />
     <Compile Include="ReactSyncMethodInfo.cs" />
     <Compile Include="ReflectionReactPackageProvider.cs" />
-    <Compile Include="ViewManagerAttributes.cs" />
-    <Compile Include="ViewManagerEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Microsoft.ReactNative.Managed.rd.xml" />
   </ItemGroup>

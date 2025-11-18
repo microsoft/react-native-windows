@@ -16,20 +16,6 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          - Name: X86DebugUniversal
-            BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground.sln
-          - Name: X64ReleaseUniversal
-            BuildConfiguration: Release
-            BuildPlatform: x64
-            SolutionFile: Playground.sln
-          - Name: X64DebugUniversal
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: Playground.sln
-            RunWack: true
-            UploadAppx: true
           - Name: X86DebugComposition
             BuildConfiguration: Debug
             BuildPlatform: x86
@@ -61,23 +47,6 @@ parameters:
             UseExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
-          - Name: X86DebugUniversal
-            BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground.sln
-            UploadAppx: true
-          - Name: X64ReleaseUniversal
-            BuildConfiguration: Release
-            BuildPlatform: x64
-            SolutionFile: Playground.sln
-            RunWack: true
-            UploadAppx: true
-          - Name: X64DebugUniversal
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: Playground.sln
-            RunWack: true
-            UploadAppx: true
           - Name: X86DebugComposition
             BuildConfiguration: Debug
             BuildPlatform: x86

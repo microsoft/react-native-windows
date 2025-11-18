@@ -153,11 +153,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           assembly.Modules.Add(module);
         }
 
-        if (IsViewManager(type))
-        {
-          assembly.ViewManagers.Add(type);
-        }
-
         // Proactively register serializable types.
         switch (type.TypeKind)
         {
@@ -273,11 +268,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       }
 
       return assembly;
-    }
-
-    internal bool IsViewManager(INamedTypeSymbol type)
-    {
-      return !type.IsAbstract && type.AllInterfaces.Any(iface => iface.Equals(ReactTypes.IViewManagerType, SymbolEqualityComparer.Default));
     }
 
     internal bool TryExtractModule(INamedTypeSymbol type, [NotNullWhen(returnValue: true)] out ReactModule? module)
