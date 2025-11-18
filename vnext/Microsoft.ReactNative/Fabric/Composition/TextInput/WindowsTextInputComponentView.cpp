@@ -1554,25 +1554,59 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   m_pf.dwMask = PFM_ALL;
 
   auto &textAlign = windowsTextInputProps().textAlign;
+  auto &baseWritingDirection = windowsTextInputProps().textAttributes.baseWritingDirection;
 
+  // Handle writingDirection (baseWritingDirection)
+  // For WritingDirection::Natural, use the computed layout direction from the layout tree
+  // since direction can be overridden at any point in the tree
+  bool isRTL = false;
+  if (baseWritingDirection.has_value()) {
+    if (*baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
+      isRTL = true;
+      m_pf.dwMask |= PFM_RTLPARA;
+      m_pf.wEffects |= PFE_RTLPARA;
+    } else if (*baseWritingDirection == facebook::react::WritingDirection::LeftToRight) {
+      isRTL = false;
+      // Ensure RTL flag is not set
+      m_pf.wEffects &= ~PFE_RTLPARA;
+    } else if (*baseWritingDirection == facebook::react::WritingDirection::Natural) {
+      // Natural uses the layout direction computed from the tree
+      isRTL = (layoutMetrics().layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+      if (isRTL) {
+        m_pf.dwMask |= PFM_RTLPARA;
+        m_pf.wEffects |= PFE_RTLPARA;
+      } else {
+        m_pf.wEffects &= ~PFE_RTLPARA;
+      }
+    }
+  } else {
+    // No explicit writing direction set - use layout direction from tree
+    isRTL = (layoutMetrics().layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+    if (isRTL) {
+      m_pf.dwMask |= PFM_RTLPARA;
+      m_pf.wEffects |= PFE_RTLPARA;
+    } else {
+      m_pf.wEffects &= ~PFE_RTLPARA;
+    }
+  }
+
+  // Handle textAlign
   if (textAlign == facebook::react::TextAlignment::Center) {
     m_pf.wAlignment = PFA_CENTER;
   } else if (textAlign == facebook::react::TextAlignment::Right) {
     m_pf.wAlignment = PFA_RIGHT;
+  } else if (textAlign == facebook::react::TextAlignment::Justified) {
+    m_pf.wAlignment = PFA_JUSTIFY;
+  } else if (textAlign == facebook::react::TextAlignment::Natural) {
+    // Natural alignment respects writing direction
+    m_pf.wAlignment = isRTL ? PFA_RIGHT : PFA_LEFT;
   } else {
+    // Default to left alignment
     m_pf.wAlignment = PFA_LEFT;
   }
 
   m_pf.cTabCount = 1;
   m_pf.rgxTabs[0] = lDefaultTab;
-
-  /*
-        if (m_spcontroller->IsCurrentReadingOrderRTL())
-        {
-                m_pf.dwMask |= PFM_RTLPARA;
-                m_pf.wEffects |= PFE_RTLPARA;
-        }
-  */
 }
 
 void WindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
