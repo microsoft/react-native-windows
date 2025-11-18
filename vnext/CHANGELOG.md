@@ -1,8 +1,72 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 30 Oct 2025 05:29:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 18 Nov 2025 06:41:41 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1008
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Changes
+
+- Add HostTargetMetadata with app name and device name for inspector page naming (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1007
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Restore Nuget packages on yarn build (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.281
+- Bump @react-native-windows/codegen to v0.0.0-canary.128
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-platform-override to v1.9.61
+
+## 0.0.0-canary.1006
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.280
+
+## 0.0.0-canary.1005
+
+Thu, 13 Nov 2025 14:35:18 GMT
+
+### Changes
+
+- Introduce xamlhost component (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.1004
+
+Wed, 12 Nov 2025 21:00:42 GMT
+
+### Changes
+
+- Add TSF support to TextInput (30809111+acoates-ms@users.noreply.github.com)
+- Implement context menu support for Fabric TextInput with Cut, Copy, Paste, and Select All options (nitchaudhary@microsoft.com)
+- More cleanup now that we only run using fabric. (30809111+acoates-ms@users.noreply.github.com)
+- Pressables should take focus on press (30809111+acoates-ms@users.noreply.github.com)
+- Remove web debugging support (30809111+acoates-ms@users.noreply.github.com)
+- TextInput is zero height when it has no content (30809111+acoates-ms@users.noreply.github.com)
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Disable the deep import warning (30809111+acoates-ms@users.noreply.github.com)
+- Use Hermes version 0.0.0-2511.7001-d7ca19b3 (vmorozov@microsoft.com)
+- Added support for modern inspector (vmorozov@microsoft.com)
+- Use hermes-windows version 0.0.0-2511.3001-9e4cf518 (vmorozov@microsoft.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Realign View.js with upstream (30809111+acoates-ms@users.noreply.github.com)
+- Fix init-windows template to automatically detect existing codegen spec files (198982749+Copilot@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.279
+- Bump @react-native-windows/codegen to v0.0.0-canary.127
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.42
+- Bump @rnw-scripts/just-task to v2.3.57
+- Bump react-native-platform-override to v1.9.60
 
 ## 0.0.0-canary.1003
 

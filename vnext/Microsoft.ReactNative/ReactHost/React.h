@@ -26,12 +26,9 @@
 
 #include <Shared/IReactRootView.h>
 
-#include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/UriImageManager.h>
-#endif
 
 namespace facebook::react::jsinspector_modern {
 class HostTarget;
@@ -54,7 +51,6 @@ enum class LogLevel : int32_t {
 };
 
 enum class JSIEngine : int32_t {
-  Chakra = 0, // Use the JSIExecutorFactory with ChakraRuntime
   Hermes = 1, // Use the JSIExecutorFactory with Hermes
   V8 = 2, // Use the JSIExecutorFactory with V8
 };
@@ -88,17 +84,10 @@ struct IReactInstance : IUnknown {
   virtual ReactInstanceState State() const noexcept = 0;
 
   virtual Mso::React::IReactContext &GetReactContext() const noexcept = 0;
-
-  virtual void AttachMeasuredRootView(
-      facebook::react::IReactRootView *rootView,
-      const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
-      bool useFabric) noexcept = 0;
-  virtual void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept = 0;
 };
 
 MSO_GUID(IReactSettingsSnapshot, "6652bb2e-4c5e-49f7-b642-e817b0fef4de")
 struct IReactSettingsSnapshot : IUnknown {
-  virtual bool UseWebDebugger() const noexcept = 0;
   virtual bool UseFastRefresh() const noexcept = 0;
   virtual bool UseDirectDebugger() const noexcept = 0;
   virtual bool DebuggerBreakOnNextLine() const noexcept = 0;
@@ -124,7 +113,6 @@ struct IReactContext : IUnknown {
   virtual winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept = 0;
   virtual ReactInstanceState State() const noexcept = 0;
   virtual bool IsLoaded() const noexcept = 0;
-  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
   virtual IReactSettingsSnapshot const &SettingsSnapshot() const noexcept = 0;
 };
 
@@ -172,11 +160,6 @@ struct NativeModuleProvider2 {
       std::shared_ptr<facebook::react::MessageQueueThread> const &defaultQueueThread) = 0;
 };
 
-struct ViewManagerProvider2 {
-  virtual std::vector<std::unique_ptr<::Microsoft::ReactNative::IViewManager>> GetViewManagers(
-      Mso::CntPtr<IReactContext> const &reactContext) = 0;
-};
-
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
@@ -185,11 +168,8 @@ struct ReactOptions {
   winrt::Microsoft::ReactNative::IReactNotificationService Notifications;
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
-  std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;
   std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> TurboModuleProvider;
-#ifdef USE_FABRIC
   std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> UriImageManager;
-#endif
 
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;
@@ -229,7 +209,6 @@ struct ReactOptions {
   //! ReactNative Infrastructure Error
   //! Error types include:
   //! * Any call to Javascript function after Global Exception has been raised
-  //! * Any WebServer error when DeveloperSettings.UseWebDebugger is true
   //! Note: Default callback generates ShipAssert.
   OnErrorCallback OnError{GetDefaultOnErrorHandler()};
 
@@ -249,11 +228,6 @@ struct ReactOptions {
 
   std::string ByteCodeFileUri;
   bool EnableByteCodeCaching{true};
-
-  //! Enable function nativePerformanceNow.
-  //! Method nativePerformanceNow() returns high resolution time info.
-  //! It is not safe to expose to Custom Function. Add this flag so we can turn it off for Custom Function.
-  bool EnableNativePerformanceNow{true};
 
   ReactDevOptions DeveloperSettings = {};
 
@@ -292,16 +266,6 @@ struct ReactOptions {
   bool UseLiveReload() const noexcept;
   static void SetUseLiveReload(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties, bool value) noexcept;
   static bool UseLiveReload(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
-
-  //! Should the instance run in a remote environment such as within a browser
-  //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
-  //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
-  void SetUseWebDebugger(bool enabled) noexcept;
-  bool UseWebDebugger() const noexcept;
-  static void SetUseWebDebugger(
-      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
-      bool value) noexcept;
-  static bool UseWebDebugger(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
   //! For direct debugging, whether to break on the next line of JavaScript that is executed.
   void SetDebuggerBreakOnNextLine(bool enable) noexcept;

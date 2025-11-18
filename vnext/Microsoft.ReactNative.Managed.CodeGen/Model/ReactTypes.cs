@@ -24,7 +24,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
         public INamedTypeSymbol Task { get; }
         public INamedTypeSymbol TaskOfT { get; }
 
-        public INamedTypeSymbol IViewManagerType { get; }
         public INamedTypeSymbol IReactPackageProvider { get; }
         public INamedTypeSymbol IReactPackageBuilder { get; }
         public INamedTypeSymbol IReactModuleBuilder { get; }
@@ -66,7 +65,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
             Task = FindBclType(compilation, "System.Threading.Tasks.Task");
             TaskOfT = FindBclType(compilation, "System.Threading.Tasks.Task`1")!.ConstructUnboundGenericType();
 
-            IViewManagerType = FindReactNativeType(compilation, "IViewManager");
             IReactPackageProvider = FindReactNativeType(compilation, "IReactPackageProvider");
             IReactPackageBuilder = FindReactNativeType(compilation, "IReactPackageBuilder");
             IReactModuleBuilder = FindReactNativeType(compilation, "IReactModuleBuilder");

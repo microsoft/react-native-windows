@@ -18,6 +18,7 @@
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
+    <SupportWinUI3Islands>true</SupportWinUI3Islands>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -67,7 +68,6 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared" />
-  <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
   <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
   <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
@@ -91,7 +91,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -142,20 +142,16 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winsqlite3.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;Dwmapi.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>
         api-ms-win-core-file-l1-2-0.dll;
         api-ms-win-core-windowserrorreporting-l1-1-0.dll;
         ext-ms-win-uiacore-l1-1-1.dll;
-        chakra.dll;
         %(DelayLoadDLLs)
       </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
-    </Link>
-    <Link Condition="'$(UseFabric)' == 'true'">
-      <AdditionalDependencies>User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -336,93 +332,6 @@
       <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
-  <!-- Paper-only ClInclude -->
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <ClInclude Include="ABIViewManager.h" />
-    <ClInclude Include="DevMenuControl.h">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="GlyphViewManager.h" />
-    <ClInclude Include="LayoutService.h">
-      <DependentUpon>LayoutService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="Modules\NativeUIManager.h" />
-    <ClInclude Include="Modules\PaperUIManagerModule.h" />
-    <ClInclude Include="ReactApplication.h">
-      <DependentUpon>ReactApplication.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ReactHost\ViewManagerProvider.h" />
-    <ClInclude Include="ReactPointerEventArgs.h">
-      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="ReactRootView.h">
-      <DependentUpon>ReactRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="Utils\AccessibilityUtils.h" />
-    <ClInclude Include="ViewManagersProvider.h" />
-    <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
-    <ClInclude Include="Views\ControlViewManager.h" />
-    <ClInclude Include="Views\DynamicAutomationPeer.h" />
-    <ClInclude Include="Views\DynamicAutomationProperties.h" />
-    <ClInclude Include="Views\DynamicValueProvider.h" />
-    <ClInclude Include="Views\ExpressionAnimationStore.h" />
-    <ClInclude Include="Views\FlyoutViewManager.h" />
-    <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
-    <ClInclude Include="Views\FrameworkElementViewManager.h" />
-    <ClInclude Include="Views\Image\Effects.h" />
-    <ClInclude Include="Views\Image\ImageViewManager.h" />
-    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h" />
-    <ClInclude Include="Views\Image\ReactImage.h" />
-    <ClInclude Include="Views\Image\ReactImageBrush.h" />
-    <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
-    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
-    <ClInclude Include="Views\UnimplementedViewManager.h" />
-    <ClInclude Include="Views\IXamlRootView.h" />
-    <ClInclude Include="Views\KeyboardEventHandler.h" />
-    <ClInclude Include="Views\PaperShadowNode.h" />
-    <ClInclude Include="Views\PopupViewManager.h" />
-    <ClInclude Include="Views\RawTextViewManager.h" />
-    <ClInclude Include="Views\ReactViewInstance.h" />
-    <ClInclude Include="Views\RefreshControlManager.h" />
-    <ClInclude Include="Views\RootViewManager.h" />
-    <ClInclude Include="Views\ScrollContentViewManager.h" />
-    <ClInclude Include="Views\ScrollViewManager.h" />
-    <ClInclude Include="Views\ShadowNodeBase.h" />
-    <ClInclude Include="Views\ShadowNodeRegistry.h" />
-    <ClInclude Include="Views\SIPEventHandler.h" />
-    <ClInclude Include="Views\SliderViewManager.h" />
-    <ClInclude Include="Views\SwitchViewManager.h" />
-    <ClInclude Include="Views\TextInputViewManager.h" />
-    <ClInclude Include="Views\TextViewManager.h" />
-    <ClInclude Include="Views\Text\TextHighlighterVisitor.h" />
-    <ClInclude Include="Views\Text\TextHitTestUtils.h" />
-    <ClInclude Include="Views\Text\TextHitTestVisitor.h" />
-    <ClInclude Include="Views\Text\TextParentVisitor.h" />
-    <ClInclude Include="Views\Text\TextPropertyChangedParentVisitor.h" />
-    <ClInclude Include="Views\Text\TextTransformParentVisitor.h" />
-    <ClInclude Include="Views\Text\TextTransformVisitor.h" />
-    <ClInclude Include="Views\Text\TextVisitorScope.h" />
-    <ClInclude Include="Views\Text\TextVisitor.h" />
-    <ClInclude Include="Views\Text\TextVisitors.h" />
-    <ClInclude Include="Views\TouchEventHandler.h" />
-    <ClInclude Include="Views\ViewControl.h" />
-    <ClInclude Include="Views\ViewManager.h" />
-    <ClInclude Include="Views\ViewManagerBase.h" />
-    <ClInclude Include="Views\ViewPanel.h" />
-    <ClInclude Include="Views\ViewViewManager.h" />
-    <ClInclude Include="Views\VirtualTextViewManager.h" />
-    <ClInclude Include="Views\XamlFeatures.h" />
-    <ClInclude Include="XamlHelper.h">
-      <DependentUpon>XamlHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="XamlLoadState.h" />
-    <ClInclude Include="XamlView.h" />
-  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
@@ -473,94 +382,10 @@
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Utils\XamlIslandUtils.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
-    <ClCompile Include="TestHook.cpp" />
     <ClCompile Include="XamlUIService.cpp">
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-  </ItemGroup>
-  <!-- Paper-only ClCompile -->
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="Base\CoreUIManagers.cpp" />
-    <ClCompile Include="DevMenuControl.cpp">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="GlyphViewManager.cpp" />
-    <ClCompile Include="LayoutService.cpp">
-      <DependentUpon>LayoutService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="Modules\NativeUIManager.cpp" />
-    <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
-    <ClCompile Include="ReactApplication.cpp">
-      <DependentUpon>ReactApplication.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="ReactPointerEventArgs.cpp">
-      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactRootView.cpp">
-      <DependentUpon>ReactRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="Utils\AccessibilityUtils.cpp" />
-    <ClCompile Include="ViewManagersProvider.cpp" />
-    <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
-    <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
-    <ClCompile Include="Views\ControlViewManager.cpp" />
-    <ClCompile Include="Views\DebuggingOverlayViewManager.cpp" />
-    <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
-    <ClCompile Include="Views\DynamicAutomationProperties.cpp" />
-    <ClCompile Include="Views\DynamicValueProvider.cpp" />
-    <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
-    <ClCompile Include="Views\FlyoutViewManager.cpp" />
-    <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
-    <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
-    <ClCompile Include="Views\Image\ImageViewManager.cpp" />
-    <ClCompile Include="Views\Image\ReactImage.cpp" />
-    <ClCompile Include="Views\Image\ReactImageBrush.cpp" />
-    <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
-    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
-    <ClCompile Include="Views\KeyboardEventHandler.cpp" />
-    <ClCompile Include="Views\UnimplementedViewManager.cpp" />
-    <ClCompile Include="Views\PaperShadowNode.cpp" />
-    <ClCompile Include="Views\PopupViewManager.cpp" />
-    <ClCompile Include="Views\RawTextViewManager.cpp" />
-    <ClCompile Include="Views\ReactViewInstance.cpp" />
-    <ClCompile Include="Views\RefreshControlManager.cpp" />
-    <ClCompile Include="Views\RootViewManager.cpp" />
-    <ClCompile Include="Views\ScrollContentViewManager.cpp" />
-    <ClCompile Include="Views\ScrollViewManager.cpp" />
-    <ClCompile Include="Views\ShadowNodeBase.cpp" />
-    <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
-    <ClCompile Include="Views\SIPEventHandler.cpp" />
-    <ClCompile Include="Views\SliderViewManager.cpp" />
-    <ClCompile Include="Views\SwitchViewManager.cpp" />
-    <ClCompile Include="Views\TextInputViewManager.cpp" />
-    <ClCompile Include="Views\TextViewManager.cpp" />
-    <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp" />
-    <ClCompile Include="Views\Text\TextHitTestUtils.cpp" />
-    <ClCompile Include="Views\Text\TextHitTestVisitor.cpp" />
-    <ClCompile Include="Views\Text\TextParentVisitor.cpp" />
-    <ClCompile Include="Views\Text\TextPropertyChangedParentVisitor.cpp" />
-    <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp" />
-    <ClCompile Include="Views\Text\TextTransformVisitor.cpp" />
-    <ClCompile Include="Views\Text\TextVisitor.cpp" />
-    <ClCompile Include="Views\TouchEventHandler.cpp" />
-    <ClCompile Include="Views\ViewControl.cpp" />
-    <ClCompile Include="Views\ViewManagerBase.cpp" />
-    <ClCompile Include="Views\ViewPanel.cpp" />
-    <ClCompile Include="Views\ViewViewManager.cpp" />
-    <ClCompile Include="Views\VirtualTextViewManager.cpp" />
-    <ClCompile Include="Views\XamlFeatures.cpp" />
-    <ClCompile Include="XamlHelper.cpp">
-      <DependentUpon>XamlHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="XamlLoadState.cpp" />
-    <ClCompile Include="XamlView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="DesktopWindowMessage.idl" />
@@ -568,28 +393,6 @@
     <Midl Include="XamlUIService.idl">
       <SubType>Designer</SubType>
     </Midl>
-  </ItemGroup>
-  <!-- Paper-only Midl -->
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <Midl Include="DevMenuControl.idl">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
-    <Midl Include="IViewManager.idl" />
-    <Midl Include="IViewManagerCore.idl" />
-    <Midl Include="LayoutService.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactPointerEventArgs.idl" />
-    <Midl Include="ReactRootView.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
-    <Midl Include="Views\cppwinrt\Effects.idl" />
-    <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
-    <Midl Include="Views\cppwinrt\ViewPanel.idl" />
-    <Midl Include="XamlHelper.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
@@ -627,11 +430,6 @@
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(UseFabric)' != 'true'">
-    <Page Include="DevMenuControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />

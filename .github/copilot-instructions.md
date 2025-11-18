@@ -26,8 +26,7 @@ React Native Windows is a Microsoft-maintained implementation of React Native th
 ├── docs/             # Documentation
 ├── packages/         # Monorepo packages
 │   ├── @react-native-windows/  # Core RNW packages
-│   ├── @rnw-scripts/           # Build and development tools
-│   └── sample-apps/            # Example applications
+│   └── @rnw-scripts/           # Build and development tools
 ├── vnext/            # Main C++/C# implementation
 └── tools/            # Development utilities
 ```
@@ -220,22 +219,6 @@ public sealed class SampleModule
     [ReactEvent]
     public Action<string> OnDataReceived { get; set; }
 }
-```
-
-### View Manager Development
-
-**C++ View Manager Pattern**:
-```cpp
-class SampleViewManager : public ViewManagerBase {
- public:
-  SampleViewManager(IReactContext const &reactContext);
-  
-  const char *GetName() const override;
-  winrt::FrameworkElement CreateView() noexcept override;
-  
-  void GetNativeProps(NativePropsBuilder const &builder) const override;
-  void UpdateProperties(ShadowNodeBase const &shadowNode, winrt::FrameworkElement const &view) override;
-};
 ```
 
 ## Common Patterns and Best Practices

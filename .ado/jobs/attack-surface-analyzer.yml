@@ -85,7 +85,7 @@ jobs:
         - template: ../templates/msbuild-sln.yml
           parameters:
             solutionDir: vnext
-            solutionName: Microsoft.ReactNative.sln
+            solutionName: Microsoft.ReactNative.NewArch.sln
             buildPlatform: x64
             buildConfiguration: Release
 

@@ -39,13 +39,7 @@
     <Midl Include="ABI\NativeLogging.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="ABI\NativeTracing.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="ABI\TestController.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
   </ItemGroup>
@@ -54,9 +48,6 @@
       <Filter>ABI</Filter>
     </ClCompile>
     <ClCompile Include="ABI\NativeLogEventSource.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
-    <ClCompile Include="ABI\NativeTraceEventSource.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
     <ClCompile Include="ABI\TestController.cpp">
@@ -87,9 +78,6 @@
       <Filter>ABI</Filter>
     </ClInclude>
     <ClInclude Include="ABI\NativeLogEventSource.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeTraceEventSource.h">
       <Filter>ABI</Filter>
     </ClInclude>
     <ClInclude Include="ABI\TestController.h">

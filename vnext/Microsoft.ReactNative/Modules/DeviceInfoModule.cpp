@@ -16,9 +16,7 @@
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
-#ifdef USE_FABRIC
 #include <ReactCoreInjection.h>
-#endif
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -45,11 +43,9 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
 
     uint64_t hwnd = 0;
 
-#ifdef USE_FABRIC
     if (IsFabricEnabled(context.Properties())) {
       hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
     }
-#endif
 
     if (xaml::TryGetCurrentUwpXamlApplication()) {
       if (auto window = xaml::Window::Current()) {
@@ -165,12 +161,10 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
   } else {
     auto hwnd = XamlUIService::GetIslandWindowHandle(m_context->Properties());
 
-#ifdef USE_FABRIC
     if (IsFabricEnabled(m_context->Properties())) {
       winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context->Properties()};
       hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
     }
-#endif
 
     if (hwnd) {
       RECT rect{};
@@ -195,12 +189,10 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
 
     auto hwnd = XamlUIService::GetIslandWindowHandle(m_context->Properties());
 
-#ifdef USE_FABRIC
     if (IsFabricEnabled(m_context->Properties())) {
       winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context->Properties()};
       hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
     }
-#endif
 
     if (hwnd && CALL_INDIRECT(L"user32.dll", GetWindowRect, reinterpret_cast<HWND>(hwnd), &desktopRect)) {
       m_screenWidth = static_cast<uint32_t>(desktopRect.right - desktopRect.left);
