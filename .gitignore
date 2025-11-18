@@ -130,7 +130,6 @@ packages/
 #Other files
 *.DotSettings
 .vs/
-*project.lock.json
 jsconfig.json
 package-lock.json
 *.metaproj
