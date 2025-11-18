@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "dependencies": {
+    "native,Version=v0.0": {
+      "boost": {
+        "type": "Direct",
+        "requested": "[1.83.0, )",
+        "resolved": "1.83.0",
+        "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
+      },
+      "fmt": {
+        "type": "Project"
+      }
+    },
+    "native,Version=v0.0/win10-arm": {},
+    "native,Version=v0.0/win10-arm-aot": {},
+    "native,Version=v0.0/win10-arm64-aot": {},
+    "native,Version=v0.0/win10-x64": {},
+    "native,Version=v0.0/win10-x64-aot": {},
+    "native,Version=v0.0/win10-x86": {},
+    "native,Version=v0.0/win10-x86-aot": {}
+  }
+}
