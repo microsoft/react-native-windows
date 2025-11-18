@@ -36,5 +36,5 @@ Cherry-picks a specific commit into a target branch. You can choose to either ap
 
 - The workflow will fail if there are merge conflicts during cherry-pick
 - If conflicts occur, you'll need to resolve them manually
-- When creating a PR, the branch name will be automatically generated as `cherry-pick-<commit-id>-to-<target-branch>`
+- When creating a PR, the branch name will be automatically generated as `cherry-pick-<commit-id>-to-<target-branch>`, where `<commit-id>` is the full commit hash (e.g., `cherry-pick-d1a95351e5203a6c0651cf73885cd7ea99e7d2b9-to-0.79-stable`). This may result in long branch names.
 - When creating a PR, the title and description will include details about the original commit and target branch
