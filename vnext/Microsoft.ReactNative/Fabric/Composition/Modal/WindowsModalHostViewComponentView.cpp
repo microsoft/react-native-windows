@@ -36,7 +36,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
                        ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView> {
   ~ModalHostView() {
     if (m_popUp) {
-      // Unregister closing event handler (when to handle event token )
+      // Unregister closing event handler
       if (m_appWindow && m_appWindowClosingToken) {
         m_appWindow.Closing(m_appWindowClosingToken);
         m_appWindowClosingToken.value = 0;
