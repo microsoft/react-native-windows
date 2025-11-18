@@ -61,7 +61,8 @@ jobs:
         working-directory: ./repo
         run: |
           COMMIT_ID="${{ github.event.inputs.commit_id }}"
-          BRANCH_NAME="cherry-pick-$COMMIT_ID-to-${{ github.event.inputs.target_branch }}"
+          SHORT_COMMIT_ID="${COMMIT_ID:0:8}"
+          BRANCH_NAME="cherry-pick-$SHORT_COMMIT_ID-to-${{ github.event.inputs.target_branch }}"
           git checkout -b "$BRANCH_NAME"
           echo "CHERRY_PICK_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
 
