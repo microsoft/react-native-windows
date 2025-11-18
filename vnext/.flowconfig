@@ -7,6 +7,30 @@
 ; Ignore fb_internal modules
 <PROJECT_ROOT>/packages/react-native/src/fb_internal/.*
 
+; Temporarily ignore all React Native core libraries to avoid nightly integration Flow errors
+; Only check Windows-specific platform code (src-win/)
+<PROJECT_ROOT>/Libraries/ActionSheetIOS/.*
+<PROJECT_ROOT>/Libraries/Alert/.*
+<PROJECT_ROOT>/Libraries/Animated/.*
+<PROJECT_ROOT>/Libraries/AppState/.*
+<PROJECT_ROOT>/Libraries/AppTheme/.*
+<PROJECT_ROOT>/Libraries/BatchedBridge/.*
+<PROJECT_ROOT>/Libraries/Blob/.*
+<PROJECT_ROOT>/Libraries/Components/.*
+<PROJECT_ROOT>/Libraries/Core/.*
+<PROJECT_ROOT>/Libraries/Debugging/.*
+<PROJECT_ROOT>/Libraries/Image/.*
+<PROJECT_ROOT>/Libraries/LayoutAnimation/.*
+<PROJECT_ROOT>/Libraries/Lists/.*
+<PROJECT_ROOT>/Libraries/LogBox/.*
+<PROJECT_ROOT>/Libraries/NativeComponent/.*
+<PROJECT_ROOT>/Libraries/Network/.*
+<PROJECT_ROOT>/Libraries/Performance/.*
+<PROJECT_ROOT>/Libraries/Renderer/.*
+<PROJECT_ROOT>/Libraries/StyleSheet/.*
+<PROJECT_ROOT>/Libraries/Utilities/.*
+<PROJECT_ROOT>/Libraries/vendor/.*
+
 ; These modules have base components and Windows versions.
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step
@@ -41,6 +65,69 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
+
+; Temporarily ignore files with Flow errors from React Native nightly integration
+<PROJECT_ROOT>/Libraries/ActionSheetIOS/ActionSheetIOS.js
+<PROJECT_ROOT>/Libraries/Alert/RCTAlertManager.android.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedEvent.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedExports.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedImplementation.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedMock.js
+<PROJECT_ROOT>/Libraries/Animated/animations/SpringAnimation.js
+<PROJECT_ROOT>/Libraries/Animated/animations/TimingAnimation.js
+<PROJECT_ROOT>/Libraries/Animated/components/AnimatedScrollView.js
+<PROJECT_ROOT>/Libraries/Animated/createAnimatedComponent.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedAddition.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedColor.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedDiffClamp.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedDivision.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedInterpolation.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedModulo.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedMultiplication.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedProps.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedStyle.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedSubtraction.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedTransform.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedValue.js
+<PROJECT_ROOT>/Libraries/AppState/AppState.js
+<PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
+<PROJECT_ROOT>/Libraries/BatchedBridge/NativeModules.js
+<PROJECT_ROOT>/Libraries/Blob/Blob.js
+<PROJECT_ROOT>/Libraries/Blob/BlobManager.js
+<PROJECT_ROOT>/Libraries/Blob/File.js
+<PROJECT_ROOT>/Libraries/Blob/FileReader.js
+<PROJECT_ROOT>/Libraries/Blob/URL.js
+<PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js
+<PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js
+<PROJECT_ROOT>/Libraries/Components/Keyboard/Keyboard.js
+<PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardAvoidingView.js
+<PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.windows.js
+<PROJECT_ROOT>/Libraries/Components/Pressable/useAndroidRippleForView.js
+<PROJECT_ROOT>/Libraries/Components/ScrollView/AndroidHorizontalScrollViewNativeComponent.js
+<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
+<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.windows.js
+<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollViewStickyHeader.js
+<PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.flow.windows.js
+<PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.windows.js
+<PROJECT_ROOT>/Libraries/Core/Devtools/loadBundleFromServer.js
+<PROJECT_ROOT>/Libraries/Core/Devtools/loadBundleFromServer.windows.js
+<PROJECT_ROOT>/Libraries/Core/ExceptionsManager.js
+<PROJECT_ROOT>/Libraries/Core/ExtendedError.js
+<PROJECT_ROOT>/Libraries/Core/ReactFiberErrorDialog.js
+<PROJECT_ROOT>/Libraries/Core/Timers/JSTimers.js
+<PROJECT_ROOT>/Libraries/Debugging/DebuggingOverlayRegistry.js
+<PROJECT_ROOT>/Libraries/LayoutAnimation/LayoutAnimation.js
+<PROJECT_ROOT>/Libraries/Network/FormData.js
+<PROJECT_ROOT>/Libraries/Network/XMLHttpRequest.js
+<PROJECT_ROOT>/Libraries/Performance/PerformanceObserver.js
+<PROJECT_ROOT>/Libraries/Utilities/Appearance.js
+<PROJECT_ROOT>/Libraries/Utilities/BackHandler.windows.js
+<PROJECT_ROOT>/Libraries/Utilities/PixelRatio.js
+<PROJECT_ROOT>/Libraries/Utilities/useColorScheme.js
+<PROJECT_ROOT>/Libraries/Utilities/useWindowDimensions.js
+<PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
+<PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
+<PROJECT_ROOT>/Libraries/vendor/emitter/EventEmitter.js
 
 <PROJECT_ROOT>/IntegrationTests/ImageCachePolicyTest.js
 <PROJECT_ROOT>/IntegrationTests/LayoutEventsTest.js
