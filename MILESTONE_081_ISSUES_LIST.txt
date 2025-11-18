@@ -1,0 +1,233 @@
+================================================================================
+MILESTONE 0.81 - OPEN ISSUES
+Generated: November 18, 2025
+Total Open Issues: 46
+================================================================================
+
+The following issues are currently open for milestone 0.81:
+
+1. #15380 - Modern debugger console shows error message with escape sequence which actually represents color
+   Assignee: @iamAbhi-916
+   Labels: bug
+   URL: https://github.com/microsoft/react-native-windows/issues/15380
+
+2. #15369 - Implement the NetworkIOAgent pathway for fusebox arch in windows
+   Assignee: @iamAbhi-916
+   Labels: enhancement, Fix Hermes Debugger for RNW
+   URL: https://github.com/microsoft/react-native-windows/issues/15369
+
+3. #15353 - Clean up few items
+   Assignee: @protikbiswas100
+   Labels: bug
+   URL: https://github.com/microsoft/react-native-windows/issues/15353
+
+4. #15352 - Props Parity of Fabric as per Paper
+   Assignee: @Nitin-100
+   Labels: bug
+   URL: https://github.com/microsoft/react-native-windows/issues/15352
+
+5. #15349 - Modern Inspector Outstanding Issues
+   Assignees: @vmoroz, @iamAbhi-916
+   Labels: bug, Fix Hermes Debugger for RNW
+   URL: https://github.com/microsoft/react-native-windows/issues/15349
+
+6. #15346 - Add tests to validate 3P module
+   Assignee: @sharath2727
+   Labels: enhancement
+   URL: https://github.com/microsoft/react-native-windows/issues/15346
+
+7. #15344 - 0.81 Release Status
+   Assignee: @vineethkuttan
+   Labels: enhancement, Area: Release Process
+   URL: https://github.com/microsoft/react-native-windows/issues/15344
+
+8. #15336 - Support Custom Xaml Controls.pri Resource file
+   Assignee: @sharath2727
+   Labels: enhancement
+   URL: https://github.com/microsoft/react-native-windows/issues/15336
+
+9. #15335 - Avoid using CompositionDynamicAutomationProvider references in RootComponentView
+   Assignee: @sharath2727
+   Labels: enhancement
+   URL: https://github.com/microsoft/react-native-windows/issues/15335
+
+10. #15325 - Accessibility and UIA Support
+    Assignee: @sharath2727
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15325
+
+11. #15324 - Address Z-order feedback
+    Assignee: @sharath2727
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15324
+
+12. #15323 - Upgrade Picker 3P Module to support for fabric Application
+    Assignee: @anupriya13
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15323
+
+13. #15322 - Upgrade CheckBox 3P Module to support for fabric Application
+    Assignee: @anupriya13
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15322
+
+14. #15321 - Add sample 3P Module in RNW
+    Assignee: @sharath2727
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15321
+
+15. #15320 - Tabbing Not recognized in Narrator
+    Assignee: @sharath2727
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15320
+
+16. #15319 - Avoid Deep Import of XamlHost tag
+    Assignee: @sharath2727
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15319
+
+17. #15318 - RNW Core Support for XAML
+    Assignee: @sharath2727
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15318
+
+18. #15317 - Add Support for XAML UI in Fabric
+    Assignee: @sharath2727
+    Labels: enhancement
+    URL: https://github.com/microsoft/react-native-windows/issues/15317
+
+19. #15315 - Text component cannot be set to black in dark mode
+    Assignee: @Nitin-100
+    Labels: bug, Needs: Attention 🌊
+    URL: https://github.com/microsoft/react-native-windows/issues/15315
+
+20. #15311 - Crashes in Assigned Access with `windows.aboveLockScreen` extension
+    Assignee: @Nitin-100
+    Labels: bug
+    URL: https://github.com/microsoft/react-native-windows/issues/15311
+
+21. #15307 - Move to the newer Windows SDK (from 10.0.22621.0 to 10.0.26100.0)
+    Assignee: @anupriya13
+    Labels: bug
+    URL: https://github.com/microsoft/react-native-windows/issues/15307
+
+22. #15256 - Typecast issue for RuntimeSamplingProfileTraceEventSerializer.cpp
+    Assignee: @vineethkuttan
+    Labels: bug, Integration Follow-up
+    URL: https://github.com/microsoft/react-native-windows/issues/15256
+
+23. #15189 - Crash when accessing PlatformColor('Complement')
+    Assignee: @anupriya13
+    Labels: bug, Area: Fabric, New Architecture
+    URL: https://github.com/microsoft/react-native-windows/issues/15189
+
+24. #15175 - react\renderer\graphics\HostPlatformColor.h : missing fork details in vnext/overrides.json
+    Assignee: @HariniMalothu17
+    Labels: bug, Integration Follow-up
+    URL: https://github.com/microsoft/react-native-windows/issues/15175
+
+25. #15167 - Tooltip does not show at correct location (offset quite a bit above and to the left)
+    Assignee: @vineethkuttan
+    Labels: bug, Area: Fabric, New Architecture, Parity: Windows
+    URL: https://github.com/microsoft/react-native-windows/issues/15167
+
+26. #15166 - Multiline TextInput starts using more space for next line well before wrapping actually happens
+    Assignee: @HariniMalothu17
+    Labels: bug, Area: Layout, Area: TextInput, Area: Fabric, New Architecture
+    URL: https://github.com/microsoft/react-native-windows/issues/15166
+
+27. #15130 - [Watson Failure] caused by FAIL_FAST_GUARD_ICALL_CHECK_FAILURE_c0000409_Microsoft.ReactNative.dll!Unknown
+    Assignee: @HariniMalothu17
+    Labels: bug
+    URL: https://github.com/microsoft/react-native-windows/issues/15130
+
+28. #15091 - Introduce a new flag --no-example in init-windows cli command that ignores the creation of example file directory
+    Assignee: @Copilot
+    Labels: enhancement, Area: CLI
+    URL: https://github.com/microsoft/react-native-windows/issues/15091
+
+29. #15078 - Streamline RNW Community Modules Integration & Creation Process
+    Assignees: @anupriya13, @Copilot
+    Labels: enhancement, Extensions, Area: Native Modules, Area: Turbo Modules, Old Architecture, New Architecture, Workstream: Module Support
+    URL: https://github.com/microsoft/react-native-windows/issues/15078
+
+30. #15051 - Update README image to new RNW hero image
+    Assignee: @protikbiswas100
+    Labels: enhancement, good first issue: easy
+    URL: https://github.com/microsoft/react-native-windows/issues/15051
+
+================================================================================
+SUMMARY BY LABEL
+================================================================================
+
+enhancement: 21 issues
+bug: 20 issues
+Area: Fabric: 5 issues
+New Architecture: 5 issues
+Fix Hermes Debugger for RNW: 2 issues
+Integration Follow-up: 2 issues
+Area: CLI: 1 issue
+Area: Layout: 1 issue
+Area: Native Modules: 1 issue
+Area: Release Process: 1 issue
+Area: TextInput: 1 issue
+Area: Turbo Modules: 1 issue
+Extensions: 1 issue
+Needs: Attention 🌊: 1 issue
+Old Architecture: 1 issue
+Parity: Windows: 1 issue
+Workstream: Module Support: 1 issue
+good first issue: easy: 1 issue
+
+================================================================================
+KEY AREAS OF FOCUS
+================================================================================
+
+1. XAML Support in Fabric (Issues #15317-#15325, #15335-#15336)
+   - Multiple issues related to adding XAML control support to Fabric applications
+   - Accessibility and UIA support
+   - ContentIsland integration
+
+2. Modern Inspector & Debugging (#15349, #15369, #15380)
+   - NetworkIOAgent implementation
+   - Console message handling
+   - Follow-up items from modern inspector integration
+
+3. Props Parity (#15352)
+   - Ensuring feature parity between Paper and Fabric architectures
+   - Multiple props need implementation in Fabric
+
+4. Community Modules (#15078, #15091, #15321-#15323, #15346)
+   - Upgrading 3P modules (Picker, CheckBox) for Fabric
+   - Streamlining module integration process
+   - Adding sample modules and tests
+
+5. UI & Layout Issues (#15166, #15167, #15189, #15315)
+   - TextInput wrapping behavior
+   - Tooltip positioning
+   - PlatformColor crashes
+   - Dark mode text rendering
+
+6. Release Process (#15344)
+   - 0.81 release tracking and validation
+
+================================================================================
+HOW TO VIEW/UPDATE THIS LIST
+================================================================================
+
+To get the latest list of open issues, use one of these methods:
+
+1. GitHub Web Interface:
+   https://github.com/microsoft/react-native-windows/milestone/41
+
+2. GitHub CLI (if installed):
+   gh issue list --repo microsoft/react-native-windows --milestone "0.81" --state open
+
+3. GitHub API:
+   curl -H "Accept: application/vnd.github.v3+json" \
+     "https://api.github.com/search/issues?q=repo:microsoft/react-native-windows+milestone:0.81+is:open"
+
+4. Run the provided script:
+   node get-milestone-081-issues.js
+
+================================================================================
