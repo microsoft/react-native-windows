@@ -93,7 +93,6 @@ Here are the options that `npx @react-native-community/cli run-windows` takes:
 | `--emulator`          | boolean    | Deploys the app to an emulator                   |
 | `--device`            | boolean    | Deploys the app to a connected device            |
 | `--target`            | string     | Deploys the app to the specified `GUID` for a device |
-| `--remote-debugging`  | boolean    | **(Deprecated)** Deploys the app in remote debugging mode |
 | `--logging`           | boolean    | Verbose output logging                           |
 | `--no-packager`       | boolean    | Do not launch the packager while building        |
 | `--bundle`            | boolean    | Enable Bundle configuration, i.e. `ReleaseBundle`/`DebugBundle` rather than `Release`/`Debug` |
@@ -110,6 +109,7 @@ Here are the options that `npx @react-native-community/cli run-windows` takes:
 | `--direct-debugging`  | number     | Enable direct debugging on specified port        |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
 | `-h`, `--help`        | boolean    | Display help for command                         |
+| `--client-logs`       | boolean    | Enable plain text JavaScript log streaming for all connected apps |
 
 ## Data Collection
 The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft's privacy statement. Our privacy statement is located at https://go.microsoft.com/fwlink/?LinkID=824704. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.

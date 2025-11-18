@@ -24,10 +24,12 @@ class AccessibilityBaseExample extends React.Component {
           style={{width: 50, height: 50, backgroundColor: 'blue'}}
           accessible={true}
           accessibilityLabel="A blue box"
+          role="heading"
           accessibilityHint="A hint for the blue box."
           accessibilityLevel={1}
           accessibilityItemType="comment"
           accessibilityAccessKey="accessKey"
+          accessibilityDescription="Sample Description"
           accessibilityAnnotation={{
             typeID: 'Comment',
             typeName: 'Check Comment',
@@ -41,6 +43,7 @@ class AccessibilityBaseExample extends React.Component {
           style={{width: 50, height: 50, backgroundColor: 'red'}}
           accessible={true}
           accessibilityLabel="A hint for the red box."
+          accessibilityRole="header"
           accessibilityLevel={2}
           testID="accessibility-base-view-2"
         />

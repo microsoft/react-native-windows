@@ -1,8 +1,436 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 31 May 2025 05:24:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 18 Nov 2025 06:41:41 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1008
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Changes
+
+- Add HostTargetMetadata with app name and device name for inspector page naming (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1007
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Restore Nuget packages on yarn build (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.281
+- Bump @react-native-windows/codegen to v0.0.0-canary.128
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-platform-override to v1.9.61
+
+## 0.0.0-canary.1006
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.280
+
+## 0.0.0-canary.1005
+
+Thu, 13 Nov 2025 14:35:18 GMT
+
+### Changes
+
+- Introduce xamlhost component (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.1004
+
+Wed, 12 Nov 2025 21:00:42 GMT
+
+### Changes
+
+- Add TSF support to TextInput (30809111+acoates-ms@users.noreply.github.com)
+- Implement context menu support for Fabric TextInput with Cut, Copy, Paste, and Select All options (nitchaudhary@microsoft.com)
+- More cleanup now that we only run using fabric. (30809111+acoates-ms@users.noreply.github.com)
+- Pressables should take focus on press (30809111+acoates-ms@users.noreply.github.com)
+- Remove web debugging support (30809111+acoates-ms@users.noreply.github.com)
+- TextInput is zero height when it has no content (30809111+acoates-ms@users.noreply.github.com)
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Disable the deep import warning (30809111+acoates-ms@users.noreply.github.com)
+- Use Hermes version 0.0.0-2511.7001-d7ca19b3 (vmorozov@microsoft.com)
+- Added support for modern inspector (vmorozov@microsoft.com)
+- Use hermes-windows version 0.0.0-2511.3001-9e4cf518 (vmorozov@microsoft.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Realign View.js with upstream (30809111+acoates-ms@users.noreply.github.com)
+- Fix init-windows template to automatically detect existing codegen spec files (198982749+Copilot@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.279
+- Bump @react-native-windows/codegen to v0.0.0-canary.127
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.42
+- Bump @rnw-scripts/just-task to v2.3.57
+- Bump react-native-platform-override to v1.9.60
+
+## 0.0.0-canary.1003
+
+Thu, 30 Oct 2025 05:29:15 GMT
+
+### Changes
+
+- Revert "Theme aware platform color for text. (#15266)" (nitchaudhary@microsoft.com)
+
+## 0.0.0-canary.1002
+
+Tue, 28 Oct 2025 23:42:04 GMT
+
+### Changes
+
+- Fix C4018 warning in ShadowNode.cpp (jthysell@microsoft.com)
+
+## 0.0.0-canary.1001
+
+Fri, 24 Oct 2025 05:26:22 GMT
+
+### Changes
+
+- Theme aware platform color for text. (nitchaudhary@microsoft.com)
+- Handling platform color with accent color (nitchaudhary@microsoft.com)
+
+## 0.0.0-canary.1000
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Changes
+
+- Add Attack Surface Analyzer (ASA) integration to CI pipeline for SDL compliance (copilot@github.com)
+- Implement SDL /GS crash detection and analysis tooling for stack buffer overrun monitoring (copilot@github.com)
+- Fix ARM64 support in rnw-dependencies.ps1 by detecting processor architecture and installing the correct Visual Studio VC Tools component (ARM64 vs x86.x64) (copilot@github.com)
+- fix: stricter checks against key events (sanajmi@microsoft.com)
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.278
+
+## 0.0.0-canary.999
+
+Thu, 09 Oct 2025 05:28:12 GMT
+
+### Changes
+
+- fix for watson (hmalothu@microsoft.com)
+- Add UIA HeadingLevel behaviour for Fabric architecture (kvineeth@microsoft.com)
+
+## 0.0.0-canary.998
+
+Wed, 08 Oct 2025 05:27:20 GMT
+
+### Changes
+
+- fixed testcli.cpp tests related setruntimedataimpl and getruntimedataimpl (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.997
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Changes
+
+- Update tester files (hmalothu@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.277
+- Bump @react-native-windows/codegen to v0.0.0-canary.126
+- Bump @rnw-scripts/just-task to v2.3.56
+- Bump react-native-platform-override to v1.9.59
+
+## 0.0.0-canary.996
+
+Wed, 01 Oct 2025 05:25:55 GMT
+
+### Changes
+
+- Revert "[Fabric] Implement snapToInterval property for ScrollView  (#14847)" (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.995
+
+Tue, 30 Sep 2025 05:27:15 GMT
+
+### Changes
+
+- [Fabric] Fixing Clipped Property for Modal Component (kvineeth@microsoft.com)
+
+## 0.0.0-canary.994
+
+Fri, 26 Sep 2025 05:31:31 GMT
+
+### Changes
+
+- Fix for hardcoded Textinput text holder as gray.GIssue:15129 (nitchaudhary@microsoft.com)
+
+## 0.0.0-canary.993
+
+Fri, 19 Sep 2025 05:29:13 GMT
+
+### Changes
+
+- Removing Platform brush instead using proper caret brush (nitchaudhary@microsoft.com)
+- adding nullptr check before destroyShadow calls (protikbiswas100@microsoft.com)
+- fix (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-platform-override to v1.9.58
+
+## 0.0.0-canary.992
+
+Thu, 18 Sep 2025 05:34:35 GMT
+
+### Changes
+
+- Remove legacy cxxmodules (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.991
+
+Wed, 17 Sep 2025 05:27:16 GMT
+
+### Changes
+
+- Upgrade dotnet version (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.276
+
+## 0.0.0-canary.990
+
+Wed, 10 Sep 2025 05:26:20 GMT
+
+### Changes
+
+- Fix deadlock in ReactInstanceWin::DetachRootView by replacing sync call with async (copilot@github.com)
+- Implement onMomentumScrollEnd and onMomentumScrollBegin for Fabric ScrollView (198982749+Copilot@users.noreply.github.com)
+
+## 0.0.0-canary.989
+
+Tue, 09 Sep 2025 05:26:26 GMT
+
+### Changes
+
+- adding UIA event handler changes for navigator (protikbiswas100@microsoft.com)
+
+## 0.0.0-canary.988
+
+Tue, 02 Sep 2025 05:24:07 GMT
+
+### Changes
+
+- [Fabric] Fix for Text and TextInput focus issue with screen readers. (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.275
+
+## 0.0.0-canary.987
+
+Wed, 27 Aug 2025 05:26:00 GMT
+
+### Changes
+
+- Reapply "Change `init-windows` default new app template to New Architecture" (#14985) (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.274
+
+## 0.0.0-canary.986
+
+Sat, 23 Aug 2025 05:30:45 GMT
+
+### Changes
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump JSI to use latest version 20 (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.273
+- Bump @react-native-windows/codegen to v0.0.0-canary.125
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.41
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump react-native-platform-override to v1.9.57
+
+## 0.0.0-canary.985
+
+Wed, 20 Aug 2025 05:26:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.272
+
+## 0.0.0-canary.984
+
+Fri, 15 Aug 2025 17:57:23 GMT
+
+### Changes
+
+- Added UIA Event Triggers for accessibilityAnnotation Property Changes (gsaran252000@gmail.com)
+
+## 0.0.0-canary.983
+
+Sat, 09 Aug 2025 05:24:31 GMT
+
+### Changes
+
+- Bump hermes-windows to 0.0.0-2507.21007-eda7aef6 (74712637+iamAbhi-916@users.noreply.github.com)
+- Null pointer checks and validation in SetLayoutPropsRecursive to prevent crashes when shadow nodes are invalid or deleted (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.982
+
+Fri, 08 Aug 2025 05:25:51 GMT
+
+### Changes
+
+- TextInput should capture mouse on mouse down (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Raising UIA Event if Toggle State Changes in Switch Component (kvineeth@microsoft.com)
+
+## 0.0.0-canary.981
+
+Thu, 07 Aug 2025 05:25:45 GMT
+
+### Changes
+
+- [Fabric] Implement announceForAccessibility in AccessibilityInfo Module (kvineeth@microsoft.com)
+
+## 0.0.0-canary.980
+
+Wed, 06 Aug 2025 05:28:00 GMT
+
+### Changes
+
+- Revert "Change `init-windows` default new app template to New Architecture (#…" (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.271
+
+## 0.0.0-canary.979
+
+Thu, 31 Jul 2025 05:23:48 GMT
+
+### Changes
+
+- Replace ContextContainer::Shared with std::shared_ptr<const ContextContainer> (chpurrer@meta.com)
+
+## 0.0.0-canary.978
+
+Sat, 26 Jul 2025 05:26:13 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250506-3ac16dd6a (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.977
+
+Fri, 25 Jul 2025 05:27:19 GMT
+
+### Changes
+
+- [Fabric] Implementation of scrollEvent Handling and scrollEnabled,OnScroll prop for TextInput (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.270
+
+## 0.0.0-canary.976
+
+Sat, 19 Jul 2025 05:26:21 GMT
+
+### Changes
+
+- Implement snapToAlignment support for Fabric ScrollView - interface and prop handling (198982749+Copilot@users.noreply.github.com)
+
+## 0.0.0-canary.975
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Changes
+
+- Add accessibilityValue support to Button component (54227869+anupriya13@users.noreply.github.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.269
+- Bump @react-native-windows/codegen to v0.0.0-canary.124
+- Bump @rnw-scripts/just-task to v2.3.54
+- Bump react-native-platform-override to v1.9.56
+
+## 0.0.0-canary.974
+
+Wed, 16 Jul 2025 05:26:19 GMT
+
+### Changes
+
+- Implement snapToInterval property for Fabric ScrollView (198982749+Copilot@users.noreply.github.com)
+- Implement the onPressOut property for the fabric implementation of TextInput (hmalothu@microsoft.com)
+
+## 0.0.0-canary.973
+
+Tue, 15 Jul 2025 05:27:19 GMT
+
+### Changes
+
+- Changes for updating accessibilityValue prop in UIA (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.268
+
+## 0.0.0-canary.972
+
+Fri, 04 Jul 2025 05:21:22 GMT
+
+### Changes
+
+- fix(new-arch): add deprecation warning for Flyout/Popup (fcalise@gmail.com)
+
+## 0.0.0-canary.971
+
+Thu, 03 Jul 2025 05:24:25 GMT
+
+### Changes
+
+- intergrate rn 0.80.0-nightly-20250414-70cdf12c4 (satkh@microsoft.com)
+
+## 0.0.0-canary.970
+
+Tue, 01 Jul 2025 05:24:43 GMT
+
+### Changes
+
+- [Fabric] Implement maxFontSizeMultiplier in Text Input (54227869+anupriya13@users.noreply.github.com)
+- Add e2e test cases for snapToStart property in ScrollView fabric implementation (198982749+Copilot@users.noreply.github.com)
+
+## 0.0.0-canary.969
+
+Fri, 27 Jun 2025 05:23:18 GMT
+
+### Changes
+
+- [Fabric] Implementation of accessibilityDescription (kvineeth@microsoft.com)
+
+## 0.0.0-canary.968
+
+Thu, 26 Jun 2025 05:22:52 GMT
+
+### Changes
+
+- Added fix for AutoFocus (hmalothu@microsoft.com)
+
+## 0.0.0-canary.967
+
+Tue, 24 Jun 2025 05:22:49 GMT
+
+### Changes
+
+- updated adjustsFontSizeToFit textlayout to nullptr (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.966
+
+Fri, 20 Jun 2025 05:21:54 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.267
+
+## 0.0.0-canary.965
+
+Thu, 19 Jun 2025 17:16:25 GMT
+
+### Changes
+
+- [Fabric] Implement aria-level, aria-posinset, aria-setsize in Switch (54227869+anupriya13@users.noreply.github.com)
+- Force all in-repo projects to build locally with RestoreForceEvaluate (jthysell@microsoft.com)
+- updated ellipsis to respect tail and clip behaviour , for head , middle follow defaulty tail behaviour (74712637+iamAbhi-916@users.noreply.github.com)
+- fix(vnext-template): add additional include dirs for submodules (fcalise@gmail.com)
+- Add aria-level, aria-posinset and aria-setsize in Image (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement aria-level, aria-posinset, aria-setsize in TextInput (54227869+anupriya13@users.noreply.github.com)
+- Update to @types/react 19 (30809111+acoates-ms@users.noreply.github.com)
+- Change `init-windows` default new app template to New Architecture (jthysell@microsoft.com)
+- Remove .. usage in relative include (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement keyboardDismissMode in ScrollView (54227869+anupriya13@users.noreply.github.com)
+- [Fabric] Implement onContentSizeChange in TextInput (54227869+anupriya13@users.noreply.github.com)
+- creaternwapp.cmd: Override default RN CLI template when nightly detected (jthysell@microsoft.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.266
 
 ## 0.0.0-canary.964
 

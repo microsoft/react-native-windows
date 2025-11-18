@@ -4,21 +4,20 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import type {ViewProps} from './ViewPropTypes';
 
-import TextAncestor from '../../Text/TextAncestor';
+import TextAncestorContext from '../../Text/TextAncestorContext';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
+import {use} from 'react';
 import invariant from 'invariant'; // [Windows]
 // [Windows
 import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
-
-export type Props = ViewProps;
 
 // [Windows
 // $FlowFixMe - children typing
@@ -57,302 +56,244 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-const View: component(
+component View(
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
-) = React.forwardRef(
-  (
-    {
-      accessibilityElementsHidden,
-      accessibilityLabel,
-      accessibilityLabelledBy,
-      accessibilityLevel, // Windows
-      accessibilityLiveRegion,
-      accessibilityPosInSet, // Windows
-      accessibilitySetSize, // Windows
-      accessibilityState,
-      accessibilityValue,
-      'aria-busy': ariaBusy,
-      'aria-checked': ariaChecked,
-      'aria-disabled': ariaDisabled,
-      'aria-expanded': ariaExpanded,
-      'aria-multiselectable': ariaMultiselectable, // Windows
-      'aria-required': ariaRequired, // Windows
-      'aria-hidden': ariaHidden,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-level': ariaLevel,
-      'aria-live': ariaLive,
-      'aria-posinset': ariaPosinset, // Windows
-      'aria-readonly': ariaReadOnly, // Windows
-      'aria-selected': ariaSelected,
-      'aria-setsize': ariaSetsize, // Windows
-      'aria-valuemax': ariaValueMax,
-      'aria-valuemin': ariaValueMin,
-      'aria-valuenow': ariaValueNow,
-      'aria-valuetext': ariaValueText,
-      focusable,
-      disabled,
-      id,
-      importantForAccessibility,
-      nativeID,
-      tabIndex,
-      ...otherProps
-    }: ViewProps,
-    forwardedRef,
-  ) => {
-    const hasTextAncestor = React.useContext(TextAncestor);
-    const _accessibilityLabelledBy =
-      ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
+) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const hasTextAncestor = use(TextAncestorContext);
 
-    let _accessibilityState;
-    if (
-      accessibilityState != null ||
-      ariaBusy != null ||
-      ariaChecked != null ||
-      ariaDisabled != null ||
-      ariaExpanded != null ||
-      ariaSelected != null ||
-      ariaReadOnly != null || // Windows
-      ariaMultiselectable != null || // Windows
-      ariaRequired != null // Windows
-    ) {
-      _accessibilityState = {
-        busy: ariaBusy ?? accessibilityState?.busy,
-        checked: ariaChecked ?? accessibilityState?.checked,
-        disabled: ariaDisabled ?? accessibilityState?.disabled,
-        expanded: ariaExpanded ?? accessibilityState?.expanded,
-        selected: ariaSelected ?? accessibilityState?.selected,
-        readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
-        multiselectable:
-          ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
-        required: ariaRequired ?? accessibilityState?.required, // Windows
-      };
+  let actualView;
+  const {
+    accessibilityState,
+    accessibilityValue,
+    'aria-busy': ariaBusy,
+    'aria-checked': ariaChecked,
+    'aria-disabled': ariaDisabled,
+    'aria-expanded': ariaExpanded,
+    'aria-multiselectable': ariaMultiselectable, // Windows
+    'aria-required': ariaRequired, // Windows
+    'aria-description': ariaDescription, //Windows
+    'aria-hidden': ariaHidden,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-level': ariaLevel,
+    'aria-live': ariaLive,
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-readonly': ariaReadOnly, // Windows
+    'aria-selected': ariaSelected,
+    'aria-setsize': ariaSetsize, // Windows
+    'aria-valuemax': ariaValueMax,
+    'aria-valuemin': ariaValueMin,
+    'aria-valuenow': ariaValueNow,
+    'aria-valuetext': ariaValueText,
+    id,
+    tabIndex,
+    ...otherProps
+  } = props;
+
+  // Since we destructured props, we can now treat it as mutable
+  const processedProps = otherProps as {...ViewProps};
+
+  const parsedAriaLabelledBy = ariaLabelledBy?.split(/\s*,\s*/g);
+  if (parsedAriaLabelledBy !== undefined) {
+    processedProps.accessibilityLabelledBy = parsedAriaLabelledBy;
+  }
+
+  if (ariaLabel !== undefined) {
+    processedProps.accessibilityLabel = ariaLabel;
+  }
+
+  if (ariaLive !== undefined) {
+    processedProps.accessibilityLiveRegion =
+      ariaLive === 'off' ? 'none' : ariaLive;
+  }
+
+  if (ariaHidden !== undefined) {
+    processedProps.accessibilityElementsHidden = ariaHidden;
+    if (ariaHidden === true) {
+      processedProps.importantForAccessibility = 'no-hide-descendants';
     }
-    let _accessibilityValue;
-    if (
-      accessibilityValue != null ||
-      ariaValueMax != null ||
-      ariaValueMin != null ||
-      ariaValueNow != null ||
-      ariaValueText != null
-    ) {
-      _accessibilityValue = {
-        max: ariaValueMax ?? accessibilityValue?.max,
-        min: ariaValueMin ?? accessibilityValue?.min,
-        now: ariaValueNow ?? accessibilityValue?.now,
-        text: ariaValueText ?? accessibilityValue?.text,
-      };
-    }
+  }
 
-    const _keyDown =
-      otherProps.keyDownEvents || otherProps.onKeyDown
-        ? (event: KeyEvent) => {
-            if (
-              otherProps.keyDownEvents &&
-              event.isPropagationStopped() !== true
-            ) {
-              // $FlowFixMe - keyDownEvents was already checked to not be undefined
-              for (const el of otherProps.keyDownEvents) {
-                if (
-                  event.nativeEvent.code === el.code &&
-                  el.handledEventPhase === 3
-                ) {
-                  event.stopPropagation();
-                }
-              }
-            }
-            otherProps.onKeyDown && otherProps.onKeyDown(event);
+  // Windows accessibility properties
+  if (ariaLevel !== undefined) {
+    processedProps.accessibilityLevel = ariaLevel;
+  }
+
+  if (ariaDescription !== undefined) {
+    processedProps.accessibilityDescription = ariaDescription;
+  }
+
+  if (ariaPosinset !== undefined) {
+    processedProps.accessibilityPosInSet = ariaPosinset;
+  }
+
+  if (ariaSetsize !== undefined) {
+    processedProps.accessibilitySetSize = ariaSetsize;
+  }
+
+  if (id !== undefined) {
+    processedProps.nativeID = id;
+  }
+
+  if (tabIndex !== undefined) {
+    processedProps.focusable = !tabIndex;
+  }
+
+  if (
+    accessibilityState != null ||
+    ariaBusy != null ||
+    ariaChecked != null ||
+    ariaDisabled != null ||
+    ariaExpanded != null ||
+    ariaSelected != null ||
+    ariaReadOnly != null || // Windows
+    ariaMultiselectable != null || // Windows
+    ariaRequired != null // Windows
+  ) {
+    processedProps.accessibilityState = {
+      busy: ariaBusy ?? accessibilityState?.busy,
+      checked: ariaChecked ?? accessibilityState?.checked,
+      disabled: ariaDisabled ?? accessibilityState?.disabled,
+      expanded: ariaExpanded ?? accessibilityState?.expanded,
+      selected: ariaSelected ?? accessibilityState?.selected,
+      readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+      multiselectable:
+        ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+      required: ariaRequired ?? accessibilityState?.required, // Windows
+    };
+  }
+
+  if (
+    accessibilityValue != null ||
+    ariaValueMax != null ||
+    ariaValueMin != null ||
+    ariaValueNow != null ||
+    ariaValueText != null
+  ) {
+    processedProps.accessibilityValue = {
+      max: ariaValueMax ?? accessibilityValue?.max,
+      min: ariaValueMin ?? accessibilityValue?.min,
+      now: ariaValueNow ?? accessibilityValue?.now,
+      text: ariaValueText ?? accessibilityValue?.text,
+    };
+  }
+
+  // [Windows key event processing and accessible property
+  if (otherProps.keyDownEvents || otherProps.onKeyDown) {
+    const keydownLocal = otherProps.onKeyDown;
+    processedProps.onKeyDown = event => {
+      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        for (const el of otherProps.keyDownEvents) {
+          if (
+            event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+            el.handledEventPhase === 3
+          ) {
+            event.stopPropagation();
           }
-        : undefined;
-
-    const _keyUp =
-      otherProps.keyUpEvents || otherProps.onKeyUp
-        ? (event: KeyEvent) => {
-            if (
-              otherProps.keyUpEvents &&
-              event.isPropagationStopped() !== true
-            ) {
-              // $FlowFixMe - keyUpEvents was already checked to not be undefined
-              for (const el of otherProps.keyUpEvents) {
-                if (
-                  event.nativeEvent.code === el.code &&
-                  el.handledEventPhase === 3
-                ) {
-                  event.stopPropagation();
-                }
-              }
-            }
-            otherProps.onKeyUp && otherProps.onKeyUp(event);
-          }
-        : undefined;
-
-    const _keyDownCapture =
-      otherProps.keyDownEvents || otherProps.onKeyDownCapture
-        ? (event: KeyEvent) => {
-            if (
-              otherProps.keyDownEvents &&
-              event.isPropagationStopped() !== true
-            ) {
-              // $FlowFixMe - keyDownEvents was already checked to not be undefined
-              for (const el of otherProps.keyDownEvents) {
-                if (
-                  event.nativeEvent.code === el.code &&
-                  el.handledEventPhase === 1
-                ) {
-                  event.stopPropagation();
-                }
-              }
-            }
-            otherProps.onKeyDownCapture && otherProps.onKeyDownCapture(event);
-          }
-        : undefined;
-
-    const _keyUpCapture =
-      otherProps.keyUpEvents || otherProps.onKeyUpCapture
-        ? (event: KeyEvent) => {
-            if (
-              otherProps.keyUpEvents &&
-              event.isPropagationStopped() !== true
-            ) {
-              // $FlowFixMe - keyUpEvents was already checked to not be undefined
-              for (const el of otherProps.keyUpEvents) {
-                if (
-                  event.nativeEvent.code === el.code &&
-                  el.handledEventPhase === 1
-                ) {
-                  event.stopPropagation();
-                }
-              }
-            }
-            otherProps.onKeyUpCapture && otherProps.onKeyUpCapture(event);
-          }
-        : undefined;
-
-    // [Windows
-    const _focusable = tabIndex !== undefined ? !tabIndex : focusable;
-    const _accessible =
-      importantForAccessibility === 'no-hide-descendants'
-        ? false
-        : otherProps.accessible;
-
-    if (_focusable === true && _accessible === false) {
-      console.warn(
-        'All focusable views should report proper accessibility information. Views marked as focusable should always be accessible.',
-      );
-    }
-
-    const actualView = (
-      <ViewNativeComponent
-        {...otherProps}
-        accessibilityLiveRegion={
-          ariaLive === 'off' ? 'none' : ariaLive ?? accessibilityLiveRegion
         }
-        accessibilityLabel={ariaLabel ?? accessibilityLabel}
-        accessibilityLevel={ariaLevel ?? accessibilityLevel}
-        accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
-        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
-        focusable={_focusable}
-        disabled={disabled}
-        accessibilityState={_accessibilityState}
-        accessibilityElementsHidden={ariaHidden ?? accessibilityElementsHidden}
-        accessibilityLabelledBy={_accessibilityLabelledBy}
-        accessibilityValue={_accessibilityValue}
-        importantForAccessibility={
-          ariaHidden === true
-            ? 'no-hide-descendants'
-            : importantForAccessibility
+      }
+      keydownLocal && keydownLocal(event);
+    };
+  }
+
+  if (otherProps.keyUpEvents || otherProps.onKeyUp) {
+    const keyupLocal = otherProps.onKeyUp;
+    processedProps.onKeyUp = event => {
+      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyUpEvents was already checked to not be undefined
+        for (const el of otherProps.keyUpEvents) {
+          if (
+            event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+            el.handledEventPhase === 3
+          ) {
+            event.stopPropagation();
+          }
         }
-        nativeID={id ?? nativeID}
-        ref={forwardedRef}
-        onKeyDown={_keyDown}
-        onKeyDownCapture={_keyDownCapture}
-        onKeyUp={_keyUp}
-        onKeyUpCapture={_keyUpCapture}
-        // [Windows
-        accessible={_accessible}
-        children={
-          importantForAccessibility === 'no-hide-descendants'
-            ? childrenWithImportantForAccessibility(otherProps.children)
-            : otherProps.children
+      }
+      keyupLocal && keyupLocal(event);
+    };
+  }
+
+  if (otherProps.keyDownEvents || otherProps.onKeyDownCapture) {
+    const keydownCaptureLocal = otherProps.onKeyDownCapture;
+    processedProps.onKeyDownCapture = event => {
+      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        for (const el of otherProps.keyDownEvents) {
+          if (
+            event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+            el.handledEventPhase === 1
+          ) {
+            event.stopPropagation();
+          }
         }
-        // Windows]
-      />
+      }
+      keydownCaptureLocal && keydownCaptureLocal(event);
+    };
+  }
+
+  if (otherProps.keyUpEvents || otherProps.onKeyUpCapture) {
+    const keyupCaptureLocal = otherProps.onKeyUpCapture;
+    processedProps.onKeyUpCapture = event => {
+      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyUpEvents was already checked to not be undefined
+        for (const el of otherProps.keyUpEvents) {
+          if (
+            event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
+            el.handledEventPhase === 1
+          ) {
+            event.stopPropagation();
+          }
+        }
+      }
+      keyupCaptureLocal && keyupCaptureLocal(event);
+    };
+  }
+
+  // Windows accessible property
+  const computedAccessible =
+    processedProps.importantForAccessibility === 'no-hide-descendants'
+      ? false
+      : otherProps.accessible;
+  if (computedAccessible !== undefined) {
+    processedProps.accessible = computedAccessible;
+  }
+
+  actualView =
+    ref == null ? (
+      <ViewNativeComponent {...processedProps} />
+    ) : (
+      <ViewNativeComponent {...processedProps} ref={ref} />
     );
 
-    // [Windows - Paper doesn't support Views in Text while Fabric does
-    if (global.RN$Bridgeless !== true) {
-      return (
-        // [Windows
-        // In core this is a TextAncestor.Provider value={false} See
-        // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
-        // But since Views are not currently supported in Text, we do not need the extra provider
-        <TextAncestor.Consumer>
-          {consumerHasTextAncestor => {
-            invariant(
-              !consumerHasTextAncestor,
-              'Nesting of <View> within <Text> is not currently supported.',
-            );
-            return (
-              <ViewNativeComponent
-                {...otherProps}
-                accessibilityLiveRegion={
-                  ariaLive === 'off'
-                    ? 'none'
-                    : ariaLive ?? accessibilityLiveRegion
-                }
-                accessibilityLabel={ariaLabel ?? accessibilityLabel}
-                accessibilityLevel={ariaLevel ?? accessibilityLevel}
-                accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
-                accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
-                focusable={_focusable}
-                disabled={disabled}
-                accessibilityState={_accessibilityState}
-                accessibilityElementsHidden={
-                  ariaHidden ?? accessibilityElementsHidden
-                }
-                accessibilityLabelledBy={_accessibilityLabelledBy}
-                accessibilityValue={_accessibilityValue}
-                importantForAccessibility={
-                  ariaHidden === true
-                    ? 'no-hide-descendants'
-                    : importantForAccessibility
-                }
-                nativeID={id ?? nativeID}
-                ref={forwardedRef}
-                onKeyDown={_keyDown}
-                onKeyDownCapture={_keyDownCapture}
-                onKeyUp={_keyUp}
-                onKeyUpCapture={_keyUpCapture}
-                // [Windows
-                accessible={_accessible}
-                children={
-                  importantForAccessibility === 'no-hide-descendants'
-                    ? childrenWithImportantForAccessibility(otherProps.children)
-                    : otherProps.children
-                }
-                // Windows]
-              />
-            );
-          }}
-        </TextAncestor.Consumer>
-        // Windows]
-      );
-    } else {
-      if (hasTextAncestor) {
-        return (
-          <TextAncestor.Provider value={false}>
-            {actualView}
-          </TextAncestor.Provider>
-        );
-      }
-    }
-    // Windows]
+  if (hasTextAncestor) {
+    return (
+      <TextAncestorContext value={false}>{actualView}</TextAncestorContext>
+    );
+  }
+  return actualView;
+}
 
-    return actualView;
-  },
-);
-
+// eslint-disable-next-line no-unreachable
 View.displayName = 'View';
 
 export default View;

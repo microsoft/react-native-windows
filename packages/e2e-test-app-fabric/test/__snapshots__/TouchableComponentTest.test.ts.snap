@@ -18,7 +18,7 @@ exports[`Touchable Tests Text components can be tappable 1`] = `
   "Visual Tree": {
     "Comment": "tappable_text",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "916, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -56,7 +56,7 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
   "Visual Tree": {
     "Comment": "touchable_without_feedback_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 34",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -125,8 +125,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         "LiveSetting": "Assertive",
         "LocalizedControlType": "text",
         "Name": "TouchableWithoutFeedback (Control 3 in Set of 3)",
-        "PositionInSet": 3,
-        "SizeofSet": 3,
         "TextRangePattern.GetText": "TouchableWithoutFeedback (Control 3 in Set of 3)",
       },
     ],
@@ -166,37 +164,11 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
   "Visual Tree": {
     "Comment": "touchable_set",
     "Offset": "0, 0, 0",
-    "Size": "916, 55",
+    "Size": "916, 56",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 18",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 18",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "916, 20",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "916, 20",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 19, 0",
         "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -222,13 +194,39 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         ],
       },
       {
-        "Offset": "0, 37, 0",
-        "Size": "916, 20",
+        "Offset": "0, 19, 0",
+        "Size": "916, 18",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "916, 18",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 37, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -495,12 +493,12 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "56, 19",
+        "Size": "56, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "56, 19",
+            "Size": "56, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -546,7 +544,7 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
     },
     "Comment": "touchable_hit_slop_button",
     "Offset": "0, 0, 0",
-    "Size": "146, 18",
+    "Size": "146, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -601,17 +599,17 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
   "Visual Tree": {
     "Comment": "touchable_feedback_events_button",
     "Offset": "0, 0, 0",
-    "Size": "56, 19",
+    "Size": "56, 18",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "56, 19",
+        "Size": "56, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "56, 19",
+            "Size": "56, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -708,12 +706,12 @@ exports[`Touchable Tests Touchables can register feedback events 2`] = `
       },
       {
         "Offset": "11, 11, 0",
-        "Size": "874, 20",
+        "Size": "874, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "874, 20",
+            "Size": "874, 19",
             "Visual Type": "SpriteVisual",
           },
         ],

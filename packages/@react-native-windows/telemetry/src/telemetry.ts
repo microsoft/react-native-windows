@@ -28,6 +28,7 @@ export interface CommandStartInfo {
 
 export interface CommandEndInfo {
   resultCode: errorUtils.CodedErrorType;
+  finalOptions?: Record<string, any>;
 }
 
 interface CommandInfo {
@@ -201,7 +202,7 @@ export class Telemetry {
 
   /** Sets up any base properties that all telemetry events require. */
   private static async setupBaseProperties() {
-    Telemetry.commonProperties.deviceId = await basePropUtils.deviceId();
+    // Telemetry.commonProperties.deviceId = await basePropUtils.deviceId();
     Telemetry.commonProperties.fullBuildInfo =
       await basePropUtils.fullBuildInfo();
     Telemetry.commonProperties.deviceArchitecture =
@@ -368,7 +369,7 @@ export class Telemetry {
     // Populate Part A extensions
     telemetryItem.ext = {};
     telemetryItem.ext.device = {
-      id: Telemetry.commonProperties.deviceId,
+      //id: Telemetry.commonProperties.deviceId,
       deviceClass: Telemetry.commonProperties.deviceClass,
     };
     telemetryItem.ext.os = {

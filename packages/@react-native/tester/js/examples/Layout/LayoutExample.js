@@ -4,12 +4,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 import RNTesterBlock from '../../components/RNTesterBlock';
@@ -53,6 +54,8 @@ function CircleBlock({children, style}: CircleBlockProps): React.Node {
     borderColor: '#d6d7da',
     marginBottom: 2,
   };
+  /* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+   * https://fburl.com/workplace/6291gfvu */
   return <View style={[circleStyle, style]}>{children}</View>;
 }
 
@@ -208,4 +211,4 @@ exports.examples = [
       return <LayoutExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

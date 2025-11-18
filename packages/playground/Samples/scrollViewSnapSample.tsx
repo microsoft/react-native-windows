@@ -14,6 +14,7 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
+  TextInput,
 } from 'react-native';
 
 function wait(timeout: number) {
@@ -247,23 +248,6 @@ export default class Bootstrap extends React.Component<{}, any> {
               value={this.state.pagingEnabled}
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              alignSelf: 'stretch',
-              justifyContent: 'center',
-              padding: 20,
-            }}>
-            <Text>
-              {'KeyboardDismiss: '.concat(
-                this.state.keyboardDismiss ? 'on-drag' : 'none',
-              )}
-            </Text>
-            <Switch
-              onValueChange={this.toggleSwitch8}
-              value={this.state.keyboardDismiss}
-            />
-          </View>
         </View>
         <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
           <ScrollView
@@ -304,12 +288,57 @@ export default class Bootstrap extends React.Component<{}, any> {
             onScrollEndDrag={() => {
               console.log('onScrollEndDrag');
             }}
+            onMomentumScrollBegin={() => {
+              console.log('onMomentumScrollBegin');
+            }}
+            onMomentumScrollEnd={() => {
+              console.log('onMomentumScrollEnd');
+            }}
             onScroll={() => {
               console.log('onScroll');
             }}
             decelerationRate={0.95}
             scrollEventThrottle={50}>
             {this.makeItems(20, [styles.itemWrapper])}
+          </ScrollView>
+        </View>
+        <View
+          style={{
+            flexDirection: 'column',
+            alignSelf: 'stretch',
+            justifyContent: 'center',
+            padding: 20,
+          }}>
+          <Text>
+            {'KeyboardDismiss: '.concat(
+              this.state.keyboardDismiss ? 'on-drag' : 'none',
+            )}
+          </Text>
+          <Switch
+            onValueChange={this.toggleSwitch8}
+            value={this.state.keyboardDismiss}
+          />
+        </View>
+        <View style={{height: 200}}>
+          <ScrollView
+            style={{borderWidth: 2, borderColor: 'green'}}
+            keyboardDismissMode={
+              this.state.keyboardDismiss ? 'on-drag' : 'none'
+            }
+            contentContainerStyle={{padding: 20}}>
+            <TextInput
+              style={{
+                borderWidth: 1,
+                marginBottom: 20,
+                padding: 8,
+                height: 40,
+              }}
+              placeholder="Touch here for keyboard"
+            />
+            <Text>Scroll to test keyboard dismiss behavior.</Text>
+            <View style={{height: 100, marginTop: 20}}>
+              <Text>Scroll down to see more empty content.</Text>
+            </View>
           </ScrollView>
         </View>
       </View>

@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "CompositionContextHelper.h"
+#include <algorithm>
 #if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
 #endif
@@ -74,6 +75,10 @@ struct CompositionTypeTraits<WindowsTypeTag> {
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
+  using InteractionTrackerInertiaModifier =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
   using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
@@ -143,6 +148,10 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
   using InteractionTrackerValuesChangedArgs =
       winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using InteractionTrackerInertiaRestingValue =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaRestingValue;
+  using InteractionTrackerInertiaModifier =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaModifier;
   using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
@@ -700,8 +709,23 @@ struct CompScrollerVisual : winrt::implements<
     void IdleStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerIdleStateEnteredArgs args) noexcept {
+      // If we were in inertia and are now idle, momentum has ended
+      if (m_outer->m_inertia) {
+        m_outer->FireScrollMomentumEnd({sender.Position().x, sender.Position().y});
+      }
+
+      // If we were interacting but never entered inertia (Interacting -> Idle),
+      // and the interaction was user-driven (requestId == 0), fire end-drag here.
+      // Note: if the interactionRequestId was non-zero it was caused by a Try* call
+      // (programmatic), so we should not fire onScrollEndDrag.
+      if (m_outer->m_interacting && args.RequestId() == 0) {
+        m_outer->FireScrollEndDrag({sender.Position().x, sender.Position().y});
+      }
+
+      // Clear state flags
       m_outer->m_custom = false;
       m_outer->m_inertia = false;
+      m_outer->m_interacting = false;
     }
     void InertiaStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
@@ -709,15 +733,26 @@ struct CompScrollerVisual : winrt::implements<
       m_outer->m_custom = false;
       m_outer->m_inertia = true;
       m_outer->m_currentPosition = args.NaturalRestingPosition();
-      // When the user stops interacting with the object, tracker can go into two paths:
-      // 1. tracker goes into idle state immediately
-      // 2. tracker has just started gliding into Inertia state
-      // Fire ScrollEndDrag
-      m_outer->FireScrollEndDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
+
+      if (!m_outer->m_interacting && args.RequestId() == 0) {
+        m_outer->FireScrollBeginDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
+      }
+
+      // If interaction was user-driven (requestId == 0),
+      // fire ScrollEndDrag here (Interacting -> Inertia caused by user lift).
+      if (m_outer->m_interacting && args.RequestId() == 0) {
+        m_outer->FireScrollEndDrag({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
+      }
+
+      // Fire momentum scroll begin when we enter inertia (user or programmatic)
+      m_outer->FireScrollMomentumBegin({args.NaturalRestingPosition().x, args.NaturalRestingPosition().y});
     }
     void InteractingStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {
+      // Mark that we're now interacting and remember the requestId (user manipulations => 0)
+      m_outer->m_interacting = true;
+
       // Fire when the user starts dragging the object
       m_outer->FireScrollBeginDrag({sender.Position().x, sender.Position().y});
     }
@@ -727,6 +762,10 @@ struct CompScrollerVisual : winrt::implements<
     void ValuesChanged(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerValuesChangedArgs args) noexcept {
+      if (!m_outer->m_interacting && args.RequestId() == 0) {
+        m_outer->FireScrollBeginDrag({args.Position().x, args.Position().y});
+      }
+      m_outer->m_interacting = true;
       m_outer->m_currentPosition = args.Position();
       m_outer->FireScrollPositionChanged({args.Position().x, args.Position().y});
     }
@@ -782,9 +821,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void Horizontal(bool value) noexcept {
+    bool previousHorizontal = m_horizontal;
     m_horizontal = value;
 
-    UpdateInteractionModes();
+    if (previousHorizontal != m_horizontal) {
+      UpdateInteractionModes();
+      ConfigureSnapInertiaModifiers(); // Reconfigure modifiers when direction changes
+    }
   }
 
   void UpdateInteractionModes() noexcept {
@@ -853,6 +896,21 @@ struct CompScrollerVisual : winrt::implements<
 
   void SetMinimumZoomScale(float minimumZoomScale) noexcept {
     m_interactionTracker.MinScale(minimumZoomScale);
+  }
+
+  void SetSnapPoints(
+      bool snapToStart,
+      bool snapToEnd,
+      winrt::Windows::Foundation::Collections::IVectorView<float> const &offsets) noexcept {
+    m_snapToStart = snapToStart;
+    m_snapToEnd = snapToEnd;
+    m_snapToOffsets.clear();
+    if (offsets) {
+      for (auto const &offset : offsets) {
+        m_snapToOffsets.push_back(offset);
+      }
+    }
+    ConfigureSnapInertiaModifiers();
   }
 
   void Opacity(float opacity) noexcept {
@@ -953,6 +1011,20 @@ struct CompScrollerVisual : winrt::implements<
     return m_scrollEndDragEvent.add(handler);
   }
 
+  winrt::event_token ScrollMomentumBegin(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs> const
+          &handler) noexcept {
+    return m_scrollMomentumBeginEvent.add(handler);
+  }
+
+  winrt::event_token ScrollMomentumEnd(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs> const
+          &handler) noexcept {
+    return m_scrollMomentumEndEvent.add(handler);
+  }
+
   void ScrollPositionChanged(winrt::event_token const &token) noexcept {
     m_scrollPositionChangedEvent.remove(token);
   }
@@ -963,6 +1035,14 @@ struct CompScrollerVisual : winrt::implements<
 
   void ScrollEndDrag(winrt::event_token const &token) noexcept {
     m_scrollEndDragEvent.remove(token);
+  }
+
+  void ScrollMomentumBegin(winrt::event_token const &token) noexcept {
+    m_scrollMomentumBeginEvent.remove(token);
+  }
+
+  void ScrollMomentumEnd(winrt::event_token const &token) noexcept {
+    m_scrollMomentumEndEvent.remove(token);
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
@@ -1043,6 +1123,14 @@ struct CompScrollerVisual : winrt::implements<
     m_scrollEndDragEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
   }
 
+  void FireScrollMomentumBegin(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
+    m_scrollMomentumBeginEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
+  }
+
+  void FireScrollMomentumEnd(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
+    m_scrollMomentumEndEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
+  }
+
   void UpdateMaxPosition() noexcept {
     m_interactionTracker.MaxPosition(
         {std::max<float>(m_contentSize.x - m_visualSize.x, 0),
@@ -1050,10 +1138,158 @@ struct CompScrollerVisual : winrt::implements<
          0});
   }
 
+  void ConfigureSnapInertiaModifiers() noexcept {
+    if (!m_visual || !m_contentVisual || !m_interactionTracker) {
+      return;
+    }
+
+    auto visualSize = m_visual.Size();
+    auto contentSize = m_contentVisual.Size();
+    if (visualSize.x <= 0 || visualSize.y <= 0 || contentSize.x <= 0 || contentSize.y <= 0) {
+      OutputDebugStringW(L"Invalid visual/content size\n");
+      return;
+    }
+
+    auto compositor = m_interactionTracker.Compositor();
+
+    // Collect and deduplicate all snap positions
+    std::vector<float> snapPositions;
+
+    if (m_snapToStart) {
+      snapPositions.push_back(0.0f);
+    }
+
+    snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
+    std::sort(snapPositions.begin(), snapPositions.end());
+    snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
+
+    std::vector<typename TTypeRedirects::InteractionTrackerInertiaRestingValue> restingValues;
+
+    for (size_t i = 0; i < snapPositions.size(); ++i) {
+      const auto position = snapPositions[i];
+      auto restingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+
+      winrt::hstring axisComponent = m_horizontal ? L"X" : L"Y";
+      winrt::hstring conditionExpr;
+
+      // Build condition expression based on whether there's one or multiple snap points
+      if (snapPositions.size() == 1) {
+        conditionExpr = L"abs(this.Target.NaturalRestingPosition." + axisComponent + L" - snap) < 50";
+      } else {
+        if (i == 0) {
+          conditionExpr = L"this.Target.NaturalRestingPosition." + axisComponent + L" < midpoint";
+        } else if (i == snapPositions.size() - 1) {
+          conditionExpr = L"this.Target.NaturalRestingPosition." + axisComponent + L" >= midpoint";
+        } else {
+          conditionExpr = L"this.Target.NaturalRestingPosition." + axisComponent +
+              L" >= prevMidpoint && this.Target.NaturalRestingPosition." + axisComponent + L" < nextMidpoint";
+        }
+      }
+
+      auto conditionAnim = compositor.CreateExpressionAnimation();
+      conditionAnim.Expression(conditionExpr);
+
+      if (snapPositions.size() == 1) {
+        conditionAnim.SetScalarParameter(L"snap", position);
+      } else {
+        // Multiple snap points - use range-based conditions
+        if (i == 0) {
+          const auto nextPosition = snapPositions[i + 1];
+          const auto midpoint = (position + nextPosition) / 2.0f;
+          conditionAnim.SetScalarParameter(L"midpoint", midpoint);
+        } else if (i == snapPositions.size() - 1) {
+          const auto prevPosition = snapPositions[i - 1];
+          const auto midpoint = (prevPosition + position) / 2.0f;
+          conditionAnim.SetScalarParameter(L"midpoint", midpoint);
+        } else {
+          const auto prevPosition = snapPositions[i - 1];
+          const auto nextPosition = snapPositions[i + 1];
+          const auto prevMidpoint = (prevPosition + position) / 2.0f;
+          const auto nextMidpoint = (position + nextPosition) / 2.0f;
+          conditionAnim.SetScalarParameter(L"prevMidpoint", prevMidpoint);
+          conditionAnim.SetScalarParameter(L"nextMidpoint", nextMidpoint);
+        }
+      }
+
+      restingValue.Condition(conditionAnim);
+
+      // Resting value simply snaps to this position
+      auto restingAnim = compositor.CreateExpressionAnimation();
+      restingAnim.Expression(L"snap");
+      restingAnim.SetScalarParameter(L"snap", position);
+      restingValue.RestingValue(restingAnim);
+
+      restingValues.push_back(restingValue);
+    }
+
+    if (m_snapToEnd) {
+      auto endRestingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
+
+      // Create property sets to dynamically compute content - visual size
+      auto contentSizePropertySet = compositor.CreatePropertySet();
+      contentSizePropertySet.InsertVector2(L"Size", m_contentVisual.Size());
+
+      auto visualSizePropertySet = compositor.CreatePropertySet();
+      visualSizePropertySet.InsertVector2(L"Size", m_visual.Size());
+
+      winrt::hstring endPositionExpr = m_horizontal ? L"max(contentSize.Size.x - visualSize.Size.x, 0)"
+                                                    : L"max(contentSize.Size.y - visualSize.Size.y, 0)";
+
+      float prevPosition = snapPositions.empty() ? 0.0f : snapPositions.back();
+
+      winrt::hstring endConditionExpr = m_horizontal
+          ? L"this.Target.NaturalRestingPosition.X >= ((max(contentSize.Size.x - visualSize.Size.x, 0) + prevSnap) / 2.0)"
+          : L"this.Target.NaturalRestingPosition.Y >= ((max(contentSize.Size.y - visualSize.Size.y, 0) + prevSnap) / 2.0)";
+
+      auto endCondition = compositor.CreateExpressionAnimation();
+      endCondition.Expression(endConditionExpr);
+      endCondition.SetReferenceParameter(L"contentSize", contentSizePropertySet);
+      endCondition.SetReferenceParameter(L"visualSize", visualSizePropertySet);
+      endCondition.SetScalarParameter(L"prevSnap", prevPosition);
+
+      auto endResting = compositor.CreateExpressionAnimation();
+      endResting.Expression(endPositionExpr);
+      endResting.SetReferenceParameter(L"contentSize", contentSizePropertySet);
+      endResting.SetReferenceParameter(L"visualSize", visualSizePropertySet);
+
+      endRestingValue.Condition(endCondition);
+      endRestingValue.RestingValue(endResting);
+
+      restingValues.push_back(endRestingValue);
+    }
+
+    if (!restingValues.empty()) {
+      auto modifiers = winrt::single_threaded_vector<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
+      for (auto &v : restingValues) {
+        auto modifier = v.as<typename TTypeRedirects::InteractionTrackerInertiaModifier>();
+        if (modifier) {
+          modifiers.Append(modifier);
+        }
+      }
+
+      if (m_horizontal) {
+        m_interactionTracker.ConfigurePositionXInertiaModifiers(modifiers);
+      } else {
+        m_interactionTracker.ConfigurePositionYInertiaModifiers(modifiers);
+      }
+    } else {
+      // Clear inertia modifiers when no snapping is configured
+      if (m_horizontal) {
+        m_interactionTracker.ConfigurePositionXInertiaModifiers({});
+      } else {
+        m_interactionTracker.ConfigurePositionYInertiaModifiers({});
+      }
+    }
+  }
+
   bool m_isScrollEnabled{true};
   bool m_horizontal{false};
+  bool m_snapToStart{true};
+  bool m_snapToEnd{true};
+  std::vector<float> m_snapToOffsets;
   bool m_inertia{false};
   bool m_custom{false};
+  bool m_interacting{false};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
   winrt::Windows::Foundation::Numerics::float3 m_currentPosition;
   winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
@@ -1067,6 +1303,12 @@ struct CompScrollerVisual : winrt::implements<
   winrt::event<winrt::Windows::Foundation::EventHandler<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs>>
       m_scrollEndDragEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs>>
+      m_scrollMomentumBeginEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs>>
+      m_scrollMomentumEndEvent;
   typename TTypeRedirects::SpriteVisual m_visual{nullptr};
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
   typename TTypeRedirects::InteractionTracker m_interactionTracker{nullptr};

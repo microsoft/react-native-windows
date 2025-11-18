@@ -23,19 +23,12 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   REACT_METHOD(Hide, L"hide") void Hide() noexcept;
 
  private:
-#ifdef USE_FABRIC
   static void RegisterWndClass() noexcept;
-#endif // USE_FABRIC
   void ShowOnUIThread() noexcept;
   void HideOnUIThread() noexcept;
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
-#ifdef USE_FABRIC
   HWND m_hwnd{nullptr};
-#else
-  xaml::Controls::Primitives::Popup m_popup{nullptr};
-  winrt::Microsoft::ReactNative::ReactRootView m_logBoxContent{nullptr};
-#endif // USE_FABRIC
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::event_token m_tokenClosed;
 };

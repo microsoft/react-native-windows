@@ -14,7 +14,6 @@
 #include <UI.Xaml.Controls.h>
 #include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
-#include <Views/FrameworkElementTransferProperties.h>
 #include <atlcomcli.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -527,10 +526,10 @@ facebook::react::RectangleEdges<bool> ComponentView::focusNudges() const noexcep
 
   Assert(m_componentHostingFocusVisual);
 
-  if (layoutMetrics.frame.origin.x < 0) {
+  if (layoutMetrics.frame.origin.x < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.x) {
     nudgeEdges.left = true;
   }
-  if (layoutMetrics.frame.origin.y < 0) {
+  if (layoutMetrics.frame.origin.y < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.y) {
     nudgeEdges.top = true;
   }
   if (layoutMetrics.frame.getMaxX() > m_componentHostingFocusVisual->m_layoutMetrics.frame.getMaxX()) {
@@ -818,6 +817,42 @@ void ComponentView::updateAccessibilityProps(
       UIA_ItemTypePropertyId,
       oldViewProps.accessibilityItemType,
       newViewProps.accessibilityItemType);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_FullDescriptionPropertyId,
+      oldViewProps.accessibilityDescription,
+      newViewProps.accessibilityDescription);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(),
+      UIA_ValueValuePropertyId,
+      oldViewProps.accessibilityValue.text,
+      newViewProps.accessibilityValue.text);
+
+  // Handle annotation properties with single call
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaPropertiesForAnnotation(
+      EnsureUiaProvider(), oldViewProps.accessibilityAnnotation, newViewProps.accessibilityAnnotation);
+
+  // Handle expand/collapse state changes
+  if (oldViewProps.accessibilityState.has_value() != newViewProps.accessibilityState.has_value() ||
+      (oldViewProps.accessibilityState.has_value() && newViewProps.accessibilityState.has_value() &&
+       oldViewProps.accessibilityState->expanded != newViewProps.accessibilityState->expanded)) {
+    auto oldExpanded =
+        oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->expanded.has_value()
+        ? oldViewProps.accessibilityState->expanded.value()
+        : false;
+    auto newExpanded =
+        newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->expanded.has_value()
+        ? newViewProps.accessibilityState->expanded.value()
+        : false;
+
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        EnsureUiaProvider(),
+        UIA_ExpandCollapseExpandCollapseStatePropertyId,
+        static_cast<int>(winrt::Microsoft::ReactNative::implementation::GetExpandCollapseState(oldExpanded)),
+        static_cast<int>(winrt::Microsoft::ReactNative::implementation::GetExpandCollapseState(newExpanded)));
+  }
 
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {

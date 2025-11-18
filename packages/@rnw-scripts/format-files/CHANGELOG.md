@@ -1,8 +1,53 @@
 # Change Log - @rnw-scripts/format-files
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.1.61
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 1.1.60
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 1.1.59
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.56
+
+## 1.1.58
+
+Sat, 23 Aug 2025 05:30:42 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+
+## 1.1.57
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.54
 
 ## 1.1.56
 

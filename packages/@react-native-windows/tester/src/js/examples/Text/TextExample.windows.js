@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 // This is a port of TextExample.android.js
@@ -18,7 +18,8 @@ import type {RNTesterModule} from '../../types/RNTesterTypes';
 import RNTesterText from '../../components/RNTesterText';
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
-import TextInlineViewsExample from './TextInlineViewsExample';
+import TextSharedExamples from './TextSharedExamples';
+
 const TextInlineView = require('../../components/TextInlineView');
 const React = require('react');
 const {
@@ -38,7 +39,7 @@ class Entity extends React.Component<{children: React.Node}> {
     );
   }
 }
-class AttributeToggler extends React.Component<{...}, $FlowFixMeState> {
+class AttributeToggler extends React.Component<{...}, $FlowFixMe> {
   state: {fontSize: number, fontWeight: 'bold' | 'normal'} = {
     fontWeight: 'bold',
     fontSize: 15,
@@ -62,7 +63,7 @@ class AttributeToggler extends React.Component<{...}, $FlowFixMeState> {
       fontSize: this.state.fontSize,
     };
     return (
-      <View>
+      <View testID="text-with-toggle-attributes">
         <RNTesterText style={curStyle}>
           Tap the controls below to change attributes.
         </RNTesterText>
@@ -75,11 +76,12 @@ class AttributeToggler extends React.Component<{...}, $FlowFixMeState> {
           </RNTesterText>
         </RNTesterText>
         <RNTesterText>
-          <RNTesterText onPress={this.toggleWeight}>Toggle Weight</RNTesterText>
-          {' (with highlight onPress)'}
+          <RNTesterText onPress={this.toggleWeight} testID="toggle-weight">
+            Toggle Weight
+          </RNTesterText>
         </RNTesterText>
-        <RNTesterText onPress={this.increaseSize} suppressHighlighting={true}>
-          Increase Size (suppressHighlighting true)
+        <RNTesterText onPress={this.increaseSize} testID="increase-size">
+          Increase Size
         </RNTesterText>
       </View>
     );
@@ -523,7 +525,7 @@ function MaxFontSizeMultiplierExample(props: {}): React.Node {
 
 function NumberOfLinesExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="number-of-lines">
       <RNTesterText
         numberOfLines={1}
         style={styles.wrappedText}
@@ -543,11 +545,18 @@ function NumberOfLinesExample(props: {}): React.Node {
         RNTesterText of two lines no matter now much I write here. If I keep
         writing it{"'"}ll just truncate after two lines
       </RNTesterText>
+      <RNTesterText numberOfLines={1} style={{marginTop: 20}}>
+        The hotdog should be truncated. The hotdog should be truncated. The
+        hotdog should be truncated. The hotdog should be truncated. The hotdog
+        should be truncated. The hotdog should be truncated. The hotdog should
+        be truncated. The hotdog should be truncated. The hotdog should be
+        truncated. The hotdog should be truncated.
+      </RNTesterText>
       <RNTesterText style={[{marginTop: 20}, styles.wrappedText]}>
         No maximum lines specified no matter now much I write here. If I keep
         writing it{"'"}ll just keep going and going
       </RNTesterText>
-    </>
+    </View>
   );
 }
 
@@ -1128,6 +1137,8 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
   // [Windows - Paper doesn't support Views in Text while Fabric does
   return global.RN$Bridgeless !== true ? (
     <View>
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <RNTesterText style={subtitleStyle}>{'Nested <Text/>s:'}</RNTesterText>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
         {marker}
@@ -1135,6 +1146,8 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
         {marker}
       </View>
 
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <RNTesterText style={subtitleStyle}>
         {'Array of <Text/>s in <View>:'}
       </RNTesterText>
@@ -1146,13 +1159,19 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
     </View>
   ) : (
     <View>
-      <RNTesterText style={subtitleStyle}>{'Nested <Text/>s:'}</RNTesterText>
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
+      <RNTesterText style={subtitleStyle}>
+        {'Interleaving <View> and <Text>:'}
+      </RNTesterText>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
         {marker}
         <RNTesterText>{texts}</RNTesterText>
         {marker}
       </View>
 
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <RNTesterText style={subtitleStyle}>
         {'Array of <Text/>s in <View>:'}
       </RNTesterText>
@@ -1647,18 +1666,9 @@ const examples = [
     },
   },
   {
-    title: 'Empty Text',
-    name: 'emptyText',
-    render(): React.Node {
-      return <Text />;
-    },
-  },
-  {
     title: 'Toggling Attributes',
     name: 'togglingAttributes',
-    render(): React.Node {
-      return <AttributeToggler />;
-    },
+    render: AttributeToggler,
   },
   {
     title: 'backgroundColor attribute',
@@ -1766,7 +1776,7 @@ const examples = [
             return <TextInlineView.ChangeInnerViewSize />;
           },
         },
-        TextInlineViewsExample,
+        ...TextSharedExamples,
       ]
     : []),
   // Windows]
@@ -1911,6 +1921,21 @@ const examples = [
       );
     },
   },
+  {
+    title: 'Disabled',
+    name: 'disabled',
+    render: function (): React.Node {
+      return (
+        <View>
+          <RNTesterText testID="text-disabled" disabled={true}>
+            This text has its corresponding text view in the disabled state for
+            testing purposes.
+          </RNTesterText>
+        </View>
+      );
+    },
+  },
+  ...TextSharedExamples,
   {
     title: 'Customized Accessibility',
     name: 'textAccessibility',

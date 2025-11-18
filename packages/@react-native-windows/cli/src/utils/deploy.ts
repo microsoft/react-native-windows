@@ -181,7 +181,7 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     '..',
     'src',
     'powershell',
-    'WindowsStoreAppUtils.ps1',
+    'WindowsStoreAppUtils.psm1',
   );
   execSync(
     `${powershell} -NoProfile Unblock-File '${windowsStoreAppUtilsPath}'`,
@@ -380,9 +380,6 @@ export async function deployToDesktop(
   const vsVersion = Version.fromString(buildTools.installationVersion);
 
   const args = [];
-  if (options.remoteDebugging) {
-    args.push('--remote-debugging');
-  }
 
   if (options.directDebugging) {
     args.push('--direct-debugging', options.directDebugging.toString());

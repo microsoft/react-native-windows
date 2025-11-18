@@ -14,7 +14,9 @@
 #include <jsinspector-modern/InspectorInterfaces.h>
 #include <jsinspector-modern/tracing/InstanceTracingProfile.h>
 #include <react/featureflags/ReactNativeFeatureFlags.h>
+#include <cstdio>
 #include <mutex>
+#include "Hermes/HermesRuntimeTargetDelegate.h"
 #include "SafeLoadLibrary.h"
 
 #define CRASH_ON_ERROR(result) VerifyElseCrash(result == napi_ok);
@@ -27,6 +29,12 @@ using namespace Microsoft::NodeApiJsi;
 
 namespace Microsoft::ReactNative {
 
+/*static*/ const hermes_inspector_vtable *HermesInspectorApi::vtable = nullptr;
+
+void setHermesInspectorVTable(const hermes_inspector_vtable *vtable) {
+  HermesInspectorApi::vtable = vtable;
+}
+
 React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<HermesRuntimeHolder>>>
 HermesRuntimeHolderProperty() noexcept {
   static React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<HermesRuntimeHolder>>> propId{
@@ -35,9 +43,6 @@ HermesRuntimeHolderProperty() noexcept {
 }
 
 namespace {
-
-int32_t NAPI_CDECL addInspectorPage(const char *title, const char *vm, void *connectFunc) noexcept;
-void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept;
 
 class HermesFuncResolver : public IFuncResolver {
  public:
@@ -55,7 +60,9 @@ HermesApi &initHermesApi() noexcept {
   static HermesFuncResolver funcResolver;
   static HermesApi s_hermesApi(&funcResolver);
   HermesApi::setCurrent(&s_hermesApi);
-  CRASH_ON_ERROR(s_hermesApi.hermes_set_inspector(&addInspectorPage, &removeInspectorPage));
+  const hermes_inspector_vtable *inspectorVTable{};
+  s_hermesApi.hermes_get_inspector_vtable(&inspectorVTable);
+  setHermesInspectorVTable(inspectorVTable);
   return s_hermesApi;
 }
 
@@ -233,65 +240,6 @@ class HermesScriptCache {
   std::shared_ptr<facebook::jsi::PreparedScriptStore> scriptStore_;
 };
 
-class HermesLocalConnection : public facebook::react::jsinspector_modern::ILocalConnection {
- public:
-  HermesLocalConnection(
-      std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remoteConnection,
-      void *connectFunc) noexcept {
-    CRASH_ON_ERROR(getHermesApi().hermes_create_local_connection(
-        connectFunc,
-        reinterpret_cast<hermes_remote_connection>(remoteConnection.release()),
-        &OnRemoteConnectionSendMessage,
-        &OnRemoteConnectionDisconnect,
-        &OnRemoteConnectionDelete,
-        nullptr,
-        &localConnection_));
-  }
-
-  ~HermesLocalConnection() override {
-    CRASH_ON_ERROR(getHermesApi().hermes_delete_local_connection(localConnection_));
-  }
-
-  void sendMessage(std::string message) {
-    CRASH_ON_ERROR(getHermesApi().hermes_local_connection_send_message(localConnection_, message.c_str()));
-  }
-
-  void disconnect() {
-    CRASH_ON_ERROR(getHermesApi().hermes_local_connection_disconnect(localConnection_));
-  }
-
- private:
-  static void NAPI_CDECL OnRemoteConnectionSendMessage(hermes_remote_connection remoteConnection, const char *message) {
-    reinterpret_cast<facebook::react::jsinspector_modern::IRemoteConnection *>(remoteConnection)->onMessage(message);
-  }
-
-  static void NAPI_CDECL OnRemoteConnectionDisconnect(hermes_remote_connection remoteConnection) {
-    reinterpret_cast<facebook::react::jsinspector_modern::IRemoteConnection *>(remoteConnection)->onDisconnect();
-  }
-
-  static void NAPI_CDECL OnRemoteConnectionDelete(void *remoteConnection, void * /*deleterData*/) {
-    delete reinterpret_cast<facebook::react::jsinspector_modern::IRemoteConnection *>(remoteConnection);
-  }
-
- private:
-  hermes_local_connection localConnection_{};
-};
-
-int32_t NAPI_CDECL addInspectorPage(const char *title, const char *vm, void *connectFunc) noexcept {
-  return facebook::react::jsinspector_modern::getInspectorInstance().addPage(
-      title,
-      vm,
-      [connectFunc, hermesApi = HermesApi::current()](
-          std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remoteConnection) {
-        HermesApi::Scope apiScope(hermesApi);
-        return std::make_unique<HermesLocalConnection>(std::move(remoteConnection), connectFunc);
-      });
-}
-
-void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept {
-  facebook::react::jsinspector_modern::getInspectorInstance().removePage(pageId);
-}
-
 } // namespace
 
 //==============================================================================
@@ -307,9 +255,9 @@ HermesRuntimeHolder::HermesRuntimeHolder(
       m_preparedScriptStore(std::move(preparedScriptStore)) {}
 
 HermesRuntimeHolder::~HermesRuntimeHolder() {
-  if (m_runtime) {
-    CRASH_ON_ERROR(getHermesApi().jsr_delete_runtime(m_runtime));
-  }
+  // if (m_runtime) {
+  //   CRASH_ON_ERROR(getHermesApi().jsr_delete_runtime(m_runtime));
+  // }
 }
 
 void HermesRuntimeHolder::initRuntime() noexcept {
@@ -323,9 +271,6 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   CRASH_ON_ERROR(api.jsr_create_config(&config));
   CRASH_ON_ERROR(api.hermes_config_enable_default_crash_handler(config, devSettings->enableDefaultCrashHandler));
   CRASH_ON_ERROR(api.jsr_config_enable_inspector(config, devSettings->useDirectDebugger));
-  CRASH_ON_ERROR(api.jsr_config_set_inspector_runtime_name(config, devSettings->debuggerRuntimeName.c_str()));
-  CRASH_ON_ERROR(api.jsr_config_set_inspector_port(config, devSettings->debuggerPort));
-  CRASH_ON_ERROR(api.jsr_config_set_inspector_break_on_start(config, devSettings->debuggerBreakOnNextLine));
   CRASH_ON_ERROR(api.jsr_config_set_explicit_microtasks(
       config, facebook::react::ReactNativeFeatureFlags::enableBridgelessArchitecture()));
 
@@ -338,6 +283,7 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   jsr_runtime runtime{};
   CRASH_ON_ERROR(api.jsr_create_runtime(config, &runtime));
   CRASH_ON_ERROR(api.jsr_delete_config(config));
+  m_runtime = runtime;
 
   napi_env env{};
   CRASH_ON_ERROR(api.jsr_runtime_get_node_api_env(runtime, &env));
@@ -364,12 +310,13 @@ std::shared_ptr<facebook::jsi::Runtime> HermesRuntimeHolder::getRuntime() noexce
   return m_jsiRuntime;
 }
 
-void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
-  CRASH_ON_ERROR(getHermesApi().hermes_dump_crash_data(m_runtime, fileDescriptor));
+std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate>
+HermesRuntimeHolder::createRuntimeTargetDelegate() {
+  return std::make_shared<Microsoft::ReactNative::HermesRuntimeTargetDelegate>(shared_from_this());
 }
 
-void HermesRuntimeHolder::teardown() noexcept {
-  // TODO: (@vmoroz) Implement
+void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
+  CRASH_ON_ERROR(getHermesApi().hermes_dump_crash_data(m_runtime, fileDescriptor));
 }
 
 std::shared_ptr<HermesRuntimeHolder> HermesRuntimeHolder::loadFrom(
@@ -403,6 +350,10 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_dump_to_file(fileName.c_str()));
 }
 
+hermes_runtime HermesRuntimeHolder::getHermesRuntime() noexcept {
+  return reinterpret_cast<hermes_runtime>(m_runtime);
+}
+
 //==============================================================================
 // HermesJSRuntime implementation
 //==============================================================================
@@ -414,44 +365,11 @@ facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
   return *m_holder->getRuntime();
 }
 
-void HermesJSRuntime::addConsoleMessage(
-    facebook::jsi::Runtime &runtime,
-    facebook::react::jsinspector_modern::ConsoleMessage message) {
-  return;
-}
-
-bool HermesJSRuntime::supportsConsole() const {
-  return false;
-}
-
-std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> HermesJSRuntime::captureStackTrace(
-    facebook::jsi::Runtime &runtime,
-    size_t framesToSkip) {
-  return std::make_unique<facebook::react::jsinspector_modern::StackTrace>();
-}
-
-void HermesJSRuntime::enableSamplingProfiler() {
-  return; // [Windows TODO: stubbed implementation #14700]
-}
-
-void HermesJSRuntime::disableSamplingProfiler() {
-  return; // [Windows TODO: stubbed implementation #14700]
-}
-
-facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile HermesJSRuntime::collectSamplingProfile() {
-  return facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile(
-      "stubbed_impl", {}); // [Windows TODO: stubbed implementation #14700]
-}
-
-std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(
-    facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
-    facebook::react::jsinspector_modern::SessionState &sessionState,
-    std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState> previouslyExportedState,
-    const facebook::react::jsinspector_modern::ExecutionContextDescription &executionContextDescription,
-    facebook::react::RuntimeExecutor runtimeExecutor) {
-  (void)frontendChannel;
-  (void)sessionState;
-  return nullptr;
+facebook::react::jsinspector_modern::RuntimeTargetDelegate &HermesJSRuntime::getRuntimeTargetDelegate() {
+  if (!m_runtimeTargetDelegate) {
+    m_runtimeTargetDelegate = m_holder->createRuntimeTargetDelegate();
+  }
+  return *m_runtimeTargetDelegate;
 }
 
 } // namespace Microsoft::ReactNative

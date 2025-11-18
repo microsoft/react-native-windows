@@ -30,6 +30,7 @@ import {
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
 import * as nameHelpers from '../../utils/nameHelpers';
+import {showOldArchitectureWarning} from '../../utils/oldArchWarning';
 import type {InitOptions} from './initWindowsOptions';
 import {initOptions} from './initWindowsOptions';
 
@@ -165,6 +166,13 @@ export class InitWindows {
         `Unable to find template '${this.options.template}'.`,
       );
     }
+
+    const isOldArchTemplate = this.options.template.startsWith('old');
+
+    if (isOldArchTemplate) {
+      showOldArchitectureWarning();
+    }
+
     const templateConfig = this.templates.get(this.options.template)!;
 
     // Check if there's a passed-in project name and if it's valid
@@ -309,6 +317,19 @@ async function getExtraProps(): Promise<Record<string, any>> {
   return extraProps;
 }
 
+function sanitizeOptions(
+  opts: Record<string, any>,
+  sanitizer: (key: keyof InitOptions, value: any) => any,
+): Record<string, any> {
+  const sanitized: Record<string, any> = {};
+  for (const key in opts) {
+    if (Object.prototype.hasOwnProperty.call(opts, key)) {
+      sanitized[key] = sanitizer(key as keyof InitOptions, opts[key]);
+    }
+  }
+  return sanitized;
+}
+
 /**
  * The function run when calling `npx @react-native-community/cli init-windows`.
  * @param args Unprocessed args passed from react-native CLI.
@@ -329,6 +350,7 @@ async function initWindows(
   );
 
   let initWindowsError: Error | undefined;
+
   try {
     await initWindowsInternal(args, config, options);
   } catch (ex) {
@@ -337,7 +359,11 @@ async function initWindows(
     Telemetry.trackException(initWindowsError);
   }
 
-  await endTelemetrySession(initWindowsError, getExtraProps);
+  // Now, instead of custom fields, just pass the final options object
+  await endTelemetrySession(initWindowsError, getExtraProps, options, opts =>
+    sanitizeOptions(opts, optionSanitizer),
+  );
+
   setExitProcessWithError(options.logging, initWindowsError);
 }
 

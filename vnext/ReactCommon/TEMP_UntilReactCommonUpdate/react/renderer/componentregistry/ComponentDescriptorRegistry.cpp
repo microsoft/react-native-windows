@@ -10,6 +10,7 @@
 #include "componentNameByReactViewName.h"
 
 #include <react/debug/react_native_assert.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/legacyviewmanagerinterop/UnstableLegacyViewManagerAutomaticComponentDescriptor.h>
 #include <react/renderer/components/legacyviewmanagerinterop/UnstableLegacyViewManagerAutomaticShadowNode.h>
@@ -22,13 +23,13 @@ namespace facebook::react {
 ComponentDescriptorRegistry::ComponentDescriptorRegistry(
     ComponentDescriptorParameters parameters,
     const ComponentDescriptorProviderRegistry& providerRegistry,
-    ContextContainer::Shared contextContainer)
+    std::shared_ptr<const ContextContainer> contextContainer)
     : parameters_(std::move(parameters)),
       providerRegistry_(providerRegistry),
       contextContainer_(std::move(contextContainer)) {}
 
 void ComponentDescriptorRegistry::add(
-    ComponentDescriptorProvider componentDescriptorProvider) const {
+    const ComponentDescriptorProvider& componentDescriptorProvider) const {
   std::unique_lock lock(mutex_);
 
   auto componentDescriptor = componentDescriptorProvider.constructor(

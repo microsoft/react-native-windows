@@ -4,11 +4,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
 
 'use strict';
+
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 import RNTesterText from '../../components/RNTesterText';
 import React from 'react';
@@ -123,7 +125,7 @@ class DisabledSwitchExample extends React.Component<
   }
 }
 
-class ColorSwitchExample extends React.Component<{...}, $FlowFixMeState> {
+class ColorSwitchExample extends React.Component<{...}, $FlowFixMe> {
   state: any | {colorFalseSwitchIsOn: boolean, colorTrueSwitchIsOn: boolean} = {
     colorTrueSwitchIsOn: true,
     colorFalseSwitchIsOn: false,
@@ -158,7 +160,7 @@ class ColorSwitchExample extends React.Component<{...}, $FlowFixMeState> {
   }
 }
 
-class EventSwitchExample extends React.Component<{...}, $FlowFixMeState> {
+class EventSwitchExample extends React.Component<{...}, $FlowFixMe> {
   state: any | {eventSwitchIsOn: boolean, eventSwitchRegressionIsOn: boolean} =
     {
       eventSwitchIsOn: false,
@@ -211,7 +213,7 @@ class EventSwitchExample extends React.Component<{...}, $FlowFixMeState> {
   }
 }
 
-class IOSBackgroundColEx extends React.Component<{...}, $FlowFixMeState> {
+class IOSBackgroundColEx extends React.Component<{...}, $FlowFixMe> {
   state: any | {iosBackgroundColor: string} = {
     iosBackgroundColor: '#ffa500',
   };
@@ -233,7 +235,7 @@ class IOSBackgroundColEx extends React.Component<{...}, $FlowFixMeState> {
   }
 }
 
-class OnChangeExample extends React.Component<{...}, $FlowFixMeState> {
+class OnChangeExample extends React.Component<{...}, $FlowFixMe> {
   render(): React.Node {
     return (
       <View>
@@ -250,7 +252,7 @@ class OnChangeExample extends React.Component<{...}, $FlowFixMeState> {
 
 class ContainerBackgroundColorStyleExample extends React.Component<
   {...},
-  $FlowFixMeState,
+  $FlowFixMe,
 > {
   render(): React.Node {
     return (
@@ -394,7 +396,7 @@ exports.examples = [
       return <AccessibilitySwitchExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;
 
 if (Platform.OS === 'ios') {
   exports.examples.push({

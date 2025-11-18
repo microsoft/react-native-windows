@@ -10,8 +10,11 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import RNTesterText from '../../components/RNTesterText';
 import React from 'react';
+import {useState} from 'react';
 import {
   Button,
   DeviceInfo,
@@ -22,7 +25,7 @@ import {
 } from 'react-native';
 
 function SafeAreaViewExample(): React.Node {
-  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const toggleModal = (visible: boolean) => {
     setModalVisible(visible);
@@ -103,4 +106,4 @@ exports.examples = [
         'Use <SafeAreaView> instead.': string),
     render: (): React.Node => <IsIPhoneXExample />,
   },
-];
+] as Array<RNTesterModuleExample>;

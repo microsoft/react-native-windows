@@ -4,12 +4,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
-import type {RootTag} from 'react-native/Libraries/ReactNative/RootTag';
-import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/EventEmitter';
+import type {EventSubscription, RootTag} from 'react-native';
 
 import NativeCxxModuleExample, {
   EnumInt,
@@ -59,6 +58,7 @@ type Examples =
   | 'promise'
   | 'rejectPromise'
   | 'voidFunc'
+  | 'voidPromise'
   | 'setMenuItem'
   | 'optionalArgs'
   | 'emitDeviceEvent';
@@ -139,6 +139,10 @@ class NativeCxxModuleExampleExample extends React.Component<{}, State> {
         .then(() => {})
         .catch(e => this._setResult('rejectPromise', e.message)),
     voidFunc: () => NativeCxxModuleExample?.voidFunc(),
+    voidPromise: () =>
+      NativeCxxModuleExample?.voidPromise().then(valuePromise =>
+        this._setResult('voidPromise', valuePromise),
+      ),
     setMenuItem: () => {
       let curValue = '';
       NativeCxxModuleExample?.setMenu({

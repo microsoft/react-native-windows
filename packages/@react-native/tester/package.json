@@ -1,6 +1,6 @@
 {
   "name": "@react-native/tester",
-  "version": "0.79.0-main",
+  "version": "0.82.0-main",
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "directory": "packages/rn-tester"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "scripts": {
     "start": "npx @react-native-community/cli start",
@@ -26,13 +26,14 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/popup-menu-android": "0.79.0-nightly-20250123-d1028885e",
+    "@react-native/new-app-screen": "0.82.0-nightly-20250806-5936f29d6",
+    "@react-native/popup-menu-android": "0.82.0-nightly-20250806-5936f29d6",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "19.0.0",
+    "react": "19.1.1",
     "react-native": "*"
   },
   "codegenConfig": {
@@ -43,15 +44,22 @@
       "javaPackageName": "com.facebook.fbreact.specs"
     },
     "ios": {
-      "componentProvider": {
-        "RNTMyNativeView": "RNTMyNativeViewComponentView"
+      "modules": {
+        "SampleTurboModule": {
+          "unstableRequiresMainQueueSetup": true
+        }
+      },
+      "components": {
+        "RNTMyNativeView": {
+          "className": "RNTMyNativeViewComponentView"
+        }
       }
     }
   },
   "devDependencies": {
-    "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-android": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-ios": "15.0.0-alpha.2",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli-platform-android": "20.0.0",
+    "@react-native-community/cli-platform-ios": "20.0.0",
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"

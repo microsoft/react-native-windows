@@ -48,7 +48,8 @@ HRESULT UiaNavigateHelper(
         uint32_t index = children.Size() - 1;
         do {
           auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-          if (uiaProvider = child->EnsureUiaProvider()) {
+          uiaProvider = child->EnsureUiaProvider();
+          if (uiaProvider) {
             break;
           }
         } while (index-- != 0);
@@ -60,7 +61,8 @@ HRESULT UiaNavigateHelper(
         uint32_t index = 0;
         do {
           auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-          if (uiaProvider = child->EnsureUiaProvider()) {
+          uiaProvider = child->EnsureUiaProvider();
+          if (uiaProvider) {
             break;
           }
         } while (++index != children.Size());
@@ -74,7 +76,8 @@ HRESULT UiaNavigateHelper(
 
         while (++it != children.end()) {
           auto nextchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-          if (uiaProvider = nextchild->EnsureUiaProvider()) {
+          uiaProvider = nextchild->EnsureUiaProvider();
+          if (uiaProvider) {
             break;
           }
         }
@@ -91,7 +94,8 @@ HRESULT UiaNavigateHelper(
           do {
             it--;
             auto prevchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
-            if (uiaProvider = prevchild->EnsureUiaProvider()) {
+            uiaProvider = prevchild->EnsureUiaProvider();
+            if (uiaProvider) {
               break;
             }
           } while (it != children.begin());
@@ -166,6 +170,24 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool old
   UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
 }
 
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, int oldValue, int newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
+
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+}
+
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, long oldValue, long newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
+
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+}
+
 void UpdateUiaProperty(
     winrt::IInspectable provider,
     PROPERTYID propId,
@@ -188,6 +210,29 @@ void UpdateUiaProperty(
   std::string oldData = oldValue.value_or("");
   std::string newData = newValue.value_or("");
   UpdateUiaProperty(provider, propId, oldData, newData);
+}
+
+void UpdateUiaPropertiesForAnnotation(
+    winrt::IInspectable provider,
+    const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
+    const std::optional<facebook::react::AccessibilityAnnotation> &newAnnotation) noexcept {
+  // if no value fall back to a default value.
+  const auto &old_annotation = oldAnnotation.value_or(facebook::react::AccessibilityAnnotation());
+  const auto &new_annotation = newAnnotation.value_or(facebook::react::AccessibilityAnnotation());
+
+  // Update all annotation properties
+  UpdateUiaProperty(
+      provider,
+      UIA_AnnotationAnnotationTypeIdPropertyId,
+      GetAnnotationTypeId(old_annotation.typeID),
+      GetAnnotationTypeId(new_annotation.typeID));
+
+  UpdateUiaProperty(
+      provider, UIA_AnnotationAnnotationTypeNamePropertyId, old_annotation.typeName, new_annotation.typeName);
+
+  UpdateUiaProperty(provider, UIA_AnnotationAuthorPropertyId, old_annotation.author, new_annotation.author);
+
+  UpdateUiaProperty(provider, UIA_AnnotationDateTimePropertyId, old_annotation.dateTime, new_annotation.dateTime);
 }
 
 long GetLiveSetting(const std::string &liveRegion) noexcept {
@@ -248,6 +293,190 @@ long GetAnnotationTypeId(const std::string &annotationType) noexcept {
     return AnnotationType_UnsyncedChange;
   }
   return AnnotationType_Unknown;
+}
+
+long GetControlTypeFromString(const std::string &role) noexcept {
+  if (role == "adjustable") {
+    return UIA_SliderControlTypeId;
+  } else if (role == "group" || role == "search" || role == "radiogroup" || role == "timer" || role.empty()) {
+    return UIA_GroupControlTypeId;
+  } else if (role == "button" || role == "imagebutton" || role == "switch" || role == "togglebutton") {
+    return UIA_ButtonControlTypeId;
+  } else if (role == "checkbox") {
+    return UIA_CheckBoxControlTypeId;
+  } else if (role == "combobox") {
+    return UIA_ComboBoxControlTypeId;
+  } else if (role == "alert" || role == "header" || role == "summary" || role == "text") {
+    return UIA_TextControlTypeId;
+  } else if (role == "image") {
+    return UIA_ImageControlTypeId;
+  } else if (role == "keyboardkey") {
+    return UIA_CustomControlTypeId;
+  } else if (role == "link") {
+    return UIA_HyperlinkControlTypeId;
+  }
+  // list and listitem were added by RNW to better support UIA Control Types
+  else if (role == "list") {
+    return UIA_ListControlTypeId;
+  } else if (role == "listitem") {
+    return UIA_ListItemControlTypeId;
+  } else if (role == "menu") {
+    return UIA_MenuControlTypeId;
+  } else if (role == "menubar") {
+    return UIA_MenuBarControlTypeId;
+  } else if (role == "menuitem") {
+    return UIA_MenuItemControlTypeId;
+  }
+  // If role is "none", remove the element from the control tree
+  // and expose it as a plain element would in the raw tree.
+  else if (role == "none") {
+    return UIA_GroupControlTypeId;
+  } else if (role == "progressbar") {
+    return UIA_ProgressBarControlTypeId;
+  } else if (role == "radio") {
+    return UIA_RadioButtonControlTypeId;
+  } else if (role == "scrollbar") {
+    return UIA_ScrollBarControlTypeId;
+  } else if (role == "spinbutton") {
+    return UIA_SpinnerControlTypeId;
+  } else if (role == "splitbutton") {
+    return UIA_SplitButtonControlTypeId;
+  } else if (role == "tab") {
+    return UIA_TabItemControlTypeId;
+  } else if (role == "tablist") {
+    return UIA_TabControlTypeId;
+  } else if (role == "textinput" || role == "searchbox") {
+    return UIA_EditControlTypeId;
+  } else if (role == "toolbar") {
+    return UIA_ToolBarControlTypeId;
+  } else if (role == "tree") {
+    return UIA_TreeControlTypeId;
+  } else if (role == "treeitem") {
+    return UIA_TreeItemControlTypeId;
+  } else if (role == "pane") {
+    return UIA_PaneControlTypeId;
+  }
+  assert(false);
+  return UIA_GroupControlTypeId;
+}
+
+long GetControlTypeFromRole(const facebook::react::Role &role) noexcept {
+  switch (role) {
+    case facebook::react::Role::Alert:
+      return UIA_TextControlTypeId;
+    case facebook::react::Role::Application:
+      return UIA_WindowControlTypeId;
+    case facebook::react::Role::Button:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Checkbox:
+      return UIA_CheckBoxControlTypeId;
+    case facebook::react::Role::Columnheader:
+      return UIA_HeaderControlTypeId;
+    case facebook::react::Role::Combobox:
+      return UIA_ComboBoxControlTypeId;
+    case facebook::react::Role::Document:
+      return UIA_DocumentControlTypeId;
+    case facebook::react::Role::Grid:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Group:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Heading:
+      return UIA_TextControlTypeId;
+    case facebook::react::Role::Img:
+      return UIA_ImageControlTypeId;
+    case facebook::react::Role::Link:
+      return UIA_HyperlinkControlTypeId;
+    case facebook::react::Role::List:
+      return UIA_ListControlTypeId;
+    case facebook::react::Role::Listitem:
+      return UIA_ListItemControlTypeId;
+    case facebook::react::Role::Menu:
+      return UIA_MenuControlTypeId;
+    case facebook::react::Role::Menubar:
+      return UIA_MenuBarControlTypeId;
+    case facebook::react::Role::Menuitem:
+      return UIA_MenuItemControlTypeId;
+    case facebook::react::Role::None:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Presentation:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Progressbar:
+      return UIA_ProgressBarControlTypeId;
+    case facebook::react::Role::Radio:
+      return UIA_RadioButtonControlTypeId;
+    case facebook::react::Role::Radiogroup:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Rowgroup:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Rowheader:
+      return UIA_HeaderControlTypeId;
+    case facebook::react::Role::Scrollbar:
+      return UIA_ScrollBarControlTypeId;
+    case facebook::react::Role::Searchbox:
+      return UIA_EditControlTypeId;
+    case facebook::react::Role::Separator:
+      return UIA_SeparatorControlTypeId;
+    case facebook::react::Role::Slider:
+      return UIA_SliderControlTypeId;
+    case facebook::react::Role::Spinbutton:
+      return UIA_SpinnerControlTypeId;
+    case facebook::react::Role::Status:
+      return UIA_StatusBarControlTypeId;
+    case facebook::react::Role::Summary:
+      return UIA_GroupControlTypeId;
+    case facebook::react::Role::Switch:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Tab:
+      return UIA_TabItemControlTypeId;
+    case facebook::react::Role::Table:
+      return UIA_TableControlTypeId;
+    case facebook::react::Role::Tablist:
+      return UIA_TabControlTypeId;
+    case facebook::react::Role::Tabpanel:
+      return UIA_TabControlTypeId;
+    case facebook::react::Role::Timer:
+      return UIA_ButtonControlTypeId;
+    case facebook::react::Role::Toolbar:
+      return UIA_ToolBarControlTypeId;
+    case facebook::react::Role::Tooltip:
+      return UIA_ToolTipControlTypeId;
+    case facebook::react::Role::Tree:
+      return UIA_TreeControlTypeId;
+    case facebook::react::Role::Treegrid:
+      return UIA_TreeControlTypeId;
+    case facebook::react::Role::Treeitem:
+      return UIA_TreeItemControlTypeId;
+  }
+  return UIA_GroupControlTypeId;
+}
+
+long GetHeadingLevel(int headingLevel, const std::string &strRole, const facebook::react::Role &role) noexcept {
+  if (strRole != "header" && role != facebook::react::Role::Heading) {
+    return HeadingLevel_None;
+  }
+
+  switch (headingLevel) {
+    case 1:
+      return HeadingLevel1;
+    case 2:
+      return HeadingLevel2;
+    case 3:
+      return HeadingLevel3;
+    case 4:
+      return HeadingLevel4;
+    case 5:
+      return HeadingLevel5;
+    case 6:
+      return HeadingLevel6;
+    case 7:
+      return HeadingLevel7;
+    case 8:
+      return HeadingLevel8;
+    case 9:
+      return HeadingLevel9;
+    default:
+      return HeadingLevel_None;
+  }
 }
 
 bool accessibilityAnnotationHasValue(

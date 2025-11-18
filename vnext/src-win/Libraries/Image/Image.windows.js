@@ -8,8 +8,10 @@
  * @format
  */
 
+import type {HostInstance} from '../../src/private/types/HostInstance';
 import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
 import type {RootTag} from '../Types/RootTagTypes';
+import type {ImageProps} from './ImageProps';
 import type {AbstractImageIOS, ImageIOS} from './ImageTypes.flow';
 import type {ImageSize} from './NativeImageLoaderAndroid';
 
@@ -107,7 +109,13 @@ async function queryCache(
  *
  * See https://reactnative.dev/docs/image
  */
-let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
+let BaseImage: AbstractImageIOS = ({
+  ref: forwardedRef,
+  ...props
+}: {
+  ref?: React.RefSetter<HostInstance>,
+  ...ImageProps,
+}) => {
   const source = getImageSourcesFromImageProps(props) || {
     uri: undefined,
     width: undefined,
@@ -176,45 +184,10 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
 
   const actualRef = useWrapRefWithImageAttachedCallbacks(forwardedRef);
 
-  // [Windows - Paper doesn't support Views in Text while Fabric does
-  if (global.RN$Bridgeless !== true) {
-    return (
-      // [Windows
-      <TextAncestor.Consumer>
-        {hasTextAncestor => {
-          invariant(
-            !hasTextAncestor,
-            'Nesting of <Image> within <Text> is not currently supported.',
-          );
-          // windows]
-          return (
-            <ImageAnalyticsTagContext.Consumer>
-              {analyticTag => (
-                <ImageViewNativeComponent
-                  accessibilityState={_accessibilityState}
-                  {...restProps}
-                  accessible={props.alt !== undefined ? true : props.accessible}
-                  accessibilityLabel={accessibilityLabel ?? props.alt}
-                  accessibilityLevel={accessibilityLevel} // Windows
-                  accessibilityPosInSet={accessibilityPosInSet} // Windows
-                  accessibilitySetSize={accessibilitySetSize} // Windows
-                  ref={actualRef}
-                  style={style}
-                  resizeMode={resizeMode}
-                  tintColor={tintColor}
-                  source={sources}
-                  internal_analyticTag={analyticTag}
-                />
-              )}
-            </ImageAnalyticsTagContext.Consumer>
-          );
-        }}
-      </TextAncestor.Consumer>
-    );
-  } else {
-    return (
-      <ImageAnalyticsTagContext.Consumer>
-        {analyticTag => (
+  return (
+    <ImageAnalyticsTagContext.Consumer>
+      {analyticTag => {
+        return (
           <ImageViewNativeComponent
             accessibilityState={_accessibilityState}
             {...restProps}
@@ -230,12 +203,11 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
             source={sources}
             internal_analyticTag={analyticTag}
           />
-        )}
-      </ImageAnalyticsTagContext.Consumer>
-    );
-  }
-  // Windows]
-});
+        );
+      }}
+    </ImageAnalyticsTagContext.Consumer>
+  );
+};
 
 const imageComponentDecorator = unstable_getImageComponentDecorator();
 if (imageComponentDecorator != null) {

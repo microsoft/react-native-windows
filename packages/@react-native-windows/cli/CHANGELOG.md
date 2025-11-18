@@ -1,8 +1,171 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.281
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.128
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/package-utils to v0.0.0-canary.96
+- Bump @react-native-windows/telemetry to v0.0.0-canary.129
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 0.0.0-canary.280
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.128
+
+## 0.0.0-canary.279
+
+Wed, 12 Nov 2025 21:00:41 GMT
+
+### Changes
+
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Remove web debugging support (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.127
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/package-utils to v0.0.0-canary.95
+- Bump @react-native-windows/telemetry to v0.0.0-canary.127
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 0.0.0-canary.278
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.126
+
+## 0.0.0-canary.277
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.126
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @react-native-windows/package-utils to v0.0.0-canary.94
+- Bump @react-native-windows/telemetry to v0.0.0-canary.125
+- Bump @rnw-scripts/just-task to v2.3.56
+
+## 0.0.0-canary.276
+
+Wed, 17 Sep 2025 05:27:16 GMT
+
+### Changes
+
+- Upgrade dotnet version (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.275
+
+Tue, 02 Sep 2025 05:24:07 GMT
+
+### Changes
+
+- Remove Prompt from CLI for switching to new arch. (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.274
+
+Wed, 27 Aug 2025 05:26:00 GMT
+
+### Changes
+
+- Replace environment variable approach with separate stable/preview test suites (198982749+Copilot@users.noreply.github.com)
+- Reapply "Change `init-windows` default new app template to New Architecture" (#14985) (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.273
+
+Sat, 23 Aug 2025 05:30:40 GMT
+
+### Changes
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.125
+- Bump @react-native-windows/fs to v0.0.0-canary.67
+- Bump @react-native-windows/package-utils to v0.0.0-canary.93
+- Bump @react-native-windows/telemetry to v0.0.0-canary.124
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-unittest-config to v1.5.12
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+
+## 0.0.0-canary.272
+
+Wed, 20 Aug 2025 05:26:04 GMT
+
+### Changes
+
+- Update CLI to show static warning for old architecture in run-windows and interactive prompt for init-windows (#15029) (54227869+anupriya13@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.123
+
+## 0.0.0-canary.271
+
+Wed, 06 Aug 2025 05:27:59 GMT
+
+### Changes
+
+- Revert "Change `init-windows` default new app template to New Architecture (#…" (54227869+anupriya13@users.noreply.github.com)
+- [BugFix] Open Init windows telemetry not capturing the true default template (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.270
+
+Fri, 25 Jul 2025 05:27:19 GMT
+
+### Changes
+
+- Enable Console Logging for playground Apps (satkh@microsoft.com)
+
+## 0.0.0-canary.269
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.124
+- Bump @react-native-windows/fs to v0.0.0-canary.66
+- Bump @react-native-windows/package-utils to v0.0.0-canary.92
+- Bump @react-native-windows/telemetry to v0.0.0-canary.122
+- Bump @rnw-scripts/just-task to v2.3.54
+
+## 0.0.0-canary.268
+
+Tue, 15 Jul 2025 05:27:20 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.121
+
+## 0.0.0-canary.267
+
+Fri, 20 Jun 2025 05:21:53 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+
+## 0.0.0-canary.266
+
+Thu, 19 Jun 2025 17:16:24 GMT
+
+### Changes
+
+- Remove rnw/cli dependency on rnc/cli (30809111+acoates-ms@users.noreply.github.com)
+- Add warning to CLI commands about using the old architecture (jthysell@microsoft.com)
+- Change `init-windows` default new app template to New Architecture (jthysell@microsoft.com)
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.265
 

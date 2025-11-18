@@ -7,17 +7,15 @@
 
 #pragma once
 
-#include "CdpJson.h"
 #include "InspectorInterfaces.h"
 #include "ScopedExecutor.h"
 
 #include <folly/dynamic.h>
-#include <mutex>
-#include <sstream>
+#include <jsinspector-modern/cdp/CdpJson.h>
+
 #include <string>
 #include <unordered_map>
 #include <utility>
-#include <variant>
 
 namespace facebook::react::jsinspector_modern {
 
@@ -87,6 +85,17 @@ struct IOReadResult {
     obj("eof", eof);
     obj("base64Encoded", base64Encoded);
     return obj;
+  }
+};
+
+struct GetResponseBodyResult {
+  std::string body;
+  bool base64Encoded;
+  folly::dynamic toDynamic() const {
+    folly::dynamic params = folly::dynamic::object;
+    params["body"] = body;
+    params["base64Encoded"] = base64Encoded;
+    return params;
   }
 };
 
@@ -261,6 +270,11 @@ class NetworkIOAgent {
    * Reports CDP ok if the stream is found, or a CDP error if not.
    */
   void handleIoClose(const cdp::PreparsedRequest& req);
+
+  /**
+   * Handle a Network.getResponseBody CDP request.
+   */
+  void handleGetResponseBody(const cdp::PreparsedRequest& req);
 };
 
 } // namespace facebook::react::jsinspector_modern

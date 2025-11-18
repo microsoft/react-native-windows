@@ -68,6 +68,19 @@ steps:
       PoliCheck: true
       PoliCheckBreakOn: Severity4Above
       ToolLogsNotFoundAction: "Error"
+      # TSA Configuration for automatic bug filing
+      TSAEnabled: true
+      TSAOptions: |
+        {
+          "areaPath": "OS\\Windows Client and Services\\WinPD\\SPICE\\ReactNative",
+          "iterationPath": "OS\\Future",
+          "notificationAliases": ["$(TSANotificationAliases)"],
+          "codebaseAdmins": ["$(TSACodebaseAdmins)"],
+          "bugTags": ["SDL", "Security"],
+          "instanceUrl": "https://dev.azure.com/microsoft",
+          "projectName": "OS",
+          "allTools": true
+        }
     continueOnError: ${{ parameters.complianceWarnOnly }}
 
   # Restore unnecessary changes that were made by the compliance tasks

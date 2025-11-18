@@ -19,6 +19,12 @@
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == '' AND '$(BuildingInRnwRepo)' == 'true'">true</EnableSourceLink>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
+    
+    <!-- Symbol Publishing Compliance (Work Item 59264834) - Generate PDB files for Release builds -->
+    <DebugSymbols Condition="'$(Configuration)' == 'Release'">true</DebugSymbols>
+    <DebugType Condition="'$(Configuration)' == 'Release'">pdbonly</DebugType>
+    <IncludeSymbols Condition="'$(Configuration)' == 'Release'">true</IncludeSymbols>
+    <IncludeSource Condition="'$(Configuration)' == 'Release'">false</IncludeSource>
     <!-- When bumping the Folly version, be sure to bump the git hash of that version's commit, find the matching fastfloat dependency and build Folly.vcxproj (to update its cgmanifest.json) too. -->
     <FollyVersion>2024.10.14.00</FollyVersion>
     <FastFloatVersion>6.1.4</FastFloatVersion>
@@ -28,7 +34,7 @@
     <FmtVersion>10.1.0</FmtVersion>
     <FmtCommitHash>ca2e3685b160617d3d95fcd9e789c4e06ca88</FmtCommitHash>
     <!-- Commit hash for https://github.com/microsoft/node-api-jsi code. -->
-    <NodeApiJsiCommitHash>980cb60d7911237d0f647fc566543ef627adac70</NodeApiJsiCommitHash>
+    <NodeApiJsiCommitHash>21b47f08b762b21b1d4d970940ab23f59f43249c</NodeApiJsiCommitHash>
   </PropertyGroup>
 
   <!--
@@ -74,10 +80,13 @@
 
     <IntermediateOutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(IntDir)</IntermediateOutputPath>
     <OutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(OutDir)</OutputPath>
+  </PropertyGroup>
 
-    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
+  <PropertyGroup Condition="'$(BuildingInRnwRepo)' != 'true'">
+    <!-- Consumers of RNW outside of the repo don't need lock files unless they ask for it -->
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)' == ''">false</RestoreLockedMode>
+    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">false</RestorePackagesWithLockFile>
     <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">false</RestoreForceEvaluate>
-
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">

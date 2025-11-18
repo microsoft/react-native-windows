@@ -60,6 +60,8 @@ struct WindowsTextInputComponentView
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void OnPointerMoved(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void OnPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
@@ -97,7 +99,9 @@ struct WindowsTextInputComponentView
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
+  void EmitOnScrollEvent() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
+  std::pair<float, float> GetContentSize() const noexcept;
   std::string GetTextFromRichEdit() const noexcept;
   void updateCursorColor(
       const facebook::react::SharedColor &cursorColor,
@@ -114,6 +118,7 @@ struct WindowsTextInputComponentView
   void updateLetterSpacing(float letterSpacing) noexcept;
   void updateAutoCorrect(bool value) noexcept;
   void updateSpellCheck(bool value) noexcept;
+  void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};

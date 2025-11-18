@@ -13,18 +13,21 @@ import type {TouchableWithoutFeedbackProps} from './TouchableWithoutFeedback';
 import Pressability, {
   type PressabilityConfig,
 } from '../../Pressability/Pressability';
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import {findHostInstance_DEPRECATED} from '../../ReactNative/RendererProxy';
 import processColor from '../../StyleSheet/processColor';
 import Platform from '../../Utilities/Platform';
 import {Commands} from '../View/ViewNativeComponent';
 import invariant from 'invariant';
 import * as React from 'react';
+import {cloneElement} from 'react';
 
-type TVProps = {
+type TouchableNativeFeedbackTVProps = {
   /**
    * *(Apple TV only)* TV preferred focus (see documentation for the View component).
    *
    * @platform ios
+   * @deprecated Use `focusable` instead
    */
   hasTVPreferredFocus?: ?boolean,
 
@@ -66,7 +69,7 @@ type TVProps = {
 
 export type TouchableNativeFeedbackProps = $ReadOnly<{
   ...TouchableWithoutFeedbackProps,
-  ...TVProps,
+  ...TouchableNativeFeedbackTVProps,
   /**
    * Determines the type of background drawable that's going to be used to display feedback.
    * It takes an object with type property and extra data depending on the type.
@@ -111,7 +114,7 @@ export type TouchableNativeFeedbackProps = $ReadOnly<{
   tooltip?: string, // Win32
 }>;
 
-type State = $ReadOnly<{
+type TouchableNativeFeedbackState = $ReadOnly<{
   pressability: Pressability,
 }>;
 
@@ -127,7 +130,7 @@ type State = $ReadOnly<{
  */
 class TouchableNativeFeedback extends React.Component<
   TouchableNativeFeedbackProps,
-  State,
+  TouchableNativeFeedbackState,
 > {
   /**
    * Creates an object that represents android theme's default background for
@@ -203,7 +206,7 @@ class TouchableNativeFeedback extends React.Component<
   static canUseNativeForeground: () => boolean = () =>
     Platform.OS === 'android';
 
-  state: State = {
+  state: TouchableNativeFeedbackState = {
     pressability: new Pressability(this._createPressabilityConfig()),
   };
 
@@ -252,7 +255,7 @@ class TouchableNativeFeedback extends React.Component<
 
   _dispatchPressedStateChange(pressed: boolean): void {
     if (Platform.OS === 'android') {
-      const hostComponentRef = findHostInstance_DEPRECATED(this);
+      const hostComponentRef = findHostInstance_DEPRECATED<$FlowFixMe>(this);
       if (hostComponentRef == null) {
         console.warn(
           'Touchable: Unable to find HostComponent instance. ' +
@@ -267,7 +270,7 @@ class TouchableNativeFeedback extends React.Component<
   _dispatchHotspotUpdate(event: GestureResponderEvent): void {
     if (Platform.OS === 'android') {
       const {locationX, locationY} = event.nativeEvent;
-      const hostComponentRef = findHostInstance_DEPRECATED(this);
+      const hostComponentRef = findHostInstance_DEPRECATED<$FlowFixMe>(this);
       if (hostComponentRef == null) {
         console.warn(
           'Touchable: Unable to find HostComponent instance. ' +
@@ -285,7 +288,7 @@ class TouchableNativeFeedback extends React.Component<
 
   componentDidUpdate(
     prevProps: TouchableNativeFeedbackProps,
-    prevState: State,
+    prevState: TouchableNativeFeedbackState,
   ) {
     this.state.pressability.configure(this._createPressabilityConfig());
   }

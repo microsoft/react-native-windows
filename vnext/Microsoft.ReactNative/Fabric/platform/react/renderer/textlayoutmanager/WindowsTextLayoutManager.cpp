@@ -66,12 +66,10 @@ class AttachmentInlineObject : public winrt::implements<AttachmentInlineObject, 
   float m_height;
 };
 
-TextLayoutManager::TextLayoutManager(const ContextContainer::Shared &contextContainer)
-    : contextContainer_(contextContainer),
-      textMeasureCache_(kSimpleThreadSafeCacheSizeCap),
-      lineMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
+TextLayoutManager::TextLayoutManager(const std::shared_ptr<const ContextContainer> &contextContainer)
+    : contextContainer_(contextContainer), textMeasureCache_(kSimpleThreadSafeCacheSizeCap) {}
 
-WindowsTextLayoutManager::WindowsTextLayoutManager(const ContextContainer::Shared &contextContainer)
+WindowsTextLayoutManager::WindowsTextLayoutManager(const std::shared_ptr<const ContextContainer> &contextContainer)
     : TextLayoutManager(contextContainer) {}
 
 void WindowsTextLayoutManager::GetTextLayout(
@@ -82,6 +80,12 @@ void WindowsTextLayoutManager::GetTextLayout(
     TextMeasurement::Attachments &attachments) noexcept {
   const auto &attributedString = attributedStringBox.getValue();
   auto fragments = attributedString.getFragments();
+
+  // Check if fragments is empty to avoid out-of-bounds access
+  if (fragments.empty()) {
+    return;
+  }
+
   auto outerFragment = fragments[0];
 
   DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
@@ -132,6 +136,25 @@ void WindowsTextLayoutManager::GetTextLayout(
         outerFragment.textAttributes.lineHeight * 0.8f));
   }
 
+  // Set reading direction (RTL/LTR) based on baseWritingDirection
+  // Only set reading direction if explicitly specified to avoid breaking existing layouts
+  bool isRTL = false;
+  if (outerFragment.textAttributes.baseWritingDirection.has_value()) {
+    DWRITE_READING_DIRECTION readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+    if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
+      readingDirection = DWRITE_READING_DIRECTION_RIGHT_TO_LEFT;
+      isRTL = true;
+    } else if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::LeftToRight) {
+      readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+      isRTL = false;
+    } else if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::Natural) {
+      // Natural uses the layout direction from textAttributes
+      isRTL = (outerFragment.textAttributes.layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+      readingDirection = isRTL ? DWRITE_READING_DIRECTION_RIGHT_TO_LEFT : DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+    }
+    winrt::check_hresult(spTextFormat->SetReadingDirection(readingDirection));
+  }
+
   // Set text alignment
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
   if (outerFragment.textAttributes.alignment) {
@@ -148,9 +171,9 @@ void WindowsTextLayoutManager::GetTextLayout(
       case facebook::react::TextAlignment::Right:
         alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
         break;
-      // TODO use LTR values
       case facebook::react::TextAlignment::Natural:
-        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+        // Natural alignment respects reading direction if baseWritingDirection was set
+        alignment = isRTL ? DWRITE_TEXT_ALIGNMENT_TRAILING : DWRITE_TEXT_ALIGNMENT_LEADING;
         break;
       default:
         assert(false);
@@ -377,47 +400,45 @@ TextMeasurement TextLayoutManager::measure(
   TextMeasurement measurement{};
   auto &attributedString = attributedStringBox.getValue();
 
-  measurement = textMeasureCache_.get(
-      {attributedString, paragraphAttributes, layoutConstraints}, [&](TextMeasureCacheKey const &key) {
-        auto telemetry = TransactionTelemetry::threadLocalTelemetry();
-        if (telemetry) {
-          telemetry->willMeasureText();
+  measurement = textMeasureCache_.get({attributedString, paragraphAttributes, layoutConstraints}, [&]() {
+    auto telemetry = TransactionTelemetry::threadLocalTelemetry();
+    if (telemetry) {
+      telemetry->willMeasureText();
+    }
+
+    winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+
+    TextMeasurement::Attachments attachments;
+    WindowsTextLayoutManager::GetTextLayout(
+        attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+
+    if (spTextLayout) {
+      auto maxHeight = std::numeric_limits<float>().max();
+      if (paragraphAttributes.maximumNumberOfLines > 0) {
+        std::vector<DWRITE_LINE_METRICS> lineMetrics;
+        uint32_t actualLineCount;
+        spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
+        lineMetrics.resize(static_cast<size_t>(actualLineCount));
+        winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
+        maxHeight = 0;
+        const auto count = std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount);
+        for (uint32_t i = 0; i < count; ++i) {
+          maxHeight += lineMetrics[i].height;
         }
+      }
 
-        winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+      DWRITE_TEXT_METRICS dtm{};
+      winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
+      measurement.size = {dtm.width, std::min(dtm.height, maxHeight)};
+      measurement.attachments = attachments;
+    }
 
-        TextMeasurement::Attachments attachments;
-        WindowsTextLayoutManager::GetTextLayout(
-            attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout, attachments);
+    if (telemetry) {
+      telemetry->didMeasureText();
+    }
 
-        if (spTextLayout) {
-          auto maxHeight = std::numeric_limits<float>().max();
-          if (paragraphAttributes.maximumNumberOfLines > 0) {
-            std::vector<DWRITE_LINE_METRICS> lineMetrics;
-            uint32_t actualLineCount;
-            spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
-            lineMetrics.resize(static_cast<size_t>(actualLineCount));
-            winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
-            maxHeight = 0;
-            const auto count =
-                std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount);
-            for (uint32_t i = 0; i < count; ++i) {
-              maxHeight += lineMetrics[i].height;
-            }
-          }
-
-          DWRITE_TEXT_METRICS dtm{};
-          winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
-          measurement.size = {dtm.width, std::min(dtm.height, maxHeight)};
-          measurement.attachments = attachments;
-        }
-
-        if (telemetry) {
-          telemetry->didMeasureText();
-        }
-
-        return measurement;
-      });
+    return measurement;
+  });
   return measurement;
 }
 
@@ -438,96 +459,6 @@ Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTra
   }
 
   return Microsoft::ReactNative::TextTransform::Undefined;
-}
-
-LinesMeasurements TextLayoutManager::measureLines(
-    const AttributedStringBox &attributedStringBox,
-    const ParagraphAttributes &paragraphAttributes,
-    const Size &size) const {
-  LinesMeasurements lineMeasurements{};
-
-  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-  TextMeasurement::Attachments attachments;
-  WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
-
-  if (spTextLayout) {
-    std::vector<DWRITE_LINE_METRICS> lineMetrics;
-    uint32_t actualLineCount;
-    spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
-    lineMetrics.resize(static_cast<size_t>(actualLineCount));
-    winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
-    uint32_t startRange = 0;
-    const auto count = (paragraphAttributes.maximumNumberOfLines > 0)
-        ? std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount)
-        : actualLineCount;
-    for (uint32_t i = 0; i < count; ++i) {
-      UINT32 actualHitTestCount = 0;
-      spTextLayout->HitTestTextRange(
-          startRange,
-          lineMetrics[i].length,
-          0, // x
-          0, // y
-          NULL,
-          0, // metrics count
-          &actualHitTestCount);
-
-      // Allocate enough room to return all hit-test metrics.
-      std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
-      spTextLayout->HitTestTextRange(
-          startRange,
-          lineMetrics[i].length,
-          0, // x
-          0, // y
-          &hitTestMetrics[0],
-          static_cast<UINT32>(hitTestMetrics.size()),
-          &actualHitTestCount);
-
-      float width = 0;
-      for (auto tm : hitTestMetrics) {
-        width += tm.width;
-      }
-
-      std::string str;
-      const auto &attributedString = attributedStringBox.getValue();
-      for (const auto &fragment : attributedString.getFragments()) {
-        str = str +
-            winrt::to_string(Microsoft::ReactNative::TransformableText::TransformText(
-                winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
-                ConvertTextTransform(fragment.textAttributes.textTransform)));
-      }
-
-      lineMeasurements.emplace_back(LineMeasurement(
-          str.substr(startRange, lineMetrics[i].length),
-          {{hitTestMetrics[0].left, hitTestMetrics[0].top}, // origin
-           {width, lineMetrics[i].height}},
-          0.0f, // TODO descender
-          0.0f, // TODO: capHeight
-          0.0f, // TODO ascender
-          0.0f // TODO: xHeight
-          ));
-
-      startRange += lineMetrics[i].length;
-    }
-  }
-
-  return lineMeasurements;
-}
-
-Float TextLayoutManager::baseline(
-    const AttributedStringBox &attributedStringBox,
-    const ParagraphAttributes &paragraphAttributes,
-    const Size &size) const {
-  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-  TextMeasurement::Attachments attachments;
-  WindowsTextLayoutManager::GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout, attachments);
-  if (!spTextLayout) {
-    return 0;
-  }
-
-  DWRITE_TEXT_METRICS metrics;
-  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-  return metrics.height *
-      0.8f; // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
 }
 
 winrt::hstring WindowsTextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {

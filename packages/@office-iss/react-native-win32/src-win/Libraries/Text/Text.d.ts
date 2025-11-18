@@ -16,8 +16,7 @@ import {TextStyle, ViewStyle} from '../StyleSheet/StyleSheetTypes';
 import {
   GestureResponderEvent,
   LayoutChangeEvent,
-  NativeSyntheticEvent,
-  TextLayoutEventData,
+  TextLayoutEvent,
 } from '../Types/CoreEventTypes';
 import type {
   IKeyboardEvent,
@@ -248,9 +247,7 @@ export interface TextProps
   /**
    * Invoked on Text layout
    */
-  onTextLayout?:
-    | ((event: NativeSyntheticEvent<TextLayoutEventData>) => void)
-    | undefined;
+  onTextLayout?: ((event: TextLayoutEvent) => void) | undefined;
 
   /**
    * This function is called on press.
@@ -299,6 +296,13 @@ export interface TextProps
    * Controls how touch events are handled. Similar to `View`'s `pointerEvents`.
    */
   pointerEvents?: ViewStyle['pointerEvents'] | undefined;
+
+  /**
+   * Defines how far your touch may move off of the button, before deactivating the button.
+   */
+  pressRetentionOffset?:
+    | {top: number; left: number; bottom: number; right: number}
+    | undefined;
 }
 
 /**

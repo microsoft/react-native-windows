@@ -46,7 +46,6 @@
 
     <file src="$nugetroot$\inc\Shared\AbiSafe.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\DevSettings.h" target="inc"/>
-    <file src="$nugetroot$\inc\ReactWin32\INativeUIManagerLegacy.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IDevSupportManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
@@ -55,7 +54,6 @@
     <file src="$nugetroot$\inc\Shared\LayoutAnimation.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Logging.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\MemoryMappedBuffer.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\Modules\I18nModule.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Networking\IWebSocketResource.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Networking\OriginPolicy.h" target="inc"/>

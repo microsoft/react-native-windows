@@ -1,6 +1,9 @@
 /**
- * Copyright (c) Microsoft Corporation.
- * Licensed under the MIT License.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @flow
  * @format
  */
@@ -116,12 +119,15 @@ class Alert {
       if (action === constants.buttonClicked) {
         if (buttonKey === constants.buttonNeutral) {
           // $FlowFixMe[incompatible-type]
+          // $FlowFixMe[incompatible-use]
           buttonNeutral.onPress && buttonNeutral.onPress();
         } else if (buttonKey === constants.buttonNegative) {
           // $FlowFixMe[incompatible-type]
+          // $FlowFixMe[incompatible-use]
           buttonNegative.onPress && buttonNegative.onPress();
         } else if (buttonKey === constants.buttonPositive) {
           // $FlowFixMe[incompatible-type]
+          // $FlowFixMe[incompatible-use]
           buttonPositive.onPress && buttonPositive.onPress();
         }
       } else if (action === constants.dismissed) {

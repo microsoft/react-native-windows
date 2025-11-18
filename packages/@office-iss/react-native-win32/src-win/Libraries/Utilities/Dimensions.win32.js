@@ -2,8 +2,8 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * @format
  * @flow
+ * @format
  */
 
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
@@ -17,7 +17,7 @@ import NativeDeviceInfo, {
 } from './NativeDeviceInfo';
 import invariant from 'invariant';
 
-export type {DisplayMetrics, DisplayMetricsAndroid};
+export type {DimensionsPayload, DisplayMetrics, DisplayMetricsAndroid};
 
 /** @deprecated Use DisplayMetrics */
 export type ScaledSize = DisplayMetrics;

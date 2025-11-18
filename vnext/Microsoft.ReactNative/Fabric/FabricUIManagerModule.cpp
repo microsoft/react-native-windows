@@ -66,7 +66,8 @@ FabricUIManager::~FabricUIManager() {
 void FabricUIManager::installFabricUIManager() noexcept {
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
-  facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
+  std::shared_ptr<const facebook::react::ContextContainer> contextContainer =
+      std::make_shared<facebook::react::ContextContainer>();
 
   // This allows access to our ReactContext from the contextContainer thats passed around the fabric codebase
   contextContainer->insert("MSRN.ReactContext", m_context);
@@ -97,8 +98,9 @@ void FabricUIManager::installFabricUIManager() noexcept {
       };
 
   toolbox.contextContainer = contextContainer;
-  toolbox.componentRegistryFactory = [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
-                                        facebook::react::ContextContainer::Shared const &contextContainer)
+  toolbox.componentRegistryFactory =
+      [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
+         std::shared_ptr<const facebook::react::ContextContainer> const &contextContainer)
       -> facebook::react::ComponentDescriptorRegistry::Shared {
     auto providerRegistry =
         WindowsComponentDescriptorRegistry::FromProperties(
@@ -165,6 +167,9 @@ void FabricUIManager::setProps(facebook::react::SurfaceId surfaceId, const folly
 }
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
+  if (surfaceId == -1) {
+    return;
+  }
   visit(surfaceId, [&](const facebook::react::SurfaceHandler &surfaceHandler) {
     surfaceHandler.stop();
     m_scheduler->unregisterSurface(surfaceHandler);
@@ -174,7 +179,9 @@ void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept
     std::unique_lock lock(m_handlerMutex);
 
     auto iterator = m_handlerRegistry.find(surfaceId);
-    m_handlerRegistry.erase(iterator);
+    if (iterator != m_handlerRegistry.end()) {
+      m_handlerRegistry.erase(iterator);
+    }
   }
 
   auto &rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
@@ -465,10 +472,20 @@ void FabricUIManager::schedulerDidSetIsJSResponder(
     bool isJSResponder,
     bool blockNativeResponder) {}
 
+void FabricUIManager::schedulerShouldSynchronouslyUpdateViewOnUIThread(
+    facebook::react::Tag tag,
+    const folly::dynamic &props) {}
+
 void FabricUIManager::schedulerDidSendAccessibilityEvent(
     const facebook::react::ShadowView &shadowView,
     std::string const &eventType) {
   assert(false);
+}
+
+void FabricUIManager::schedulerDidUpdateShadowTree(
+    const std::unordered_map<facebook::react::Tag, folly::dynamic> &tagToProps) {
+  // TODO: Implement shadow tree update handling if needed
+  // This method is called when the scheduler updates shadow tree props
 }
 
 void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {

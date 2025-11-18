@@ -21,11 +21,12 @@ import flattenStyle from '../../StyleSheet/flattenStyle';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
 
-export type TVProps = $ReadOnly<{
+export type TouchableOpacityTVProps = $ReadOnly<{
   /**
    * *(Apple TV only)* TV preferred focus (see documentation for the View component).
    *
    * @platform ios
+   * @deprecated Use `focusable` instead
    */
   hasTVPreferredFocus?: ?boolean,
 
@@ -71,18 +72,18 @@ type TouchableOpacityBaseProps = $ReadOnly<{
    * Defaults to 0.2
    */
   activeOpacity?: ?number,
-  style?: ?ViewStyleProp,
+  style?: ?Animated.WithAnimatedValue<ViewStyleProp>,
 
   hostRef?: ?React.RefSetter<React.ElementRef<typeof Animated.View>>,
 }>;
 
 export type TouchableOpacityProps = $ReadOnly<{
   ...TouchableWithoutFeedbackProps,
-  ...TVProps,
+  ...TouchableOpacityTVProps,
   ...TouchableOpacityBaseProps,
 }>;
 
-type State = $ReadOnly<{
+type TouchableOpacityState = $ReadOnly<{
   anim: Animated.Value,
   pressability: Pressability,
 }>;
@@ -171,8 +172,11 @@ type State = $ReadOnly<{
  * ```
  *
  */
-class TouchableOpacity extends React.Component<TouchableOpacityProps, State> {
-  state: State = {
+class TouchableOpacity extends React.Component<
+  TouchableOpacityProps,
+  TouchableOpacityState,
+> {
+  state: TouchableOpacityState = {
     anim: new Animated.Value(this._getChildStyleOpacityWithDefault()),
     pressability: new Pressability(this._createPressabilityConfig()),
   };
@@ -322,7 +326,8 @@ class TouchableOpacity extends React.Component<TouchableOpacityProps, State> {
         importantForAccessibility={
           this.props['aria-hidden'] === true
             ? 'no-hide-descendants'
-            : this.props.importantForAccessibility
+            : // $FlowFixMe[incompatible-type] - AnimatedProps types were made more strict and need refining at this call site
+              this.props.importantForAccessibility
         }
         accessibilityViewIsModal={
           this.props['aria-modal'] ?? this.props.accessibilityViewIsModal
@@ -366,7 +371,10 @@ class TouchableOpacity extends React.Component<TouchableOpacityProps, State> {
     );
   }
 
-  componentDidUpdate(prevProps: TouchableOpacityProps, prevState: State) {
+  componentDidUpdate(
+    prevProps: TouchableOpacityProps,
+    prevState: TouchableOpacityState,
+  ) {
     this.state.pressability.configure(this._createPressabilityConfig());
     if (
       this.props.disabled !== prevProps.disabled ||
@@ -394,9 +402,13 @@ class TouchableOpacity extends React.Component<TouchableOpacityProps, State> {
 const Touchable: component(
   ref?: React.RefSetter<React.ElementRef<typeof Animated.View>>,
   ...props: TouchableOpacityProps
-) = React.forwardRef((props, ref) => (
-  <TouchableOpacity {...props} hostRef={ref} />
-));
+) = ({
+  ref,
+  ...props
+}: {
+  ref?: React.RefSetter<React.ElementRef<typeof Animated.View>>,
+  ...TouchableOpacityProps,
+}) => <TouchableOpacity {...props} hostRef={ref} />;
 
 Touchable.displayName = 'TouchableOpacity';
 

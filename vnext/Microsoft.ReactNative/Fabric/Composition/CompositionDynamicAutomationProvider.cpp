@@ -15,6 +15,21 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+// Helper function to check if any parent has NoHideDescendants
+bool IsHiddenByParent(const winrt::Microsoft::ReactNative::ComponentView &view) {
+  auto parent = view.Parent();
+  while (parent) {
+    auto parentProps = std::static_pointer_cast<const facebook::react::ViewProps>(
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parent)->props());
+    if (parentProps &&
+        parentProps->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants) {
+      return true;
+    }
+    parent = parent.Parent();
+  }
+  return false;
+}
+
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
     : m_view{componentView} {
@@ -132,6 +147,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetEmbeddedFragmentRoots
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::SetFocus(void) {
   return UiaSetFocusHelper(m_view);
+}
+
+winrt::IUnknown CompositionDynamicAutomationProvider::TryGetChildSiteLinkAutomationProvider() {
+  if (m_childSiteLink) {
+    return m_childSiteLink.AutomationProvider().as<winrt::IUnknown>();
+  }
+  return nullptr;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) {
@@ -301,161 +323,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   return S_OK;
 }
 
-long GetControlTypeFromString(const std::string &role) noexcept {
-  if (role == "adjustable") {
-    return UIA_SliderControlTypeId;
-  } else if (role == "group" || role == "search" || role == "radiogroup" || role == "timer" || role.empty()) {
-    return UIA_GroupControlTypeId;
-  } else if (role == "button" || role == "imagebutton" || role == "switch" || role == "togglebutton") {
-    return UIA_ButtonControlTypeId;
-  } else if (role == "checkbox") {
-    return UIA_CheckBoxControlTypeId;
-  } else if (role == "combobox") {
-    return UIA_ComboBoxControlTypeId;
-  } else if (role == "alert" || role == "header" || role == "summary" || role == "text") {
-    return UIA_TextControlTypeId;
-  } else if (role == "image") {
-    return UIA_ImageControlTypeId;
-  } else if (role == "keyboardkey") {
-    return UIA_CustomControlTypeId;
-  } else if (role == "link") {
-    return UIA_HyperlinkControlTypeId;
-  }
-  // list and listitem were added by RNW to better support UIA Control Types
-  else if (role == "list") {
-    return UIA_ListControlTypeId;
-  } else if (role == "listitem") {
-    return UIA_ListItemControlTypeId;
-  } else if (role == "menu") {
-    return UIA_MenuControlTypeId;
-  } else if (role == "menubar") {
-    return UIA_MenuBarControlTypeId;
-  } else if (role == "menuitem") {
-    return UIA_MenuItemControlTypeId;
-  }
-  // If role is "none", remove the element from the control tree
-  // and expose it as a plain element would in the raw tree.
-  else if (role == "none") {
-    return UIA_GroupControlTypeId;
-  } else if (role == "progressbar") {
-    return UIA_ProgressBarControlTypeId;
-  } else if (role == "radio") {
-    return UIA_RadioButtonControlTypeId;
-  } else if (role == "scrollbar") {
-    return UIA_ScrollBarControlTypeId;
-  } else if (role == "spinbutton") {
-    return UIA_SpinnerControlTypeId;
-  } else if (role == "splitbutton") {
-    return UIA_SplitButtonControlTypeId;
-  } else if (role == "tab") {
-    return UIA_TabItemControlTypeId;
-  } else if (role == "tablist") {
-    return UIA_TabControlTypeId;
-  } else if (role == "textinput" || role == "searchbox") {
-    return UIA_EditControlTypeId;
-  } else if (role == "toolbar") {
-    return UIA_ToolBarControlTypeId;
-  } else if (role == "tree") {
-    return UIA_TreeControlTypeId;
-  } else if (role == "treeitem") {
-    return UIA_TreeItemControlTypeId;
-  } else if (role == "pane") {
-    return UIA_PaneControlTypeId;
-  }
-  assert(false);
-  return UIA_GroupControlTypeId;
-}
-
-long GetControlTypeFromRole(const facebook::react::Role &role) noexcept {
-  switch (role) {
-    case facebook::react::Role::Alert:
-      return UIA_TextControlTypeId;
-    case facebook::react::Role::Application:
-      return UIA_WindowControlTypeId;
-    case facebook::react::Role::Button:
-      return UIA_ButtonControlTypeId;
-    case facebook::react::Role::Checkbox:
-      return UIA_CheckBoxControlTypeId;
-    case facebook::react::Role::Columnheader:
-      return UIA_HeaderControlTypeId;
-    case facebook::react::Role::Combobox:
-      return UIA_ComboBoxControlTypeId;
-    case facebook::react::Role::Document:
-      return UIA_DocumentControlTypeId;
-    case facebook::react::Role::Grid:
-      return UIA_GroupControlTypeId;
-    case facebook::react::Role::Group:
-      return UIA_GroupControlTypeId;
-    case facebook::react::Role::Heading:
-      return UIA_TextControlTypeId;
-    case facebook::react::Role::Img:
-      return UIA_ImageControlTypeId;
-    case facebook::react::Role::Link:
-      return UIA_HyperlinkControlTypeId;
-    case facebook::react::Role::List:
-      return UIA_ListControlTypeId;
-    case facebook::react::Role::Listitem:
-      return UIA_ListItemControlTypeId;
-    case facebook::react::Role::Menu:
-      return UIA_MenuControlTypeId;
-    case facebook::react::Role::Menubar:
-      return UIA_MenuBarControlTypeId;
-    case facebook::react::Role::Menuitem:
-      return UIA_MenuItemControlTypeId;
-    case facebook::react::Role::None:
-      return UIA_GroupControlTypeId;
-    case facebook::react::Role::Presentation:
-      return UIA_GroupControlTypeId;
-    case facebook::react::Role::Progressbar:
-      return UIA_ProgressBarControlTypeId;
-    case facebook::react::Role::Radio:
-      return UIA_RadioButtonControlTypeId;
-    case facebook::react::Role::Radiogroup:
-      return UIA_GroupControlTypeId;
-    case facebook::react::Role::Rowgroup:
-      return UIA_GroupControlTypeId;
-    case facebook::react::Role::Rowheader:
-      return UIA_HeaderControlTypeId;
-    case facebook::react::Role::Scrollbar:
-      return UIA_ScrollBarControlTypeId;
-    case facebook::react::Role::Searchbox:
-      return UIA_EditControlTypeId;
-    case facebook::react::Role::Separator:
-      return UIA_SeparatorControlTypeId;
-    case facebook::react::Role::Slider:
-      return UIA_SliderControlTypeId;
-    case facebook::react::Role::Spinbutton:
-      return UIA_SpinnerControlTypeId;
-    case facebook::react::Role::Status:
-      return UIA_StatusBarControlTypeId;
-    case facebook::react::Role::Summary:
-      return UIA_GroupControlTypeId;
-    case facebook::react::Role::Switch:
-      return UIA_ButtonControlTypeId;
-    case facebook::react::Role::Tab:
-      return UIA_TabItemControlTypeId;
-    case facebook::react::Role::Table:
-      return UIA_TableControlTypeId;
-    case facebook::react::Role::Tablist:
-      return UIA_TabControlTypeId;
-    case facebook::react::Role::Tabpanel:
-      return UIA_TabControlTypeId;
-    case facebook::react::Role::Timer:
-      return UIA_ButtonControlTypeId;
-    case facebook::react::Role::Toolbar:
-      return UIA_ToolBarControlTypeId;
-    case facebook::react::Role::Tooltip:
-      return UIA_ToolTipControlTypeId;
-    case facebook::react::Role::Tree:
-      return UIA_TreeControlTypeId;
-    case facebook::react::Role::Treegrid:
-      return UIA_TreeControlTypeId;
-    case facebook::react::Role::Treeitem:
-      return UIA_TreeItemControlTypeId;
-  }
-  return UIA_GroupControlTypeId;
-}
-
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -524,23 +391,54 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsContentElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal =
-          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+      // Check if this element or any parent has NoHideDescendants
+      bool isHidden =
+          props->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants ||
+          IsHiddenByParent(strongView);
+      pRetVal->boolVal = (!isHidden && props->accessible &&
+                          (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
           ? VARIANT_TRUE
           : VARIANT_FALSE;
       break;
     }
+
     case UIA_IsControlElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal =
-          (props->accessible && (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+      // Check if this element or any parent has NoHideDescendants
+      bool isHidden =
+          props->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants ||
+          IsHiddenByParent(strongView);
+      pRetVal->boolVal = (!isHidden && props->accessible &&
+                          (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
           ? VARIANT_TRUE
           : VARIANT_FALSE;
       break;
     }
     case UIA_IsOffscreenPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (compositionView->getClipState() == ClipState::FullyClipped) ? VARIANT_TRUE : VARIANT_FALSE;
+
+      // Special handling for modal content - check if component is in a popup/modal window
+      bool isOffscreen = true;
+      auto clipState = compositionView->getClipState();
+
+      if (clipState != ClipState::FullyClipped) {
+        isOffscreen = false;
+      } else {
+        // Component appears clipped, but check if it's modal content
+        // Modal content may appear clipped due to lack of parent relationships
+        // but should still be considered visible if it's in its own window
+        if (auto hwnd = compositionView->GetHwndForParenting()) {
+          // Check if this window is visible and not minimized
+          if (IsWindowVisible(hwnd) && !IsIconic(hwnd)) {
+            isOffscreen = false; // Window is visible, so content is not offscreen
+          }
+        } else {
+          // If we can't get window info, fall back to clip state
+          isOffscreen = true;
+        }
+      }
+
+      pRetVal->boolVal = isOffscreen ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
     case UIA_HelpTextPropertyId: {
@@ -589,6 +487,17 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->vt = VT_BSTR;
       auto itemtype = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityItemType.value_or(""));
       pRetVal->bstrVal = SysAllocString(itemtype.c_str());
+      break;
+    }
+    case UIA_FullDescriptionPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto desc = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityDescription.value_or(""));
+      pRetVal->bstrVal = SysAllocString(desc.c_str());
+      break;
+    }
+    case UIA_HeadingLevelPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = GetHeadingLevel(props->accessibilityLevel, props->accessibilityRole, props->role);
       break;
     }
   }
@@ -982,7 +891,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Expand() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   DispatchAccessibilityAction(m_view, "expand");
+
   return S_OK;
 }
 
@@ -991,7 +902,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Collapse() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   DispatchAccessibilityAction(m_view, "collapse");
+
   return S_OK;
 }
 

@@ -1,8 +1,130 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Fri, 30 May 2025 05:24:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.301
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-platform-override to v1.9.61
+
+## 0.0.0-canary.300
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Changes
+
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.42
+- Bump @rnw-scripts/just-task to v2.3.57
+- Bump react-native-platform-override to v1.9.60
+
+## 0.0.0-canary.299
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Changes
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- fix: stricter checks against key events (sanajmi@microsoft.com)
+
+## 0.0.0-canary.298
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Changes
+
+- Update tester files (hmalothu@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.56
+- Bump react-native-platform-override to v1.9.59
+
+## 0.0.0-canary.297
+
+Fri, 19 Sep 2025 05:29:13 GMT
+
+### Changes
+
+- integrate nightly 0.81.0-nightly-20250521-3cb70bb6a (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-platform-override to v1.9.58
+
+## 0.0.0-canary.296
+
+Wed, 03 Sep 2025 05:22:57 GMT
+
+### Changes
+
+- Add reply count prop to AccessibilityAnnotationInfo (mmaring@microsoft.com)
+
+## 0.0.0-canary.295
+
+Sat, 23 Aug 2025 05:30:39 GMT
+
+### Changes
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.41
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump react-native-platform-override to v1.9.57
+
+## 0.0.0-canary.294
+
+Sat, 26 Jul 2025 05:26:13 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250506-3ac16dd6a (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.293
+
+Thu, 17 Jul 2025 05:27:00 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.54
+- Bump react-native-platform-override to v1.9.56
+
+## 0.0.0-canary.292
+
+Thu, 03 Jul 2025 05:24:24 GMT
+
+### Changes
+
+- intergrate rn 0.80.0-nightly-20250414-70cdf12c4 (satkh@microsoft.com)
+
+## 0.0.0-canary.291
+
+Sat, 21 Jun 2025 05:21:48 GMT
+
+### Changes
+
+- Remove usage of Animated in LogBox (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.290
+
+Fri, 20 Jun 2025 05:21:53 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+
+## 0.0.0-canary.289
+
+Thu, 19 Jun 2025 17:16:23 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
+- Update to @types/react 19 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.288
 

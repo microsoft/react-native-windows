@@ -15,6 +15,7 @@
 #pragma warning(pop)
 
 #include <windows.ui.composition.interop.h>
+#include <winrt/Windows.UI.ViewManagement.Core.h>
 
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
@@ -804,6 +805,15 @@ void ScrollViewComponentView::updateProps(
   if (oldViewProps.zoomScale != newViewProps.zoomScale) {
     m_scrollVisual.Scale({newViewProps.zoomScale, newViewProps.zoomScale, newViewProps.zoomScale});
   }
+
+  if (oldViewProps.snapToStart != newViewProps.snapToStart || oldViewProps.snapToEnd != newViewProps.snapToEnd ||
+      oldViewProps.snapToOffsets != newViewProps.snapToOffsets) {
+    const auto snapToOffsets = winrt::single_threaded_vector<float>();
+    for (const auto &offset : newViewProps.snapToOffsets) {
+      snapToOffsets.Append(static_cast<float>(offset));
+    }
+    m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -1276,6 +1286,16 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
         auto now = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_lastScrollEventTime).count();
 
+        // Dismiss keyboard if mode is "on-drag"
+        auto keyboardDismissMode =
+            std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->keyboardDismissMode;
+        if (keyboardDismissMode == facebook::react::ScrollViewKeyboardDismissMode::OnDrag) {
+          auto coreInputView = winrt::Windows::UI::ViewManagement::Core::CoreInputView::GetForCurrentView();
+          if (coreInputView) {
+            coreInputView.TryHide();
+          }
+        }
+
         if (m_allowNextScrollNoMatterWhat ||
             (m_scrollEventThrottle < std::max(std::chrono::duration<double>(0.017).count(), elapsed))) {
           updateStateWithContentOffset();
@@ -1316,6 +1336,32 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           auto scrollMetrics = getScrollMetrics(eventEmitter, args);
           std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
               ->onScrollEndDrag(scrollMetrics);
+        }
+      });
+
+  m_scrollMomentumBeginRevoker = m_scrollVisual.ScrollMomentumBegin(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onMomentumScrollBegin(scrollMetrics);
+        }
+      });
+
+  m_scrollMomentumEndRevoker = m_scrollVisual.ScrollMomentumEnd(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          auto scrollMetrics = getScrollMetrics(eventEmitter, args);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onMomentumScrollEnd(scrollMetrics);
         }
       });
 

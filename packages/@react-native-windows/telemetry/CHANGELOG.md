@@ -1,8 +1,91 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.129
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 0.0.0-canary.128
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.127
+
+Wed, 12 Nov 2025 21:00:46 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 0.0.0-canary.126
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Changes
+
+- rever passing localid to telmetry pipeline (hmalothu@microsoft.com)
+
+## 0.0.0-canary.125
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @rnw-scripts/just-task to v2.3.56
+
+## 0.0.0-canary.124
+
+Sat, 23 Aug 2025 05:30:41 GMT
+
+### Changes
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.67
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-unittest-config to v1.5.12
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+
+## 0.0.0-canary.123
+
+Wed, 20 Aug 2025 05:26:04 GMT
+
+### Changes
+
+- Update CLI to show static warning for old architecture in run-windows and interactive prompt for init-windows (#15029) (54227869+anupriya13@users.noreply.github.com)
+
+## 0.0.0-canary.122
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.66
+- Bump @rnw-scripts/just-task to v2.3.54
+
+## 0.0.0-canary.121
+
+Tue, 15 Jul 2025 05:27:19 GMT
+
+### Changes
+
+- Removed uneeded `@azure/core-auth` dependency (jthysell@microsoft.com)
 
 ## 0.0.0-canary.120
 

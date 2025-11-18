@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 import type {ViewProps} from './ViewPropTypes';
@@ -17,8 +17,6 @@ import invariant from 'invariant'; // [Windows]
 // [Windows
 import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
-
-export type Props = ViewProps;
 
 /**
  * The most fundamental component for building a UI, View is a container that
@@ -78,8 +76,7 @@ const View: component(
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
 
-    let _accessibilityState;
-    if (
+    const _accessibilityState =
       accessibilityState != null ||
       ariaBusy != null ||
       ariaChecked != null ||
@@ -88,33 +85,31 @@ const View: component(
       ariaMultiselectable != null ||
       ariaRequired != null ||
       ariaSelected != null
-    ) {
-      _accessibilityState = {
-        busy: ariaBusy ?? accessibilityState?.busy,
-        checked: ariaChecked ?? accessibilityState?.checked,
-        disabled: ariaDisabled ?? accessibilityState?.disabled,
-        expanded: ariaExpanded ?? accessibilityState?.expanded,
-        multiselectable:
-          ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
-        required: ariaRequired ?? accessibilityState?.required, // Win32
-        selected: ariaSelected ?? accessibilityState?.selected,
-      };
-    }
-    let _accessibilityValue;
-    if (
+        ? {
+            busy: ariaBusy ?? accessibilityState?.busy,
+            checked: ariaChecked ?? accessibilityState?.checked,
+            disabled: ariaDisabled ?? accessibilityState?.disabled,
+            expanded: ariaExpanded ?? accessibilityState?.expanded,
+            multiselectable:
+              ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+            required: ariaRequired ?? accessibilityState?.required, // Win32
+            selected: ariaSelected ?? accessibilityState?.selected,
+          }
+        : undefined;
+
+    const _accessibilityValue =
       accessibilityValue != null ||
       ariaValueMax != null ||
       ariaValueMin != null ||
       ariaValueNow != null ||
       ariaValueText != null
-    ) {
-      _accessibilityValue = {
-        max: ariaValueMax ?? accessibilityValue?.max,
-        min: ariaValueMin ?? accessibilityValue?.min,
-        now: ariaValueNow ?? accessibilityValue?.now,
-        text: ariaValueText ?? accessibilityValue?.text,
-      };
-    }
+        ? {
+            max: ariaValueMax ?? accessibilityValue?.max,
+            min: ariaValueMin ?? accessibilityValue?.min,
+            now: ariaValueNow ?? accessibilityValue?.now,
+            text: ariaValueText ?? accessibilityValue?.text,
+          }
+        : undefined;
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
@@ -122,6 +117,10 @@ const View: component(
         for (const el of otherProps.keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
             el.handledEventPhase === 3
           ) {
             event.stopPropagation();
@@ -137,6 +136,10 @@ const View: component(
         for (const el of otherProps.keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
             el.handledEventPhase === 3
           ) {
             event.stopPropagation();
@@ -152,6 +155,10 @@ const View: component(
         for (const el of otherProps.keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
             el.handledEventPhase === 1
           ) {
             event.stopPropagation();
@@ -167,6 +174,10 @@ const View: component(
         for (const el of otherProps.keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&
+            event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
+            event.nativeEvent.shiftKey === Boolean(el.shiftKey) &&
+            event.nativeEvent.altKey === Boolean(el.altKey) &&
+            event.nativeEvent.metaKey === Boolean(el.metaKey) &&
             el.handledEventPhase === 1
           ) {
             event.stopPropagation();

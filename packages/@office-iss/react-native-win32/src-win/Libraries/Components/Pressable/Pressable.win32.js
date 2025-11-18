@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import type {
   GestureResponderEvent,
   LayoutChangeEvent,
@@ -28,11 +29,11 @@ import useAndroidRippleForView, {
   type PressableAndroidRippleConfig,
 } from './useAndroidRippleForView';
 import * as React from 'react';
-import {useMemo, useRef, useState} from 'react';
+import {memo, useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
 
-type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
+export type {PressableAndroidRippleConfig};
 
 export type PressableStateCallbackType = $ReadOnly<{
   pressed: boolean,
@@ -49,7 +50,7 @@ type PressableBaseProps = $ReadOnly<{
    * Either children or a render prop that receives a boolean reflecting whether
    * the component is currently pressed.
    */
-  children: React.Node | ((state: PressableStateCallbackType) => React.Node),
+  children?: React.Node | ((state: PressableStateCallbackType) => React.Node),
 
   /**
    * Duration to wait after hover in before calling `onHoverIn`.
@@ -111,11 +112,21 @@ type PressableBaseProps = $ReadOnly<{
    * Called when a touch is engaged before `onPress`.
    */
   onPressIn?: ?(event: GestureResponderEvent) => mixed,
+  /**
+   * Called when the press location moves.
+   */
+  onPressMove?: ?(event: GestureResponderEvent) => mixed,
 
   /**
    * Called when a touch is released before `onPress`.
    */
   onPressOut?: ?(event: GestureResponderEvent) => mixed,
+
+  /**
+   * Whether to prevent any other native components from becoming responder
+   * while this pressable is responder.
+   */
+  blockNativeResponder?: ?boolean,
 
   /**
    * Called after the element loses focus.
@@ -192,7 +203,10 @@ type PressableBaseProps = $ReadOnly<{
 }>;
 
 export type PressableProps = $ReadOnly<{
-  ...ViewProps,
+  // Pressability may override `onMouseEnter` and `onMouseLeave` to
+  // implement `onHoverIn` and `onHoverOut` in a platform-agnostic way.
+  // Hover events should be used instead of mouse events.
+  ...Omit<ViewProps, 'onMouseEnter' | 'onMouseLeave'>,
   ...PressableBaseProps,
 }>;
 
@@ -202,10 +216,13 @@ type Instance = React.ElementRef<typeof View>;
  * Component used to build display components that should respond to whether the
  * component is currently pressed or not.
  */
-function Pressable(
-  props: PressableProps,
-  forwardedRef: React.RefSetter<Instance>,
-): React.Node {
+function Pressable({
+  ref: forwardedRef,
+  ...props
+}: {
+  ref?: React.RefSetter<Instance>,
+  ...PressableProps,
+}): React.Node {
   const {
     accessible,
     accessibilityState,
@@ -220,6 +237,7 @@ function Pressable(
     'aria-multiselectable': ariaMultiselectable, // Win32
     'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
+    blockNativeResponder,
     cancelable,
     children,
     delayHoverIn,
@@ -228,15 +246,16 @@ function Pressable(
     disabled,
     focusable,
     hitSlop,
+    onBlur,
+    onFocus,
     onHoverIn,
     onHoverOut,
     onLongPress,
     onPress,
     onPressIn,
+    onPressMove,
     onPressOut,
     // [Windows
-    onBlur,
-    onFocus,
     onKeyDown,
     onKeyUp,
     // Windows]
@@ -306,6 +325,8 @@ function Pressable(
       delayHoverOut,
       delayLongPress,
       delayPressIn: unstable_pressDelay,
+      onBlur,
+      onFocus,
       onHoverIn,
       onHoverOut,
       onLongPress,
@@ -319,7 +340,12 @@ function Pressable(
           onPressIn(event);
         }
       },
-      onPressMove: android_rippleConfig?.onPressMove,
+      onPressMove(event: GestureResponderEvent): void {
+        android_rippleConfig?.onPressMove(event);
+        if (onPressMove != null) {
+          onPressMove(event);
+        }
+      },
       onPressOut(event: GestureResponderEvent): void {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressOut(event);
@@ -329,9 +355,8 @@ function Pressable(
           onPressOut(event);
         }
       },
+      blockNativeResponder,
       // [Windows
-      onBlur,
-      onFocus,
       onKeyDown,
       onKeyUp,
       // Windows]
@@ -339,21 +364,23 @@ function Pressable(
     [
       android_disableSound,
       android_rippleConfig,
+      blockNativeResponder,
       cancelable,
       delayHoverIn,
       delayHoverOut,
       delayLongPress,
       disabled,
       hitSlop,
+      onBlur,
+      onFocus,
       onHoverIn,
       onHoverOut,
       onLongPress,
       onPress,
       onPressIn,
+      onPressMove,
       onPressOut,
       // [Windows
-      onBlur,
-      onFocus,
       onKeyDown,
       onKeyUp,
       // Windows]
@@ -363,6 +390,7 @@ function Pressable(
       unstable_pressDelay,
     ],
   );
+
   const eventHandlers = usePressability(config);
 
   return (
@@ -382,7 +410,7 @@ function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
   return [pressed || forcePressed, setPressed];
 }
 
-const MemoedPressable = React.memo(React.forwardRef(Pressable));
+const MemoedPressable = memo(Pressable);
 MemoedPressable.displayName = 'Pressable';
 
 export default (MemoedPressable: component(

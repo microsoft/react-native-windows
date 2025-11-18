@@ -4,6 +4,8 @@
  * @format
  */
 
+/* eslint-disable complexity */
+
 import fs from '@react-native-windows/fs';
 import path from 'path';
 
@@ -31,6 +33,7 @@ import type {RunWindowsOptions} from './runWindowsOptions';
 import {runWindowsOptions} from './runWindowsOptions';
 import {autolinkWindowsInternal} from '../autolinkWindows/autolinkWindows';
 import type {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
+import {showOldArchitectureWarning} from '../../utils/oldArchWarning';
 
 /**
  * Sanitizes the given option for telemetry.
@@ -38,7 +41,6 @@ import type {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-// eslint-disable-next-line complexity
 function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
   // Do not add a default case here.
   // Strings risking PII should just return true if present, false otherwise.
@@ -57,7 +59,6 @@ function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
     case 'singleproc':
     case 'emulator':
     case 'device':
-    case 'remoteDebugging':
     case 'logging':
     case 'packager':
     case 'bundle':
@@ -203,6 +204,11 @@ async function runWindowsInternal(
 
   if (verbose) {
     newInfo('Verbose: ON');
+  }
+
+  // Warn about old architecture projects
+  if (config.project.windows?.rnwConfig?.projectArch === 'old') {
+    showOldArchitectureWarning();
   }
 
   // Get the solution file

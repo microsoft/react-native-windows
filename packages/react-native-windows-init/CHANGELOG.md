@@ -1,8 +1,162 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Fri, 30 May 2025 05:24:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.85
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/telemetry to v0.0.0-canary.129
+- Bump @react-native-windows/cli to v0.0.0-canary.281
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 1.4.84
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Patches
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.128
+- Bump @react-native-windows/cli to v0.0.0-canary.280
+
+## 1.4.83
+
+Wed, 12 Nov 2025 21:00:45 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/telemetry to v0.0.0-canary.127
+- Bump @react-native-windows/cli to v0.0.0-canary.279
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 1.4.82
+
+Tue, 21 Oct 2025 05:28:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.126
+- Bump @react-native-windows/cli to v0.0.0-canary.278
+
+## 1.4.81
+
+Tue, 07 Oct 2025 05:27:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @react-native-windows/telemetry to v0.0.0-canary.125
+- Bump @react-native-windows/cli to v0.0.0-canary.277
+- Bump @rnw-scripts/just-task to v2.3.56
+
+## 1.4.80
+
+Wed, 17 Sep 2025 05:27:17 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.276
+
+## 1.4.79
+
+Tue, 02 Sep 2025 05:24:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.275
+
+## 1.4.78
+
+Wed, 27 Aug 2025 05:26:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.274
+
+## 1.4.77
+
+Sat, 23 Aug 2025 05:30:46 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.67
+- Bump @react-native-windows/telemetry to v0.0.0-canary.124
+- Bump @react-native-windows/cli to v0.0.0-canary.273
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-unittest-config to v1.5.12
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+
+## 1.4.76
+
+Wed, 20 Aug 2025 05:26:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.123
+- Bump @react-native-windows/cli to v0.0.0-canary.272
+
+## 1.4.75
+
+Wed, 06 Aug 2025 05:28:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.271
+
+## 1.4.74
+
+Fri, 25 Jul 2025 05:27:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.270
+
+## 1.4.73
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.66
+- Bump @react-native-windows/telemetry to v0.0.0-canary.122
+- Bump @react-native-windows/cli to v0.0.0-canary.269
+- Bump @rnw-scripts/just-task to v2.3.54
+
+## 1.4.72
+
+Tue, 15 Jul 2025 05:27:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.121
+- Bump @react-native-windows/cli to v0.0.0-canary.268
+
+## 1.4.71
+
+Fri, 20 Jun 2025 05:21:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.267
+
+## 1.4.70
+
+Thu, 19 Jun 2025 17:16:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.266
 
 ## 1.4.69
 

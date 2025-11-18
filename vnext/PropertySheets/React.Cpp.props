@@ -61,11 +61,11 @@
   <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;REACT_NATIVE_DEBUGGER_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>JSI_VERSION=19;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=20;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         To address the crash on the first call to std::mutex::lock.
         See: https://github.com/microsoft/STL/wiki/Changelog#vs-2022-1710
@@ -74,7 +74,7 @@
       <PreprocessorDefinitions>_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Midl>
-      <PreprocessorDefinitions Condition="'$(UseFabric)' == 'true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
 
@@ -114,7 +114,6 @@
         BOOST_NO_TYPEID               - Configure boost not to check typeid (not to use RTTI)
         BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
         GTEST_HAS_RTTI                - Let GTest know not to use RTTI
-        USE_EDGEMODE_JSRT               When using Chakra, enforce System Chakra instead of JS9.
         WIN32_LEAN_AND_MEAN           - Reduce the Windows API included surface.
         WINRT_LEAN_AND_MEAN           - Disable rarely used cppwinrt templates that impact compile-time/PCH size.
       -->
@@ -126,7 +125,6 @@
         BOOST_NO_TYPEID;
         BOOST_SYSTEM_SOURCE;
         GTEST_HAS_RTTI=0;
-        USE_EDGEMODE_JSRT;
         WIN32_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
@@ -136,7 +134,7 @@
       </PreprocessorDefinitions>
       <LanguageStandard>$(CppStandard)</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
       <AdditionalOptions>/utf-8 %(AdditionalOptions) /await</AdditionalOptions>
       <ControlFlowGuard>Guard</ControlFlowGuard>
@@ -160,6 +158,12 @@
         $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\components\view\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\text\platform\android\react\renderer\components\text;
+        $(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\utils\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\platform\cxx;
+        $(ReactNativeDir)\ReactCommon\runtimeexecutor\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>

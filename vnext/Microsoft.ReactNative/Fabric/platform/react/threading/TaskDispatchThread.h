@@ -11,11 +11,8 @@
 #pragma once
 
 #include <chrono>
-#include <condition_variable>
 #include <functional>
-#include <mutex>
-#include <queue>
-#include <thread>
+#include <memory>
 
 namespace facebook::react {
 
@@ -47,27 +44,9 @@ class TaskDispatchThread {
   /** Shut down and clean up the thread. */
   void quit() noexcept;
 
- protected:
-  struct Task {
-    TimePoint dispatchTime;
-    TaskFn fn;
-
-    Task(TimePoint dispatchTime, TaskFn &&fn) : dispatchTime(dispatchTime), fn(std::move(fn)) {}
-
-    bool operator<(const Task &other) const {
-      // Have the earliest tasks be at the front of the queue.
-      return dispatchTime > other.dispatchTime;
-    }
-  };
-
-  void loop() noexcept;
-
-  std::mutex queueLock_;
-  std::condition_variable loopCv_;
-  std::priority_queue<Task> queue_;
-  std::atomic<bool> running_{true};
-  std::string threadName_;
-  std::thread thread_;
+ private:
+  class Impl;
+  std::shared_ptr<Impl> impl_;
 };
 
 } // namespace facebook::react

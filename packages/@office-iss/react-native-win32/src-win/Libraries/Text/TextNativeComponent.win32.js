@@ -44,7 +44,6 @@ const textViewConfig = {
     minimumFontScale: true,
     textBreakStrategy: true,
     onTextLayout: true,
-    onInlineViewLayout: true,
     dataDetectorType: true,
     android_hyphenationFrequency: true,
     lineBreakStrategyIOS: true,
@@ -87,9 +86,6 @@ const textViewConfig = {
     topTextLayout: {
       registrationName: 'onTextLayout',
     },
-    topInlineViewLayout: {
-      registrationName: 'onInlineViewLayout',
-    },
   },
   uiViewClassName: 'RCTText',
 };
@@ -105,6 +101,8 @@ const virtualTextViewConfig = {
 
 export const NativeText: HostComponent<NativeTextProps> =
   (createReactNativeComponentClass('RCTText', () =>
+    /* $FlowFixMe[incompatible-call] Natural Inference rollout. See
+     * https://fburl.com/workplace/6291gfvu */
     createViewConfig(textViewConfig),
   ): any);
 
@@ -113,5 +111,7 @@ export const NativeVirtualText: HostComponent<NativeTextProps> =
   UIManager.getViewManagerConfig('RCTVirtualText') == null
     ? NativeText
     : (createReactNativeComponentClass('RCTVirtualText', () =>
+        /* $FlowFixMe[incompatible-call] Natural Inference rollout. See
+         * https://fburl.com/workplace/6291gfvu */
         createViewConfig(virtualTextViewConfig),
       ): any);

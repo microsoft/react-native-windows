@@ -17,8 +17,8 @@ import type {
   MouseEvent,
 } from '../Types/CoreEventTypes';
 
+import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import SoundManager from '../Components/Sound/SoundManager';
-import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
 import UIManager from '../ReactNative/UIManager';
 import {type RectOrSize, normalizeRect} from '../StyleSheet/Rect';
 import {type PointerEvent} from '../Types/CoreEventTypes';
@@ -267,7 +267,7 @@ const Transitions = Object.freeze({
     LEAVE_PRESS_RECT: 'NOT_RESPONDER',
     LONG_PRESS_DETECTED: 'NOT_RESPONDER',
   },
-});
+} as const);
 
 const isActiveSignal = (signal: TouchState) =>
   signal === 'RESPONDER_ACTIVE_PRESS_IN' ||
@@ -934,7 +934,7 @@ export default class Pressability {
   };
 
   _isTouchWithinResponderRegion(
-    touch: $PropertyType<GestureResponderEvent, 'nativeEvent'>,
+    touch: GestureResponderEvent['nativeEvent'],
     responderRegion: $ReadOnly<{
       bottom: number,
       left: number,

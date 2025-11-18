@@ -1,10 +1,10 @@
-![Hero Image with Logo](https://github.com/microsoft/react-native-windows/raw/main/.github/hero2.png)
+![Hero Image with Logo](https://github.com/microsoft/react-native-windows/raw/main/.github/hero3.png)
 
 <h1 align="center"> React Native for Windows </h1>
 
 <p align="center">
   <a href="https://twitter.com/intent/follow?&screen_name=ReactNativeMSFT">
-    <img src="https://img.shields.io/twitter/follow/windowsui.svg?label=Follow ReactNativeMSFT on X" alt="Follow @windowsui" />
+    <img src="https://img.shields.io/twitter/follow/ReactNativeMSFT?style=for-the-badge&logo=X&labelColor=black&color=white" alt="Follow @ReactNativeMSFT" />
   </a>
 </p>
 
@@ -58,17 +58,21 @@ Search the [existing issues](https://github.com/microsoft/react-native-windows/i
 ## Documentation
 React Native has [great documentation](https://reactnative.dev/docs/getting-started). React Native for Windows adds its own separate [Windows and macOS documentation](https://microsoft.github.io/react-native-windows/) for desktop platform information like API docs and blog updates.
 
+### Security Documentation
+- **[Security Configuration Guide](https://github.com/microsoft/react-native-windows/blob/main/docs/security-configuration.md)** - Comprehensive guide for SDL-compliant security configurations
+- **[Security Best Practices](https://github.com/microsoft/react-native-windows/blob/main/docs/security-best-practices.md)** - Secure coding patterns and security API usage
+
 ### Examples
 - Using the CLI in the [Getting Started](https://microsoft.github.io/react-native-windows/docs/getting-started) guide will set you up with a sample React Native for Windows app that you can begin editing right away.
 - Check the [samples repo](https://github.com/microsoft/react-native-windows-samples) for more standalone samples.
 - The [React Native Gallery](https://github.com/microsoft/react-native-gallery) app demonstrates various components in an interactive way.
 - Check out the [React Native Developer Blog](https://devblogs.microsoft.com/react-native/) to see examples from past conference talks, blog posts, and more.
-- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app/windows/RNTesterApp) in the GitHub web UI.
+- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app-fabric/windows/RNTesterApp) in the GitHub web UI.
 
 ## 📢 Contributing
 See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
 
-Not sure where to start? The [good first issue](https://github.com/microsoft/react-native-windows/labels/good%20first%20issue) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) labels are the best starting points.
+Not sure where to start? The [good first issue](https://github.com/microsoft/react-native-windows/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22) and [help wanted](https://github.com/microsoft/react-native-windows/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22help%20wanted%22) labels are the best starting points.
 
 ## Code of Conduct
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

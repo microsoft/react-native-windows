@@ -26,16 +26,13 @@ EXPORTS
 ??0TypeError@folly@@QAE@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ??1TypeError@folly@@UAE@XZ
 ??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
-?CreateReactInstance@react@facebook@@YG?AV?$shared_ptr@UInstanceWrapper@react@facebook@@@std@@$$QAV?$shared_ptr@VInstance@react@facebook@@@4@$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@4@$$QAV?$vector@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@V?$allocator@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@@2@@4@V?$shared_ptr@VTurboModuleRegistry@react@facebook@@@4@$$QAV?$unique_ptr@UInstanceCallback@react@facebook@@U?$default_delete@UInstanceCallback@react@facebook@@@std@@@4@V?$shared_ptr@VMessageQueueThread@react@facebook@@@4@5V?$shared_ptr@UDevSettings@react@facebook@@@4@@Z
 ?InitializeLogging@react@facebook@@YGX$$QAV?$function@$$A6GXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
-?InitializeTracing@react@facebook@@YGXPAUINativeTraceHandler@12@@Z
 ?Make@IWebSocketResource@Networking@React@Microsoft@@SG?AV?$shared_ptr@UIWebSocketResource@Networking@React@Microsoft@@@std@@XZ
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?moduleNames@ModuleRegistry@react@facebook@@QAE?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
 ?at@dynamic@folly@@QGBEABU12@V?$Range@PBD@2@@Z
 ?getRuntimeExecutor@Instance@react@facebook@@QAE?AV?$function@$$A6GX$$QAV?$function@$$A6GXAAVRuntime@jsi@facebook@@@Z@std@@@Z@std@@XZ
 ?callJSFunction@Instance@react@facebook@@QAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
-?createI18nModule@windows@react@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
 ??$to_ascii_size_route@$09@detail@folly@@YGI_K@Z
 ??$to_ascii_with_route@$09U?$to_ascii_alphabet@$0A@@folly@@$0BE@@detail@folly@@YGIAAY0BE@D_K@Z
 ?getModuleRegistry@Instance@react@facebook@@QAEAAVModuleRegistry@23@XZ
@@ -54,8 +51,6 @@ EXPORTS
 ?GetRuntimeOptionBool@React@Microsoft@@YA?B_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 ?GetRuntimeOptionInt@React@Microsoft@@YA?BHABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 ?GetRuntimeOptionString@React@Microsoft@@YA?BV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV34@@Z
-?makeChakraRuntime@JSI@Microsoft@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraRuntimeArgs@12@@Z
-?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?Make@IHttpResource@Networking@React@Microsoft@@SG?AV?$shared_ptr@UIHttpResource@Networking@React@Microsoft@@@std@@XZ
 ?MakeJSQueueThread@ReactNative@Microsoft@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?Hash128@SpookyHashV2@hash@folly@@SGXPBXIPA_K1@Z

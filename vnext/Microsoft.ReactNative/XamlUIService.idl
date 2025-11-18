@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import "IReactContext.idl";
-import "ReactRootView.idl";
 
 #include "NamespaceRedirect.h"
 #include "DocString.h"
@@ -18,17 +17,6 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("Use this method to get access to the @XamlUIService associated with the @IReactContext.")
     static XamlUIService FromContext(IReactContext context);
-
-#ifndef USE_FABRIC
-    DOC_STRING("Gets the backing XAML element from a react tag.")
-    XAML_NAMESPACE.DependencyObject ElementFromReactTag(Int64 reactTag);
-
-    DOC_STRING("Dispatches an event to a JS component.")
-    void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
-
-    DOC_STRING("Gets the @ReactRootView view for a given element.")
-    ReactRootView GetReactRootView(XAML_NAMESPACE.FrameworkElement view);
-#endif
 
     DOC_STRING(
       "Sets the @Windows.UI.Xaml.XamlRoot element for the app. "

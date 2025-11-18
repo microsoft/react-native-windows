@@ -65,6 +65,10 @@ export default class Bootstrap extends React.Component<{}, any> {
     console.log('Text input focus lost:', text);
   };
 
+  getHeightAndWidth = (height: number, width: number) => {
+    console.log(' onContentSizeChange height: ' + height + ' width: ' + width);
+  };
+
   render() {
     let textInputRef: TextInput | null;
     return (
@@ -78,6 +82,17 @@ export default class Bootstrap extends React.Component<{}, any> {
               aria-level={1}
               aria-posinset={1}
               aria-setsize={30}
+            />
+            <TextInput
+              style={[styles.input, {maxHeight: 120}]}
+              multiline={true}
+              onContentSizeChange={event =>
+                this.getHeightAndWidth(
+                  event.nativeEvent.contentSize.height,
+                  event.nativeEvent.contentSize.width,
+                )
+              }
+              placeholder={'MultiLine - content size change'}
             />
             <TextInput
               style={styles.input}
@@ -244,6 +259,13 @@ export default class Bootstrap extends React.Component<{}, any> {
               }}
             />
             <TextInput
+              style={styles.input}
+              placeholder="OnPressOut..."
+              onPressOut={event => {
+                Alert.alert('Released!');
+              }}
+            />
+            <TextInput
               placeholder="Single line with selection color"
               cursorColor="#00FF00"
               selectionColor="yellow"
@@ -265,6 +287,36 @@ export default class Bootstrap extends React.Component<{}, any> {
               style={[styles.input, {borderColor: 'red'}]}
               placeholder="Focus and then click outside"
               onEndEditing={this.handleEndEditing}
+            />
+            <TextInput
+              style={[styles.input, {borderColor: 'green', borderWidth: 2}]}
+              placeholder={
+                'autoFocus: true - This input will be focused automatically'
+              }
+              autoFocus={true}
+            />
+            <TextInput
+              style={[styles.input, {borderColor: 'red', borderWidth: 2}]}
+              placeholder={
+                'autoFocus: false - This input will NOT be focused automatically'
+              }
+              autoFocus={false}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                {height: 50, borderColor: '#bd1cddff', borderWidth: 2},
+              ]}
+              multiline={true}
+              placeholder="onScroll..."
+              scrollEnabled={true}
+              onScroll={event => {
+                Alert.alert(
+                  `onScroll event: ${JSON.stringify(
+                    event.nativeEvent.contentOffset,
+                  )}`,
+                );
+              }}
             />
 
             <KeyboardAvoidingView

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updated ellipsis to respect tail and clip behaviour , for head , middle follow defaulty tail behaviour",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

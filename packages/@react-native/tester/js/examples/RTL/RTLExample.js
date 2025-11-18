@@ -10,6 +10,8 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import RNTexterText from '../../components/RNTesterText';
 import React from 'react';
 import {
@@ -67,6 +69,8 @@ const TextAlignmentExample = withRTLState(({isRTL, setRTL, ...props}) => {
   return (
     <View>
       <RTLToggler setRTL={setRTL} isRTL={isRTL} />
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={directionStyle(isRTL)}>
         <RNTexterText style={props.style}>
           Left-to-Right language without text alignment.
@@ -91,6 +95,8 @@ const TextInputExample = withRTLState(({isRTL, setRTL, ...props}) => {
   return (
     <View>
       <RTLToggler setRTL={setRTL} isRTL={isRTL} />
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={directionStyle(isRTL)}>
         <RNTexterText style={props.style}>LRT or RTL TextInput.</RNTexterText>
         <TextInput style={props.style} />
@@ -103,6 +109,8 @@ const IconsExample = withRTLState(({isRTL, setRTL}) => {
   return (
     <View>
       <RTLToggler setRTL={setRTL} isRTL={isRTL} />
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={[styles.flexDirectionRow, directionStyle(isRTL)]}>
         <View>
           <Image
@@ -245,6 +253,8 @@ const SimpleListItemExample = withRTLState(({isRTL, setRTL}) => {
   return (
     <View>
       <RTLToggler setRTL={setRTL} isRTL={isRTL} />
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={[styles.list, directionStyle(isRTL)]}>
         <ListItem imageSource={require('../../assets/like.png')} />
         <ListItem imageSource={require('../../assets/poke.png')} />
@@ -439,6 +449,8 @@ const BorderWidthExample = withRTLState(({isRTL, setRTL}) => {
       <RNTexterText>borderEndWidth: 50</RNTexterText>
       <Text />
       <RNTexterText style={styles.bold}>Demo: </RNTexterText>
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={directionStyle(isRTL)}>
         <View
           style={{
@@ -462,6 +474,8 @@ const BorderColorExample = withRTLState(({isRTL, setRTL}) => {
       <RNTexterText>borderEndColor: 'green',</RNTexterText>
       <Text />
       <RNTexterText style={styles.bold}>Demo: </RNTexterText>
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={directionStyle(isRTL)}>
         <View
           style={{
@@ -490,6 +504,8 @@ const BorderRadiiExample = withRTLState(({isRTL, setRTL}) => {
       <RNTexterText>borderBottomEndRadius: 40</RNTexterText>
       <Text />
       <RNTexterText style={styles.bold}>Demo: </RNTexterText>
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={directionStyle(isRTL)}>
         <View
           style={{
@@ -519,6 +535,8 @@ const LogicalBorderRadiiExample = withRTLState(({isRTL, setRTL}) => {
       <RNTexterText>borderEndEndRadius: 40</RNTexterText>
       <Text />
       <RNTexterText style={styles.bold}>Demo: </RNTexterText>
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={directionStyle(isRTL)}>
         <View
           style={{
@@ -552,6 +570,8 @@ const BorderExample = withRTLState(({isRTL, setRTL}) => {
       <RNTexterText>borderBottomEndRadius: 40</RNTexterText>
       <Text />
       <RNTexterText style={styles.bold}>Demo: </RNTexterText>
+      {/* $FlowFixMe[incompatible-type] Natural Inference rollout. See
+       * https://fburl.com/workplace/6291gfvu */}
       <View style={directionStyle(isRTL)}>
         <View
           style={{
@@ -812,4 +832,4 @@ exports.examples = [
       return <BorderExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

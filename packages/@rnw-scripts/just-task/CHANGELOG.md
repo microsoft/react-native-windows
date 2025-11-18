@@ -1,8 +1,53 @@
 # Change Log - @rnw-scripts/just-task
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.58
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Restore Nuget packages on yarn build (vmorozov@microsoft.com)
+
+## 2.3.57
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Copy flow files for rn copy (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.38
+
+## 2.3.56
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Patches
+
+- Update downloadFlowTypes with newly missing flow types (hmalothu@microsoft.com)
+
+## 2.3.55
+
+Sat, 23 Aug 2025 05:30:44 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @rnw-scripts/jest-e2e-config to v1.4.12
+- Bump @rnw-scripts/jest-unittest-config to v1.5.12
+- Bump @rnw-scripts/eslint-config to v1.2.37
+
+## 2.3.54
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
 
 ## 2.3.53
 

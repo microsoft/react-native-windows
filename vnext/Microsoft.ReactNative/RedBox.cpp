@@ -16,22 +16,20 @@
 
 #ifndef CORE_ABI
 
-#ifdef USE_FABRIC
 #include <ReactCoreInjection.h>
 #include <Shobjidl.h>
-#include <Utils/Helpers.h>
-#include <winrt/Windows.UI.Popups.h>
-#endif // USE_FABRIC
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Markup.h>
 #include <UI.Xaml.Media.h>
+#include <Utils/Helpers.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.UI.Popups.h>
 #include <winrt/Windows.Web.Http.h>
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
@@ -77,7 +75,6 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     }
   }
 
-#ifdef USE_FABRIC
   void ShowNewJsErrorUsingMessageDialog() noexcept {
     // Using MessageDialog is "easy", but it does mean we cannot update the message when symbols are resolved.
     // Ideally we'd have a dialog we could push UI updates to. -- Maybe we could load XAML and host the XAML dialog?
@@ -123,8 +120,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(m_propBag.Handle()));
     auto initializeWithWindow{msg.as<::IInitializeWithWindow>()};
     initializeWithWindow->Initialize(hwnd);
-    msg.Commands().Append(
-        winrt::Windows::UI::Popups::UICommand(L"Dismiss", [](winrt::Windows::UI::Popups::IUICommand const &command){}));
+    msg.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+        L"Dismiss", [](winrt::Windows::UI::Popups::IUICommand const &command) {}));
     msg.Commands().Append(winrt::Windows::UI::Popups::UICommand(
         L"Reload", [wkHost = m_weakReactHost](winrt::Windows::UI::Popups::IUICommand const &command) {
           if (auto reactHost = wkHost.GetStrongPtr()) {
@@ -133,7 +130,6 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         }));
     msg.ShowAsync();
   }
-#endif USE_FABRIC
 
   void ShowNewJSErrorUsingXaml() noexcept {
     m_popup = xaml::Controls::Primitives::Popup{};
@@ -236,12 +232,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   void ShowNewJSError() noexcept {
     m_showing = true;
 
-#ifdef USE_FABRIC
     if (Microsoft::ReactNative::IsFabricEnabled(m_propBag.Handle())) {
       ShowNewJsErrorUsingMessageDialog();
-    } else
-#endif // USE_FABRIC
-    {
+    } else {
       ShowNewJSErrorUsingXaml();
     }
   }

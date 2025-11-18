@@ -9,6 +9,7 @@
  */
 
 import type {ColorValue} from '../../StyleSheet/StyleSheet';
+import type {AccessibilityState} from '../View/ViewAccessibility';
 import type {TouchableWithoutFeedbackProps} from './TouchableWithoutFeedback';
 
 import View from '../../Components/View/View';
@@ -19,6 +20,7 @@ import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import StyleSheet, {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
+import {cloneElement} from 'react';
 
 type AndroidProps = $ReadOnly<{
   nextFocusDown?: ?number,
@@ -29,6 +31,9 @@ type AndroidProps = $ReadOnly<{
 }>;
 
 type IOSProps = $ReadOnly<{
+  /**
+   * @deprecated Use `focusable` instead
+   */
   hasTVPreferredFocus?: ?boolean,
 }>;
 
@@ -64,10 +69,10 @@ type TouchableHighlightBaseProps = $ReadOnly<{
   onHideUnderlay?: ?() => void,
   testOnly_pressed?: ?boolean,
 
-  hostRef: React.RefSetter<React.ElementRef<typeof View>>,
+  hostRef?: React.RefSetter<React.ElementRef<typeof View>>,
 }>;
 
-type TouchableHighlightProps = $ReadOnly<{
+export type TouchableHighlightProps = $ReadOnly<{
   ...TouchableWithoutFeedbackProps,
   ...AndroidProps,
   ...IOSProps,
@@ -80,7 +85,7 @@ type ExtraStyles = $ReadOnly<{
   underlay: ViewStyleProp,
 }>;
 
-type State = $ReadOnly<{
+type TouchableHighlightState = $ReadOnly<{
   pressability: Pressability,
   extraStyles: ?ExtraStyles,
 }>;
@@ -183,12 +188,12 @@ type State = $ReadOnly<{
  */
 class TouchableHighlightImpl extends React.Component<
   TouchableHighlightProps,
-  State,
+  TouchableHighlightState,
 > {
   _hideTimeout: ?TimeoutID;
   _isMounted: boolean = false;
 
-  state: State = {
+  state: TouchableHighlightState = {
     pressability: new Pressability(this._createPressabilityConfig()),
     extraStyles:
       this.props.testOnly_pressed === true ? this._createExtraStyles() : null,
@@ -322,7 +327,7 @@ class TouchableHighlightImpl extends React.Component<
       ...eventHandlersWithoutBlurAndFocus
     } = this.state.pressability.getEventHandlers();
 
-    const accessibilityState =
+    const accessibilityState: ?AccessibilityState =
       this.props.disabled != null
         ? {
             ...this.props.accessibilityState,
@@ -396,7 +401,7 @@ class TouchableHighlightImpl extends React.Component<
         onMouseEnter={this.props.onMouseEnter} // [Windows]
         onMouseLeave={this.props.onMouseLeave} // [Windows]
         {...eventHandlersWithoutBlurAndFocus}>
-        {React.cloneElement(child, {
+        {cloneElement(child, {
           style: StyleSheet.compose(
             child.props.style,
             this.state.extraStyles?.child,
@@ -414,7 +419,10 @@ class TouchableHighlightImpl extends React.Component<
     this.state.pressability.configure(this._createPressabilityConfig());
   }
 
-  componentDidUpdate(prevProps: TouchableHighlightProps, prevState: State) {
+  componentDidUpdate(
+    prevProps: TouchableHighlightProps,
+    prevState: TouchableHighlightState,
+  ) {
     this.state.pressability.configure(this._createPressabilityConfig());
   }
 
@@ -429,10 +437,14 @@ class TouchableHighlightImpl extends React.Component<
 
 const TouchableHighlight: component(
   ref?: React.RefSetter<React.ElementRef<typeof View>>,
-  ...props: $ReadOnly<$Diff<TouchableHighlightProps, {+hostRef: mixed}>>
-) = React.forwardRef((props, hostRef) => (
-  <TouchableHighlightImpl {...props} hostRef={hostRef} />
-));
+  ...props: $ReadOnly<Omit<TouchableHighlightProps, 'hostRef'>>
+) = ({
+  ref: hostRef,
+  ...props
+}: {
+  ref?: React.RefSetter<React.ElementRef<typeof View>>,
+  ...$ReadOnly<Omit<TouchableHighlightProps, 'hostRef'>>,
+}) => <TouchableHighlightImpl {...props} hostRef={hostRef} />;
 
 TouchableHighlight.displayName = 'TouchableHighlight';
 

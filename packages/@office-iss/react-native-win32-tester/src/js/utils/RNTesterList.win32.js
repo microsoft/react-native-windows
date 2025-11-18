@@ -4,15 +4,15 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
 
 'use strict';
 
 import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
-import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+import * as RNTesterListFbInternal from './RNTesterListFbInternal';
 
 const Components: Array<RNTesterModuleInfo> = [
   /*{
@@ -153,12 +153,7 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
-  /*
-  {
-    key: 'OSSLibraryExample',
-    module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
-  },
-  */
+  ...RNTesterListFbInternal.Components,
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -197,6 +192,16 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/AppState/AppStateExample'),
   },
   {
+    key: 'ContentURLAndroid',
+    category: 'Android',
+    module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
+  },
+  {
+    key: 'URLExample',
+    category: 'Basic',
+    module: require('../examples/Urls/UrlExample'),
+  },
+  {
     key: 'BorderExample',
     category: 'UI',
     module: require('../examples/Border/BorderExample').default,
@@ -223,14 +228,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
       .default,
   },
   // Only show the link for the example if the API is available.
-  // $FlowExpectedError[cannot-resolve-name]
-  typeof IntersectionObserver === 'function'
-    ? {
-        key: 'IntersectionObserver',
-        category: 'UI',
-        module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
-      }
-    : null,
+  /*{
+    key: 'FocusEventsExample',
+    module: require('../examples/FocusEventsExample/FocusEventsExample')
+      .default,
+  },*/
   {
     key: 'InvalidPropsExample',
     module: require('../examples/InvalidProps/InvalidPropsExample'),
@@ -255,14 +257,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
   },
-  // $FlowExpectedError[cannot-resolve-name]
-  typeof MutationObserver === 'function'
-    ? {
-        key: 'MutationObserver',
-        category: 'UI',
-        module: require('../examples/MutationObserver/MutationObserverIndex'),
-      }
-    : null,
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
@@ -327,9 +321,14 @@ const APIs: Array<RNTesterModuleInfo> = ([
   },
   /*
   {
-    key: 'LinearGradient',
+    key: 'LinearGradientExample',
     category: 'UI',
     module: require('../examples/LinearGradient/LinearGradientExample'),
+  },
+  {
+    key: 'RadialGradientExample',
+    category: 'UI',
+    module: require('../examples/RadialGradient/RadialGradientExample'),
   },
   {
     key: 'MixBlendModeExample',
@@ -365,20 +364,8 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
   },
-  {
-    key: 'PerformanceApiExample',
-    category: 'Basic',
-    module: require('../examples/Performance/PerformanceApiExample'),
-  },
+  ...RNTesterListFbInternal.APIs,
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
-
-if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
-  APIs.push({
-    key: 'W3C PointerEvents',
-    category: 'Experimental',
-    module: require('../examples/Experimental/W3CPointerEventsExample').default,
-  });
-}
 
 const Playgrounds: Array<RNTesterModuleInfo> = [
   {

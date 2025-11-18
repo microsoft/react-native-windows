@@ -11,16 +11,16 @@
   },
   "dependencies": {
     "@babel/core": "^7.25.2",
-    "@react-native/babel-preset": "0.79.0-nightly-20250303-cee63397b",
+    "@react-native/babel-preset": "0.82.0-nightly-20250806-5936f29d6",
     "babel-plugin-transform-flow-enums": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@react-native/babel-preset": "0.79.0-nightly-20250303-cee63397b",
+    "@react-native/babel-preset": "0.82.0-nightly-20250806-5936f29d6",
     "eslint": "^8.19.0",
     "prettier": "2.8.8"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

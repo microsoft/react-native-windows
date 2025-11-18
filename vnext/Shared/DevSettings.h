@@ -23,13 +23,12 @@ struct RuntimeHolderLazyInit;
 namespace facebook {
 namespace react {
 
+namespace jsinspector_modern {
+class HostTarget;
+} // namespace jsinspector_modern
+
 enum class JSIEngineOverride : int32_t {
   Default = 0, // No JSI, will use the legacy ExecutorFactory
-  Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
-
-#if 0 // Deprecated
-  ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
-#endif
 
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
@@ -49,7 +48,6 @@ struct DevSettings {
   std::function<void()> liveReloadCallback;
   std::function<void(std::string)> errorCallback;
   std::function<void()> waitingForDebuggerCallback;
-  std::function<void()> debuggerAttachCallback;
   NativeLoggingHook loggingCallback;
   std::shared_ptr<Mso::React::IRedBoxHandler> redboxHandler;
 
@@ -62,23 +60,11 @@ struct DevSettings {
   /// For direct debugging, break on the next line of JavaScript executed
   bool debuggerBreakOnNextLine{false};
 
-  /// Enable function nativePerformanceNow.
-  /// Method nativePerformanceNow() returns high resolution time info.
-  /// It is not safe to expose to Custom Function. Add this flag so we can turn
-  /// it off for Custom Function.
-  bool enableNativePerformanceNow{true};
-
   /// For direct debugging, the port number to use, or zero for the default
   uint16_t debuggerPort{0};
 
   /// For direct debugging, name of runtime instance, or empty for default.
   std::string debuggerRuntimeName;
-
-  /// Enables debugging by running the JavaScript in a web browser (Chrome)
-  /// using http://localhost:8081/debugger-ui from the React Native packager
-  /// (Metro / Haul). Debugging will start as soon as the React Native instance
-  /// is loaded.
-  bool useWebDebugger{false};
 
   bool useFastRefresh{false};
 
@@ -106,17 +92,14 @@ struct DevSettings {
 
   bool enableDefaultCrashHandler{false};
 
-  // Transitory. Used to indicate whether or not to load networking types in the default Cxx module registry.
-  bool omitNetworkingCxxModules{false};
-
   // OC:8368383 - Memory leak under investigation.
   bool useWebSocketTurboModule{false};
 
   // Enable concurrent mode by installing runtimeScheduler
   bool useRuntimeScheduler{false};
 
-  // If true, then use only Turbo Modules instead of CxxModules.
-  bool useTurboModulesOnly{false};
+  // The HostTarget instance for Fusebox
+  facebook::react::jsinspector_modern::HostTarget *inspectorHostTarget;
 };
 
 } // namespace react

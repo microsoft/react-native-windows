@@ -14,21 +14,14 @@
 #include "IReactContext.h"
 #include "ReactInstanceSettings.h"
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactPackageBuilder.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
-#endif
 
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-using namespace xaml;
-using namespace xaml::Controls;
-#endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -88,13 +81,8 @@ ReactNativeHostProperty() noexcept {
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   auto modulesProvider = std::make_shared<NativeModulesProvider>();
 
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
-#endif
-
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
-#ifdef USE_FABRIC
   auto uriImageManager =
       std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager>();
   auto componentregistry = std::make_shared<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>();
@@ -102,23 +90,11 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   ::Microsoft::ReactNative::WindowsComponentDescriptorRegistry::AddToProperties(
       ReactPropertyBag(m_instanceSettings.Properties()), componentregistry);
-#endif
 
-  m_packageBuilder = make<ReactPackageBuilder>(
-      modulesProvider,
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-      viewManagersProvider,
-#endif
-      turboModulesProvider,
-#ifdef USE_FABRIC
-      componentregistry,
-      uriImageManager,
-#endif
-      m_instanceSettings.UseWebDebugger());
+  m_packageBuilder =
+      make<ReactPackageBuilder>(modulesProvider, turboModulesProvider, componentregistry, uriImageManager);
 
-#ifdef USE_FABRIC
   winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
-#endif
 
   if (auto packageProviders = InstanceSettings().PackageProviders()) {
     for (auto const &packageProvider : packageProviders) {
@@ -133,7 +109,6 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.Notifications = m_instanceSettings.Notifications();
   reactOptions.SetUseDeveloperSupport(m_instanceSettings.UseDeveloperSupport());
   reactOptions.DeveloperSettings.SourceBundleName = to_string(m_instanceSettings.DebugBundlePath());
-  reactOptions.SetUseWebDebugger(m_instanceSettings.UseWebDebugger());
   reactOptions.SetUseDirectDebugger(m_instanceSettings.UseDirectDebugger());
   reactOptions.SetDebuggerBreakOnNextLine(m_instanceSettings.DebuggerBreakOnNextLine());
   reactOptions.SetUseFastRefresh(m_instanceSettings.UseFastRefresh());
@@ -168,14 +143,9 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.SetJsiEngine(static_cast<Mso::React::JSIEngine>(m_instanceSettings.JSIEngineOverride()));
 
   reactOptions.ModuleProvider = modulesProvider;
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  reactOptions.ViewManagerProvider = viewManagersProvider;
-#endif
   reactOptions.TurboModuleProvider = turboModulesProvider;
 
-#ifdef USE_FABRIC
   reactOptions.UriImageManager = uriImageManager;
-#endif
 
   reactOptions.OnInstanceCreated = [](Mso::CntPtr<Mso::React::IReactContext> &&context) {
     auto notifications = context->Notifications();

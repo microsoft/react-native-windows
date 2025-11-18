@@ -45,7 +45,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
-  <Import Project="..\PropertySheets\WebView2.props" Condition="'$(UseWinUI3)'=='true'" />
   <!-- Added since we build this project with/without UseExperimentalWinUI3. -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\NuGet.LockFile.props" />
   <PropertyGroup Label="Configuration">
@@ -157,7 +156,6 @@
     <ClCompile Include="RedBoxTests.cpp" />
     <ClCompile Include="SimpleMessageQueue.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
-    <ClCompile Include="NativeTraceEventTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -182,9 +180,6 @@
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.7" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
-    <!-- We're transitively pulling in Microsoft.WindowsAppSDK, and it depends on Microsoft.Web.WebView2, which 
-        doesn't get pulled in the same way, so we need to add it explicitly. -->
-    <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2PackageVersion)" Condition="'$(UseWinUI3)'=='true'" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

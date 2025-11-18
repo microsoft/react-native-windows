@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow
+ * @format
  */
 
 'use strict';
@@ -20,7 +20,7 @@ import {
   View,
 } from 'react-native';
 
-class AnExScroll extends React.Component<$FlowFixMeProps, any> {
+class AnExScroll extends React.Component<$FlowFixMe, any> {
   state: any = {scrollX: new Animated.Value(0)};
 
   render(): React.Node {

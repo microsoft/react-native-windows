@@ -17,11 +17,13 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
         "typeName": "Check Comment",
       }
     }
+    accessibilityDescription="Sample Description"
     accessibilityHint="A hint for the blue box."
     accessibilityItemType="comment"
     accessibilityLabel="A blue box"
     accessibilityLevel={1}
     accessible={true}
+    role="heading"
     style={
       {
         "backgroundColor": "blue",
@@ -37,6 +39,7 @@ exports[`snapshotAllPages Accessibility Windows 1`] = `
   <View
     accessibilityLabel="A hint for the red box."
     accessibilityLevel={2}
+    accessibilityRole="header"
     accessible={true}
     style={
       {
@@ -3210,16 +3213,12 @@ exports[`snapshotAllPages Animated 1`] = `
   <View
     collapsable={false}
     style={
-      [
-        {
-          "backgroundColor": "blue",
-          "height": 100,
-          "width": 100,
-        },
-        {
-          "transform": [],
-        },
-      ]
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "transform": [],
+        "width": 100,
+      }
     }
   />
   <View
@@ -3241,16 +3240,12 @@ exports[`snapshotAllPages Animated 1`] = `
     <View
       collapsable={false}
       style={
-        [
-          {
-            "backgroundColor": "blue",
-            "height": 100,
-            "width": 100,
-          },
-          {
-            "transform": undefined,
-          },
-        ]
+        {
+          "backgroundColor": "blue",
+          "height": 100,
+          "transform": undefined,
+          "width": 100,
+        }
       }
     />
   </View>
@@ -7571,6 +7566,195 @@ exports[`snapshotAllPages Animated 13`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Animated 14`] = `
+<View
+  style={
+    {
+      "alignItems": "stretch",
+      "justifyContent": "flex-start",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#3c3c4399",
+        }
+      }
+    >
+      Use Native Driver
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      testID="toggle-use-native-driver"
+      value={false}
+    />
+  </View>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Block js thread for 5s
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "cyan",
+          "height": 160,
+          "justifyContent": "center",
+          "padding": 12,
+          "transform": [
+            {
+              "translateX": 0,
+            },
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 160,
+        }
+      }
+    >
+      <View
+        pointerEvents="none"
+      >
+        <Text
+          style={
+            {
+              "pointerEvents": "none",
+            }
+          }
+        >
+          Use PanResponder
+           
+          + JS Animated value
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages AppState 1`] = `
 <Text
   style={
@@ -8394,25 +8578,33 @@ exports[`snapshotAllPages Border 23`] = `
 exports[`snapshotAllPages Border 24`] = `
 <View
   style={
-    [
-      {
-        "height": 50,
-        "width": 50,
-      },
-      {
-        "backgroundColor": "red",
-        "borderLeftWidth": 10,
-        "borderRadius": 10,
-        "transform": [
-          {
-            "scale": 1.2,
-          },
-        ],
-      },
-    ]
+    {
+      "padding": 10,
+    }
   }
   testID="border-test-scaling-transforms"
-/>
+>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderLeftWidth": 10,
+          "borderRadius": 10,
+          "transform": [
+            {
+              "scale": 1.2,
+            },
+          ],
+        },
+      ]
+    }
+  />
+</View>
 `;
 
 exports[`snapshotAllPages Button 1`] = `
@@ -8638,6 +8830,7 @@ exports[`snapshotAllPages Button 3`] = `
     }
     accessible={true}
     focusable={true}
+    onAccessibilityTap={[Function]}
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -10572,6 +10765,76 @@ exports[`snapshotAllPages Composition Bugs Example 6`] = `
 </View>
 `;
 
+exports[`snapshotAllPages ContentURLAndroid 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      [
+        {
+          "borderRadius": 4,
+          "borderWidth": 0.5,
+          "height": 45,
+          "margin": 10,
+          "marginBottom": 0,
+          "padding": 10,
+        },
+        {
+          "backgroundColor": "#f2f2f7ff",
+          "borderColor": "#3c3c4349",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontSize": 19,
+            "fontWeight": "500",
+          },
+          {
+            "color": "#000000ff",
+          },
+        ]
+      }
+    >
+      fetch content:// scheme urls on Android as a Blob
+    </Text>
+  </View>
+  <RCTScrollView
+    automaticallyAdjustContentInsets={false}
+    contentContainerStyle={
+      {
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+    keyboardDismissMode="interactive"
+    keyboardShouldPersistTaps="handled"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View />
+  </RCTScrollView>
+</View>
+`;
+
 exports[`snapshotAllPages Crash 1`] = `
 <View
   accessibilityRole="button"
@@ -11370,6 +11633,8 @@ exports[`snapshotAllPages Display:none Style 1`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -14782,7 +15047,6 @@ exports[`snapshotAllPages FlatList 2`] = `
     </View>
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -15362,7 +15626,6 @@ exports[`snapshotAllPages FlatList 3`] = `
     </View>
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -16256,7 +16519,6 @@ exports[`snapshotAllPages FlatList 4`] = `
       </View>
     </View>
     <RCTScrollView
-      accessible={true}
       automaticallyAdjustContentInsets={false}
       contentInset={
         {
@@ -17129,7 +17391,6 @@ exports[`snapshotAllPages FlatList 5`] = `
     </View>
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -17904,7 +18165,6 @@ exports[`snapshotAllPages FlatList 6`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -18674,7 +18934,6 @@ exports[`snapshotAllPages FlatList 7`] = `
 >
   <RCTScrollView
     ItemSeparatorComponent={[Function]}
-    accessible={true}
     data={
       [
         "Pizza",
@@ -19962,6 +20221,8 @@ exports[`snapshotAllPages FlatList 9`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -20181,7 +20442,6 @@ exports[`snapshotAllPages FlatList 10`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -20972,7 +21232,6 @@ exports[`snapshotAllPages FlatList 11`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -21763,7 +22022,6 @@ exports[`snapshotAllPages FlatList 12`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -22625,7 +22883,6 @@ exports[`snapshotAllPages FlatList 13`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -23494,7 +23751,6 @@ exports[`snapshotAllPages FlatList 14`] = `
     }
   />
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -24285,7 +24541,6 @@ exports[`snapshotAllPages FlatList 15`] = `
     />
   </View>
   <RCTScrollView
-    accessible={true}
     data={
       [
         "Pizza",
@@ -26455,6 +26710,8 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -30624,6 +30881,49 @@ exports[`snapshotAllPages Modal 1`] = `
   <View
     style={
       {
+        "alignItems": "center",
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
+      }
+    >
+      Allow Swipe Dismissal ⚫️
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      value={false}
+    />
+  </View>
+  <View
+    style={
+      {
         "borderBottomWidth": 1,
         "borderColor": "rgba(0,0,0, 0.1)",
         "padding": 6,
@@ -33915,504 +34215,6 @@ exports[`snapshotAllPages PanResponder Sample 1`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Performance API Examples 1`] = `
-<View
-  style={
-    {
-      "padding": 10,
-    }
-  }
->
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "backgroundColor": {
-            "windowsbrush": [
-              "ButtonBackground",
-            ],
-          },
-          "borderBottomWidth": 1.5,
-          "borderColor": {
-            "windowsbrush": [
-              "ButtonBorderBrush",
-            ],
-          },
-          "borderRadius": 3,
-          "borderWidth": 1,
-        },
-      ]
-    }
-  >
-    <View
-      style={{}}
-    >
-      <View
-        style={{}}
-      >
-        <Text
-          style={
-            [
-              {
-                "color": {
-                  "windowsbrush": [
-                    "ButtonForeground",
-                  ],
-                },
-                "fontSize": 14,
-                "fontWeight": "400",
-                "margin": 8,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Click to update memory info
-        </Text>
-      </View>
-    </View>
-  </View>
-  <View>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      jsHeapSizeLimit: undefined bytes
-    </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      totalJSHeapSize: undefined bytes
-    </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      usedJSHeapSize: undefined bytes
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Performance API Examples 2`] = `
-<View
-  style={
-    {
-      "padding": 10,
-    }
-  }
->
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "backgroundColor": {
-            "windowsbrush": [
-              "ButtonBackground",
-            ],
-          },
-          "borderBottomWidth": 1.5,
-          "borderColor": {
-            "windowsbrush": [
-              "ButtonBorderBrush",
-            ],
-          },
-          "borderRadius": 3,
-          "borderWidth": 1,
-        },
-      ]
-    }
-  >
-    <View
-      style={{}}
-    >
-      <View
-        style={{}}
-      >
-        <Text
-          style={
-            [
-              {
-                "color": {
-                  "windowsbrush": [
-                    "ButtonForeground",
-                  ],
-                },
-                "fontSize": 14,
-                "fontWeight": "400",
-                "margin": 8,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Click to update React startup timing
-        </Text>
-      </View>
-    </View>
-  </View>
-  <View>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      startTime: undefined ms
-    </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      initializeRuntimeStart: undefined ms
-    </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      executeJavaScriptBundleEntryPointStart: undefined ms
-    </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      executeJavaScriptBundleEntryPointEnd: undefined ms
-    </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      initializeRuntimeEnd: undefined ms
-    </Text>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      endTime: undefined ms
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Performance API Examples 3`] = `
-<View
-  style={
-    {
-      "padding": 10,
-    }
-  }
->
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "backgroundColor": {
-            "windowsbrush": [
-              "ButtonBackground",
-            ],
-          },
-          "borderBottomWidth": 1.5,
-          "borderColor": {
-            "windowsbrush": [
-              "ButtonBorderBrush",
-            ],
-          },
-          "borderRadius": 3,
-          "borderWidth": 1,
-        },
-      ]
-    }
-  >
-    <View
-      style={{}}
-    >
-      <View
-        style={{}}
-      >
-        <Text
-          style={
-            [
-              {
-                "color": {
-                  "windowsbrush": [
-                    "ButtonForeground",
-                  ],
-                },
-                "fontSize": 14,
-                "fontWeight": "400",
-                "margin": 8,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Click to log some marks and measures
-        </Text>
-      </View>
-    </View>
-  </View>
-  <View />
-</View>
-`;
-
-exports[`snapshotAllPages Performance API Examples 4`] = `
-<View
-  style={
-    {
-      "padding": 10,
-    }
-  }
->
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "backgroundColor": {
-            "windowsbrush": [
-              "ButtonBackground",
-            ],
-          },
-          "borderBottomWidth": 1.5,
-          "borderColor": {
-            "windowsbrush": [
-              "ButtonBorderBrush",
-            ],
-          },
-          "borderRadius": 3,
-          "borderWidth": 1,
-        },
-      ]
-    }
-  >
-    <View
-      style={{}}
-    >
-      <View
-        style={{}}
-      >
-        <Text
-          style={
-            [
-              {
-                "color": {
-                  "windowsbrush": [
-                    "ButtonForeground",
-                  ],
-                },
-                "fontSize": 14,
-                "fontWeight": "400",
-                "margin": 8,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Click to force a slow event (clicked 0 times)
-        </Text>
-      </View>
-    </View>
-  </View>
-  <View />
-</View>
-`;
-
 exports[`snapshotAllPages Performance Comparison Examples 1`] = `
 <View
   style={
@@ -34422,6 +34224,8 @@ exports[`snapshotAllPages Performance Comparison Examples 1`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -34590,6 +34394,8 @@ exports[`snapshotAllPages Performance Comparison Examples 2`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -34758,6 +34564,8 @@ exports[`snapshotAllPages Performance Comparison Examples 3`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -34926,6 +34734,8 @@ exports[`snapshotAllPages Performance Comparison Examples 4`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -35094,6 +34904,8 @@ exports[`snapshotAllPages Performance Comparison Examples 5`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -35262,6 +35074,8 @@ exports[`snapshotAllPages Performance Comparison Examples 6`] = `
       },
       {
         "backgroundColor": "#f2f2f7ff",
+        "marginBottom": 10,
+        "marginTop": 20,
       },
     ]
   }
@@ -51681,6 +51495,113 @@ exports[`snapshotAllPages ScrollView 22`] = `
 </RCTScrollView>
 `;
 
+exports[`snapshotAllPages ScrollView 23`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "backgroundColor": "red",
+    }
+  }
+  horizontal={true}
+  nestedScrollEnabled={true}
+  style={
+    [
+      {
+        "backgroundColor": "#eeeeee",
+        "height": 300,
+      },
+      {
+        "height": 200,
+        "width": "100%",
+      },
+    ]
+  }
+  testID="touchable_overflowing_container_horizontal"
+>
+  <View>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "minHeight": 45,
+          "minWidth": "100%",
+        }
+      }
+    >
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_1"
+      >
+        <Text>
+          Item 
+          1
+        </Text>
+      </View>
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_2"
+      >
+        <Text>
+          Item 
+          2
+        </Text>
+      </View>
+      <View
+        onTouchStart={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "lightgray",
+            "flexBasis": "25%",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "justifyContent": "center",
+            "margin": 5,
+            "position": "relative",
+          }
+        }
+        testID="touchable_item_3"
+      >
+        <Text>
+          Item 
+          3
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
 exports[`snapshotAllPages ScrollViewAnimated 1`] = `
 <View
   style={
@@ -67764,6 +67685,7 @@ exports[`snapshotAllPages Text 3`] = `
             "textAlign": "center",
           }
         }
+        testID="adjusting-text"
       >
         This is adjusting text.
       </Text>
@@ -67832,6 +67754,7 @@ exports[`snapshotAllPages Text 3`] = `
           },
         ]
       }
+      testID="set-height-20"
     >
       <View
         style={{}}
@@ -67925,6 +67848,7 @@ exports[`snapshotAllPages Text 3`] = `
           },
         ]
       }
+      testID="set-height-40"
     >
       <View
         style={{}}
@@ -68018,6 +67942,7 @@ exports[`snapshotAllPages Text 3`] = `
           },
         ]
       }
+      testID="set-height-60"
     >
       <View
         style={{}}
@@ -71581,10 +71506,10 @@ exports[`snapshotAllPages Text 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 23`] = `<Text />`;
-
-exports[`snapshotAllPages Text 24`] = `
-<View>
+exports[`snapshotAllPages Text 23`] = `
+<View
+  testID="text-with-toggle-attributes"
+>
   <Text
     style={
       [
@@ -71659,10 +71584,10 @@ exports[`snapshotAllPages Text 24`] = `
           undefined,
         ]
       }
+      testID="toggle-weight"
     >
       Toggle Weight
     </Text>
-     (with highlight onPress)
   </Text>
   <Text
     onPress={[Function]}
@@ -71674,14 +71599,14 @@ exports[`snapshotAllPages Text 24`] = `
         undefined,
       ]
     }
-    suppressHighlighting={true}
+    testID="increase-size"
   >
-    Increase Size (suppressHighlighting true)
+    Increase Size
   </Text>
 </View>
 `;
 
-exports[`snapshotAllPages Text 25`] = `
+exports[`snapshotAllPages Text 24`] = `
 <View
   testID="text-background-color"
 >
@@ -71785,7 +71710,7 @@ exports[`snapshotAllPages Text 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 26`] = `
+exports[`snapshotAllPages Text 25`] = `
 [
   <View
     style={
@@ -71856,8 +71781,10 @@ exports[`snapshotAllPages Text 26`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 27`] = `
-[
+exports[`snapshotAllPages Text 26`] = `
+<View
+  testID="number-of-lines"
+>
   <Text
     numberOfLines={1}
     style={
@@ -71875,7 +71802,7 @@ exports[`snapshotAllPages Text 27`] = `
     Maximum of one line no matter now much I write here. If I keep writing it
     '
     ll just truncate after one line
-  </Text>,
+  </Text>
   <Text
     numberOfLines={1}
     style={
@@ -71897,7 +71824,7 @@ exports[`snapshotAllPages Text 27`] = `
     Maximum of one line no matter now much I write here. If I keep writing it
     '
     ll just truncate after one line
-  </Text>,
+  </Text>
   <Text
     numberOfLines={2}
     style={
@@ -71919,7 +71846,22 @@ exports[`snapshotAllPages Text 27`] = `
     RNTesterText of two lines no matter now much I write here. If I keep writing it
     '
     ll just truncate after two lines
-  </Text>,
+  </Text>
+  <Text
+    numberOfLines={1}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginTop": 20,
+        },
+      ]
+    }
+  >
+    The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated. The hotdog should be truncated.
+  </Text>
   <Text
     style={
       [
@@ -71940,11 +71882,11 @@ exports[`snapshotAllPages Text 27`] = `
     No maximum lines specified no matter now much I write here. If I keep writing it
     '
     ll just keep going and going
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
-exports[`snapshotAllPages Text 28`] = `
+exports[`snapshotAllPages Text 27`] = `
 [
   <Text
     style={
@@ -72012,7 +71954,7 @@ exports[`snapshotAllPages Text 28`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 29`] = `
+exports[`snapshotAllPages Text 28`] = `
 <View
   testID="max-font-size-multiplier"
 >
@@ -72067,7 +72009,7 @@ exports[`snapshotAllPages Text 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 30`] = `
+exports[`snapshotAllPages Text 29`] = `
 <Text
   selectable={true}
   style={
@@ -72084,7 +72026,7 @@ exports[`snapshotAllPages Text 30`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 31`] = `
+exports[`snapshotAllPages Text 30`] = `
 <Text
   selectable={true}
   selectionColor="orange"
@@ -72102,7 +72044,7 @@ exports[`snapshotAllPages Text 31`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 32`] = `
+exports[`snapshotAllPages Text 31`] = `
 <Text
   style={
     [
@@ -72126,7 +72068,7 @@ exports[`snapshotAllPages Text 32`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 33`] = `
+exports[`snapshotAllPages Text 32`] = `
 [
   <Text
     numberOfLines={1}
@@ -72194,7 +72136,7 @@ exports[`snapshotAllPages Text 33`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 34`] = `
+exports[`snapshotAllPages Text 33`] = `
 <View
   testID="font-variants"
 >
@@ -72305,7 +72247,7 @@ exports[`snapshotAllPages Text 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 35`] = `
+exports[`snapshotAllPages Text 34`] = `
 [
   <View
     style={
@@ -72417,7 +72359,7 @@ exports[`snapshotAllPages Text 35`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 36`] = `
+exports[`snapshotAllPages Text 35`] = `
 <View
   testID="text-transform"
 >
@@ -72677,7 +72619,7 @@ exports[`snapshotAllPages Text 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 37`] = `
+exports[`snapshotAllPages Text 36`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
@@ -72747,7 +72689,7 @@ exports[`snapshotAllPages Text 37`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 38`] = `
+exports[`snapshotAllPages Text 37`] = `
 <View>
   <Text
     style={
@@ -73169,7 +73111,7 @@ exports[`snapshotAllPages Text 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 39`] = `
+exports[`snapshotAllPages Text 38`] = `
 <View>
   <Text
     style={
@@ -73188,7 +73130,7 @@ exports[`snapshotAllPages Text 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 39`] = `
 <View>
   <Text
     style={
@@ -73257,7 +73199,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 40`] = `
 <View>
   <Text
     style={
@@ -73282,7 +73224,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
@@ -73303,7 +73245,1183 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Text 42`] = `
+<View>
+  <Text
+    disabled={true}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="text-disabled"
+  >
+    This text has its corresponding text view in the disabled state for testing purposes.
+  </Text>
+</View>
+`;
+
 exports[`snapshotAllPages Text 43`] = `
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      {
+        "borderColor": "#005dffff",
+        "borderWidth": 1,
+      },
+    ]
+  }
+  testID="empty-text"
+/>
+`;
+
+exports[`snapshotAllPages Text 44`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+  testID="view-test-inline-text-alignment"
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 14,
+          "textAlign": "center",
+        },
+      ]
+    }
+  >
+    BoringLayout
+  </Text>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "right",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "justify",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+    </Text>
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 14,
+          "textAlign": "center",
+        },
+      ]
+    }
+  >
+    StaticLayout
+  </Text>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        aaaa a aaaa aaaaaa aaa a a a aaaaa sdsds dsdSAD asd ASDasd ASDas
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        aaaa a aaaa aaaaaa aaa a a a aaaaa sdsds dsdSAD asd ASDasd ASDas
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "right",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        aaaa a aaaa aaaaaa aaa a a a aaaaa sdsds dsdSAD asd ASDasd ASDas
+      </Text>
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "margin": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "cyan",
+            "textAlign": "justify",
+          },
+        ]
+      }
+    >
+      Parent
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        Child
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        aaaa a aaaa aaaaaa aaa a a a aaaaa sdsds dsdSAD asd ASDasd ASDas
+      </Text>
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Text 45`] = `
+<View
+  style={
+    {
+      "rowGap": 5,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "flexGrow": 1,
+      }
+    }
+    testID="rtl-inline-view-example-1"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontSize": 10,
+            "width": 100,
+          },
+        ]
+      }
+    >
+      RTL script in LTR Layout with end attachment
+    </Text>
+    <View
+      style={
+        {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "direction": "ltr",
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        مَٰنِ ٱلرَّحِيمِ
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "flexGrow": 1,
+      }
+    }
+    testID="rtl-inline-view-example-2"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontSize": 10,
+            "width": 100,
+          },
+        ]
+      }
+    >
+      LTR script in RTL layout with middle attachment
+    </Text>
+    <View
+      style={
+        {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "direction": "rtl",
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        Hello
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+         
+        World!
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "flexGrow": 1,
+      }
+    }
+    testID="rtl-inline-view-example-3"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontSize": 10,
+            "width": 100,
+          },
+        ]
+      }
+    >
+      RTL script in LTR layout with start attachment
+    </Text>
+    <View
+      style={
+        {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "direction": "ltr",
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+        مَٰنِ ٱلرَّحِيمِ
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "flexGrow": 1,
+      }
+    }
+    testID="rtl-inline-view-example-4"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontSize": 10,
+            "width": 100,
+          },
+        ]
+      }
+    >
+      RTL script in RTL layout with end attachment
+    </Text>
+    <View
+      style={
+        {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "direction": "rtl",
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        مَٰنِ ٱلرَّحِيمِ
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "flexGrow": 1,
+      }
+    }
+    testID="rtl-inline-view-example-5"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontSize": 10,
+            "width": 100,
+          },
+        ]
+      }
+    >
+      RTL dominant BiDi script in RTL layout with end attachments
+    </Text>
+    <View
+      style={
+        {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "direction": "rtl",
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        مَٰنِ ٱلرَّحِيمِ
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+         Hello
+        <View
+          style={
+            {
+              "backgroundColor": "blue",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "flexGrow": 1,
+      }
+    }
+    testID="rtl-inline-view-example-6"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontSize": 10,
+            "width": 100,
+          },
+        ]
+      }
+    >
+      LTR dominant BiDi script in RTL layout with end attachments
+    </Text>
+    <View
+      style={
+        {
+          "flexGrow": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "direction": "rtl",
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        Hello
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+        مَٰنِ ٱلرَّحِيمِ
+        <View
+          style={
+            {
+              "backgroundColor": "blue",
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Text 46`] = `
+<View
+  style={
+    {
+      "rowGap": 20,
+    }
+  }
+>
+  <View
+    testID="tail-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      tail
+    </Text>
+    <Text
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    testID="head-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      head
+    </Text>
+    <Text
+      ellipsizeMode="head"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    testID="middle-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      middle
+    </Text>
+    <Text
+      ellipsizeMode="middle"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+  <View
+    testID="clip-layout"
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          undefined,
+        ]
+      }
+    >
+      clip
+    </Text>
+    <Text
+      ellipsizeMode="clip"
+      numberOfLines={1}
+      onTextLayout={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat molestie nunc non tristique.
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "monospace",
+            "fontSize": 8,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Text 47`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -73321,7 +74439,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 48`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -73398,7 +74516,7 @@ exports[`snapshotAllPages Text 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 45`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -73454,7 +74572,7 @@ exports[`snapshotAllPages Text 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 46`] = `
+exports[`snapshotAllPages Text 50`] = `
 <View
   testID="text-opacity"
 >
@@ -73561,7 +74679,7 @@ exports[`snapshotAllPages Text 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 47`] = `
+exports[`snapshotAllPages Text 51`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -73579,7 +74697,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 52`] = `
 <View>
   <Text
     style={
@@ -77168,19 +78286,9 @@ exports[`snapshotAllPages TextInput 18`] = `
       6
     </Text>
   </View>
-  <View>
-    <View
-      style={
-        {
-          "bottom": -5,
-          "left": 120,
-          "position": "absolute",
-          "right": -5,
-          "top": -5,
-        }
-      }
-      testID="styles-screenshot-area"
-    />
+  <View
+    testID="text-styles"
+  >
     <View
       style={
         {
@@ -78433,6 +79541,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         "fontSize": 16,
       }
     }
+    testID="dynamic-width-uncontrolled-textinput"
   />
   <Text
     style={
@@ -78456,6 +79565,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         "fontSize": 16,
       }
     }
+    testID="dynamic-width-controlled-textinput"
     value=""
   />
   <View
@@ -78654,6 +79764,7 @@ exports[`snapshotAllPages TextInput 21`] = `
         ]
       }
     >
+      generic generic generic
       <Text
         style={
           {
@@ -78677,6 +79788,7 @@ exports[`snapshotAllPages TextInput 21`] = `
       >
         huge huge huge huge huge
       </Text>
+      generic generic generic
     </TextInput>
     <Text
       style={
@@ -78718,6 +79830,107 @@ exports[`snapshotAllPages TextInput 21`] = `
 `;
 
 exports[`snapshotAllPages TextInput 22`] = `
+<View>
+  <TextInput
+    experimental_acceptDragAndDropTypes={[]}
+    placeholder="Does not accept drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    experimental_acceptDragAndDropTypes={
+      [
+        "public.plain-text",
+      ]
+    }
+    placeholder="Only accepts plaintext drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    experimental_acceptDragAndDropTypes={
+      [
+        "public.plain-text",
+      ]
+    }
+    multiline={true}
+    numberOfLines={3}
+    placeholder="Only accepts plaintext drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "height": 60,
+        },
+      ]
+    }
+  />
+  <TextInput
+    experimental_acceptDragAndDropTypes={null}
+    placeholder="Accepts all drag drops"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 23`] = `
 <View>
   <Text>
     Do not clear text on focus:
@@ -78773,7 +79986,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <View>
   <Text>
     Select text on focus:
@@ -78831,7 +80044,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <TextInput
     defaultValue="Default color text"
@@ -79091,7 +80304,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -79429,7 +80642,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <View
   testID="style-fontFamily"
 >
@@ -79657,7 +80870,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -79685,7 +80898,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -79802,7 +81015,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -79861,7 +81074,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -79888,7 +81101,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -79959,6 +81172,7 @@ exports[`snapshotAllPages TextInput 31`] = `
   <TextInput
     autoCorrect={true}
     multiline={true}
+    onScroll={[Function]}
     style={
       [
         {
@@ -80004,7 +81218,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     editable={true}
@@ -80097,7 +81311,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View
   style={
     {
@@ -80196,7 +81410,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <Text>
     By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
@@ -80248,7 +81462,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View
   testID="max-font-size-multiplier"
 >
@@ -80308,7 +81522,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View
   style={
     {
@@ -80426,7 +81640,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -80540,7 +81754,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -80761,7 +81975,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -80838,7 +82052,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <TextInput
     style={
@@ -80868,17 +82082,21 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text
-    testID="textinput-state-display"
+    testID="textinput-state-display-in"
   >
-    PressIn/PressOut message
+    OnPressIn message
+  </Text>
+  <Text
+    testID="textinput-state-display-out"
+  >
+    OnPressOut message
   </Text>
   <TextInput
     onPressIn={[Function]}
-    onPressOut={[Function]}
-    placeholder="Click inside the box to observe events being fired."
+    placeholder="OnPressIn test."
     style={
       [
         {
@@ -80900,12 +82118,38 @@ exports[`snapshotAllPages TextInput 41`] = `
         ],
       ]
     }
-    testID="textinput-press"
+    testID="textinput-pressin"
+  />
+  <TextInput
+    onPressOut={[Function]}
+    placeholder="OnPressOut test."
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "height": 30,
+          },
+        ],
+      ]
+    }
+    testID="textinput-pressout"
   />
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -81041,7 +82285,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 [
   <View
     focusable={true}
@@ -81107,7 +82351,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -81156,7 +82400,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 <View>
   <Text>
     CaretHidden
@@ -81188,7 +82432,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View>
   <Text>
     Cursorcolor
@@ -81220,7 +82464,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View>
   <Text>
     Shadow
@@ -81258,7 +82502,7 @@ exports[`snapshotAllPages TextInput 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 48`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -81341,7 +82585,7 @@ exports[`snapshotAllPages TextInput 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 49`] = `
+exports[`snapshotAllPages TextInput 50`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -85113,6 +86357,674 @@ exports[`snapshotAllPages TransparentHitTestExample 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages URL 1`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://username:password@reactnative.dev:8080/docs/path?query=testQuery&key=value#fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: #fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev:8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: password
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: username
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://username:password@reactnative.dev:8080/docs/path?query=testQuery&key=value#fragment
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: ?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: query=testQuery&key=value
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 2`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://reactnative.dev/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://reactnative.dev/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: 
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 3`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://reactnative.dev/docs/path?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://reactnative.dev/docs/path?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: ?query=testQuery&key=value
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: query=testQuery&key=value
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages URL 4`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-href"
+  >
+    href: https://username:password@reactnative.dev:8080/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hash"
+  >
+    hash: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-host"
+  >
+    host: reactnative.dev:8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-hostname"
+  >
+    hostname: reactnative.dev
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-password"
+  >
+    password: password
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-username"
+  >
+    username: username
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-pathname"
+  >
+    pathname: /docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-protocol"
+  >
+    protocol: https:
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-toString"
+  >
+    toString: https://username:password@reactnative.dev:8080/docs/path
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-port"
+  >
+    port: 8080
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search"
+  >
+    search: 
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="URL-search-params"
+  >
+    searchParams: 
+  </Text>
+</View>
+`;
+
 exports[`snapshotAllPages View 1`] = `
 <View
   accessibilityLabel="Background Color Example"
@@ -87457,6 +89369,236 @@ exports[`snapshotAllPages View 20`] = `
 
 exports[`snapshotAllPages View 21`] = `
 <View
+  onBlur={[Function]}
+  onFocus={[Function]}
+  style={
+    [
+      {
+        "backgroundColor": "green",
+        "borderColor": "transparent",
+        "borderWidth": 2,
+        "padding": 10,
+      },
+      false,
+    ]
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "color": "white",
+        },
+      ]
+    }
+  >
+    Focused: 
+    false
+  </Text>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      true
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      true
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+  <View
+    accessible={false}
+    focusable={false}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      false
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onFocus={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "red",
+          "borderColor": "transparent",
+          "borderWidth": 2,
+          "height": 50,
+          "width": "100%",
+        },
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focusable: 
+      true
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "white",
+          },
+        ]
+      }
+    >
+      Focused: 
+      false
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 22`] = `
+<View
   accessibilityLabel="NativeID Example"
   accessible={true}
   nativeID="native-id-view"
@@ -87477,7 +89619,7 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityActions={
     [
@@ -87581,7 +89723,7 @@ exports[`snapshotAllPages View 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -87602,7 +89744,7 @@ exports[`snapshotAllPages View 23`] = `
 />
 `;
 
-exports[`snapshotAllPages View 24`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -87627,7 +89769,7 @@ exports[`snapshotAllPages View 24`] = `
 />
 `;
 
-exports[`snapshotAllPages View 25`] = `
+exports[`snapshotAllPages View 26`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
@@ -88219,130 +90361,6 @@ exports[`snapshotAllPages WebSocket 1`] = `
     </View>
   </View>
 </RCTScrollView>
-`;
-
-exports[`snapshotAllPages XAML 1`] = `
-<View
-  testID="ReactNativeXAMLRoot"
->
-  <XamlControl
-    text="simple TextBox"
-    type="Windows.UI.Xaml.Controls.TextBox"
-  />
-  <XamlControl
-    fontStyle={2}
-    fontWeight={350}
-    foreground="red"
-    text="right aligned TextBlock"
-    textAlignment={2}
-    type="Windows.UI.Xaml.Controls.TextBlock"
-  />
-  <XamlControl
-    onTapped={[Function]}
-    testID="tappableTextBlock"
-    text="tapping on this TextBlock brings up the button's flyout menu"
-    type="Windows.UI.Xaml.Controls.TextBlock"
-  />
-  <XamlControl
-    background="green"
-    gridLayout={
-      {
-        "columns": [
-          200,
-          200,
-          200,
-        ],
-        "rows": [
-          40,
-          40,
-        ],
-      }
-    }
-    type="Windows.UI.Xaml.Controls.Grid"
-  >
-    <XamlControl
-      background="blue"
-      gridColumn={2}
-      gridRow={1}
-      type="Windows.UI.Xaml.Controls.Border"
-      xamlMargin={4}
-    >
-      <XamlControl
-        horizontalAlignment={1}
-        type="Windows.UI.Xaml.Controls.Button"
-      >
-        <XamlControl
-          orientation={1}
-          type="Windows.UI.Xaml.Controls.StackPanel"
-        >
-          <XamlControl
-            foreground="red"
-            symbol={57641}
-            type="Windows.UI.Xaml.Controls.SymbolIcon"
-          />
-          <XamlControl
-            foreground="white"
-            text="Button 1"
-            type="Windows.UI.Xaml.Controls.TextBlock"
-          />
-        </XamlControl>
-        <XamlControl
-          isOpen={false}
-          onClosed={[Function]}
-          priority={0}
-          testID="MenuFlyout"
-          type="Windows.UI.Xaml.Controls.MenuFlyout"
-        >
-          <XamlControl
-            text="menu option 1"
-            type="Windows.UI.Xaml.Controls.MenuFlyoutItem"
-          >
-            <XamlControl
-              symbol={57626}
-              type="Windows.UI.Xaml.Controls.SymbolIcon"
-            />
-          </XamlControl>
-          <XamlControl
-            onClick={[Function]}
-            testID="menuOption2"
-            text="menu option 2"
-            type="Windows.UI.Xaml.Controls.MenuFlyoutItem"
-          />
-        </XamlControl>
-      </XamlControl>
-    </XamlControl>
-  </XamlControl>
-  <XamlControl
-    data="M14,2H12V1H11V2H5V1H4V2H2V14H14ZM4,3V4H5V3h6V4h1V3h1V5H3V3Zm9,10H3V6H13ZM7,10V7H4v3ZM5,8H6V9H5Z"
-    fill="red"
-    height={16}
-    horizontalAlignment={1}
-    type="Windows.UI.Xaml.Shapes.Path"
-    verticalAlignment={1}
-    width={16}
-  />
-  <XamlControl
-    height={80}
-    source="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA="
-    type="Windows.UI.Xaml.Controls.Image"
-    width={80}
-  />
-  <XamlControl
-    isActive={true}
-    type="Microsoft.UI.Xaml.Controls.ProgressRing"
-    width={40}
-  />
-  <XamlControl
-    horizontalAlignment={1}
-    isOpen={true}
-    message="here is the message"
-    onClosed={[Function]}
-    severity={1}
-    title="title"
-    type="Microsoft.UI.Xaml.Controls.InfoBar"
-    visibility={0}
-  />
-</View>
 `;
 
 exports[`snapshotAllPages XMLHttpRequest 1`] = `

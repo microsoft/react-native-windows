@@ -62,8 +62,36 @@ if ($tagsToInclude.Contains('rnwDev')) {
     $tagsToInclude.Add('appDev') | Out-null;
 }
 
+# Detect processor architecture to select appropriate VC Tools component
+$ProcessorArchitecture = $Env:Processor_Architecture
+
+# Getting $Env:Processor_Architecture on arm64 machines will return x86.  So check if the environment
+# variable "ProgramFiles(Arm)" is also set, if it is we know the actual processor architecture is arm64.
+# The value will also be x86 on amd64 machines when running the x86 version of PowerShell.
+if ($ProcessorArchitecture -eq "x86")
+{
+    if ($null -ne ${Env:ProgramFiles(Arm)})
+    {
+        $ProcessorArchitecture = "arm64"
+    }
+    elseif ($null -ne ${Env:ProgramFiles(x86)})
+    {
+        $ProcessorArchitecture = "amd64"
+    }
+}
+
+# Select the appropriate VC Tools component based on processor architecture
+if ($ProcessorArchitecture -eq "arm64")
+{
+    $vcToolsComponent = 'Microsoft.VisualStudio.Component.VC.Tools.ARM64'
+}
+else
+{
+    $vcToolsComponent = 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64'
+}
+
 $vsComponents = @('Microsoft.Component.MSBuild',
-    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
+    $vcToolsComponent,
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
     'Microsoft.VisualStudio.Component.Windows10SDK.19041',
@@ -88,9 +116,9 @@ $wingetver = "1.7.11261";
 $vsver = "17.11.0";
 
 # The exact .NET SDK version to check for
-$dotnetver = "6.0";
+$dotnetver = "8.0";
 # Version name of the winget package
-$wingetDotNetVer = "6";
+$wingetDotNetVer = "8";
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -242,7 +270,7 @@ function CheckNode {
         Write-Verbose "Node version found: $nodeVersion";
         $major = $nodeVersion.Major;
         $minor = $nodeVersion.Minor;
-        return ($major -gt 18) -or (($major -eq 18) -and ($minor -ge 18));
+        return ($major -gt 22) -or (($major -eq 22) -and ($minor -ge 14));
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -438,10 +466,10 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 18.18)';
+        Name = 'Node.js (LTS, >= 22.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.18.0" };
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "22.14.0" };
         HasVerboseOutput = $true;
     },
     @{
@@ -460,9 +488,23 @@ $requirements = @(
         Install = {
             $ProgressPreference = 'Ignore';
             $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
+            $downloadPath = "$env:TEMP\WindowsApplicationDriver.msi"
             Write-Verbose "Downloading WinAppDriver from $url";
-            Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\WindowsApplicationDriver.msi
-            & $env:TEMP\WindowsApplicationDriver.msi /q
+            Invoke-WebRequest -UseBasicParsing $url -OutFile $downloadPath
+            
+            # SDL Compliance: Verify signature (Work Item 58386093)
+            $signature = Get-AuthenticodeSignature $downloadPath
+            if ($signature.Status -ne "Valid") {
+                Remove-Item $downloadPath -ErrorAction SilentlyContinue
+                throw "WinAppDriver signature verification failed"
+            }
+            if ($signature.SignerCertificate.Subject -notlike "*Microsoft*") {
+                Remove-Item $downloadPath -ErrorAction SilentlyContinue  
+                throw "WinAppDriver not signed by Microsoft"
+            }
+            
+            & $downloadPath /q
+            Remove-Item $downloadPath -ErrorAction SilentlyContinue
         };
         HasVerboseOutput = $true;
         Optional = $true;

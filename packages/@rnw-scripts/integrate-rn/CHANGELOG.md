@@ -1,8 +1,109 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Fri, 30 May 2025 05:25:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.67
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.99
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/package-utils to v0.0.0-canary.96
+- Bump react-native-platform-override to v1.9.61
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 1.4.66
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.98
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/package-utils to v0.0.0-canary.95
+- Bump react-native-platform-override to v1.9.60
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 1.4.65
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Patches
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+
+## 1.4.64
+
+Tue, 07 Oct 2025 05:27:27 GMT
+
+### Patches
+
+- Update communitycli template version (hmalothu@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.97
+- Bump @react-native-windows/fs to v0.0.0-canary.68
+- Bump @react-native-windows/package-utils to v0.0.0-canary.94
+- Bump react-native-platform-override to v1.9.59
+- Bump @rnw-scripts/just-task to v2.3.56
+
+## 1.4.63
+
+Fri, 19 Sep 2025 05:29:14 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.9.58
+
+## 1.4.62
+
+Sat, 23 Aug 2025 05:30:43 GMT
+
+### Patches
+
+- Upgrade to node22 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.96
+- Bump @react-native-windows/fs to v0.0.0-canary.67
+- Bump @react-native-windows/package-utils to v0.0.0-canary.93
+- Bump react-native-platform-override to v1.9.57
+- Bump @rnw-scripts/eslint-config to v1.2.37
+- Bump @rnw-scripts/jest-unittest-config to v1.5.12
+- Bump @rnw-scripts/just-task to v2.3.55
+- Bump @rnw-scripts/ts-config to v2.0.6
+
+## 1.4.61
+
+Thu, 17 Jul 2025 05:27:01 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250428-9efcdc091 (10109130+sharath2727@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.95
+- Bump @react-native-windows/fs to v0.0.0-canary.66
+- Bump @react-native-windows/package-utils to v0.0.0-canary.92
+- Bump react-native-platform-override to v1.9.56
+- Bump @rnw-scripts/just-task to v2.3.54
+
+## 1.4.60
+
+Fri, 20 Jun 2025 05:21:53 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250331-398ac1f71 (kvineeth@microsoft.com)
+
+## 1.4.59
+
+Thu, 19 Jun 2025 17:16:25 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 0.80.0-nightly-20250317-fc7385c1e (hmalothu@microsoft.com)
 
 ## 1.4.58
 

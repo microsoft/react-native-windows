@@ -3,7 +3,7 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "start": "npx @react-native-community/cli start",
+    "start": "npx @react-native-community/cli start --client-logs",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
     "windows": "npx @react-native-community/cli run-windows"
@@ -11,24 +11,24 @@
   "dependencies": {
     "@react-native-picker/picker": "^2.5.1",
     "@react-native-windows/tester": "0.0.1",
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.1.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "react": "^19.0.0",
-    "react-native": "0.79.0-nightly-20250303-cee63397b",
-    "react-native-windows": "^0.0.0-canary.964"
+    "react": "^19.1.0",
+    "react-native": "0.82.0-nightly-20250806-5936f29d6",
+    "react-native-windows": "^0.0.0-canary.1008"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native/metro-config": "0.79.0-nightly-20250303-cee63397b",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native/metro-config": "0.82.0-nightly-20250806-5936f29d6",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
-    "@rnw-scripts/eslint-config": "1.2.36",
-    "@rnw-scripts/just-task": "2.3.53",
+    "@rnw-scripts/eslint-config": "1.2.38",
+    "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/metro-dev-config": "0.0.0",
-    "@rnw-scripts/ts-config": "2.0.5",
-    "@types/node": "^18.0.0",
+    "@rnw-scripts/ts-config": "2.0.6",
+    "@types/node": "^22.14.0",
     "@types/react": "^19.0.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
@@ -37,6 +37,6 @@
     "sample-custom-component": "0.0.1"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   }
 }

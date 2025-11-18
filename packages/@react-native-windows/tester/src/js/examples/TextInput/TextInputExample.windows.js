@@ -4,8 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 'use strict';
@@ -17,11 +17,12 @@ import type {
 
 import ExampleTextInput from './ExampleTextInput';
 import TextInputSharedExamples from './TextInputSharedExamples';
-import React, {useState} from 'react';
+import React from 'react';
+import {useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
 
 const ToggleDefaultPaddingExample = (): React.Node => {
-  const [hasPadding, setHasPadding] = React.useState(false);
+  const [hasPadding, setHasPadding] = useState(false);
 
   return (
     <View>
@@ -78,21 +79,36 @@ class PressInOutEvents extends React.Component<
 > {
   constructor(props) {
     super(props);
-    this.state = {text: 'PressIn/PressOut message'};
+    this.state = {
+      OnpressInText: 'OnPressIn message',
+      OnpressOutText: 'OnPressOut message',
+    };
   }
 
   render() {
     return (
       <View>
-        <Text testID="textinput-state-display">{this.state.text}</Text>
+        <Text testID="textinput-state-display-in">
+          {this.state.OnpressInText}
+        </Text>
+        <Text testID="textinput-state-display-out">
+          {this.state.OnpressOutText}
+        </Text>
         <ExampleTextInput
-          placeholder="Click inside the box to observe events being fired."
+          placeholder="OnPressIn test."
           style={[styles.singleLineWithHeightTextInput]}
           onPressIn={() => {
-            this.setState({text: 'Holding down the click/touch'});
+            this.setState({OnpressInText: 'Holding down the click/touch'});
           }}
-          onPressOut={() => this.setState({text: 'Released click/touch'})}
-          testID="textinput-press"
+          testID="textinput-pressin"
+        />
+        <ExampleTextInput
+          placeholder="OnPressOut test."
+          style={[styles.singleLineWithHeightTextInput]}
+          onPressOut={() => {
+            this.setState({OnpressOutText: 'Released click/touch'});
+          }}
+          testID="textinput-pressout"
         />
       </View>
     );
@@ -311,19 +327,21 @@ const examples: Array<RNTesterModuleExample> = [
             style={[styles.singleLine]}
             testID="textinput-weight-default"
           />
-          {[
-            'normal',
-            'bold',
-            '900',
-            800,
-            '700',
-            '600',
-            '500',
-            '400',
-            '300',
-            '200',
-            '100',
-          ].map(fontWeight => (
+          {(
+            [
+              'normal',
+              'bold',
+              '900',
+              800,
+              '700',
+              '600',
+              '500',
+              '400',
+              '300',
+              '200',
+              '100',
+            ] as const
+          ).map(fontWeight => (
             <ExampleTextInput
               defaultValue={`Font Weight (${fontWeight})`}
               key={fontWeight}
@@ -471,6 +489,13 @@ const examples: Array<RNTesterModuleExample> = [
           <ExampleTextInput
             autoCorrect={true}
             multiline={true}
+            onScroll={event => {
+              console.log(
+                `onScroll event: ${JSON.stringify(
+                  event.nativeEvent.contentOffset,
+                )}`,
+              );
+            }}
             style={[
               styles.multiline,
               {color: 'blue'},
@@ -664,7 +689,7 @@ const examples: Array<RNTesterModuleExample> = [
         'done',
         'previous',
         'next',
-      ];
+      ] as const;
       const returnKeyLabels = ['Compile', 'React Native'];
       const returnKeyExamples = returnKeyTypes.map(type => {
         return (

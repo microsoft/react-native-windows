@@ -315,6 +315,14 @@ export interface AccessibilityPropsWindows {
    * Access keys are used in keyboard navigation to allow quick navigation to UI in an application.
    */
   accessibilityAccessKey?: string; //Windows
+
+  /**
+   * accessibilityDescription provides more detailed information specific to the element (i.e. last edit date, full location for a file)
+   * while accessibilityHint provides information on what will happen when they perform an action.
+   *
+   */
+  accessibilityDescription?: string; // Windows
+  'aria-description'?: string; // Windows
 }
 
 export interface AccessibilityPropsAndroid {
