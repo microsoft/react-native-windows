@@ -1,7 +1,7 @@
 {
   "name": "@react-native-windows/fs",
   "description": "A minimal-dependency drop-in replacement to `fs` with changes for resiliency, promises, and convenience.",
-  "version": "0.0.0-canary.69",
+  "version": "0.0.0-canary.70",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",
-    "@rnw-scripts/just-task": "2.3.57",
+    "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/ts-config": "2.0.6",
     "@types/graceful-fs": "^4.1.5",
     "@types/node": "^22.14.0",

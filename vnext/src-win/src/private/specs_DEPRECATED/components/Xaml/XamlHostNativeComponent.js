@@ -7,8 +7,8 @@
 
 'use strict';
 
-import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type {ViewProps} from 'react-native';
+import {codegenNativeComponent} from 'react-native';
 import type {HostComponent} from '../../../../../src/private/types/HostComponent';
 
 type XamlHostProps = $ReadOnly<{|

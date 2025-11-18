@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sun, 16 Nov 2025 06:36:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 18 Nov 2025 06:41:41 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1008
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Changes
+
+- Add HostTargetMetadata with app name and device name for inspector page naming (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1007
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Restore Nuget packages on yarn build (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.281
+- Bump @react-native-windows/codegen to v0.0.0-canary.128
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-platform-override to v1.9.61
 
 ## 0.0.0-canary.1006
 

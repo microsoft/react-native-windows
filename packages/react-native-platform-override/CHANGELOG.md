@@ -1,8 +1,18 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Wed, 12 Nov 2025 21:00:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.9.61
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/package-utils to v0.0.0-canary.96
+- Bump @rnw-scripts/just-task to v2.3.58
 
 ## 1.9.60
 
