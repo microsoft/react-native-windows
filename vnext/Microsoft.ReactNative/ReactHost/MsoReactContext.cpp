@@ -16,13 +16,6 @@ namespace Mso::React {
 ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept
     : m_reactInstance{std::move(reactInstance)} {}
 
-bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->UseWebDebugger();
-  }
-  return false;
-}
-
 bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->UseFastRefresh();
@@ -214,14 +207,6 @@ bool ReactContext::IsLoaded() const noexcept {
   }
 
   return false;
-}
-
-std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->GetInnerInstance();
-  }
-
-  return nullptr;
 }
 
 IReactSettingsSnapshot const &ReactContext::SettingsSnapshot() const noexcept {

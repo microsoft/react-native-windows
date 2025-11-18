@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <jsinspector-modern/HostTarget.h>
 #include <mutex>
 #include <unordered_map>
 #include "AsyncActionQueue.h"
@@ -15,6 +16,7 @@
 
 namespace Mso::React {
 
+class ReactInspectorHostTargetDelegate;
 class ReactViewHost;
 
 //! ReactHost manages lifetime of ReactNative instance.
@@ -52,9 +54,6 @@ class ReactHost final : public Mso::ActiveObject<IReactHost> {
 
   Mso::CntPtr<AsyncActionQueue> ActionQueue() const noexcept;
 
-  Mso::Future<void> LoadInQueue(ReactOptions &&options) noexcept;
-  Mso::Future<void> UnloadInQueue(size_t unloadActionId) noexcept;
-
   void Close() noexcept;
   bool IsClosed() const noexcept;
 
@@ -63,6 +62,12 @@ class ReactHost final : public Mso::ActiveObject<IReactHost> {
 
   template <class TCallback>
   Mso::Future<void> PostInQueue(TCallback &&callback) noexcept;
+
+ private:
+  enum class UnloadReason {
+    Unload,
+    CloseHost,
+  };
 
  private:
   friend MakePolicy;
@@ -75,9 +80,18 @@ class ReactHost final : public Mso::ActiveObject<IReactHost> {
   void ForEachViewHost(const Mso::FunctorRef<void(ReactViewHost &)> &action) noexcept;
 
   AsyncAction MakeLoadInstanceAction(ReactOptions &&options) noexcept;
-  AsyncAction MakeUnloadInstanceAction() noexcept;
+  AsyncAction MakeUnloadInstanceAction(UnloadReason reason) noexcept;
+
+  Mso::Future<void> LoadInQueue(ReactOptions &&options) noexcept;
+  Mso::Future<void> UnloadInQueue(UnloadReason reason, size_t unloadActionId) noexcept;
+
+  void OnDebuggerResume() noexcept;
+  bool IsInspectable() noexcept;
+  void AddInspectorPage() noexcept;
+  void RemoveInspectorPage() noexcept;
 
  private:
+  friend class ReactInspectorHostTargetDelegate;
   mutable std::mutex m_mutex;
   const Mso::InvokeElsePostExecutor m_executor{Queue()};
   const Mso::ActiveReadableField<Mso::CntPtr<AsyncActionQueue>> m_actionQueue{
@@ -92,6 +106,10 @@ class ReactHost final : public Mso::ActiveObject<IReactHost> {
   size_t m_pendingUnloadActionId{0};
   size_t m_nextUnloadActionId{0};
   const Mso::ActiveField<bool> m_isInstanceUnloading{false, Queue()};
+
+  const std::shared_ptr<facebook::react::jsinspector_modern::HostTargetDelegate> m_inspectorHostTargetDelegate;
+  const std::shared_ptr<facebook::react::jsinspector_modern::HostTarget> m_inspectorHostTarget;
+  const Mso::ActiveField<std::optional<int32_t>> m_inspectorPageId{Queue()};
 };
 
 //! Implements a cross-platform host for a React view

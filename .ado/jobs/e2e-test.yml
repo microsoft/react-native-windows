@@ -14,33 +14,21 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          #- Name: X64Chakra
-          #  BuildPlatform: x64
-          #  UseChakra: true
           - Name: X64Hermes
             BuildPlatform: x64
-            UseChakra: false
       - BuildEnvironment: Continuous
         Matrix:
-          #- Name: X64Chakra
-          #  BuildPlatform: x64
-          #  UseChakra: true
           - Name: X64Hermes
             BuildPlatform: x64
-            UseChakra: false
-          #- Name: X86Chakra
-          #  BuildPlatform: x86
-          #  UseChakra: true
           - Name: X86Hermes
             BuildPlatform: x86
-            UseChakra: false
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - job: E2ETest${{ matrix.Name }}
-          displayName: E2E Test App ${{ matrix.Name }}
+        - job: E2ETestFabric${{ matrix.Name }}
+          displayName: E2E Test App Fabric ${{ matrix.Name }}
 
           variables: [template: ../variables/windows.yml]
           pool: ${{ parameters.AgentPool.Medium }}
@@ -68,41 +56,34 @@ jobs:
                 targetType: filePath # filePath | inline
                 filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
 
-            - template: ../templates/set-experimental-feature.yml
-              parameters:
-                workingDir: packages/e2e-test-app/windows
-                feature: UseHermes
-                ${{ if eq(matrix.UseChakra, true) }}:
-                  value: false
-                ${{ else }}:
-                  value: true
-
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
                 buildConfiguration: Release
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
-                workingDirectory: packages/e2e-test-app
-                errorOnNuGetLockChanges: false # Sometimes the content hashes of NuGet packages are wrong on VMs, workaround for later .NET versions don't work for UWP C#.
+                workingDirectory: packages/e2e-test-app-fabric
 
             - script: |
-                echo ##vso[task.setvariable variable=StartedTests]true
-              displayName: Set StartedTests
+                echo ##vso[task.setvariable variable=StartedFabricTests]true
+              displayName: Set StartedFabricTests
 
-            - script: yarn e2etest
+            - script: |
+                yarn e2etest
               displayName: yarn e2etest
-              workingDirectory: packages/e2e-test-app
+              workingDirectory: packages/e2e-test-app-fabric
+              timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
             - script: npx jest --clearCache
               displayName: clear jest cache
-              workingDirectory: packages/e2e-test-app
-              condition: and(failed(), eq(variables.StartedTests, 'true'))
+              workingDirectory: packages/e2e-test-app-fabric
+              condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
 
             - script: yarn e2etest -u
               displayName: Update snapshots
-              workingDirectory: packages/e2e-test-app
-              condition: and(failed(), eq(variables.StartedTests, 'true'))
+              workingDirectory: packages/e2e-test-app-fabric
+              condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+              timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
             - task: PowerShell@2
               displayName: Stop tracing
@@ -120,145 +101,35 @@ jobs:
               condition: true
 
             - task: CopyFiles@2
-              displayName: Copy snapshots
+              displayName: Copy Fabric snapshots
               inputs:
-                sourceFolder: packages/e2e-test-app/test/__snapshots__
-                targetFolder: $(Build.StagingDirectory)/snapshots
+                sourceFolder: packages/e2e-test-app-fabric/test/__snapshots__
+                targetFolder: $(Build.StagingDirectory)/snapshots-fabric
                 contents: "**"
               condition: failed()
 
             - task: CopyFiles@2
               displayName: Copy RNTesterApp artifacts
               inputs:
-                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/RNTesterApp
-                targetFolder: $(Build.StagingDirectory)/RNTesterApp
-                contents: AppPackages\**
+                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release
+                targetFolder: $(Build.StagingDirectory)/RNTesterApp-Fabric
+                contents: "**"
               condition: failed()
 
             - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact: RNTesterApp"
+              displayName: "Publish Artifact: RNTesterApp Fabric"
               inputs:
-                artifactName: RNTesterApp-${{ matrix.Name }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/RNTesterApp
+                artifactName: RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+                targetPath: $(Build.StagingDirectory)/RNTesterApp-Fabric
               condition: failed()
 
             - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact: Snapshots"
+              displayName: "Publish Artifact: Fabric Snapshots"
               inputs:
-                artifactName: Snapshots - RNTesterApp-${{ matrix.Name }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/snapshots
+                artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+                targetPath: $(Build.StagingDirectory)/snapshots-fabric
               condition: failed()
 
             - template: ../templates/upload-build-logs.yml
               parameters:
                 buildLogDirectory: '$(BuildLogDirectory)'
-  - ${{ each config in parameters.buildMatrix }}:
-    - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
-      - ${{ each matrix in config.Matrix }}:
-        - ${{ if eq(matrix.UseChakra, false) }}:
-          - job: E2ETestFabric${{ matrix.Name }}
-            displayName: E2E Test App Fabric ${{ matrix.Name }}
-
-            variables: [template: ../variables/windows.yml]
-            pool: ${{ parameters.AgentPool.Medium }}
-            timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-            cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-
-            steps:
-              - template: ../templates/checkout-shallow.yml
-
-              - template: ../templates/prepare-js-env.yml
-
-              - template: ../templates/prepare-build-env.yml
-                parameters:
-                  platform: ${{ matrix.BuildPlatform }}
-                  configuration: Release
-                  buildEnvironment: ${{ config.buildEnvironment }}
-
-              - powershell: |
-                  Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
-                displayName: Set BuildLogDirectory
-
-              - task: PowerShell@2
-                displayName: Start tracing
-                inputs:
-                  targetType: filePath # filePath | inline
-                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
-
-              - template: ../templates/run-windows-with-certificates.yml
-                parameters:
-                  buildEnvironment: ${{ parameters.BuildEnvironment }}
-                  buildConfiguration: Release
-                  buildPlatform: ${{ matrix.BuildPlatform }}
-                  buildLogDirectory: $(BuildLogDirectory)
-                  workingDirectory: packages/e2e-test-app-fabric
-
-              - script: |
-                  echo ##vso[task.setvariable variable=StartedFabricTests]true
-                displayName: Set StartedFabricTests
-
-              - script: |
-                  yarn e2etest
-                displayName: yarn e2etest
-                workingDirectory: packages/e2e-test-app-fabric
-                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
-
-              - script: npx jest --clearCache
-                displayName: clear jest cache
-                workingDirectory: packages/e2e-test-app-fabric
-                condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
-
-              - script: yarn e2etest -u
-                displayName: Update snapshots
-                workingDirectory: packages/e2e-test-app-fabric
-                condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
-                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
-
-              - task: PowerShell@2
-                displayName: Stop tracing
-                inputs:
-                  targetType: filePath # filePath | inline
-                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
-                  arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
-                condition: true
-
-              - task: PublishBuildArtifacts@1
-                displayName: Upload traces
-                inputs:
-                  pathtoPublish: '$(Build.StagingDirectory)/Tracing'
-                  artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
-                condition: true
-
-              - task: CopyFiles@2
-                displayName: Copy Fabric snapshots
-                inputs:
-                  sourceFolder: packages/e2e-test-app-fabric/test/__snapshots__
-                  targetFolder: $(Build.StagingDirectory)/snapshots-fabric
-                  contents: "**"
-                condition: failed()
-
-              - task: CopyFiles@2
-                displayName: Copy RNTesterApp artifacts
-                inputs:
-                  sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release
-                  targetFolder: $(Build.StagingDirectory)/RNTesterApp-Fabric
-                  contents: "**"
-                condition: failed()
-
-              - task: PublishPipelineArtifact@1
-                displayName: "Publish Artifact: RNTesterApp Fabric"
-                inputs:
-                  artifactName: RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
-                  targetPath: $(Build.StagingDirectory)/RNTesterApp-Fabric
-                condition: failed()
-
-              - task: PublishPipelineArtifact@1
-                displayName: "Publish Artifact: Fabric Snapshots"
-                inputs:
-                  artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
-                  targetPath: $(Build.StagingDirectory)/snapshots-fabric
-                condition: failed()
-
-              - template: ../templates/upload-build-logs.yml
-                parameters:
-                  buildLogDirectory: '$(BuildLogDirectory)'

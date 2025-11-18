@@ -1,9 +1,0 @@
-#include <NamespaceRedirect.h>
-
-namespace PlaygroundNativeModules {
-
-[default_interface]
-runtimeclass GridItemView : XAML_NAMESPACE.Controls.Grid {
-  GridItemView(Microsoft.ReactNative.IReactContext context);
-};
-} // namespace PlaygroundNativeModules

@@ -291,7 +291,7 @@ function getTestCommandProjectInfo(): projectUtils.AppProjectInfo {
     rnwLang: 'cpp',
     usesTS: true,
     usesRNConfig: false,
-    jsEngine: 'Chakra',
+    jsEngine: 'Hermes',
     rnwSource: 'Source',
     dependencies: [
       {

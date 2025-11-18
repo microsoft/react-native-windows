@@ -1,8 +1,38 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 30 Oct 2025 05:29:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 16 Nov 2025 06:36:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.346
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Patches
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1006
+
+## 0.12.345
+
+Thu, 13 Nov 2025 14:35:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1005
+
+## 0.12.344
+
+Wed, 12 Nov 2025 21:00:45 GMT
+
+### Patches
+
+- Use Hermes version 0.0.0-2511.7001-d7ca19b3 (vmorozov@microsoft.com)
+- Use hermes-windows version 0.0.0-2511.3001-9e4cf518 (vmorozov@microsoft.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+- Bump react-native-windows to v0.0.0-canary.1004
 
 ## 0.12.343
 

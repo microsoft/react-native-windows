@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Restore Nuget packages on yarn build",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

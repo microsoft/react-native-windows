@@ -1,0 +1,22 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Xaml {
+[webhosthidden][default_interface] runtimeclass XamlApplication : Microsoft.UI.Xaml.Application,
+    Microsoft.UI.Xaml.Markup.IXamlMetadataProvider {
+  DOC_STRING("Initializes a new XamlApplication instance for RNW-hosted WinUI/XAML.")
+  XamlApplication();
+
+  DOC_STRING("Ensures the XamlApplication singleton exists.")
+  static void EnsureCreated();
+
+  DOC_STRING("Gets the process-wide XamlApplication singleton.")
+  static XamlApplication Current {
+    get;
+  };
+
+  DOC_STRING("Adds an additional XAML metadata provider to the application.")
+  void AddMetadataProvider(Microsoft.UI.Xaml.Markup.IXamlMetadataProvider otherProvider);
+}
+} // namespace Microsoft.ReactNative.Xaml
