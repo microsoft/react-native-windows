@@ -12,6 +12,11 @@ name: Cherry-pick Commit to Branch
         description: 'Target branch name to cherry-pick into'
         required: true
         type: string
+      create_pr:
+        description: 'Create a PR instead of direct cherry-pick'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -51,6 +56,15 @@ jobs:
           git checkout "${{ github.event.inputs.target_branch }}"
           git pull origin "${{ github.event.inputs.target_branch }}"
 
+      - name: Create cherry-pick branch (if creating PR)
+        if: github.event.inputs.create_pr == 'true'
+        working-directory: ./repo
+        run: |
+          COMMIT_ID="${{ github.event.inputs.commit_id }}"
+          BRANCH_NAME="cherry-pick-$COMMIT_ID-to-${{ github.event.inputs.target_branch }}"
+          git checkout -b "$BRANCH_NAME"
+          echo "CHERRY_PICK_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
+
       - name: Cherry-pick commit
         working-directory: ./repo
         run: |
@@ -68,7 +82,8 @@ jobs:
             exit 1
           fi
 
-      - name: Push changes
+      - name: Push changes directly to target branch
+        if: github.event.inputs.create_pr == 'false'
         working-directory: ./repo
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,8 +91,42 @@ jobs:
           COMMIT_ID="${{ github.event.inputs.commit_id }}"
           TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
 
-          echo "📤 Pushing cherry-picked commit to $TARGET_BRANCH"
+          echo "📤 Pushing cherry-picked commit directly to $TARGET_BRANCH"
           REPO_URL="https://x-access-token:${GH_TOKEN}@github.com"
           REPO_URL="${REPO_URL}/${{ github.repository }}.git"
           git push "$REPO_URL" "$TARGET_BRANCH"
           echo "✅ Successfully cherry-picked $COMMIT_ID to $TARGET_BRANCH"
+
+      - name: Push cherry-pick branch and create PR
+        if: github.event.inputs.create_pr == 'true'
+        working-directory: ./repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COMMIT_ID="${{ github.event.inputs.commit_id }}"
+          TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
+          BRANCH_NAME="${CHERRY_PICK_BRANCH}"
+
+          echo "📤 Pushing cherry-pick branch $BRANCH_NAME"
+          REPO_URL="https://x-access-token:${GH_TOKEN}@github.com"
+          REPO_URL="${REPO_URL}/${{ github.repository }}.git"
+          git push "$REPO_URL" "$BRANCH_NAME"
+
+          echo "📋 Creating Pull Request"
+          ORIGINAL_COMMIT_MSG=$(git log --format=%s -n 1 "$COMMIT_ID")
+          PR_TITLE="Cherry-pick $COMMIT_ID to $TARGET_BRANCH: $ORIGINAL_COMMIT_MSG"
+          PR_BODY="This PR cherry-picks commit $COMMIT_ID to the $TARGET_BRANCH branch.
+
+          **Original commit:** $COMMIT_ID
+          **Target branch:** $TARGET_BRANCH
+          **Original commit message:** $ORIGINAL_COMMIT_MSG
+
+          Please review the changes before merging."
+
+          gh pr create \
+            --title "$PR_TITLE" \
+            --body "$PR_BODY" \
+            --base "$TARGET_BRANCH" \
+            --head "$BRANCH_NAME"
+
+          echo "✅ Successfully created PR for cherry-pick of $COMMIT_ID to $TARGET_BRANCH"
