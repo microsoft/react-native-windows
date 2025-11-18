@@ -4,6 +4,10 @@ Generated: November 18, 2025
 Total Open Issues: 46
 ================================================================================
 
+NOTE: This file shows the first 30 most recent issues for quick reference.
+For the complete list of all 46 issues, use one of the methods described at
+the end of this document.
+
 The following issues are currently open for milestone 0.81:
 
 1. #15380 - Modern debugger console shows error message with escape sequence which actually represents color
