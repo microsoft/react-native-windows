@@ -271,8 +271,7 @@ bool UISchedulerWinRT<TDispatcherTraits>::TryTakeTask(
     --m_taskCount;
   }
 
-  queue = m_queue.GetStrongPtr();
-  if (queue) {
+  if (queue = m_queue.GetStrongPtr()) {
     return queue->TryDequeTask(task);
   }
 
