@@ -234,8 +234,7 @@ static void NAPI_CDECL onFrame(
   }
 
   std::string funcName(functionName, functionNameSize);
-  std::optional<std::string> url =
-      scriptUrl ? std::optional{std::string(scriptUrl, scriptUrlSize)} : std::nullopt;
+  std::optional<std::string> url = scriptUrl ? std::optional{std::string(scriptUrl, scriptUrlSize)} : std::nullopt;
   std::optional<uint32_t> line = lineNumber > 0 ? std::optional{lineNumber} : std::nullopt;
   std::optional<uint32_t> column = columnNumber > 0 ? std::optional{columnNumber} : std::nullopt;
 
