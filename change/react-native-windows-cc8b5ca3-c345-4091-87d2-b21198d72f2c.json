@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Tooltip positioned incorrectly on non 100% scale factor",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
