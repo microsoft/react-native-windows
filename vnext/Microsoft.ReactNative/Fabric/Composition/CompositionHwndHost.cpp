@@ -73,7 +73,6 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
         .InternalRootVisual(
             winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::CreateVisual(
                 target.Root()));
-
   }
 
   m_compRootView.ReactViewHost(std::move(m_reactViewHost));

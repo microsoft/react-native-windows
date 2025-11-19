@@ -54,8 +54,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     }
   }
 
-  void Dismiss() noexcept
-  {
+  void Dismiss() noexcept {
     if (m_dialogAsync)
       m_dialogAsync.Cancel();
   }
@@ -130,8 +129,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   }
 
  private:
-
-   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::UI::Popups::IUICommand> m_dialogAsync { nullptr };
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::UI::Popups::IUICommand> m_dialogAsync{nullptr};
 
   winrt::Microsoft::ReactNative::ReactPropertyBag m_propBag;
   bool m_showing = false;

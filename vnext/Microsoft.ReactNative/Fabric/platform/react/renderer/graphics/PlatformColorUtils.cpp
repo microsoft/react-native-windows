@@ -16,7 +16,6 @@ namespace facebook::react {
 winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &semanticItems) {
   if (!semanticItems.empty()) {
     for (auto platformColor : semanticItems) {
-
       // Accent colors
       // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uicolortype?view=winrt-22621
       static std::unordered_map<

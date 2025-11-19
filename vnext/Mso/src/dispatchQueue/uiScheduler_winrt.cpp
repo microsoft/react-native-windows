@@ -97,7 +97,6 @@ struct DispatcherTraits<MicrosoftTypeTag> {
 };
 using MicrosoftDispatcherTraits = DispatcherTraits<MicrosoftTypeTag>;
 
-
 //! TaskDispatcherHandler is a DispatcherQueueHandler delegate that we pass to DispatcherQueue.
 //! We use custom ref counting to avoid extra memory allocations and to handle reference to DispatchTask.
 template <typename TDispatcherTraits>

@@ -9,9 +9,9 @@
 #include <ReactContext.h>
 #include <react/renderer/core/ReactPrimitives.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Input.h>
-#include <winrt/Microsoft.UI.Input.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::Input::implementation {
 
