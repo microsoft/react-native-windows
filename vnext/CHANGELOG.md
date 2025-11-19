@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 18 Nov 2025 06:41:41 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 19 Nov 2025 06:41:09 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1009
+
+Wed, 19 Nov 2025 06:41:09 GMT
+
+### Changes
+
+- Implement textAlign justify and writingDirection support (ltr/rtl/auto) for Fabric TextInput (nitchaudhary@microsoft.com)
+- Update WinAppSdk to 1.8 (30809111+acoates-ms@users.noreply.github.com)
+- Tooltip positioned incorrectly on non 100% scale factor (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1008
 
