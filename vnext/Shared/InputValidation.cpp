@@ -528,9 +528,11 @@ void EncodingValidator::ValidateHeaderValue(std::string_view value) {
     return; // Empty headers are allowed
   }
 
-  if (value.length() > GetMaxHeaderLength()) {
+  if (value.length() > SizeValidator::GetMaxHeaderLength()) {
+    std::string errorMsg =
+        "Header value exceeds maximum length (" + std::to_string(SizeValidator::GetMaxHeaderLength()) + ")";
     LogValidationFailure("HEADER_LENGTH", "Header exceeds max length: " + std::to_string(value.length()));
-    throw InvalidSizeException("Header value exceeds maximum length (" + std::to_string(GetMaxHeaderLength()) + ")");
+    throw InvalidSizeException(errorMsg);
   }
 
   // SDL Requirement: Prevent CRLF injection (response splitting)
