@@ -46,11 +46,6 @@ struct AppState : public std::enable_shared_from_this<AppState> {
   std::atomic<bool> m_enteredBackground;
   char const *m_lastState{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-#ifndef USE_WINUI3
-  xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
-  xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
-  winrt::Windows::UI::Core::CoreWindow::Activated_revoker m_activatedEventRevoker;
-#endif
 };
 
 } // namespace Microsoft::ReactNative

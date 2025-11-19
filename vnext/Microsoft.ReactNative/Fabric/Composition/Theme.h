@@ -19,9 +19,7 @@ struct Theme : ThemeT<Theme, Experimental::IInternalTheme> {
       const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &customResourceLoader) noexcept;
 
 // Public APIs
-#ifdef USE_WINUI3
   winrt::Microsoft::UI::Composition::CompositionBrush PlatformBrush(winrt::hstring platformColor) noexcept;
-#endif
   bool TryGetPlatformColor(winrt::hstring platformColor, winrt::Windows::UI::Color &color) noexcept;
   bool IsEmpty() const noexcept;
 

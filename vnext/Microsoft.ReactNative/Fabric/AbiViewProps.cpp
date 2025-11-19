@@ -53,13 +53,13 @@ winrt::Windows::UI::Color Color::AsWindowsColor(
     const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept {
   return winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(theme)->Color(*m_color);
 }
-#ifdef USE_WINUI3
+
 winrt::Microsoft::UI::Composition::CompositionBrush Color::AsBrush(
     const winrt::Microsoft::ReactNative::Composition::Theme theme) noexcept {
   return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerBrush(
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(theme)->Brush(*m_color));
 }
-#endif
+
 winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Color::AsInternalBrush(
     const winrt::Microsoft::ReactNative::Composition::Theme theme) noexcept {
   return winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(theme)->Brush(*m_color);

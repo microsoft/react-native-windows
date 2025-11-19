@@ -5,10 +5,8 @@
 #if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
 #endif
-#ifdef USE_WINUI3
 #if __has_include("Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp"
-#endif
 #endif
 
 #include <Windows.Graphics.Interop.h>
@@ -19,11 +17,9 @@
 #include <winrt/Windows.UI.Composition.interactions.h>
 #include "CompositionHelpers.h"
 
-#ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interactions.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
-#endif
 
 namespace Microsoft::ReactNative::Composition::Experimental {
 
@@ -102,7 +98,6 @@ struct CompositionTypeTraits<WindowsTypeTag> {
 };
 using WindowsTypeRedirects = CompositionTypeTraits<WindowsTypeTag>;
 
-#ifdef USE_WINUI3
 struct MicrosoftTypeTag;
 template <>
 struct CompositionTypeTraits<MicrosoftTypeTag> {
@@ -174,7 +169,6 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper;
 };
 using MicrosoftTypeRedirects = CompositionTypeTraits<MicrosoftTypeTag>;
-#endif
 
 struct GeometrySource : public winrt::implements<
                             GeometrySource,
@@ -228,9 +222,7 @@ struct CompDropShadow : public winrt::implements<
   typename TTypeRedirects::DropShadow m_shadow;
 };
 using WindowsCompDropShadow = CompDropShadow<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompDropShadow = CompDropShadow<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompBrush : public winrt::implements<
@@ -247,9 +239,7 @@ struct CompBrush : public winrt::implements<
   typename TTypeRedirects::CompositionBrush m_brush;
 };
 using WindowsCompBrush = CompBrush<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompBrush = CompBrush<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompDrawingSurfaceBrush : public winrt::implements<
@@ -328,9 +318,7 @@ struct CompDrawingSurfaceBrush : public winrt::implements<
   winrt::com_ptr<typename TTypeRedirects::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
 };
 using WindowsCompDrawingSurfaceBrush = CompDrawingSurfaceBrush<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompDrawingSurfaceBrush = CompDrawingSurfaceBrush<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 void SetAnimationClass(
@@ -554,9 +542,7 @@ struct CompVisual : public winrt::implements<
   }
 };
 using WindowsCompVisual = CompVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompVisual = CompVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompSpriteVisual : winrt::implements<
@@ -588,9 +574,7 @@ struct CompSpriteVisual : winrt::implements<
   }
 };
 using WindowsCompSpriteVisual = CompSpriteVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompSpriteVisual = CompSpriteVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompRoundedRectangleVisual
@@ -671,9 +655,7 @@ struct CompRoundedRectangleVisual
   typename TTypeRedirects::CompositionRoundedRectangleGeometry m_geometry{nullptr};
 };
 using WindowsCompRoundedRectangleVisual = CompRoundedRectangleVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompRoundedRectangleVisual = CompRoundedRectangleVisual<MicrosoftTypeRedirects>;
-#endif
 
 struct CompScrollPositionChangedArgs
     : winrt::implements<
@@ -1315,9 +1297,7 @@ struct CompScrollerVisual : winrt::implements<
   typename TTypeRedirects::VisualInteractionSource m_visualInteractionSource{nullptr};
 };
 using WindowsCompScrollerVisual = CompScrollerVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompScrollerVisual = CompScrollerVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompActivityVisual : winrt::implements<
@@ -1805,9 +1785,7 @@ struct CompActivityVisual : winrt::implements<
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
 };
 using WindowsCompActivityVisual = CompActivityVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompActivityVisual = CompActivityVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompCaretVisual : winrt::implements<
@@ -1890,13 +1868,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual CompCaretVisua
 }
 using WindowsCompCaretVisual = CompCaretVisual<WindowsTypeRedirects>;
 
-#ifdef USE_WINUI3
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 CompCaretVisual<MicrosoftTypeRedirects>::CreateVisual() const noexcept {
   return winrt::make<Composition::Experimental::MicrosoftCompSpriteVisual>(m_compVisual);
 }
 using MicrosoftCompCaretVisual = CompCaretVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompFocusVisual : winrt::implements<
@@ -1961,13 +1937,11 @@ CompFocusVisual<WindowsTypeRedirects>::CreateVisual() noexcept {
 }
 using WindowsCompFocusVisual = CompFocusVisual<WindowsTypeRedirects>;
 
-#ifdef USE_WINUI3
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 CompFocusVisual<MicrosoftTypeRedirects>::CreateVisual() noexcept {
   return winrt::make<Composition::Experimental::MicrosoftCompSpriteVisual>(m_compVisual);
 }
 using MicrosoftCompFocusVisual = CompFocusVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompContext : winrt::implements<
@@ -2154,7 +2128,6 @@ CompContext<WindowsTypeRedirects>::CompositionGraphicsDevice() noexcept {
 
 using WindowsCompContext = CompContext<WindowsTypeRedirects>;
 
-#ifdef USE_WINUI3
 winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual
 CompContext<MicrosoftTypeRedirects>::CreateSpriteVisual() noexcept {
   return winrt::make<Composition::Experimental::MicrosoftCompSpriteVisual>(m_compositor.CreateSpriteVisual());
@@ -2219,7 +2192,6 @@ CompContext<MicrosoftTypeRedirects>::CompositionGraphicsDevice() noexcept {
 }
 
 using MicrosoftCompContext = CompContext<MicrosoftTypeRedirects>;
-#endif
 
 } // namespace Microsoft::ReactNative::Composition::Experimental
 
@@ -2269,7 +2241,6 @@ winrt::Windows::UI::Composition::ICompositionSurface SystemCompositionContextHel
   return s ? s->Inner() : nullptr;
 }
 
-#ifdef USE_WINUI3
 ICompositionContext MicrosoftCompositionContextHelper::CreateContext(
     winrt::Microsoft::UI::Composition::Compositor const &compositor) noexcept {
   return winrt::make<::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompContext>(compositor);
@@ -2320,7 +2291,5 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IBrush MicrosoftCompos
     const winrt::Microsoft::UI::Composition::CompositionBrush &brush) noexcept {
   return winrt::make<::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompBrush>(brush);
 }
-
-#endif
 
 } // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation
