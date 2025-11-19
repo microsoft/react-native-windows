@@ -45,6 +45,14 @@ Copy-Item -Force -Recurse -Path $ReactWindowsRoot\Microsoft.ReactNative.Cxx -Des
 # Copy native module spec files
 Copy-Item -Force -Recurse -Path $ReactWindowsRoot\codegen -Destination $TargetRoot\inc
 
+# Overwrite ReactCommon\jsi\jsi files. It must be called before the ReactCommon overrides
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\decorator.h -Destination $ReactNativeRoot\ReactCommon\jsi\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\instrumentation.h -Destination $ReactNativeRoot\ReactCommon\jsi\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\jsi.cpp -Destination $ReactNativeRoot\ReactCommon\jsi\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\jsi.h -Destination $ReactNativeRoot\ReactCommon\jsi\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\jsi-inl.h -Destination $ReactNativeRoot\ReactCommon\jsi\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\threadsafe.h -Destination $ReactNativeRoot\ReactCommon\jsi\jsi\
+
 # Overwrite temporary ReactCommon files (since this script can runs on a different machine than where ReactCommon was built)
 Copy-Item -Force -Recurse -Path $ReactCommonOverrideRoot\* -Destination $ReactNativeRoot\ReactCommon\
 
@@ -61,6 +69,8 @@ New-Item $TargetRoot\Microsoft.ReactNative.Cxx\node-api -ItemType Directory -For
 Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_native_api.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
 Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_native_api_types.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
 Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_runtime_api.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
+Copy-Item -Force -Path $NodeApiJsiRoot\node-api\node_api.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
+Copy-Item -Force -Path $NodeApiJsiRoot\node-api\node_api_types.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
 
 # Microsoft.ReactNative.CXX project Node-API JSI files
 New-Item $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders -ItemType Directory -Force
