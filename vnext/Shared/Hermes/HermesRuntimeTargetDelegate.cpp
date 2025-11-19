@@ -17,6 +17,7 @@
 #include <jsinspector-modern/RuntimeTarget.h>
 #include <utility>
 #include "HermesRuntimeAgentDelegate.h"
+#include <windows.h>
 
 using namespace facebook::react::jsinspector_modern;
 
@@ -268,7 +269,10 @@ tracing::RuntimeSamplingProfile HermesRuntimeTargetDelegate::collectSamplingProf
 
   // Return the complete profile with samples. Wrap the raw profile since it owns the strings.
   return tracing::RuntimeSamplingProfile(
-      "Hermes", 1234, std::move(readerState.samples), std::make_unique<HermesRawRuntimeProfile>(std::move(profile)));
+      "Hermes",
+      GetCurrentProcessId(),
+      std::move(readerState.samples),
+      std::make_unique<HermesRawRuntimeProfile>(std::move(profile)));
 }
 
 } // namespace Microsoft::ReactNative
