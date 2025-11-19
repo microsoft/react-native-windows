@@ -22,7 +22,7 @@ struct Url {
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> getApplicationDataPath(const wchar_t *childfolder);
 
-//string formatting
+// string formatting
 std::string string_format(_Printf_format_string_ const char *format, ...);
 
 } // namespace Microsoft::React

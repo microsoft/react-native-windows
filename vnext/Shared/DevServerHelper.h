@@ -14,7 +14,8 @@ class DevServerHelper {
   DevServerHelper() = default;
 
   static std::string get_WebsocketProxyUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
-    return Microsoft::React::string_format(WebsocketProxyUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
+    return Microsoft::React::string_format(
+        WebsocketProxyUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
   static std::string get_LaunchDevToolsCommandUrl(
@@ -37,7 +38,8 @@ class DevServerHelper {
     std::string hermesBytecodeVersionQuery;
     if (hermesBytecodeVersion > 0) {
       static constexpr const char HermesBytecodeVersionQueryFormat[] = "&runtimeBytecodeVersion=%d";
-      hermesBytecodeVersionQuery = Microsoft::React::string_format(HermesBytecodeVersionQueryFormat, hermesBytecodeVersion);
+      hermesBytecodeVersionQuery =
+          Microsoft::React::string_format(HermesBytecodeVersionQueryFormat, hermesBytecodeVersion);
     }
 
     std::string appIdQuery;
@@ -59,11 +61,13 @@ class DevServerHelper {
   }
 
   static std::string get_OnChangeEndpointUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
-    return Microsoft::React::string_format(OnChangeEndpointUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
+    return Microsoft::React::string_format(
+        OnChangeEndpointUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
   static std::string get_PackagerConnectionUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
-    return Microsoft::React::string_format(PackagerConnectionUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
+    return Microsoft::React::string_format(
+        PackagerConnectionUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
   static std::string get_PackagerOpenStackFrameUrl(

@@ -15,9 +15,9 @@
 
 #include "HermesRuntimeTargetDelegate.h"
 #include <jsinspector-modern/RuntimeTarget.h>
+#include <windows.h>
 #include <utility>
 #include "HermesRuntimeAgentDelegate.h"
-#include <windows.h>
 
 using namespace facebook::react::jsinspector_modern;
 
