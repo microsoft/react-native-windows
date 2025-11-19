@@ -268,6 +268,79 @@ TEST_CLASS(UtilsTest)
   }
 
 #pragma endregion Base64 Tests
+
+#pragma region string_format Tests
+
+  TEST_METHOD(UtilsTest_StringFormat_Simple)
+  {
+    auto result = Microsoft::React::string_format("Hello, %s!", "World");
+    Assert::AreEqual("Hello, World!", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Integer)
+  {
+    auto result = Microsoft::React::string_format("Port: %d", 8081);
+    Assert::AreEqual("Port: 8081", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Multiple)
+  {
+    auto result = Microsoft::React::string_format("%s:%d", "localhost", 8081);
+    Assert::AreEqual("localhost:8081", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Complex)
+  {
+    auto result = Microsoft::React::string_format(
+      "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s",
+      "localhost:8081",
+      "index",
+      "windows",
+      "true",
+      "false");
+    Assert::AreEqual(
+      "http://localhost:8081/index.bundle?platform=windows&dev=true&hot=false",
+      result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_EmptyString)
+  {
+    auto result = Microsoft::React::string_format("");
+    Assert::AreEqual("", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_NoArgs)
+  {
+    auto result = Microsoft::React::string_format("no args here");
+    Assert::AreEqual("no args here", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_LargeString)
+  {
+    std::string longString(1000, 'a');
+    auto result = Microsoft::React::string_format("%s", longString.c_str());
+    Assert::AreEqual(longString.c_str(), result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_MixedTypes)
+  {
+    auto result = Microsoft::React::string_format(
+      "Int: %d, Uint: %u, Hex: %x, String: %s, Float: %.2f",
+      -42,
+      42u,
+      255,
+      "test",
+      3.14159);
+    Assert::AreEqual("Int: -42, Uint: 42, Hex: ff, String: test, Float: 3.14", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_SpecialChars)
+  {
+    auto result = Microsoft::React::string_format("100%% complete");
+    Assert::AreEqual("100% complete", result.c_str());
+  }
+
+#pragma endregion string_format Tests
 };
 
 // clang-format on
