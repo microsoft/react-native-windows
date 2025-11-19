@@ -54,7 +54,7 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
   // SDL Compliance: Validate size (P1 - CVSS 5.0)
   try {
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-        static_cast<size_t>(size), Microsoft::ReactNative::InputValidation::GetMaxBlobSize(), "Blob");
+        static_cast<size_t>(size), Microsoft::ReactNative::InputValidation::SizeValidator::GetMaxBlobSize(), "Blob");
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     result.Reject(winrt::to_hstring(ex.what()).c_str());
     return;

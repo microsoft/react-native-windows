@@ -530,8 +530,7 @@ void EncodingValidator::ValidateHeaderValue(std::string_view value) {
 
   if (value.length() > GetMaxHeaderLength()) {
     LogValidationFailure("HEADER_LENGTH", "Header exceeds max length: " + std::to_string(value.length()));
-    throw InvalidSizeException(
-        "Header value exceeds maximum length (" + std::to_string(GetMaxHeaderLength()) + ")");
+    throw InvalidSizeException("Header value exceeds maximum length (" + std::to_string(GetMaxHeaderLength()) + ")");
   }
 
   // SDL Requirement: Prevent CRLF injection (response splitting)

@@ -202,9 +202,7 @@ void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
   //  VALIDATE Size - DoS PROTECTION (P0 Critical - CVSS 7.0)
   try {
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-        message.length(),
-        Microsoft::ReactNative::InputValidation::GetMaxWebSocketFrame(),
-        "WebSocket message");
+        message.length(), Microsoft::ReactNative::InputValidation::GetMaxWebSocketFrame(), "WebSocket message");
   } catch (const Microsoft::ReactNative::InputValidation::ValidationException &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
     return;
@@ -232,9 +230,7 @@ void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID)
     size_t estimatedSize =
         Microsoft::ReactNative::InputValidation::EncodingValidator::EstimateBase64DecodedSize(base64String);
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-        estimatedSize,
-        Microsoft::ReactNative::InputValidation::GetMaxWebSocketFrame(),
-        "WebSocket binary frame");
+        estimatedSize, Microsoft::ReactNative::InputValidation::GetMaxWebSocketFrame(), "WebSocket binary frame");
   } catch (const std::exception &ex) {
     SendEvent(m_context, L"websocketFailed", {{"id", static_cast<int64_t>(forSocketID)}, {"message", ex.what()}});
     return;

@@ -83,7 +83,9 @@ void BlobTurboModule::SendOverSocket(msrn::JSValue &&blob, double socketID) noex
       int64_t size = blob[blobKeys.Size].AsInt64();
       if (size > 0) {
         Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-            static_cast<size_t>(size), Microsoft::ReactNative::InputValidation::GetMaxBlobSize(), "Blob");
+            static_cast<size_t>(size),
+            Microsoft::ReactNative::InputValidation::SizeValidator::GetMaxBlobSize(),
+            "Blob");
       }
     }
 
@@ -115,7 +117,7 @@ void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> &&parts, string &&wi
       }
     }
     Microsoft::ReactNative::InputValidation::SizeValidator::ValidateSize(
-        totalSize, Microsoft::ReactNative::InputValidation::GetMaxBlobSize(), "Blob parts total");
+        totalSize, Microsoft::ReactNative::InputValidation::SizeValidator::GetMaxBlobSize(), "Blob parts total");
 
     m_resource->CreateFromParts(std::move(parts), std::move(withId));
   } catch (const std::exception &ex) {
