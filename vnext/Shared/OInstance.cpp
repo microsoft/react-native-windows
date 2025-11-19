@@ -18,13 +18,7 @@
 #include "OInstance.h"
 #include "Unicode.h"
 
-<<<<<<< HEAD
-#include "Chakra/ChakraHelpers.h"
-#include "Chakra/ChakraUtils.h"
 #include "InputValidation.h"
-    == == ==
-    =
->>>>>>> origin/main
 #include "JSI/RuntimeHolder.h"
 
 #include <cxxreact/MessageQueueThread.h>
@@ -66,7 +60,7 @@
 #include "BaseScriptStoreImpl.h"
 
 #include <tracing/tracing.h>
-        namespace fs = std::filesystem;
+namespace fs = std::filesystem;
 
 using namespace facebook;
 using namespace Microsoft::JSI;
