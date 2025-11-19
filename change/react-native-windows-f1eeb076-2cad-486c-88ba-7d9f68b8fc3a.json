@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "solve modern debugger oustanding issues",
+  "comment": "remove DevSupportManager::OpenDevTools not needed with  modern inspector infra",
   "packageName": "react-native-windows",
   "email": "74712637+iamAbhi-916@users.noreply.github.com",
   "dependentChangeType": "patch"
