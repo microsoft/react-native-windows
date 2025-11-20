@@ -2651,6 +2651,11 @@
   resolved "https://registry.yarnpkg.com/@rnx-kit/console/-/console-1.1.0.tgz#86364f8e6c68b01e9493730276c0d8109a80cd41"
   integrity sha512-N+zFhTSXroiK4eL26vs61Pmtl7wzTPAKLd4JKw9/fk5cNAHUscCXF/uclzuYN61Ye5AwygIvcwbm9wv4Jfa92A==
 
+"@rnx-kit/console@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/console/-/console-2.0.0.tgz#8a59b99092a387ef2f7d74ba5d502e5e433bc175"
+  integrity sha512-8kyM0TUWpawWlaypHKWLgJjPoF5HcsjIxx9LSnYM8VgwBW1gOl2cCDhPYaeS8IG9m0fi4rMtQD8OJqmwpJ2jEg==
+
 "@rnx-kit/jest-preset@^0.1.16", "@rnx-kit/jest-preset@^0.1.17":
   version "0.1.18"
   resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.18.tgz#815893ebcb2bc49d1b131363c5027136ddd7ee01"
@@ -2661,14 +2666,14 @@
     "@babel/preset-typescript" "^7.0.0"
     find-up "^5.0.0"
 
-"@rnx-kit/metro-config@^1.3.5":
-  version "1.3.17"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.17.tgz#8efc69151161e0ce76b6966d3fc9de284a189391"
-  integrity sha512-OAQhevPAYkRcFtGHv8Fxl9P0rQhc3slcclmHHIsV6IYanqeIl8uW/djmLY27MBLu+uvjNCirc7XJ9sH9mUYuRQ==
+"@rnx-kit/metro-config@^2.1.2":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-2.2.0.tgz#8867daad76f1bd32eb89a25402b7a77a24731449"
+  integrity sha512-L3MceV9dC0f/cZhbCWPcfJaQVslFK0IlllgHym6mZS2BKQmYkxomUiKD/lqRS6W88qoV8SarGEDRQgqwYryu1g==
   dependencies:
-    "@rnx-kit/tools-node" "^2.0.0"
-    "@rnx-kit/tools-react-native" "^1.4.1"
-    "@rnx-kit/tools-workspaces" "^0.1.3"
+    "@rnx-kit/tools-node" "^3.0.0"
+    "@rnx-kit/tools-react-native" "^2.3.1"
+    "@rnx-kit/tools-workspaces" "^0.2.0"
 
 "@rnx-kit/metro-plugin-cyclic-dependencies-detector@^1.1.1":
   version "1.1.2"
@@ -2678,13 +2683,21 @@
     "@rnx-kit/console" "^1.0.11"
     "@rnx-kit/tools-node" "^2.0.0"
 
-"@rnx-kit/metro-plugin-duplicates-checker@^2.1.0", "@rnx-kit/metro-plugin-duplicates-checker@^2.1.1":
+"@rnx-kit/metro-plugin-duplicates-checker@^2.1.1":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-2.1.3.tgz#a76ada37c18a2008997094f0c370d0371a29efd2"
   integrity sha512-YfA12XKiL9okd8nOJ9uNbtSYal1ol9w01I9u3rfz/BBFXjxQAQpv+ATRTfRL4tDgcePXfY5hiINaDscWuCvfeg==
   dependencies:
     "@rnx-kit/console" "^1.0.11"
     "@rnx-kit/tools-node" "^2.0.0"
+
+"@rnx-kit/metro-plugin-duplicates-checker@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-3.0.2.tgz#19a06208a9046d8bf6663f5b5264bc3b19dc7c5f"
+  integrity sha512-DAGSJCo+6nG6MJw6c1UuXmM4ZxusOdMhxmUQC3UXgmpNJH87t/VqrmJDDMzfUTbMK0nmbZ7tes0Wg67r6A68qw==
+  dependencies:
+    "@rnx-kit/console" "^2.0.0"
+    "@rnx-kit/tools-node" "^3.0.0"
 
 "@rnx-kit/metro-plugin-typescript@^0.4.4":
   version "0.4.5"
@@ -2711,13 +2724,20 @@
     esbuild-plugin-lodash "^1.2.0"
     fast-glob "^3.2.7"
 
-"@rnx-kit/metro-serializer@^1.0.11", "@rnx-kit/metro-serializer@^1.0.14":
+"@rnx-kit/metro-serializer@^1.0.14":
   version "1.0.14"
   resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-1.0.14.tgz#8542e13441cadd749026e398127fe29e143e99ed"
   integrity sha512-xBVtpCE3w8GKK0nS95PnxJeQmsGq9K98LMEN/BD1wRuXNpASiSRPNI2vA3ol0ID76xwsl+afg9SptccrydMpbA==
   dependencies:
     "@rnx-kit/tools-react-native" "^1.3.4"
     semver "^7.0.0"
+
+"@rnx-kit/metro-serializer@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-2.0.3.tgz#6f4bf04ca0fe65ce34c8ebfcff58b1b89aa0ab17"
+  integrity sha512-ZmXoaaQiXsI/b33xT23vpWs9y+TZQA97xRp/MR98qdU2QWCJqd3IlYsr+WYphvN4ZBlpgxt3SvPrjdbYrcg1EA==
+  dependencies:
+    "@rnx-kit/tools-react-native" "^2.3.0"
 
 "@rnx-kit/metro-service@^3.1.6":
   version "3.1.6"
@@ -2749,6 +2769,11 @@
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-2.1.2.tgz#8f854b0136beadfc8b8a6c2c8f5f0f0cfefadfc4"
   integrity sha512-pCpiUpC/032ZoN4iFZFWtKp3Vrjma115nXwv2gyD2XFxj6DFyTX6pYjSK70xT7gwLMU0C3bZonN1JxiOBlGb0A==
 
+"@rnx-kit/tools-node@^3.0.0":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-3.0.2.tgz#9993e86ee3f06af71662eae75ffdb07b8d7313c5"
+  integrity sha512-nz0kq7FxJ89Vh5NLHZjmexl3sdGeoPaPZMSWQhW6g9JzryGVdU+CyLQtQbajtwaDMQB2qH/IqpmOzAxNFr5pgg==
+
 "@rnx-kit/tools-react-native@^1.3.2", "@rnx-kit/tools-react-native@^1.3.4", "@rnx-kit/tools-react-native@^1.4.0", "@rnx-kit/tools-react-native@^1.4.1":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-1.4.2.tgz#099972ecb705276d17fea72da5531f24271fe3a7"
@@ -2756,13 +2781,21 @@
   dependencies:
     "@rnx-kit/tools-node" "^2.0.1"
 
-"@rnx-kit/tools-workspaces@^0.1.3":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-workspaces/-/tools-workspaces-0.1.6.tgz#94e5fb72c9857cf4a00d27e931b7ca5a362b4695"
-  integrity sha512-af5CYnc1dtnMIAl2u0U1QHUCGgLNN9ZQkYCAtQOHPxxgF5yX2Cr9jrXLZ9M+/h/eSVbK0ETjJWbNbPoiUSW/7w==
+"@rnx-kit/tools-react-native@^2.3.0", "@rnx-kit/tools-react-native@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-2.3.1.tgz#f6b03fae7ccf5dbe5066d7eea6af2189d914abe7"
+  integrity sha512-6XVhP6W0C9xyjDeyhMC0/bmlgk8rAfrFGEafupn36q1dOzhcN3uXVQaLVFhYW6dF29NafakKg9gzfUeRTOz7bg==
+  dependencies:
+    "@rnx-kit/tools-node" "^3.0.0"
+
+"@rnx-kit/tools-workspaces@^0.2.0":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-workspaces/-/tools-workspaces-0.2.3.tgz#dd239dae99abfcd3ccffcbdc0c5e62db85f2bbe7"
+  integrity sha512-nJ1aRBqUoEPYVdc9cYZtpR6k5F+DcdtLWdlSAGd9f1HU2tqvDpRJhOId9uY3T57fC+YVtPijlp9/55gNGsaiJw==
   dependencies:
     fast-glob "^3.2.7"
     find-up "^5.0.0"
+    micromatch "^4.0.0"
     read-yaml-file "^2.1.0"
     strip-json-comments "^3.1.1"
 
