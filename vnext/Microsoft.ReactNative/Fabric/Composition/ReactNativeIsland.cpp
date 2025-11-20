@@ -175,12 +175,7 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
   if (m_island) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
-    m_island.StateChanged(m_islandStateChangedToken);
-#ifdef USE_EXPERIMENTAL_WINUI3
-    m_island.Connected(m_islandConnectedToken);
-    m_island.Disconnected(m_islandDisconnectedToken);
-#endif
-  }
+    m_island.StateChanged(m_islandStateChangedToken);  }
 #endif
 
   if (m_uiDispatcher) {
@@ -261,12 +256,6 @@ void ReactNativeIsland::RemoveRenderedVisual(
 }
 
 bool ReactNativeIsland::TrySetFocus() noexcept {
-#ifdef USE_WINUI3
-  if (m_island && m_island.IsConnected()) {
-    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
-    return focusController.TrySetFocus();
-  }
-#endif
   return false;
 }
 
@@ -981,25 +970,6 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             }
           }
         });
-#ifdef USE_EXPERIMENTAL_WINUI3
-    if (!m_isFragment) {
-      m_islandConnectedToken = m_island.Connected(
-          [weakThis = get_weak()](
-              winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
-            if (auto pThis = weakThis.get()) {
-              pThis->OnMounted();
-            }
-          });
-
-      m_islandDisconnectedToken = m_island.Disconnected(
-          [weakThis = get_weak()](
-              winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
-            if (auto pThis = weakThis.get()) {
-              pThis->OnUnmounted();
-            }
-          });
-    }
-#endif
   }
   return m_island;
 }
