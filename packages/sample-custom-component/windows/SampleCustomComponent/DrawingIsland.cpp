@@ -66,11 +66,6 @@ DrawingIsland::DrawingIsland(const winrt::Microsoft::UI::Composition::Compositor
   EnqueueFromBackgroundThread();
 
   // Get notifications for island disconnection.
-#ifdef USE_EXPERIMENTAL_WINUI3
-  (void)m_island.Connected([&](auto &&...) { return Island_OnConnected(); });
-
-  (void)m_island.Disconnected([&](auto &&...) { return Island_OnDisconnected(); });
-#endif
   (void)m_island.Closed([&]() { return Island_OnClosed(); });
 }
 
@@ -616,16 +611,6 @@ void DrawingIsland::Island_OnStateChanged() {
   Output_UpdateCurrentColorVisual();
 }
 
-void DrawingIsland::Island_OnConnected() {
-  SetLayoutDirectionForVisuals();
-}
-
-void DrawingIsland::Island_OnDisconnected() {
-  WCHAR msg2[300];
-  StringCbPrintf(msg2, sizeof(msg2), L"Island_OnDisconnected Disconnected \n");
-  OutputDebugStringW(msg2);
-}
-
 void DrawingIsland::Island_OnClosed() {
   WCHAR msg2[300];
   StringCbPrintf(msg2, sizeof(msg2), L"Island_OnClosed %d\n", m_island.IsClosed());
@@ -823,11 +808,6 @@ void DrawingIsland::Window_Initialize() {
         return Window_OnSettingChanged(args);
       });
 
-#ifdef USE_EXPERIMENTAL_WINUI3
-  (void)window.ThemeChanged(
-      [this](winrt::ContentIslandEnvironment const &, winrt::IInspectable const &) { return Window_OnThemeChanged(); });
-#endif
-
   (void)window.StateChanged([this](winrt::ContentIslandEnvironment const &sender, winrt::IInspectable const &) {
     return Window_OnStateChanged(sender);
   });
@@ -841,36 +821,9 @@ void DrawingIsland::Window_OnSettingChanged(const winrt::ContentEnvironmentSetti
   }
 }
 
-void DrawingIsland::Window_OnThemeChanged() {
-  // Do nothing intentionally - For testing purposes only
-}
-
 void DrawingIsland::Window_OnStateChanged(winrt::ContentIslandEnvironment const &sender) {
   sender;
-#ifdef USE_EXPERIMENTAL_WINUI3
-  WCHAR msg[300];
-  winrt::Microsoft::UI::DisplayId displayId = sender.DisplayId();
-  float scale = sender.DisplayScale();
-  winrt::Microsoft::UI::Content::ContentDisplayOrientations nativeOrientation = sender.NativeOrientation();
-  winrt::Microsoft::UI::Content::ContentDisplayOrientations currentOrientation = sender.CurrentOrientation();
-  HWND hwnd = winrt::GetWindowFromWindowId(sender.AppWindowId());
-  RECT rect;
-  GetWindowRect(hwnd, &rect);
-  StringCbPrintf(
-      msg,
-      sizeof(msg),
-      L"AppWindow Hwnd = %x, Rect.top = %d, Rect.right = %d, Rect.bottom = %d, Rect.left = %d, DisplayId: %p, DisplayScale: %f, NativeOrientation: %d, CurrentOrientation: %d\n",
-      hwnd,
-      rect.top,
-      rect.right,
-      rect.bottom,
-      rect.left,
-      displayId.Value,
-      scale,
-      nativeOrientation,
-      currentOrientation);
-  OutputDebugStringW(msg);
-#endif
+  // ContentDisplayOrientations and related APIs removed from WinUI3
 }
 
 struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView, winrt::IInspectable>,

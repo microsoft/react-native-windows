@@ -136,10 +136,6 @@ void Accessibility_OnAutomationProviderRequested(
 
   void Island_OnStateChanged();
 
-  void Island_OnConnected();
-
-  void Island_OnDisconnected();
-
   void Island_OnClosed();
 
   void LightDismiss_Initialize();
@@ -161,7 +157,6 @@ void Accessibility_OnAutomationProviderRequested(
   void Window_Initialize();
 
   void Window_OnSettingChanged(const winrt::ContentEnvironmentSettingChangedEventArgs &args);
-  void Window_OnThemeChanged();
 
   void Window_OnStateChanged(winrt::ContentIslandEnvironment const &sender);
 
