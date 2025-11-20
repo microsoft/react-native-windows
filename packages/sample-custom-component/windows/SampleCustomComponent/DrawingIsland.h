@@ -213,7 +213,7 @@ void Accessibility_OnAutomationProviderRequested(
   winrt::RectangleClip m_backgroundClip{nullptr};
   winrt::RectangleClip m_backdropClip{nullptr};
 #ifdef USE_EXPERIMENTAL_WINUI3
-  winrt::ContentExternalBackdropLink m_backdropLink{nullptr};
+  winrt::Microsoft::UI::Content::ContentExternalBackdropLink m_backdropLink{nullptr};
 #endif
   winrt::ICompositionSupportsSystemBackdrop m_backdropTarget{nullptr};
 
