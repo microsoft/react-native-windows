@@ -2,6 +2,42 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 19 Nov 2025 06:41:09 GMT",
+      "version": "0.12.349",
+      "tag": "@react-native-windows/automation-channel_v0.12.349",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "d9f58dee5a19e0bf7332346f657d79db7c6287e0",
+            "comment": "Update WinAppSdk to 1.8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.1009",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Nov 2025 06:41:41 GMT",
+      "version": "0.12.348",
+      "tag": "@react-native-windows/automation-channel_v0.12.348",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.1008",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "0.12.347",
       "tag": "@react-native-windows/automation-channel_v0.12.347",

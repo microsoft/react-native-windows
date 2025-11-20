@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Nov 2025 06:41:09 GMT",
+      "version": "0.0.0-canary.1009",
+      "tag": "react-native-windows_v0.0.0-canary.1009",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5bc336fff7a8ce4254217dbafa2f82d01edbcd64",
+            "comment": "Implement textAlign justify and writingDirection support (ltr/rtl/auto) for Fabric TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d9f58dee5a19e0bf7332346f657d79db7c6287e0",
+            "comment": "Update WinAppSdk to 1.8"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c8aa062b19357e1276c26144222ba7552bcaef18",
+            "comment": "Tooltip positioned incorrectly on non 100% scale factor"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Nov 2025 06:41:41 GMT",
+      "version": "0.0.0-canary.1008",
+      "tag": "react-native-windows_v0.0.0-canary.1008",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0d88883294fa78c8e4cfc3b2d052f71ace9a710",
+            "comment": "Add HostTargetMetadata with app name and device name for inspector page naming"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "0.0.0-canary.1007",
       "tag": "react-native-windows_v0.0.0-canary.1007",

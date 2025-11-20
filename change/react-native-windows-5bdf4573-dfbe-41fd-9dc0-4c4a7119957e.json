@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add HostTargetMetadata with app name and device name for inspector page naming",
+  "comment": "Fix  Crash after closing DesktopPopupSiteBridge",
   "packageName": "react-native-windows",
   "email": "74712637+iamAbhi-916@users.noreply.github.com",
   "dependentChangeType": "patch"
