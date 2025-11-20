@@ -175,7 +175,8 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
   if (m_island) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
-    m_island.StateChanged(m_islandStateChangedToken);  }
+    m_island.StateChanged(m_islandStateChangedToken);
+  }
 #endif
 
   if (m_uiDispatcher) {
