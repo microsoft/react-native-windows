@@ -167,6 +167,9 @@ void FabricUIManager::setProps(facebook::react::SurfaceId surfaceId, const folly
 }
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
+  if (surfaceId == -1) {
+    return;
+  }
   visit(surfaceId, [&](const facebook::react::SurfaceHandler &surfaceHandler) {
     surfaceHandler.stop();
     m_scheduler->unregisterSurface(surfaceHandler);
@@ -176,7 +179,9 @@ void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept
     std::unique_lock lock(m_handlerMutex);
 
     auto iterator = m_handlerRegistry.find(surfaceId);
-    m_handlerRegistry.erase(iterator);
+    if (iterator != m_handlerRegistry.end()) {
+      m_handlerRegistry.erase(iterator);
+    }
   }
 
   auto &rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);

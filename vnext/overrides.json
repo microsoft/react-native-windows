@@ -49,20 +49,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
-      "baseHash": "eeaefdb8689f30047c3907fbb706c49a43e1cdfa",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.h",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.h",
-      "baseHash": "459d79bc399760546afaf3209c7ec96caeebc449",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
       "baseHash": "c79e30b01266ff00f62f60c81bd6f08e59222972",
@@ -102,20 +88,6 @@
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
       "baseHash": "d961f37983356cbc64622db6194cd4b2a9a4e05c",
       "issue": 13587
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseHash": "3e9e300ac2c01ed2b3bfa7e5afe7b5961d3e9080",
-      "issue": 13172
     },
     {
       "type": "patch",
@@ -212,13 +184,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
       "baseHash": "e03ce8e5db0216f23389ff8b3e9ea450c8a031b7",
       "issue": 14673
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "d9767072276759fde75aa7be5a4acec405d892d3",
-      "issue": 13172
     },
     {
       "type": "copy",
