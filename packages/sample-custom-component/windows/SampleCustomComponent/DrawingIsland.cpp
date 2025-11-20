@@ -792,65 +792,11 @@ void DrawingIsland::SystemBackdrop_Initialize() {
         });
   }
 
-#ifdef USE_EXPERIMENTAL_WINUI3
-  if (IsHostedByPopupWindowSiteBridge()) {
-    // For popups, we want to draw shadows around the edges, so clip the backdrop visual to
-    // allow room on the edges for the shadows.
-    m_backdropLink = winrt::ContentExternalBackdropLink::Create(m_compositor);
+  // If we are the main content, we don't want to add custom clips or offsets to our
+  // backdrop, so we can pass the ContentIsland as the target to the BackdropController.
+  // This will by default fill the entire ContentIsland backdrop surface.
 
-    // This will be the size of the "cut out" we will make in the lifted composition surface
-    // so that the Backdrop System Sprite Visual will show through. This is specified in
-    // logical coordinates.
-    m_backdropLink.PlacementVisual().Size(m_island.ActualSize());
-
-    // Clip the backdrop.
-    m_backdropClip = m_compositor.CreateRectangleClip(
-        10.0f,
-        10.0f,
-        m_island.ActualSize().x - 10.0f,
-        m_island.ActualSize().y - 10.0f,
-        {10.0f, 10.0f},
-        {10.0f, 10.0f},
-        {10.0f, 10.0f},
-        {10.0f, 10.0f});
-    m_backdropLink.PlacementVisual().Clip(m_backdropClip);
-
-    // Clip the overall background.
-    m_backgroundClip = m_compositor.CreateRectangleClip(
-        0.0f,
-        0.0f,
-        m_island.ActualSize().x,
-        m_island.ActualSize().y,
-        {10.0f, 10.0f},
-        {10.0f, 10.0f},
-        {10.0f, 10.0f},
-        {10.0f, 10.0f});
-    m_backgroundVisual.Clip(m_backgroundClip);
-
-    // Add the backdropLink into the LiftedVisual tree of the popup.
-    m_backgroundVisual.Children().InsertAtBottom(m_backdropLink.PlacementVisual());
-
-    auto animation = m_compositor.CreateVector3KeyFrameAnimation();
-    animation.InsertKeyFrame(0.0f, {0.0f, -m_island.ActualSize().y, 0.0f});
-    animation.InsertKeyFrame(1.0f, {0.0f, 0.0f, 0.0f});
-    animation.Duration(std::chrono::milliseconds(2000));
-    animation.IterationBehavior(AnimationIterationBehavior::Count);
-    animation.IterationCount(1);
-    m_backgroundVisual.StartAnimation(L"Offset", animation);
-
-    // For Popups, we want to customize the clip and offset of the system backdrop, so we
-    // pass the ContentExternalBackdropLink as the target to the BackdropController.
-
-    m_backdropTarget = m_backdropLink;
-  } else
-#endif
-  {
-    // If we are the main content, we don't want to add custom clips or offsets to our
-    // backdrop, so we can pass the ContentIsland as the target to the BackdropController.
-    // This will by default fill the entire ContentIsland backdrop surface.
-
-    m_backdropTarget = m_island;
-  }
+  m_backdropTarget = m_island;
 
   m_backdropController.AddSystemBackdropTarget(m_backdropTarget);
 }

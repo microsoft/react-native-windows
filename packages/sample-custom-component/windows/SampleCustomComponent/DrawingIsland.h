@@ -212,9 +212,6 @@ void Accessibility_OnAutomationProviderRequested(
   winrt::Microsoft::UI::Composition::SpriteVisual m_backgroundVisual{nullptr};
   winrt::RectangleClip m_backgroundClip{nullptr};
   winrt::RectangleClip m_backdropClip{nullptr};
-#ifdef USE_EXPERIMENTAL_WINUI3
-  winrt::Microsoft::UI::Content::ContentExternalBackdropLink m_backdropLink{nullptr};
-#endif
   winrt::ICompositionSupportsSystemBackdrop m_backdropTarget{nullptr};
 
   // Drawing squares
