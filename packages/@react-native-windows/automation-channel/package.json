@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-channel",
-  "version": "0.12.349",
+  "version": "0.12.350",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "prettier": "2.8.8",
     "react": "19.1.0",
     "react-native": "0.82.0-nightly-20250819-25104de5c",
-    "react-native-windows": "^0.0.0-canary.1009",
+    "react-native-windows": "^0.0.0-canary.1010",
     "typescript": "5.0.4"
   },
   "files": [
