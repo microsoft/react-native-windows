@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Nov 2025 06:43:27 GMT",
+      "version": "0.0.0-canary.1011",
+      "tag": "react-native-windows_v0.0.0-canary.1011",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "65c946ff16a2ee05efb471163f569606362caab8",
+            "comment": "Remove code related to USE_WINUI3 which is now always true"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Nov 2025 06:39:28 GMT",
       "version": "0.0.0-canary.1010",
       "tag": "react-native-windows_v0.0.0-canary.1010",
