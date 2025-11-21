@@ -12,7 +12,6 @@
 #include <winrt/Windows.Storage.h>
 
 #include <cstdarg>
-#include <memory>
 #include <sstream>
 
 using std::string;
@@ -35,12 +34,10 @@ std::string string_format(const char *format, ...) {
     return "";
   }
 
-  // Allocate buffer and format string
-  std::unique_ptr<char[]> buf(new char[size + 1]);
-  vsnprintf(buf.get(), size + 1, format, args);
+  std::string result(size, '\0');
+  vsnprintf(result.data(), size + 1, format, args);
   va_end(args);
-
-  return std::string(buf.get(), size);
+  return result;
 }
 
 namespace {
