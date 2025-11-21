@@ -1193,6 +1193,11 @@ void WindowsTextInputComponentView::updateProps(
     updateAutoCorrect(newTextInputProps.autoCorrect);
   }
 
+  if (oldTextInputProps.keyboardType != newTextInputProps.keyboardType ||
+      oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
+    updateKeyboardType(newTextInputProps.keyboardType);
+  }
+
   if (oldTextInputProps.selectionColor != newTextInputProps.selectionColor) {
     m_needsRedraw = true;
   }
@@ -1439,6 +1444,10 @@ void WindowsTextInputComponentView::onMounted() noexcept {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
+
+  // Initialize keyboardType
+  updateKeyboardType(windowsTextInputProps().keyboardType);
+
   InternalFinalize();
 
   // Handle autoFocus property - focus the component when mounted if autoFocus is true
@@ -1914,4 +1923,10 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
   DestroyMenu(menu);
 }
 
+void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboardType) noexcept {
+  // Store the keyboard type for future use
+  // Note: Fabric's windowless RichEdit doesn't have direct InputScope support like Paper's XAML controls.
+  // The keyboard type is stored but the actual keyboard behavior is handled by the system's IME.
+  m_keyboardType = keyboardType;
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
