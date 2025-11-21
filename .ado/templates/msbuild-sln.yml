@@ -6,7 +6,7 @@ parameters:
   # NuGet & MSBuild
   solutionDir:
   solutionName:
-  msbuildVersion: latest
+  msbuildVersion: 17.14.21
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
   platformToolset: v143
