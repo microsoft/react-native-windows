@@ -6,8 +6,8 @@
 #include "Timer.g.cpp"
 
 #include <CppWinRTIncludes.h>
-#include "ReactCoreInjection.h"
 #include <winrt/Microsoft.UI.Dispatching.h>
+#include "ReactCoreInjection.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
