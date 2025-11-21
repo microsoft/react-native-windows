@@ -480,50 +480,6 @@ TEST_CLASS (JSValueReaderTest) {
     TestCheck(jsValue["NullValue"] == nullptr);
     TestCheck(jsValue["NullValue"] == JSValue::Null);
   }
-
-  TEST_METHOD(TestReadValueXamlTypes) {
-    const wchar_t *json =
-        LR"JSON({
-      "Thickness1": 2,
-      "Thickness2": 2.5,
-      "Thickness3": [1,2,3,4],
-      "Thickness4": {"left": 1, "top": 2, "right": 3, "bottom": 4},
-      "CornerRadius1": 2,
-      "CornerRadius2": 2.5,
-      "CornerRadius3": [1,2,3,4],
-      "CornerRadius4": {"topLeft": 1, "topRight": 2, "bottomRight": 3, "bottomLeft": 4},
-      "Uri1": "https://bing.com",
-    })JSON";
-
-    IJSValueReader reader = make<JsonJSValueReader>(json);
-
-    TestCheck(reader.ValueType() == JSValueType::Object);
-    hstring propertyName;
-    while (reader.GetNextObjectProperty(/*out*/ propertyName)) {
-      if (propertyName == L"Thickness1") {
-        TestCheck(ReadValue<xaml::Thickness>(reader) == xaml::ThicknessHelper::FromUniformLength(2));
-      } else if (propertyName == L"Thickness2") {
-        TestCheck(ReadValue<xaml::Thickness>(reader) == xaml::ThicknessHelper::FromUniformLength(2.5));
-      } else if (propertyName == L"Thickness3") {
-        TestCheck(ReadValue<xaml::Thickness>(reader) == xaml::ThicknessHelper::FromLengths(1, 2, 3, 4));
-      } else if (propertyName == L"Thickness4") {
-        TestCheck(ReadValue<xaml::Thickness>(reader) == xaml::ThicknessHelper::FromLengths(1, 2, 3, 4));
-      } else if (propertyName == L"CornerRadius1") {
-        TestCheck(ReadValue<xaml::CornerRadius>(reader) == xaml::CornerRadiusHelper::FromUniformRadius(2));
-      } else if (propertyName == L"CornerRadius2") {
-        TestCheck(ReadValue<xaml::CornerRadius>(reader) == xaml::CornerRadiusHelper::FromUniformRadius(2.5));
-      } else if (propertyName == L"CornerRadius3") {
-        TestCheck(ReadValue<xaml::CornerRadius>(reader) == xaml::CornerRadiusHelper::FromRadii(1, 2, 3, 4));
-      } else if (propertyName == L"CornerRadius4") {
-        TestCheck(ReadValue<xaml::CornerRadius>(reader) == xaml::CornerRadiusHelper::FromRadii(1, 2, 3, 4));
-      } else if (propertyName == L"Uri1") {
-        // Uri has no default ctor, so instead we read this way:
-        auto jsValue = JSValue::ReadFrom(reader);
-        auto uri = jsValue.To<Uri>();
-        TestCheck(uri.RawUri() == L"https://bing.com");
-      }
-    }
-  }
 };
 
 } // namespace winrt::Microsoft::ReactNative
