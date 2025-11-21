@@ -165,7 +165,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
     if (m_hostObjectWrapper) {
       return m_hostObjectWrapper->get(runtime, propName);
     }
+    return __super::get(runtime, propName);
+  }
 
+  facebook::jsi::Value create(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &propName) override {
     // it is not safe to assume that "runtime" never changes, so members are not cached here
     std::string key = propName.utf8(runtime);
 
