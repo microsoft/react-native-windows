@@ -6,7 +6,6 @@
 #include "DevMenu.h"
 
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#include "Hermes/HermesSamplingProfiler.h"
 #include "IReactDispatcher.h"
 #include "Modules/DevSettingsModule.h"
 
@@ -68,28 +67,9 @@ void ToggleFastRefresh(Mso::CntPtr<Mso::React::IReactContext> const &reactContex
   DevSettings::Reload(React::ReactPropertyBag(reactContext->Properties()));
 }
 
-winrt::fire_and_forget ToggleHermesProfiler(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
-  if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-    Microsoft::ReactNative::HermesSamplingProfiler::Start(reactContext);
-  } else {
-    auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop(reactContext);
-    auto uiDispatcher = React::implementation::ReactDispatcher::GetUIDispatcher(reactContext->Properties());
-    uiDispatcher.Post([traceFilePath]() {
-      DataTransfer::DataPackage data;
-      data.SetText(winrt::to_hstring(traceFilePath));
-      DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
-    });
-  }
-}
-
 const wchar_t *FastRefreshLabel(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
   return Mso::React::ReactOptions::UseFastRefresh(reactContext->Properties()) ? L"Disable Fast Refresh"
                                                                               : L"Enable Fast Refresh";
-}
-
-const wchar_t *HermesProfilerLabel(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
-  return !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
-                                                                      : L"Stop and copy trace path to clipboard";
 }
 
 struct WindowsPopupMenuDevMenu : public IDevMenu, public std::enable_shared_from_this<WindowsPopupMenuDevMenu> {
@@ -126,12 +106,6 @@ struct WindowsPopupMenuDevMenu : public IDevMenu, public std::enable_shared_from
         L"Toggle Inspector", [context = m_context](winrt::Windows::UI::Popups::IUICommand const &) {
           DevSettings::ToggleElementInspector(*context);
         }));
-
-    if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
-      m_menu.Commands().Append(winrt::Windows::UI::Popups::UICommand(
-          HermesProfilerLabel(m_context),
-          [context = m_context](winrt::Windows::UI::Popups::IUICommand const &) { ToggleHermesProfiler(context); }));
-    }
 
     m_menu.ShowAsync({0, 0});
   }

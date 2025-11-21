@@ -45,7 +45,6 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
       const uint16_t sourceBundlePort,
       std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
-  virtual void OpenDevTools(const std::string &bundleAppId) override;
 
   virtual void EnsureInspectorPackagerConnection(
       const std::string &packagerHost,

@@ -231,20 +231,6 @@ class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit,
 
   std::shared_ptr<facebook::react::jsinspector_modern::RuntimeTargetDelegate> createRuntimeTargetDelegate() override;
 
-  static std::shared_ptr<HermesRuntimeHolder> loadFrom(
-      winrt::Microsoft::ReactNative::ReactPropertyBag const &propertyBag) noexcept;
-
-  static void storeTo(
-      winrt::Microsoft::ReactNative::ReactPropertyBag const &propertyBag,
-      std::shared_ptr<HermesRuntimeHolder> const &holder) noexcept;
-
-  void addToProfiling() const noexcept;
-  void removeFromProfiling() const noexcept;
-
-  static void enableSamplingProfiler() noexcept;
-  static void disableSamplingProfiler() noexcept;
-  static void dumpSampledTraceToFile(const std::string &fileName) noexcept;
-
   hermes_runtime getHermesRuntime() noexcept;
 
  private:
