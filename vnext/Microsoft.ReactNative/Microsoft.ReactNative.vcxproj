@@ -187,7 +187,6 @@
     <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
-    <ClInclude Include="Utils\BatchingEventEmitter.h" />
     <ClInclude Include="DocString.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -303,7 +302,6 @@
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
-    <ClInclude Include="Utils\ResourceBrushUtils.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
     <ClInclude Include="Utils\TextTransform.h" />
     <ClInclude Include="Utils\TransformableText.h" />
@@ -334,7 +332,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
-    <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="Modules\AccessibilityInfoModule.cpp" />
     <ClCompile Include="Modules\AlertModule.cpp" />
@@ -376,11 +373,9 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
-    <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
-    <ClCompile Include="Utils\XamlIslandUtils.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="XamlUIService.cpp">
       <DependentUpon>XamlUIService.idl</DependentUpon>

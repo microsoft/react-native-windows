@@ -146,7 +146,6 @@ struct ReactNativeIsland
   void UninitRootView() noexcept;
 
  private:
-#ifdef USE_WINUI3
   winrt::Microsoft::UI::Composition::Compositor m_compositor{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
   winrt::event_token m_islandFrameworkClosedToken;
@@ -154,7 +153,6 @@ struct ReactNativeIsland
   winrt::event_token m_islandStateChangedToken;
   winrt::event_token m_islandConnectedToken;
   winrt::event_token m_islandDisconnectedToken;
-#endif
 
   HWND m_hwnd{0};
   bool m_isFragment{false};

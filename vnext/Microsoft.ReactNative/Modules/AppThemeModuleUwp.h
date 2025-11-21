@@ -32,8 +32,6 @@ class AppThemeHolder {
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> m_notifyCallback;
   ReactNativeSpecs::AppThemeSpec_AppThemeData m_appThemeData;
-  winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{};
-  winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{};
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
   winrt::Microsoft::ReactNative::ReactNotificationSubscription m_wmSubscription;
 };
