@@ -28,7 +28,6 @@ namespace Microsoft.ReactNative.Composition.Experimental
     static Windows.UI.Composition.ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface);
   }
 
-#ifdef USE_WINUI3
   [webhosthidden]
   [default_interface]
   [experimental]
@@ -49,6 +48,5 @@ namespace Microsoft.ReactNative.Composition.Experimental
     static Microsoft.UI.Composition.CompositionBrush InnerBrush(IBrush brush);
     static Microsoft.UI.Composition.ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface);
   }
-#endif
 
 } // namespace Microsoft.ReactNative.Composition

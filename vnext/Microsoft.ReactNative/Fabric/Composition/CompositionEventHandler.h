@@ -166,7 +166,6 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   facebook::react::Cursor m_currentCursor{facebook::react::Cursor::Auto};
   winrt::Microsoft::UI::Input::InputCursor m_inputCursor{nullptr};
 
-#ifdef USE_WINUI3
   winrt::event_token m_pointerPressedToken;
   winrt::event_token m_pointerReleasedToken;
   winrt::event_token m_pointerMovedToken;
@@ -176,7 +175,6 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;
   winrt::event_token m_characterReceivedToken;
-#endif
 };
 
 } // namespace Microsoft::ReactNative

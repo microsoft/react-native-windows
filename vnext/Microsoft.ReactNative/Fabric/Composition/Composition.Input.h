@@ -9,11 +9,9 @@
 #include <ReactContext.h>
 #include <react/renderer/core/ReactPrimitives.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Input.h>
-#ifdef USE_WINUI3
-#include <winrt/Microsoft.UI.Input.h>
-#endif
 
 namespace winrt::Microsoft::ReactNative::Composition::Input::implementation {
 
@@ -27,12 +25,10 @@ struct KeyRoutedEventArgs : winrt::implements<
       uint64_t wParam,
       int64_t lParam,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
-#ifdef USE_WINUI3
   KeyRoutedEventArgs(
       facebook::react::Tag tag,
       winrt::Microsoft::UI::Input::KeyEventArgs const &args,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
-#endif
 
   int32_t OriginalSource() noexcept;
   winrt::hstring DeviceId() noexcept;
@@ -62,12 +58,10 @@ struct CharacterReceivedRoutedEventArgs
       uint64_t wParam,
       int64_t lParam,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
-#ifdef USE_WINUI3
   CharacterReceivedRoutedEventArgs(
       facebook::react::Tag tag,
       winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source);
-#endif
 
   int32_t OriginalSource() noexcept;
   bool Handled() noexcept;
@@ -96,9 +90,7 @@ struct Pointer : PointerT<Pointer> {
 };
 
 struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> {
-#ifdef USE_WINUI3
   PointerPointProperties(const winrt::Microsoft::UI::Input::PointerPointProperties &ppp);
-#endif
 
   PointerPointProperties(
       bool isBarrelButtonPressed,
@@ -145,9 +137,7 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
   float YTilt() noexcept;
 
  private:
-#ifdef USE_WINUI3
   winrt::Microsoft::UI::Input::PointerPointProperties m_sysPointerPointProps{nullptr};
-#endif
 
   // When not using m_sysPointerPointProps
   bool m_isBarrelButtonPressed : 1;
@@ -173,13 +163,11 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
 };
 
 struct PointerPoint : PointerPointT<PointerPoint> {
-#ifdef USE_WINUI3
   PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp, float scaleFactor);
   PointerPoint(
       const winrt::Microsoft::UI::Input::PointerPoint &pp,
       float scaleFactor,
       const winrt::Windows::Foundation::Point &offset);
-#endif
   PointerPoint(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor);
   PointerPoint(
       HWND hwnd,
@@ -204,9 +192,7 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   bool IsPointerMessage(uint32_t message) const noexcept;
 
   // Windows::Input
-#ifdef USE_WINUI3
   winrt::Microsoft::UI::Input::PointerPoint m_sysPointerPoint{nullptr};
-#endif
   // Non Windows::Input
   HWND m_hwnd;
   // WM_POINTER*

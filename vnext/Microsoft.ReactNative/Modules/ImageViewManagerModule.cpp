@@ -11,18 +11,15 @@
 #include "ImageViewManagerModule.h"
 
 #include <Fabric/WindowsImageManager.h>
-#include <UI.Xaml.Media.Imaging.h>
 #include <Utils/Helpers.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #include <wincodec.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
-#include "XamlUtils.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
-using namespace xaml::Media::Imaging;
 } // namespace winrt
 
 namespace Microsoft::ReactNative {

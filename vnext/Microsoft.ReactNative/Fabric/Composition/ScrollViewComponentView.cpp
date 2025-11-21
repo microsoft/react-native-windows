@@ -6,7 +6,6 @@
 
 #include "ScrollViewComponentView.h"
 
-#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 #pragma warning(push)
