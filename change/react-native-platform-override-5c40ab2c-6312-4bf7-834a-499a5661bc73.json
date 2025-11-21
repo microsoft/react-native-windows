@@ -1,0 +1,7 @@
+{
+  "comment": "resolving confincts",
+  "type": "prerelease",
+  "packageName": "react-native-platform-override",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
