@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 20 Nov 2025 06:39:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 21 Nov 2025 06:43:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1011
+
+Fri, 21 Nov 2025 06:43:27 GMT
+
+### Changes
+
+- Remove code related to USE_WINUI3 which is now always true (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1010
 
