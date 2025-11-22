@@ -6,7 +6,7 @@
 #include "DevMenu.h"
 
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#include "HermesSamplingProfiler.h"
+#include "Hermes/HermesSamplingProfiler.h"
 #include "IReactDispatcher.h"
 #include "Modules/DevSettingsModule.h"
 

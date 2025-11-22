@@ -479,7 +479,7 @@ facebook::jsi::JSError const &jsError) {                             \
       }();
     )JS");
   // TODO: consider implementing this script as a resource file and loading it with the resource URL.
-  jsiRuntime->evaluateJavaScript(jsiPalBuffer, "Form_JSI_API_not_a_real_file");
+  jsiRuntime->evaluateJavaScript(jsiPalBuffer, "jsi-internal://host-function-manager.js");
   ReactNative::JsiRuntime abiJsiResult{make<JsiRuntime>(Mso::Copy(jsiRuntimeHolder), Mso::Copy(jsiRuntime))};
   std::scoped_lock lock{s_mutex};
   auto it = s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(jsiRuntime.get()), abiJsiResult);
