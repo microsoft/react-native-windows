@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Nov 2025 02:16:46 GMT",
+      "version": "0.81.0-preview.2",
+      "tag": "react-native-windows_v0.81.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4983c4def6996ab2dbbede5279dff3a2cbc0e947",
+            "comment": "metro config fix"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2028f45a074e54ec7cd787fd99c2b84b554f37f0",
+            "comment": "Fix  Crash after closing DesktopPopupSiteBridge"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "46c64c86b9c9db6908549e5efc78a59458b3ce87",
+            "comment": "Add HostTargetMetadata with app name and device name for inspector page naming"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 16:41:31 GMT",
       "version": "0.81.0-preview.1",
       "tag": "react-native-windows_v0.81.0-preview.1",

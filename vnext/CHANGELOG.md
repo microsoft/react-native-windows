@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 17 Nov 2025 16:41:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 24 Nov 2025 02:16:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.2
+
+Mon, 24 Nov 2025 02:16:46 GMT
+
+### Changes
+
+- metro config fix (66076509+vineethkuttan@users.noreply.github.com)
+- Fix  Crash after closing DesktopPopupSiteBridge (74712637+iamAbhi-916@users.noreply.github.com)
+- Add HostTargetMetadata with app name and device name for inspector page naming (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.81.0-preview.1
 
