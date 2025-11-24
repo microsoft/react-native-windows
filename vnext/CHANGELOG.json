@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Nov 2025 16:32:48 GMT",
+      "version": "0.80.2",
+      "tag": "react-native-windows_v0.80.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "50f646f893d3eb70f45de762199a85b71fea038d",
+            "comment": "Add support for modern inspector"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2248327f96d65b67df0a2641c3df8d739231f066",
+            "comment": "Fix  Crash after closing DesktopPopupSiteBridge"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2c47571b3774e635370534e2eda9b49470c37216",
+            "comment": "Add HostTargetMetadata with app name and device name for inspector page naming"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Nov 2025 16:31:24 GMT",
       "version": "0.80.1",
       "tag": "react-native-windows_v0.80.1",

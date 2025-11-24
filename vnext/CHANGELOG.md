@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 03 Nov 2025 16:31:24 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 24 Nov 2025 16:32:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.2
+
+Mon, 24 Nov 2025 16:32:48 GMT
+
+### Patches
+
+- Add support for modern inspector (vmorozov@microsoft.com)
+- Fix  Crash after closing DesktopPopupSiteBridge (74712637+iamAbhi-916@users.noreply.github.com)
+- Add HostTargetMetadata with app name and device name for inspector page naming (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.80.1
 
