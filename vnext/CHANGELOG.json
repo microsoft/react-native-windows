@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Nov 2025 16:41:44 GMT",
+      "version": "0.74.49",
+      "tag": "react-native-windows_v0.74.49",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "21a1047c8106e99cdaa10dac6dc9f109b0b70daf",
+            "comment": "added check for double click on textInput component view connecting it to WM_LBUTTONDBLCLK"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "97efdc5a0f951c84da6870595bf34997ec342fa4",
+            "comment": "Fix OfficeReact.Win32 Nuget layout"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "21a1047c8106e99cdaa10dac6dc9f109b0b70daf",
+            "comment": "Tooltip positioned incorrectly on non 100% scale factor"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 16:33:43 GMT",
       "version": "0.74.48",
       "tag": "react-native-windows_v0.74.48",

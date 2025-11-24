@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix OfficeReact.Win32 Nuget layout",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
