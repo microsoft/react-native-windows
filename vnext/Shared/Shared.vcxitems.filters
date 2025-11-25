@@ -313,9 +313,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.cpp">
       <Filter>Hermes</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesSamplingProfiler.cpp">
-      <Filter>Hermes</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.cpp">
       <Filter>Inspector</Filter>
     </ClCompile>
@@ -772,9 +769,6 @@
       <Filter>Hermes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.h">
-      <Filter>Hermes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesSamplingProfiler.h">
       <Filter>Hermes</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorThread.h">

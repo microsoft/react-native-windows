@@ -11,12 +11,38 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.h>
 
+#include <cstdarg>
 #include <sstream>
 
 using std::string;
 using winrt::Windows::Foundation::IAsyncOperation;
 
 namespace Microsoft::React {
+
+std::string FormatString(const char *format, ...) {
+  if (format == nullptr) {
+    return "";
+  }
+
+  va_list args;
+  va_start(args, format);
+
+  // Get required size
+  va_list args_copy;
+  va_copy(args_copy, args);
+  int size = vsnprintf(nullptr, 0, format, args_copy);
+  va_end(args_copy);
+
+  if (size < 0) {
+    va_end(args);
+    return "";
+  }
+
+  std::string result(size, '\0');
+  vsnprintf(result.data(), size + 1, format, args);
+  va_end(args);
+  return result;
+}
 
 namespace {
 IAsyncOperation<winrt::hstring> getPackagedApplicationDataPath(const wchar_t *childFolder) {
