@@ -124,6 +124,7 @@ namespace Microsoft.ReactNative
     void SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl);
     void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl);
     void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl);
+    Boolean XamlSupport { get; set; };
   };
 
   // [exclusiveto(ShadowNode)]
