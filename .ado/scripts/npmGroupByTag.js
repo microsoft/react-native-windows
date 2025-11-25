@@ -117,7 +117,15 @@ function setPipelineVariable(name, value) {
 (function main() {
   const {packRootArg, customRootArg, latestRootArg} = ensureArgs();
 
-  const repoRoot = process.env.BUILD_SOURCESDIRECTORY || process.cwd();
+  const repoRoot = path.resolve(__dirname, '..', '..');
+  const vnextPackageJsonPath = path.join(repoRoot, 'vnext', 'package.json');
+
+  if (!fs.existsSync(vnextPackageJsonPath)) {
+    console.error(`[npmGroupByTag] vnext package.json not found at ${vnextPackageJsonPath}`);
+    process.exit(1);
+  }
+
+  console.log(`[npmGroupByTag] Using repo root ${repoRoot}`);
   const packRoot = path.resolve(packRootArg);
   const customRoot = path.resolve(customRootArg);
   const latestRoot = path.resolve(latestRootArg);
@@ -128,15 +136,19 @@ function setPipelineVariable(name, value) {
   /** @type {string | null} */
   let customTag = null;
   try {
-    const vnextPackageJson = /** @type {PackageJson} */ (
-      readJson(path.join(repoRoot, 'vnext', 'package.json'))
-    );
+    const vnextPackageJson = /** @type {PackageJson} */ (readJson(vnextPackageJsonPath));
     const tagFromVnext = vnextPackageJson?.beachball?.defaultNpmTag;
     if (tagFromVnext && tagFromVnext !== 'latest') {
       customTag = tagFromVnext;
     }
+    console.log(
+      `[npmGroupByTag] vnext defaultNpmTag is ${tagFromVnext || 'latest'}${
+        customTag ? ` (custom tag '${customTag}' will be used)` : ' (no custom tag)'
+      }`,
+    );
   } catch (e) {
-    console.warn('Unable to read vnext/package.json to determine custom tag.');
+    console.error(`[npmGroupByTag] Failed to read ${vnextPackageJsonPath}: ${e}`);
+    process.exit(1);
   }
 
   /** @type {string[]} */
@@ -153,28 +165,31 @@ function setPipelineVariable(name, value) {
     return;
   }
 
-  /** @type {Set<string>} */
-  const customTarballs = new Set();
-
-  if (customTag) {
-    for (const packageJsonPath of findPackageJsons(repoRoot)) {
-      /** @type {PackageJson | undefined} */
-      let pkg;
-      try {
-        pkg = /** @type {PackageJson} */ (readJson(packageJsonPath));
-      } catch (e) {
-        continue;
-      }
-
-      if (!pkg?.name || !pkg?.version) {
-        continue;
-      }
-
-      const pkgTag = pkg?.beachball?.defaultNpmTag;
-      if (pkgTag === customTag && pkg.private !== true) {
-        customTarballs.add(sanitizedTarballName(pkg.name, pkg.version));
-      }
+  /** @type {Map<string, {packageJsonPath: string, name: string, version: string, tag: string, isPrivate: boolean}>} */
+  const packageMetadata = new Map();
+  for (const packageJsonPath of findPackageJsons(repoRoot)) {
+    /** @type {PackageJson | undefined} */
+    let pkg;
+    try {
+      pkg = /** @type {PackageJson} */ (readJson(packageJsonPath));
+    } catch (e) {
+      console.warn(`[npmGroupByTag] Skipping unreadable package.json ${packageJsonPath}: ${e}`);
+      continue;
     }
+
+    if (!pkg?.name || !pkg?.version) {
+      continue;
+    }
+
+    const metadata = {
+      packageJsonPath,
+      name: pkg.name,
+      version: pkg.version,
+      tag: pkg?.beachball?.defaultNpmTag || 'latest',
+      isPrivate: pkg.private === true,
+    };
+
+    packageMetadata.set(sanitizedTarballName(pkg.name, pkg.version), metadata);
   }
 
   let customCount = 0;
@@ -183,10 +198,22 @@ function setPipelineVariable(name, value) {
   for (const tarball of tarballs) {
     const sourcePath = path.join(packRoot, tarball);
     const normalizedName = normalizePackedTarballName(tarball);
-    const destinationRoot = customTag && customTarballs.has(normalizedName) ? customRoot : latestRoot;
+    const metadata = packageMetadata.get(normalizedName);
+    const destinationRoot = customTag && metadata && !metadata.isPrivate && metadata.tag === customTag ? customRoot : latestRoot;
     const destinationPath = path.join(destinationRoot, tarball);
     fs.mkdirSync(path.dirname(destinationPath), {recursive: true});
     fs.renameSync(sourcePath, destinationPath);
+
+    if (metadata) {
+      const destinationLabel = destinationRoot === customRoot ? 'custom' : 'latest';
+      console.log(
+        `[npmGroupByTag] ${tarball}: ${metadata.name}@${metadata.version} (${metadata.packageJsonPath}) tag=${metadata.tag} ` +
+          `private=${metadata.isPrivate} -> ${destinationLabel}`,
+      );
+    } else {
+      console.warn(`[npmGroupByTag] ${tarball}: no package.json metadata found. Defaulting to latest.`);
+    }
+
     if (destinationRoot === customRoot) {
       customCount++;
     } else {
