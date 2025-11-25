@@ -19,7 +19,11 @@ using winrt::Windows::Foundation::IAsyncOperation;
 
 namespace Microsoft::React {
 
-std::string string_format(const char *format, ...) {
+std::string FormatString(const char *format, ...) {
+  if (format == nullptr) {
+    return "";
+  }
+
   va_list args;
   va_start(args, format);
 
