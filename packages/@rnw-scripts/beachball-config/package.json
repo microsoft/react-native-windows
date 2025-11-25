@@ -27,6 +27,7 @@
     "@rnw-scripts/just-task": "2.3.56",
     "@rnw-scripts/ts-config": "2.0.6",
     "@types/node": "^22.14.0",
+    "@types/parse-path": "^7.1.0",
     "@types/shell-quote": "^1.7.5",
     "beachball": "^2.20.0",
     "eslint": "^8.19.0",
