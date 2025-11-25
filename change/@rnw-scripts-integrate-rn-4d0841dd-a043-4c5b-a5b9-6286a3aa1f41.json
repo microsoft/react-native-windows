@@ -1,0 +1,7 @@
+{
+  "comment": "adding changes with conflicts",
+  "type": "prerelease",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
