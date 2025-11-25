@@ -42,19 +42,15 @@ parameters:
 steps:
   - pwsh: |
       $slices = ConvertFrom-Json -NoEnumerate '${{ convertToJson(parameters.slices) }}'
-      $debugSlices = @($slices.where{$_.configuration -match 'Debug'});
       $releaseSlices = @($slices.where{$_.configuration -match 'Release'});
   
       $sliceTags = $slices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
-      $debugSliceTags = $debugSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
       $releaseSliceTags = $releaseSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
 
       Write-Host "##vso[task.setvariable variable=allSlices]$sliceTags"
-      Write-Host "##vso[task.setvariable variable=debugSlices]$debugSliceTags"
       Write-Host "##vso[task.setvariable variable=releaseSlices]$releaseSliceTags"
 
       Write-Host "##vso[task.setvariable variable=basePlatform]$($slices[0].platform)"
-      Write-Host "##vso[task.setvariable variable=debugBasePlatform]$($debugSlices[0].platform)"
       Write-Host "##vso[task.setvariable variable=releaseBasePlatform]$($releaseSlices[0].platform)"
 
       Write-Host "##vso[task.setvariable variable=baseConfiguration]$($slices[0].configuration)"
@@ -100,16 +96,6 @@ steps:
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
-    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
-      - template: prep-and-pack-single.yml
-        parameters:
-          outputPackage: Microsoft.ReactNative.Debug
-          nuspec: Microsoft.ReactNative
-          slices: $(debugSlices)
-          packageVersion: ${{parameters.npmVersion}}
-          codesignBinaries: ${{ parameters.signMicrosoft }}
-          codesignNuget: ${{ parameters.signMicrosoft }}
-          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
     - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
       - template: prep-and-pack-single.yml
         parameters:
@@ -130,16 +116,6 @@ steps:
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
-    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
-      - template: prep-and-pack-single.yml
-        parameters:
-          outputPackage: Microsoft.ReactNative.Managed.Debug
-          nuspec: Microsoft.ReactNative.Managed
-          slices: $(debugSlices)
-          packageVersion: ${{parameters.npmVersion}}
-          codesignBinaries: ${{ parameters.signMicrosoft }}
-          codesignNuget: ${{ parameters.signMicrosoft }}
-          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
     - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
       - template: prep-and-pack-single.yml
         parameters:
