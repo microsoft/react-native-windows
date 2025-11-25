@@ -13,6 +13,7 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include "IReactContext.h"
 #include "ReactInstanceSettings.h"
+#include "XamlApplication.h"
 
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
@@ -100,6 +101,10 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
     for (auto const &packageProvider : packageProviders) {
       packageProvider.CreatePackage(m_packageBuilder);
     }
+  }
+
+  if (componentregistry->isXamlSupportRequired()) {
+    winrt::Microsoft::ReactNative::Xaml::implementation::XamlApplication::EnsureCreated();
   }
 
   ReactPropertyBag(m_instanceSettings.Properties()).Set(ReactNativeHostProperty(), get_weak());

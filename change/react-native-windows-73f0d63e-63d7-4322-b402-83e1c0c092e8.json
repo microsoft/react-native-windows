@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Initialize Xaml on demand only for module authors",
+  "packageName": "react-native-windows",
+  "email": "suramaswamy@microsoft.com",
+  "dependentChangeType": "none"
+}

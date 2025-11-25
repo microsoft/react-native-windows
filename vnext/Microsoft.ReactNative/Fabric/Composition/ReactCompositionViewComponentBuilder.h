@@ -39,6 +39,8 @@ struct ReactCompositionViewComponentBuilder
   void SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl) noexcept;
   void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl) noexcept;
   void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl) noexcept;
+  bool XamlSupport() const noexcept;
+  void XamlSupport(bool isRequired) noexcept;
 
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
@@ -108,6 +110,7 @@ struct ReactCompositionViewComponentBuilder
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate
       m_visualToMountChildrenIntoHandler;
   UpdateLayoutMetricsDelegate m_updateLayoutMetricsHandler;
+  bool m_xamlSupport{false};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition
