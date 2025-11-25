@@ -1,7 +1,0 @@
-{
-    "type": "prerelease",
-    "comment": "Implement snap point parity for Fabric ScrollView: pagingEnabled (viewport-sized intervals), snapToInterval (custom interval snapping), and snapToAlignment (start/center/end alignment) matching iOS/Android/Paper behavior with priority hierarchy snapToOffsets > snapToInterval > pagingEnabled",
-    "packageName": "react-native-windows",
-    "email": "nitinkum@microsoft.com",
-    "dependentChangeType": "patch"
-}

@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 25 Nov 2025 18:16:44 GMT",
+      "version": "0.81.0-preview.4",
+      "tag": "react-native-windows_v0.81.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61c8174058931f3cc06b3fc449a551c0708c4f8c",
+            "comment": "Implement textAlign justify and writingDirection support (ltr/rtl/auto) for Fabric TextInput"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61c8174058931f3cc06b3fc449a551c0708c4f8c",
+            "comment": "Implement context menu support for Fabric TextInput with Cut, Copy, Paste, and Select All options"
+          },
+          {
+            "author": "nitinkum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61c8174058931f3cc06b3fc449a551c0708c4f8c",
+            "comment": "Implement snap point parity for Fabric ScrollView: pagingEnabled (viewport-sized intervals), snapToInterval (custom interval snapping), and snapToAlignment (start/center/end alignment) matching iOS/Android/Paper behavior with priority hierarchy snapToOffsets > snapToInterval > pagingEnabled"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Nov 2025 02:16:46 GMT",
       "version": "0.81.0-preview.2",
       "tag": "react-native-windows_v0.81.0-preview.2",

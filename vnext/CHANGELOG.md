@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 24 Nov 2025 02:16:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 25 Nov 2025 18:16:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.4
+
+Tue, 25 Nov 2025 18:16:44 GMT
+
+### Changes
+
+- Implement textAlign justify and writingDirection support (ltr/rtl/auto) for Fabric TextInput (nitchaudhary@microsoft.com)
+- Implement context menu support for Fabric TextInput with Cut, Copy, Paste, and Select All options (nitchaudhary@microsoft.com)
+- Implement snap point parity for Fabric ScrollView: pagingEnabled (viewport-sized intervals), snapToInterval (custom interval snapping), and snapToAlignment (start/center/end alignment) matching iOS/Android/Paper behavior with priority hierarchy snapToOffsets > snapToInterval > pagingEnabled (nitinkum@microsoft.com)
 
 ## 0.81.0-preview.2
 
