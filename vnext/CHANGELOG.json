@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Nov 2025 06:36:13 GMT",
+      "version": "0.0.0-canary.1012",
+      "tag": "react-native-windows_v0.0.0-canary.1012",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "86da8cae251df813195afba5c0e89036157ff24e",
+            "comment": "fix outstanding modern debugger issues"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Nov 2025 06:43:27 GMT",
       "version": "0.0.0-canary.1011",
       "tag": "react-native-windows_v0.0.0-canary.1011",
