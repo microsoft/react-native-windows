@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 27 Nov 2025 06:35:01 GMT",
+      "version": "0.0.0-canary.1013",
+      "tag": "react-native-windows_v0.0.0-canary.1013",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fe510e45f19fa9edd9c29e4a4a6dae120aecc8cc",
+            "comment": "disable network domain for modern devtools until 0.83"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Nov 2025 06:36:13 GMT",
       "version": "0.0.0-canary.1012",
       "tag": "react-native-windows_v0.0.0-canary.1012",

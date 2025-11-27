@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 26 Nov 2025 06:36:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Nov 2025 06:35:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1013
+
+Thu, 27 Nov 2025 06:35:01 GMT
+
+### Changes
+
+- disable network domain for modern devtools until 0.83 (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.0.0-canary.1012
 

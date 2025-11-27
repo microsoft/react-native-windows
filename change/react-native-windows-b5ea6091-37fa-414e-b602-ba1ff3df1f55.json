@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "disable network domain for modern devtools until 0.83",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
