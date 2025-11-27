@@ -8,7 +8,7 @@ param(
     [string]$Check = [CheckId]::All,
 
     [Parameter(ValueFromRemainingArguments)]
-    [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2026', 'clone')]
+    [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2022', 'clone')]
     [String[]]$Tags = @('appDev'),
     [switch]$Enterprise = $false
 )
@@ -113,7 +113,7 @@ $wingetver = "1.7.11261";
 
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
-$vsver = "18.0.0";
+$vsver = "17.11.0";
 
 # The exact .NET SDK version to check for
 $dotnetver = "8.0";
@@ -242,9 +242,9 @@ function InstallVS {
 
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
-            WinGetInstall Microsoft.VisualStudio.2026.Enterprise
+            WinGetInstall Microsoft.VisualStudio.2022.Enterprise
         } else {
-            WinGetInstall Microsoft.VisualStudio.2026.Community
+            WinGetInstall Microsoft.VisualStudio.2022.Community
         }
 
         $vsWhere = Get-VSWhere;
@@ -458,8 +458,8 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::VSUWP;
-        Name = "Visual Studio 2026 (>= $vsver) & req. components";
-        Tags = @('appDev', 'vs2026');
+        Name = "Visual Studio 2022 (>= $vsver) & req. components";
+        Tags = @('appDev', 'vs2022');
         Valid = { CheckVS; }
         Install = { InstallVS };
         HasVerboseOutput = $true;

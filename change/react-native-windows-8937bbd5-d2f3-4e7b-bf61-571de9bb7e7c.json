@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update CI pipelines and dependency scripts to support Visual Studio 2026",
-  "packageName": "react-native-windows",
-  "email": "copilot@github.com",
-  "dependentChangeType": "patch"
-}
