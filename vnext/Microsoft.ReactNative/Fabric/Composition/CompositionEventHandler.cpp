@@ -966,12 +966,17 @@ void CompositionEventHandler::getTargetPointerArgs(
     assert(m_pointerCapturingComponentTag != -1);
     tag = m_pointerCapturingComponentTag;
 
-    auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
-    auto clientRect = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
-                          ->getClientRect();
-    if (auto strongRootView = m_wkRootView.get()) {
-      ptLocal.x = ptScaled.x - (clientRect.left / strongRootView.ScaleFactor());
-      ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
+    auto targetComponentView = fabricuiManager->GetViewRegistry().findComponentViewWithTag(tag);
+    if (targetComponentView) {
+      auto clientRect =
+          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+              ->getClientRect();
+      if (auto strongRootView = m_wkRootView.get()) {
+        ptLocal.x = ptScaled.x - (clientRect.left / strongRootView.ScaleFactor());
+        ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
+      }
+    } else {
+      tag = -1;
     }
   } else {
     tag = RootComponentView().hitTest(ptScaled, ptLocal);
