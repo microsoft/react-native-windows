@@ -353,7 +353,7 @@ struct ReactOptions {
   OnReactInstanceDestroyedCallback OnInstanceDestroyed;
 
   //! The HostTarget instance for modern inspector integration.
-  facebook::react::jsinspector_modern::HostTarget *InspectorHostTarget;
+  facebook::react::jsinspector_modern::HostTarget *InspectorHostTarget{nullptr};
 };
 
 //! IReactHost manages a ReactNative instance.
