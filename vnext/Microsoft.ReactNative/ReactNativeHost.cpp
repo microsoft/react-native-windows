@@ -13,7 +13,9 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include "IReactContext.h"
 #include "ReactInstanceSettings.h"
+#ifdef RNW_XAML_ISLAND
 #include "XamlApplication.h"
+#endif // RNW_XAML_ISLAND
 
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
@@ -103,9 +105,11 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
     }
   }
 
+#ifdef RNW_XAML_ISLAND
   if (componentregistry->isXamlSupportRequired()) {
     winrt::Microsoft::ReactNative::Xaml::implementation::XamlApplication::EnsureCreated();
   }
+#endif // RNW_XAML_ISLAND
 
   ReactPropertyBag(m_instanceSettings.Properties()).Set(ReactNativeHostProperty(), get_weak());
 
