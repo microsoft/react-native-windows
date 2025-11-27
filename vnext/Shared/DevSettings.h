@@ -123,7 +123,7 @@ struct DevSettings {
   bool useTurboModulesOnly{false};
 
   // The HostTarget instance for Fusebox
-  facebook::react::jsinspector_modern::HostTarget *inspectorHostTarget;
+  facebook::react::jsinspector_modern::HostTarget *inspectorHostTarget{nullptr};
 };
 
 } // namespace react
