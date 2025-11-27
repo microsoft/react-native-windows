@@ -2,6 +2,7 @@
   "name": "@rnw-scripts/generate-release-notes",
   "version": "1.0.3",
   "description": "Generates release notes for React Native Windows",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",

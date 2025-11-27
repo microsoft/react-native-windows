@@ -62,11 +62,15 @@
     "README.md"
   ],
   "beachball": {
+    "defaultNpmTag": "canary",
     "disallowedChangeTypes": [
-      "prerelease",
+      "major",
+      "minor",
+      "patch",
       "premajor",
       "preminor",
       "prepatch"
     ]
-  }
+  },
+  "promoteRelease": true
 }
