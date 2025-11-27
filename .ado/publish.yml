@@ -22,10 +22,10 @@ parameters:
   default:
     Medium:
       name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-vs2026-node22
+      demands: ImageOverride -equals rnw-img-vs2022-node22
     Large:
       name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-vs2026-node22
+      demands: ImageOverride -equals rnw-img-vs2022-node22
 
 - name: desktopBuildMatrix
   type: object

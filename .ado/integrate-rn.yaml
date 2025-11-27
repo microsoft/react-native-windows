@@ -14,7 +14,7 @@ variables:
   - group: RNW Secrets
 
 pool:
-  vmImage: windows-2025
+  vmImage: windows-2022
 
 jobs:
   - job: IntegrateRN

@@ -1,7 +1,7 @@
 steps:
 
   - powershell: |
-      $vsExtensionPath="${env:ProgramFiles}\Microsoft Visual Studio\2026\Enterprise\Common7\IDE\Extensions\";
+      $vsExtensionPath="${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\";
       $GoogleTestAdapterPath=(Get-ChildItem $vsExtensionPath -Directory | Where-Object -FilterScript {Test-Path  (Join-Path -Path $_.FullName -ChildPath "GoogleTestAdapter.Core.dll")}).FullName
 
       # Test the path to the google test adapter
