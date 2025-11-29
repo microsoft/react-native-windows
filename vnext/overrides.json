@@ -187,13 +187,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSTokenizer.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSTokenizer.h",
-      "baseHash": "1580353c281d9c4a6548564ab32af7a3a2c8247e",
-      "issue": 14665
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/primitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/primitives.h",
       "baseHash": "74cee7804fa62964c9ecc3fafd475d09b0ed6375",
