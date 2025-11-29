@@ -52,6 +52,9 @@
     <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.folly\folly-$(FollyVersion)</FollyDir>
     <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
 
+    <FastFloatDir Condition="'$(FastFloatDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.fastfloat\fast_float-$(FastFloatVersion)</FastFloatDir>
+    <FastFloatDir>$([MSBuild]::NormalizeDirectory($(FastFloatDir)))</FastFloatDir>
+
     <FmtDir Condition="'$(FmtDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.fmt\fmt-$(FmtVersion)</FmtDir>
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
 
