@@ -333,11 +333,11 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
     },
     "Comment": "style-change-pressable",
     "Offset": "0, 0, 0",
-    "Size": "76, 33",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
+        "Offset": "426, 6, 0",
         "Size": "64, 22",
         "Visual Type": "SpriteVisual",
         "__Children": [

@@ -243,7 +243,6 @@
     <ClInclude Include="$(FollyDir)\folly\Uri.h" />
     <ClInclude Include="$(FollyDir)\folly\Utility.h" />
     <ClInclude Include="$(FollyDir)\folly\Varint.h" />
-    <ClInclude Include="$(FollyDir)\..\fast_float-6.1.4\include\fast_float\fast_float.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -271,7 +270,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);$(FollyDir)\..\fast_float-6.1.4\include;$(FmtDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);$(FastFloatDir)\include;$(FmtDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4251;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -292,8 +291,8 @@
     <CGManifestFile>$(MSBuildThisFileDirectory)cgmanifest.json</CGManifestFile>
   </PropertyGroup>
   <PropertyGroup>
-    <FastFloatZipDir>$(FollyDir)..\.fastfloatzip</FastFloatZipDir>
-    <FastFloatZipFile>$(FollyDir)..\.fastfloatzip\fastfloat.zip</FastFloatZipFile>
+    <FastFloatZipDir>$(FastFloatDir)..\.fastfloatzip</FastFloatZipDir>
+    <FastFloatZipFile>$(FastFloatZipDir)\fastfloat.zip</FastFloatZipFile>
   </PropertyGroup>
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild" Inputs="$(FollyZipFile)" Outputs="$(FollyZipFile)">
     <Message Importance="High" Text="Downloading folly..." />
@@ -320,11 +319,11 @@
       OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="UnzipFastFloat" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFastFloat">
-    <Message Condition="!Exists('$(FastFloatZipDir)\include\fast_float.h')" Importance="High" Text="Unzipping FastFloat to $([MSBuild]::NormalizePath($(FastFloatZipDir)..))." />
+    <Message Condition="!Exists('$(FastFloatDir)\include\fast_float\fast_float.h')" Importance="High" Text="Unzipping FastFloat to $([MSBuild]::NormalizePath($(FastFloatDir)..))." />
     <Unzip
-      Condition="!Exists('$(FastFloatZipDir)\include\fast_float.h')"
+      Condition="!Exists('$(FastFloatDir)\include\fast_float\fast_float.h')"
       SourceFiles="$(FastFloatZipFile)"
-      DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))"
+      DestinationFolder="$([MSBuild]::NormalizePath($(FastFloatDir)..))"
       OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly" Inputs="$(FollyZipFile)" Outputs="$(CGManifestFile)">

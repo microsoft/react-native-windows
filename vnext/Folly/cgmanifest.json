@@ -16,7 +16,7 @@
                 "Type": "git",
                 "Git": {
                   "RepositoryUrl": "https://github.com/fastfloat/fast_float",
-                  "CommitHash": "ad90720829db5ba0c3d0e44994856dcce33d7940"
+                  "CommitHash": "77cc847c842c49e7e3477c1e95da2b6540166d66"
                 }
             },
             "DevelopmentDependency": false
