@@ -1,0 +1,99 @@
+---
+name: Create Branch from Upstream
+
+'on':
+  workflow_dispatch:
+    inputs:
+      upstream_branch:
+        description: 'Upstream branch name to create from (e.g., 0.81-stable, main)'
+        required: true
+        type: string
+      new_branch_name:
+        description: 'Name for the new branch in your fork (leave empty to use same name as upstream)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  create-branch-from-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install -y gh
+
+      - name: Authenticate GitHub CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Clone repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh auth setup-git
+          gh repo clone "${{ github.repository }}" repo
+          cd repo
+          git fetch origin
+
+      - name: Configure Git
+        working-directory: ./repo
+        run: |
+          git config user.name "React-Native-Windows Bot"
+          git config user.email "53619745+rnbot@users.noreply.github.com"
+
+      - name: Add upstream remote and fetch branch
+        working-directory: ./repo
+        run: |
+          UPSTREAM_BRANCH="${{ github.event.inputs.upstream_branch }}"
+
+          echo "🔗 Adding upstream remote (microsoft/react-native-windows)"
+          git remote add upstream https://github.com/microsoft/react-native-windows.git
+
+          echo "📥 Fetching upstream branch: $UPSTREAM_BRANCH"
+          if ! git fetch upstream "$UPSTREAM_BRANCH"; then
+            echo "❌ Failed to fetch branch '$UPSTREAM_BRANCH' from upstream."
+            echo "Please verify that the branch exists in microsoft/react-native-windows."
+            exit 1
+          fi
+
+          echo "✅ Successfully fetched upstream branch: $UPSTREAM_BRANCH"
+
+      - name: Create and push new branch
+        working-directory: ./repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          UPSTREAM_BRANCH="${{ github.event.inputs.upstream_branch }}"
+          NEW_BRANCH="${{ github.event.inputs.new_branch_name }}"
+
+          # Use upstream branch name if new branch name is not specified
+          if [ -z "$NEW_BRANCH" ]; then
+            NEW_BRANCH="$UPSTREAM_BRANCH"
+          fi
+
+          echo "🌿 Creating new branch: $NEW_BRANCH from upstream/$UPSTREAM_BRANCH"
+
+          # Check if the branch already exists in the fork
+          if git ls-remote --heads origin "$NEW_BRANCH" | grep -q "$NEW_BRANCH"; then
+            echo "❌ Branch '$NEW_BRANCH' already exists in your fork."
+            echo "Please specify a different branch name or delete the existing branch first."
+            exit 1
+          fi
+
+          # Create the new branch based on upstream
+          git checkout -b "$NEW_BRANCH" "upstream/$UPSTREAM_BRANCH"
+
+          echo "📤 Pushing new branch to fork"
+          REPO_URL="https://x-access-token:${GH_TOKEN}@github.com"
+          REPO_URL="${REPO_URL}/${{ github.repository }}.git"
+          git push "$REPO_URL" "$NEW_BRANCH"
+
+          echo "✅ Successfully created branch '$NEW_BRANCH' from upstream '$UPSTREAM_BRANCH'"
+          echo ""
+          echo "📋 Branch details:"
+          echo "   - Source: microsoft/react-native-windows/$UPSTREAM_BRANCH"
+          echo "   - Destination: ${{ github.repository }}/$NEW_BRANCH"
