@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Dec 2025 03:29:39 GMT",
+      "version": "0.81.0-preview.6",
+      "tag": "react-native-windows_v0.81.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "15b72b3f2121e6f7d3d8aabff5e7f1f26e989829",
+            "comment": "Bump fastfloat to 8.0.0"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d40502859578c6d5fcabb5cf373e2c0a8f0fbfd0",
+            "comment": "disable network domain for modern devtools until 0.83"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Nov 2025 18:16:44 GMT",
       "version": "0.81.0-preview.4",
       "tag": "react-native-windows_v0.81.0-preview.4",
