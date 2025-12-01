@@ -27,9 +27,9 @@
     <IncludeSource Condition="'$(Configuration)' == 'Release'">false</IncludeSource>
     <!-- When bumping the Folly version, be sure to bump the git hash of that version's commit, find the matching fastfloat dependency and build Folly.vcxproj (to update its cgmanifest.json) too. -->
     <FollyVersion>2024.10.14.00</FollyVersion>
-    <FastFloatVersion>6.1.4</FastFloatVersion>
+    <FastFloatVersion>8.0.0</FastFloatVersion>
     <FollyCommitHash>ad90720829db5ba0c3d0e44994856dcce33d7940</FollyCommitHash>
-    <FastFloatCommitHash>ad90720829db5ba0c3d0e44994856dcce33d7940</FastFloatCommitHash>
+    <FastFloatCommitHash>77cc847c842c49e7e3477c1e95da2b6540166d66</FastFloatCommitHash>
     <!-- When bumping the fmt version, be sure to bump the git hash of that version's commit and build fmt.vcxproj (to update its cgmanifest.json) too. -->
     <FmtVersion>10.1.0</FmtVersion>
     <FmtCommitHash>ca2e3685b160617d3d95fcd9e789c4e06ca88</FmtCommitHash>
@@ -51,6 +51,9 @@
 
     <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.folly\folly-$(FollyVersion)</FollyDir>
     <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
+
+    <FastFloatDir Condition="'$(FastFloatDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.fastfloat\fast_float-$(FastFloatVersion)</FastFloatDir>
+    <FastFloatDir>$([MSBuild]::NormalizeDirectory($(FastFloatDir)))</FastFloatDir>
 
     <FmtDir Condition="'$(FmtDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.fmt\fmt-$(FmtVersion)</FmtDir>
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
