@@ -180,6 +180,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/conversions.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/conversions.h",
+      "baseHash": "3487b9dcde51614425687a31b10923c67a2f1d52",
+      "issue": 14698
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
       "baseHash": "b56e467ee394e08d4e0dd0a8d71a8a9919603ff9",
@@ -485,6 +492,14 @@
       "baseHash": "d04b64a97b6040611d96b909c41230c1a350ebe6"
     },
     {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/Xaml/XamlHost.d.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/Xaml/XamlHost.windows.js"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Core/Devtools/loadBundleFromServer.windows.js",
       "baseFile": "packages/react-native/Libraries/Core/Devtools/loadBundleFromServer.js",
@@ -674,6 +689,10 @@
     },
     {
       "type": "platform",
+      "file": "src-win/src/private/specs_DEPRECATED/components/Xaml/XamlHostNativeComponent.js"
+    },
+    {
+      "type": "platform",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeAppTheme.js"
     },
     {
@@ -687,18 +706,6 @@
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativePlatformConstantsWindows.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "365c5df75b38b129d364af3f6700cb206ce5bd2a"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Xaml/XamlHost.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Xaml/XamlHost.windows.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/src/private/specs_DEPRECATED/components/Xaml/XamlHostNativeComponent.js"
     }
   ]
 }
