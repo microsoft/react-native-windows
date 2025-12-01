@@ -4,6 +4,7 @@
 #pragma once
 
 #include <cxxreact/JSExecutor.h>
+#include "Utils.h"
 
 namespace facebook {
 namespace react {
@@ -13,13 +14,14 @@ class DevServerHelper {
   DevServerHelper() = default;
 
   static std::string get_WebsocketProxyUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
-    return string_format(WebsocketProxyUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
+    return Microsoft::React::FormatString(
+        WebsocketProxyUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
   static std::string get_LaunchDevToolsCommandUrl(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort) {
-    return string_format(
+    return Microsoft::React::FormatString(
         LaunchDevToolsCommandUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
@@ -36,16 +38,17 @@ class DevServerHelper {
     std::string hermesBytecodeVersionQuery;
     if (hermesBytecodeVersion > 0) {
       static constexpr const char HermesBytecodeVersionQueryFormat[] = "&runtimeBytecodeVersion=%d";
-      hermesBytecodeVersionQuery = string_format(HermesBytecodeVersionQueryFormat, hermesBytecodeVersion);
+      hermesBytecodeVersionQuery =
+          Microsoft::React::FormatString(HermesBytecodeVersionQueryFormat, hermesBytecodeVersion);
     }
 
     std::string appIdQuery;
     if (bundleAppId.size() > 0) {
       static constexpr const char AppIdQueryFormat[] = "&app=%s";
-      appIdQuery = string_format(AppIdQueryFormat, bundleAppId.c_str());
+      appIdQuery = Microsoft::React::FormatString(AppIdQueryFormat, bundleAppId.c_str());
     }
 
-    return string_format(
+    return Microsoft::React::FormatString(
         BundleUrlFormat,
         GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str(),
         jsbundle.c_str(),
@@ -58,17 +61,19 @@ class DevServerHelper {
   }
 
   static std::string get_OnChangeEndpointUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
-    return string_format(OnChangeEndpointUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
+    return Microsoft::React::FormatString(
+        OnChangeEndpointUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
   static std::string get_PackagerConnectionUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
-    return string_format(PackagerConnectionUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
+    return Microsoft::React::FormatString(
+        PackagerConnectionUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
   static std::string get_PackagerOpenStackFrameUrl(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort) {
-    return string_format(
+    return Microsoft::React::FormatString(
         PackagerOpenStackFrameUrlFormat, GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str());
   }
 
@@ -78,7 +83,7 @@ class DevServerHelper {
       const std::string &deviceName,
       const std::string &packageName,
       const std::string &deviceId) {
-    return string_format(
+    return Microsoft::React::FormatString(
         InspectorDeviceUrlFormat,
         GetDeviceLocalHost(packagerHost, packagerPort).c_str(),
         deviceName.c_str(),
@@ -88,7 +93,7 @@ class DevServerHelper {
 
   static std::string
   get_OpenDebuggerUrl(const std::string &packagerHost, const uint16_t packagerPort, const std::string &deviceId) {
-    return string_format(
+    return Microsoft::React::FormatString(
         OpenDebuggerUrlFormat, GetDeviceLocalHost(packagerHost, packagerPort).c_str(), deviceId.c_str());
   }
 
@@ -97,7 +102,7 @@ class DevServerHelper {
 
  private:
   static std::string GetDeviceLocalHost(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
-    return string_format(
+    return Microsoft::React::FormatString(
         DeviceLocalHostFormat,
         sourceBundleHost.empty() ? DefaultPackagerHost : sourceBundleHost.c_str(),
         sourceBundlePort ? sourceBundlePort : DefaultPackagerPort);
@@ -118,15 +123,6 @@ class DevServerHelper {
 
   static constexpr const char PackagerOkStatus[] = "packager-status:running";
   const int LongPollFailureDelayMs = 5000;
-
-  // TODO: [vmoroz]  avoid using vaiadic args for the format and move it to a utility class.
-  template <typename... Args>
-  static std::string string_format(const char *format, Args... args) {
-    size_t size = snprintf(nullptr, 0, format, args...) + 1;
-    std::unique_ptr<char[]> buf(new char[size]);
-    snprintf(buf.get(), size, format, args...);
-    return std::string(buf.get(), buf.get() + size - 1);
-  }
 };
 
 } // namespace react

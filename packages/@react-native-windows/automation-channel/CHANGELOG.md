@@ -1,8 +1,66 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Sun, 16 Nov 2025 06:36:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 27 Nov 2025 06:35:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.353
+
+Thu, 27 Nov 2025 06:35:01 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1013
+
+## 0.12.352
+
+Wed, 26 Nov 2025 06:36:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1012
+
+## 0.12.351
+
+Fri, 21 Nov 2025 06:43:27 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1011
+
+## 0.12.350
+
+Thu, 20 Nov 2025 06:39:28 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1010
+
+## 0.12.349
+
+Wed, 19 Nov 2025 06:41:09 GMT
+
+### Patches
+
+- Update WinAppSdk to 1.8 (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1009
+
+## 0.12.348
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1008
+
+## 0.12.347
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-windows to v0.0.0-canary.1007
 
 ## 0.12.346
 

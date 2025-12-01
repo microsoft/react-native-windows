@@ -1,178 +1,179 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "NamespaceRedirect.h"
 #include "DocString.h"
+#include "NamespaceRedirect.h"
 import "Composition.Input.idl";
 
-namespace Microsoft.ReactNative.Composition.Experimental
+namespace Microsoft.ReactNative.Composition.Experimental {
+enum CompositionStretch {
+  None,
+  Fill,
+  Uniform,
+  UniformToFill,
+};
+
+enum BackfaceVisibility { Inherit, Visible, Hidden };
+
+enum AnimationClass {
+  None = 0,
+  ScrollBar,
+  ScrollBarThumbHorizontal,
+  ScrollBarThumbVertical,
+  SwitchThumb,
+};
+
+enum SnapPointsAlignment {
+  Near = 0, // Start alignment (left/top)
+  Center = 1, // Center alignment
+  Far = 2, // End alignment (right/bottom)
+};
+
+[webhosthidden][uuid("172def51-9e1a-4e3c-841a-e5a470065acc")] // uuid needed for empty interfaces
+               [version(0)][experimental] interface IBrush {}
+
+                   [webhosthidden][experimental] interface IDrawingSurfaceBrush
+  requires IBrush
 {
-  enum CompositionStretch
-  {
-    None,
-    Fill,
-    Uniform,
-    UniformToFill,
+  void HorizontalAlignmentRatio(Single value);
+  void VerticalAlignmentRatio(Single value);
+  void Stretch(CompositionStretch value);
+}
+
+[webhosthidden][experimental] interface IDropShadow {
+  void Offset(Windows.Foundation.Numerics.Vector3 value);
+  void Opacity(Single value);
+  void BlurRadius(Single value);
+  void Color(Windows.UI.Color value);
+}
+
+    [webhosthidden][experimental] interface IVisual {
+  void InsertAt(IVisual visual, Int32 index);
+  void Remove(IVisual visual);
+  IVisual GetAt(UInt32 index);
+  void Opacity(Single opacity);
+  void Scale(Windows.Foundation.Numerics.Vector3 scale);
+  void TransformMatrix(Windows.Foundation.Numerics.Matrix4x4 transform);
+  void RotationAngle(Single angle);
+  void IsVisible(Boolean isVisible);
+  void Size(Windows.Foundation.Numerics.Vector2 size);
+  void Offset(Windows.Foundation.Numerics.Vector3 offset);
+  void Offset(Windows.Foundation.Numerics.Vector3 offset, Windows.Foundation.Numerics.Vector3 relativeAdjustment);
+  void RelativeSizeWithOffset(
+      Windows.Foundation.Numerics.Vector2 size, Windows.Foundation.Numerics.Vector2 relativeSizeAdjustment);
+  BackfaceVisibility BackfaceVisibility {
+    get;
+    set;
   };
-
-  enum BackfaceVisibility
-  {
-    Inherit,
-    Visible,
-    Hidden
+  String Comment {
+    get;
+    set;
   };
-  
-  enum AnimationClass
-  {
-    None = 0,
-    ScrollBar,
-    ScrollBarThumbHorizontal,
-    ScrollBarThumbVertical,
-    SwitchThumb,
+  void AnimationClass(AnimationClass value);
+}
+
+[webhosthidden][experimental] interface ISpriteVisual
+  requires IVisual
+{
+  void Brush(IBrush brush);
+  void Shadow(IDropShadow shadow);
+}
+
+    [webhosthidden][experimental] interface IRoundedRectangleVisual
+  requires IVisual
+{
+  void Brush(IBrush brush);
+  void CornerRadius(Windows.Foundation.Numerics.Vector2 value);
+  void StrokeBrush(IBrush brush);
+  void StrokeThickness(Single value);
+}
+
+[webhosthidden][experimental] interface IScrollPositionChangedArgs {
+  Windows.Foundation.Numerics.Vector2 Position {
+    get;
   };
+}
 
-  [webhosthidden]
-  [uuid("172def51-9e1a-4e3c-841a-e5a470065acc")] // uuid needed for empty interfaces
-  [version(0)]
-  [experimental]
-  interface IBrush {
-  }
+    [webhosthidden][experimental] interface IScrollVisual
+  requires IVisual
+{
+  void Brush(IBrush brush);
+  void ScrollEnabled(Boolean isScrollEnabled);
+  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollPositionChanged;
+  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollBeginDrag;
+  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollEndDrag;
+  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumBegin;
+  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumEnd;
+  void ContentSize(Windows.Foundation.Numerics.Vector2 size);
+  Windows.Foundation.Numerics.Vector3 ScrollPosition {
+    get;
+  };
+  void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
+  void TryUpdatePosition(Windows.Foundation.Numerics.Vector3 position, Boolean animate);
+  void OnPointerPressed(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
+  void SetDecelerationRate(Windows.Foundation.Numerics.Vector3 decelerationRate);
+  void SetMaximumZoomScale(Single maximumZoomScale);
+  void SetMinimumZoomScale(Single minimumZoomScale);
+  Boolean Horizontal;
+  void SetSnapPoints(
+      Boolean snapToStart, Boolean snapToEnd, Windows.Foundation.Collections.IVectorView<Single> offsets);
+  void PagingEnabled(Boolean pagingEnabled);
+  void SnapToInterval(Single interval);
+  void SnapToAlignment(SnapPointsAlignment alignment);
+}
 
-  [webhosthidden]
-  [experimental]
-  interface IDrawingSurfaceBrush requires IBrush
-  {
-    void HorizontalAlignmentRatio(Single value);
-    void VerticalAlignmentRatio(Single value);
-    void Stretch(CompositionStretch value);
-  }
+[webhosthidden][experimental] interface IActivityVisual
+  requires IVisual
+{
+  void Size(Single value);
+  void Brush(IBrush brush);
+  void StartAnimation();
+  void StopAnimation();
+}
 
-  [webhosthidden]
-  [experimental]
-  interface IDropShadow {
-    void Offset(Windows.Foundation.Numerics.Vector3 value);
-    void Opacity(Single value);
-    void BlurRadius(Single value);
-    void Color(Windows.UI.Color value);
-  }
+    [webhosthidden][experimental] interface ICaretVisual {
+  IVisual InnerVisual {
+    get;
+  };
+  void Size(Windows.Foundation.Numerics.Vector2 size);
+  void Position(Windows.Foundation.Numerics.Vector2 position);
+  Boolean IsVisible {
+    get;
+    set;
+  };
+  void Brush(IBrush brush);
+}
 
-  [webhosthidden]
-  [experimental]
-  interface IVisual
-  {
-    void InsertAt(IVisual visual, Int32 index);
-    void Remove(IVisual visual);
-    IVisual GetAt(UInt32 index);
-    void Opacity(Single opacity);
-    void Scale(Windows.Foundation.Numerics.Vector3 scale);
-    void TransformMatrix(Windows.Foundation.Numerics.Matrix4x4 transform);
-    void RotationAngle(Single angle);
-    void IsVisible(Boolean isVisible);
-    void Size(Windows.Foundation.Numerics.Vector2 size);
-    void Offset(Windows.Foundation.Numerics.Vector3 offset);
-    void Offset(Windows.Foundation.Numerics.Vector3 offset, Windows.Foundation.Numerics.Vector3 relativeAdjustment);
-    void RelativeSizeWithOffset(Windows.Foundation.Numerics.Vector2 size, Windows.Foundation.Numerics.Vector2 relativeSizeAdjustment);
-    BackfaceVisibility BackfaceVisibility{ get; set; };
-    String Comment { get; set; };
-    void AnimationClass(AnimationClass value);
-  }
+[webhosthidden][experimental] interface IFocusVisual {
+  IVisual InnerVisual {
+    get;
+  };
+  Boolean IsFocused {
+    get;
+    set;
+  };
+  Single ScaleFactor {
+    get;
+    set;
+  };
+}
 
-  [webhosthidden]
-  [experimental]
-  interface ISpriteVisual requires IVisual
-  {
-    void Brush(IBrush brush);
-    void Shadow(IDropShadow shadow);
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface IRoundedRectangleVisual requires IVisual
-  {
-    void Brush(IBrush brush);
-    void CornerRadius(Windows.Foundation.Numerics.Vector2 value);
-    void StrokeBrush(IBrush brush);
-    void StrokeThickness(Single value);
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface IScrollPositionChangedArgs
-  {
-    Windows.Foundation.Numerics.Vector2 Position { get; };
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface IScrollVisual requires IVisual
-  {
-    void Brush(IBrush brush);
-    void ScrollEnabled(Boolean isScrollEnabled);
-    event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollPositionChanged;
-    event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollBeginDrag;
-	  event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollEndDrag;
-    event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumBegin;
-    event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumEnd;
-    void ContentSize(Windows.Foundation.Numerics.Vector2 size);
-    Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
-    void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
-    void TryUpdatePosition(Windows.Foundation.Numerics.Vector3 position, Boolean animate);
-    void OnPointerPressed(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
-    void SetDecelerationRate(Windows.Foundation.Numerics.Vector3 decelerationRate);
-    void SetMaximumZoomScale(Single maximumZoomScale);
-    void SetMinimumZoomScale(Single minimumZoomScale);
-    Boolean Horizontal;
-    void SetSnapPoints(Boolean snapToStart, Boolean snapToEnd, Windows.Foundation.Collections.IVectorView<Single> offsets);
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface IActivityVisual requires IVisual
-  {
-    void Size(Single value);
-    void Brush(IBrush brush);
-    void StartAnimation();
-    void StopAnimation();
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface ICaretVisual
-  {
-    IVisual InnerVisual { get; };
-    void Size(Windows.Foundation.Numerics.Vector2 size);
-    void Position(Windows.Foundation.Numerics.Vector2 position);
-    Boolean IsVisible { get; set; };
-    void Brush(IBrush brush);
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface IFocusVisual
-  {
-    IVisual InnerVisual { get; };
-    Boolean IsFocused { get; set; };
-    Single ScaleFactor { get; set; };
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface ICompositionContext
-  {
-    ISpriteVisual CreateSpriteVisual();
-    IScrollVisual CreateScrollerVisual();
-    IRoundedRectangleVisual CreateRoundedRectangleVisual();
-    IActivityVisual CreateActivityVisual();
-    ICaretVisual CreateCaretVisual();
-    IFocusVisual CreateFocusVisual();
-    IDropShadow CreateDropShadow();
-    IBrush CreateColorBrush(Windows.UI.Color color);
-    IDrawingSurfaceBrush CreateDrawingSurfaceBrush(Windows.Foundation.Size surfaceSize,
+    [webhosthidden][experimental] interface ICompositionContext {
+  ISpriteVisual CreateSpriteVisual();
+  IScrollVisual CreateScrollerVisual();
+  IRoundedRectangleVisual CreateRoundedRectangleVisual();
+  IActivityVisual CreateActivityVisual();
+  ICaretVisual CreateCaretVisual();
+  IFocusVisual CreateFocusVisual();
+  IDropShadow CreateDropShadow();
+  IBrush CreateColorBrush(Windows.UI.Color color);
+  IDrawingSurfaceBrush CreateDrawingSurfaceBrush(
+      Windows.Foundation.Size surfaceSize,
       Windows.Graphics.DirectX.DirectXPixelFormat pixelFormat,
       Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
 
-    // TODO Add and hook up to rootnode - to notify the tree
-    // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;
-  }
+  // TODO Add and hook up to rootnode - to notify the tree
+  // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;
+}
 
-} // namespace Microsoft.ReactNative.Composition.Experimental
+} // namespace Microsoft.ReactNative.Composition. Experimental

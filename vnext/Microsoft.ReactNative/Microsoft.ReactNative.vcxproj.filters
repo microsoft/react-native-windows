@@ -144,9 +144,6 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\ResourceBrushUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -156,14 +153,8 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\XamlIslandUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\CreateModules.cpp">
       <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\BatchingEventEmitter.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
@@ -386,9 +377,6 @@
     <ClInclude Include="Utils\PropertyUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\ResourceBrushUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -422,9 +410,6 @@
     </ClInclude>
     <ClInclude Include="Modules\ReactRootViewTagGenerator.h" />
     <ClInclude Include="DocString.h" />
-    <ClInclude Include="Utils\BatchingEventEmitter.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
       <Filter>ReactHost</Filter>
     </ClInclude>

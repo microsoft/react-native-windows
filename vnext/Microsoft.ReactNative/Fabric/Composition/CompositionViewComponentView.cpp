@@ -11,7 +11,6 @@
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/FabricUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
 #include <atlcomcli.h>

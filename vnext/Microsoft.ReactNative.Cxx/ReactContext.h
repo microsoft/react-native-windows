@@ -8,9 +8,6 @@
 #ifndef MICROSOFT_REACTNATIVE_REACTCONTEXT
 #define MICROSOFT_REACTNATIVE_REACTCONTEXT
 
-#if !defined(CORE_ABI) && !defined(__APPLE__)
-#include <CppWinRTIncludes.h>
-#endif
 #include <ReactCommon/CallInvoker.h>
 #include <string_view>
 #include "JSValueWriter.h"

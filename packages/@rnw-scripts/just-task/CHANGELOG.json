@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 06:42:06 GMT",
+      "version": "2.3.58",
+      "tag": "@rnw-scripts/just-task_v2.3.58",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "c5bcdf70d5088979ef395dc1a5b0d3bbe2e022ca",
+            "comment": "Restore Nuget packages on yarn build"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Nov 2025 21:00:43 GMT",
       "version": "2.3.57",
       "tag": "@rnw-scripts/just-task_v2.3.57",

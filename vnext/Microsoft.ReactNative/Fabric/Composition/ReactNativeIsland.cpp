@@ -33,10 +33,8 @@
 #include "RootComponentView.h"
 #include "TextDrawing.h"
 
-#ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
-#endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -172,7 +170,6 @@ ReactNativeIsland::ReactNativeIsland() noexcept
     : ReactNativeIsland(winrt::Microsoft::UI::Composition::Compositor{nullptr}) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
-#ifdef USE_WINUI3
   if (m_island) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
     m_island.StateChanged(m_islandStateChangedToken);
@@ -181,7 +178,6 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
     m_island.Disconnected(m_islandDisconnectedToken);
 #endif
   }
-#endif
 
   if (m_uiDispatcher) {
     assert(m_uiDispatcher.HasThreadAccess());
@@ -261,12 +257,10 @@ void ReactNativeIsland::RemoveRenderedVisual(
 }
 
 bool ReactNativeIsland::TrySetFocus() noexcept {
-#ifdef USE_WINUI3
   if (m_island && m_island.IsConnected()) {
     auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
     return focusController.TrySetFocus();
   }
-#endif
   return false;
 }
 

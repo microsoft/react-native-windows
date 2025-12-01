@@ -7,7 +7,6 @@
 #include "future/future.h"
 
 #include <functional>
-#include "CppWinRTIncludes.h"
 #include "JSValue.h"
 #include "NativeModules.h"
 
@@ -141,11 +140,6 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   IInspectable JSRuntime() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
-
-  void DispatchEvent(
-      xaml::FrameworkElement const & /*view*/,
-      hstring const & /*eventName*/,
-      JSValueArgWriter const & /*eventDataArgWriter*/) noexcept {}
 
   void CallJSFunction(
       hstring const &moduleName,

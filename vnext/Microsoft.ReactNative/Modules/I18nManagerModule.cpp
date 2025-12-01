@@ -28,14 +28,9 @@ static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
 }
 
 void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  if (xaml::TryGetCurrentUwpXamlApplication() && !IsXamlIsland()) {
-    // TODO: Figure out packaged win32 app story for WinUI 3
-    auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
-                               .GetForCurrentView()
-                               .QualifierValues()
-                               .Lookup(L"LayoutDirection");
-
-    propertyBag.Set(SystemIsRTLPropertyId(), layoutDirection != L"LTR");
+  DWORD dw;
+  if (GetProcessDefaultLayout(&dw)) {
+    propertyBag.Set(SystemIsRTLPropertyId(), dw == LAYOUT_RTL);
   }
 }
 

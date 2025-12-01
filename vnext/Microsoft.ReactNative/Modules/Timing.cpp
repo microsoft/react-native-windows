@@ -7,7 +7,6 @@
 #include "Timing.h"
 
 #include <InstanceManager.h>
-#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
 #include <XamlUtils.h>
 
@@ -120,7 +119,7 @@ void TimerRegistry::setTimerManager(std::weak_ptr<facebook::react::TimerManager>
 void Timing::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
   m_properties = reactContext.Properties().Handle();
-  m_usePostForRendering = !xaml::TryGetCurrentUwpXamlApplication();
+  m_usePostForRendering = true;
   m_uiDispatcher = m_context.UIDispatcher().Handle();
 }
 
@@ -129,7 +128,7 @@ void Timing::InitializeBridgeless(
     const winrt::Microsoft::ReactNative::IReactPropertyBag &properties) noexcept {
   m_timerRegistry = timerRegistry;
   m_properties = properties;
-  m_usePostForRendering = !xaml::TryGetCurrentUwpXamlApplication();
+  m_usePostForRendering = true;
   m_uiDispatcher = {properties.Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                         .try_as<winrt::Microsoft::ReactNative::IReactDispatcher>()};
 }
@@ -216,16 +215,20 @@ void Timing::StartRendering() {
     PostRenderFrame();
     return;
   }
+
+  // TODO use composition rendering callback here
+  /*
   m_rendering.revoke();
   m_usingRendering = true;
   m_rendering = xaml::Media::CompositionTarget::Rendering(
       winrt::auto_revoke,
       [wkThis = std::weak_ptr(this->shared_from_this())](
-          const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
+          const winrt::IInspectable &, const winrt::IInspectable & args) {
         if (auto pThis = wkThis.lock()) {
           pThis->OnTick();
         }
       });
+      */
 }
 
 void Timing::StartDispatcherTimer() {
