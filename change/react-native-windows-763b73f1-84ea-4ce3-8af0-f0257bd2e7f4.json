@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Assert on text input focus when no UIA tool running",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

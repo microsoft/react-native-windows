@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 Nov 2025 16:41:44 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Dec 2025 16:29:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.50
+
+Mon, 01 Dec 2025 16:29:10 GMT
+
+### Patches
+
+- Assert on text input focus when no UIA tool running (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.49
 

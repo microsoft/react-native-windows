@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Dec 2025 16:29:10 GMT",
+      "version": "0.74.50",
+      "tag": "react-native-windows_v0.74.50",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "47b2709dce3764495160f84253ec154a2924410f",
+            "comment": "Assert on text input focus when no UIA tool running"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Nov 2025 16:41:44 GMT",
       "version": "0.74.49",
       "tag": "react-native-windows_v0.74.49",
