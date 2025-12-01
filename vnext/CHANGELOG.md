@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 27 Nov 2025 06:35:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 01 Dec 2025 06:36:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1014
+
+Mon, 01 Dec 2025 06:36:40 GMT
+
+### Changes
+
+- Bump fastfloat to 8.0.0 (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.0.0-canary.1013
 
