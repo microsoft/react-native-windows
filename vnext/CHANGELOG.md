@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 24 Nov 2025 16:32:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 01 Dec 2025 16:28:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.3
+
+Mon, 01 Dec 2025 16:28:19 GMT
+
+### Patches
+
+- disable network domain for modern devtools until 0.83 (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.80.2
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Dec 2025 16:28:19 GMT",
+      "version": "0.80.3",
+      "tag": "react-native-windows_v0.80.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ccb9398e7f5b5fd85a6443953d625a2975141ca9",
+            "comment": "disable network domain for modern devtools until 0.83"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Nov 2025 16:32:48 GMT",
       "version": "0.80.2",
       "tag": "react-native-windows_v0.80.2",
