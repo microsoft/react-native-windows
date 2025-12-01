@@ -17,14 +17,9 @@ inline T asEnum(winrt::Microsoft::ReactNative::JSValue const &obj) {
   return static_cast<T>(obj.AsInt64());
 }
 
-bool IsRS3OrHigher();
-bool IsRS4OrHigher();
 bool IsRS5OrHigher();
 bool Is19H1OrHigher();
-bool Is21H1OrHigher();
 
-bool IsXamlIsland();
-bool IsWinUI3Island();
 bool IsFabricEnabled(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties);
 
 } // namespace Microsoft::ReactNative

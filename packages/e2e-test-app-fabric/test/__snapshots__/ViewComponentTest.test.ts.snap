@@ -452,10 +452,12 @@ exports[`View Tests Views can have backface visibility 1`] = `
       {
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
       },
       {
         "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
@@ -538,18 +540,20 @@ exports[`View Tests Views can have backface visibility 1`] = `
             "Offset": "0, 0, 0",
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "393, 85, 0",
-        "Size": "130, 38",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "130, 38",
-            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "10, 56, 0",
+                "Size": "130, 38",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "130, 38",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

@@ -269,10 +269,6 @@ class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatur
   bool fuseboxEnabledRelease() override {
     return true; // Enable Fusebox (modern CDP backend) by default for React Native Windows
   }
-
-  bool fuseboxNetworkInspectionEnabled() override {
-    return true; // Enable network inspection support in Fusebox
-  }
 };
 
 //=============================================================================================

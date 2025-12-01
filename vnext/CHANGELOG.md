@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 19 Nov 2025 06:41:09 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 01 Dec 2025 06:36:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1014
+
+Mon, 01 Dec 2025 06:36:40 GMT
+
+### Changes
+
+- Bump fastfloat to 8.0.0 (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1013
+
+Thu, 27 Nov 2025 06:35:01 GMT
+
+### Changes
+
+- disable network domain for modern devtools until 0.83 (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1012
+
+Wed, 26 Nov 2025 06:36:13 GMT
+
+### Changes
+
+- fix outstanding modern debugger issues (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1011
+
+Fri, 21 Nov 2025 06:43:27 GMT
+
+### Changes
+
+- Remove code related to USE_WINUI3 which is now always true (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1010
+
+Thu, 20 Nov 2025 06:39:28 GMT
+
+### Changes
+
+- Fix  Crash after closing DesktopPopupSiteBridge (74712637+iamAbhi-916@users.noreply.github.com)
+- Implement snap point parity for Fabric ScrollView: pagingEnabled (viewport-sized intervals), snapToInterval (custom interval snapping), and snapToAlignment (start/center/end alignment) matching iOS/Android/Paper behavior with priority hierarchy snapToOffsets > snapToInterval > pagingEnabled (nitinkum@microsoft.com)
 
 ## 0.0.0-canary.1009
 

@@ -144,6 +144,7 @@
       <AdditionalIncludeDirectories>
         $(FollyDir);
         $(FmtDir)include;
+        $(FastFloatDir)include;
         $(ReactNativeDir)\ReactCommon;
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;

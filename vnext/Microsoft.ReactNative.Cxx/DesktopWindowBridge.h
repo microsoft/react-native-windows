@@ -8,7 +8,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <functional>
 
-#if defined(USE_WINUI3) && !defined(CORE_ABI) && !defined(__APPLE__) && \
+#if !defined(CORE_ABI) && !defined(__APPLE__) && \
     WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
 
 #include <winrt/Microsoft.ReactNative.h>
