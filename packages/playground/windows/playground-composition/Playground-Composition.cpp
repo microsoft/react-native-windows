@@ -16,6 +16,7 @@
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
+
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
 #include <winrt/Microsoft.UI.Content.h>
@@ -73,22 +74,9 @@ struct EllipseImageHandler
   }
 };
 
-struct EllipseReactPackageProvider
-    : winrt::implements<EllipseReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
- public: // IReactPackageProvider
-  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    // Register ellipse: uri handler for images
-    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddUriImageProvider(
-        winrt::make<EllipseImageHandler>());
-  }
-};
 
-// Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
-struct CompReactPackageProvider
-    : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
- public: // IReactPackageProvider
-  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {}
-};
+
+
 
 constexpr auto WindowDataProperty = L"WindowData";
 
@@ -164,9 +152,8 @@ struct WindowData {
           winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
               host.InstanceSettings(), L"React Native Windows Playground");
 
-          host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
 
-          host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
+
 
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
@@ -181,8 +168,7 @@ struct WindowData {
             winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
                 InstanceSettings(), g_liftedCompositor);
 
-            // Register ellipse:// uri hander for images
-            host.PackageProviders().Append(winrt::make<EllipseReactPackageProvider>());
+
 
             m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
                 g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
