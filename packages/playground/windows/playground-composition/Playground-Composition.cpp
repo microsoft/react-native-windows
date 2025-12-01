@@ -22,13 +22,8 @@
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
 
-// Includes from sample-custom-component
-#include <winrt/SampleCustomComponent.h>
-
 winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQueueController{nullptr};
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
-
-void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
 
 /**
  * This ImageHandler will accept images with a uri using the ellipse protocol and render an ellipse image
@@ -93,7 +88,6 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    RegisterCustomComponent(packageBuilder);
   }
 };
 
