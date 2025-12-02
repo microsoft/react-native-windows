@@ -16,7 +16,6 @@
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
-
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
 #include <winrt/Microsoft.UI.Content.h>
@@ -74,10 +73,6 @@ struct EllipseImageHandler
         });
   }
 };
-
-
-
-
 
 constexpr auto WindowDataProperty = L"WindowData";
 
@@ -153,9 +148,6 @@ struct WindowData {
           winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
               host.InstanceSettings(), L"React Native Windows Playground");
 
-
-
-
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
@@ -168,8 +160,6 @@ struct WindowData {
             // By setting the compositor here we opt into using the new architecture.
             winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
                 InstanceSettings(), g_liftedCompositor);
-
-
 
             m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
                 g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
