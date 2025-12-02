@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 02 Dec 2025 06:36:52 GMT",
+      "version": "1.9.61",
+      "tag": "react-native-platform-override_v1.9.61",
+      "comments": {
+        "none": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "3123d2987b083e99fb7714bc3d871071c63c0ba9",
+            "comment": "Fix NPM dist tags and make some NPM private"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "1.9.61",
       "tag": "react-native-platform-override_v1.9.61",

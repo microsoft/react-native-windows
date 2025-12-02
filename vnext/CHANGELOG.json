@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Dec 2025 06:36:52 GMT",
+      "version": "0.0.0-canary.1015",
+      "tag": "react-native-windows_v0.0.0-canary.1015",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "716b7bf82791939f7f3f37ebab6759aa3ec27dfc",
+            "comment": "Adding override for conversions.h"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Dec 2025 06:36:40 GMT",
       "version": "0.0.0-canary.1014",
       "tag": "react-native-windows_v0.0.0-canary.1014",

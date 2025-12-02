@@ -1,7 +1,0 @@
-{
-  "comment": "Fix NPM dist tags and make some NPM private",
-  "type": "none",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "none"
-}
