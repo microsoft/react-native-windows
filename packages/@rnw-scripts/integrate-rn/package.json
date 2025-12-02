@@ -29,7 +29,7 @@
     "async": "^3.2.3",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
-    "react-native-platform-override": "^1.9.61",
+    "react-native-platform-override": "0.0.0-canary.1015",
     "semver": "^7.6.3",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
