@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/integrate-rn",
   "version": "1.4.67",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",

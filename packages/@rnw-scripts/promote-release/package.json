@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/promote-release",
   "version": "2.1.65",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
