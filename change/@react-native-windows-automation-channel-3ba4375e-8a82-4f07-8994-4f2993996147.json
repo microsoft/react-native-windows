@@ -1,7 +1,0 @@
-{
-  "comment": "Revert back to VS2026 CI pipeline configuration",
-  "type": "prerelease",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "protikbiswas100@microsoft.com",
-  "dependentChangeType": "patch"
-}
