@@ -2,5 +2,6 @@
     "type": "prerelease",
     "comment": "Update MinimumVisualStudioVersion to 18.0 for VS2026 support",
     "packageName": "@react-native-windows/automation-channel",
-    "email": "copilot@github.com"
+    "email": "copilot@github.com",
+    "dependentChangeType": "prerelease"
 }
