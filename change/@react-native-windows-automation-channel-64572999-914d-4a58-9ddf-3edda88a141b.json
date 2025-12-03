@@ -1,0 +1,7 @@
+{
+  "comment": "Fix C++ formatting",
+  "type": "prerelease",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}

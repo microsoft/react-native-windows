@@ -1,0 +1,7 @@
+{
+  "comment": "applying package updates ***NO_CI***",
+  "type": "prerelease",
+  "packageName": "react-native-platform-override",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}

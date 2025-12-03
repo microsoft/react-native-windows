@@ -1,0 +1,7 @@
+{
+  "comment": "Merge branch 'main' into user/protikbiswas100/15353-cleanup",
+  "type": "prerelease",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
