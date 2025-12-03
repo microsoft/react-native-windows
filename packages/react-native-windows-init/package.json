@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "1.4.85",
+  "version": "0.0.0-canary.1016",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": {
