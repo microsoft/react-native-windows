@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use 0.0.0-canary.1015 version for public NPM packages",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
