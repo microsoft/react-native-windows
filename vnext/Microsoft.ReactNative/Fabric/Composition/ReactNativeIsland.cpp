@@ -174,8 +174,8 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
     m_island.StateChanged(m_islandStateChangedToken);
 #ifdef USE_EXPERIMENTAL_WINUI3
-    m_island.Connected(m_islandConnectedToken);
-    m_island.Disconnected(m_islandDisconnectedToken);
+    // m_island.Connected(m_islandConnectedToken);
+    ///m_island.Disconnected(m_islandDisconnectedToken);
 #endif
   }
 
@@ -977,21 +977,21 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
         });
 #ifdef USE_EXPERIMENTAL_WINUI3
     if (!m_isFragment) {
-      m_islandConnectedToken = m_island.Connected(
+      /*m_islandConnectedToken = m_island.Connected(
           [weakThis = get_weak()](
               winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
             if (auto pThis = weakThis.get()) {
               pThis->OnMounted();
             }
-          });
+          });*/
 
-      m_islandDisconnectedToken = m_island.Disconnected(
+      /*m_islandDisconnectedToken = m_island.Disconnected(
           [weakThis = get_weak()](
               winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
             if (auto pThis = weakThis.get()) {
               pThis->OnUnmounted();
             }
-          });
+          });*/
     }
 #endif
   }
