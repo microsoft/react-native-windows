@@ -139,8 +139,9 @@ WindowsImageManager::GetImageRandomAccessStreamAsync(
 
   if (asyncOp.Status() == winrt::Windows::Foundation::AsyncStatus::Error ||
       asyncOp.Status() == winrt::Windows::Foundation::AsyncStatus::Canceled) {
+    auto errorMessage = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
     co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(
-        L"Network request failed: A connection with the server could not be established.");
+        winrt::to_hstring("Network request failed: " + errorMessage));
   }
 
   winrt::Windows::Web::Http::HttpResponseMessage response = asyncOp.GetResults();
