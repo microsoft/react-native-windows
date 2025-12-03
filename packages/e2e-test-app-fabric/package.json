@@ -14,14 +14,14 @@
     "bundle:debug": "npx @react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "0.0.0-canary.1015",
+    "@react-native-windows/automation-channel": "0.0.0-canary.1016",
     "@react-native-windows/tester": "0.0.1",
     "@types/react": "^19.1.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.1.0",
     "react-native": "0.82.0-nightly-20250806-5936f29d6",
-    "react-native-windows": "^0.0.0-canary.1015"
+    "react-native-windows": "^0.0.0-canary.1016"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -30,8 +30,8 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "20.0.0",
-    "@react-native-windows/automation": "0.0.0-canary.1015",
-    "@react-native-windows/automation-commands": "0.0.0-canary.1015",
+    "@react-native-windows/automation": "0.0.0-canary.1016",
+    "@react-native-windows/automation-commands": "0.0.0-canary.1016",
     "@react-native/metro-config": "0.82.0-nightly-20250806-5936f29d6",
     "@rnw-scripts/babel-node-config": "2.3.3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
