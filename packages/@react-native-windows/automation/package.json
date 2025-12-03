@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.3.425",
+  "version": "0.81.0-preview.6",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -18,7 +18,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.12.343",
+    "@react-native-windows/automation-channel": "0.81.0-preview.6",
     "@react-native-windows/fs": "0.81.0-preview.1",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
@@ -48,6 +48,18 @@
     "lib-commonjs",
     "README.md"
   ],
+  "beachball": {
+    "defaultNpmTag": "preview",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch",
+      "premajor",
+      "preminor",
+      "prepatch"
+    ]
+  },
+  "promoteRelease": true,
   "engines": {
     "node": ">= 22"
   }

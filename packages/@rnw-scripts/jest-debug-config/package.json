@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/jest-debug-config",
   "version": "1.5.12",
+  "private": true,
   "license": "MIT",
   "main": "jest.debug.config.js",
   "repository": {
@@ -26,6 +27,5 @@
   },
   "engines": {
     "node": ">= 22"
-  },
-  "private": true
+  }
 }
