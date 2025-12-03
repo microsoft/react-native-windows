@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/jest-e2e-config",
   "version": "1.4.11",
+  "private": true,
   "license": "MIT",
   "main": "jest.e2e.config.js",
   "repository": {
@@ -26,6 +27,5 @@
   },
   "engines": {
     "node": ">= 18"
-  },
-  "private": true
+  }
 }
