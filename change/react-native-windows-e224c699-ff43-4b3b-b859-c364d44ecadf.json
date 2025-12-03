@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove WerRegisterMemoryBlock which causes issues when kernel debugging",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
