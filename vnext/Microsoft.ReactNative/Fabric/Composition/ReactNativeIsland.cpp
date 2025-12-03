@@ -175,7 +175,7 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
     m_island.StateChanged(m_islandStateChangedToken);
 #ifdef USE_EXPERIMENTAL_WINUI3
     // m_island.Connected(m_islandConnectedToken);
-    ///m_island.Disconnected(m_islandDisconnectedToken);
+    /// m_island.Disconnected(m_islandDisconnectedToken);
 #endif
   }
 
