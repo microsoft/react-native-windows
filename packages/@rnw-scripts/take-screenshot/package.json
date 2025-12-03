@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/take-screenshot",
   "version": "1.1.63",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -49,6 +50,5 @@
   ],
   "engines": {
     "node": ">= 22"
-  },
-  "private": true
+  }
 }
