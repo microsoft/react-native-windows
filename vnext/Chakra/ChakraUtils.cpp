@@ -166,8 +166,6 @@ FileMappingBigString::FileMappingBigString(const std::wstring &filename, uint32_
     return;
   }
 
-  WerRegisterMemoryBlock(m_fileData.get(), m_fileSize);
-
   static const uint32_t s_pageSize = getPageSize();
   if (m_fileSize % s_pageSize != 0) {
     // Data are owned by m_fileData, deleter is no-op
