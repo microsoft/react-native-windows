@@ -10301,9 +10301,7 @@ react-is@^19.0.0, react-is@^19.1.1:
   integrity sha512-x3Ax3kNSMIIkyVYhWPyO09bu0uttcAIoecO/um/rKGQ4EltYWVYtyiGkS/3xMynrbVQdS69Jhlv8FXUEZehlzA==
 
 react-native-platform-override@0.0.0-canary.1015:
-  version "1.9.61"
-  resolved "https://registry.yarnpkg.com/react-native-platform-override/-/react-native-platform-override-1.9.61.tgz#3e9442cc7a75d4bf59ec1bdd8d856699918fd77c"
-  integrity sha512-/RL4/DfDLVTwfJwAJv0dO+McrFVuCnTaqufPzZU2hOCpOAABqGxyfGA1eWXgpLXtu1TBTl08i3AlSWowleW+gg==
+  version "0.0.0-canary.1016"
   dependencies:
     "@react-native-windows/fs" "^0.0.0-canary.70"
     "@react-native-windows/package-utils" "^0.0.0-canary.96"
