@@ -33,6 +33,10 @@
 #include <Fabric/Composition/UriImageManager.h>
 #endif
 
+namespace facebook::react::jsinspector_modern {
+class HostTarget;
+} // namespace facebook::react::jsinspector_modern
+
 namespace Mso::React {
 
 // Forward declarations
@@ -216,9 +220,9 @@ struct ReactOptions {
   //! Base path of the SDX. The absolute path of the SDX can be constructed from this and the Identity.
   std::string BundleRootPath;
 
-  //! Javascript Bundles
-  //! This List includes both Platform and User Javascript Bundles
-  //! Bundles are loaded into Javascript engine in the same order
+  //! JavaScript Bundles
+  //! This List includes both Platform and User JavaScript Bundles
+  //! Bundles are loaded into JavaScript engine in the same order
   //! as they are specified in this list.
   std::vector<Mso::CntPtr<IJSBundle>> JSBundles;
 
@@ -237,7 +241,7 @@ struct ReactOptions {
   //! during development to report JavaScript errors to users
   std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
 
-  //! Flag to suggest sdx owner's preference on enabling Bytecode caching in Javascript Engine for corresponding SDX.
+  //! Flag to suggest sdx owner's preference on enabling Bytecode caching in JavaScript Engine for corresponding SDX.
   bool EnableBytecode{true};
 
   //! Flag controlling whether the JavaScript engine uses JIT compilation.
@@ -347,6 +351,9 @@ struct ReactOptions {
   //! The callback is called when IReactInstance is destroyed and must not be used anymore.
   //! It is called from the native queue.
   OnReactInstanceDestroyedCallback OnInstanceDestroyed;
+
+  //! The HostTarget instance for modern inspector integration.
+  facebook::react::jsinspector_modern::HostTarget *InspectorHostTarget{nullptr};
 };
 
 //! IReactHost manages a ReactNative instance.

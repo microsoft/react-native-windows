@@ -72,6 +72,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   bool m_isPerspectiveEnabled{true};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
+  bool m_isDebuggerPausedOverlayOpen{false};
   Mso::DispatchQueue m_uiQueue;
   int64_t m_rootTag{-1};
   std::unique_ptr<Mso::React::ReactOptions> m_reactOptions;
@@ -84,9 +85,11 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   std::shared_ptr<::Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
   xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
   xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
+  xaml::Controls::Flyout m_debuggerPausedFlyout{nullptr};
   winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_waitingTextBlock{nullptr};
   winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};
+  std::vector<xaml::XamlRoot> m_subscribedDebuggerRoots{};
 
   // Visual tree to support safe harbor
   // this
@@ -102,6 +105,8 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   void UpdateRootViewInternal() noexcept;
   void ClearLoadingUI() noexcept;
   void EnsureLoadingUI() noexcept;
+  void HideDebuggerPausedOverlay() noexcept;
+  void ShowDebuggerPausedOverlay(const std::string &message, const std::function<void()> &onResume) noexcept;
   void ShowInstanceLoaded() noexcept;
   void ShowInstanceError() noexcept;
   void ShowInstanceWaiting() noexcept;
@@ -112,6 +117,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   bool OnBackRequested() noexcept;
   Mso::React::IReactViewHost *ReactViewHost() noexcept;
   void ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept;
+  void SetupDevToolsShortcut() noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -27,7 +27,7 @@ static constexpr std::array kTextMIMETypePrefixes{
     "application/javascript" // Not in Chromium but emitted by Metro
 };
 
-// namespace { [Windows #13587]
+namespace {
 
 struct InitStreamResult {
   uint32_t httpStatusCode;
@@ -40,6 +40,8 @@ using StreamInitCallback =
     std::function<void(std::variant<InitStreamError, InitStreamResult>)>;
 using IOReadCallback =
     std::function<void(std::variant<IOReadError, IOReadResult>)>;
+
+} // namespace [Windows #13587]
 
 /**
  * Private class owning state and implementing the listener for a particular
@@ -54,7 +56,7 @@ class Stream : public NetworkRequestListener,
   Stream(const Stream& other) = delete;
   Stream& operator=(const Stream& other) = delete;
   Stream(Stream&& other) = default;
-  Stream& operator=(Stream&& other) = default;
+  Stream& operator=(Stream&& other) noexcept = default;
 
   /**
    * Factory method to create a Stream with a callback for the initial result
@@ -67,9 +69,9 @@ class Stream : public NetworkRequestListener,
    */
   static std::shared_ptr<Stream> create(
       VoidExecutor executor,
-      StreamInitCallback initCb) {
+      const StreamInitCallback& initCb) {
     std::shared_ptr<Stream> stream{new Stream(initCb)};
-    stream->setExecutor(executor);
+    stream->setExecutor(std::move(executor));
     return stream;
   }
 
@@ -382,7 +384,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
         "Invalid params: handle is missing or not a string."));
     return;
   }
-  std::optional<int64_t> size = std::nullopt; // [Windows #13587]
+  std::optional<int64_t> size = std::nullopt;
   if ((req.params.count("size") != 0u) && req.params.at("size").isInt()) {
     size = req.params.at("size").asInt();
   }
