@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Nov 2025 16:32:23 GMT",
+      "version": "0.79.6",
+      "tag": "react-native-windows_v0.79.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dcff77be79380e9583d0e542a6f4c4295e5769d1",
+            "comment": "Fix  Crash after closing DesktopPopupSiteBridge"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Oct 2025 15:29:13 GMT",
       "version": "0.79.5",
       "tag": "react-native-windows_v0.79.5",

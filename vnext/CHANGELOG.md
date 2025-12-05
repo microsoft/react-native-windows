@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 27 Oct 2025 15:29:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 24 Nov 2025 16:32:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.6
+
+Mon, 24 Nov 2025 16:32:23 GMT
+
+### Patches
+
+- Fix  Crash after closing DesktopPopupSiteBridge (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.79.5
 
