@@ -48,6 +48,7 @@ struct BlobTurboModule {
 
  private:
   std::shared_ptr<Networking::IBlobResource> m_resource;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::React
