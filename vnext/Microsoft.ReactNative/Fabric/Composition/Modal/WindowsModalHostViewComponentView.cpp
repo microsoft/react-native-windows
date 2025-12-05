@@ -66,6 +66,12 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         m_appWindow = nullptr;
       }
 
+      // Bring parent window to foreground
+      if (m_parentHwnd) {
+        SetForegroundWindow(m_parentHwnd);
+        SetFocus(m_parentHwnd);
+      }
+
       // Close bridge
       m_popUp.Close();
       m_popUp = nullptr;
@@ -247,6 +253,12 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
           m_reactContext.Properties().Handle(), m_prevWindowID);
     }
 
+    // Bring parent window to foreground
+    if (m_parentHwnd) {
+      SetForegroundWindow(m_parentHwnd);
+      SetFocus(m_parentHwnd);
+    }
+
     // Dispatch onDismiss event
     if (auto eventEmitter = EventEmitter()) {
       ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnDismiss eventArgs;
@@ -287,8 +299,15 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       overlappedPresenter.IsModal(true);
       overlappedPresenter.SetBorderAndTitleBar(true, true);
 
+      // modal should only have close button
+      overlappedPresenter.IsMinimizable(false);
+      overlappedPresenter.IsMaximizable(false);
+
       // Apply the presenter to the window
       m_appWindow.SetPresenter(overlappedPresenter);
+
+      // Hide the title bar icon
+      m_appWindow.TitleBar().IconShowOptions(winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
 
       // Set initial title using the stored local props
       if (m_localProps && m_localProps->title.has_value()) {
