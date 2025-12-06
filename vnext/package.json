@@ -83,7 +83,7 @@
     "jscodeshift": "^0.14.0",
     "just-scripts": "^1.3.3",
     "prettier": "2.8.8",
-    "react": "19.1.0",
+    "react": "19.1.2",
     "react-native": "0.82.0-nightly-20250806-5936f29d6",
     "react-native-platform-override": "0.0.0-canary.1016",
     "react-refresh": "^0.14.0",
@@ -91,7 +91,7 @@
   },
   "peerDependencies": {
     "@types/react": "^19.1.0",
-    "react": "^19.1.0",
+    "react": "^19.1.2",
     "react-native": "0.82.0-nightly-20250806-5936f29d6"
   },
   "beachball": {
