@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "solve modal foreground/background issue and only have a closebutton on title bar with no icon",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

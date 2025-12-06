@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Mon, 17 Nov 2025 16:41:29 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 06 Dec 2025 16:30:52 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.3
+
+Sat, 06 Dec 2025 16:30:52 GMT
+
+### Changes
+
+- removed nightly to use 81 directly (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.81.0-preview.1
 

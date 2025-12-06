@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 01 Dec 2025 03:29:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 06 Dec 2025 16:30:52 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.8
+
+Sat, 06 Dec 2025 16:30:52 GMT
+
+### Changes
+
+- removed nightly to use 81 directly (66076509+vineethkuttan@users.noreply.github.com)
+- Fix crash when image loading fails due to network error (74712637+iamAbhi-916@users.noreply.github.com)
+- solve modal foreground/background issue and only have a closebutton on title bar with no icon (74712637+iamAbhi-916@users.noreply.github.com)
+- Remove WerRegisterMemoryBlock (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.0-preview.6
 

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 06 Dec 2025 16:30:52 GMT",
+      "version": "0.81.0-preview.8",
+      "tag": "react-native-windows_v0.81.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "160ef08880f3f221982ca7840688f45126450539",
+            "comment": "removed nightly to use 81 directly"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2b973ebe3c7a1d5284b812295014af71821c0848",
+            "comment": "Fix crash when image loading fails due to network error"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5a68fe87faab5e24f9c5eb615d02b2199abe26c0",
+            "comment": "solve modal foreground/background issue and only have a closebutton on title bar with no icon"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d8bd1ca5a6ff563b221d5e6fcafc07cc24ab286d",
+            "comment": "Remove WerRegisterMemoryBlock"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Dec 2025 03:29:39 GMT",
       "version": "0.81.0-preview.6",
       "tag": "react-native-windows_v0.81.0-preview.6",
