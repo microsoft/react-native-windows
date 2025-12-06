@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 06 Dec 2025 06:38:46 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "react-native-windows_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "68eb3ebc53ac9aef1b1ad7eacd110a2fba972c6e",
+            "comment": "solve modal foreground/background issue and only have a closebutton on title bar with no icon"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Dec 2025 06:34:57 GMT",
       "version": "0.0.0-canary.1017",
       "tag": "react-native-windows_v0.0.0-canary.1017",

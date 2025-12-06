@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Sat, 06 Dec 2025 06:38:46 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "@react-native-windows/automation_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1018",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Dec 2025 06:34:57 GMT",
       "version": "0.0.0-canary.1017",
       "tag": "@react-native-windows/automation_v0.0.0-canary.1017",
