@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 Dec 2025 16:29:10 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Dec 2025 16:27:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.51
+
+Mon, 08 Dec 2025 16:27:19 GMT
+
+### Patches
+
+- Remove WerRegisterMemoryBlock which causes issues when kernel debugging (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.50
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Dec 2025 16:27:19 GMT",
+      "version": "0.74.51",
+      "tag": "react-native-windows_v0.74.51",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9278101549931837e657fb7cf4809a427604040f",
+            "comment": "Remove WerRegisterMemoryBlock which causes issues when kernel debugging"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Dec 2025 16:29:10 GMT",
       "version": "0.74.50",
       "tag": "react-native-windows_v0.74.50",
