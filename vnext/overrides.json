@@ -42,27 +42,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
-      "baseHash": "f6420ce2d56117dc241a9a9dd08b6184fb6b1447",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.h",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.h",
-      "baseHash": "459d79bc399760546afaf3209c7ec96caeebc449",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
-      "baseHash": "e1317c960b04add1b13100df32bc73a9710dbacb",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "db28bdd74acb9306ef285603bc491137e4a62b1d",
@@ -88,20 +67,6 @@
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
       "baseHash": "d961f37983356cbc64622db6194cd4b2a9a4e05c",
       "issue": 13587
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.cpp",
-      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseFile": "packages/react-native/ReactCommon/jsitooling/react/runtime/JSRuntimeFactory.h",
-      "baseHash": "3e9e300ac2c01ed2b3bfa7e5afe7b5961d3e9080",
-      "issue": 13172
     },
     {
       "type": "patch",
@@ -177,13 +142,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/internal/sliceChildShadowNodeViewPairs.cpp",
       "baseHash": "e03ce8e5db0216f23389ff8b3e9ea450c8a031b7",
       "issue": 14673
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "651098ef1888fbabab0a70d8e542f46c35d09d7a",
-      "issue": 13172
     },
     {
       "type": "copy",
