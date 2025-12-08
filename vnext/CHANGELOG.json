@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Dec 2025 16:30:58 GMT",
+      "version": "0.79.7",
+      "tag": "react-native-windows_v0.79.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "845c3e0c5f44f43b7a264eeb57d3a09fddefab9f",
+            "comment": "Fix crash when image loading fails due to network error"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2864adfe96c4acced55cf3731410a8fcc8580839",
+            "comment": "solve modal foreground/background issue and only have a closebutton on title bar with no icon"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Nov 2025 16:32:23 GMT",
       "version": "0.79.6",
       "tag": "react-native-windows_v0.79.6",
