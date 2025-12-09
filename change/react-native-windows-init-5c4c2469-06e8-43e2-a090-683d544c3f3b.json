@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Merge branch 'main' into user/protikbiswas100/integrate-nighlty-20250819",
   "packageName": "react-native-windows-init",
   "email": "protikbiswas100@microsoft.com",

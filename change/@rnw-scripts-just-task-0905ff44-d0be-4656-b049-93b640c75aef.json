@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Merge branch 'main' into user/protikbiswas100/integrate-nighlty-20250819",
-  "packageName": "@rnw-scripts/just-task",
-  "email": "protikbiswas100@microsoft.com",
-  "dependentChangeType": "patch"
-}
