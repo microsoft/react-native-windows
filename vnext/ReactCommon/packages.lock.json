@@ -25,12 +25,9 @@
         }
       }
     },
-    "native,Version=v0.0/win10-arm": {},
-    "native,Version=v0.0/win10-arm-aot": {},
-    "native,Version=v0.0/win10-arm64-aot": {},
-    "native,Version=v0.0/win10-x64": {},
-    "native,Version=v0.0/win10-x64-aot": {},
-    "native,Version=v0.0/win10-x86": {},
-    "native,Version=v0.0/win10-x86-aot": {}
+    "native,Version=v0.0/win": {},
+    "native,Version=v0.0/win-arm64": {},
+    "native,Version=v0.0/win-x64": {},
+    "native,Version=v0.0/win-x86": {}
   }
 }
