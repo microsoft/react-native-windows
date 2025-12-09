@@ -187,17 +187,17 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/conversions.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/conversions.h",
+      "baseHash": "3487b9dcde51614425687a31b10923c67a2f1d52",
+      "issue": 14698
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
       "baseHash": "b56e467ee394e08d4e0dd0a8d71a8a9919603ff9",
       "issue": 15292
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/css/CSSTokenizer.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/css/CSSTokenizer.h",
-      "baseHash": "1580353c281d9c4a6548564ab32af7a3a2c8247e",
-      "issue": 14665
     },
     {
       "type": "patch",

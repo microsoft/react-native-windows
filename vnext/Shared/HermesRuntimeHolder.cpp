@@ -319,37 +319,6 @@ void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_dump_crash_data(m_runtime, fileDescriptor));
 }
 
-std::shared_ptr<HermesRuntimeHolder> HermesRuntimeHolder::loadFrom(
-    React::ReactPropertyBag const &propertyBag) noexcept {
-  return *(propertyBag.Get(HermesRuntimeHolderProperty()));
-}
-
-void HermesRuntimeHolder::storeTo(
-    React::ReactPropertyBag const &propertyBag,
-    std::shared_ptr<HermesRuntimeHolder> const &holder) noexcept {
-  propertyBag.Set(HermesRuntimeHolderProperty(), holder);
-}
-
-void HermesRuntimeHolder::addToProfiling() const noexcept {
-  CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_add(m_runtime));
-}
-
-void HermesRuntimeHolder::removeFromProfiling() const noexcept {
-  CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_remove(m_runtime));
-}
-
-/*static*/ void HermesRuntimeHolder::enableSamplingProfiler() noexcept {
-  CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_enable());
-}
-
-/*static*/ void HermesRuntimeHolder::disableSamplingProfiler() noexcept {
-  CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_disable());
-}
-
-/*static*/ void HermesRuntimeHolder::dumpSampledTraceToFile(const std::string &fileName) noexcept {
-  CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_dump_to_file(fileName.c_str()));
-}
-
 hermes_runtime HermesRuntimeHolder::getHermesRuntime() noexcept {
   return reinterpret_cast<hermes_runtime>(m_runtime);
 }

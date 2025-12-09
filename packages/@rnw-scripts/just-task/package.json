@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/just-task",
   "version": "2.3.58",
+  "private": true,
   "license": "MIT",
   "main": "just-task.js",
   "repository": {

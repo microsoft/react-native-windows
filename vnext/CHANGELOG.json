@@ -2,6 +2,138 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 07 Dec 2025 06:34:40 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-windows_v0.0.0-canary.1019",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e990ad5a631fa42bf43bddd8ebbfc637ab8e2145",
+            "comment": "Fix stackoverflow in StructInfo"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Dec 2025 06:38:46 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "react-native-windows_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "68eb3ebc53ac9aef1b1ad7eacd110a2fba972c6e",
+            "comment": "solve modal foreground/background issue and only have a closebutton on title bar with no icon"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Dec 2025 06:34:57 GMT",
+      "version": "0.0.0-canary.1017",
+      "tag": "react-native-windows_v0.0.0-canary.1017",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "92d8c80d2ca49669508a461ee9ad43b6809c7847",
+            "comment": "Fix crash when image loading fails due to network error"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Dec 2025 06:40:45 GMT",
+      "version": "0.0.0-canary.1016",
+      "tag": "react-native-windows_v0.0.0-canary.1016",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6099ed486aabbdc654176d4cab27708e24e8ab0c",
+            "comment": "Use 0.0.0-canary.1015 version for public NPM packages"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a2a5684ccabd4407bd6727f6c4eef2d37dfecca8",
+            "comment": "Remove WerRegisterMemoryBlock which causes issues when kernel debugging"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1016",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Dec 2025 06:36:52 GMT",
+      "version": "0.0.0-canary.1015",
+      "tag": "react-native-windows_v0.0.0-canary.1015",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "716b7bf82791939f7f3f37ebab6759aa3ec27dfc",
+            "comment": "Adding override for conversions.h"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Dec 2025 06:36:40 GMT",
+      "version": "0.0.0-canary.1014",
+      "tag": "react-native-windows_v0.0.0-canary.1014",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "857272dbc9d93c3b5d28606500ca21f0c567824f",
+            "comment": "Bump fastfloat to 8.0.0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Nov 2025 06:35:01 GMT",
+      "version": "0.0.0-canary.1013",
+      "tag": "react-native-windows_v0.0.0-canary.1013",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fe510e45f19fa9edd9c29e4a4a6dae120aecc8cc",
+            "comment": "disable network domain for modern devtools until 0.83"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Nov 2025 06:36:13 GMT",
+      "version": "0.0.0-canary.1012",
+      "tag": "react-native-windows_v0.0.0-canary.1012",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "86da8cae251df813195afba5c0e89036157ff24e",
+            "comment": "fix outstanding modern debugger issues"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Nov 2025 06:43:27 GMT",
       "version": "0.0.0-canary.1011",
       "tag": "react-native-windows_v0.0.0-canary.1011",

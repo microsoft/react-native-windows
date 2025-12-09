@@ -177,7 +177,6 @@ ReactInstanceWin::ReactInstanceWin(
                                                                propBag = m_options.Properties,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
-        Microsoft::ReactNative::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
         if (onDestroyed) {
           onDestroyed.Get()->Invoke(reactContext);
         }

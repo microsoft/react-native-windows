@@ -253,22 +253,6 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
-// TODO: (vmoroz) Use or delete this function
-void DevSupportManager::OpenDevTools(const std::string &bundleAppId) {
-  winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
-  filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
-  winrt::Windows::Web::Http::HttpClient httpClient(filter);
-  // TODO: Use currently configured dev server host
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_OpenDebuggerUrl(
-          std::string{DevServerHelper::DefaultPackagerHost},
-          DevServerHelper::DefaultPackagerPort,
-          GetDeviceId(GetPackageName(bundleAppId)))));
-
-  winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Post(), uri);
-  httpClient.SendRequestAsync(request);
-}
-
 void DevSupportManager::EnsureInspectorPackagerConnection(
     [[maybe_unused]] const std::string &packagerHost,
     [[maybe_unused]] const uint16_t packagerPort,
