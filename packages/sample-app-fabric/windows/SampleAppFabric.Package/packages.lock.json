@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "UAP,Version=v10.0.17763": {
+    "UAP,Version=v7.0": {
       "boost": {
         "type": "Transitive",
         "resolved": "1.83.0",
@@ -29,6 +29,14 @@
         "dependencies": {
           "Microsoft.Build.Tasks.Git": "1.1.1",
           "Microsoft.SourceLink.Common": "1.1.1"
+        }
+      },
+      "Microsoft.UI.Xaml": {
+        "type": "Transitive",
+        "resolved": "2.8.0",
+        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
+        "dependencies": {
+          "Microsoft.Web.WebView2": "1.0.1264.42"
         }
       },
       "Microsoft.VCRTForwarders.140": {
@@ -186,13 +194,13 @@
         "dependencies": {
           "Microsoft.JavaScript.Hermes": "[0.0.0-2511.7001-d7ca19b3, )",
           "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.UI.Xaml": "[2.8.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
-          "Microsoft.WindowsAppSDK": "[1.8.251106002, )",
           "boost": "[1.83.0, )"
         }
       }
     },
-    "UAP,Version=v10.0.17763/win10-arm": {
+    "UAP,Version=v7.0/win10-arm": {
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
         "resolved": "1.0.2-rc",
@@ -213,7 +221,7 @@
         }
       }
     },
-    "UAP,Version=v10.0.17763/win10-arm-aot": {
+    "UAP,Version=v7.0/win10-arm-aot": {
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
         "resolved": "1.0.2-rc",
@@ -234,7 +242,7 @@
         }
       }
     },
-    "UAP,Version=v10.0.17763/win10-arm64-aot": {
+    "UAP,Version=v7.0/win10-arm64-aot": {
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
         "resolved": "1.0.2-rc",
@@ -255,7 +263,7 @@
         }
       }
     },
-    "UAP,Version=v10.0.17763/win10-x64": {
+    "UAP,Version=v7.0/win10-x64": {
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
         "resolved": "1.0.2-rc",
@@ -276,7 +284,7 @@
         }
       }
     },
-    "UAP,Version=v10.0.17763/win10-x64-aot": {
+    "UAP,Version=v7.0/win10-x64-aot": {
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
         "resolved": "1.0.2-rc",
@@ -297,7 +305,7 @@
         }
       }
     },
-    "UAP,Version=v10.0.17763/win10-x86": {
+    "UAP,Version=v7.0/win10-x86": {
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
         "resolved": "1.0.2-rc",
@@ -318,7 +326,7 @@
         }
       }
     },
-    "UAP,Version=v10.0.17763/win10-x86-aot": {
+    "UAP,Version=v7.0/win10-x86-aot": {
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
         "resolved": "1.0.2-rc",
