@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-channel",
-  "version": "0.12.343",
+  "version": "0.81.0-preview.8",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -41,8 +41,19 @@
     "windows",
     "!packages*.lock.json"
   ],
+  "beachball": {
+    "defaultNpmTag": "preview",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch",
+      "premajor",
+      "preminor",
+      "prepatch"
+    ]
+  },
+  "promoteRelease": true,
   "engines": {
     "node": ">= 22"
-  },
-  "private": true
+  }
 }

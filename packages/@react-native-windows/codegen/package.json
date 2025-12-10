@@ -47,7 +47,7 @@
     "typescript": "5.0.4"
   },
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "^0.81.0-0"
   },
   "files": [
     "bin.js",
