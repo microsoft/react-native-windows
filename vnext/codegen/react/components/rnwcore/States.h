@@ -25,8 +25,6 @@ using DebuggingOverlayState = StateData;
 
 using PullToRefreshViewState = StateData;
 
-using SwitchState = StateData;
-
 using UnimplementedNativeViewState = StateData;
 
 } // namespace facebook::react

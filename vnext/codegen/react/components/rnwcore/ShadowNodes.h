@@ -73,17 +73,6 @@ using PullToRefreshViewShadowNode = ConcreteViewShadowNode<
     PullToRefreshViewEventEmitter,
     PullToRefreshViewState>;
 
-JSI_EXPORT extern const char SwitchComponentName[];
-
-/*
- * `ShadowNode` for <Switch> component.
- */
-using SwitchShadowNode = ConcreteViewShadowNode<
-    SwitchComponentName,
-    SwitchProps,
-    SwitchEventEmitter,
-    SwitchState>;
-
 JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
 
 /*

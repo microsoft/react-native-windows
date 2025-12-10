@@ -10,7 +10,11 @@
     "directory": "packages/rn-tester"
   },
   "engines": {
+<<<<<<< Upstream
+    "node": ">= 20.19.4"
+=======
     "node": ">=22"
+>>>>>>> Override
   },
   "scripts": {
     "start": "npx @react-native-community/cli start",
@@ -26,8 +30,14 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
+<<<<<<< Upstream
+    "@react-native/oss-library-example": "0.81.0-main",
+    "@react-native/new-app-screen": "0.81.5",
+    "@react-native/popup-menu-android": "0.81.5",
+=======
     "@react-native/new-app-screen": "0.81.0-rc.0",
     "@react-native/popup-menu-android": "0.81.0-rc.0",
+>>>>>>> Override
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
