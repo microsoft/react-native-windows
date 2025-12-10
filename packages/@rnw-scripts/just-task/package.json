@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/just-task",
   "version": "2.3.56",
+  "private": true,
   "license": "MIT",
   "main": "just-task.js",
   "repository": {
@@ -31,10 +32,10 @@
     "@typescript-eslint/parser": "^7.1.1"
   },
   "peerDependencies": {
-    "eslint": "*",
-    "jest": "*",
-    "prettier": "*",
-    "typescript": "*"
+    "eslint": "^8.19.0",
+    "jest": "^29.7.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4"
   },
   "peerDependenciesMeta": {
     "jest": {
@@ -43,6 +44,5 @@
   },
   "engines": {
     "node": ">= 22"
-  },
-  "private": true
+  }
 }

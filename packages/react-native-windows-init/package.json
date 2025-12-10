@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "1.4.82",
+  "version": "0.81.0-preview.8",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": {
@@ -9,7 +9,6 @@
     "directory": "packages/react-native-windows-init"
   },
   "license": "MIT",
-  "private": true,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
@@ -62,11 +61,15 @@
     "README.md"
   ],
   "beachball": {
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
-      "prerelease",
+      "major",
+      "minor",
+      "patch",
       "premajor",
       "preminor",
       "prepatch"
     ]
-  }
+  },
+  "promoteRelease": true
 }

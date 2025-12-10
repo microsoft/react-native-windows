@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
   "version": "1.1.41",
+  "private": true,
   "license": "MIT",
   "main": "jest-snapshot-resolver.js",
   "repository": {
@@ -15,6 +16,5 @@
   },
   "engines": {
     "node": ">= 22"
-  },
-  "private": true
+  }
 }

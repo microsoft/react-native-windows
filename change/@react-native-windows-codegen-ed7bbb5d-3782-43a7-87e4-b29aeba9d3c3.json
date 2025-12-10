@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix NPM dist tags and make some NPM private",
+  "packageName": "@react-native-windows/codegen",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
