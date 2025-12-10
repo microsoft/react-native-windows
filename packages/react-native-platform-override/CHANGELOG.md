@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 10 Dec 2025 18:44:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.10
+
+Wed, 10 Dec 2025 18:44:30 GMT
+
+### Changes
+
+- Fix NPM dist tags and make some NPM private (vmorozov@microsoft.com)
 
 ## 1.9.59
 
