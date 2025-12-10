@@ -792,11 +792,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...eventHandlers}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
-<<<<<<< Upstream
         accessibilityLabel={_accessibilityLabel}
-=======
         accessibilityErrorMessage={accessibilityErrorMessage}
->>>>>>> Override
         accessibilityState={_accessibilityState}
         accessible={accessible}
         submitBehavior={submitBehavior}
@@ -860,12 +857,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...colorProps}
         {...eventHandlers}
-<<<<<<< Upstream
         accessibilityLabel={_accessibilityLabel}
-=======
         accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
->>>>>>> Override
         accessibilityLabelledBy={_accessibilityLabelledBy}
         accessibilityState={_accessibilityState}
         accessible={accessible}

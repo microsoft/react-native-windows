@@ -25,11 +25,7 @@ import type {KeyEvent} from '../../Types/CoreEventTypes';
  *
  * @see https://reactnative.dev/docs/view
  */
-<<<<<<< Upstream
 component View(
-=======
-const View: component(
->>>>>>> Override
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) = React.forwardRef(
@@ -283,14 +279,8 @@ const View: component(
       </TextAncestor.Consumer>
       // Windows]
     );
-<<<<<<< Upstream
-  }
-  return actualView;
-}
-=======
   },
 );
->>>>>>> Override
 
 View.displayName = 'View';
 
