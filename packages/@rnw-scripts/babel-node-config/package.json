@@ -2,6 +2,7 @@
   "name": "@rnw-scripts/babel-node-config",
   "version": "2.3.3",
   "license": "MIT",
+  "private": true,
   "main": "babel.config.js",
   "repository": {
     "type": "git",
@@ -27,6 +28,5 @@
   },
   "engines": {
     "node": ">= 22"
-  },
-  "private": true
+  }
 }
