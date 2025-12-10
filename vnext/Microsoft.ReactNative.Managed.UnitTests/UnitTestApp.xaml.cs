@@ -3,16 +3,9 @@
 
 using System;
 using Windows.ApplicationModel;
-#if !USE_WINUI3
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-#else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-#endif
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
@@ -39,11 +32,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     protected override void OnLaunched(LaunchActivatedEventArgs e_)
     {
       Windows.ApplicationModel.Activation.LaunchActivatedEventArgs e =
-#if USE_WINUI3
         e_.UWPLaunchActivatedEventArgs;
-#else
-        e_;
-#endif
 
 #if DEBUG
       if (global::System.Diagnostics.Debugger.IsAttached)

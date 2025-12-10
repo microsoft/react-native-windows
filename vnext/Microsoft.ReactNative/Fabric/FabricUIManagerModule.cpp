@@ -19,7 +19,6 @@
 #include <JSI/jsi.h>
 #include <ReactCommon/RuntimeExecutor.h>
 #include <SchedulerSettings.h>
-#include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>

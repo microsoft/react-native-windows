@@ -77,8 +77,6 @@ MemoryMappedBuffer::MemoryMappedBuffer(const wchar_t *const filename, uint32_t o
     throw facebook::jsi::JSINativeException(
         "MapViewOfFile/MapViewOfFileFromApp failed with last error " + std::to_string(GetLastError()));
   }
-
-  WerRegisterMemoryBlock(m_fileData.get(), m_fileSize);
 }
 
 size_t MemoryMappedBuffer::size() const {

@@ -7,11 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-#if !USE_WINUI3
-using Windows.UI.Xaml;
-#else
 using Microsoft.UI.Xaml;
-#endif
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {

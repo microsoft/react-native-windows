@@ -656,12 +656,12 @@ TEST_CLASS (TurboModuleTests) {
       host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
       ReactPropertyBag(host.InstanceSettings().Properties())
           .Set(CppTurboModule::TestName, L"JSDispatcherAfterInstanceUnload");
-      host.InstanceSettings().InstanceDestroyed(
-          [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
-            TestNotificationService::Set("Instance destroyed event");
-          });
+      host.InstanceSettings().InstanceDestroyed([&](winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                                                    InstanceDestroyedEventArgs const & /*args*/) {
+        TestNotificationService::Set("Instance destroyed event");
+      });
       host.InstanceSettings().InstanceCreated(
-          [&](IInspectable const & /*sender*/, InstanceCreatedEventArgs const &args) {
+          [&](winrt::Windows::Foundation::IInspectable const & /*sender*/, InstanceCreatedEventArgs const &args) {
             callInvoker = args.Context().CallInvoker();
           });
     });
@@ -700,10 +700,10 @@ TEST_CLASS (TurboModuleTests) {
           auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
           properties.Set(CppTurboModule::TestName, L"DeferCallbackAfterInstanceUnload");
           properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
-          host.InstanceSettings().InstanceDestroyed(
-              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
-                TestNotificationService::Set("Instance destroyed event");
-              });
+          host.InstanceSettings().InstanceDestroyed([&](winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                                                        InstanceDestroyedEventArgs const & /*args*/) {
+            TestNotificationService::Set("Instance destroyed event");
+          });
         });
 
     TestNotificationService::Wait("NegateDeferredCallback called");
@@ -729,10 +729,10 @@ TEST_CLASS (TurboModuleTests) {
           auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
           properties.Set(CppTurboModule::TestName, L"DeferResolveCallbackAfterInstanceUnload");
           properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
-          host.InstanceSettings().InstanceDestroyed(
-              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
-                TestNotificationService::Set("Instance destroyed event");
-              });
+          host.InstanceSettings().InstanceDestroyed([&](winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                                                        InstanceDestroyedEventArgs const & /*args*/) {
+            TestNotificationService::Set("Instance destroyed event");
+          });
         });
 
     TestNotificationService::Wait("NegateDeferredTwoCallbacks called");
@@ -758,10 +758,10 @@ TEST_CLASS (TurboModuleTests) {
           auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
           properties.Set(CppTurboModule::TestName, L"DeferRejectCallbackAfterInstanceUnload");
           properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
-          host.InstanceSettings().InstanceDestroyed(
-              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
-                TestNotificationService::Set("Instance destroyed event");
-              });
+          host.InstanceSettings().InstanceDestroyed([&](winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                                                        InstanceDestroyedEventArgs const & /*args*/) {
+            TestNotificationService::Set("Instance destroyed event");
+          });
         });
 
     TestNotificationService::Wait("NegateDeferredTwoCallbacks called");
@@ -787,10 +787,10 @@ TEST_CLASS (TurboModuleTests) {
           auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
           properties.Set(CppTurboModule::TestName, L"DeferPromiseResolveAfterInstanceUnload");
           properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
-          host.InstanceSettings().InstanceDestroyed(
-              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
-                TestNotificationService::Set("Instance destroyed event");
-              });
+          host.InstanceSettings().InstanceDestroyed([&](winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                                                        InstanceDestroyedEventArgs const & /*args*/) {
+            TestNotificationService::Set("Instance destroyed event");
+          });
         });
 
     TestNotificationService::Wait("NegateDeferredPromise called");
@@ -816,10 +816,10 @@ TEST_CLASS (TurboModuleTests) {
           auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
           properties.Set(CppTurboModule::TestName, L"DeferPromiseRejectAfterInstanceUnload");
           properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
-          host.InstanceSettings().InstanceDestroyed(
-              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
-                TestNotificationService::Set("Instance destroyed event");
-              });
+          host.InstanceSettings().InstanceDestroyed([&](winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                                                        InstanceDestroyedEventArgs const & /*args*/) {
+            TestNotificationService::Set("Instance destroyed event");
+          });
         });
 
     TestNotificationService::Wait("NegateDeferredPromise called");

@@ -1,8 +1,109 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 07 Dec 2025 06:34:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1019
+
+Sun, 07 Dec 2025 06:34:40 GMT
+
+### Changes
+
+- Fix stackoverflow in StructInfo (vmorozov@microsoft.com)
+
+## 0.0.0-canary.1018
+
+Sat, 06 Dec 2025 06:38:46 GMT
+
+### Changes
+
+- solve modal foreground/background issue and only have a closebutton on title bar with no icon (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1017
+
+Fri, 05 Dec 2025 06:34:57 GMT
+
+### Changes
+
+- Fix crash when image loading fails due to network error (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1016
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+- Remove WerRegisterMemoryBlock which causes issues when kernel debugging (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1016
+
+## 0.0.0-canary.1015
+
+Tue, 02 Dec 2025 06:36:52 GMT
+
+### Changes
+
+- Adding override for conversions.h (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1014
+
+Mon, 01 Dec 2025 06:36:40 GMT
+
+### Changes
+
+- Bump fastfloat to 8.0.0 (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1013
+
+Thu, 27 Nov 2025 06:35:01 GMT
+
+### Changes
+
+- disable network domain for modern devtools until 0.83 (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1012
+
+Wed, 26 Nov 2025 06:36:13 GMT
+
+### Changes
+
+- fix outstanding modern debugger issues (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1011
+
+Fri, 21 Nov 2025 06:43:27 GMT
+
+### Changes
+
+- Remove code related to USE_WINUI3 which is now always true (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1010
+
+Thu, 20 Nov 2025 06:39:28 GMT
+
+### Changes
+
+- Fix  Crash after closing DesktopPopupSiteBridge (74712637+iamAbhi-916@users.noreply.github.com)
+- Implement snap point parity for Fabric ScrollView: pagingEnabled (viewport-sized intervals), snapToInterval (custom interval snapping), and snapToAlignment (start/center/end alignment) matching iOS/Android/Paper behavior with priority hierarchy snapToOffsets > snapToInterval > pagingEnabled (nitinkum@microsoft.com)
+
+## 0.0.0-canary.1009
+
+Wed, 19 Nov 2025 06:41:09 GMT
+
+### Changes
+
+- Implement textAlign justify and writingDirection support (ltr/rtl/auto) for Fabric TextInput (nitchaudhary@microsoft.com)
+- Update WinAppSdk to 1.8 (30809111+acoates-ms@users.noreply.github.com)
+- Tooltip positioned incorrectly on non 100% scale factor (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1008
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Changes
+
+- Add HostTargetMetadata with app name and device name for inspector page naming (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.0.0-canary.1007
 

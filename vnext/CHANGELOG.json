@@ -2,6 +2,216 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 07 Dec 2025 06:34:40 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-windows_v0.0.0-canary.1019",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e990ad5a631fa42bf43bddd8ebbfc637ab8e2145",
+            "comment": "Fix stackoverflow in StructInfo"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Dec 2025 06:38:46 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "react-native-windows_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "68eb3ebc53ac9aef1b1ad7eacd110a2fba972c6e",
+            "comment": "solve modal foreground/background issue and only have a closebutton on title bar with no icon"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Dec 2025 06:34:57 GMT",
+      "version": "0.0.0-canary.1017",
+      "tag": "react-native-windows_v0.0.0-canary.1017",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "92d8c80d2ca49669508a461ee9ad43b6809c7847",
+            "comment": "Fix crash when image loading fails due to network error"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Dec 2025 06:40:45 GMT",
+      "version": "0.0.0-canary.1016",
+      "tag": "react-native-windows_v0.0.0-canary.1016",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6099ed486aabbdc654176d4cab27708e24e8ab0c",
+            "comment": "Use 0.0.0-canary.1015 version for public NPM packages"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a2a5684ccabd4407bd6727f6c4eef2d37dfecca8",
+            "comment": "Remove WerRegisterMemoryBlock which causes issues when kernel debugging"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1016",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Dec 2025 06:36:52 GMT",
+      "version": "0.0.0-canary.1015",
+      "tag": "react-native-windows_v0.0.0-canary.1015",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "716b7bf82791939f7f3f37ebab6759aa3ec27dfc",
+            "comment": "Adding override for conversions.h"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Dec 2025 06:36:40 GMT",
+      "version": "0.0.0-canary.1014",
+      "tag": "react-native-windows_v0.0.0-canary.1014",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "857272dbc9d93c3b5d28606500ca21f0c567824f",
+            "comment": "Bump fastfloat to 8.0.0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Nov 2025 06:35:01 GMT",
+      "version": "0.0.0-canary.1013",
+      "tag": "react-native-windows_v0.0.0-canary.1013",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fe510e45f19fa9edd9c29e4a4a6dae120aecc8cc",
+            "comment": "disable network domain for modern devtools until 0.83"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Nov 2025 06:36:13 GMT",
+      "version": "0.0.0-canary.1012",
+      "tag": "react-native-windows_v0.0.0-canary.1012",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "86da8cae251df813195afba5c0e89036157ff24e",
+            "comment": "fix outstanding modern debugger issues"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Nov 2025 06:43:27 GMT",
+      "version": "0.0.0-canary.1011",
+      "tag": "react-native-windows_v0.0.0-canary.1011",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "65c946ff16a2ee05efb471163f569606362caab8",
+            "comment": "Remove code related to USE_WINUI3 which is now always true"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Nov 2025 06:39:28 GMT",
+      "version": "0.0.0-canary.1010",
+      "tag": "react-native-windows_v0.0.0-canary.1010",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9123bc870edd7453c914cdb3f8dbf5df32c3feff",
+            "comment": "Fix  Crash after closing DesktopPopupSiteBridge"
+          },
+          {
+            "author": "nitinkum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "96c6b492ba2a030dbd4707a3e26c52fbef636585",
+            "comment": "Implement snap point parity for Fabric ScrollView: pagingEnabled (viewport-sized intervals), snapToInterval (custom interval snapping), and snapToAlignment (start/center/end alignment) matching iOS/Android/Paper behavior with priority hierarchy snapToOffsets > snapToInterval > pagingEnabled"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Nov 2025 06:41:09 GMT",
+      "version": "0.0.0-canary.1009",
+      "tag": "react-native-windows_v0.0.0-canary.1009",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5bc336fff7a8ce4254217dbafa2f82d01edbcd64",
+            "comment": "Implement textAlign justify and writingDirection support (ltr/rtl/auto) for Fabric TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d9f58dee5a19e0bf7332346f657d79db7c6287e0",
+            "comment": "Update WinAppSdk to 1.8"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c8aa062b19357e1276c26144222ba7552bcaef18",
+            "comment": "Tooltip positioned incorrectly on non 100% scale factor"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Nov 2025 06:41:41 GMT",
+      "version": "0.0.0-canary.1008",
+      "tag": "react-native-windows_v0.0.0-canary.1008",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0d88883294fa78c8e4cfc3b2d052f71ace9a710",
+            "comment": "Add HostTargetMetadata with app name and device name for inspector page naming"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "0.0.0-canary.1007",
       "tag": "react-native-windows_v0.0.0-canary.1007",

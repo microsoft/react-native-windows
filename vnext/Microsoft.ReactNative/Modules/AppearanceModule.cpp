@@ -50,10 +50,6 @@ ApplicationTheme CurrentThemeFromUISettings(const winrt::Windows::UI::ViewManage
 
 ApplicationTheme Appearance::GetCurrentTheme() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess()); // xaml::Application is only accessible on the UI thread
-  if (auto currentApp = xaml::TryGetCurrentUwpXamlApplication()) {
-    return currentApp.RequestedTheme();
-  }
-
   return CurrentThemeFromUISettings(m_uiSettings);
 }
 
@@ -74,11 +70,7 @@ void Appearance::RequeryTheme() noexcept {
 
 void Appearance::InitOnUIThread(const Mso::React::IReactContext &context) noexcept {
   xaml::ApplicationTheme theme = ApplicationTheme::Light;
-  if (auto currentApp = xaml::TryGetCurrentUwpXamlApplication()) {
-    theme = currentApp.RequestedTheme();
-  } else {
-    theme = CurrentThemeFromUISettings(winrt::Windows::UI::ViewManagement::UISettings());
-  }
+  theme = CurrentThemeFromUISettings(winrt::Windows::UI::ViewManagement::UISettings());
 
   winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
   pb.Set(AppearanceCurrentThemePropertyId(), theme);

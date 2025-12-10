@@ -6,6 +6,7 @@
 #include "Timer.g.cpp"
 
 #include <CppWinRTIncludes.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
 #include "ReactCoreInjection.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -13,7 +14,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // Implementation of ITimer based on Windows' DispatcherQueue
 struct ReactTimer : winrt::implements<ReactTimer, ITimer> {
   ReactTimer(const IReactPropertyBag &properties) {
-    const auto queue = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
+    const auto queue = winrt::Microsoft::UI::Dispatching::DispatcherQueue::GetForCurrentThread();
     m_dispatcherQueueTimer = queue.CreateTimer();
   }
 
@@ -42,7 +43,7 @@ struct ReactTimer : winrt::implements<ReactTimer, ITimer> {
   }
 
  private:
-  winrt::dispatching::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
+  winrt::Microsoft::UI::Dispatching::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
 };
 
 Timer::Timer() noexcept {}

@@ -50,9 +50,7 @@ namespace Microsoft.ReactNative.Composition
   runtimeclass Theme {
     Theme(Microsoft.ReactNative.IReactContext reactContext, ICustomResourceLoader resourceLoader);
 
-#ifdef USE_WINUI3
     Microsoft.UI.Composition.CompositionBrush PlatformBrush(String platformColor);
-#endif
 
     Boolean TryGetPlatformColor(String platformColor, out Windows.UI.Color color);
     DOC_STRING("An empty theme is used when the final theme is not yet known.  It will generally return transparent colors.")

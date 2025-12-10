@@ -291,9 +291,11 @@ ImageResponseOrImageErrorInfo ImageFailedResponse::ResolveImage() {
   if (imageOrError.errorInfo->error.empty()) {
     imageOrError.errorInfo->error = "Failed to load image.";
   }
-  for (auto &&[header, value] : m_responseHeaders) {
-    imageOrError.errorInfo->httpResponseHeaders.push_back(
-        std::make_pair<std::string, std::string>(winrt::to_string(header), winrt::to_string(value)));
+  if (m_responseHeaders) {
+    for (auto &&[header, value] : m_responseHeaders) {
+      imageOrError.errorInfo->httpResponseHeaders.push_back(
+          std::make_pair<std::string, std::string>(winrt::to_string(header), winrt::to_string(value)));
+    }
   }
   return imageOrError;
 }

@@ -1,8 +1,105 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 07 Dec 2025 06:34:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1019
+
+Sun, 07 Dec 2025 06:34:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1019
+
+## 0.0.0-canary.1018
+
+Sat, 06 Dec 2025 06:38:46 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1018
+
+## 0.0.0-canary.1017
+
+Fri, 05 Dec 2025 06:34:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1017
+
+## 0.0.0-canary.1016
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1016
+
+## 0.1.458-0
+
+Tue, 02 Dec 2025 06:36:52 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.12.355-0
+
+## 0.1.457
+
+Mon, 01 Dec 2025 06:36:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.354
+
+## 0.1.456
+
+Thu, 27 Nov 2025 06:35:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.353
+
+## 0.1.455
+
+Wed, 26 Nov 2025 06:36:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.352
+
+## 0.1.454
+
+Fri, 21 Nov 2025 06:43:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.351
+
+## 0.1.453
+
+Thu, 20 Nov 2025 06:39:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.350
+
+## 0.1.452
+
+Wed, 19 Nov 2025 06:41:09 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.349
+
+## 0.1.451
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.348
 
 ## 0.1.450
 

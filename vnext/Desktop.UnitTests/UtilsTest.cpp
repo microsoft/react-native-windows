@@ -268,6 +268,85 @@ TEST_CLASS(UtilsTest)
   }
 
 #pragma endregion Base64 Tests
+
+#pragma region FormatString Tests
+
+  TEST_METHOD(UtilsTest_StringFormat_Simple)
+  {
+    std::string result = Microsoft::React::FormatString("Hello, %s!", "World");
+    Assert::AreEqual("Hello, World!", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Integer)
+  {
+    std::string result = Microsoft::React::FormatString("Port: %d", 8081);
+    Assert::AreEqual("Port: 8081", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Multiple)
+  {
+    std::string result = Microsoft::React::FormatString("%s:%d", "localhost", 8081);
+    Assert::AreEqual("localhost:8081", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Complex)
+  {
+    std::string result = Microsoft::React::FormatString(
+      "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s",
+      "localhost:8081",
+      "index",
+      "windows",
+      "true",
+      "false");
+    Assert::AreEqual(
+      "http://localhost:8081/index.bundle?platform=windows&dev=true&hot=false",
+      result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_EmptyString)
+  {
+    std::string result = Microsoft::React::FormatString("");
+    Assert::AreEqual("", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_NullPtr)
+  {
+    std::string result = Microsoft::React::FormatString(nullptr);
+    Assert::AreEqual("", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_NoArgs)
+  {
+    std::string result = Microsoft::React::FormatString("no args here");
+    Assert::AreEqual("no args here", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_LargeString)
+  {
+    std::string longString(1000, 'a');
+    std::string result = Microsoft::React::FormatString("%s", longString.c_str());
+    Assert::AreEqual(longString.c_str(), result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_MixedTypes)
+  {
+    std::string result = Microsoft::React::FormatString(
+      "Int: %d, Uint: %u, Hex: %x, String: %s, Float: %.2f",
+      -42,
+      42u,
+      255,
+      "test",
+      3.14159);
+    Assert::AreEqual("Int: -42, Uint: 42, Hex: ff, String: test, Float: 3.14", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_SpecialChars)
+  {
+    std::string result = Microsoft::React::FormatString("100%% complete");
+    Assert::AreEqual("100% complete", result.c_str());
+  }
+
+#pragma endregion FormatString Tests
 };
 
 // clang-format on
