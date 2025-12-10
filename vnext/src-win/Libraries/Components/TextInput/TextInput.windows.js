@@ -876,7 +876,6 @@ function InternalTextInput(props: TextInputProps): React.Node {
         accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessibilityLabelledBy={_accessibilityLabelledBy}
-        accessibilityState={_accessibilityState}
         accessible={accessible}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
         autoCapitalize={autoCapitalize}

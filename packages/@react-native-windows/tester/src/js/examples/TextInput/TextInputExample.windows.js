@@ -776,7 +776,7 @@ const examples: Array<RNTesterModuleExample> = [
           <ExampleTextInput accessibilityLabel="This is Accessibility Label" />
           <Text>aria-label prop</Text>
           <ExampleTextInput aria-label="This is Aria Label" />
-          </View>
+        </View>
       );
     },
   },

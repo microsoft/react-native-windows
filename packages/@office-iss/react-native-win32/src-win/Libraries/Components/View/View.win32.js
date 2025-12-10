@@ -25,7 +25,7 @@ import type {KeyEvent} from '../../Types/CoreEventTypes';
  *
  * @see https://reactnative.dev/docs/view
  */
-component View(
+const View: component(
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) = React.forwardRef(

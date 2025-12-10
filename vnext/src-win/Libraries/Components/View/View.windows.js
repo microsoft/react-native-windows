@@ -399,6 +399,7 @@ component View(
   return actualView;
 }
 
+// eslint-disable-next-line no-unreachable
 View.displayName = 'View';
 
 export default View;
