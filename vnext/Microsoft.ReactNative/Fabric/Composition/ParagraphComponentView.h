@@ -17,7 +17,7 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-/// @brief Clears any active text selection in the application.
+/// Clears any active text selection in the application.
 /// Called by CompositionEventHandler when pointer is pressed anywhere,
 /// allowing the target ParagraphComponentView to re-establish selection if needed.
 /// This ensures only one text component has selection at a time.
@@ -54,6 +54,9 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::ParagraphProps &paragraphProps() const noexcept;
 
+  // Returns true when text is selectable
+  bool focusable() const noexcept override;
+
   /// @brief Clears the current text selection and redraws the component.
   /// Called when losing focus, when another text starts selection, or when clicking outside text bounds.
   void ClearSelection() noexcept;
@@ -67,6 +70,10 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void onLostFocus(
       const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
+
+  // Keyboard event handler for copy
+  void OnKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
 
   ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -88,6 +95,12 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   // Returns character position at the given point, or -1 if outside text bounds
   // Similar pattern to TextInput's hit testing but using IDWriteTextLayout directly
   int32_t getTextPositionAtPoint(facebook::react::Point pt) noexcept;
+
+  // Returns the currently selected text, or empty string if no selection
+  std::string getSelectedText() const noexcept;
+
+  // Copies currently selected text to the system clipboard
+  void copySelectionToClipboard() noexcept;
 
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;

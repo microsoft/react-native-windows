@@ -13,6 +13,8 @@
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.UI.Input.h>
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
@@ -39,7 +41,8 @@ ParagraphComponentView::ParagraphComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
+          // Disable Background (text draws its own) and FocusVisual (selection highlight is the focus indicator)
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background & ~ComponentViewFeatures::FocusVisual) {}
 
 void ParagraphComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -561,10 +564,7 @@ void ParagraphComponentView::OnPointerReleased(
   int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
   int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
 
-  if (selStart >= 0 && selEnd > selStart) {
-    // TODO: Emit onSelectionChange event to JS
-    // TODO: Extract selected text for clipboard support
-  } else {
+  if (selStart < 0 || selEnd <= selStart) {
     m_selectionStart = -1;
     m_selectionEnd = -1;
   }
@@ -587,12 +587,69 @@ void ParagraphComponentView::onLostFocus(
   Super::onLostFocus(args);
 }
 
+std::string ParagraphComponentView::getSelectedText() const noexcept {
+  int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
+  int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
+
+  if (selStart < 0 || selEnd <= selStart) {
+    return "";
+  }
+
+  std::string fullText = m_attributedStringBox.getValue().getString();
+
+  if (selStart >= static_cast<int32_t>(fullText.length())) {
+    return "";
+  }
+  if (selEnd > static_cast<int32_t>(fullText.length())) {
+    selEnd = static_cast<int32_t>(fullText.length());
+  }
+
+  return fullText.substr(static_cast<size_t>(selStart), static_cast<size_t>(selEnd - selStart));
+}
+
+void ParagraphComponentView::copySelectionToClipboard() noexcept {
+  std::string selectedText = getSelectedText();
+  if (selectedText.empty()) {
+    return;
+  }
+
+  // Convert UTF-8 to wide string for Windows clipboard
+  std::wstring wideText = ::Microsoft::Common::Unicode::Utf8ToUtf16(selectedText);
+
+  winrt::Windows::ApplicationModel::DataTransfer::DataPackage dataPackage;
+  dataPackage.SetText(wideText);
+  winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(dataPackage);
+}
+
+void ParagraphComponentView::OnKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  // Handle Ctrl+C for copy
+  bool isCtrlDown =
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+
+  if (isCtrlDown && args.Key() == winrt::Windows::System::VirtualKey::C) {
+    if (m_selectionStart >= 0 && m_selectionEnd >= 0 && m_selectionStart != m_selectionEnd) {
+      copySelectionToClipboard();
+      args.Handled(true);
+      return;
+    }
+  }
+
+  Super::OnKeyDown(args);
+}
+
 std::string ParagraphComponentView::DefaultControlType() const noexcept {
   return "text";
 }
 
 std::string ParagraphComponentView::DefaultAccessibleName() const noexcept {
   return m_attributedStringBox.getValue().getString();
+}
+
+bool ParagraphComponentView::focusable() const noexcept {
+  // Text is focusable when it's selectable to receive keyboard events
+  return paragraphProps().isSelectable;
 }
 
 winrt::Microsoft::ReactNative::ComponentView ParagraphComponentView::Create(
