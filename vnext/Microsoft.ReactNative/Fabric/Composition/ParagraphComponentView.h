@@ -58,6 +58,9 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   // Returns true when text is selectable
   bool focusable() const noexcept override;
 
+  // Returns I-beam cursor for selectable text
+  std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept override;
+
   /// @brief Clears the current text selection and redraws the component.
   /// Called when losing focus, when another text starts selection, or when clicking outside text bounds.
   void ClearSelection() noexcept;

@@ -771,6 +771,14 @@ bool ParagraphComponentView::focusable() const noexcept {
   return paragraphProps().isSelectable;
 }
 
+std::pair<facebook::react::Cursor, HCURSOR> ParagraphComponentView::cursor() const noexcept {
+  // Returns I-beam cursor for selectable text
+  if (paragraphProps().isSelectable) {
+    return {facebook::react::Cursor::Text, nullptr};
+  }
+  return Super::cursor();
+}
+
 winrt::Microsoft::ReactNative::ComponentView ParagraphComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
