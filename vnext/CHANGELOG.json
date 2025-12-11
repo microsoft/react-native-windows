@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Dec 2025 06:34:17 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-windows_v0.0.0-canary.1019",
+      "comments": {
+        "none": [
+          {
+            "author": "suramaswamy@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eb39c9c559b1daad165f1f3ad82c33692b855614",
+            "comment": "Initialize Xaml on demand only for module authors"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 07 Dec 2025 06:34:40 GMT",
       "version": "0.0.0-canary.1019",
       "tag": "react-native-windows_v0.0.0-canary.1019",
