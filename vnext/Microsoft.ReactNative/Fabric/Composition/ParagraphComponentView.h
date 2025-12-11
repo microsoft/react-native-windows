@@ -6,13 +6,13 @@
 
 #include "Composition.ParagraphComponentView.g.h"
 #include <Fabric/ComponentView.h>
-#include <chrono>
 #include <d2d1_1.h>
 #include <dwrite.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/components/text/ParagraphProps.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include <chrono>
 #include "CompositionHelpers.h"
 #include "CompositionViewComponentView.h"
 
@@ -74,12 +74,10 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void OnPointerReleased(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
-  void onLostFocus(
-      const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
+  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 
   // Keyboard event handler for copy
-  void OnKeyDown(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
 
   ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,

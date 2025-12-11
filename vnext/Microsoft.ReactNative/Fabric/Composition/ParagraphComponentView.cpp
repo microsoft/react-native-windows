@@ -128,7 +128,7 @@ facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPo
     facebook::react::Point pt) noexcept {
   // Test if text at this point is selectable
   bool selectable = isTextSelectableAtPoint(pt);
-  
+
   if (m_attributedStringBox.getValue().getFragments().size() && m_textLayout) {
     BOOL isTrailingHit = false;
     BOOL isInside = false;
@@ -169,7 +169,7 @@ bool ParagraphComponentView::isTextSelectableAtPoint(facebook::react::Point pt) 
     BOOL isInside = false;
     DWRITE_HIT_TEST_METRICS metrics;
     winrt::check_hresult(m_textLayout->HitTestPoint(pt.x, pt.y, &isTrailingHit, &isInside, &metrics));
-    
+
     if (isInside) {
       uint32_t textPosition = metrics.textPosition;
 
@@ -354,7 +354,6 @@ void ParagraphComponentView::DrawSelectionHighlight(
     float offsetX,
     float offsetY,
     float pointScaleFactor) noexcept {
-
   // Draws if we have a valid selection
   int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
   int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
@@ -416,11 +415,7 @@ void ParagraphComponentView::DrawSelectionHighlight(
   // Draw rectangles for each hit test metric
   for (UINT32 i = 0; i < actualCount; i++) {
     const auto &metric = hitTestMetrics[i];
-    D2D1_RECT_F rect = {
-        metric.left,
-        metric.top,
-        metric.left + metric.width,
-        metric.top + metric.height};
+    D2D1_RECT_F rect = {metric.left, metric.top, metric.left + metric.width, metric.top + metric.height};
     renderTarget.FillRectangle(&rect, selectionBrush.get());
   }
 
@@ -501,13 +496,12 @@ void ParagraphComponentView::OnPointerPressed(
   }
 
   auto position = pp.Position();
-  
+
   facebook::react::Point localPt{
-      position.X - m_layoutMetrics.frame.origin.x,
-      position.Y - m_layoutMetrics.frame.origin.y};
+      position.X - m_layoutMetrics.frame.origin.x, position.Y - m_layoutMetrics.frame.origin.y};
 
   int32_t charPosition = getTextPositionAtPoint(localPt);
-  
+
   if (charPosition >= 0) {
     // Clears any previous text selection in another component
     ClearCurrentTextSelection();
@@ -515,9 +509,8 @@ void ParagraphComponentView::OnPointerPressed(
     // Check for double-click
     auto now = std::chrono::steady_clock::now();
     auto timeSinceLastClick = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastClickTime);
-    bool isDoubleClick = (timeSinceLastClick.count() < 500) &&
-                         (m_lastClickPosition >= 0) &&
-                         (std::abs(charPosition - m_lastClickPosition) <= 1);
+    bool isDoubleClick = (timeSinceLastClick.count() < 500) && (m_lastClickPosition >= 0) &&
+        (std::abs(charPosition - m_lastClickPosition) <= 1);
 
     // Update last click tracking
     m_lastClickTime = now;
@@ -559,13 +552,12 @@ void ParagraphComponentView::OnPointerMoved(
 
   auto pp = args.GetCurrentPoint(-1);
   auto position = pp.Position();
-  
+
   facebook::react::Point localPt{
-      position.X - m_layoutMetrics.frame.origin.x,
-      position.Y - m_layoutMetrics.frame.origin.y};
+      position.X - m_layoutMetrics.frame.origin.x, position.Y - m_layoutMetrics.frame.origin.y};
 
   int32_t charPosition = getTextPositionAtPoint(localPt);
-  
+
   if (charPosition >= 0 && charPosition != m_selectionEnd) {
     m_selectionEnd = charPosition;
 
