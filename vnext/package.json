@@ -68,7 +68,7 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.81.0-preview.10",
+    "@react-native-windows/codegen": "0.81.0-preview.3",
     "@react-native/metro-config": "0.81.5",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.37",
