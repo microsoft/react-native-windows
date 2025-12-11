@@ -7,6 +7,9 @@
 ; Ignore fb_internal modules
 <PROJECT_ROOT>/packages/react-native/src/fb_internal/.*
 
+; Ignore all flow directory contents in node_modules
+.*/flow/.*
+
 ; These modules have base components and Windows versions.
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step

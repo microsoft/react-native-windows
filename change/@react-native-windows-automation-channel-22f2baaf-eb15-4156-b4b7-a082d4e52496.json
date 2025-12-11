@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 81.5",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.81.0-rc.0",
+  "baseVersion": "0.81.5",
   "overrides": [
     {
       "type": "copy",
@@ -124,7 +124,7 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "e2ec4b71e3cd614682d9be1551b3a2994ea51823",
+      "baseHash": "9aa7d0134a84831e699156845ec92d0a2fc8c108",
       "issue": 5688
     },
     {

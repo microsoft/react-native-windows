@@ -5,6 +5,9 @@
 .*/*[.]macos.js
 .*/*[.]windesktop.js
 
+; Ignore all flow directory contents in node_modules
+.*/flow/.*
+
 ; Ignore fb_internal modules
 <PROJECT_ROOT>/packages/react-native/src/fb_internal/.*
 
