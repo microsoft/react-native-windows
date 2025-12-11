@@ -506,9 +506,27 @@ void ParagraphComponentView::OnPointerPressed(
     // Clears any previous text selection in another component
     ClearCurrentTextSelection();
 
-    m_selectionStart = charPosition;
-    m_selectionEnd = charPosition;
-    m_isSelecting = true;
+    // Check for double-click
+    auto now = std::chrono::steady_clock::now();
+    auto timeSinceLastClick = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastClickTime);
+    bool isDoubleClick = (timeSinceLastClick.count() < 500) &&
+                         (m_lastClickPosition >= 0) &&
+                         (std::abs(charPosition - m_lastClickPosition) <= 1);
+
+    // Update last click tracking
+    m_lastClickTime = now;
+    m_lastClickPosition = charPosition;
+
+    if (isDoubleClick) {
+      selectWordAtPosition(charPosition);
+      m_isSelecting = false;
+    } else {
+      // Single-click: start drag selection
+      m_selectionStart = charPosition;
+      m_selectionEnd = charPosition;
+      m_isSelecting = true;
+    }
+
     s_currentlySelectedText = get_weak();
 
     // Focuses so we receive onLostFocus when clicking elsewhere
@@ -520,6 +538,7 @@ void ParagraphComponentView::OnPointerPressed(
   } else {
     // Click outside text bounds
     ClearSelection();
+    m_lastClickPosition = -1;
     Super::OnPointerPressed(args);
   }
 }
@@ -619,6 +638,32 @@ void ParagraphComponentView::copySelectionToClipboard() noexcept {
   winrt::Windows::ApplicationModel::DataTransfer::DataPackage dataPackage;
   dataPackage.SetText(wideText);
   winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(dataPackage);
+}
+
+void ParagraphComponentView::selectWordAtPosition(int32_t charPosition) noexcept {
+  std::string fullText = m_attributedStringBox.getValue().getString();
+  if (fullText.empty() || charPosition < 0 || charPosition >= static_cast<int32_t>(fullText.length())) {
+    return;
+  }
+
+  // Finds word boundaries
+  int32_t wordStart = charPosition;
+  int32_t wordEnd = charPosition;
+
+  while (wordStart > 0 && std::isalnum(static_cast<unsigned char>(fullText[wordStart - 1]))) {
+    wordStart--;
+  }
+
+  while (wordEnd < static_cast<int32_t>(fullText.length()) &&
+         std::isalnum(static_cast<unsigned char>(fullText[wordEnd]))) {
+    wordEnd++;
+  }
+
+  if (wordEnd > wordStart) {
+    m_selectionStart = wordStart;
+    m_selectionEnd = wordEnd;
+    DrawText();
+  }
 }
 
 void ParagraphComponentView::OnKeyDown(

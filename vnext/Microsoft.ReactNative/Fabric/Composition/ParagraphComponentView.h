@@ -6,6 +6,7 @@
 
 #include "Composition.ParagraphComponentView.g.h"
 #include <Fabric/ComponentView.h>
+#include <chrono>
 #include <d2d1_1.h>
 #include <dwrite.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
@@ -102,6 +103,9 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   // Copies currently selected text to the system clipboard
   void copySelectionToClipboard() noexcept;
 
+  // Finds word boundaries at the given character position and sets selection
+  void selectWordAtPosition(int32_t charPosition) noexcept;
+
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;
@@ -109,11 +113,16 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   bool m_requireRedraw{true};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
 
-  // Selection state - character indices (not pixel positions)
+  // Selection state - character indices
   // -1 means no selection
   int32_t m_selectionStart{-1};
   int32_t m_selectionEnd{-1};
-  bool m_isSelecting{false}; // True while pointer is pressed and dragging
+  // True while pointer is pressed and dragging
+  bool m_isSelecting{false};
+
+  // Double-click detection
+  std::chrono::steady_clock::time_point m_lastClickTime{};
+  int32_t m_lastClickPosition{-1};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
