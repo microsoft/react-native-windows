@@ -743,8 +743,12 @@ void ParagraphComponentView::OnKeyDown(
   if (isCtrlDown && args.Key() == winrt::Windows::System::VirtualKey::A) {
     std::string fullText = m_attributedStringBox.getValue().getString();
     if (!fullText.empty()) {
+      ClearCurrentTextSelection();
+
       m_selectionStart = 0;
       m_selectionEnd = static_cast<int32_t>(fullText.length());
+      s_currentlySelectedText = get_weak();
+
       DrawText();
       args.Handled(true);
       return;
