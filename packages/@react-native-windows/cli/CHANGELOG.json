@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 10 Dec 2025 18:44:30 GMT",
+      "version": "0.81.0-preview.3",
+      "tag": "@react-native-windows/cli_v0.81.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "f8c11e35831ed3a036757abf53f7d3959c186634",
+            "comment": "Fix NPM dist tags and make some NPM private"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.81.0-preview.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 16:41:29 GMT",
       "version": "0.81.0-preview.1",
       "tag": "@react-native-windows/cli_v0.81.0-preview.1",

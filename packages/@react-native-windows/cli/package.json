@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.81.0-preview.1",
+  "version": "0.81.0-preview.3",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,7 +17,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.81.0-preview.1",
+    "@react-native-windows/codegen": "0.81.0-preview.3",
     "@react-native-windows/fs": "0.81.0-preview.1",
     "@react-native-windows/package-utils": "0.81.0-preview.1",
     "@react-native-windows/telemetry": "0.81.0-preview.1",

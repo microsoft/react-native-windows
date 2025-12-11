@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 30 Oct 2025 05:29:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 10 Dec 2025 18:44:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.10
+
+Wed, 10 Dec 2025 18:44:30 GMT
+
+### Changes
+
+- Fix NPM dist tags and make some NPM private (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.81.0-preview.10
 
 ## 0.12.343
 
