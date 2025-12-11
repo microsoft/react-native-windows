@@ -1,0 +1,7 @@
+{
+  "comment": "adding lint fix",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}

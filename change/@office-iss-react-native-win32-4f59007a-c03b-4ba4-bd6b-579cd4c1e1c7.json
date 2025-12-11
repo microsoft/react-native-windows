@@ -1,0 +1,7 @@
+{
+  "comment": "integrate react native",
+  "type": "prerelease",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
