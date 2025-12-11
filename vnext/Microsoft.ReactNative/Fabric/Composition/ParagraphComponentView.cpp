@@ -623,14 +623,27 @@ void ParagraphComponentView::copySelectionToClipboard() noexcept {
 
 void ParagraphComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  // Handle Ctrl+C for copy
+  // Check if Ctrl is pressed
   bool isCtrlDown =
       (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
 
+  // Handle Ctrl+C for copy
   if (isCtrlDown && args.Key() == winrt::Windows::System::VirtualKey::C) {
     if (m_selectionStart >= 0 && m_selectionEnd >= 0 && m_selectionStart != m_selectionEnd) {
       copySelectionToClipboard();
+      args.Handled(true);
+      return;
+    }
+  }
+
+  // Handle Ctrl+A for select all
+  if (isCtrlDown && args.Key() == winrt::Windows::System::VirtualKey::A) {
+    std::string fullText = m_attributedStringBox.getValue().getString();
+    if (!fullText.empty()) {
+      m_selectionStart = 0;
+      m_selectionEnd = static_cast<int32_t>(fullText.length());
+      DrawText();
       args.Handled(true);
       return;
     }
