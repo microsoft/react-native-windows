@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/eslint-config",
   "version": "1.2.36",
+  "private": true,
   "license": "MIT",
   "main": "eslintrc.js",
   "repository": {
@@ -22,11 +23,10 @@
     "prettier": "2.8.8"
   },
   "peerDependencies": {
-    "eslint": "*",
-    "prettier": "*"
+    "eslint": "^8.19.0",
+    "prettier": "^2.8.8"
   },
   "engines": {
     "node": ">= 18"
-  },
-  "private": true
+  }
 }

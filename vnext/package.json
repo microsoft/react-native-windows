@@ -85,7 +85,7 @@
     "prettier": "2.8.8",
     "react": "19.1.0",
     "react-native": "0.80.0",
-    "react-native-platform-override": "^1.9.56",
+    "react-native-platform-override": "0.80.4",
     "react-refresh": "^0.14.0",
     "typescript": "5.0.4"
   },

@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/doxysaurus",
   "version": "0.4.55",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -57,6 +58,5 @@
   ],
   "engines": {
     "node": ">= 18"
-  },
-  "private": true
+  }
 }
