@@ -17,6 +17,7 @@ extern const char AndroidDrawerLayoutComponentName[] = "AndroidDrawerLayout";
 extern const char AndroidSwipeRefreshLayoutComponentName[] = "AndroidSwipeRefreshLayout";
 extern const char DebuggingOverlayComponentName[] = "DebuggingOverlay";
 extern const char PullToRefreshViewComponentName[] = "PullToRefreshView";
+extern const char SwitchComponentName[] = "Switch";
 extern const char UnimplementedNativeViewComponentName[] = "UnimplementedNativeView";
 
 } // namespace facebook::react

@@ -681,6 +681,12 @@
       "baseHash": "6de61fb2342d9cdfad73a28c8d9cf39d2097a34b"
     },
     {
+      "type": "patch",
+      "file": "src-win/src/private/specs_DEPRECATED/components/SwitchNativeComponent.js",
+      "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/SwitchNativeComponent.js",
+      "baseHash": "ef274b26bb96c786b0137ca34561d4c53ab37faa"
+    },
+    {
       "type": "platform",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeAppTheme.js"
     },

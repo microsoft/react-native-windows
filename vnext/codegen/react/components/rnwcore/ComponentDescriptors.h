@@ -21,6 +21,7 @@ using AndroidDrawerLayoutComponentDescriptor = ConcreteComponentDescriptor<Andro
 using AndroidSwipeRefreshLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidSwipeRefreshLayoutShadowNode>;
 using DebuggingOverlayComponentDescriptor = ConcreteComponentDescriptor<DebuggingOverlayShadowNode>;
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;
+using SwitchComponentDescriptor = ConcreteComponentDescriptor<SwitchShadowNode>;
 using UnimplementedNativeViewComponentDescriptor = ConcreteComponentDescriptor<UnimplementedNativeViewShadowNode>;
 
 void rnwcore_registerComponentDescriptorsFromCodegen(
