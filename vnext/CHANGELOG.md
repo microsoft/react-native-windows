@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 08 Dec 2025 16:29:34 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 11 Dec 2025 15:30:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.5
+
+Thu, 11 Dec 2025 15:30:44 GMT
+
+### Patches
+
+- Fix NPM dist tags and make some NPM private (#15416) (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.80.1
+- Bump @react-native-windows/codegen to v0.80.1
+- Bump react-native-platform-override to v0.80.5
 
 ## 0.80.4
 

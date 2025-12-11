@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 11 Dec 2025 15:30:44 GMT",
+      "version": "0.80.1",
+      "tag": "@react-native-windows/codegen_v0.80.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "2f4935ac69841dfca983dd947ce93d4a11e04c8d",
+            "comment": "Fix NPM dist tags and make some NPM private (#15416)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Oct 2025 23:58:54 GMT",
       "version": "0.80.0",
       "tag": "@react-native-windows/codegen_v0.80.0",
