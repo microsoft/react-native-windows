@@ -134,8 +134,9 @@ facebook::react::Tag ContentIslandComponentView::hitTest(
   // Check if the point is within the bounds of this ContentIslandComponentView.
   // This ensures that hit tests correctly return this view's tag for UIA purposes,
   // even when the actual content (XAML buttons, etc.) is hosted in the ContentIsland.
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+  auto props = viewProps();
+  if ((ignorePointerEvents || props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
