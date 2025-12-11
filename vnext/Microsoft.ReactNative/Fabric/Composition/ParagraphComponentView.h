@@ -18,6 +18,8 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+constexpr D2D1_COLOR_F kDefaultSelectionColor = {0.0f, 0.47f, 0.84f, 0.3f};
+
 /// Clears any active text selection in the application.
 /// Called by CompositionEventHandler when pointer is pressed anywhere,
 /// allowing the target ParagraphComponentView to re-establish selection if needed.

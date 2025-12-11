@@ -403,12 +403,10 @@ void ParagraphComponentView::DrawSelectionHighlight(
     return;
   }
 
-  // Create a selection highlight brush (semi-transparent blue)
+  // Create a selection highlight brush
   // TODO: use prop selectionColor if provided
   winrt::com_ptr<ID2D1SolidColorBrush> selectionBrush;
-  hr = renderTarget.CreateSolidColorBrush(
-      D2D1::ColorF(0.0f, 0.47f, 0.84f, 0.3f),
-      selectionBrush.put());
+  hr = renderTarget.CreateSolidColorBrush(kDefaultSelectionColor, selectionBrush.put());
 
   if (FAILED(hr)) {
     renderTarget.SetDpi(oldDpiX, oldDpiY);
