@@ -30,7 +30,7 @@
     "@types/node": "^22.14.0",
     "@types/parse-path": "^7.1.0",
     "@types/shell-quote": "^1.7.5",
-    "beachball": "^2.20.0",
+    "beachball": "^2.60.1",
     "eslint": "^8.19.0",
     "prettier": "2.8.8",
     "shell-quote": "^1.8.1",
