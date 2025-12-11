@@ -20,10 +20,7 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 constexpr D2D1_COLOR_F kDefaultSelectionColor = {0.0f, 0.47f, 0.84f, 0.3f};
 
-/// Clears any active text selection in the application.
-/// Called by CompositionEventHandler when pointer is pressed anywhere,
-/// allowing the target ParagraphComponentView to re-establish selection if needed.
-/// This ensures only one text component has selection at a time.
+// Clears any active text selection in the application.
 void ClearCurrentTextSelection() noexcept;
 
 struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, ViewComponentView> {
@@ -63,8 +60,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   // Returns I-beam cursor for selectable text
   std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept override;
 
-  /// @brief Clears the current text selection and redraws the component.
-  /// Called when losing focus, when another text starts selection, or when clicking outside text bounds.
+  // Called when losing focus, when another text starts selection, or when clicking outside text bounds.
   void ClearSelection() noexcept;
 
   // Text selection pointer event handlers
@@ -95,9 +91,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
   bool isTextSelectableAtPoint(facebook::react::Point pt) noexcept;
 
-  // Text selection support
   // Returns character position at the given point, or -1 if outside text bounds
-  // Similar pattern to TextInput's hit testing but using IDWriteTextLayout directly
   int32_t getTextPositionAtPoint(facebook::react::Point pt) noexcept;
 
   // Returns the currently selected text, or empty string if no selection
@@ -123,7 +117,6 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   // -1 means no selection
   int32_t m_selectionStart{-1};
   int32_t m_selectionEnd{-1};
-  // True while pointer is pressed and dragging
   bool m_isSelecting{false};
 
   // Double-click detection
