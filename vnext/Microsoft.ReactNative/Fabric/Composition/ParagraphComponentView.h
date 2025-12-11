@@ -106,6 +106,9 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   // Finds word boundaries at the given character position and sets selection
   void selectWordAtPosition(int32_t charPosition) noexcept;
 
+  // Shows a context menu with Copy/Select All options on right-click
+  void ShowContextMenu() noexcept;
+
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;

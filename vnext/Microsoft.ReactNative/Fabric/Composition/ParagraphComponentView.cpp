@@ -494,6 +494,14 @@ void ParagraphComponentView::OnPointerPressed(
   }
 
   auto pp = args.GetCurrentPoint(-1);
+
+  // Ignores right-click
+  if (pp.Properties().PointerUpdateKind() ==
+      winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonPressed) {
+    args.Handled(true);
+    return;
+  }
+
   auto position = pp.Position();
   
   facebook::react::Point localPt{
@@ -572,6 +580,18 @@ void ParagraphComponentView::OnPointerMoved(
 
 void ParagraphComponentView::OnPointerReleased(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  // Check for right-click to show context menu
+  auto pp = args.GetCurrentPoint(-1);
+  if (pp.Properties().PointerUpdateKind() ==
+      winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonReleased) {
+    const auto &props = paragraphProps();
+    if (props.isSelectable) {
+      ShowContextMenu();
+      args.Handled(true);
+      return;
+    }
+  }
+
   if (!m_isSelecting) {
     Super::OnPointerReleased(args);
     return;
@@ -664,6 +684,43 @@ void ParagraphComponentView::selectWordAtPosition(int32_t charPosition) noexcept
     m_selectionEnd = wordEnd;
     DrawText();
   }
+}
+
+void ParagraphComponentView::ShowContextMenu() noexcept {
+  HMENU menu = CreatePopupMenu();
+  if (!menu) {
+    return;
+  }
+
+  bool hasSelection = (m_selectionStart >= 0 && m_selectionEnd >= 0 && m_selectionStart != m_selectionEnd);
+  std::string fullText = m_attributedStringBox.getValue().getString();
+  bool hasText = !fullText.empty();
+
+  // Add menu items (1 = Copy, 2 = Select All)
+  AppendMenuW(menu, MF_STRING | (hasSelection ? 0 : MF_GRAYED), 1, L"Copy");
+  AppendMenuW(menu, MF_STRING | (hasText ? 0 : MF_GRAYED), 2, L"Select All");
+
+  // Get cursor position for menu placement
+  POINT cursorPos;
+  GetCursorPos(&cursorPos);
+
+  HWND hwnd = GetActiveWindow();
+
+  // Show the menu and get the selected command
+  int cmd = TrackPopupMenu(
+      menu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY, cursorPos.x, cursorPos.y, 0, hwnd, NULL);
+
+  if (cmd == 1) {
+    // Copy
+    copySelectionToClipboard();
+  } else if (cmd == 2) {
+    // Select All
+    m_selectionStart = 0;
+    m_selectionEnd = static_cast<int32_t>(fullText.length());
+    DrawText();
+  }
+
+  DestroyMenu(menu);
 }
 
 void ParagraphComponentView::OnKeyDown(
