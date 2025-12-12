@@ -15,6 +15,7 @@
 #include <winrt/Windows.UI.Input.h>
 #include "Composition.Input.h"
 #include "CompositionViewComponentView.h"
+#include "ParagraphComponentView.h"
 #include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
@@ -1095,6 +1096,13 @@ void CompositionEventHandler::onPointerExited(
 void CompositionEventHandler::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  // Clears any active text selection when left pointer is pressed
+  // Don't clear on right-click
+  if (pointerPoint.Properties().PointerUpdateKind() !=
+      winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonPressed) {
+    winrt::Microsoft::ReactNative::Composition::implementation::ClearCurrentTextSelection();
+  }
+
   PointerId pointerId = pointerPoint.PointerId();
 
   auto staleTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
