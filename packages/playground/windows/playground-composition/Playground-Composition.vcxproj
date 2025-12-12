@@ -129,7 +129,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="CustomComponent.cpp" />
     <ClCompile Include="Playground-Composition.cpp" />
     <ClCompile Include="YogaXamlPanel.cpp" />
   </ItemGroup>
