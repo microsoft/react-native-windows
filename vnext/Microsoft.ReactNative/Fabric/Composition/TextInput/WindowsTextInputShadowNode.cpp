@@ -15,12 +15,8 @@
 
 namespace facebook::react {
 
-<<<<<<< Upstream
 // NOLINTNEXTLINE(modernize-avoid-c-arrays)
-extern const char AndroidTextInputComponentName[] = "AndroidTextInput";
-=======
 extern const char WindowsTextInputComponentName[] = "WindowsTextInput";
->>>>>>> Override
 
 void WindowsTextInputShadowNode::setTextLayoutManager(std::shared_ptr<const TextLayoutManager> textLayoutManager) {
   ensureUnsealed();

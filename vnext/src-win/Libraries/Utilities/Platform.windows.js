@@ -63,15 +63,9 @@ const Platform: PlatformType = {
     return false;
   },
   select: <T>(spec: PlatformSelectSpec<T>): T =>
-<<<<<<< Upstream
-    'android' in spec
-      ? // $FlowFixMe[incompatible-type]
-        spec.android
-=======
     'windows' in spec
-      ? // $FlowFixMe[incompatible-return]
+      ? // $FlowFixMe[incompatible-type]
         spec.windows
->>>>>>> Override
       : 'native' in spec
         ? // $FlowFixMe[incompatible-type]
           spec.native

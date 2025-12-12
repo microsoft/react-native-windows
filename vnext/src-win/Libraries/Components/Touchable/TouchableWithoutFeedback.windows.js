@@ -322,15 +322,9 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     }
   }
 
-<<<<<<< Upstream
   // $FlowFixMe[incompatible-type]
-  return cloneElement(element, elementProps, ...children);
-}
-=======
-  // $FlowFixMe[incompatible-call]
   return cloneElement(element, {...elementProps, ref}, ...children);
 });
 
 export default TouchableWithoutFeedback;
 // Windows]
->>>>>>> Override
