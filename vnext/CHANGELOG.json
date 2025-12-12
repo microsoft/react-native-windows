@@ -2,6 +2,66 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Dec 2025 06:34:17 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-windows_v0.0.0-canary.1019",
+      "comments": {
+        "none": [
+          {
+            "author": "suramaswamy@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eb39c9c559b1daad165f1f3ad82c33692b855614",
+            "comment": "Initialize Xaml on demand only for module authors"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 07 Dec 2025 06:34:40 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-windows_v0.0.0-canary.1019",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e990ad5a631fa42bf43bddd8ebbfc637ab8e2145",
+            "comment": "Fix stackoverflow in StructInfo"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Dec 2025 06:38:46 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "react-native-windows_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "68eb3ebc53ac9aef1b1ad7eacd110a2fba972c6e",
+            "comment": "solve modal foreground/background issue and only have a closebutton on title bar with no icon"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Dec 2025 06:34:57 GMT",
+      "version": "0.0.0-canary.1017",
+      "tag": "react-native-windows_v0.0.0-canary.1017",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "92d8c80d2ca49669508a461ee9ad43b6809c7847",
+            "comment": "Fix crash when image loading fails due to network error"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Dec 2025 06:40:45 GMT",
       "version": "0.0.0-canary.1016",
       "tag": "react-native-windows_v0.0.0-canary.1016",
