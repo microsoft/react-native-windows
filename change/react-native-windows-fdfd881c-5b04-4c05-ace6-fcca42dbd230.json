@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Implements selectable for Text on windows",
+  "comment": "Implements selectable for <Text>",
   "packageName": "react-native-windows",
   "email": "74712637+iamAbhi-916@users.noreply.github.com",
   "dependentChangeType": "patch"
