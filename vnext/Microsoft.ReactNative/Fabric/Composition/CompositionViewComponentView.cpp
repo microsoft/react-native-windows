@@ -801,8 +801,8 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_LiveSettingPropertyId,
-      oldViewProps.accessibilityLiveRegion,
-      newViewProps.accessibilityLiveRegion);
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(oldViewProps.accessibilityLiveRegion),
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(newViewProps.accessibilityLiveRegion));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(), UIA_LevelPropertyId, oldViewProps.accessibilityLevel, newViewProps.accessibilityLevel);
