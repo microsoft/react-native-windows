@@ -140,11 +140,6 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-      <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlHost.cpp">
-      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true' OR '$(SupportWinUI3Islands)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
@@ -244,11 +239,6 @@
       <SubType>Code</SubType>
     </ClInclude>
 	<ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.h">
-      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true' OR '$(SupportWinUI3Islands)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-      <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlHost.h">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true' OR '$(SupportWinUI3Islands)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\XamlApplication.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -610,7 +600,6 @@
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl" />
     <Midl Condition="('$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true') AND '$(SupportWinUI3Islands)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl" />
-    <Midl Condition="('$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true') AND '$(SupportWinUI3Islands)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IXamlProvider.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />

@@ -24,6 +24,7 @@
     "@react-native-windows/package-utils": "^0.0.0-canary.96",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
+    "minimatch": "^10.0.3",
     "chalk": "^4.1.0",
     "simple-git": "^3.3.0",
     "source-map-support": "^0.5.19",
