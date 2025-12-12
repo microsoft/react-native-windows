@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR by using GetLiveSetting() conversion function",
-  "packageName": "react-native-windows",
-  "email": "ankudutt101@gmail.com",
-  "dependentChangeType": "patch"
-}
