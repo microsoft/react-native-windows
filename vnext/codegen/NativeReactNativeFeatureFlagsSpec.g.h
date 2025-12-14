@@ -65,17 +65,20 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{45, L"fuseboxNetworkInspectionEnabled"},
       SyncMethod<bool() noexcept>{46, L"hideOffscreenVirtualViewsOnIOS"},
       SyncMethod<double() noexcept>{47, L"preparedTextCacheSize"},
-      SyncMethod<bool() noexcept>{48, L"traceTurboModulePromiseRejectionsOnAndroid"},
-      SyncMethod<bool() noexcept>{49, L"updateRuntimeShadowNodeReferencesOnCommit"},
-      SyncMethod<bool() noexcept>{50, L"useAlwaysAvailableJSErrorHandling"},
-      SyncMethod<bool() noexcept>{51, L"useFabricInterop"},
-      SyncMethod<bool() noexcept>{52, L"useNativeViewConfigsInBridgelessMode"},
-      SyncMethod<bool() noexcept>{53, L"useOptimizedEventBatchingOnAndroid"},
-      SyncMethod<bool() noexcept>{54, L"useRawPropsJsiValue"},
-      SyncMethod<bool() noexcept>{55, L"useShadowNodeStateOnClone"},
-      SyncMethod<bool() noexcept>{56, L"useTurboModuleInterop"},
-      SyncMethod<bool() noexcept>{57, L"useTurboModules"},
-      SyncMethod<double() noexcept>{58, L"virtualViewPrerenderRatio"},
+      SyncMethod<bool() noexcept>{48, L"preventShadowTreeCommitExhaustion"},
+      SyncMethod<bool() noexcept>{49, L"traceTurboModulePromiseRejectionsOnAndroid"},
+      SyncMethod<bool() noexcept>{50, L"updateRuntimeShadowNodeReferencesOnCommit"},
+      SyncMethod<bool() noexcept>{51, L"useAlwaysAvailableJSErrorHandling"},
+      SyncMethod<bool() noexcept>{52, L"useFabricInterop"},
+      SyncMethod<bool() noexcept>{53, L"useNativeEqualsInNativeReadableArrayAndroid"},
+      SyncMethod<bool() noexcept>{54, L"useNativeTransformHelperAndroid"},
+      SyncMethod<bool() noexcept>{55, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{56, L"useOptimizedEventBatchingOnAndroid"},
+      SyncMethod<bool() noexcept>{57, L"useRawPropsJsiValue"},
+      SyncMethod<bool() noexcept>{58, L"useShadowNodeStateOnClone"},
+      SyncMethod<bool() noexcept>{59, L"useTurboModuleInterop"},
+      SyncMethod<bool() noexcept>{60, L"useTurboModules"},
+      SyncMethod<double() noexcept>{61, L"virtualViewPrerenderRatio"},
   };
 
   template <class TModule>
@@ -324,56 +327,71 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(preparedTextCacheSize) static double preparedTextCacheSize() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           48,
+          "preventShadowTreeCommitExhaustion",
+          "    REACT_SYNC_METHOD(preventShadowTreeCommitExhaustion) bool preventShadowTreeCommitExhaustion() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(preventShadowTreeCommitExhaustion) static bool preventShadowTreeCommitExhaustion() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          49,
           "traceTurboModulePromiseRejectionsOnAndroid",
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) static bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          49,
+          50,
           "updateRuntimeShadowNodeReferencesOnCommit",
           "    REACT_SYNC_METHOD(updateRuntimeShadowNodeReferencesOnCommit) bool updateRuntimeShadowNodeReferencesOnCommit() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(updateRuntimeShadowNodeReferencesOnCommit) static bool updateRuntimeShadowNodeReferencesOnCommit() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          50,
+          51,
           "useAlwaysAvailableJSErrorHandling",
           "    REACT_SYNC_METHOD(useAlwaysAvailableJSErrorHandling) bool useAlwaysAvailableJSErrorHandling() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useAlwaysAvailableJSErrorHandling) static bool useAlwaysAvailableJSErrorHandling() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          51,
+          52,
           "useFabricInterop",
           "    REACT_SYNC_METHOD(useFabricInterop) bool useFabricInterop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useFabricInterop) static bool useFabricInterop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          52,
+          53,
+          "useNativeEqualsInNativeReadableArrayAndroid",
+          "    REACT_SYNC_METHOD(useNativeEqualsInNativeReadableArrayAndroid) bool useNativeEqualsInNativeReadableArrayAndroid() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(useNativeEqualsInNativeReadableArrayAndroid) static bool useNativeEqualsInNativeReadableArrayAndroid() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          54,
+          "useNativeTransformHelperAndroid",
+          "    REACT_SYNC_METHOD(useNativeTransformHelperAndroid) bool useNativeTransformHelperAndroid() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(useNativeTransformHelperAndroid) static bool useNativeTransformHelperAndroid() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          55,
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          53,
+          56,
           "useOptimizedEventBatchingOnAndroid",
           "    REACT_SYNC_METHOD(useOptimizedEventBatchingOnAndroid) bool useOptimizedEventBatchingOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useOptimizedEventBatchingOnAndroid) static bool useOptimizedEventBatchingOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          54,
+          57,
           "useRawPropsJsiValue",
           "    REACT_SYNC_METHOD(useRawPropsJsiValue) bool useRawPropsJsiValue() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useRawPropsJsiValue) static bool useRawPropsJsiValue() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          55,
+          58,
           "useShadowNodeStateOnClone",
           "    REACT_SYNC_METHOD(useShadowNodeStateOnClone) bool useShadowNodeStateOnClone() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useShadowNodeStateOnClone) static bool useShadowNodeStateOnClone() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          56,
+          59,
           "useTurboModuleInterop",
           "    REACT_SYNC_METHOD(useTurboModuleInterop) bool useTurboModuleInterop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModuleInterop) static bool useTurboModuleInterop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          57,
+          60,
           "useTurboModules",
           "    REACT_SYNC_METHOD(useTurboModules) bool useTurboModules() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModules) static bool useTurboModules() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          58,
+          61,
           "virtualViewPrerenderRatio",
           "    REACT_SYNC_METHOD(virtualViewPrerenderRatio) double virtualViewPrerenderRatio() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(virtualViewPrerenderRatio) static double virtualViewPrerenderRatio() noexcept { /* implementation */ }\n");
