@@ -8,6 +8,7 @@
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 
 #include <AutoDraw.h>
+#include <Fabric/ReactTaggedView.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
@@ -19,7 +20,6 @@
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 #include "TextDrawing.h"
-#include <Fabric/ReactTaggedView.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
