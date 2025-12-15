@@ -18,8 +18,6 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-constexpr D2D1_COLOR_F kDefaultSelectionColor = {0.0f, 0.47f, 0.84f, 0.3f};
-
 // Clears any active text selection in the application.
 void ClearCurrentTextSelection() noexcept;
 
@@ -70,6 +68,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void OnPointerReleased(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void OnPointerCaptureLost() noexcept override;
   void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 
   // Keyboard event handler for copy
@@ -93,6 +92,9 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
 
   // Returns character position at the given point, or -1 if outside text bounds
   int32_t getTextPositionAtPoint(facebook::react::Point pt) noexcept;
+
+  // Returns character position clamped to text bounds for drag selection outside component
+  int32_t getClampedTextPosition(facebook::react::Point pt) noexcept;
 
   // Returns the currently selected text, or empty string if no selection
   std::string getSelectedText() const noexcept;

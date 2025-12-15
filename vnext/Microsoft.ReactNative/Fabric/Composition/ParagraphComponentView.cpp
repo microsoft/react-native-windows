@@ -217,6 +217,58 @@ int32_t ParagraphComponentView::getTextPositionAtPoint(facebook::react::Point pt
   return position;
 }
 
+int32_t ParagraphComponentView::getClampedTextPosition(facebook::react::Point pt) noexcept {
+  if (!m_textLayout) {
+    return -1;
+  }
+
+  std::string fullText = m_attributedStringBox.getValue().getString();
+  if (fullText.empty()) {
+    return -1;
+  }
+
+  DWRITE_TEXT_METRICS textMetrics;
+  if (FAILED(m_textLayout->GetMetrics(&textMetrics))) {
+    return -1;
+  }
+
+  // Clamp the point to the text bounds for hit testing
+  float clampedX = std::max(0.0f, std::min(pt.x, textMetrics.width));
+  float clampedY = std::max(0.0f, std::min(pt.y, textMetrics.height));
+
+  BOOL isTrailingHit = FALSE;
+  BOOL isInside = FALSE;
+  DWRITE_HIT_TEST_METRICS metrics = {};
+
+  HRESULT hr = m_textLayout->HitTestPoint(clampedX, clampedY, &isTrailingHit, &isInside, &metrics);
+  if (FAILED(hr)) {
+    return -1;
+  }
+
+  int32_t result = static_cast<int32_t>(metrics.textPosition);
+  if (pt.x > textMetrics.width) {
+    // Dragging right - go to end of character
+    result = static_cast<int32_t>(metrics.textPosition + metrics.length);
+  } else if (pt.x < 0) {
+    // Dragging left - go to start of character
+    result = static_cast<int32_t>(metrics.textPosition);
+  } else if (isTrailingHit) {
+    // Inside bounds, trailing hit
+    result += 1;
+  }
+
+  // Vertical clamping
+  if (pt.y > textMetrics.height) {
+    // Dragging below - select to end of text
+    result = static_cast<int32_t>(fullText.length());
+  } else if (pt.y < 0) {
+    // Dragging above - select to start of text
+    result = 0;
+  }
+
+  return result;
+}
+
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
   DrawText();
 }
@@ -402,10 +454,10 @@ void ParagraphComponentView::DrawSelectionHighlight(
     return;
   }
 
-  // Create a selection highlight brush
   // TODO: use prop selectionColor if provided
   winrt::com_ptr<ID2D1SolidColorBrush> selectionBrush;
-  hr = renderTarget.CreateSolidColorBrush(kDefaultSelectionColor, selectionBrush.put());
+  D2D1_COLOR_F selectionColor = theme()->D2DPlatformColor("Highlight@40");
+  hr = renderTarget.CreateSolidColorBrush(selectionColor, selectionBrush.put());
 
   if (FAILED(hr)) {
     renderTarget.SetDpi(oldDpiX, oldDpiY);
@@ -467,7 +519,7 @@ void ParagraphComponentView::DrawText() noexcept {
 }
 
 void ParagraphComponentView::ClearSelection() noexcept {
-  bool hadSelection = (m_selectionStart >= 0 && m_selectionEnd > m_selectionStart);
+  bool hadSelection = (m_selectionStart >= 0 || m_selectionEnd >= 0 || m_isSelecting);
   m_selectionStart = -1;
   m_selectionEnd = -1;
   m_isSelecting = false;
@@ -509,8 +561,9 @@ void ParagraphComponentView::OnPointerPressed(
     // Check for double-click
     auto now = std::chrono::steady_clock::now();
     auto timeSinceLastClick = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastClickTime);
-    bool isDoubleClick = (timeSinceLastClick.count() < 500) && (m_lastClickPosition >= 0) &&
-        (std::abs(charPosition - m_lastClickPosition) <= 1);
+    UINT doubleClickTime = GetDoubleClickTime();
+    bool isDoubleClick = (timeSinceLastClick.count() < static_cast<long long>(doubleClickTime)) &&
+        (m_lastClickPosition >= 0) && (std::abs(charPosition - m_lastClickPosition) <= 1);
 
     // Update last click tracking
     m_lastClickTime = now;
@@ -524,6 +577,9 @@ void ParagraphComponentView::OnPointerPressed(
       m_selectionStart = charPosition;
       m_selectionEnd = charPosition;
       m_isSelecting = true;
+
+      // Tracks selection even when the mouse moves outside the component bounds
+      CapturePointer(args.Pointer());
     }
 
     s_currentlySelectedText = get_weak();
@@ -550,13 +606,11 @@ void ParagraphComponentView::OnPointerMoved(
     return;
   }
 
-  auto pp = args.GetCurrentPoint(-1);
+  auto pp = args.GetCurrentPoint(static_cast<int32_t>(Tag()));
   auto position = pp.Position();
 
-  facebook::react::Point localPt{
-      position.X - m_layoutMetrics.frame.origin.x, position.Y - m_layoutMetrics.frame.origin.y};
-
-  int32_t charPosition = getTextPositionAtPoint(localPt);
+  facebook::react::Point localPt{position.X, position.Y};
+  int32_t charPosition = getClampedTextPosition(localPt);
 
   if (charPosition >= 0 && charPosition != m_selectionEnd) {
     m_selectionEnd = charPosition;
@@ -589,6 +643,8 @@ void ParagraphComponentView::OnPointerReleased(
 
   m_isSelecting = false;
 
+  ReleasePointerCapture(args.Pointer());
+
   // Calculate selection range (ensure start <= end)
   int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
   int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
@@ -614,6 +670,23 @@ void ParagraphComponentView::onLostFocus(
   }
 
   Super::onLostFocus(args);
+}
+
+void ParagraphComponentView::OnPointerCaptureLost() noexcept {
+  // Pointer capture was lost stop any active selection drag
+  if (m_isSelecting) {
+    m_isSelecting = false;
+
+    int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
+    int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
+
+    if (selStart < 0 || selEnd <= selStart) {
+      m_selectionStart = -1;
+      m_selectionEnd = -1;
+    }
+  }
+
+  Super::OnPointerCaptureLost();
 }
 
 std::string ParagraphComponentView::getSelectedText() const noexcept {
@@ -757,8 +830,8 @@ std::string ParagraphComponentView::DefaultAccessibleName() const noexcept {
 }
 
 bool ParagraphComponentView::focusable() const noexcept {
-  // Text is focusable when it's selectable to receive keyboard events
-  return paragraphProps().isSelectable;
+  // Text is focusable when it's selectable or when explicitly marked as focusable via props
+  return paragraphProps().isSelectable || viewProps()->focusable;
 }
 
 std::pair<facebook::react::Cursor, HCURSOR> ParagraphComponentView::cursor() const noexcept {
