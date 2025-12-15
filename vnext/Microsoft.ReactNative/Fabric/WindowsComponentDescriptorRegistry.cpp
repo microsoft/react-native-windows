@@ -54,6 +54,14 @@ bool WindowsComponentDescriptorRegistry::hasComponentProvider(const std::string 
   return std::find(m_componentNames.begin(), m_componentNames.end(), name) != m_componentNames.end();
 }
 
+bool WindowsComponentDescriptorRegistry::isXamlSupportRequired() const noexcept {
+  return std::any_of(m_builderByName.cbegin(), m_builderByName.cend(), [](const auto &pair) -> bool {
+    return winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
+               pair.second)
+        ->XamlSupport();
+  });
+}
+
 void WindowsComponentDescriptorRegistry::Add(
     winrt::hstring componentName,
     winrt::Microsoft::ReactNative::ReactViewComponentProvider const &provider) noexcept {
