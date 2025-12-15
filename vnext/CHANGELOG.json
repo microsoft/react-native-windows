@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 13 Dec 2025 06:33:40 GMT",
+      "version": "0.0.0-canary.1020",
+      "tag": "react-native-windows_v0.0.0-canary.1020",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ankudutt101@gmail.com",
+            "package": "react-native-windows",
+            "commit": "615cf4b500d1b683aff01ccc7f3cc8c081540248",
+            "comment": "[Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Dec 2025 06:34:17 GMT",
       "version": "0.0.0-canary.1019",
       "tag": "react-native-windows_v0.0.0-canary.1019",
