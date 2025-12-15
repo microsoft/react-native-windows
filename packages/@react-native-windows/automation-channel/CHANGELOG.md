@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Wed, 10 Dec 2025 18:44:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 15 Dec 2025 16:33:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.11
+
+Mon, 15 Dec 2025 16:33:06 GMT
+
+### Changes
+
+- Integrate 81.5 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.81.0-preview.11
 
 ## 0.81.0-preview.10
 
