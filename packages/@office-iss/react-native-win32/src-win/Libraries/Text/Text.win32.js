@@ -20,7 +20,7 @@ import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import processColor from '../StyleSheet/processColor';
 import Platform from '../Utilities/Platform';
-import TextAncestor from './TextAncestor';
+import TextAncestorContext from './TextAncestorContext';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
@@ -36,7 +36,6 @@ type TextForwardRef = React.ElementRef<
  *
  * @see https://reactnative.dev/docs/text
  */
-<<<<<<< Upstream
 let _TextImpl;
 if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
   const TextImplNoDefaultProps: component(
@@ -45,15 +44,29 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
   ) = ({
     ref: forwardedRef,
     accessible,
+    accessibilityControls, // Win32
+    accessibilityDescribedBy, // Win32
+    accessibilityDescription, // Win32
     accessibilityLabel,
+    accessibilityLevel, // Win32
+    accessibilityPositionInSet, // Win32
+    accessibilitySetSize, // Win32
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
+    'aria-controls': ariaControls, // Win32
+    'aria-describedby': ariaDescribedBy, // Win32
+    'aria-description': ariaDescription, // Win32
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
+    'aria-level': ariaLevel, // Win32
+    'aria-multiselectable': ariaMultiselectable, // Win32
+    'aria-posinset': ariaPosinset, // Win32
+    'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
+    'aria-setsize': ariaSetsize, // Win32
     children,
     ellipsizeMode,
     disabled,
@@ -84,6 +97,16 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       ...NativeTextProps,
     };
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
+    const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
+    const _accessibilityDescribedBy =
+      ariaDescribedBy ?? accessibilityDescribedBy; // Win32
+    const _accessibilityDescription =
+      ariaDescription ?? accessibilityDescription; // Win32
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
+    const _accessibilityPositionInSet =
+      ariaPosinset ?? accessibilityPositionInSet; // Win32
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
+
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
     if (
@@ -99,6 +122,9 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           checked: ariaChecked ?? _accessibilityState.checked,
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
+          multiselectable:
+            ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+          required: ariaRequired ?? accessibilityState?.required, // Win32
           selected: ariaSelected ?? _accessibilityState.selected,
         };
       } else {
@@ -107,6 +133,8 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           checked: ariaChecked,
           disabled: ariaDisabled,
           expanded: ariaExpanded,
+          multiselectable: ariaMultiselectable, // Win32,
+          required: ariaRequired, // Win32
           selected: ariaSelected,
         };
       }
@@ -133,7 +161,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         accessible == null
           ? onPress != null || onLongPress != null
           : accessible,
-      default: accessible,
+      default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
     });
 
     const isPressable =
@@ -218,6 +246,30 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       processedProps.selectionColor = _selectionColor;
     }
 
+    // [Windows accessibility properties
+    if (_accessibilityControls !== undefined) {
+      processedProps.accessibilityControls = _accessibilityControls;
+    }
+
+    if (_accessibilityDescribedBy !== undefined) {
+      processedProps.accessibilityDescribedBy = _accessibilityDescribedBy;
+    }
+
+    if (_accessibilityDescription !== undefined) {
+      processedProps.accessibilityDescription = _accessibilityDescription;
+    }
+
+    if (_accessibilityLevel !== undefined) {
+      processedProps.accessibilityLevel = _accessibilityLevel;
+    }
+    if (_accessibilityPositionInSet !== undefined) {
+      processedProps.accessibilityPosInSet = _accessibilityPositionInSet;
+    }
+    if (_accessibilitySetSize !== undefined) {
+      processedProps.accessibilitySetSize = _accessibilitySetSize;
+    }
+    // ]
+
     let textPressabilityProps: ?TextPressabilityProps;
     if (isPressable) {
       textPressabilityProps = {
@@ -233,101 +285,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         onStartShouldSetResponder,
         pressRetentionOffset,
         suppressHighlighting,
-=======
-const TextImpl: component(
-  ref?: React.RefSetter<TextForwardRef>,
-  ...props: TextProps
-) = ({
-  ref: forwardedRef,
-  accessible,
-  accessibilityControls, // Win32
-  accessibilityDescribedBy, // Win32
-  accessibilityDescription, // Win32
-  accessibilityLabel,
-  accessibilityLevel, // Win32
-  accessibilityPositionInSet, // Win32
-  accessibilitySetSize, // Win32
-  accessibilityState,
-  allowFontScaling,
-  'aria-busy': ariaBusy,
-  'aria-checked': ariaChecked,
-  'aria-controls': ariaControls, // Win32
-  'aria-describedby': ariaDescribedBy, // Win32
-  'aria-description': ariaDescription, // Win32
-  'aria-disabled': ariaDisabled,
-  'aria-expanded': ariaExpanded,
-  'aria-label': ariaLabel,
-  'aria-level': ariaLevel, // Win32
-  'aria-multiselectable': ariaMultiselectable, // Win32
-  'aria-posinset': ariaPosinset, // Win32
-  'aria-required': ariaRequired, // Win32
-  'aria-selected': ariaSelected,
-  'aria-setsize': ariaSetsize, // Win32
-  children,
-  ellipsizeMode,
-  disabled,
-  id,
-  nativeID,
-  numberOfLines,
-  onLongPress,
-  onPress,
-  onPressIn,
-  onPressOut,
-  onResponderGrant,
-  onResponderMove,
-  onResponderRelease,
-  onResponderTerminate,
-  onResponderTerminationRequest,
-  onStartShouldSetResponder,
-  pressRetentionOffset,
-  selectable,
-  selectionColor,
-  suppressHighlighting,
-  style,
-  ...restProps
-}: {
-  ref?: React.RefSetter<TextForwardRef>,
-  ...TextProps,
-}) => {
-  const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-  const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
-  const _accessibilityDescribedBy = ariaDescribedBy ?? accessibilityDescribedBy; // Win32
-  const _accessibilityDescription = ariaDescription ?? accessibilityDescription; // Win32
-  const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
-  const _accessibilityPositionInSet =
-    ariaPosinset ?? accessibilityPositionInSet; // Win32
-  const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
-
-  let _accessibilityState: ?TextProps['accessibilityState'] =
-    accessibilityState;
-  if (
-    ariaBusy != null ||
-    ariaChecked != null ||
-    ariaDisabled != null ||
-    ariaExpanded != null ||
-    ariaSelected != null
-  ) {
-    if (_accessibilityState != null) {
-      _accessibilityState = {
-        busy: ariaBusy ?? _accessibilityState.busy,
-        checked: ariaChecked ?? _accessibilityState.checked,
-        disabled: ariaDisabled ?? _accessibilityState.disabled,
-        expanded: ariaExpanded ?? _accessibilityState.expanded,
-        multiselectable:
-          ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
-        required: ariaRequired ?? accessibilityState?.required, // Win32
-        selected: ariaSelected ?? _accessibilityState.selected,
-      };
-    } else {
-      _accessibilityState = {
-        busy: ariaBusy,
-        checked: ariaChecked,
-        disabled: ariaDisabled,
-        expanded: ariaExpanded,
-        multiselectable: ariaMultiselectable, // Win32,
-        required: ariaRequired, // Win32
-        selected: ariaSelected,
->>>>>>> Override
       };
     }
 
@@ -402,15 +359,29 @@ const TextImpl: component(
   ) = ({
     ref: forwardedRef,
     accessible,
+    accessibilityControls, // Win32
+    accessibilityDescribedBy, // Win32
+    accessibilityDescription, // Win32
     accessibilityLabel,
+    accessibilityLevel, // Win32
+    accessibilityPositionInSet, // Win32
+    accessibilitySetSize, // Win32
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
+    'aria-controls': ariaControls, // Win32
+    'aria-describedby': ariaDescribedBy, // Win32
+    'aria-description': ariaDescription, // Win32
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
+    'aria-level': ariaLevel, // Win32
+    'aria-multiselectable': ariaMultiselectable, // Win32
+    'aria-posinset': ariaPosinset, // Win32
+    'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
+    'aria-setsize': ariaSetsize, // Win32
     children,
     ellipsizeMode,
     disabled,
@@ -438,6 +409,15 @@ const TextImpl: component(
     ...TextProps,
   }) => {
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
+    const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
+    const _accessibilityDescribedBy =
+      ariaDescribedBy ?? accessibilityDescribedBy; // Win32
+    const _accessibilityDescription =
+      ariaDescription ?? accessibilityDescription; // Win32
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
+    const _accessibilityPositionInSet =
+      ariaPosinset ?? accessibilityPositionInSet; // Win32
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
 
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
@@ -454,6 +434,9 @@ const TextImpl: component(
           checked: ariaChecked ?? _accessibilityState.checked,
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
+          multiselectable:
+            ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+          required: ariaRequired ?? accessibilityState?.required, // Win32
           selected: ariaSelected ?? _accessibilityState.selected,
         };
       } else {
@@ -462,6 +445,8 @@ const TextImpl: component(
           checked: ariaChecked,
           disabled: ariaDisabled,
           expanded: ariaExpanded,
+          multiselectable: ariaMultiselectable, // Win32,
+          required: ariaRequired, // Win32
           selected: ariaSelected,
         };
       }
@@ -540,6 +525,12 @@ const TextImpl: component(
               ...restProps,
               accessibilityLabel: _accessibilityLabel,
               accessibilityState: _accessibilityState,
+              accessibilityControls: _accessibilityControls, // Win32
+              accessibilityDescribedBy: _accessibilityDescribedBy, // Win32
+              accessibilityDescription: _accessibilityDescription, // Win32
+              accessibilityLevel: _accessibilityLevel, // Win32
+              accessibilityPositionInSet: _accessibilityPositionInSet, // Win32
+              accessibilitySetSize: _accessibilitySetSize, // Win32
               nativeID: _nativeID,
               numberOfLines: _numberOfLines,
               selectable: _selectable,
@@ -571,6 +562,12 @@ const TextImpl: component(
           {...restProps}
           accessibilityLabel={_accessibilityLabel}
           accessibilityState={_accessibilityState}
+          accessibilityControls={_accessibilityControls} // Win32
+          accessibilityDescribedBy={_accessibilityDescribedBy} // Win32
+          accessibilityDescription={_accessibilityDescription} // Win32
+          accessibilityLevel={_accessibilityLevel} // Win32
+          accessibilityPositionInSet={_accessibilityPositionInSet} // Win32
+          accessibilitySetSize={_accessibilitySetSize} // Win32
           nativeID={_nativeID}
           numberOfLines={_numberOfLines}
           ref={forwardedRef}
@@ -600,15 +597,10 @@ const TextImpl: component(
         accessible == null
           ? onPress != null || onLongPress != null
           : accessible,
-      default: accessible,
+      default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
     });
 
-<<<<<<< Upstream
     let nativeText = null;
-=======
-  const hasTextAncestor = useContext(TextAncestor);
-  if (hasTextAncestor) {
->>>>>>> Override
     if (isPressable) {
       nativeText = (
         <NativePressableText
@@ -617,19 +609,10 @@ const TextImpl: component(
             ...restProps,
             accessibilityLabel: _accessibilityLabel,
             accessibilityState: _accessibilityState,
-<<<<<<< Upstream
             accessible: _accessible,
             allowFontScaling: allowFontScaling !== false,
             disabled: _disabled,
             ellipsizeMode: ellipsizeMode ?? 'tail',
-=======
-            accessibilityControls: _accessibilityControls, // Win32
-            accessibilityDescribedBy: _accessibilityDescribedBy, // Win32
-            accessibilityDescription: _accessibilityDescription, // Win32
-            accessibilityLevel: _accessibilityLevel, // Win32
-            accessibilityPositionInSet: _accessibilityPositionInSet, // Win32
-            accessibilitySetSize: _accessibilitySetSize, // Win32
->>>>>>> Override
             nativeID: _nativeID,
             numberOfLines: _numberOfLines,
             selectable: _selectable,
@@ -674,126 +657,8 @@ const TextImpl: component(
       );
     }
 
-<<<<<<< Upstream
     if (children == null) {
       return nativeText;
-=======
-    return (
-      <NativeVirtualText
-        {...restProps}
-        accessibilityLabel={_accessibilityLabel}
-        accessibilityState={_accessibilityState}
-        accessibilityControls={_accessibilityControls} // Win32
-        accessibilityDescribedBy={_accessibilityDescribedBy} // Win32
-        accessibilityDescription={_accessibilityDescription} // Win32
-        accessibilityLevel={_accessibilityLevel} // Win32
-        accessibilityPositionInSet={_accessibilityPositionInSet} // Win32
-        accessibilitySetSize={_accessibilitySetSize} // Win32
-        nativeID={_nativeID}
-        numberOfLines={_numberOfLines}
-        ref={forwardedRef}
-        selectable={_selectable}
-        selectionColor={_selectionColor}
-        style={_style}
-        disabled={disabled}>
-        {children}
-      </NativeVirtualText>
-    );
-  }
-
-  // If the disabled prop and accessibilityState.disabled are out of sync but not both in
-  // falsy states we need to update the accessibilityState object to use the disabled prop.
-  if (
-    _disabled !== _accessibilityStateDisabled &&
-    ((_disabled != null && _disabled !== false) ||
-      (_accessibilityStateDisabled != null &&
-        _accessibilityStateDisabled !== false))
-  ) {
-    _accessibilityState = {..._accessibilityState, disabled: _disabled};
-  }
-
-  const _accessible = Platform.select({
-    ios: accessible !== false,
-    android:
-      accessible == null ? onPress != null || onLongPress != null : accessible,
-    default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
-  });
-
-  let nativeText = null;
-  if (isPressable) {
-    nativeText = (
-      <NativePressableText
-        ref={forwardedRef}
-        textProps={{
-          ...restProps,
-          accessibilityLabel: _accessibilityLabel,
-          accessibilityState: _accessibilityState,
-          accessible: _accessible,
-          allowFontScaling: allowFontScaling !== false,
-          disabled: _disabled,
-          ellipsizeMode: ellipsizeMode ?? 'tail',
-          nativeID: _nativeID,
-          numberOfLines: _numberOfLines,
-          selectable: _selectable,
-          selectionColor: _selectionColor,
-          style: _style,
-          children,
-        }}
-        textPressabilityProps={{
-          onLongPress,
-          onPress,
-          onPressIn,
-          onPressOut,
-          onResponderGrant,
-          onResponderMove,
-          onResponderRelease,
-          onResponderTerminate,
-          onResponderTerminationRequest,
-          onStartShouldSetResponder,
-          pressRetentionOffset,
-          suppressHighlighting,
-        }}
-      />
-    );
-  } else {
-    nativeText = (
-      <NativeText
-        {...restProps}
-        accessibilityLabel={_accessibilityLabel}
-        accessibilityState={_accessibilityState}
-        accessible={_accessible}
-        allowFontScaling={allowFontScaling !== false}
-        disabled={_disabled}
-        ellipsizeMode={ellipsizeMode ?? 'tail'}
-        nativeID={_nativeID}
-        numberOfLines={_numberOfLines}
-        ref={forwardedRef}
-        selectable={_selectable}
-        selectionColor={_selectionColor}
-        style={_style}>
-        {children}
-      </NativeText>
-    );
-  }
-
-  if (children == null) {
-    return nativeText;
-  }
-
-  // If the children do not contain a JSX element it would not be possible to have a
-  // nested `Text` component so we can skip adding the `TextAncestor` context wrapper
-  // which has a performance overhead. Since we do this for performance reasons we need
-  // to keep the check simple to avoid regressing overall perf. For this reason the
-  // `children.length` constant is set to `3`, this should be a reasonable tradeoff
-  // to capture the majority of `Text` uses but also not make this check too expensive.
-  if (Array.isArray(children) && children.length <= 3) {
-    let hasNonTextChild = false;
-    for (let child of children) {
-      if (child != null && typeof child === 'object') {
-        hasNonTextChild = true;
-        break;
-      }
->>>>>>> Override
     }
 
     // If the children do not contain a JSX element it would not be possible to have a
@@ -817,7 +682,6 @@ const TextImpl: component(
       return nativeText;
     }
 
-<<<<<<< Upstream
     return <TextAncestorContext value={true}>{nativeText}</TextAncestorContext>;
   };
   _TextImpl = TextImplLegacy;
@@ -827,12 +691,6 @@ const TextImpl: component(
   ref?: React.RefSetter<TextForwardRef>,
   ...props: TextProps
 ) = _TextImpl;
-=======
-  return (
-    <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
-  );
-};
->>>>>>> Override
 
 TextImpl.displayName = 'Text';
 
