@@ -19,17 +19,22 @@
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 #include "TextDrawing.h"
+#include <Fabric/ReactTaggedView.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-static winrt::weak_ref<ParagraphComponentView> s_currentlySelectedText;
+static std::optional<::Microsoft::ReactNative::ReactTaggedView> s_currentlySelectedText;
 
 // Clear any active text selection when the user clicks anywhere in the app
 void ClearCurrentTextSelection() noexcept {
-  if (auto current = s_currentlySelectedText.get()) {
-    current->ClearSelection();
+  if (s_currentlySelectedText) {
+    if (auto strongView = s_currentlySelectedText->view()) {
+      if (auto paragraphView = strongView.try_as<ParagraphComponentView>()) {
+        paragraphView->ClearSelection();
+      }
+    }
   }
-  s_currentlySelectedText = nullptr;
+  s_currentlySelectedText = std::nullopt;
 }
 
 ParagraphComponentView::ParagraphComponentView(
@@ -582,7 +587,7 @@ void ParagraphComponentView::OnPointerPressed(
       CapturePointer(args.Pointer());
     }
 
-    s_currentlySelectedText = get_weak();
+    s_currentlySelectedText = ::Microsoft::ReactNative::ReactTaggedView{*get_strong()};
 
     // Focuses so we receive onLostFocus when clicking elsewhere
     if (auto root = rootComponentView()) {
@@ -663,10 +668,8 @@ void ParagraphComponentView::onLostFocus(
   ClearSelection();
 
   // Clear static reference if this was the selected component
-  if (auto current = s_currentlySelectedText.get()) {
-    if (current.get() == this) {
-      s_currentlySelectedText = nullptr;
-    }
+  if (s_currentlySelectedText && s_currentlySelectedText->Tag() == Tag()) {
+    s_currentlySelectedText = std::nullopt;
   }
 
   Super::onLostFocus(args);
@@ -810,7 +813,7 @@ void ParagraphComponentView::OnKeyDown(
 
       m_selectionStart = 0;
       m_selectionEnd = static_cast<int32_t>(fullText.length());
-      s_currentlySelectedText = get_weak();
+      s_currentlySelectedText = ::Microsoft::ReactNative::ReactTaggedView{*get_strong()};
 
       DrawText();
       args.Handled(true);
