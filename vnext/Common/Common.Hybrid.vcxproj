@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{07B21646-07A1-4C53-9D5C-FE7C8C9FA5C6}</ProjectGuid>
+    <ProjectName>Common.Hybrid</ProjectName>
+    <Keyword>StaticLibrary</Keyword>
+    <UseHybridCRT>true</UseHybridCRT>
+  </PropertyGroup>
+  <Import Project="Common.vcxproj" />
+</Project>

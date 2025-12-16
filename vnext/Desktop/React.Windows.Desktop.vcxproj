@@ -49,8 +49,8 @@
     -->
     <CppWinRTRootNamespace>Microsoft.ReactNative</CppWinRTRootNamespace>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
-    <ProjectName>React.Windows.Desktop</ProjectName>
+    <ProjectGuid Condition="'$(UseHybridCRT)' != 'true'">{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
+    <ProjectName Condition="'$(UseHybridCRT)' != 'true'">React.Windows.Desktop</ProjectName>
     <RootNamespace>facebook.react</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
@@ -88,6 +88,7 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\WinUI.props" Condition="'$(UseWinUI3)'=='true'" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" Condition="'$(UseHybridCRT)' == 'true'" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -266,7 +267,7 @@
     <ClInclude Include="Modules\DesktopTimingModule.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(UseHybridCRT)' != 'true'">
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
     </ProjectReference>
@@ -278,6 +279,20 @@
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseHybridCRT)' == 'true'">
+    <ProjectReference Include="..\Common\Common.Hybrid.vcxproj">
+      <Project>{07B21646-07A1-4C53-9D5C-FE7C8C9FA5C6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Folly\Folly.Hybrid.vcxproj">
+      <Project>{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FollyWin32\FollyWin32.Hybrid.vcxproj">
+      <Project>{BDA7C42C-73C2-4A21-9DA3-7B64B5ED4D56}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.Hybrid.vcxproj">
+      <Project>{5CB3C038-4A3C-4F09-A36B-66DB8EC650F5}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

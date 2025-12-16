@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</ProjectGuid>
+    <ProjectGuid Condition="'$(UseHybridCRT)' != 'true'">{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
     <RootNamespace>FollyWin32</RootNamespace>
   </PropertyGroup>
@@ -62,6 +62,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" Condition="'$(UseHybridCRT)' == 'true'" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
@@ -84,7 +85,10 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <!-- Make sure we've downloaded Folly -->
-  <ItemGroup>
+  <ItemGroup Condition="'$(UseHybridCRT)' != 'true'">
     <ProjectReference Include="..\Folly\Folly.vcxproj" Project="{A990658C-CE31-4BCC-976F-0FC6B1AF693D}" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseHybridCRT)' == 'true'">
+    <ProjectReference Include="..\Folly\Folly.Hybrid.vcxproj" Project="{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}" />
   </ItemGroup>
 </Project>
