@@ -330,7 +330,7 @@ module.exports = {
   get NativeComponentRegistry() {
     return require('./Libraries/NativeComponent/NativeComponentRegistry');
   },
-  get NativeDialogManagerAndroid() {
+  get NativeDialogManagerAndroid(): NativeDialogManagerAndroid {
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')
       .default;
   },
