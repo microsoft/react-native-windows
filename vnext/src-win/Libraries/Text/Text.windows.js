@@ -226,6 +226,15 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     if (_accessibilityState !== undefined) {
       processedProps.accessibilityState = _accessibilityState;
     }
+    if (accessibilityLevel !== undefined) {
+      processedProps.accessibilityLevel = _accessibilityLevel;
+    }
+    if (accessibilityPosInSet !== undefined) {
+      processedProps.accessibilityPosInSet = _accessibilityPosInSet;
+    }
+    if (accessibilitySetSize !== undefined) {
+      processedProps.accessibilitySetSize = _accessibilitySetSize;
+    }
     if (_nativeID !== undefined) {
       processedProps.nativeID = _nativeID;
     }
@@ -332,6 +341,9 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ref: forwardedRef,
     accessible,
     accessibilityLabel,
+    accessibilityLevel,
+    accessibilityPosInSet,
+    accessibilitySetSize,
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
