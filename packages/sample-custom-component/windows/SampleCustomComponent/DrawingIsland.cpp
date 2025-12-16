@@ -67,6 +67,11 @@ DrawingIsland::DrawingIsland(const winrt::Microsoft::UI::Composition::Compositor
   EnqueueFromBackgroundThread();
 
   // Get notifications for island disconnection.
+  #ifdef USE_EXPERIMENTAL_WINUI3
+    (void)m_island.Connected([&](auto &&...) { return Island_OnConnected(); });
+
+    (void)m_island.Disconnected([&](auto &&...) { return Island_OnDisconnected(); });
+  #endif
   (void)m_island.Closed([&]() { return Island_OnClosed(); });
 }
 
