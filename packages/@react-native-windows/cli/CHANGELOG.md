@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 17 Nov 2025 16:41:29 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 10 Dec 2025 18:44:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.3
+
+Wed, 10 Dec 2025 18:44:30 GMT
+
+### Changes
+
+- Fix NPM dist tags and make some NPM private (vmorozov@microsoft.com)
+- Bump @react-native-windows/codegen to v0.81.0-preview.3
 
 ## 0.81.0-preview.1
 

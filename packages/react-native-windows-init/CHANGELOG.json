@@ -2,6 +2,27 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 10 Dec 2025 18:44:29 GMT",
+      "version": "0.81.0-preview.10",
+      "tag": "react-native-windows-init_v0.81.0-preview.10",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "f8c11e35831ed3a036757abf53f7d3959c186634",
+            "comment": "Fix NPM dist tags and make some NPM private"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.81.0-preview.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Oct 2025 05:28:13 GMT",
       "version": "1.4.82",
       "tag": "react-native-windows-init_v1.4.82",

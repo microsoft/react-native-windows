@@ -68,10 +68,13 @@ public:
   virtual bool fuseboxNetworkInspectionEnabled(jsi::Runtime &rt) = 0;
   virtual bool hideOffscreenVirtualViewsOnIOS(jsi::Runtime &rt) = 0;
   virtual double preparedTextCacheSize(jsi::Runtime &rt) = 0;
+  virtual bool preventShadowTreeCommitExhaustion(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool updateRuntimeShadowNodeReferencesOnCommit(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
+  virtual bool useNativeEqualsInNativeReadableArrayAndroid(jsi::Runtime &rt) = 0;
+  virtual bool useNativeTransformHelperAndroid(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useRawPropsJsiValue(jsi::Runtime &rt) = 0;
@@ -493,6 +496,14 @@ private:
       return bridging::callFromJs<double>(
           rt, &T::preparedTextCacheSize, jsInvoker_, instance_);
     }
+    bool preventShadowTreeCommitExhaustion(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::preventShadowTreeCommitExhaustion) == 1,
+          "Expected preventShadowTreeCommitExhaustion(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::preventShadowTreeCommitExhaustion, jsInvoker_, instance_);
+    }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::traceTurboModulePromiseRejectionsOnAndroid) == 1,
@@ -524,6 +535,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useFabricInterop, jsInvoker_, instance_);
+    }
+    bool useNativeEqualsInNativeReadableArrayAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useNativeEqualsInNativeReadableArrayAndroid) == 1,
+          "Expected useNativeEqualsInNativeReadableArrayAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useNativeEqualsInNativeReadableArrayAndroid, jsInvoker_, instance_);
+    }
+    bool useNativeTransformHelperAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useNativeTransformHelperAndroid) == 1,
+          "Expected useNativeTransformHelperAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useNativeTransformHelperAndroid, jsInvoker_, instance_);
     }
     bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) override {
       static_assert(

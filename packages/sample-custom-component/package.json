@@ -22,8 +22,8 @@
   "dependencies": {
     "@types/react": "^19.1.0",
     "react": "^19.1.0",
-    "react-native": "0.81.0-rc.0",
-    "react-native-windows": "0.81.0-preview.8"
+    "react-native": "0.81.5",
+    "react-native-windows": "0.81.0-preview.11"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -32,7 +32,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "17.0.0",
-    "@react-native/metro-config": "0.81.0",
+    "@react-native/metro-config": "0.81.5",
     "@rnw-scripts/babel-node-config": "2.3.3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.37",

@@ -1,8 +1,25 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Sat, 06 Dec 2025 16:30:52 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 15 Dec 2025 16:33:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0-preview.6
+
+Mon, 15 Dec 2025 16:33:06 GMT
+
+### Changes
+
+- Integrate 81.5 (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.81.0-preview.5
+
+Wed, 10 Dec 2025 18:44:29 GMT
+
+### Changes
+
+- Fix NPM dist tags and make some NPM private (vmorozov@microsoft.com)
+- Bump react-native-platform-override to v0.81.0-preview.10
 
 ## 0.81.0-preview.3
 

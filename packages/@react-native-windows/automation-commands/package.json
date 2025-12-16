@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-commands",
-  "version": "0.1.446",
+  "version": "0.81.0-preview.11",
   "description": "Allows controlling your react-native-windows application",
   "main": "lib-commonjs/index.js",
   "license": "MIT",
@@ -9,7 +9,6 @@
     "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@react-native-windows/automation-commands"
   },
-  "private": true,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
@@ -18,7 +17,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.12.343",
+    "@react-native-windows/automation-channel": "0.81.0-preview.11",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1"
   },
@@ -37,6 +36,18 @@
     "lib-commonjs",
     "README.md"
   ],
+  "beachball": {
+    "defaultNpmTag": "preview",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch",
+      "premajor",
+      "preminor",
+      "prepatch"
+    ]
+  },
+  "promoteRelease": true,
   "engines": {
     "node": ">= 22"
   }

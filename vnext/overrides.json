@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.81.0-rc.0",
+  "baseVersion": "0.81.5",
   "overrides": [
     {
       "type": "derived",
@@ -393,7 +393,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Switch/Switch.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
-      "baseHash": "38b0a2bd22fdbfb327271411867a382f46db0d61"
+      "baseHash": "1559bf5b3d332bf61bebef077273b91cae156d1b"
     },
     {
       "type": "derived",
@@ -405,7 +405,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b6289ef53abc941f6f0aed50f80d3852b6682215"
+      "baseHash": "6ead80870e2e165d1f5ea0fa48f2c6c647ccfa5b"
     },
     {
       "type": "patch",
@@ -466,7 +466,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "83a4fc8e982845619abb121bb860ad63366260c7"
+      "baseHash": "455c75f23e4fc099376cc8cc37016ac1fa09ed66"
     },
     {
       "type": "derived",
@@ -679,6 +679,12 @@
       "file": "src-win/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseHash": "6de61fb2342d9cdfad73a28c8d9cf39d2097a34b"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/src/private/specs_DEPRECATED/components/SwitchNativeComponent.js",
+      "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/SwitchNativeComponent.js",
+      "baseHash": "ef274b26bb96c786b0137ca34561d4c53ab37faa"
     },
     {
       "type": "platform",

@@ -755,6 +755,32 @@ const examples: Array<RNTesterModuleExample> = [
     },
   },
   {
+    title: 'Accessibility',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>accessibilityLabel prop</Text>
+          <ExampleTextInput accessibilityLabel="This is Accessibility Label" />
+          <Text>aria-label prop</Text>
+          <ExampleTextInput aria-label="This is Aria Label" />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Accessibility',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>accessibilityLabel prop</Text>
+          <ExampleTextInput accessibilityLabel="This is Accessibility Label" />
+          <Text>aria-label prop</Text>
+          <ExampleTextInput aria-label="This is Aria Label" />
+        </View>
+      );
+    },
+  },
+  {
     title: 'onPressIn, onPressOut events',
     render: function (): React.Node {
       return <PressInOutEvents />;

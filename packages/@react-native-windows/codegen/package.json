@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.81.0-preview.1",
+  "version": "0.81.0-preview.3",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -47,7 +47,7 @@
     "typescript": "5.0.4"
   },
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "^0.81.0-0"
   },
   "files": [
     "bin.js",
