@@ -86,7 +86,7 @@ void DebuggingOverlayComponentView::HandleCommand(
     if (auto root = rootComponentView()) {
       auto rootVisual = root->OuterVisual();
       auto brush = m_compContext.CreateColorBrush({204, 200, 230, 255});
-      auto scaleFactor = root->theme()->PointScaleFactor();
+      float scaleFactor = m_layoutMetrics.pointScaleFactor;
       for (auto &element : elements) {
         auto overlayVisual = m_compContext.CreateSpriteVisual();
         overlayVisual.Size({element.width * scaleFactor, element.height * scaleFactor});
