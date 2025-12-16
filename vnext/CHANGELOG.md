@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 24 Nov 2025 16:32:23 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 08 Dec 2025 16:30:58 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.79.7
+
+Mon, 08 Dec 2025 16:30:58 GMT
+
+### Patches
+
+- Fix crash when image loading fails due to network error (74712637+iamAbhi-916@users.noreply.github.com)
+- solve modal foreground/background issue and only have a closebutton on title bar with no icon (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.79.6
 
