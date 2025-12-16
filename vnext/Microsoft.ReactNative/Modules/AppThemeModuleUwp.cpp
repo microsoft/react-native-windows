@@ -42,18 +42,10 @@ static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<AppT
 
 AppThemeHolder::AppThemeHolder(const Mso::React::IReactContext &context) : m_context(&context) {
   NotifyHighContrastChanged();
-
-  if (auto currentApp = xaml::TryGetCurrentUwpXamlApplication()) {
-    if (IsWinUI3Island()) {
-      m_wmSubscription = SubscribeToWindowMessage(
-          ReactNotificationService(m_context->Notifications()), WM_THEMECHANGED, [this](const auto &, const auto &) {
-            NotifyHighContrastChanged();
-          });
-    } else {
-      m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
-          winrt::auto_revoke, [this](const auto &, const auto &) { NotifyHighContrastChanged(); });
-    }
-  }
+  m_wmSubscription = SubscribeToWindowMessage(
+      ReactNotificationService(m_context->Notifications()), WM_THEMECHANGED, [this](const auto &, const auto &) {
+        NotifyHighContrastChanged();
+      });
 }
 
 ReactNativeSpecs::AppThemeSpec_AppThemeData AppThemeHolder::GetConstants() noexcept {
@@ -75,8 +67,7 @@ void AppThemeHolder::SetCallback(
 }
 
 void AppThemeHolder::NotifyHighContrastChanged() noexcept {
-  m_appThemeData.isHighContrast =
-      xaml::TryGetCurrentUwpXamlApplication() ? m_accessibilitySettings.HighContrast() : IsInHighContrastWin32();
+  m_appThemeData.isHighContrast = IsInHighContrastWin32();
   m_appThemeData.highContrastColors.ButtonFaceColor =
       FormatRGB(m_uiSettings.UIElementColor(winrt::UIElementType::ButtonFace));
   m_appThemeData.highContrastColors.ButtonTextColor =

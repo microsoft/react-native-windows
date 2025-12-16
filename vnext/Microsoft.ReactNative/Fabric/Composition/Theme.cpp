@@ -13,13 +13,6 @@
 #include "ReactPropertyBag.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"
 
-#ifndef CORE_ABI
-#include <UI.Xaml.Media.h>
-#include <Utils/ValueUtils.h>
-#include <XamlUtils.h>
-
-#endif // CORE_ABI
-
 #include "Composition.Theme.g.cpp"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -121,27 +114,6 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
       return true;
     }
   }
-
-#ifndef CORE_ABI
-  // If XAML is loaded, look in application resources
-  if (xaml::TryGetCurrentUwpXamlApplication()) {
-    const auto appResources{xaml::Application::Current().Resources()};
-    const auto boxedResourceName{winrt::box_value(winrt::to_hstring(platformColor))};
-    if (appResources.HasKey(boxedResourceName)) {
-      winrt::IInspectable resource{appResources.Lookup(boxedResourceName)};
-
-      if (auto brush = resource.try_as<xaml::Media::SolidColorBrush>()) {
-        color = brush.Color();
-        m_colorCache[platformColor] = std::make_pair(true, brush.Color());
-        return true;
-      } else if (auto maybeColor = resource.try_as<winrt::Windows::UI::Color>()) {
-        color = maybeColor.value();
-        m_colorCache[platformColor] = std::make_pair(true, color);
-        return true;
-      }
-    }
-  }
-#endif // CORE_ABI
 
   // Accent colors
   // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uicolortype?view=winrt-22621
@@ -469,12 +441,10 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::Internal
   return PlatformBrush(winrt::to_string(platformColor));
 }
 
-#ifdef USE_WINUI3
 winrt::Microsoft::UI::Composition::CompositionBrush Theme::PlatformBrush(winrt::hstring platformColor) noexcept {
   return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerBrush(
       PlatformBrush(winrt::to_string(platformColor)));
 }
-#endif
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::PlatformBrush(
     const std::string &platformColor) noexcept {

@@ -4,11 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-#if !USE_WINUI3
-using Windows.UI.Xaml;
-#else
 using Microsoft.UI.Xaml;
-#endif
 
 namespace Microsoft.ReactNative.Managed
 {

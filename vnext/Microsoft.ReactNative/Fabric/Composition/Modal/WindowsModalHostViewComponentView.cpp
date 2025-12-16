@@ -35,26 +35,44 @@ struct ModalHostState
 struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::Foundation::IInspectable>,
                        ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView> {
   ~ModalHostView() {
-    if (m_reactNativeIsland) {
-      m_reactNativeIsland.Island().Close();
-    }
-
-    // Add AppWindow closing token cleanup
-    if (m_appWindow && m_appWindowClosingToken) {
-      m_appWindow.Closing(m_appWindowClosingToken);
-      m_appWindowClosingToken.value = 0;
-    }
-
     if (m_popUp) {
-      if (m_departFocusToken && !m_popUp.IsClosed()) {
-        // WASDK BUG: InputFocusNavigationHost::GetForSiteBridge fails on a DesktopPopupSiteBridge
-        // https://github.com/microsoft/react-native-windows/issues/14604
-        /*
-        auto navHost =
-        winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(m_popUp.as<winrt::Microsoft::UI::Content::IContentSiteBridge>());
-        navHost.DepartFocusRequested(m_departFocusToken);
-        */
+      // Unregister closing event handler
+      if (m_appWindow && m_appWindowClosingToken) {
+        m_appWindow.Closing(m_appWindowClosingToken);
+        m_appWindowClosingToken.value = 0;
       }
+
+      // Reset topWindowID before destroying
+      if (m_prevWindowID) {
+        winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+            m_reactContext.Properties().Handle(), m_prevWindowID);
+        m_prevWindowID = 0;
+      }
+
+      // Close island
+      if (m_reactNativeIsland) {
+        m_reactNativeIsland.Island().Close();
+        m_reactNativeIsland = nullptr;
+      }
+
+      // Hide popup
+      if (m_popUp.IsVisible()) {
+        m_popUp.Hide();
+      }
+
+      // Destroy AppWindow this automatically resumes parent window to receive inputs
+      if (m_appWindow) {
+        m_appWindow.Destroy();
+        m_appWindow = nullptr;
+      }
+
+      // Bring parent window to foreground
+      if (m_parentHwnd) {
+        SetForegroundWindow(m_parentHwnd);
+        SetFocus(m_parentHwnd);
+      }
+
+      // Close bridge
       m_popUp.Close();
       m_popUp = nullptr;
     }
@@ -88,7 +106,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         QueueShow(view);
       } else {
         m_visible = false;
-        CloseWindow();
+        HideWindow();
       }
     }
 
@@ -219,30 +237,32 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     }
   }
 
-  void CloseWindow() noexcept {
-    // enable input to parent before closing the modal window, so focus can return back to the parent window
-    EnableWindow(m_parentHwnd, true);
+  /*
+  HideWindow called on visible=false
+  unmounts the modal window using onDismiss event
+  */
+  void HideWindow() noexcept {
+    // Hide popup
     if (m_popUp) {
       m_popUp.Hide();
     }
 
-    // Unregister closing event handler
-    if (m_appWindow && m_appWindowClosingToken) {
-      m_appWindow.Closing(m_appWindowClosingToken);
-      m_appWindowClosingToken.value = 0;
-    }
-
-    // dispatch onDismiss event
-    if (auto eventEmitter = EventEmitter()) {
-      ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnDismiss eventArgs;
-      eventEmitter->onDismiss(eventArgs);
-    }
-
-    // reset the topWindowID
+    // Restore message routing to parent
     if (m_prevWindowID) {
       winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
           m_reactContext.Properties().Handle(), m_prevWindowID);
-      m_prevWindowID = 0;
+    }
+
+    // Bring parent window to foreground
+    if (m_parentHwnd) {
+      SetForegroundWindow(m_parentHwnd);
+      SetFocus(m_parentHwnd);
+    }
+
+    // Dispatch onDismiss event
+    if (auto eventEmitter = EventEmitter()) {
+      ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnDismiss eventArgs;
+      eventEmitter->onDismiss(eventArgs);
     }
   }
 
@@ -279,8 +299,15 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       overlappedPresenter.IsModal(true);
       overlappedPresenter.SetBorderAndTitleBar(true, true);
 
+      // modal should only have close button
+      overlappedPresenter.IsMinimizable(false);
+      overlappedPresenter.IsMaximizable(false);
+
       // Apply the presenter to the window
       m_appWindow.SetPresenter(overlappedPresenter);
+
+      // Hide the title bar icon
+      m_appWindow.TitleBar().IconShowOptions(winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
 
       // Set initial title using the stored local props
       if (m_localProps && m_localProps->title.has_value()) {
