@@ -153,7 +153,7 @@
       "issue": 14204
     },
     {
-      "type": "derived",
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/image/conversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/image/conversions.h",
       "baseHash": "7fdf1967fa9c3421b11e841afcf207624df18706",
