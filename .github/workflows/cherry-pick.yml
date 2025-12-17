@@ -1,0 +1,78 @@
+name: Cherry Pick Backports
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  cherry-pick:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check merged PR and extract target branch
+        id: extract
+        shell: bash
+        run: |
+          # Run only for merged PRs
+          if [ "${{ github.event.pull_request.merged }}" != "true" ]; then
+            echo "PR not merged. Exiting."
+            exit 0
+          fi
+
+          # Extract cherry-pick/<branch> label
+          LABELS_JSON='${{ toJson(github.event.pull_request.labels) }}'
+          LABEL=$(echo "$LABELS_JSON" | jq -r '.[] | select(.name | startswith("cherry-pick/")) | .name' | head -n 1)
+
+          if [ -z "$LABEL" ] || [ "$LABEL" = "null" ]; then
+            echo "No cherry-pick label found. Exiting."
+            exit 0
+          fi
+
+          TARGET_BRANCH="${LABEL#cherry-pick/}"
+          echo "target=$TARGET_BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout repository
+        if: steps.extract.outputs.target != ''
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        if: steps.extract.outputs.target != ''
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Cherry-pick merge commit (allow conflicts)
+        if: steps.extract.outputs.target != ''
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          TARGET_BRANCH=${{ steps.extract.outputs.target }}
+          NEW_BRANCH=cherry-pick/pr-${PR_NUMBER}-to-${TARGET_BRANCH}
+
+          # Fetch target branch
+          git fetch origin ${TARGET_BRANCH}
+
+          # Create working branch from target
+          git checkout -b ${NEW_BRANCH} origin/${TARGET_BRANCH}
+
+          # Cherry-pick merge commit
+          # -m 1 = take PR side
+          # || true = allow conflicts
+          git cherry-pick -m 1 ${{ github.event.pull_request.merge_commit_sha }} || true
+
+          git status
+
+          # Push branch even if conflicts exist
+          git push --force-with-lease origin ${NEW_BRANCH}
+
+      - name: Create backport PR
+        if: steps.extract.outputs.target != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base ${{ steps.extract.outputs.target }} \
+            --head cherry-pick/pr-${{ github.event.pull_request.number }}-to-${{ steps.extract.outputs.target }} \
+            --title "Cherry-pick PR #${{ github.event.pull_request.number }} to ${{ steps.extract.outputs.target }}" \
+            --body "Automated backport. Resolve conflicts if present."
