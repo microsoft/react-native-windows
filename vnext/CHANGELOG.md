@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sun, 07 Dec 2025 06:34:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 17 Dec 2025 06:33:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1021
+
+Wed, 17 Dec 2025 06:33:16 GMT
+
+### Changes
+
+- Defer UIA accessibility provider initialization until requested (198982749+Copilot@users.noreply.github.com)
+
+## 0.0.0-canary.1020
+
+Sat, 13 Dec 2025 06:33:40 GMT
+
+### Changes
+
+- [Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR (ankudutt101@gmail.com)
 
 ## 0.0.0-canary.1019
 
