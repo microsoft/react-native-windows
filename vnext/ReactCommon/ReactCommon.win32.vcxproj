@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5CB3C038-4A3C-4F09-A36B-66DB8EC650F5}</ProjectGuid>
+    <ProjectName>ReactCommon.win32</ProjectName>
+    <Keyword>StaticLibrary</Keyword>
+    <ReactTargetWin32>true</ReactTargetWin32>
+  </PropertyGroup>
+  <Import Project="ReactCommon.vcxproj" />
+</Project>

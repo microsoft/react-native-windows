@@ -88,6 +88,7 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\WinUI.props" Condition="'$(UseWinUI3)'=='true'" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -267,17 +268,17 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    <ProjectReference Include="..\Common\Common.win32.vcxproj">
+      <Project>{07B21646-07A1-4C53-9D5C-FE7C8C9FA5C6}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
+    <ProjectReference Include="..\Folly\Folly.win32.vcxproj">
+      <Project>{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}</Project>
     </ProjectReference>
     <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
       <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
-      <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.win32.vcxproj">
+      <Project>{5CB3C038-4A3C-4F09-A36B-66DB8EC650F5}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
