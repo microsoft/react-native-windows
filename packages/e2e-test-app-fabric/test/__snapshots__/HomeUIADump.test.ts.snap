@@ -7,15 +7,6 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "APIs",
-        "TextRangePattern.GetText": "APIs",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -34,7 +25,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                 {
                   "Size": "111, 72",
                   "Type": "Local",
-                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-apis-icon-light.png",
+                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-apis-icon-dark.png",
                 },
               ],
             },
@@ -50,43 +41,43 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
-      "Color": "rgba(243, 248, 255, 255)",
+      "Color": "rgba(12, 7, 0, 255)",
     },
     "Comment": "apis-tab",
     "Offset": "0, 0, 0",
-    "Size": "333, 65",
+    "Size": "332, 97.00003",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "333, 65",
+        "Size": "332, 97.00003",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "333, 65",
+            "Size": "332, 97.00003",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "151, 13, 0",
-                "Size": "30, 20",
+                "Offset": "144, 20, 0",
+                "Size": "45, 30",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "30, 20",
+                    "Size": "45, 30",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
               },
               {
-                "Offset": "153, 33, 0",
-                "Size": "27, 19",
+                "Offset": "146, 49, 0",
+                "Size": "40.00003, 28.99997",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "27, 19",
+                    "Size": "40.00003, 28.99997",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -998,15 +989,6 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Components",
-        "TextRangePattern.GetText": "Components",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -1025,7 +1007,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 {
                   "Size": "66, 72",
                   "Type": "Local",
-                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-components-icon-dark.png",
+                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-components-icon-light.png",
                 },
               ],
             },
@@ -1041,41 +1023,41 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
-      "Color": "rgba(243, 248, 255, 255)",
+      "Color": "rgba(12, 7, 0, 255)",
     },
     "Comment": "components-tab",
     "Offset": "0, 0, 0",
-    "Size": "333, 65",
+    "Size": "332, 97.00003",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "333, 65",
+        "Size": "332, 97.00003",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "333, 65",
+            "Size": "332, 97.00003",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "0, 2",
+                "Size": "0, 3",
                 "Visual Type": "SpriteVisual",
               },
               {
                 "Offset": "0, 0, 0",
-                "Size": "-0, 2",
+                "Size": "-0, 3",
                 "Visual Type": "SpriteVisual",
               },
               {
                 "Offset": "-0, 0, 0",
-                "Size": "0, 2",
+                "Size": "0, 3",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-0, 2, 0",
-                "Size": "0, -2",
+                "Offset": "-0, 3, 0",
+                "Size": "0, -3",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1094,30 +1076,30 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 2, 0",
-                "Size": "0, -2",
+                "Offset": "0, 3, 0",
+                "Size": "0, -3",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "156, 14, 0",
-                "Size": "20, 20",
+                "Offset": "151, 21, 0",
+                "Size": "30, 30",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "20, 20",
+                    "Size": "30, 30",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
               },
               {
-                "Offset": "126, 34, 0",
-                "Size": "80, 19",
+                "Offset": "106, 51, 0",
+                "Size": "120.000015, 28.99997",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "80, 19",
+                    "Size": "120.000015, 28.99997",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -5039,85 +5021,85 @@ exports[`Home UIA Tree Dump Search Bar 1`] = `
   "Visual Tree": {
     "Comment": "explorer_search",
     "Offset": "0, 0, 0",
-    "Size": "938, 35",
+    "Size": "906, 53.000004",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
         "Offset": "0, 0, 0",
-        "Size": "7, 7",
+        "Size": "11, 11",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
-        "Offset": "7, 0, 0",
-        "Size": "924, 1",
+        "Offset": "11, 0, 0",
+        "Size": "884, 2",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
-        "Offset": "-7, 0, 0",
-        "Size": "7, 7",
+        "Offset": "-11, 0, 0",
+        "Size": "11, 11",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
-        "Offset": "-1, 7, 0",
-        "Size": "1, 21",
+        "Offset": "-2, 11, 0",
+        "Size": "2, 31.000004",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
-        "Offset": "-7, -7, 0",
-        "Size": "7, 7",
+        "Offset": "-11, -11, 0",
+        "Size": "11, 11",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
-        "Offset": "7, -1, 0",
-        "Size": "924, 1",
+        "Offset": "11, -2, 0",
+        "Size": "884, 2",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
-        "Offset": "0, -7, 0",
-        "Size": "7, 7",
+        "Offset": "0, -11, 0",
+        "Size": "11, 11",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(60, 60, 67, 45)",
+          "Color": "rgba(235, 235, 245, 40)",
         },
-        "Offset": "0, 7, 0",
-        "Size": "1, 21",
+        "Offset": "0, 11, 0",
+        "Size": "2, 31.000004",
         "Visual Type": "SpriteVisual",
       },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(255, 255, 255, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5137,22 +5119,6 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "Name": "SectionList Performant, scrollable list of data.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "SectionList",
-        "TextRangePattern.GetText": "SectionList",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Performant, scrollable list of data.",
-        "TextRangePattern.GetText": "Performant, scrollable list of data.",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -5174,33 +5140,33 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
+      "Color": "rgba(28, 28, 30, 255)",
     },
     "Comment": "SectionList",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "948, 117",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "16, 16, 0",
-        "Size": "86, 25",
+        "Offset": "24, 24, 0",
+        "Size": "128, 37.000122",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "86, 25",
+            "Size": "128, 37.000122",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Offset": "24, 68, 0",
+        "Size": "900, 25.000122",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "900, 25.000122",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5299,22 +5265,6 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "Name": "SwipeableCard Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "SwipeableCard",
-        "TextRangePattern.GetText": "SwipeableCard",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
-        "TextRangePattern.GetText": "Example of a swipeable card with scrollable content to test PanResponder and JSResponderHandler interaction.",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -5336,33 +5286,33 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
+      "Color": "rgba(28, 28, 30, 255)",
     },
     "Comment": "SwipeableCard",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "948, 117",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "16, 16, 0",
-        "Size": "118, 25",
+        "Offset": "24, 24, 0",
+        "Size": "177, 37.000122",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "118, 25",
+            "Size": "177, 37.000122",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Offset": "24, 68, 0",
+        "Size": "900, 25.000122",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "900, 25.000122",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5380,22 +5330,6 @@ exports[`Home UIA Tree Dump Switch 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
     "Name": "Switch Native boolean input",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Switch",
-        "TextRangePattern.GetText": "Switch",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Native boolean input",
-        "TextRangePattern.GetText": "Native boolean input",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -5417,33 +5351,33 @@ exports[`Home UIA Tree Dump Switch 1`] = `
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
+      "Color": "rgba(28, 28, 30, 255)",
     },
     "Comment": "Switch",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "948, 115.99988",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "16, 16, 0",
-        "Size": "52, 25",
+        "Offset": "24, 24, 0",
+        "Size": "77, 37.000122",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 25",
+            "Size": "77, 37.000122",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Offset": "24, 68, 0",
+        "Size": "900, 25.000122",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "900, 25.000122",
             "Visual Type": "SpriteVisual",
           },
         ],
