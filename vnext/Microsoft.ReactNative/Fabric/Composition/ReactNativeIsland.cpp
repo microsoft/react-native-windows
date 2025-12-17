@@ -173,10 +173,10 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
   if (m_island) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
     m_island.StateChanged(m_islandStateChangedToken);
-    #ifdef USE_EXPERIMENTAL_WINUI3
-      m_island.Connected(m_islandConnectedToken);
-      m_island.Disconnected(m_islandDisconnectedToken);
-    #endif
+#ifdef USE_EXPERIMENTAL_WINUI3
+    m_island.Connected(m_islandConnectedToken);
+    m_island.Disconnected(m_islandDisconnectedToken);
+#endif
   }
 
   if (m_uiDispatcher) {
