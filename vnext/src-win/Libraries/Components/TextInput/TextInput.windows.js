@@ -602,11 +602,6 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const accessible = props.accessible !== false;
 
-  const accessibilityErrorMessage =
-    props.accessibilityInvalid === true
-      ? props.accessibilityErrorMessage
-      : null;
-
   const focusable = props.focusable !== false;
 
   const {
@@ -808,7 +803,6 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...eventHandlers}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
         accessibilityLabel={_accessibilityLabel}
-        accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessible={accessible}
         submitBehavior={submitBehavior}
@@ -873,7 +867,6 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...colorProps}
         {...eventHandlers}
         accessibilityLabel={_accessibilityLabel}
-        accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessibilityLabelledBy={_accessibilityLabelledBy}
         accessible={accessible}
