@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Thu, 11 Dec 2025 15:30:44 GMT",
+      "version": "0.80.5",
+      "tag": "@react-native-windows/automation_v0.80.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "2f4935ac69841dfca983dd947ce93d4a11e04c8d",
+            "comment": "Fix NPM dist tags and make some NPM private (#15416)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.80.5",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Jul 2025 05:26:14 GMT",
       "version": "0.3.400",
       "tag": "@react-native-windows/automation_v0.3.400",

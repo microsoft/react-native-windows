@@ -19,7 +19,8 @@
   "dependencies": {
     "@react-native-windows/package-utils": "0.80.0",
     "@rnw-scripts/stamp-version": "0.0.0",
-    "find-up": "^4.1.0"
+    "find-up": "^4.1.0",
+    "parse-path": "^7.1.0"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.36",
@@ -27,8 +28,9 @@
     "@rnw-scripts/just-task": "2.3.54",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/node": "^18.0.0",
+    "@types/parse-path": "^7.1.0",
     "@types/shell-quote": "^1.7.5",
-    "beachball": "^2.20.0",
+    "beachball": "^2.60.1",
     "eslint": "^8.19.0",
     "prettier": "2.8.8",
     "shell-quote": "^1.8.1",

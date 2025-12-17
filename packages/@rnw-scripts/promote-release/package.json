@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/promote-release",
   "version": "2.1.61",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -45,6 +46,5 @@
   ],
   "engines": {
     "node": ">= 18"
-  },
-  "private": true
+  }
 }
