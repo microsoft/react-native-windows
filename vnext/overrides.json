@@ -492,14 +492,6 @@
       "baseHash": "d04b64a97b6040611d96b909c41230c1a350ebe6"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Xaml/XamlHost.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Xaml/XamlHost.windows.js"
-    },
-    {
       "type": "patch",
       "file": "src-win/Libraries/Core/Devtools/loadBundleFromServer.windows.js",
       "baseFile": "packages/react-native/Libraries/Core/Devtools/loadBundleFromServer.js",
@@ -686,10 +678,6 @@
       "file": "src-win/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseHash": "6de61fb2342d9cdfad73a28c8d9cf39d2097a34b"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/src/private/specs_DEPRECATED/components/Xaml/XamlHostNativeComponent.js"
     },
     {
       "type": "platform",

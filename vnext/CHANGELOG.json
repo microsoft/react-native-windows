@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Dec 2025 06:33:16 GMT",
+      "version": "0.0.0-canary.1021",
+      "tag": "react-native-windows_v0.0.0-canary.1021",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b39b43d25e148da8ea8248a567d9aa214b1f1086",
+            "comment": "Defer UIA accessibility provider initialization until requested"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Dec 2025 06:33:40 GMT",
+      "version": "0.0.0-canary.1020",
+      "tag": "react-native-windows_v0.0.0-canary.1020",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ankudutt101@gmail.com",
+            "package": "react-native-windows",
+            "commit": "615cf4b500d1b683aff01ccc7f3cc8c081540248",
+            "comment": "[Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Dec 2025 06:34:17 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-windows_v0.0.0-canary.1019",
+      "comments": {
+        "none": [
+          {
+            "author": "suramaswamy@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eb39c9c559b1daad165f1f3ad82c33692b855614",
+            "comment": "Initialize Xaml on demand only for module authors"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 07 Dec 2025 06:34:40 GMT",
       "version": "0.0.0-canary.1019",
       "tag": "react-native-windows_v0.0.0-canary.1019",
