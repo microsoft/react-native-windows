@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Dec 2025 06:33:16 GMT",
+      "version": "0.0.0-canary.1021",
+      "tag": "react-native-windows_v0.0.0-canary.1021",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b39b43d25e148da8ea8248a567d9aa214b1f1086",
+            "comment": "Defer UIA accessibility provider initialization until requested"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 13 Dec 2025 06:33:40 GMT",
       "version": "0.0.0-canary.1020",
       "tag": "react-native-windows_v0.0.0-canary.1020",
