@@ -14,15 +14,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 1,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable 1 of 3",
-            "TextRangePattern.GetText": "Pressable 1 of 3",
-          },
-        ],
       },
       {
         "AutomationId": "",
@@ -32,15 +23,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 2,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable 2 of 3",
-            "TextRangePattern.GetText": "Pressable 2 of 3",
-          },
-        ],
       },
       {
         "AutomationId": "",
@@ -50,15 +32,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 3,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable 3 of 3",
-            "TextRangePattern.GetText": "Pressable 3 of 3",
-          },
-        ],
       },
     ],
   },
@@ -196,15 +169,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Enabled Pressable",
-        "TextRangePattern.GetText": "Enabled Pressable",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -249,15 +213,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
     "IsEnabled": false,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Disabled Pressable",
-        "TextRangePattern.GetText": "Disabled Pressable",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -304,15 +259,6 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -408,15 +354,6 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Outside This View",
-        "TextRangePattern.GetText": "Press Outside This View",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -464,15 +401,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -515,38 +443,12 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
     "AutomationId": "pressable_delay_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressOut",
-        "TextRangePattern.GetText": "pressOut",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressIn",
-        "TextRangePattern.GetText": "pressIn",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
       "TestId": "pressable_delay_events_console",
     },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
   },
   "Visual Tree": {
     "Brush": {
@@ -598,30 +500,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
         "Size": "1, -2",
         "Visual Type": "SpriteVisual",
       },
-      {
-        "Offset": "11, 11, 0",
-        "Size": "874, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "874, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "11, 29, 0",
-        "Size": "874, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "874, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
     ],
   },
 }
@@ -636,15 +514,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 1`] = `
     "LocalizedControlType": "button",
     "Name": "pressable feedback events",
     "ValuePattern.Value": "Press Me",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -688,15 +557,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
     "AutomationId": "pressable_feedback_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "hover in",
-        "TextRangePattern.GetText": "hover in",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -704,196 +564,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
       "TestId": "pressable_feedback_events_console",
     },
     "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(249, 249, 249, 255)",
-    },
-    "Comment": "pressable_feedback_events_console",
-    "Offset": "0, 0, 0",
-    "Size": "896, 120",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, 0, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, -1, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "11, 11, 0",
-        "Size": "874, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "874, 19",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
-exports[`Pressable Tests Pressables can have event handlers, hover and click 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "pressable_feedback_events_button",
-    "ControlType": 50000,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "button",
-    "Name": "pressable feedback events",
-    "ValuePattern.Value": "Press Me",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "pressable feedback events",
-      "TestId": "pressable_feedback_events_button",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Comment": "pressable_feedback_events_button",
-    "Offset": "0, 0, 0",
-    "Size": "56, 18",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "56, 20",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "56, 20",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
-exports[`Pressable Tests Pressables can have event handlers, hover and click 2`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "pressable_feedback_events_console",
-    "ControlType": 50026,
-    "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressOut",
-        "TextRangePattern.GetText": "pressOut",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "focus",
-        "TextRangePattern.GetText": "focus",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "press",
-        "TextRangePattern.GetText": "press",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressIn",
-        "TextRangePattern.GetText": "pressIn",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "hover in",
-        "TextRangePattern.GetText": "hover in",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "TestId": "pressable_feedback_events_console",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
       {
         "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
         "_Props": {},
@@ -978,20 +648,132 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
           },
         ],
       },
+    ],
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can have event handlers, hover and click 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_button",
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "pressable feedback events",
+    "ValuePattern.Value": "Press Me",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "pressable feedback events",
+      "TestId": "pressable_feedback_events_button",
+    },
+    "__Children": [
       {
-        "Offset": "11, 48, 0",
-        "Size": "874, 20",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_feedback_events_button",
+    "Offset": "0, 0, 0",
+    "Size": "56, 18",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "56, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "874, 20",
+            "Size": "56, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
+    ],
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can have event handlers, hover and click 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_console",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_feedback_events_console",
+    },
+    "__Children": [
       {
-        "Offset": "11, 66, 0",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(249, 249, 249, 255)",
+    },
+    "Comment": "pressable_feedback_events_console",
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
         "Size": "874, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1003,7 +785,7 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
         ],
       },
       {
-        "Offset": "11, 85, 0",
+        "Offset": "11, 29, 0",
         "Size": "874, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1026,15 +808,6 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Outside This View",
-        "TextRangePattern.GetText": "Press Outside This View",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -1431,43 +1204,11 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable with accessible=true and focusable=true",
-            "TextRangePattern.GetText": "Pressable with accessible=true and focusable=true",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Pressable with accessible=false",
-        "TextRangePattern.GetText": "Pressable with accessible=false",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable with focusable=false",
-            "TextRangePattern.GetText": "Pressable with focusable=false",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Pressable with accessible=false and focusable=false",
-        "TextRangePattern.GetText": "Pressable with accessible=false and focusable=false",
       },
     ],
   },
@@ -1641,15 +1382,6 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Pressable with ToolTip "Pressable"",
-        "TextRangePattern.GetText": "Pressable with ToolTip "Pressable"",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -1695,77 +1427,27 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
     "__Children": [
       {
         "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "View #1, front is visible, back is hidden.",
-        "TextRangePattern.GetText": "View #1, front is visible, back is hidden.",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Front",
-            "TextRangePattern.GetText": "Front",
-          },
-        ],
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Back (You should not see this)",
-            "TextRangePattern.GetText": "Back (You should not see this)",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "View #2, front is hidden, back is visible.",
-        "TextRangePattern.GetText": "View #2, front is hidden, back is visible.",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Front (You should not see this)",
-            "TextRangePattern.GetText": "Front (You should not see this)",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Back",
-            "TextRangePattern.GetText": "Back",
-          },
-        ],
       },
     ],
   },
