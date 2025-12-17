@@ -66,7 +66,7 @@ DrawingIsland::DrawingIsland(const winrt::Microsoft::UI::Composition::Compositor
   // Just adding EnqueueFromBackgroundThread method for testing.
   EnqueueFromBackgroundThread();
 
-// Get notifications for island disconnection.
+  // Get notifications for island disconnection.
 #ifdef USE_EXPERIMENTAL_WINUI3
   (void)m_island.Connected([&](auto &&...) { return Island_OnConnected(); });
 
@@ -617,6 +617,16 @@ void DrawingIsland::Island_OnStateChanged() {
   Output_UpdateCurrentColorVisual();
 }
 
+void DrawingIsland::Island_OnConnected() {
+  SetLayoutDirectionForVisuals();
+}
+
+void DrawingIsland::Island_OnDisconnected() {
+  WCHAR msg2[300];
+  StringCbPrintf(msg2, sizeof(msg2), L"Island_OnDisconnected Disconnected \n");
+  OutputDebugStringW(msg2);
+}
+
 void DrawingIsland::Island_OnClosed() {
   WCHAR msg2[300];
   StringCbPrintf(msg2, sizeof(msg2), L"Island_OnClosed %d\n", m_island.IsClosed());
@@ -783,11 +793,65 @@ void DrawingIsland::SystemBackdrop_Initialize() {
         });
   }
 
-  // If we are the main content, we don't want to add custom clips or offsets to our
-  // backdrop, so we can pass the ContentIsland as the target to the BackdropController.
-  // This will by default fill the entire ContentIsland backdrop surface.
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (IsHostedByPopupWindowSiteBridge()) {
+    // For popups, we want to draw shadows around the edges, so clip the backdrop visual to
+    // allow room on the edges for the shadows.
+    m_backdropLink = winrt::ContentExternalBackdropLink::Create(m_compositor);
 
-  m_backdropTarget = m_island;
+    // This will be the size of the "cut out" we will make in the lifted composition surface
+    // so that the Backdrop System Sprite Visual will show through. This is specified in
+    // logical coordinates.
+    m_backdropLink.PlacementVisual().Size(m_island.ActualSize());
+
+    // Clip the backdrop.
+    m_backdropClip = m_compositor.CreateRectangleClip(
+        10.0f,
+        10.0f,
+        m_island.ActualSize().x - 10.0f,
+        m_island.ActualSize().y - 10.0f,
+        {10.0f, 10.0f},
+        {10.0f, 10.0f},
+        {10.0f, 10.0f},
+        {10.0f, 10.0f});
+    m_backdropLink.PlacementVisual().Clip(m_backdropClip);
+
+    // Clip the overall background.
+    m_backgroundClip = m_compositor.CreateRectangleClip(
+        0.0f,
+        0.0f,
+        m_island.ActualSize().x,
+        m_island.ActualSize().y,
+        {10.0f, 10.0f},
+        {10.0f, 10.0f},
+        {10.0f, 10.0f},
+        {10.0f, 10.0f});
+    m_backgroundVisual.Clip(m_backgroundClip);
+
+    // Add the backdropLink into the LiftedVisual tree of the popup.
+    m_backgroundVisual.Children().InsertAtBottom(m_backdropLink.PlacementVisual());
+
+    auto animation = m_compositor.CreateVector3KeyFrameAnimation();
+    animation.InsertKeyFrame(0.0f, {0.0f, -m_island.ActualSize().y, 0.0f});
+    animation.InsertKeyFrame(1.0f, {0.0f, 0.0f, 0.0f});
+    animation.Duration(std::chrono::milliseconds(2000));
+    animation.IterationBehavior(AnimationIterationBehavior::Count);
+    animation.IterationCount(1);
+    m_backgroundVisual.StartAnimation(L"Offset", animation);
+
+    // For Popups, we want to customize the clip and offset of the system backdrop, so we
+    // pass the ContentExternalBackdropLink as the target to the BackdropController.
+
+    m_backdropTarget = m_backdropLink;
+  } else
+#endif
+  {
+    // If we are the main content, we don't want to add custom clips or offsets to our
+    // backdrop, so we can pass the ContentIsland as the target to the BackdropController.
+    // This will by default fill the entire ContentIsland backdrop surface.
+
+    m_backdropTarget = m_island;
+  }
 
   m_backdropController.AddSystemBackdropTarget(m_backdropTarget);
 }
@@ -814,6 +878,11 @@ void DrawingIsland::Window_Initialize() {
         return Window_OnSettingChanged(args);
       });
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+  (void)window.ThemeChanged(
+      [this](winrt::ContentIslandEnvironment const &, winrt::IInspectable const &) { return Window_OnThemeChanged(); });
+#endif
+
   (void)window.StateChanged([this](winrt::ContentIslandEnvironment const &sender, winrt::IInspectable const &) {
     return Window_OnStateChanged(sender);
   });
@@ -827,9 +896,36 @@ void DrawingIsland::Window_OnSettingChanged(const winrt::ContentEnvironmentSetti
   }
 }
 
+void DrawingIsland::Window_OnThemeChanged() {
+  // Do nothing intentionally - For testing purposes only
+}
+
 void DrawingIsland::Window_OnStateChanged(winrt::ContentIslandEnvironment const &sender) {
   sender;
-  // ContentDisplayOrientations and related APIs removed from WinUI3
+#ifdef USE_EXPERIMENTAL_WINUI3
+  WCHAR msg[300];
+  winrt::Microsoft::UI::DisplayId displayId = sender.DisplayId();
+  float scale = sender.DisplayScale();
+  winrt::Microsoft::UI::Content::ContentDisplayOrientations nativeOrientation = sender.NativeOrientation();
+  winrt::Microsoft::UI::Content::ContentDisplayOrientations currentOrientation = sender.CurrentOrientation();
+  HWND hwnd = winrt::GetWindowFromWindowId(sender.AppWindowId());
+  RECT rect;
+  GetWindowRect(hwnd, &rect);
+  StringCbPrintf(
+      msg,
+      sizeof(msg),
+      L"AppWindow Hwnd = %x, Rect.top = %d, Rect.right = %d, Rect.bottom = %d, Rect.left = %d, DisplayId: %p, DisplayScale: %f, NativeOrientation: %d, CurrentOrientation: %d\n",
+      hwnd,
+      rect.top,
+      rect.right,
+      rect.bottom,
+      rect.left,
+      displayId.Value,
+      scale,
+      nativeOrientation,
+      currentOrientation);
+  OutputDebugStringW(msg);
+#endif
 }
 
 struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView, winrt::IInspectable>,
