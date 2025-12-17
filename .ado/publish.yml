@@ -241,53 +241,6 @@ extends:
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
             displayName: Show created npm packages
 
-          # Beachball usually takes care about the NPM package tagging based on the values in package.json files.
-          # We use the ESRP Release where we must provide the tag explictly (the productstate parameter).
-          # Fortunately, we just use two tags: latest and some custom tag like "canary", "v0.73-stable", etc.
-          # The npmGroupByTag.js script groups the created NPM package by these two tags into the specified folders.
-          - pwsh: |
-              node .ado/scripts/npmGroupByTag.js "$(Pipeline.Workspace)\published-packages" "$(Pipeline.Workspace)\published-packages\custom-tag" "$(Pipeline.Workspace)\published-packages\latest-tag"
-            displayName: Group npm packages by tag
-
-          - script: dir /s "$(Pipeline.Workspace)\published-packages"
-            displayName: Show grouped npm packages by tag
-
-          # Publish NPM packages using ESRP Release task with the custom tag such as "canary", "v0.73-stable", etc.
-          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
-            displayName: 'ESRP Release to npmjs.com (custom tag)'
-            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }}, eq(variables['NpmCustomFolderHasContent'], 'true'))
-            inputs:
-              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
-              usemanagedidentity: false
-              keyvaultname: 'OGX-JSHost-KV'
-              authcertname: 'OGX-JSHost-Auth4'
-              signcertname: 'OGX-JSHost-Sign3'
-              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
-              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
-              contenttype: npm
-              folderlocation: '$(NpmCustomFolder)'
-              productstate: '$(NpmCustomTag)'
-              owners: 'vmorozov@microsoft.com'
-              approvers: 'khosany@microsoft.com'
-
-          # Publish NPM packages using ESRP Release task with the "latest" tag.
-          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
-            displayName: 'ESRP Release to npmjs.com (latest)'
-            condition: and(succeeded(), ${{ not(parameters.skipNpmPublish) }}, eq(variables['NpmLatestFolderHasContent'], 'true'))
-            inputs:
-              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
-              usemanagedidentity: false
-              keyvaultname: 'OGX-JSHost-KV'
-              authcertname: 'OGX-JSHost-Auth4'
-              signcertname: 'OGX-JSHost-Sign3'
-              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
-              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
-              contenttype: npm
-              folderlocation: '$(NpmLatestFolder)'
-              productstate: 'latest'
-              owners: 'vmorozov@microsoft.com'
-              approvers: 'khosany@microsoft.com'
-
           # Beachball reverts to local state after publish, but we want the updates it added
           - script: git pull origin $(SourceBranchWithFolders)
             displayName: git pull
@@ -303,6 +256,29 @@ extends:
           - template: .ado/templates/set-version-vars.yml@self
             parameters:
               buildEnvironment: Continuous
+
+          - script: echo NpmDistTag is $(NpmDistTag)
+            displayName: Show NPM dist tag
+
+          - script: dir /s "$(Pipeline.Workspace)\published-packages"
+            displayName: Show npm packages before ESRP release
+
+          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
+            displayName: 'ESRP Release to npmjs.com'
+            condition: and(succeeded(), ne(variables['NpmDistTag'], ''))
+            inputs:
+              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+              usemanagedidentity: false
+              keyvaultname: 'OGX-JSHost-KV'
+              authcertname: 'OGX-JSHost-Auth4'
+              signcertname: 'OGX-JSHost-Sign3'
+              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+              contenttype: npm
+              folderlocation: '$(Pipeline.Workspace)\published-packages'
+              productstate: '$(NpmDistTag)'
+              owners: 'vmorozov@microsoft.com'
+              approvers: 'khosany@microsoft.com'
 
           - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
             displayName: 📒 Generate Manifest Npm
