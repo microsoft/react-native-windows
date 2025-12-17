@@ -341,9 +341,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ref: forwardedRef,
     accessible,
     accessibilityLabel,
-    accessibilityLevel,
-    accessibilityPosInSet,
-    accessibilitySetSize,
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
@@ -352,6 +349,17 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
+    //[windows
+    'aria-multiselectable': ariaMultiselectable,
+    'aria-required': ariaRequired,
+    'aria-level': ariaLevel, 
+    'aria-posinset': ariaPosinset, 
+    'aria-setsize': ariaSetsize, 
+    'aria-readonly': ariaReadOnly,
+    accessibilityLevel, 
+    accessibilityPosInSet,
+    accessibilitySetSize,
+    //windows]
     children,
     ellipsizeMode,
     disabled,
@@ -379,6 +387,9 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ...TextProps,
   }) => {
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
+    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
 
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
