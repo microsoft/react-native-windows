@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid Condition="'$(UseHybridCRT)' != 'true'">{a990658c-ce31-4bcc-976f-0fc6b1af693d}</ProjectGuid>
+    <ProjectGuid Condition="'$(ReactTargetWin32)' != 'true'">{a990658c-ce31-4bcc-976f-0fc6b1af693d}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
-    <ProjectName Condition="'$(UseHybridCRT)' != 'true'">Folly</ProjectName>
+    <ProjectName Condition="'$(ReactTargetWin32)' != 'true'">Folly</ProjectName>
     <RootNamespace>Folly</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <ApplicationType Condition="'$(UseHybridCRT)' != 'true'">Windows Store</ApplicationType>
-    <ApplicationTypeRevision Condition="'$(UseHybridCRT)' != 'true'">10.0</ApplicationTypeRevision>
-    <AppContainerApplication Condition="'$(UseHybridCRT)' != 'true'">true</AppContainerApplication>
+    <ApplicationType Condition="'$(ReactTargetWin32)' != 'true'">Windows Store</ApplicationType>
+    <ApplicationTypeRevision Condition="'$(ReactTargetWin32)' != 'true'">10.0</ApplicationTypeRevision>
+    <AppContainerApplication Condition="'$(ReactTargetWin32)' != 'true'">true</AppContainerApplication>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -250,7 +250,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" Condition="'$(UseHybridCRT)' == 'true'" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" Condition="'$(ReactTargetWin32)' == 'true'" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -335,10 +335,10 @@
     <Message Importance="High" Text="Applying temporary patches to folly." />
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
-  <ItemGroup Condition="'$(UseHybridCRT)' != 'true'">
+  <ItemGroup Condition="'$(ReactTargetWin32)' != 'true'">
     <ProjectReference Include="..\fmt\fmt.vcxproj" Project="{14B93DC8-FD93-4A6D-81CB-8BC96644501C}" />
   </ItemGroup>
-  <ItemGroup Condition="'$(UseHybridCRT)' == 'true'">
-    <ProjectReference Include="..\fmt\fmt.Hybrid.vcxproj" Project="{4A98E8E8-F0B2-4F45-8A0E-9F4C7A81A239}" />
+  <ItemGroup Condition="'$(ReactTargetWin32)' == 'true'">
+    <ProjectReference Include="..\fmt\fmt.win32.vcxproj" Project="{4A98E8E8-F0B2-4F45-8A0E-9F4C7A81A239}" />
   </ItemGroup>
 </Project>
