@@ -227,6 +227,29 @@ extends:
             parameters:
               buildEnvironment: Continuous
 
+          - script: echo NpmDistTag is $(NpmDistTag)
+            displayName: Show NPM dist tag
+
+          - script: dir /s "$(Pipeline.Workspace)\published-packages"
+            displayName: Show npm packages before ESRP release
+
+          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
+            displayName: 'ESRP Release to npmjs.com'
+            condition: and(succeeded(), ne(variables['NpmDistTag'], ''))
+            inputs:
+              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+              usemanagedidentity: false
+              keyvaultname: 'OGX-JSHost-KV'
+              authcertname: 'OGX-JSHost-Auth4'
+              signcertname: 'OGX-JSHost-Sign3'
+              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+              contenttype: npm
+              folderlocation: '$(Pipeline.Workspace)\published-packages'
+              productstate: '$(NpmDistTag)'
+              owners: 'vmorozov@microsoft.com'
+              approvers: 'khosany@microsoft.com'
+
           - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
             displayName: 📒 Generate Manifest Npm
             inputs:
