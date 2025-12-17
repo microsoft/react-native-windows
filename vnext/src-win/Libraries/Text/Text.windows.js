@@ -352,11 +352,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     //[windows
     'aria-multiselectable': ariaMultiselectable,
     'aria-required': ariaRequired,
-    'aria-level': ariaLevel, 
-    'aria-posinset': ariaPosinset, 
-    'aria-setsize': ariaSetsize, 
+    'aria-level': ariaLevel,
+    'aria-posinset': ariaPosinset,
+    'aria-setsize': ariaSetsize,
     'aria-readonly': ariaReadOnly,
-    accessibilityLevel, 
+    accessibilityLevel,
     accessibilityPosInSet,
     accessibilitySetSize,
     //windows]
