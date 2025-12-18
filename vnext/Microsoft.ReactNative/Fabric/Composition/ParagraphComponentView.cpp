@@ -36,7 +36,8 @@ struct DpiRestorer {
   }
 };
 
-inline auto MakeDpiGuard(ID2D1RenderTarget &renderTarget, float newDpiX, float newDpiY) noexcept {
+inline std::unique_ptr<ID2D1RenderTarget, DpiRestorer>
+MakeDpiGuard(ID2D1RenderTarget &renderTarget, float newDpiX, float newDpiY) noexcept {
   float originalDpiX, originalDpiY;
   renderTarget.GetDpi(&originalDpiX, &originalDpiY);
   renderTarget.SetDpi(newDpiX, newDpiY);
