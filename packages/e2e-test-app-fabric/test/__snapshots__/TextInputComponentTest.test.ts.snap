@@ -2,41 +2,392 @@
 
 exports[`TextInput Tests Multi-line TextInputs can enable text selection (Imperative) 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "multilineImperative-text-input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "multiline text selection
+can also be changed imperatively",
+    "ValuePattern.Value": "multiline text selection
+can also be changed imperatively",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "multilineImperative-text-input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "multilineImperative-text-input",
+    "Offset": "0, 0, 0",
+    "Size": "916, 50",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "multiline-text-input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "multiline text selection
+can also be changed",
+    "ValuePattern.Value": "multiline text selection
+can also be changed",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "multiline-text-input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "multiline-text-input",
+    "Offset": "0, 0, 0",
+    "Size": "916, 50",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests Single-line TextInputs can enable text selection (Imperative) 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "singlelineImperative-text-input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "text selection can be changed imperatively",
+    "ValuePattern.Value": "text selection can be changed imperatively",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "singlelineImperative-text-input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "singlelineImperative-text-input",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "singleline-text-input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "text selection can be changed",
+    "ValuePattern.Value": "text selection can be changed",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "singleline-text-input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "singleline-text-input",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests Text have cursorColor 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-cursorColor",
+    "ControlType": 50004,
+    "HelpText": "cursorColor={"green"}",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "cursorColor={"green"}",
+    "TextRangePattern.GetText": "Hello World",
+    "ValuePattern.Value": "Hello World",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-cursorColor",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-cursorColor",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 128, 0, 255)",
+        },
+        "Offset": "83, 5, 0",
+        "Opacity": 0,
+        "Size": "1, 19",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
@@ -120,329 +471,3361 @@ exports[`TextInput Tests TextInput triggers onPressIn and updates state text 1`]
 
 exports[`TextInput Tests TextInput triggers onPressOut and updates state text 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-pressout",
+    "ControlType": 50004,
+    "HelpText": "OnPressOut test.",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "OnPressOut test.",
+    "TextRangePattern.GetText": "OnPressOut test.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-pressout",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-pressout",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Characters 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "capitalize-characters",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "capitalize-characters",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "capitalize-characters",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Off 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "capitalize-none",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "capitalize-none",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "capitalize-none",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-autocomplete-address-country",
+    "ControlType": 50004,
+    "HelpText": "postal-address-country",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "postal-address-country",
+    "TextRangePattern.GetText": "postal-address-country",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-autocomplete-address-country",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-autocomplete-address-country",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-autocomplete-country",
+    "ControlType": 50004,
+    "HelpText": "country",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "country",
+    "TextRangePattern.GetText": "country",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-autocomplete-country",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-autocomplete-country",
+    "Offset": "0, 0, 0",
+    "Size": "916, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-autocomplete-one-time-code",
+    "ControlType": 50004,
+    "HelpText": "one-time-code",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "one-time-code",
+    "TextRangePattern.GetText": "one-time-code",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-autocomplete-one-time-code",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-autocomplete-one-time-code",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-autocomplete-sms-otp",
+    "ControlType": 50004,
+    "HelpText": "sms-otp",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "sms-otp",
+    "TextRangePattern.GetText": "sms-otp",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-autocomplete-sms-otp",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-autocomplete-sms-otp",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can autogrow 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-autogrow",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "small small small small small small",
+    "ValuePattern.Value": "small small small small small small",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-autogrow",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-autogrow",
+    "Offset": "0, 0, 0",
+    "Size": "300, 131",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-set",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "HelpText": "TextInput 1 in Set of 3",
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "edit",
+        "Name": "TextInput 1 in Set of 3",
+        "PositionInSet": 1,
+        "SizeofSet": 3,
+        "TextRangePattern.GetText": "TextInput 1 in Set of 3",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "HelpText": "TextInput 2 in Set of 3",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Polite",
+        "LocalizedControlType": "edit",
+        "Name": "TextInput 2 in Set of 3",
+        "PositionInSet": 2,
+        "SizeofSet": 3,
+        "TextRangePattern.GetText": "TextInput 2 in Set of 3",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "HelpText": "TextInput 3 in Set of 3",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Assertive",
+        "LocalizedControlType": "edit",
+        "Name": "TextInput 3 in Set of 3",
+        "PositionInSet": 3,
+        "SizeofSet": 3,
+        "TextRangePattern.GetText": "TextInput 3 in Set of 3",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "textinput-set",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "textinput-set",
+    "Offset": "0, 0, 0",
+    "Size": "916, 94",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 32",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 32",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 31, 0",
+        "Size": "916, 32",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 32",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 62, 0",
+        "Size": "916, 32",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 32",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can be editable 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-editable",
+    "ControlType": 50004,
+    "HelpText": "editable text input using editable prop",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "editable text input using editable prop",
+    "TextRangePattern.GetText": "editable text input using editable prop",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-editable",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-editable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can be multiline, bottomright alignment 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-multiline-bottomright",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "multiline with children, aligned bottom-right",
+    "ValuePattern.Value": "multiline with children, aligned bottom-right",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-multiline-bottomright",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-multiline-bottomright",
+    "Offset": "0, 0, 0",
+    "Size": "916, 60",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 255, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can be multiline, center alignment 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-multiline-center",
+    "ControlType": 50004,
+    "HelpText": "multiline, aligned center",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "multiline, aligned center",
+    "TextRangePattern.GetText": "multiline, aligned center",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-multiline-center",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-multiline-center",
+    "Offset": "0, 0, 0",
+    "Size": "916, 60",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can be multiline, topleft alignment 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-multiline-topleft",
+    "ControlType": 50004,
+    "HelpText": "multiline, aligned top-left",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "multiline, aligned top-left",
+    "TextRangePattern.GetText": "multiline, aligned top-left",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-multiline-topleft",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-multiline-topleft",
+    "Offset": "0, 0, 0",
+    "Size": "916, 60",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-not-editable",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^",
+    "ValuePattern.Value": "Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-not-editable",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-not-editable",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-not-editable2",
+    "ControlType": 50004,
+    "HelpText": "uneditable text input using editable prop",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "uneditable text input using editable prop",
+    "TextRangePattern.GetText": "uneditable text input using editable prop",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-not-editable2",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-not-editable2",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can clear on submit 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-clear-on-submit",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-clear-on-submit",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-clear-on-submit",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "5, 5, 0",
+        "Opacity": 0,
+        "Size": "1, 19",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can clear on submit with custom submit key event (Shift + Enter), multi-line 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-clear-on-submit-3",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-clear-on-submit-3",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-clear-on-submit-3",
+    "Offset": "0, 0, 0",
+    "Size": "916, 60",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can clear on submit with custom submit key event (Shift + Enter), single-line 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-clear-on-submit-2",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-clear-on-submit-2",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-clear-on-submit-2",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can customize its padding 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-padding",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-padding",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-padding",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can enable spellcheck 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-spellcheck",
+    "ControlType": 50004,
+    "HelpText": "Type text to test spell check functionality.",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "Type text to test spell check functionality.",
+    "TextRangePattern.GetText": "Type text to test spell check functionality.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-spellcheck",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-spellcheck",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have a background color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-backgroundColor",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-backgroundColor",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-backgroundColor",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have a color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-color",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-color",
+    "Offset": "0, 0, 0",
+    "Size": "791, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have a font family 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-fontFamily",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-fontFamily",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-fontFamily",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have a font size 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-fontSize",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-fontSize",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-fontSize",
+    "Offset": "0, 0, 0",
+    "Size": "791, 35",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have a font style 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-fontStyle",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-fontStyle",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-fontStyle",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have a font weight 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-fontWeight",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-fontWeight",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-fontWeight",
+    "Offset": "0, 0, 0",
+    "Size": "791, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have attributed text 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "text-input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Hello ",
+    "ValuePattern.Value": "Hello ",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "text-input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "text-input",
+    "Offset": "0, 0, 0",
+    "Size": "916, 50",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-carethidden",
+    "ControlType": 50004,
+    "HelpText": "caretHidden={true}",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "caretHidden={true}",
+    "TextRangePattern.GetText": "Hello World",
+    "ValuePattern.Value": "Hello World",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-carethidden",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-carethidden",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "83, 5, 0",
+        "Opacity": 0,
+        "Size": "1, 19",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-Compile",
+    "ControlType": 50004,
+    "HelpText": "returnKeyLabel: Compile",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyLabel: Compile",
+    "TextRangePattern.GetText": "returnKeyLabel: Compile",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-Compile",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-Compile",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key label, React Native 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-React Native",
+    "ControlType": 50004,
+    "HelpText": "returnKeyLabel: React Native",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyLabel: React Native",
+    "TextRangePattern.GetText": "returnKeyLabel: React Native",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-React Native",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-React Native",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-done",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: done",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: done",
+    "TextRangePattern.GetText": "returnKeyType: done",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-done",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-done",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-go",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: go",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: go",
+    "TextRangePattern.GetText": "returnKeyType: go",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-go",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-go",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-next",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: next",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: next",
+    "TextRangePattern.GetText": "returnKeyType: next",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-next",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-next",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-none",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: none",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: none",
+    "TextRangePattern.GetText": "returnKeyType: none",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-none",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-none",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key type, previous 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-previous",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: previous",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: previous",
+    "TextRangePattern.GetText": "returnKeyType: previous",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-previous",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-previous",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key type, search 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-search",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: search",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: search",
+    "TextRangePattern.GetText": "returnKeyType: search",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-search",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-search",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-return-send",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: send",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: send",
+    "TextRangePattern.GetText": "returnKeyType: send",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-send",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-send",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-letterspacing--1",
+    "ControlType": 50004,
+    "HelpText": "letterSpacing = -1",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "letterSpacing = -1",
+    "TextRangePattern.GetText": "letterSpacing = -1",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-letterspacing--1",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-letterspacing--1",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-letterspacing-0",
+    "ControlType": 50004,
+    "HelpText": "letterSpacing = 0",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "letterSpacing = 0",
+    "TextRangePattern.GetText": "letterSpacing = 0",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-letterspacing-0",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-letterspacing-0",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-letterspacing-2",
+    "ControlType": 50004,
+    "HelpText": "letterSpacing = 2",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "letterSpacing = 2",
+    "TextRangePattern.GetText": "letterSpacing = 2",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-letterspacing-2",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-letterspacing-2",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-letterspacing-9",
+    "ControlType": 50004,
+    "HelpText": "letterSpacing = 9",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "letterSpacing = 9",
+    "TextRangePattern.GetText": "letterSpacing = 9",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-letterspacing-9",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-letterspacing-9",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
@@ -544,240 +3927,2343 @@ exports[`TextInput Tests TextInputs can have customized font weight, normal 1`] 
 
 exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-letterSpacing",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-letterSpacing",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-letterSpacing",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have customized line height 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-lineHeight",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Hel",
+    "ValuePattern.Value": "Hel",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-lineHeight",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-lineHeight",
+    "Offset": "0, 0, 0",
+    "Size": "791, 26",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have inline images 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-inline-images",
+    "ControlType": 50004,
+    "HelpText": "This has drawableLeft set",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "This has drawableLeft set",
+    "TextRangePattern.GetText": "This has drawableLeft set",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-inline-images",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-inline-images",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have inline images, drawable props not set 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-inline-images-3",
+    "ControlType": 50004,
+    "HelpText": "This does not have drawable props set",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "This does not have drawable props set",
+    "TextRangePattern.GetText": "This does not have drawable props set",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-inline-images-3",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-inline-images-3",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have inline images, drawableLeft and drawablePadding set 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-inline-images-2",
+    "ControlType": 50004,
+    "HelpText": "This has drawableLeft and drawablePadding set",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "This has drawableLeft and drawablePadding set",
+    "TextRangePattern.GetText": "This has drawableLeft and drawablePadding set",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-inline-images-2",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-inline-images-2",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have shadows 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-shadow",
+    "ControlType": 50004,
+    "HelpText": "shadowColor: purple",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "shadowColor: purple",
+    "TextRangePattern.GetText": "shadowColor: purple",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-shadow",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-shadow",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-textDecorationLine",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-textDecorationLine",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-textDecorationLine",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can have text shadows 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "style-textShadow",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "He",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-textShadow",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-textShadow",
+    "Offset": "0, 0, 0",
+    "Size": "791, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can propagate events 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-propagation",
+    "ControlType": 50004,
+    "HelpText": "Click inside the box to observe events being fired.",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "Click inside the box to observe events being fired.",
+    "TextRangePattern.GetText": "Click inside the box to observe events being fired.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-propagation",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-propagation",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can register press events 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-pressin",
+    "ControlType": 50004,
+    "HelpText": "OnPressIn test.",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "OnPressIn test.",
+    "TextRangePattern.GetText": "OnPressIn test.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-pressin",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-pressin",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with Clear 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "rewrite_clear_input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "rewrite_clear_input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "rewrite_clear_input",
+    "Offset": "0, 0, 0",
+    "Size": "867, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with No Character 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "rewrite_no_sp_input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "rewrite_no_sp_input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "rewrite_no_sp_input",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with Underscore 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "rewrite_sp_underscore_input",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "rewrite_sp_underscore_input",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "rewrite_sp_underscore_input",
+    "Offset": "0, 0, 0",
+    "Size": "892, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can select text on focus 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "select-text-on-focus",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Hello World",
+    "ValuePattern.Value": "Hello World",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "select-text-on-focus",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "select-text-on-focus",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "83, 5, 0",
+        "Opacity": 0,
+        "Size": "1, 19",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-readonly-false",
+    "ControlType": 50004,
+    "HelpText": "editable text input using readOnly prop",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "editable text input using readOnly prop",
+    "TextRangePattern.GetText": "editable text input using readOnly prop",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-readonly-false",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-readonly-false",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-readyonly",
+    "ControlType": 50004,
+    "HelpText": "uneditable text input using readOnly prop",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "uneditable text input using readOnly prop",
+    "TextRangePattern.GetText": "uneditable text input using readOnly prop",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-readyonly",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-readyonly",
+    "Offset": "0, 0, 0",
+    "Size": "916, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs can submit with custom key, multilined and submit with enter 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-clear-on-submit-4",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-clear-on-submit-4",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-clear-on-submit-4",
+    "Offset": "0, 0, 0",
+    "Size": "916, 60",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "5, 5, 0",
+        "Opacity": 0,
+        "Size": "1, 19",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a custom background color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-custom-background-color",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Same BackgroundColor as View ",
+    "ValuePattern.Value": "Same BackgroundColor as View ",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-custom-background-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-custom-background-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-custom-highlight-color",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Selection Color is red",
+    "ValuePattern.Value": "Selection Color is red",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-custom-highlight-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-custom-highlight-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-custom-placeholder-color",
+    "ControlType": 50004,
+    "HelpText": "Red placeholder text color",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "Red placeholder text color",
+    "TextRangePattern.GetText": "Red placeholder text color",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-custom-placeholder-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-custom-placeholder-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a custom text color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-custom-color",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Green Text",
+    "ValuePattern.Value": "Green Text",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-custom-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-custom-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 128, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-custom-underline-color",
+    "ControlType": 50004,
+    "HelpText": "Blue underline color",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "Blue underline color",
+    "TextRangePattern.GetText": "Blue underline color",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-custom-underline-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-custom-underline-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-default-placeholder-color",
+    "ControlType": 50004,
+    "HelpText": "Default placeholder text color",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "Default placeholder text color",
+    "TextRangePattern.GetText": "Default placeholder text color",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-default-placeholder-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-default-placeholder-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a default text color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-default-color",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Default color text",
+    "ValuePattern.Value": "Default color text",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-default-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-default-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs have a default underline color 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-default-underline-color",
+    "ControlType": 50004,
+    "HelpText": "Default underline color",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "Default underline color",
+    "TextRangePattern.GetText": "Default underline color",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-default-underline-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-default-underline-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs support secure entry 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-password",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "iloveturtles",
+    "ValuePattern.Value": "iloveturtles",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-password",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-password",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs support secure entry, with placeholder text 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-password-placeholder",
+    "ControlType": 50004,
+    "HelpText": "color is supported too",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "color is supported too",
+    "TextRangePattern.GetText": "color is supported too",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-password-placeholder",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-password-placeholder",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs which have a searchbox role should also support the value pattern. 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-searchbox",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "edit",
+        "TextRangePattern.GetText": "Search",
+        "ValuePattern.Value": "Search",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "textinput-searchbox",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "textinput-searchbox",
+    "Offset": "0, 0, 0",
+    "Size": "916, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 33",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 33",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests TextInputs with set height and padding from theme 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "textinput-theme-padding",
+    "ControlType": 50004,
+    "HelpText": "If you set height, beware of padding set from themes",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "If you set height, beware of padding set from themes",
+    "TextRangePattern.GetText": "If you set height, beware of padding set from themes",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-theme-padding",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-theme-padding",
+    "Offset": "0, 0, 0",
+    "Size": "916, 30",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
 
 exports[`TextInput Tests Uncontrolled TextInput 1`] = `
 {
-  "Automation Tree": {},
-  "Component Tree": {},
-  "Visual Tree": {},
+  "Automation Tree": {
+    "AutomationId": "uncontrolled-textinput",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Hello World!",
+    "ValuePattern.Value": "Hello World!",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "uncontrolled-textinput",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "uncontrolled-textinput",
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
 }
 `;
