@@ -8,6 +8,16 @@ exports[`Button Tests Buttons can be disabled 1`] = `
     "IsEnabled": false,
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "IsEnabled": false,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+        "TextRangePattern.GetText": "Submit Application",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -147,6 +157,15 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+        "TextRangePattern.GetText": "Submit Application",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -287,6 +306,15 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+        "TextRangePattern.GetText": "Submit Application",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -408,6 +436,16 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
     "IsEnabled": false,
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "IsEnabled": false,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+        "TextRangePattern.GetText": "Submit Application",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
