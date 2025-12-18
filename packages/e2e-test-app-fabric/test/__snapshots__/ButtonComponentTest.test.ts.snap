@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+﻿// Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button Tests Buttons can be disabled 1`] = `
 {
@@ -585,6 +585,15 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "Press to cancel your application!",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Cancel Application",
+        "TextRangePattern.GetText": "Cancel Application",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -617,7 +626,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
           {
             "Brush": {
               "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 55, 95, 255)",
+              "Color": "rgba(255, 59, 48, 255)",
             },
             "Offset": "0, 0, 0",
             "Size": "916, 37",
@@ -844,8 +853,8 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
-        "Name": "Cancel Application",
-        "TextRangePattern.GetText": "Cancel Application",
+        "Name": "Button with focusable=false",
+        "TextRangePattern.GetText": "Button with focusable=false",
       },
     ],
   },
@@ -1089,6 +1098,15 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "Press to cancel your application!",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Cancel",
+            "TextRangePattern.GetText": "Cancel",
+          },
+        ],
       },
       {
         "AutomationId": "two_submit_button",
@@ -1096,13 +1114,13 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "Press to submit your application!",
-         "__Children": [
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
-            "Name": "Cancel",
-            "TextRangePattern.GetText": "Cancel",
+            "Name": "Submit",
+            "TextRangePattern.GetText": "Submit",
           },
         ],
       },
@@ -1175,7 +1193,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                   {
                     "Brush": {
                       "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 55, 95, 255)",
+                      "Color": "rgba(255, 59, 48, 255)",
                     },
                     "Offset": "0, 0, 0",
                     "Size": "59, 37",
@@ -1292,7 +1310,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                   {
                     "Brush": {
                       "Brush Type": "ColorBrush",
-                      "Color": "rgba(48, 209, 88, 255)",
+                      "Color": "rgba(52, 199, 89, 255)",
                     },
                     "Offset": "0, 0, 0",
                     "Size": "62, 37",
@@ -1408,6 +1426,15 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "Press to cancel your application!",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Cancel",
+            "TextRangePattern.GetText": "Cancel",
+          },
+        ],
       },
       {
         "AutomationId": "three_save_button",
@@ -1415,6 +1442,15 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "Press to save your application!",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Save For Later",
+            "TextRangePattern.GetText": "Save For Later",
+          },
+        ],
       },
       {
         "AutomationId": "three_submit_button",
@@ -1422,13 +1458,13 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "Press to submit your application!",
-         "__Children": [
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
             "LocalizedControlType": "text",
-            "Name": "Cancel",
-            "TextRangePattern.GetText": "Cancel",
+            "Name": "Submit",
+            "TextRangePattern.GetText": "Submit",
           },
         ],
       },
@@ -1518,7 +1554,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                   {
                     "Brush": {
                       "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 55, 95, 255)",
+                      "Color": "rgba(255, 59, 48, 255)",
                     },
                     "Offset": "0, 0, 0",
                     "Size": "59, 37",
@@ -1752,7 +1788,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                   {
                     "Brush": {
                       "Brush Type": "ColorBrush",
-                      "Color": "rgba(48, 209, 88, 255)",
+                      "Color": "rgba(52, 199, 89, 255)",
                     },
                     "Offset": "0, 0, 0",
                     "Size": "62, 37",
@@ -1863,6 +1899,15 @@ exports[`Button Tests Buttons have default styling 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+        "TextRangePattern.GetText": "Submit Application",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -1975,3 +2020,4 @@ exports[`Button Tests Buttons have default styling 1`] = `
   },
 }
 `;
+
