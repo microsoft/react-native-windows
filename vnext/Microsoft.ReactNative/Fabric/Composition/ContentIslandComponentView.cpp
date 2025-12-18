@@ -126,6 +126,27 @@ bool ContentIslandComponentView::focusable() const noexcept {
   return true;
 }
 
+facebook::react::Tag ContentIslandComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
+  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+
+  // Check if the point is within the bounds of this ContentIslandComponentView.
+  // This ensures that hit tests correctly return this view's tag for UIA purposes,
+  // even when the actual content (XAML buttons, etc.) is hosted in the ContentIsland.
+  auto props = viewProps();
+  if ((ignorePointerEvents || props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+    localPt = ptLocal;
+    return Tag();
+  }
+
+  return -1;
+}
+
 // Helper to convert a FocusNavigationDirection to a FocusNavigationReason.
 winrt::Microsoft::UI::Input::FocusNavigationReason GetFocusNavigationReason(
     winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
