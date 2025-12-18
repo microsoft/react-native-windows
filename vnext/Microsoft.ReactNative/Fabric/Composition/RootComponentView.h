@@ -5,6 +5,7 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
+#include <Fabric/ReactTaggedView.h>
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 #include "CompositionViewComponentView.h"
@@ -86,6 +87,9 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   HWND GetHwndForParenting() noexcept override;
 
+  void ClearCurrentTextSelection() noexcept;
+  void SetCurrentlySelectedText(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
+
  private:
   // should this be a ReactTaggedView? - It shouldn't actually matter since if the view is going away it should always
   // be clearing its focus But being a reactTaggedView might make it easier to identify cases where that isn't
@@ -94,6 +98,8 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView{nullptr};
   winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::PortalComponentView> m_wkPortal{nullptr};
   bool m_visualAddedToIsland{false};
+
+  std::optional<::Microsoft::ReactNative::ReactTaggedView> m_currentlySelectedText;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -10,6 +10,7 @@
 #include <winrt/Microsoft.UI.Input.h>
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionRootAutomationProvider.h"
+#include "ParagraphComponentView.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
 
@@ -382,6 +383,21 @@ HWND RootComponentView::GetHwndForParenting() noexcept {
   }
 
   return base_type::GetHwndForParenting();
+}
+
+void RootComponentView::ClearCurrentTextSelection() noexcept {
+  if (m_currentlySelectedText) {
+    if (auto view = m_currentlySelectedText->view()) {
+      if (auto paragraphView = view.try_as<ParagraphComponentView>()) {
+        paragraphView->ClearSelection();
+      }
+    }
+  }
+  m_currentlySelectedText = std::nullopt;
+}
+
+void RootComponentView::SetCurrentlySelectedText(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+  m_currentlySelectedText = ::Microsoft::ReactNative::ReactTaggedView{view};
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

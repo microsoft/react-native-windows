@@ -18,9 +18,6 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-// Clears any active text selection in the application.
-void ClearCurrentTextSelection() noexcept;
-
 struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, ViewComponentView> {
   using Super = ParagraphComponentViewT<ParagraphComponentView, ViewComponentView>;
 
@@ -88,25 +85,22 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
       float offsetY,
       float pointScaleFactor) noexcept;
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
-  bool isTextSelectableAtPoint(facebook::react::Point pt) noexcept;
-
-  // Returns character position at the given point, or -1 if outside text bounds
-  int32_t getTextPositionAtPoint(facebook::react::Point pt) noexcept;
-
-  // Returns character position clamped to text bounds for drag selection outside component
-  int32_t getClampedTextPosition(facebook::react::Point pt) noexcept;
-
-  // Returns the currently selected text, or empty string if no selection
-  std::string getSelectedText() const noexcept;
+  bool IsTextSelectableAtPoint(facebook::react::Point pt) noexcept;
+  std::optional<int32_t> GetTextPositionAtPoint(facebook::react::Point pt) noexcept;
+  std::optional<int32_t> GetClampedTextPosition(facebook::react::Point pt) noexcept;
+  std::string GetSelectedText() const noexcept;
 
   // Copies currently selected text to the system clipboard
-  void copySelectionToClipboard() noexcept;
+  void CopySelectionToClipboard() noexcept;
 
-  // Finds word boundaries at the given character position and sets selection
-  void selectWordAtPosition(int32_t charPosition) noexcept;
+  // Selects the word at the given character position
+  void SelectWordAtPosition(int32_t charPosition) noexcept;
 
   // Shows a context menu with Copy/Select All options on right-click
   void ShowContextMenu() noexcept;
+
+  // m_selectionStart <= m_selectionEnd
+  void SetSelection(int32_t start, int32_t end) noexcept;
 
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
@@ -115,15 +109,13 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   bool m_requireRedraw{true};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
 
-  // Selection state - character indices
-  // -1 means no selection
-  int32_t m_selectionStart{-1};
-  int32_t m_selectionEnd{-1};
+  std::optional<int32_t> m_selectionStart;
+  std::optional<int32_t> m_selectionEnd;
   bool m_isSelecting{false};
 
   // Double-click detection
   std::chrono::steady_clock::time_point m_lastClickTime{};
-  int32_t m_lastClickPosition{-1};
+  std::optional<int32_t> m_lastClickPosition;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

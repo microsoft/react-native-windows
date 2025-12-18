@@ -23,18 +23,26 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-static std::optional<::Microsoft::ReactNative::ReactTaggedView> s_currentlySelectedText;
+// Automatically restores the original DPI of a render target
+struct DpiRestorer {
+  ID2D1RenderTarget *renderTarget = nullptr;
+  float originalDpiX = 0.0f;
+  float originalDpiY = 0.0f;
 
-// Clear any active text selection when the user clicks anywhere in the app
-void ClearCurrentTextSelection() noexcept {
-  if (s_currentlySelectedText) {
-    if (auto strongView = s_currentlySelectedText->view()) {
-      if (auto paragraphView = strongView.try_as<ParagraphComponentView>()) {
-        paragraphView->ClearSelection();
-      }
+  void operator()(ID2D1RenderTarget *) const noexcept {
+    if (renderTarget) {
+      renderTarget->SetDpi(originalDpiX, originalDpiY);
     }
   }
-  s_currentlySelectedText = std::nullopt;
+};
+
+inline auto MakeDpiGuard(ID2D1RenderTarget &renderTarget, float newDpiX, float newDpiY) noexcept {
+  float originalDpiX, originalDpiY;
+  renderTarget.GetDpi(&originalDpiX, &originalDpiY);
+  renderTarget.SetDpi(newDpiX, newDpiY);
+
+  return std::unique_ptr<ID2D1RenderTarget, DpiRestorer>(
+      &renderTarget, DpiRestorer{&renderTarget, originalDpiX, originalDpiY});
 }
 
 ParagraphComponentView::ParagraphComponentView(
@@ -131,9 +139,6 @@ void ParagraphComponentView::FinalizeUpdates(
 
 facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPoint(
     facebook::react::Point pt) noexcept {
-  // Test if text at this point is selectable
-  bool selectable = isTextSelectableAtPoint(pt);
-
   if (m_attributedStringBox.getValue().getFragments().size() && m_textLayout) {
     BOOL isTrailingHit = false;
     BOOL isInside = false;
@@ -161,7 +166,7 @@ void ParagraphComponentView::updateTextAlignment(
   m_textLayout = nullptr;
 }
 
-bool ParagraphComponentView::isTextSelectableAtPoint(facebook::react::Point pt) noexcept {
+bool ParagraphComponentView::IsTextSelectableAtPoint(facebook::react::Point pt) noexcept {
   // paragraph-level selectable prop is enabled
   const auto &props = paragraphProps();
   if (!props.isSelectable) {
@@ -191,9 +196,9 @@ bool ParagraphComponentView::isTextSelectableAtPoint(facebook::react::Point pt) 
   return false;
 }
 
-int32_t ParagraphComponentView::getTextPositionAtPoint(facebook::react::Point pt) noexcept {
+std::optional<int32_t> ParagraphComponentView::GetTextPositionAtPoint(facebook::react::Point pt) noexcept {
   if (!m_textLayout) {
-    return -1;
+    return std::nullopt;
   }
 
   BOOL isTrailingHit = FALSE;
@@ -202,44 +207,34 @@ int32_t ParagraphComponentView::getTextPositionAtPoint(facebook::react::Point pt
 
   // Convert screen coordinates to character position
   HRESULT hr = m_textLayout->HitTestPoint(pt.x, pt.y, &isTrailingHit, &isInside, &metrics);
-  if (FAILED(hr)) {
-    return -1;
-  }
-
-  // If point is outside text bounds, return -1
-  if (!isInside) {
-    return -1;
+  if (FAILED(hr) || !isInside) {
+    return std::nullopt;
   }
 
   // Calculates the actual character position
   // If isTrailingHit is true, the point is closer to the trailing edge of the character,
   // so we should return the next character position (for cursor positioning)
-  int32_t position = static_cast<int32_t>(metrics.textPosition);
-  if (isTrailingHit) {
-    position += 1;
-  }
-
-  return position;
+  return static_cast<int32_t>(metrics.textPosition + isTrailingHit);
 }
 
-int32_t ParagraphComponentView::getClampedTextPosition(facebook::react::Point pt) noexcept {
+std::optional<int32_t> ParagraphComponentView::GetClampedTextPosition(facebook::react::Point pt) noexcept {
   if (!m_textLayout) {
-    return -1;
+    return std::nullopt;
   }
 
-  std::string fullText = m_attributedStringBox.getValue().getString();
+  const std::string fullText = m_attributedStringBox.getValue().getString();
   if (fullText.empty()) {
-    return -1;
+    return std::nullopt;
   }
 
   DWRITE_TEXT_METRICS textMetrics;
   if (FAILED(m_textLayout->GetMetrics(&textMetrics))) {
-    return -1;
+    return std::nullopt;
   }
 
   // Clamp the point to the text bounds for hit testing
-  float clampedX = std::max(0.0f, std::min(pt.x, textMetrics.width));
-  float clampedY = std::max(0.0f, std::min(pt.y, textMetrics.height));
+  const float clampedX = std::max(0.0f, std::min(pt.x, textMetrics.width));
+  const float clampedY = std::max(0.0f, std::min(pt.y, textMetrics.height));
 
   BOOL isTrailingHit = FALSE;
   BOOL isInside = FALSE;
@@ -247,7 +242,7 @@ int32_t ParagraphComponentView::getClampedTextPosition(facebook::react::Point pt
 
   HRESULT hr = m_textLayout->HitTestPoint(clampedX, clampedY, &isTrailingHit, &isInside, &metrics);
   if (FAILED(hr)) {
-    return -1;
+    return std::nullopt;
   }
 
   int32_t result = static_cast<int32_t>(metrics.textPosition);
@@ -411,22 +406,24 @@ void ParagraphComponentView::DrawSelectionHighlight(
     float offsetX,
     float offsetY,
     float pointScaleFactor) noexcept {
-  // Draws if we have a valid selection
-  int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
-  int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
-  if (selStart < 0 || selEnd <= selStart || !m_textLayout) {
+  if (!m_selectionStart || !m_selectionEnd || !m_textLayout) {
+    return;
+  }
+
+  // During drag, selection may not be normalized yet, using min/max for rendering
+  const int32_t selStart = std::min(*m_selectionStart, *m_selectionEnd);
+  const int32_t selEnd = std::max(*m_selectionStart, *m_selectionEnd);
+  if (selEnd <= selStart) {
     return;
   }
 
   // Scale offset to match text layout coordinates (same as RenderText)
-  float scaledOffsetX = offsetX / pointScaleFactor;
-  float scaledOffsetY = offsetY / pointScaleFactor;
+  const float scaledOffsetX = offsetX / pointScaleFactor;
+  const float scaledOffsetY = offsetY / pointScaleFactor;
 
   // Set DPI to match text rendering
-  const auto dpi = pointScaleFactor * 96.0f;
-  float oldDpiX, oldDpiY;
-  renderTarget.GetDpi(&oldDpiX, &oldDpiY);
-  renderTarget.SetDpi(dpi, dpi);
+  const float dpi = pointScaleFactor * 96.0f;
+  std::unique_ptr<ID2D1RenderTarget, DpiRestorer> dpiGuard = MakeDpiGuard(renderTarget, dpi, dpi);
 
   // Get the hit test metrics for the selected text range
   UINT32 actualCount = 0;
@@ -440,7 +437,6 @@ void ParagraphComponentView::DrawSelectionHighlight(
       &actualCount);
 
   if (actualCount == 0) {
-    renderTarget.SetDpi(oldDpiX, oldDpiY);
     return;
   }
 
@@ -455,29 +451,24 @@ void ParagraphComponentView::DrawSelectionHighlight(
       &actualCount);
 
   if (FAILED(hr)) {
-    renderTarget.SetDpi(oldDpiX, oldDpiY);
     return;
   }
 
   // TODO: use prop selectionColor if provided
   winrt::com_ptr<ID2D1SolidColorBrush> selectionBrush;
-  D2D1_COLOR_F selectionColor = theme()->D2DPlatformColor("Highlight@40");
+  const D2D1_COLOR_F selectionColor = theme()->D2DPlatformColor("Highlight@40");
   hr = renderTarget.CreateSolidColorBrush(selectionColor, selectionBrush.put());
 
   if (FAILED(hr)) {
-    renderTarget.SetDpi(oldDpiX, oldDpiY);
     return;
   }
 
   // Draw rectangles for each hit test metric
   for (UINT32 i = 0; i < actualCount; i++) {
     const auto &metric = hitTestMetrics[i];
-    D2D1_RECT_F rect = {metric.left, metric.top, metric.left + metric.width, metric.top + metric.height};
+    const D2D1_RECT_F rect = {metric.left, metric.top, metric.left + metric.width, metric.top + metric.height};
     renderTarget.FillRectangle(&rect, selectionBrush.get());
   }
-
-  // Restores original DPI
-  renderTarget.SetDpi(oldDpiX, oldDpiY);
 }
 
 void ParagraphComponentView::DrawText() noexcept {
@@ -500,8 +491,8 @@ void ParagraphComponentView::DrawText() noexcept {
       const auto &props = paragraphProps();
 
       // Calculate text offset
-      float textOffsetX = static_cast<float>(offset.x) + m_layoutMetrics.contentInsets.left;
-      float textOffsetY = static_cast<float>(offset.y) + m_layoutMetrics.contentInsets.top;
+      const float textOffsetX = static_cast<float>(offset.x) + m_layoutMetrics.contentInsets.left;
+      const float textOffsetY = static_cast<float>(offset.y) + m_layoutMetrics.contentInsets.top;
 
       // Draw selection highlight behind text
       DrawSelectionHighlight(*d2dDeviceContext, textOffsetX, textOffsetY, m_layoutMetrics.pointScaleFactor);
@@ -524,9 +515,9 @@ void ParagraphComponentView::DrawText() noexcept {
 }
 
 void ParagraphComponentView::ClearSelection() noexcept {
-  bool hadSelection = (m_selectionStart >= 0 || m_selectionEnd >= 0 || m_isSelecting);
-  m_selectionStart = -1;
-  m_selectionEnd = -1;
+  const bool hadSelection = (m_selectionStart || m_selectionEnd || m_isSelecting);
+  m_selectionStart = std::nullopt;
+  m_selectionEnd = std::nullopt;
   m_isSelecting = false;
   if (hadSelection) {
     // Clears selection highlight
@@ -557,25 +548,26 @@ void ParagraphComponentView::OnPointerPressed(
   facebook::react::Point localPt{
       position.X - m_layoutMetrics.frame.origin.x, position.Y - m_layoutMetrics.frame.origin.y};
 
-  int32_t charPosition = getTextPositionAtPoint(localPt);
+  std::optional<int32_t> charPosition = GetTextPositionAtPoint(localPt);
 
-  if (charPosition >= 0) {
-    // Clears any previous text selection in another component
-    ClearCurrentTextSelection();
+  if (charPosition) {
+    if (auto root = rootComponentView()) {
+      root->ClearCurrentTextSelection();
+    }
 
     // Check for double-click
     auto now = std::chrono::steady_clock::now();
     auto timeSinceLastClick = std::chrono::duration_cast<std::chrono::milliseconds>(now - m_lastClickTime);
-    UINT doubleClickTime = GetDoubleClickTime();
-    bool isDoubleClick = (timeSinceLastClick.count() < static_cast<long long>(doubleClickTime)) &&
-        (m_lastClickPosition >= 0) && (std::abs(charPosition - m_lastClickPosition) <= 1);
+    const UINT doubleClickTime = GetDoubleClickTime();
+    const bool isDoubleClick = (timeSinceLastClick.count() < static_cast<long long>(doubleClickTime)) &&
+        m_lastClickPosition && (std::abs(*charPosition - *m_lastClickPosition) <= 1);
 
     // Update last click tracking
     m_lastClickTime = now;
     m_lastClickPosition = charPosition;
 
     if (isDoubleClick) {
-      selectWordAtPosition(charPosition);
+      SelectWordAtPosition(*charPosition);
       m_isSelecting = false;
     } else {
       // Single-click: start drag selection
@@ -587,7 +579,9 @@ void ParagraphComponentView::OnPointerPressed(
       CapturePointer(args.Pointer());
     }
 
-    s_currentlySelectedText = ::Microsoft::ReactNative::ReactTaggedView{*get_strong()};
+    if (auto root = rootComponentView()) {
+      root->SetCurrentlySelectedText(*get_strong());
+    }
 
     // Focuses so we receive onLostFocus when clicking elsewhere
     if (auto root = rootComponentView()) {
@@ -596,9 +590,8 @@ void ParagraphComponentView::OnPointerPressed(
 
     args.Handled(true);
   } else {
-    // Click outside text bounds
     ClearSelection();
-    m_lastClickPosition = -1;
+    m_lastClickPosition = std::nullopt;
     Super::OnPointerPressed(args);
   }
 }
@@ -615,14 +608,11 @@ void ParagraphComponentView::OnPointerMoved(
   auto position = pp.Position();
 
   facebook::react::Point localPt{position.X, position.Y};
-  int32_t charPosition = getClampedTextPosition(localPt);
+  std::optional<int32_t> charPosition = GetClampedTextPosition(localPt);
 
-  if (charPosition >= 0 && charPosition != m_selectionEnd) {
+  if (charPosition && charPosition != m_selectionEnd) {
     m_selectionEnd = charPosition;
-
-    // Triggers redraw to show selection highlight
     DrawText();
-
     args.Handled(true);
   }
 }
@@ -650,13 +640,11 @@ void ParagraphComponentView::OnPointerReleased(
 
   ReleasePointerCapture(args.Pointer());
 
-  // Calculate selection range (ensure start <= end)
-  int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
-  int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
-
-  if (selStart < 0 || selEnd <= selStart) {
-    m_selectionStart = -1;
-    m_selectionEnd = -1;
+  if (!m_selectionStart || !m_selectionEnd || *m_selectionStart == *m_selectionEnd) {
+    m_selectionStart = std::nullopt;
+    m_selectionEnd = std::nullopt;
+  } else {
+    SetSelection(*m_selectionStart, *m_selectionEnd);
   }
 
   args.Handled(true);
@@ -664,13 +652,7 @@ void ParagraphComponentView::OnPointerReleased(
 
 void ParagraphComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
-  // Clear selection when focus is lost
   ClearSelection();
-
-  // Clear static reference if this was the selected component
-  if (s_currentlySelectedText && s_currentlySelectedText->Tag() == Tag()) {
-    s_currentlySelectedText = std::nullopt;
-  }
 
   Super::onLostFocus(args);
 }
@@ -680,54 +662,55 @@ void ParagraphComponentView::OnPointerCaptureLost() noexcept {
   if (m_isSelecting) {
     m_isSelecting = false;
 
-    int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
-    int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
-
-    if (selStart < 0 || selEnd <= selStart) {
-      m_selectionStart = -1;
-      m_selectionEnd = -1;
+    if (!m_selectionStart || !m_selectionEnd || *m_selectionStart == *m_selectionEnd) {
+      m_selectionStart = std::nullopt;
+      m_selectionEnd = std::nullopt;
+    } else {
+      SetSelection(*m_selectionStart, *m_selectionEnd);
     }
   }
 
   Super::OnPointerCaptureLost();
 }
 
-std::string ParagraphComponentView::getSelectedText() const noexcept {
-  int32_t selStart = std::min(m_selectionStart, m_selectionEnd);
-  int32_t selEnd = std::max(m_selectionStart, m_selectionEnd);
-
-  if (selStart < 0 || selEnd <= selStart) {
+std::string ParagraphComponentView::GetSelectedText() const noexcept {
+  if (!m_selectionStart || !m_selectionEnd) {
     return "";
   }
 
-  std::string fullText = m_attributedStringBox.getValue().getString();
+  const int32_t selStart = std::min(*m_selectionStart, *m_selectionEnd);
+  const int32_t selEnd = std::max(*m_selectionStart, *m_selectionEnd);
+
+  if (selEnd <= selStart) {
+    return "";
+  }
+
+  const std::string fullText = m_attributedStringBox.getValue().getString();
 
   if (selStart >= static_cast<int32_t>(fullText.length())) {
     return "";
   }
-  if (selEnd > static_cast<int32_t>(fullText.length())) {
-    selEnd = static_cast<int32_t>(fullText.length());
-  }
 
-  return fullText.substr(static_cast<size_t>(selStart), static_cast<size_t>(selEnd - selStart));
+  const int32_t clampedEnd = std::min(selEnd, static_cast<int32_t>(fullText.length()));
+  return fullText.substr(static_cast<size_t>(selStart), static_cast<size_t>(clampedEnd - selStart));
 }
 
-void ParagraphComponentView::copySelectionToClipboard() noexcept {
-  std::string selectedText = getSelectedText();
+void ParagraphComponentView::CopySelectionToClipboard() noexcept {
+  const std::string selectedText = GetSelectedText();
   if (selectedText.empty()) {
     return;
   }
 
   // Convert UTF-8 to wide string for Windows clipboard
-  std::wstring wideText = ::Microsoft::Common::Unicode::Utf8ToUtf16(selectedText);
+  const std::wstring wideText = ::Microsoft::Common::Unicode::Utf8ToUtf16(selectedText);
 
   winrt::Windows::ApplicationModel::DataTransfer::DataPackage dataPackage;
   dataPackage.SetText(wideText);
   winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(dataPackage);
 }
 
-void ParagraphComponentView::selectWordAtPosition(int32_t charPosition) noexcept {
-  std::string fullText = m_attributedStringBox.getValue().getString();
+void ParagraphComponentView::SelectWordAtPosition(int32_t charPosition) noexcept {
+  const std::string fullText = m_attributedStringBox.getValue().getString();
   if (fullText.empty() || charPosition < 0 || charPosition >= static_cast<int32_t>(fullText.length())) {
     return;
   }
@@ -746,10 +729,14 @@ void ParagraphComponentView::selectWordAtPosition(int32_t charPosition) noexcept
   }
 
   if (wordEnd > wordStart) {
-    m_selectionStart = wordStart;
-    m_selectionEnd = wordEnd;
+    SetSelection(wordStart, wordEnd);
     DrawText();
   }
+}
+
+void ParagraphComponentView::SetSelection(int32_t start, int32_t end) noexcept {
+  m_selectionStart = std::min(start, end);
+  m_selectionEnd = std::max(start, end);
 }
 
 void ParagraphComponentView::ShowContextMenu() noexcept {
@@ -758,9 +745,9 @@ void ParagraphComponentView::ShowContextMenu() noexcept {
     return;
   }
 
-  bool hasSelection = (m_selectionStart >= 0 && m_selectionEnd >= 0 && m_selectionStart != m_selectionEnd);
-  std::string fullText = m_attributedStringBox.getValue().getString();
-  bool hasText = !fullText.empty();
+  const bool hasSelection = (m_selectionStart && m_selectionEnd && *m_selectionStart != *m_selectionEnd);
+  const std::string fullText = m_attributedStringBox.getValue().getString();
+  const bool hasText = !fullText.empty();
 
   // Add menu items (1 = Copy, 2 = Select All)
   AppendMenuW(menu, MF_STRING | (hasSelection ? 0 : MF_GRAYED), 1, L"Copy");
@@ -770,19 +757,17 @@ void ParagraphComponentView::ShowContextMenu() noexcept {
   POINT cursorPos;
   GetCursorPos(&cursorPos);
 
-  HWND hwnd = GetActiveWindow();
+  const HWND hwnd = GetActiveWindow();
 
-  // Show the menu and get the selected command
-  int cmd = TrackPopupMenu(
+  const int cmd = TrackPopupMenu(
       menu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY, cursorPos.x, cursorPos.y, 0, hwnd, NULL);
 
   if (cmd == 1) {
     // Copy
-    copySelectionToClipboard();
+    CopySelectionToClipboard();
   } else if (cmd == 2) {
     // Select All
-    m_selectionStart = 0;
-    m_selectionEnd = static_cast<int32_t>(fullText.length());
+    SetSelection(0, static_cast<int32_t>(fullText.length()));
     DrawText();
   }
 
@@ -791,15 +776,14 @@ void ParagraphComponentView::ShowContextMenu() noexcept {
 
 void ParagraphComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  // Check if Ctrl is pressed
-  bool isCtrlDown =
+  const bool isCtrlDown =
       (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
 
   // Handle Ctrl+C for copy
   if (isCtrlDown && args.Key() == winrt::Windows::System::VirtualKey::C) {
-    if (m_selectionStart >= 0 && m_selectionEnd >= 0 && m_selectionStart != m_selectionEnd) {
-      copySelectionToClipboard();
+    if (m_selectionStart && m_selectionEnd && *m_selectionStart != *m_selectionEnd) {
+      CopySelectionToClipboard();
       args.Handled(true);
       return;
     }
@@ -807,13 +791,17 @@ void ParagraphComponentView::OnKeyDown(
 
   // Handle Ctrl+A for select all
   if (isCtrlDown && args.Key() == winrt::Windows::System::VirtualKey::A) {
-    std::string fullText = m_attributedStringBox.getValue().getString();
+    const std::string fullText = m_attributedStringBox.getValue().getString();
     if (!fullText.empty()) {
-      ClearCurrentTextSelection();
+      if (auto root = rootComponentView()) {
+        root->ClearCurrentTextSelection();
+      }
 
-      m_selectionStart = 0;
-      m_selectionEnd = static_cast<int32_t>(fullText.length());
-      s_currentlySelectedText = ::Microsoft::ReactNative::ReactTaggedView{*get_strong()};
+      SetSelection(0, static_cast<int32_t>(fullText.length()));
+
+      if (auto root = rootComponentView()) {
+        root->SetCurrentlySelectedText(*get_strong());
+      }
 
       DrawText();
       args.Handled(true);

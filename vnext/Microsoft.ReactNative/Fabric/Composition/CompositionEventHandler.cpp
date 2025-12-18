@@ -1096,11 +1096,11 @@ void CompositionEventHandler::onPointerExited(
 void CompositionEventHandler::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  namespace Composition = winrt::Microsoft::ReactNative::Composition;
+
   // Clears any active text selection when left pointer is pressed
-  // Don't clear on right-click
-  if (pointerPoint.Properties().PointerUpdateKind() !=
-      winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonPressed) {
-    winrt::Microsoft::ReactNative::Composition::implementation::ClearCurrentTextSelection();
+  if (pointerPoint.Properties().PointerUpdateKind() != Composition::Input::PointerUpdateKind::RightButtonPressed) {
+    RootComponentView().ClearCurrentTextSelection();
   }
 
   PointerId pointerId = pointerPoint.PointerId();
