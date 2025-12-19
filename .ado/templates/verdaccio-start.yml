@@ -16,6 +16,14 @@ steps:
 
   - template: compute-beachball-branch-name.yml
 
+  # Ensure native layout artifacts (e.g., JSI files) are copied before publishing
+  - script: |
+      cd vnext
+      npx just layoutMSRNCxx
+    displayName: Run layoutMSRNCxx (generate native headers/jsi)
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
   - script: yarn build
     displayName: Build packages before publish
     env:
