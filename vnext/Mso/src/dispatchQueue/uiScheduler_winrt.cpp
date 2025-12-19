@@ -11,9 +11,7 @@ using namespace winrt;
 using namespace Windows::Foundation;
 #include "winrt/Windows.System.h"
 
-#ifdef USE_WINUI3
 #include "winrt/Microsoft.UI.Dispatching.h"
-#endif
 
 namespace Mso {
 
@@ -86,7 +84,6 @@ struct DispatcherTraits<WindowsTypeTag> {
 };
 using WindowsDispatcherTraits = DispatcherTraits<WindowsTypeTag>;
 
-#ifdef USE_WINUI3
 struct MicrosoftTypeTag;
 using MicrosoftTaskDispatcherHandler = TaskDispatcherHandler<DispatcherTraits<MicrosoftTypeTag>>;
 
@@ -99,8 +96,6 @@ struct DispatcherTraits<MicrosoftTypeTag> {
   using TaskDispatcherHandler = MicrosoftTaskDispatcherHandler;
 };
 using MicrosoftDispatcherTraits = DispatcherTraits<MicrosoftTypeTag>;
-
-#endif
 
 //! TaskDispatcherHandler is a DispatcherQueueHandler delegate that we pass to DispatcherQueue.
 //! We use custom ref counting to avoid extra memory allocations and to handle reference to DispatchTask.
@@ -271,7 +266,8 @@ bool UISchedulerWinRT<TDispatcherTraits>::TryTakeTask(
     --m_taskCount;
   }
 
-  if (queue = m_queue.GetStrongPtr()) {
+  queue = m_queue.GetStrongPtr();
+  if (queue) {
     return queue->TryDequeTask(task);
   }
 
@@ -418,14 +414,10 @@ void UISchedulerWinRT<TDispatcherTraits>::CleanupContext::CheckTermination() noe
 
 DispatchQueue DispatchQueueStatic::GetCurrentUIThreadQueue() noexcept {
   DispatchQueue queue{nullptr};
-#if USE_WINUI3
   queue = UISchedulerWinRT<MicrosoftDispatcherTraits>::GetOrCreateUIThreadQueue();
   if (!queue) {
-#endif
     queue = UISchedulerWinRT<WindowsDispatcherTraits>::GetOrCreateUIThreadQueue();
-#if USE_WINUI3
   }
-#endif
   return queue;
 }
 

@@ -10,10 +10,10 @@
 
 'use strict';
 
-import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
+import type {ViewProps} from 'react-native';
 import type {HostComponent} from 'react-native';
 import type {DirectEventHandler} from 'react-native/Libraries/Types/CodegenTypes';
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import {codegenNativeComponent} from 'react-native';
 
 type MyEventEvent = $ReadOnly<{|
   value: boolean,

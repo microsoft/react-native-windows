@@ -103,12 +103,6 @@ export const windowsInitOptions = initOptions({
     hidden: true,
     default: false,
   },
-  useHermes: {
-    type: 'boolean',
-    describe:
-      '[Experimental] Use Hermes instead of Chakra as the JS engine (supported on 0.64+ for C++ projects)',
-    default: false,
-  },
   useWinUI3: {
     type: 'boolean',
     describe: '[Experimental] Use WinUI 3 (Windows App SDK)',
@@ -395,7 +389,6 @@ function optionSanitizer(key: keyof WindowsInitOptions, value: any): any {
     case 'overwrite':
     case 'projectType':
     case 'experimentalNuGetDependency':
-    case 'useHermes':
     case 'useWinUI3':
     case 'useDevMode':
       return value === undefined ? false : value;
@@ -673,7 +666,6 @@ export async function reactNativeWindowsInit(args?: string[]) {
       projectType: options.projectType as 'lib' | 'app',
       experimentalNuGetDependency: options.experimentalNuGetDependency,
       useWinUI3: options.useWinUI3,
-      useHermes: options.useHermes,
       useDevMode: useDevMode,
       nuGetTestVersion: options.nuGetTestVersion,
       nuGetTestFeed: options.nuGetTestFeed,

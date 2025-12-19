@@ -8,7 +8,6 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include <IReactContext.h>
-#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -126,6 +125,27 @@ bool ContentIslandComponentView::focusable() const noexcept {
   return true;
 }
 
+facebook::react::Tag ContentIslandComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
+  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+
+  // Check if the point is within the bounds of this ContentIslandComponentView.
+  // This ensures that hit tests correctly return this view's tag for UIA purposes,
+  // even when the actual content (XAML buttons, etc.) is hosted in the ContentIsland.
+  auto props = viewProps();
+  if ((ignorePointerEvents || props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+    localPt = ptLocal;
+    return Tag();
+  }
+
+  return -1;
+}
+
 // Helper to convert a FocusNavigationDirection to a FocusNavigationReason.
 winrt::Microsoft::UI::Input::FocusNavigationReason GetFocusNavigationReason(
     winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
@@ -178,14 +198,12 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
 void ContentIslandComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::MountChildComponentView(childComponentView, index);
 }
 
 void ContentIslandComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
@@ -262,6 +280,12 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
         args.AutomationProvider(nullptr);
         args.Handled(true);
       });
+
+  if (m_uiaProvider) {
+    auto providerImpl =
+        m_uiaProvider.as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    providerImpl->SetChildSiteLink(m_childSiteLink);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

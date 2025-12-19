@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 #include "TurboModuleManager.h"
-#include "ReactCommon/SampleTurboCxxModule.h"
 
-#ifdef USE_FABRIC
 #include <react/nativemodule/defaults/DefaultTurboModules.h>
 #include <react/nativemodule/microtasks/NativeMicrotasks.h>
-#endif
 
 namespace facebook::react {
 
@@ -34,12 +31,10 @@ std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &mo
     }
   }
 
-#ifdef USE_FABRIC
   if (auto module = facebook::react::DefaultTurboModules::getTurboModule(moduleName, m_callInvoker)) {
     m_modules.emplace(moduleName, module);
     return module;
   }
-#endif
 
   return nullptr;
 }

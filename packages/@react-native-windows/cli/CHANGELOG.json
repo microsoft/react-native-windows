@@ -2,6 +2,182 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 17 Nov 2025 06:42:06 GMT",
+      "version": "0.0.0-canary.281",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.281",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.128",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.70",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.96",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.129",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.58",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 16 Nov 2025 06:36:28 GMT",
+      "version": "0.0.0-canary.280",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.280",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "986e1d7dba9c19745688269765e65ca800a84dc6",
+            "comment": "Remove chakra support and more legacy instance code"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.128",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Nov 2025 21:00:41 GMT",
+      "version": "0.0.0-canary.279",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.279",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "0fe72b72890415cab242d5e253253b819f92d8e3",
+            "comment": "Remove paper"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "dee1f00fcc745455fefee3cd64d3454436bf9afe",
+            "comment": "Remove web debugging support"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "33e8489afe38fdd8b8170f750bdd5983b4f1dc7e",
+            "comment": "Integrate 0.82.0-nightly-20250806-5936f29d6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.127",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.69",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.95",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.127",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.38",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.57",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Nov 2025 06:32:19 GMT",
+      "version": "0.0.0-canary.278",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.278",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "not available",
+            "comment": "Fix PowerShell Export-ModuleMember error"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Nov 2025 06:07:44 GMT",
+      "version": "0.0.0-canary.278",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.278",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "3c72af875ecc80845fc5ff4f7a14857801511da9",
+            "comment": "Fix PowerShell Export-ModuleMember error"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Oct 2025 05:28:10 GMT",
+      "version": "0.0.0-canary.278",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.278",
+      "comments": {
+        "none": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4be87f438c771f6b609acd782347b4a1bb7c436a",
+            "comment": "Security fix: Remediate PowerShell injection vulnerabilities (SDL CE.10116)"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.126",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Oct 2025 05:27:28 GMT",
       "version": "0.0.0-canary.277",
       "tag": "@react-native-windows/cli_v0.0.0-canary.277",

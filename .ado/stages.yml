@@ -41,6 +41,13 @@ stages:
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: true
 
+      # Attack Surface Analyzer for SDL compliance
+      - template: jobs/attack-surface-analyzer.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
+          complianceWarnOnly: true
+
   - stage: IntegrationTests
     displayName: Tests 🧪
     dependsOn: Setup
@@ -55,24 +62,12 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/macos-tests.yml
-
       - template: jobs/playground.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/sample-apps.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
-
       - template: jobs/e2e-test.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
-
-      - template: jobs/integration-test.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
@@ -86,3 +81,5 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: false
+
+      - template: jobs/macos-tests.yml

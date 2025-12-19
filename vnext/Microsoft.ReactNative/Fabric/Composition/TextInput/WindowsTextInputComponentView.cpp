@@ -319,8 +319,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
     switch (nIndex) {
       case COLOR_WINDOWTEXT:
-        if (m_outer->windowsTextInputProps().textAttributes.foregroundColor)
-          return (*m_outer->windowsTextInputProps().textAttributes.foregroundColor).AsColorRefNoAlpha();
+        if (m_outer->windowsTextInputProps().textAttributes.foregroundColor) {
+          auto color = m_outer->theme()->Color(*m_outer->windowsTextInputProps().textAttributes.foregroundColor);
+          return RGB(color.R, color.G, color.B);
+        }
         // cr = 0x000000FF;
         break;
       case COLOR_WINDOW:
@@ -329,8 +331,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
         break;
 
       case COLOR_HIGHLIGHT:
-        if (m_outer->windowsTextInputProps().selectionColor)
-          return (*m_outer->windowsTextInputProps().selectionColor).AsColorRefNoAlpha();
+        if (m_outer->windowsTextInputProps().selectionColor) {
+          auto color = m_outer->theme()->Color(*m_outer->windowsTextInputProps().selectionColor);
+          return RGB(color.R, color.G, color.B);
+        }
         break;
 
       case COLOR_HIGHLIGHTTEXT:
@@ -693,10 +697,17 @@ void WindowsTextInputComponentView::OnPointerPressed(
   }
 
   if (m_textServices && msg) {
-    LRESULT lresult;
-    DrawBlock db(*this);
-    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
-    args.Handled(hr != S_FALSE);
+    if (msg == WM_RBUTTONUP && !windowsTextInputProps().contextMenuHidden) {
+      ShowContextMenu(position);
+      args.Handled(true);
+    } else if (msg == WM_RBUTTONUP && windowsTextInputProps().contextMenuHidden) {
+      args.Handled(true);
+    } else {
+      LRESULT lresult;
+      DrawBlock db(*this);
+      auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+      args.Handled(hr != S_FALSE);
+    }
   }
 
   // Emits the OnPressIn event
@@ -840,8 +851,8 @@ void WindowsTextInputComponentView::OnPointerWheelChanged(
 }
 void WindowsTextInputComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
-  // behavior We do forward Ctrl+Tab to the textinput.
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with
+  // WinUI behavior We do forward Ctrl+Tab to the textinput.
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
       (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
@@ -868,8 +879,8 @@ void WindowsTextInputComponentView::OnKeyDown(
 
 void WindowsTextInputComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
-  // behavior We do forward Ctrl+Tab to the textinput.
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with
+  // WinUI behavior We do forward Ctrl+Tab to the textinput.
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
       (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
@@ -939,8 +950,8 @@ bool WindowsTextInputComponentView::ShouldSubmit(
 
 void WindowsTextInputComponentView::OnCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
-  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
-  // behavior We do forward Ctrl+Tab to the textinput.
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with
+  // WinUI behavior We do forward Ctrl+Tab to the textinput.
   if ((args.KeyCode() == '\t') &&
       ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) != winrt::Microsoft::UI::Input::VirtualKeyStates::Down)) {
@@ -1543,25 +1554,59 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   m_pf.dwMask = PFM_ALL;
 
   auto &textAlign = windowsTextInputProps().textAlign;
+  auto &baseWritingDirection = windowsTextInputProps().textAttributes.baseWritingDirection;
 
+  // Handle writingDirection (baseWritingDirection)
+  // For WritingDirection::Natural, use the computed layout direction from the layout tree
+  // since direction can be overridden at any point in the tree
+  bool isRTL = false;
+  if (baseWritingDirection.has_value()) {
+    if (*baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
+      isRTL = true;
+      m_pf.dwMask |= PFM_RTLPARA;
+      m_pf.wEffects |= PFE_RTLPARA;
+    } else if (*baseWritingDirection == facebook::react::WritingDirection::LeftToRight) {
+      isRTL = false;
+      // Ensure RTL flag is not set
+      m_pf.wEffects &= ~PFE_RTLPARA;
+    } else if (*baseWritingDirection == facebook::react::WritingDirection::Natural) {
+      // Natural uses the layout direction computed from the tree
+      isRTL = (layoutMetrics().layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+      if (isRTL) {
+        m_pf.dwMask |= PFM_RTLPARA;
+        m_pf.wEffects |= PFE_RTLPARA;
+      } else {
+        m_pf.wEffects &= ~PFE_RTLPARA;
+      }
+    }
+  } else {
+    // No explicit writing direction set - use layout direction from tree
+    isRTL = (layoutMetrics().layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+    if (isRTL) {
+      m_pf.dwMask |= PFM_RTLPARA;
+      m_pf.wEffects |= PFE_RTLPARA;
+    } else {
+      m_pf.wEffects &= ~PFE_RTLPARA;
+    }
+  }
+
+  // Handle textAlign
   if (textAlign == facebook::react::TextAlignment::Center) {
     m_pf.wAlignment = PFA_CENTER;
   } else if (textAlign == facebook::react::TextAlignment::Right) {
     m_pf.wAlignment = PFA_RIGHT;
+  } else if (textAlign == facebook::react::TextAlignment::Justified) {
+    m_pf.wAlignment = PFA_JUSTIFY;
+  } else if (textAlign == facebook::react::TextAlignment::Natural) {
+    // Natural alignment respects writing direction
+    m_pf.wAlignment = isRTL ? PFA_RIGHT : PFA_LEFT;
   } else {
+    // Default to left alignment
     m_pf.wAlignment = PFA_LEFT;
   }
 
   m_pf.cTabCount = 1;
   m_pf.rgxTabs[0] = lDefaultTab;
-
-  /*
-        if (m_spcontroller->IsCurrentReadingOrderRTL())
-        {
-                m_pf.dwMask |= PFM_RTLPARA;
-                m_pf.wEffects |= PFE_RTLPARA;
-        }
-  */
 }
 
 void WindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
@@ -1632,7 +1677,8 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   }
 
   bool isZeroSized =
-      m_layoutMetrics.frame.size.width <= (m_layoutMetrics.contentInsets.left + m_layoutMetrics.contentInsets.right);
+      m_layoutMetrics.frame.size.width <= (m_layoutMetrics.contentInsets.left + m_layoutMetrics.contentInsets.right) ||
+      m_layoutMetrics.frame.size.height <= (m_layoutMetrics.contentInsets.top + m_layoutMetrics.contentInsets.bottom);
   if (!m_drawingSurface || isZeroSized)
     return;
 
@@ -1737,6 +1783,9 @@ WindowsTextInputComponentView::createVisual() noexcept {
   LRESULT res;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
 
+  // Enable TSF support
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
+
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);
   m_caretVisual.IsVisible(false);
@@ -1822,4 +1871,47 @@ void WindowsTextInputComponentView::updateSpellCheck(bool enable) noexcept {
   winrt::check_hresult(
       m_textServices->TxSendMessage(EM_SETLANGOPTIONS, IMF_SPELLCHECKING, enable ? newLangOptions : 0, &lresult));
 }
+
+void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept {
+  HMENU menu = CreatePopupMenu();
+  if (!menu)
+    return;
+
+  CHARRANGE selection;
+  LRESULT res;
+  m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&selection), &res);
+
+  bool hasSelection = selection.cpMin != selection.cpMax;
+  bool isEmpty = GetTextFromRichEdit().empty();
+  bool isReadOnly = windowsTextInputProps().editable == false;
+  bool canPaste = !isReadOnly && IsClipboardFormatAvailable(CF_UNICODETEXT);
+
+  AppendMenuW(menu, MF_STRING | (hasSelection && !isReadOnly ? 0 : MF_GRAYED), 1, L"Cut");
+  AppendMenuW(menu, MF_STRING | (hasSelection ? 0 : MF_GRAYED), 2, L"Copy");
+  AppendMenuW(menu, MF_STRING | (canPaste ? 0 : MF_GRAYED), 3, L"Paste");
+  AppendMenuW(menu, MF_STRING | (!isEmpty && !isReadOnly ? 0 : MF_GRAYED), 4, L"Select All");
+
+  POINT cursorPos;
+  GetCursorPos(&cursorPos);
+
+  HWND hwnd = GetActiveWindow();
+
+  int cmd = TrackPopupMenu(
+      menu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY, cursorPos.x, cursorPos.y, 0, hwnd, NULL);
+
+  if (cmd == 1) { // Cut
+    m_textServices->TxSendMessage(WM_CUT, 0, 0, &res);
+    OnTextUpdated();
+  } else if (cmd == 2) { // Copy
+    m_textServices->TxSendMessage(WM_COPY, 0, 0, &res);
+  } else if (cmd == 3) { // Paste
+    m_textServices->TxSendMessage(WM_PASTE, 0, 0, &res);
+    OnTextUpdated();
+  } else if (cmd == 4) { // Select All
+    m_textServices->TxSendMessage(EM_SETSEL, 0, -1, &res);
+  }
+
+  DestroyMenu(menu);
+}
+
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

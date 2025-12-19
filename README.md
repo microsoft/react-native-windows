@@ -58,12 +58,16 @@ Search the [existing issues](https://github.com/microsoft/react-native-windows/i
 ## Documentation
 React Native has [great documentation](https://reactnative.dev/docs/getting-started). React Native for Windows adds its own separate [Windows and macOS documentation](https://microsoft.github.io/react-native-windows/) for desktop platform information like API docs and blog updates.
 
+### Security Documentation
+- **[Security Configuration Guide](https://github.com/microsoft/react-native-windows/blob/main/docs/security-configuration.md)** - Comprehensive guide for SDL-compliant security configurations
+- **[Security Best Practices](https://github.com/microsoft/react-native-windows/blob/main/docs/security-best-practices.md)** - Secure coding patterns and security API usage
+
 ### Examples
 - Using the CLI in the [Getting Started](https://microsoft.github.io/react-native-windows/docs/getting-started) guide will set you up with a sample React Native for Windows app that you can begin editing right away.
 - Check the [samples repo](https://github.com/microsoft/react-native-windows-samples) for more standalone samples.
 - The [React Native Gallery](https://github.com/microsoft/react-native-gallery) app demonstrates various components in an interactive way.
 - Check out the [React Native Developer Blog](https://devblogs.microsoft.com/react-native/) to see examples from past conference talks, blog posts, and more.
-- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app/windows/RNTesterApp) in the GitHub web UI.
+- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app-fabric/windows/RNTesterApp) in the GitHub web UI.
 
 ## 📢 Contributing
 See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.

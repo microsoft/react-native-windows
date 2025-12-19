@@ -114,6 +114,13 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\cdp\CdpJson.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTarget.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\NetworkIOAgent.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeAgent.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\TracingAgent.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeAgentDelegate.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InstanceAgent.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfile.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\InstanceTracingProfile.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopReporter.h" />
@@ -145,9 +152,18 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorFlags.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorPackagerConnection.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\cdp\CdpJson.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTarget.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\NetworkIOAgent.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeAgent.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\TracingAgent.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeAgentDelegate.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InstanceAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\EventLoopReporter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\RuntimeSamplingProfileTraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\fusebox\FuseboxTracer.cpp" />
@@ -184,6 +200,9 @@
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserver.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryKeyedBuffer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\BoundedRequestBuffer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\CdpNetwork.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\HttpUtils.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -224,8 +243,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Folly\Folly.vcxproj">

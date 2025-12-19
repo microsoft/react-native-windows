@@ -27,10 +27,12 @@
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
-<PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Image/resolveAssetSource.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
+<PROJECT_ROOT>/Libraries/Image/Image.android.js
+
 <PROJECT_ROOT>/Libraries/Renderer/shims/ReactNativeTypes.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
@@ -50,6 +52,9 @@
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
+; Ignore all flow directory contents in node_modules
+.*/flow/.*
+
 ; Ignore react-native-windows' build output. Flow is not compiled with long path support and after running unittests these folders have long paths
 .*/node_modules/react-native-windows/build/.*
 .*/node_modules/react-native-windows/target/.*
@@ -59,7 +64,6 @@
 
 ; These files dont need to be checked and just increase the build time
 .*/node_modules/e2etest/.*
-.*/node_modules/sample-apps/.*
 .*/node_modules/playground/.*
 
 <PROJECT_ROOT>/packages/react-native/sdks/.*
@@ -145,11 +149,7 @@ module.system.haste.module_ref_prefix=m#
 
 react.runtime=automatic
 
-suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
-suppress_type=$FlowFixMeProps
-suppress_type=$FlowFixMeState
-suppress_type=$FlowFixMeEmpty
 
 ban_spread_key_props=true
 sharedmemory.hash_table_pow=21
@@ -175,4 +175,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.274.2
+^0.278.0

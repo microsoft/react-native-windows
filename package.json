@@ -44,12 +44,13 @@
     "fast-glob": "^3.2.11",
     "husky": "^4.2.5",
     "prettier-plugin-hermes-parser": "0.21.1",
-    "react-native-platform-override": "*",
+    "react-native-platform-override": "0.0.0-canary.1016",
     "unbroken": "1.0.27",
     "lage": "^2.7.1",
     "lodash": "^4.17.15"
   },
   "resolutions": {
+    "react": "19.1.1",
     "convert-source-map": "^2.0.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",

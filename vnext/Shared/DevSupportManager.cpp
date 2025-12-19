@@ -8,15 +8,19 @@
 #include <Shared/DevServerHelper.h>
 #include <Shared/DevSettings.h>
 
-#include <Executors/WebSocketJSExecutor.h>
+#include "Inspector/ReactInspectorPackagerConnectionDelegate.h"
 #include "PackagerConnection.h"
 
 #include "Unicode.h"
 #include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
+#include <jsinspector-modern/InspectorFlags.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Security.Cryptography.Core.h>
+#include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.System.Profile.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
@@ -113,38 +117,6 @@ void LaunchDevTools(const facebook::react::DevSettings &settings) {
   httpClient.SendRequestAsync(request);
 }
 
-facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
-    const facebook::react::DevSettings &settings,
-    std::function<void()> &&errorCallback) {
-  try {
-    LaunchDevTools(settings);
-    Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(settings);
-
-    return [this, settings, errorCallback](
-               std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
-               std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
-      auto websocketJSE = std::make_unique<WebSocketJSExecutor>(delegate, jsQueue);
-      try {
-        websocketJSE
-            ->ConnectAsync(
-                facebook::react::DevServerHelper::get_WebsocketProxyUrl(
-                    settings.sourceBundleHost, settings.sourceBundlePort),
-                settings.errorCallback,
-                settings.waitingForDebuggerCallback,
-                settings.debuggerAttachCallback)
-            .get();
-      } catch (...) {
-        errorCallback();
-      }
-
-      return websocketJSE;
-    };
-  } catch (winrt::hresult_error const &e) {
-    errorCallback();
-    throw std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str());
-  }
-}
-
 DevSupportManager::~DevSupportManager() {
   StopPollingLiveReload();
 }
@@ -169,6 +141,49 @@ bool IsIgnorablePollHResult(HRESULT hr) {
   // Ignored HRESULTS:
   // WININET_E_INVALID_SERVER_RESPONSE - Haul packager returns on timeouts
   return hr == WININET_E_INVALID_SERVER_RESPONSE;
+}
+
+std::string GetDeviceId(const std::string &packageName) {
+  const auto hash = winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider::OpenAlgorithm(
+                        winrt::Windows::Security::Cryptography::Core::HashAlgorithmNames::Sha256())
+                        .CreateHash();
+  hash.Append(winrt::Windows::System::Profile::SystemIdentification::GetSystemIdForPublisher().Id());
+  winrt::Windows::Storage::Streams::InMemoryRandomAccessStream stream;
+  winrt::Windows::Storage::Streams::DataWriter writer;
+  // If an app ID is provided, we will allow reconnection to DevTools.
+  // Apps must supply a unique app ID to each ReactNativeHost instance settings for this to behave correctly.
+  if (!packageName.empty()) {
+    const auto packageNameBuffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::ConvertStringToBinary(
+        winrt::to_hstring(packageName), winrt::Windows::Security::Cryptography::BinaryStringEncoding::Utf16BE);
+    hash.Append(packageNameBuffer);
+  } else {
+    const auto processId = GetCurrentProcessId();
+    std::vector<uint8_t> processIdBytes(
+        reinterpret_cast<const uint8_t *>(&processId), reinterpret_cast<const uint8_t *>(&processId + 1));
+    winrt::array_view<uint8_t> processIdByteArray(processIdBytes);
+    const auto processIdBuffer =
+        winrt::Windows::Security::Cryptography::CryptographicBuffer::CreateFromByteArray(processIdByteArray);
+    hash.Append(processIdBuffer);
+  }
+  const auto hashBuffer = hash.GetValueAndReset();
+  const auto hashString = winrt::Windows::Security::Cryptography::CryptographicBuffer::EncodeToHexString(hashBuffer);
+  return winrt::to_string(hashString);
+}
+
+std::string GetPackageName(const std::string &bundleAppId) {
+  if (!bundleAppId.empty()) {
+    return bundleAppId;
+  }
+
+  std::string packageName{"RNW"};
+  wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
+  uint32_t size = ARRAYSIZE(fullName);
+  if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
+    // we are in an unpackaged app
+    packageName = winrt::to_string(fullName);
+  }
+
+  return packageName;
 }
 
 std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string &url) {
@@ -238,35 +253,30 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
-void DevSupportManager::EnsureHermesInspector(
+void DevSupportManager::EnsureInspectorPackagerConnection(
     [[maybe_unused]] const std::string &packagerHost,
-    [[maybe_unused]] const uint16_t packagerPort) noexcept {
+    [[maybe_unused]] const uint16_t packagerPort,
+    [[maybe_unused]] const std::string &bundleAppId) noexcept {
   static std::once_flag once;
-  std::call_once(once, [this, &packagerHost, packagerPort]() {
-    // TODO: should we use the bundleAppId as the app param if available?
-    std::string packageName("RNW");
-    wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
-    UINT32 size = ARRAYSIZE(fullName);
-    if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
-      // we are in an unpackaged app
-      packageName = winrt::to_string(fullName);
-    }
-
+  std::call_once(once, [this, &packagerHost, packagerPort, &bundleAppId]() {
+    std::string packageName = GetPackageName(bundleAppId);
     std::string deviceName("RNWHost");
     auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
     if (hostNames && hostNames.First() && hostNames.First().Current()) {
       deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
     }
 
-    m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
-        facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
-        m_BundleStatusProvider);
-    m_inspectorPackagerConnection->connectAsync();
+    std::string deviceId = GetDeviceId(packageName);
+    std::string inspectorUrl = facebook::react::DevServerHelper::get_InspectorDeviceUrl(
+        packagerHost, packagerPort, deviceName, packageName, deviceId);
+    jsinspector_modern::InspectorFlags &inspectorFlags = jsinspector_modern::InspectorFlags::getInstance();
+    m_inspectorPackagerConnection = std::make_unique<jsinspector_modern::InspectorPackagerConnection>(
+        inspectorUrl,
+        deviceName,
+        packageName,
+        std::make_unique<Microsoft::ReactNative::ReactInspectorPackagerConnectionDelegate>());
+    m_inspectorPackagerConnection->connect();
   });
-}
-
-void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) noexcept {
-  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSuccess, updateTimestamp);
 }
 
 std::pair<std::string, bool> GetJavaScriptFromServer(

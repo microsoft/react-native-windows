@@ -2,6 +2,7 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionAnnotationProvider.h>
+#include <Fabric/Composition/CompositionTextProvider.h>
 #include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
@@ -44,19 +45,6 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
-  }
-
-  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
-    m_textProvider = winrt::make<CompositionTextProvider>(
-                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                         .try_as<ITextProvider2>();
-  }
-
-  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
-    m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
-                               strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                               .try_as<IAnnotationProvider>();
   }
 }
 
@@ -159,6 +147,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetEmbeddedFragmentRoots
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::SetFocus(void) {
   return UiaSetFocusHelper(m_view);
+}
+
+winrt::IUnknown CompositionDynamicAutomationProvider::TryGetChildSiteLinkAutomationProvider() {
+  if (m_childSiteLink) {
+    return m_childSiteLink.AutomationProvider().as<winrt::IUnknown>();
+  }
+  return nullptr;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) {
@@ -297,16 +292,31 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_TextPatternId &&
       (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
+    if (!m_textProvider) {
+      m_textProvider = winrt::make<CompositionTextProvider>(
+                           strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                           .try_as<ITextProvider2>();
+    }
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   if (patternId == UIA_TextPattern2Id &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    if (!m_textProvider) {
+      m_textProvider = winrt::make<CompositionTextProvider>(
+                           strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                           .try_as<ITextProvider2>();
+    }
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
   if (patternId == UIA_AnnotationPatternId &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>() &&
       accessibilityAnnotationHasValue(props->accessibilityAnnotation)) {
+    if (!m_annotationProvider) {
+      m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
+                                 strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
+                                 .try_as<IAnnotationProvider>();
+    }
     m_annotationProvider.as<IUnknown>().copy_to(pRetVal);
   }
 

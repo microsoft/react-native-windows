@@ -33,10 +33,8 @@
 #include "RootComponentView.h"
 #include "TextDrawing.h"
 
-#ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
-#endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -172,7 +170,6 @@ ReactNativeIsland::ReactNativeIsland() noexcept
     : ReactNativeIsland(winrt::Microsoft::UI::Composition::Compositor{nullptr}) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
-#ifdef USE_WINUI3
   if (m_island) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
     m_island.StateChanged(m_islandStateChangedToken);
@@ -181,7 +178,6 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
     m_island.Disconnected(m_islandDisconnectedToken);
 #endif
   }
-#endif
 
   if (m_uiDispatcher) {
     assert(m_uiDispatcher.HasThreadAccess());
@@ -261,12 +257,10 @@ void ReactNativeIsland::RemoveRenderedVisual(
 }
 
 bool ReactNativeIsland::TrySetFocus() noexcept {
-#ifdef USE_WINUI3
   if (m_island && m_island.IsConnected()) {
     auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
     return focusController.TrySetFocus();
   }
-#endif
   return false;
 }
 
@@ -284,6 +278,7 @@ void ReactNativeIsland::UpdateRootVisualSize() noexcept {
     m_rootVisual.Size({m_size.Width * m_scaleFactor, m_size.Height * m_scaleFactor});
 
   UpdateLoadingVisualSize();
+  UpdateDebuggerVisualSize();
 }
 
 void ReactNativeIsland::UpdateLoadingVisualSize() noexcept {
@@ -298,6 +293,13 @@ void ReactNativeIsland::UpdateLoadingVisualSize() noexcept {
     m_loadingActivityVisual.Offset(
         {loadingActivityHorizontalOffset * m_scaleFactor, loadingActivityVerticalOffset, 0.0f});
   }
+}
+
+void ReactNativeIsland::UpdateDebuggerVisualSize() noexcept {
+  if (!m_debuggerChildSiteLink)
+    return;
+
+  m_debuggerChildSiteLink.ActualSize(m_size);
 }
 
 float ReactNativeIsland::ScaleFactor() noexcept {
@@ -483,6 +485,20 @@ void ReactNativeIsland::InitRootView(
   m_reactViewOptions = std::move(viewOptions);
   m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
   m_CompositionEventHandler->Initialize();
+
+  ::Microsoft::ReactNative::DebuggerNotifications::SubscribeShowDebuggerPausedOverlay(
+      m_context.Notifications().Handle(),
+      m_context.UIDispatcher().Handle(),
+      [weakThis = get_weak()](std::string message, std::function<void()> onResume) {
+        if (auto strongThis = weakThis.get()) {
+          strongThis->ShowDebuggerUI(message, onResume);
+        }
+      },
+      [weakThis = get_weak()]() {
+        if (auto strongThis = weakThis.get()) {
+          strongThis->HideDebuggerUI();
+        }
+      });
 
   UpdateRootViewInternal();
 
@@ -746,7 +762,10 @@ void ReactNativeIsland::ShowInstanceLoading() noexcept {
   NotifySizeChanged();
   UpdateLoadingVisualSize();
 
-  InternalRootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
+  // ShowDebuggerUI(); // TEMP
+
+  InternalRootVisual().InsertAt(
+      m_loadingVisual, m_hasRenderedVisual ? (m_debuggerVisual ? 2 : 1) : (m_debuggerVisual ? 1 : 0));
 }
 
 void ReactNativeIsland::InitTextScaleMultiplier() noexcept {
@@ -765,6 +784,48 @@ void ReactNativeIsland::InitTextScaleMultiplier() noexcept {
               });
         }
       });
+}
+
+void ReactNativeIsland::ShowDebuggerUI(std::string message, const std::function<void()> &onResume) noexcept {
+  if (!m_debuggerVisual) {
+    auto compContext =
+        winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+            m_context.Properties().Handle());
+    m_debuggerVisual = compContext.CreateSpriteVisual();
+
+    m_debuggerChildSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
+        Island(),
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+            m_debuggerVisual)
+            .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
+
+    m_debuggerUIIsland = std::make_shared<DebuggerUIIsland>(m_compositor, compContext, Theme());
+    m_debuggerUIIsland->Message(std::string(message));
+    m_debuggerVisual.RelativeSizeWithOffset({0.0f, 0.0f}, {1.0f, 1.0f});
+
+    m_debuggerUIIsland->Resumed(
+        [wkThis = get_weak(), onResume](
+            const winrt::Windows::Foundation::IInspectable &, const winrt::Windows::Foundation::IInspectable &) {
+          if (auto pThis = wkThis.get()) {
+            // pThis->HideDebuggerUI();
+            onResume();
+          }
+        });
+
+    InternalRootVisual().InsertAt(m_debuggerVisual, m_hasRenderedVisual ? 1 : 0);
+    m_debuggerUIIsland->Island().IsHitTestVisibleWhenTransparent(false);
+    m_debuggerChildSiteLink.Connect(m_debuggerUIIsland->Island());
+  }
+
+  m_debuggerVisual.IsVisible(true);
+
+  UpdateRootVisualSize();
+}
+
+void ReactNativeIsland::HideDebuggerUI() noexcept {
+  if (m_debuggerVisual) {
+    m_debuggerVisual.IsVisible(false);
+  }
 }
 
 winrt::Windows::Foundation::Size ReactNativeIsland::Measure(

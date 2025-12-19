@@ -11,10 +11,8 @@
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/FabricUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
-#include <Views/FrameworkElementTransferProperties.h>
 #include <atlcomcli.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -527,10 +525,10 @@ facebook::react::RectangleEdges<bool> ComponentView::focusNudges() const noexcep
 
   Assert(m_componentHostingFocusVisual);
 
-  if (layoutMetrics.frame.origin.x < 0) {
+  if (layoutMetrics.frame.origin.x < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.x) {
     nudgeEdges.left = true;
   }
-  if (layoutMetrics.frame.origin.y < 0) {
+  if (layoutMetrics.frame.origin.y < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.y) {
     nudgeEdges.top = true;
   }
   if (layoutMetrics.frame.getMaxX() > m_componentHostingFocusVisual->m_layoutMetrics.frame.getMaxX()) {
@@ -801,8 +799,8 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_LiveSettingPropertyId,
-      oldViewProps.accessibilityLiveRegion,
-      newViewProps.accessibilityLiveRegion);
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(oldViewProps.accessibilityLiveRegion),
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(newViewProps.accessibilityLiveRegion));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(), UIA_LevelPropertyId, oldViewProps.accessibilityLevel, newViewProps.accessibilityLevel);

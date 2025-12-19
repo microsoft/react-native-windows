@@ -88,7 +88,7 @@ jobs:
       - template: templates/msbuild-sln.yml
         parameters:
           solutionDir: vnext
-          solutionName: Microsoft.ReactNative.sln
+          solutionName: Microsoft.ReactNative.NewArch.sln
           buildPlatform: x64
           buildConfiguration: Release
 
@@ -98,8 +98,43 @@ jobs:
         parameters:
           complianceWarnOnly: ${{ parameters.complianceWarnOnly }}
 
+      # Attack Surface Analyzer (ASA) for SDL compliance
+      # This is integrated into the compliance pipeline but runs independently
+      # Note: ASA requires before/after snapshots, so we run a separate analysis
+      - task: PowerShell@2
+        displayName: '🛡️ Attack Surface Analyzer - Note'
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "=========================================="
+            Write-Host "Attack Surface Analyzer (ASA) Information"
+            Write-Host "=========================================="
+            Write-Host ""
+            Write-Host "ASA runs as a separate job in the PR pipeline (see stages.yml)."
+            Write-Host "It performs before/after snapshot analysis of the build process."
+            Write-Host ""
+            Write-Host "For manual ASA runs or to view results:"
+            Write-Host "1. Check PR pipeline artifacts for ASA_Results"
+            Write-Host "2. Review docs/attack-surface-analyzer.md for guidance"
+            Write-Host "3. Run ASA locally: dotnet tool install -g Microsoft.CST.AttackSurfaceAnalyzer.CLI"
+            Write-Host ""
+            Write-Host "✅ ASA integration is active in PR builds"
+
       # Finalize CodeQL 3000 Task (https://aka.ms/codeql3000)
       # Performs static code analysis.
       - task: CodeQL3000Finalize@0
         displayName: "🛡️ Finalize CodeQL"
+        inputs:
+          # Enable TSA for automatic bug filing from CodeQL
+          TSAEnabled: true
+          TSAOptions: |
+            {
+              "areaPath": "OS\\Windows Client and Services\\WinPD\\SPICE\\ReactNative",
+              "iterationPath": "OS\\Future",
+              "notificationAliases": ["$(TSANotificationAliases)"],
+              "codebaseAdmins": ["$(TSACodebaseAdmins)"],
+              "bugTags": ["SDL", "Security"],
+              "instanceUrl": "https://dev.azure.com/microsoft",
+              "projectName": "OS"
+            }
         continueOnError: ${{ parameters.complianceWarnOnly }}

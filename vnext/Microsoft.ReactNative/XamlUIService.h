@@ -4,7 +4,6 @@
 #pragma once
 
 #include "XamlUIService.g.h"
-#include "INativeUIManager.h"
 #include "ReactHost/React.h"
 #include "ReactPropertyBag.h"
 #include "winrt/Microsoft.ReactNative.h"
@@ -17,16 +16,6 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
 
   static winrt::Microsoft::ReactNative::XamlUIService FromContext(IReactContext context);
 
-#ifndef USE_FABRIC
-  xaml::DependencyObject ElementFromReactTag(int64_t reactTag) noexcept;
-  void DispatchEvent(
-      xaml::FrameworkElement const &view,
-      hstring const &eventName,
-      JSValueArgWriter const &eventDataArgWriter) noexcept;
-
-  winrt::Microsoft::ReactNative::ReactRootView GetReactRootView(xaml::FrameworkElement const &view) noexcept;
-#endif
-
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
   static void SetAccessibleRoot(
       IReactPropertyBag const &properties,
@@ -38,7 +27,6 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   static uint64_t GetIslandWindowHandle(IReactPropertyBag const &properties) noexcept;
 
  private:
-  std::weak_ptr<::Microsoft::ReactNative::INativeUIManagerHost> m_wkUIManager;
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
 

@@ -6,15 +6,12 @@
   <ItemGroup>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="ABICxxModule.cpp" />
-    <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="XamlLoadState.cpp" />
     <ClCompile Include="XamlView.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
-    <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -126,34 +123,7 @@
     <ClCompile Include="Modules\TimingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Views\Image\ImageViewManager.cpp">
-      <Filter>Views\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Image\ReactImage.cpp">
-      <Filter>Views\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Image\ReactImageBrush.cpp">
-      <Filter>Views\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
-      <Filter>Views\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp">
-      <Filter>Views\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ControlViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\DynamicAutomationPeer.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\DynamicAutomationProperties.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\DynamicValueProvider.cpp">
@@ -162,70 +132,7 @@
     <ClCompile Include="Views\ExpressionAnimationStore.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\FlyoutViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\FrameworkElementViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\KeyboardEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\UnimplementedViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\PopupViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\RawTextViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\RefreshControlManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\RootViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ScrollContentViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ScrollViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ShadowNodeBase.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\SIPEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\SliderViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\SwitchViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\TextInputViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\TextViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\TouchEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ViewControl.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ViewManagerBase.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ViewPanel.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ViewViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\XamlFeatures.cpp">
@@ -237,9 +144,6 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\ResourceBrushUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -249,53 +153,15 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\XamlIslandUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\CreateModules.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="GlyphViewManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
-    <ClCompile Include="Views\PaperShadowNode.cpp" />
-    <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
-    <ClCompile Include="Utils\BatchingEventEmitter.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextHitTestUtils.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextHitTestVisitor.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextParentVisitor.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextPropertyChangedParentVisitor.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextTransformVisitor.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\Text\TextVisitor.cpp">
-      <Filter>Views\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactPointerEventArgs.cpp" />
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
-    <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Base\CxxReactIncludes.h">
       <Filter>Base</Filter>
     </ClInclude>
@@ -313,6 +179,9 @@
     <ClInclude Include="ReactHost\AsyncActionQueue.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
+    <ClInclude Include="ReactHost\DebuggerNotifications.h">
+      <Filter>ReactHost</Filter>
+    </ClInclude>    
     <ClInclude Include="ReactHost\InstanceFactory.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
@@ -355,7 +224,6 @@
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="TestHook.h" />
-    <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Modules\AccessibilityInfoModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -479,109 +347,16 @@
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Views\Image\ImageViewManager.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
     <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Views\Image\ReactImage.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\Image\ReactImageBrush.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
-      <Filter>Views\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h">
-      <Filter>Views\Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ActivityIndicatorViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ControlViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\DevMenu.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\DynamicAutomationPeer.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\DynamicAutomationProperties.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\DynamicValueProvider.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\ExpressionAnimationStore.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\FlyoutViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\FrameworkElementViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\KeyboardEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\UnimplementedViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\PopupViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\RawTextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\RefreshControlManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\RootViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ScrollContentViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ScrollViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ShadowNodeBase.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\SIPEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\SliderViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\SwitchViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\TextInputViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\TextViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\TouchEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewControl.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewManagerBase.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewPanel.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\VirtualTextViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\XamlFeatures.h">
@@ -600,9 +375,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\PropertyUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\ResourceBrushUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h">
@@ -625,9 +397,6 @@
     <ClInclude Include="ReactHost\IReactInstance.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
-    <ClInclude Include="ReactHost\ViewManagerProvider.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
     <ClInclude Include="Views\IXamlRootView.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -639,20 +408,10 @@
     <ClInclude Include="Utils\TransformableText.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="GlyphViewManager.h" />
     <ClInclude Include="Modules\ReactRootViewTagGenerator.h" />
-    <ClInclude Include="Modules\PaperUIManagerModule.h" />
-    <ClInclude Include="Views\PaperShadowNode.h" />
-    <ClInclude Include="Views\ShadowNodeRegistry.h" />
     <ClInclude Include="DocString.h" />
-    <ClInclude Include="Utils\BatchingEventEmitter.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
       <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewManager.h">
-      <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Utils\TextTransform.h">
       <Filter>Utils</Filter>
@@ -690,15 +449,12 @@
     <ClInclude Include="Views\Text\TextVisitors.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
-    <ClInclude Include="ReactPointerEventArgs.h" />
     <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\ReactViewInstance.h" />
     <ClInclude Include="Utils\KeyboardUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="IViewManager.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactRootView.idl" />
     <Midl Include="XamlHelper.idl" />
     <Midl Include="LayoutService.idl" />
     <Midl Include="XamlUIService.idl" />
@@ -714,10 +470,8 @@
     <Midl Include="Views\cppwinrt\Effects.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
-    <Midl Include="IViewManagerCore.idl" />
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
-    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

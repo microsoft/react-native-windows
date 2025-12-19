@@ -1,8 +1,49 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 03 Dec 2025 06:40:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.302
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+- Bump react-native-platform-override to v0.0.0-canary.1016
+
+## 0.0.0-canary.301
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-platform-override to v1.9.61
+
+## 0.0.0-canary.300
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Changes
+
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.42
+- Bump @rnw-scripts/just-task to v2.3.57
+- Bump react-native-platform-override to v1.9.60
+
+## 0.0.0-canary.299
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Changes
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- fix: stricter checks against key events (sanajmi@microsoft.com)
 
 ## 0.0.0-canary.298
 

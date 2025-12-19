@@ -7,9 +7,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,12 +37,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp">
-      <Filter>Source Files\Executors</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp">
-      <Filter>Source Files\Executors</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp">
       <Filter>Source Files\Threading</Filter>
     </ClCompile>
@@ -61,23 +52,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraJsiRuntime_edgemode.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactorySettings.cpp">
       <Filter>Source Files\JSI</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp">
       <Filter>Source Files\Modules</Filter>
@@ -200,6 +179,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\DebuggerUIIsland.cpp">
+      <Filter>Source Files\Fabric\Composition</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeIsland.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
@@ -210,9 +192,6 @@
       <Filter>Source Files\Fabric</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHwndHost.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeIsland.cpp">
       <Filter>Source Files\Fabric</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
@@ -247,9 +226,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
       <Filter>Hermes</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
-      <Filter>Hermes</Filter>
-    </ClCompile>
     <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
@@ -271,6 +247,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpMetricsReporter.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpInteractionTypes.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollEvent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiPortalShadowNode.cpp" />
@@ -317,6 +295,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\TracingAgent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\rnwcoreJSI-generated.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventSerializer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp" />
@@ -328,6 +307,15 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkReporter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\runtimeexecutor\platform\cxx\ReactCommon\RuntimeExecutorSyncUIThreadUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeAgentDelegate.cpp">
+      <Filter>Hermes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.cpp">
+      <Filter>Hermes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.cpp">
+      <Filter>Inspector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -462,6 +450,9 @@
     <Filter Include="Hermes">
       <UniqueIdentifier>{b32590e6-ae3d-4388-ab98-767345ce38c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inspector">
+      <UniqueIdentifier>{680511e1-15e0-48c9-a2a3-64addaeacce5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h">
@@ -480,9 +471,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BatchingMessageQueueThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h">
@@ -548,12 +536,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h">
-      <Filter>Header Files\Executors</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -572,18 +554,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
@@ -597,9 +567,6 @@
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)tracing\tracing.h">
       <Filter>Header Files\tracing</Filter>
     </ClInclude>
@@ -790,9 +757,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
       <Filter>Hermes</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
-      <Filter>Hermes</Filter>
-    </ClInclude>
     <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />
     <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.inc" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h" />
@@ -801,6 +765,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewSate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeAgentDelegate.h">
+      <Filter>Hermes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.h">
+      <Filter>Hermes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorThread.h">
+      <Filter>Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.h">
+      <Filter>Inspector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
