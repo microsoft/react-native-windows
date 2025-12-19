@@ -5,10 +5,10 @@
  * @format
  */
 
-import { app } from '@react-native-windows/automation';
-import { dumpVisualTree } from '@react-native-windows/automation-commands';
-import { goToComponentExample } from './RNTesterNavigation';
-import { verifyNoErrorLogs } from './Helpers';
+import {app} from '@react-native-windows/automation';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -28,96 +28,96 @@ describe.skip('LegacyTextHitTestTest', () => {
   });
 
   test('VirtualTextPressable', async () => {
-    await clickAt('virtual-text', { pctX: 0.85 });
+    await clickAt('virtual-text', {pctX: 0.85});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('TextPressableWithVirtualText', async () => {
-    await clickAt('nested-text', { pctX: 0.9 });
+    await clickAt('nested-text', {pctX: 0.9});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('MultilineTextPressable', async () => {
-    await clickAt('multiline-text', { pctX: 0.15, pctY: 0.75 });
+    await clickAt('multiline-text', {pctX: 0.15, pctY: 0.75});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('MultilineRTLTextPressable', async () => {
-    await clickAt('multiline-rtl-text', { pctX: 0.85, pctY: 0.25 });
-    await clickAt('multiline-rtl-text', { pctX: 0.1, pctY: 0.75 });
+    await clickAt('multiline-rtl-text', {pctX: 0.85, pctY: 0.25});
+    await clickAt('multiline-rtl-text', {pctX: 0.1, pctY: 0.75});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('RTLTextPressable', async () => {
-    await clickAt('rtl-text', { pctX: 0.85 });
+    await clickAt('rtl-text', {pctX: 0.85});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('RTLTextInRTLFlowPressable', async () => {
-    await clickAt('rtl-rtl-flow-text', { pctX: 0.8 });
+    await clickAt('rtl-rtl-flow-text', {pctX: 0.8});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('LTRTextInRTLFlowPressable', async () => {
-    await clickAt('ltr-rtl-flow-text', { pctX: 0.9 });
+    await clickAt('ltr-rtl-flow-text', {pctX: 0.9});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('BidirectionalTextPressable', async () => {
-    await clickAt('bidirectional-text', { pctX: 0.8 });
-    await clickAt('bidirectional-text', { pctX: 0.95 });
+    await clickAt('bidirectional-text', {pctX: 0.8});
+    await clickAt('bidirectional-text', {pctX: 0.95});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('BidirectionalTextSeparateRunsPressable', async () => {
-    await clickAt('separate-bidirectional-text', { pctX: 0.8 });
-    await clickAt('separate-bidirectional-text', { pctX: 0.95 });
+    await clickAt('separate-bidirectional-text', {pctX: 0.8});
+    await clickAt('separate-bidirectional-text', {pctX: 0.95});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('BidirectionalTextSeparateRunsEdgeCasePressable', async () => {
-    await clickAt('separate-bidirectional-text', { pctX: 0.62 });
+    await clickAt('separate-bidirectional-text', {pctX: 0.62});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('InsertedVirtualTextPressable', async () => {
-    await clickAt('inserted-text', { pctX: 0.85 });
-    await clickAt('inserted-text', { pctX: 0.9 });
+    await clickAt('inserted-text', {pctX: 0.85});
+    await clickAt('inserted-text', {pctX: 0.9});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('ToggleVirtualTextPressable', async () => {
-    await clickAt('toggled-text', { pctX: 0.9 });
-    await clickAt('toggled-text', { pctX: 0.9 });
+    await clickAt('toggled-text', {pctX: 0.9});
+    await clickAt('toggled-text', {pctX: 0.9});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('WrappedLTRInRTLFlowEdgeCaseNotPressable', async () => {
-    await clickAt('wrapped-ltr-rtl-flow-text', { pctX: 0.85, pctY: 0.25 });
+    await clickAt('wrapped-ltr-rtl-flow-text', {pctX: 0.85, pctY: 0.25});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('MultilineRTLTextEdgeCaseNotPressable', async () => {
-    await clickAt('multiline-rtl-text', { pctX: 0.765, pctY: 0.25 });
+    await clickAt('multiline-rtl-text', {pctX: 0.765, pctY: 0.25});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
 
   test('BidirectionalTextPressableEdgeCaseNotPressable', async () => {
-    await clickAt('bidirectional-text', { pctX: 0.61 });
+    await clickAt('bidirectional-text', {pctX: 0.61});
     const dump = await dumpVisualTree('pressed-state');
     expect(dump).toMatchSnapshot();
   });
@@ -130,10 +130,10 @@ async function clearState() {
 
 async function clickAt(
   name: string,
-  { pctX, pctY = 0.5 }: { pctX: number; pctY?: number },
+  {pctX, pctY = 0.5}: {pctX: number; pctY?: number},
 ) {
   const target = await app.findElementByTestID(name);
-  const { width, height } = await target.getSize();
+  const {width, height} = await target.getSize();
 
   // The webdriverio package computes the offsets from the center point of the
   // target. Additionally, the package uses raw pixels. To make this test more
