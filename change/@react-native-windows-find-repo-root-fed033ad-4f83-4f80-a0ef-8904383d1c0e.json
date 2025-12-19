@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.80 to legacy",
+  "packageName": "@react-native-windows/find-repo-root",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
