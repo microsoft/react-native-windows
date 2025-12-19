@@ -231,7 +231,7 @@ function isPublishedOnNpm(packageName, version) {
 /**
  * Extract package name and version from a .tgz file by reading its package.json
  * @param {string} tgzPath - Full path to the .tgz file
- * @returns {{name: string, version: string} | null} Package info or null if extraction fails
+ * @returns {{name: string, version: string, error?: string} | null} Package info or null if extraction fails
  */
 function getPackageInfoFromTgz(tgzPath) {
   try {
@@ -240,8 +240,8 @@ function getPackageInfoFromTgz(tgzPath) {
     const unixPath = tgzPath.replace(/\\/g, '/');
 
     // Use tar to extract package/package.json from the tarball
-    // The -O flag outputs to stdout, -xzf extracts from gzipped tar
-    const output = execSync(`tar -xzf "${unixPath}" package/package.json -O`, {
+    // The -xzf extracts from gzipped tar, the -O flag outputs to stdout, then the file to extract
+    const output = execSync(`tar -xzf "${unixPath}" -O package/package.json`, {
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe']
     });
@@ -252,8 +252,9 @@ function getPackageInfoFromTgz(tgzPath) {
       version: packageJson.version
     };
   } catch (error) {
-    // If extraction fails, return null
-    return null;
+    // If extraction fails, return error information
+    const message = error instanceof Error ? error.message : String(error);
+    return { name: '', version: '', error: message };
   }
 }
 
@@ -279,8 +280,10 @@ function checkAndRemovePublishedPackages(targetDir) {
     const tgzPath = path.join(targetDir, tgzFile);
     const packageInfo = getPackageInfoFromTgz(tgzPath);
 
-    if (!packageInfo) {
-      console.log(`  ${colorize('⚠', colors.yellow)} Skipping ${tgzFile} (cannot extract package.json)`);
+    if (!packageInfo || packageInfo.error || !packageInfo.name) {
+      const errorMsg = packageInfo?.error || 'cannot extract package.json';
+      console.log(`  ${colorize('⚠', colors.yellow)} Skipping ${tgzFile}`);
+      console.log(`    ${colorize('Error:', colors.red)} ${errorMsg}`);
       continue;
     }
 
