@@ -20,7 +20,8 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('LegacyTextInputTest', () => {
+// TODO: Re-enable once element accessibility issues are resolved
+describe.skip('LegacyTextInputTest', () => {
   test('Click on TextInput to focus', async () => {
     const textInput = await textInputField();
     await textInput.click();

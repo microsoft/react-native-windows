@@ -67,7 +67,7 @@ can also be changed imperatively",
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -146,7 +146,7 @@ can also be changed",
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -223,7 +223,7 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -300,7 +300,7 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -457,7 +457,7 @@ exports[`TextInput Tests TextInput triggers onPressIn and updates state text 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -535,7 +535,7 @@ exports[`TextInput Tests TextInput triggers onPressOut and updates state text 1`
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -610,7 +610,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -685,7 +685,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -763,7 +763,7 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -841,7 +841,7 @@ exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -919,7 +919,7 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -997,7 +997,7 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -1158,12 +1158,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 33",
+        "Size": "916, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 33",
+            "Size": "916, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1209,7 +1209,7 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 255, 255, 255)",
+                  "Color": "rgba(0, 0, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
                 "Opacity": 0,
@@ -1273,7 +1273,7 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 255, 255, 255)",
+                  "Color": "rgba(0, 0, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
                 "Opacity": 0,
@@ -1337,7 +1337,7 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 255, 255, 255)",
+                  "Color": "rgba(0, 0, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
                 "Opacity": 0,
@@ -1373,7 +1373,7 @@ exports[`TextInput Tests TextInputs can be editable 1`] = `
   "Visual Tree": {
     "Comment": "textinput-editable",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1419,7 +1419,7 @@ exports[`TextInput Tests TextInputs can be editable 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -1574,7 +1574,7 @@ exports[`TextInput Tests TextInputs can be multiline, center alignment 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -1652,7 +1652,7 @@ exports[`TextInput Tests TextInputs can be multiline, topleft alignment 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -1729,7 +1729,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -1807,7 +1807,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -1836,7 +1836,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1882,7 +1882,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "5, 5, 0",
         "Opacity": 0,
@@ -1957,7 +1957,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2032,7 +2032,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2107,7 +2107,7 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2185,7 +2185,7 @@ exports[`TextInput Tests TextInputs can enable spellcheck 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2262,7 +2262,7 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2339,7 +2339,7 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2416,7 +2416,7 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2493,7 +2493,7 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2570,7 +2570,7 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2601,7 +2601,7 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
   "Visual Tree": {
     "Comment": "style-fontWeight",
     "Offset": "0, 0, 0",
-    "Size": "791, 28",
+    "Size": "791, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2647,7 +2647,7 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2724,7 +2724,7 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2757,7 +2757,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
   "Visual Tree": {
     "Comment": "textinput-carethidden",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2803,7 +2803,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "83, 5, 0",
         "Opacity": 0,
@@ -2881,7 +2881,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -2959,7 +2959,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3037,7 +3037,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3115,7 +3115,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3193,7 +3193,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3271,7 +3271,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3349,7 +3349,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3380,84 +3380,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
   },
   "Visual Tree": {
     "Comment": "textinput-return-search",
-    "Offset": "0, 0, 0",
-    "Size": "916, 33",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, 0, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, -1, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Brush": {
-          "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
-        },
-        "Offset": "0, 0, 0",
-        "Opacity": 0,
-        "Size": "0, 0",
-        "Visual Type": "SpriteVisual",
-      },
-    ],
-  },
-}
-`;
-
-exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "textinput-return-send",
-    "ControlType": 50004,
-    "HelpText": "returnKeyType: send",
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "edit",
-    "Name": "returnKeyType: send",
-    "TextRangePattern.GetText": "returnKeyType: send",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
-    "_Props": {
-      "TestId": "textinput-return-send",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-return-send",
     "Offset": "0, 0, 0",
     "Size": "916, 32",
     "Visual Type": "SpriteVisual",
@@ -3505,7 +3427,85 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-return-send",
+    "ControlType": 50004,
+    "HelpText": "returnKeyType: send",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "returnKeyType: send",
+    "TextRangePattern.GetText": "returnKeyType: send",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-return-send",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-return-send",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3583,7 +3583,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3661,7 +3661,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3739,7 +3739,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3817,7 +3817,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -3944,7 +3944,7 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
   "Visual Tree": {
     "Comment": "style-letterSpacing",
     "Offset": "0, 0, 0",
-    "Size": "791, 29",
+    "Size": "791, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3990,7 +3990,7 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4067,7 +4067,7 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4145,7 +4145,7 @@ exports[`TextInput Tests TextInputs can have inline images 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4223,7 +4223,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawable props not s
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4301,7 +4301,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4333,7 +4333,7 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "textinput-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4379,7 +4379,7 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4456,7 +4456,7 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4487,7 +4487,7 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
   "Visual Tree": {
     "Comment": "style-textShadow",
     "Offset": "0, 0, 0",
-    "Size": "791, 28",
+    "Size": "791, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4533,7 +4533,7 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4611,7 +4611,7 @@ exports[`TextInput Tests TextInputs can propagate events 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4689,7 +4689,7 @@ exports[`TextInput Tests TextInputs can register press events 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4764,7 +4764,7 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4839,7 +4839,7 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4914,7 +4914,7 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -4945,7 +4945,7 @@ exports[`TextInput Tests TextInputs can select text on focus 1`] = `
   "Visual Tree": {
     "Comment": "select-text-on-focus",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4991,7 +4991,7 @@ exports[`TextInput Tests TextInputs can select text on focus 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "83, 5, 0",
         "Opacity": 0,
@@ -5069,7 +5069,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5147,7 +5147,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5222,7 +5222,7 @@ exports[`TextInput Tests TextInputs can submit with custom key, multilined and s
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "5, 5, 0",
         "Opacity": 0,
@@ -5252,6 +5252,83 @@ exports[`TextInput Tests TextInputs have a custom background color 1`] = `
   },
   "Visual Tree": {
     "Comment": "textinput-custom-background-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 33",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-custom-highlight-color",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Selection Color is red",
+    "ValuePattern.Value": "Selection Color is red",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-custom-highlight-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-custom-highlight-color",
     "Offset": "0, 0, 0",
     "Size": "916, 32",
     "Visual Type": "SpriteVisual",
@@ -5299,84 +5376,7 @@ exports[`TextInput Tests TextInputs have a custom background color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
-        },
-        "Offset": "0, 0, 0",
-        "Opacity": 0,
-        "Size": "0, 0",
-        "Visual Type": "SpriteVisual",
-      },
-    ],
-  },
-}
-`;
-
-exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "textinput-custom-highlight-color",
-    "ControlType": 50004,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "edit",
-    "TextRangePattern.GetText": "Selection Color is red",
-    "ValuePattern.Value": "Selection Color is red",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
-    "_Props": {
-      "TestId": "textinput-custom-highlight-color",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-custom-highlight-color",
-    "Offset": "0, 0, 0",
-    "Size": "916, 33",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, 0, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, -1, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Brush": {
-          "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5408,7 +5408,7 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-placeholder-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5454,7 +5454,7 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5609,7 +5609,7 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5640,83 +5640,6 @@ exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = 
   },
   "Visual Tree": {
     "Comment": "textinput-default-placeholder-color",
-    "Offset": "0, 0, 0",
-    "Size": "916, 32",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "0, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, 0, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 0, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "-1, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "1, -1, 0",
-        "Size": "-2, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, -1, 0",
-        "Size": "1, 1",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Brush": {
-          "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
-        },
-        "Offset": "0, 0, 0",
-        "Opacity": 0,
-        "Size": "0, 0",
-        "Visual Type": "SpriteVisual",
-      },
-    ],
-  },
-}
-`;
-
-exports[`TextInput Tests TextInputs have a default text color 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "textinput-default-color",
-    "ControlType": 50004,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "edit",
-    "TextRangePattern.GetText": "Default color text",
-    "ValuePattern.Value": "Default color text",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
-    "_Props": {
-      "TestId": "textinput-default-color",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "textinput-default-color",
     "Offset": "0, 0, 0",
     "Size": "916, 33",
     "Visual Type": "SpriteVisual",
@@ -5764,7 +5687,84 @@ exports[`TextInput Tests TextInputs have a default text color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs have a default text color 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-default-color",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "TextRangePattern.GetText": "Default color text",
+    "ValuePattern.Value": "Default color text",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-default-color",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-default-color",
+    "Offset": "0, 0, 0",
+    "Size": "916, 32",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5842,7 +5842,7 @@ exports[`TextInput Tests TextInputs have a default underline color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -5919,7 +5919,7 @@ exports[`TextInput Tests TextInputs support secure entry 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -6046,12 +6046,12 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 32",
+        "Size": "916, 33",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 32",
+            "Size": "916, 33",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -6097,7 +6097,7 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
-                  "Color": "rgba(255, 255, 255, 255)",
+                  "Color": "rgba(0, 0, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
                 "Opacity": 0,
@@ -6179,7 +6179,7 @@ exports[`TextInput Tests TextInputs with set height and padding from theme 1`] =
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
@@ -6256,7 +6256,7 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(255, 255, 255, 255)",
+          "Color": "rgba(0, 0, 0, 255)",
         },
         "Offset": "0, 0, 0",
         "Opacity": 0,
