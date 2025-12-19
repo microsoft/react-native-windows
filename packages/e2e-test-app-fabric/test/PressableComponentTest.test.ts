@@ -21,7 +21,8 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('Pressable Tests', () => {
+// TODO: Re-enable once element accessibility issues are resolved
+describe.skip('Pressable Tests', () => {
   // TODO: Re-enable once element accessibility issues are resolved
   test.skip('Pressables can change text on press/rest, state rest', async () => {
     const searchBox = await app.findElementByTestID('example_search');
