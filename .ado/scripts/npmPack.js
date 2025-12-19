@@ -15,7 +15,6 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
-const glob = require('glob');
 
 /**
  * Find the enlistment root by going up two directories from script location
@@ -48,14 +47,76 @@ function getWorkspacePackages(repoRoot) {
 }
 
 /**
+ * Recursively find all package.json files in a directory
+ */
+function findPackageJsonsRecursive(dir, results = []) {
+  if (!fs.existsSync(dir)) {
+    return results;
+  }
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      // Skip node_modules directories
+      if (entry.name === 'node_modules') {
+        continue;
+      }
+      findPackageJsonsRecursive(fullPath, results);
+    } else if (entry.isFile() && entry.name === 'package.json') {
+      results.push(fullPath);
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Match a pattern against a path
+ * Supports patterns like "packages/*" or "packages/@react-native-windows/*"
+ */
+function matchPattern(pattern, basePath) {
+  // Remove trailing /* if present
+  const cleanPattern = pattern.replace(/\/\*$/, '');
+  const patternPath = path.join(basePath, cleanPattern);
+
+  const results = [];
+
+  // Check if pattern ends with /*
+  if (pattern.endsWith('/*')) {
+    // Pattern like "packages/*" - find all direct subdirectories
+    if (fs.existsSync(patternPath)) {
+      const entries = fs.readdirSync(patternPath, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          const packageJsonPath = path.join(patternPath, entry.name, 'package.json');
+          if (fs.existsSync(packageJsonPath)) {
+            results.push(packageJsonPath);
+          }
+        }
+      }
+    }
+  } else {
+    // Exact path - check if package.json exists
+    const packageJsonPath = path.join(patternPath, 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      results.push(packageJsonPath);
+    }
+  }
+
+  return results;
+}
+
+/**
  * Find all package.json files matching workspace patterns
  */
 function findWorkspacePackageJsons(repoRoot, workspacePatterns) {
   const packageJsonPaths = [];
 
   for (const pattern of workspacePatterns) {
-    const searchPattern = path.join(repoRoot, pattern, 'package.json');
-    const matches = glob.sync(searchPattern, { windowsPathsNoEscape: true });
+    const matches = matchPattern(pattern, repoRoot);
     packageJsonPaths.push(...matches);
   }
 
