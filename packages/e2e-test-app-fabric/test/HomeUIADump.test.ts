@@ -5,9 +5,9 @@
  * @format
  */
 
-import { app } from '@react-native-windows/automation';
-import { verifyNoErrorLogs } from './Helpers';
-import { dumpVisualTree } from '@react-native-windows/automation-commands';
+import {app} from '@react-native-windows/automation';
+import {verifyNoErrorLogs} from './Helpers';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 
 type RNTesterExampleModule = {
   title: string;
@@ -43,19 +43,19 @@ beforeAll(async () => {
 describe.skip('Home UIA Tree Dump', () => {
   test('Components Tab', async () => {
     const componentsTabButton = await app.findElementByTestID('components-tab');
-    await componentsTabButton.waitForDisplayed({ timeout: 20000 });
+    await componentsTabButton.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('components-tab');
     expect(dump).toMatchSnapshot();
   });
   test('APIs Tab', async () => {
     const apisTabButton = await app.findElementByTestID('apis-tab');
-    await apisTabButton.waitForDisplayed({ timeout: 20000 });
+    await apisTabButton.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('apis-tab');
     expect(dump).toMatchSnapshot();
   });
   test('Search Bar', async () => {
     const component = await app.findElementByTestID('explorer_search');
-    await component.waitForDisplayed({ timeout: 20000 });
+    await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('explorer_search');
     expect(dump).toMatchSnapshot();
   });
@@ -66,7 +66,7 @@ describe.skip('Home UIA Tree Dump', () => {
       );
       await componentsTabButton.click();
       const componentTile = await app.findElementByTestID(component);
-      await componentTile.waitForDisplayed({ timeout: 20000 });
+      await componentTile.waitForDisplayed({timeout: 20000});
       const dump = await dumpVisualTree(component);
       expect(dump).toMatchSnapshot();
     });
@@ -76,11 +76,11 @@ describe.skip('Home UIA Tree Dump', () => {
       const apisTabButton = await app.findElementByTestID('apis-tab');
       await apisTabButton.click();
       const apiTile = await app.findElementByTestID(api);
-      await apiTile.waitForDisplayed({ timeout: 20000 });
+      await apiTile.waitForDisplayed({timeout: 20000});
       const dump = await dumpVisualTree(api);
       expect(dump).toMatchSnapshot();
     });
   }
 });
 
-export { };
+export {};
