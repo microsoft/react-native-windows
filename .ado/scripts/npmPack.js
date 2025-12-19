@@ -15,6 +15,63 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { parseArgs } = require('util');
+
+// ANSI color codes
+const colors = {
+  reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  cyan: '\x1b[36m',
+  gray: '\x1b[90m',
+};
+
+/** @type {boolean} */
+let useColors = true;
+
+/**
+ * Colorize text if colors are enabled
+ * @param {string} text - Text to colorize
+ * @param {string} color - Color code from colors object
+ * @returns {string} Colorized text
+ */
+function colorize(text, color) {
+  if (!useColors) {
+    return text;
+  }
+  return color + text + colors.reset;
+}
+
+/**
+ * Display help information
+ */
+function showHelp() {
+  console.log(`
+npmPack.js - Pack all non-private workspace packages to tgz files
+
+Usage:
+  node npmPack.js [options] [targetDir]
+
+Arguments:
+  targetDir           Target directory for .tgz files
+                      Default: npm-pkgs (in repository root)
+
+Options:
+  --clean             Clean target directory if it's not empty
+  --no-color          Disable colored output
+  --help, -h          Show this help message
+
+Examples:
+  node npmPack.js
+  node npmPack.js --clean
+  node npmPack.js path/to/output
+  node npmPack.js --clean --no-color path/to/output
+`);
+}
 
 /**
  * Find the enlistment root by going up two directories from script location
@@ -156,7 +213,7 @@ function packPackage(packageDir, targetDir) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
   const packageName = packageJson.name;
 
-  console.log(`Packing ${packageName}...`);
+  console.log(`Packing ${colorize(packageName, colors.cyan)}...`);
 
   try {
     // Run npm pack in the package directory, output to target directory
@@ -167,11 +224,11 @@ function packPackage(packageDir, targetDir) {
     });
 
     const tgzFileName = output.trim().split('\n').pop();
-    console.log(`  ✓ Created ${tgzFileName}`);
+    console.log(`  ${colorize('✓', colors.green)} Created ${tgzFileName}`);
     return true;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(`  ✗ Failed to pack ${packageName}: ${message}`);
+    console.error(`  ${colorize('✗', colors.red)} Failed to pack ${colorize(packageName, colors.cyan)}: ${message}`);
     return false;
   }
 }
@@ -180,49 +237,88 @@ function packPackage(packageDir, targetDir) {
  * Main function
  */
 function main() {
-  const args = process.argv.slice(2);
-  const cleanFlag = args.includes('--clean');
-  const targetDirArg = args.find(arg => !arg.startsWith('--'));
+  // Parse command line arguments
+  /** @type {import('util').ParseArgsConfig['options']} */
+  const options = {
+    help: {
+      type: 'boolean',
+      short: 'h',
+      default: false,
+    },
+    clean: {
+      type: 'boolean',
+      default: false,
+    },
+    'no-color': {
+      type: 'boolean',
+      default: false,
+    },
+  };
+
+  let args;
+  try {
+    args = parseArgs({
+      options,
+      allowPositionals: true,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`${colorize('Error parsing arguments:', colors.red)} ${message}`);
+    console.error('Use --help for usage information');
+    process.exit(1);
+  }
+
+  // Show help if requested
+  if (args.values.help) {
+    showHelp();
+    process.exit(0);
+  }
+
+  // Set color mode (colors enabled by default, disabled if --no-color is passed)
+  useColors = !args.values['no-color'];
+
+  const cleanFlag = args.values.clean;
+  const targetDirArg = args.positionals[0];
 
   try {
     // Find repo root
     const repoRoot = findEnlistmentRoot();
-    console.log(`Repository root: ${repoRoot}`);
+    console.log(`${colorize('Repository root:', colors.bright)} ${repoRoot}`);
 
     // Determine target directory
     const targetDir = targetDirArg
       ? path.resolve(repoRoot, targetDirArg)
       : path.join(repoRoot, 'npm-pkgs');
 
-    console.log(`Target directory: ${targetDir}`);
+    console.log(`${colorize('Target directory:', colors.bright)} ${targetDir}`);
 
     // Handle target directory
     if (fs.existsSync(targetDir)) {
       const files = fs.readdirSync(targetDir);
       if (files.length > 0) {
         if (!cleanFlag) {
-          console.error(`Error: Target directory is not empty: ${targetDir}`);
+          console.error(`${colorize('Error:', colors.red)} Target directory is not empty: ${targetDir}`);
           console.error('Use --clean flag to clean the directory before packing');
           process.exit(1);
         }
 
-        console.log('Cleaning target directory...');
+        console.log(`${colorize('Cleaning target directory...', colors.yellow)}`);
         for (const file of files) {
           fs.rmSync(path.join(targetDir, file), { recursive: true, force: true });
         }
       }
     } else {
-      console.log('Creating target directory...');
+      console.log(`${colorize('Creating target directory...', colors.yellow)}`);
       fs.mkdirSync(targetDir, { recursive: true });
     }
 
     // Get workspace packages
     const workspacePatterns = getWorkspacePackages(repoRoot);
-    console.log(`Workspace patterns: ${workspacePatterns.join(', ')}`);
+    console.log(`${colorize('Workspace patterns:', colors.bright)} ${workspacePatterns.join(', ')}`);
 
     // Find all package.json files
     const packageJsonPaths = findWorkspacePackageJsons(repoRoot, workspacePatterns);
-    console.log(`Found ${packageJsonPaths.length} workspace packages\n`);
+    console.log(`${colorize('Found', colors.bright)} ${colorize(packageJsonPaths.length.toString(), colors.cyan)} ${colorize('workspace packages', colors.bright)}\n`);
 
     // Pack non-private packages
     let packedCount = 0;
@@ -234,7 +330,7 @@ function main() {
 
       if (isPrivatePackage(packageJsonPath)) {
         const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-        console.log(`Skipping private package: ${packageJson.name}`);
+        console.log(`${colorize('Skipping private package:', colors.gray)} ${colorize(packageJson.name, colors.dim)}`);
         skippedCount++;
         continue;
       }
@@ -247,18 +343,18 @@ function main() {
       }
     }
 
-    console.log(`\n✓ Packing complete:`);
-    console.log(`  Packed: ${packedCount}`);
-    console.log(`  Skipped (private): ${skippedCount}`);
-    console.log(`  Failed: ${failedCount}`);
-    console.log(`  Target: ${targetDir}`);
+    console.log(`\n${colorize('✓', colors.green)} ${colorize('Packing complete:', colors.bright)}`);
+    console.log(`  ${colorize('Packed:', colors.bright)} ${colorize(packedCount.toString(), colors.green)}`);
+    console.log(`  ${colorize('Skipped (private):', colors.bright)} ${colorize(skippedCount.toString(), colors.gray)}`);
+    console.log(`  ${colorize('Failed:', colors.bright)} ${failedCount > 0 ? colorize(failedCount.toString(), colors.red) : colorize(failedCount.toString(), colors.green)}`);
+    console.log(`  ${colorize('Target:', colors.bright)} ${targetDir}`);
 
     if (failedCount > 0) {
       process.exit(1);
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(`Error: ${message}`);
+    console.error(`${colorize('Error:', colors.red)} ${message}`);
     process.exit(1);
   }
 }
