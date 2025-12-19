@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.Office.Test
 {
@@ -22,14 +23,14 @@ namespace Microsoft.Office.Test
 
       var request = context.Request;
 
-      var resBody = "";
-      if (request.ContentType == "multipart/form-data")
+      string? resBody;
+      if (Regex.IsMatch(request.ContentType!, @"multipart/form-data(;\s+.*)?"))
       {
-        resBody = $"Binary form data with {request.Form.Count} entries";
+        resBody = $"Multipart form data with {request.Form.Count} entries";
       }
       else if (request.ContentType == "application/x-www-form-urlencoded")
       {
-        resBody = $"Text form data with {request.Form.Count} entries";
+        resBody = $"URL-encoded form data with {request.Form.Count} entries";
       }
       else
       {
