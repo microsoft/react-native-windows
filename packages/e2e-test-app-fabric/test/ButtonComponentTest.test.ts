@@ -5,10 +5,10 @@
  * @format
  */
 
-import { dumpVisualTree } from '@react-native-windows/automation-commands';
-import { goToComponentExample } from './RNTesterNavigation';
-import { verifyNoErrorLogs } from './Helpers';
-import { app } from '@react-native-windows/automation';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
+import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -46,7 +46,7 @@ describe.skip('Button Tests', () => {
   test('Buttons have default styling', async () => {
     await searchBox('default');
     const component = await app.findElementByTestID('button_default_styling');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('button_default_styling');
     expect(dump).toMatchSnapshot();
     await component.click();
@@ -58,7 +58,7 @@ describe.skip('Button Tests', () => {
   test('Buttons can have custom colors', async () => {
     await searchBox('color');
     const component = await app.findElementByTestID('cancel_button');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('cancel_button');
     expect(dump).toMatchSnapshot();
     await component.click();
@@ -69,20 +69,20 @@ describe.skip('Button Tests', () => {
   });
   test('Buttons can have flexbox styling', async () => {
     const component = await app.findElementByTestID('two_button_container');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('two_button_container');
     expect(dump).toMatchSnapshot();
   });
   test('Buttons can have flexbox styling with three buttons', async () => {
     const component = await app.findElementByTestID('three_button_container');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('three_button_container');
     expect(dump).toMatchSnapshot();
   });
   test('Buttons can be disabled', async () => {
     await searchBox('dis');
     const component = await app.findElementByTestID('disabled_button');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('disabled_button');
     expect(dump).toMatchSnapshot();
     const alert = await app.findElementByTestID('Popup Window');
@@ -93,7 +93,7 @@ describe.skip('Button Tests', () => {
     const component = await app.findElementByTestID(
       'accessibilityLabel_button',
     );
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('accessibilityLabel_button');
     expect(dump).toMatchSnapshot();
     await component.click();
@@ -107,7 +107,7 @@ describe.skip('Button Tests', () => {
     const component = await app.findElementByTestID(
       'accessibilityState_button',
     );
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('accessibilityState_button');
     expect(dump).toMatchSnapshot();
     const alert = await app.findElementByTestID('Popup Window');
@@ -116,7 +116,7 @@ describe.skip('Button Tests', () => {
   test('Buttons can have accessibility props', async () => {
     await searchBox('props');
     const component = await app.findElementByTestID('accessibility_props');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('accessibility_props');
     expect(dump).toMatchSnapshot();
     await component.click();
@@ -133,7 +133,7 @@ describe.skip('Button Tests', () => {
       'focusable_false_button',
     );
 
-    await componentNotFocusable.waitForDisplayed({ timeout: 5000 });
+    await componentNotFocusable.waitForDisplayed({timeout: 5000});
     const dump2 = await dumpVisualTree('focusable_false_button');
     expect(dump2).toMatchSnapshot();
     const dump3 = await dumpVisualTree('accessible_focusable_false_button');

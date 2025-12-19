@@ -343,6 +343,29 @@ exports[`Text Tests Text can have advanced borders 1`] = `
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Advanced Border Example",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This text has customized borders.",
+        "TextRangePattern.GetText": "This text has customized borders.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This text has customized borders.",
+        "TextRangePattern.GetText": "This text has customized borders.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This text has customized borders.",
+        "TextRangePattern.GetText": "This text has customized borders.",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -545,12 +568,12 @@ exports[`Text Tests Text can have advanced borders 1`] = `
       },
       {
         "Offset": "0, 77, 0",
-        "Size": "916, 21",
+        "Size": "916, 22",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 21",
+            "Size": "916, 22",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -586,7 +609,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "-1, 4, 0",
-                "Size": "1, 13",
+                "Size": "1, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -622,7 +645,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "0, 4, 0",
-                "Size": "1, 13",
+                "Size": "1, 14",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -665,6 +688,33 @@ exports[`Text Tests Text can have borders 1`] = `
     "ControlType": 50026,
     "LocalizedControlType": "group",
     "Name": "Border Example",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sample bordered text with default styling.",
+        "TextRangePattern.GetText": "Sample bordered text with default styling.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Some more bordered text + a tad of CSS.
+1st nested - border specifcied but ignored.
+2nd Inside text!",
+        "TextRangePattern.GetText": "Some more bordered text + a tad of CSS.
+1st nested - border specifcied but ignored.
+2nd Inside text!",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
+        "TextRangePattern.GetText": "This text is outlined and laid out within the normal text run, so will wrap etc as normal text.",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -945,6 +995,22 @@ exports[`Text Tests Text can have nested views 1`] = `
     "AutomationId": "text-nested-view",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This is the first row",
+        "TextRangePattern.GetText": "This is the first row",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This is a nested text ￼ with a Red View",
+        "TextRangePattern.GetText": "This is a nested text ￯﾿ﾼ with a Red View",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -976,12 +1042,12 @@ exports[`Text Tests Text can have nested views 1`] = `
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 20",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1075,6 +1141,36 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
     "AutomationId": "text-view-images-clipped",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "The inline view below is taller than its Text parent and should be clipped.",
+        "TextRangePattern.GetText": "The inline view below is taller than its Text parent and should be clipped.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This is an inline view￼",
+        "TextRangePattern.GetText": "This is an inline view￯﾿ﾼ",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "The inline image below is taller than its Text parent and should be clipped.",
+        "TextRangePattern.GetText": "The inline image below is taller than its Text parent and should be clipped.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "This is an inline image￼",
+        "TextRangePattern.GetText": "This is an inline image￯﾿ﾼ",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",

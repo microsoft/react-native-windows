@@ -110,6 +110,15 @@ exports[`Accessibility Tests Components can store range data by setting the min,
     "RangeValuePattern.Maximum": 125,
     "RangeValuePattern.Minimum": 5,
     "RangeValuePattern.Value": 10,
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "The View's (accessibilityRole == adjustable, ie. Slider) properties should be the following according to UIA: Min- 5Max- 125Now- 10",
+        "TextRangePattern.GetText": "The View's (accessibilityRole == adjustable, ie. Slider) properties should be the following according to UIA: Min- 5Max- 125Now- 10",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -158,6 +167,15 @@ exports[`Accessibility Tests Components can store value data by setting the text
     "LocalizedControlType": "combo box",
     "ValuePattern.IsReadOnly": true,
     "ValuePattern.Value": "testText",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "The View's properties should be the following according to UIA: Text- testText",
+        "TextRangePattern.GetText": "The View's properties should be the following according to UIA: Text- testText",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -206,6 +224,15 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to fal
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "Selectable item 1",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Unselected",
+        "TextRangePattern.GetText": "Unselected",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -256,6 +283,15 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
     "LocalizedControlType": "button",
     "Name": "Selectable item 1",
     "SelectionItemPattern.IsSelected": true,
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Selected",
+        "TextRangePattern.GetText": "Selected",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -319,6 +355,15 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "IsKeyboardFocusable": true,
             "LocalizedControlType": "button",
             "Name": "Selectable item 1",
+            "__Children": [
+              {
+                "AutomationId": "",
+                "ControlType": 50020,
+                "LocalizedControlType": "text",
+                "Name": "Unselected",
+                "TextRangePattern.GetText": "Unselected",
+              },
+            ],
           },
           {
             "AutomationId": "Selectable item 2",
@@ -326,6 +371,15 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "IsKeyboardFocusable": true,
             "LocalizedControlType": "button",
             "Name": "Selectable item 2",
+            "__Children": [
+              {
+                "AutomationId": "",
+                "ControlType": 50020,
+                "LocalizedControlType": "text",
+                "Name": "Unselected",
+                "TextRangePattern.GetText": "Unselected",
+              },
+            ],
           },
           {
             "AutomationId": "Selectable item 3",
@@ -333,6 +387,15 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
             "IsKeyboardFocusable": true,
             "LocalizedControlType": "button",
             "Name": "Selectable item 3",
+            "__Children": [
+              {
+                "AutomationId": "",
+                "ControlType": 50020,
+                "LocalizedControlType": "text",
+                "Name": "Unselected",
+                "TextRangePattern.GetText": "Unselected",
+              },
+            ],
           },
         ],
       },

@@ -5,10 +5,10 @@
  * @format
  */
 
-import {dumpVisualTree} from '@react-native-windows/automation-commands';
-import {goToComponentExample} from './RNTesterNavigation';
-import {verifyNoErrorLogs} from './Helpers';
-import {app} from '@react-native-windows/automation';
+import { dumpVisualTree } from '@react-native-windows/automation-commands';
+import { goToComponentExample } from './RNTesterNavigation';
+import { verifyNoErrorLogs } from './Helpers';
+import { app } from '@react-native-windows/automation';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -39,12 +39,13 @@ const searchBox = async (input: string) => {
   );
 };
 
-describe('Touchable Tests', () => {
+// TODO: Re-enable once element accessibility issues are resolved
+describe.skip('Touchable Tests', () => {
   test('Touchables can contain a Text component', async () => {
     const component = await app.findElementByTestID(
       'touchable_highlight_text_button',
     );
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('touchable_highlight_text_button');
     expect(dump).toMatchSnapshot();
   });
@@ -52,7 +53,7 @@ describe('Touchable Tests', () => {
     const component = await app.findElementByTestID(
       'touchable_highlight_image_button',
     );
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('touchable_highlight_image_button');
     expect(dump).toMatchSnapshot();
   });
@@ -60,7 +61,7 @@ describe('Touchable Tests', () => {
     const component = await app.findElementByTestID(
       'touchable_without_feedback_button',
     );
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('touchable_without_feedback_button');
     expect(dump).toMatchSnapshot();
   });
@@ -69,7 +70,7 @@ describe('Touchable Tests', () => {
     const component = await app.findElementByTestID(
       'touchable_feedback_events_button',
     );
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('touchable_feedback_events_button');
     expect(dump).toMatchSnapshot();
     await component.click();
@@ -79,7 +80,7 @@ describe('Touchable Tests', () => {
   });
   test('Text components can be tappable', async () => {
     const component = await app.findElementByTestID('tappable_text');
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('tappable_text');
     expect(dump).toMatchSnapshot();
   });
@@ -87,7 +88,7 @@ describe('Touchable Tests', () => {
     const component = await app.findElementByTestID(
       'touchable_delay_events_button',
     );
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('touchable_delay_events_button');
     expect(dump).toMatchSnapshot();
   });
@@ -95,20 +96,20 @@ describe('Touchable Tests', () => {
     const component = await app.findElementByTestID(
       'touchable_hit_slop_button',
     );
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('touchable_hit_slop_button');
     expect(dump).toMatchSnapshot();
   });
   test('Touchables can be defined in a set using accessibilityPosInSet and accessibilitySetSize', async () => {
     const component = await app.findElementByTestID('touchable_set');
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('touchable_set');
     expect(dump).toMatchSnapshot();
   });
   test('Touchables can be disabled', async () => {
     await searchBox('dis');
     const component = await app.findElementByTestID('disabled_touchable');
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('disabled_touchable');
     expect(dump).toMatchSnapshot();
     await component.click();

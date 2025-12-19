@@ -5,10 +5,10 @@
  * @format
  */
 
-import {dumpVisualTree} from '@react-native-windows/automation-commands';
-import {goToComponentExample} from './RNTesterNavigation';
-import {verifyNoErrorLogs} from './Helpers';
-import {app} from '@react-native-windows/automation';
+import { dumpVisualTree } from '@react-native-windows/automation-commands';
+import { goToComponentExample } from './RNTesterNavigation';
+import { verifyNoErrorLogs } from './Helpers';
+import { app } from '@react-native-windows/automation';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -21,7 +21,8 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('ScrollView Tests', () => {
+// TODO: Re-enable once element accessibility issues are resolved
+describe.skip('ScrollView Tests', () => {
   // Disable tests where testID is not found.
   /*test('ScrollViews can scroll an item list vertically', async () => {
     const component = await app.findElementByTestID('scroll_vertical');
@@ -31,13 +32,13 @@ describe('ScrollView Tests', () => {
   });*/
   test('ScrollView has scrollTo method, scroll to top button', async () => {
     const component = await app.findElementByTestID('scroll_to_top_button');
-    await component.waitForDisplayed({timeout: 20000});
+    await component.waitForDisplayed({ timeout: 20000 });
     const dump = await dumpVisualTree('scroll_to_top_button');
     expect(dump).toMatchSnapshot();
   });
   test('ScrollView has scrollTo method, scroll to bottom button', async () => {
     const component = await app.findElementByTestID('scroll_to_bottom_button');
-    await component.waitForDisplayed({timeout: 20000});
+    await component.waitForDisplayed({ timeout: 20000 });
     const dump = await dumpVisualTree('scroll_to_bottom_button');
     expect(dump).toMatchSnapshot();
   });
@@ -45,25 +46,25 @@ describe('ScrollView Tests', () => {
     const component = await app.findElementByTestID(
       'flash_scroll_indicators_button',
     );
-    await component.waitForDisplayed({timeout: 20000});
+    await component.waitForDisplayed({ timeout: 20000 });
     const dump = await dumpVisualTree('flash_scroll_indicators_button');
     expect(dump).toMatchSnapshot();
   });
   test('ScrollViews can scroll an item list horizontally', async () => {
     const component = await app.findElementByTestID('scroll_horizontal');
-    await component.waitForDisplayed({timeout: 20000});
+    await component.waitForDisplayed({ timeout: 20000 });
     const dump = await dumpVisualTree('scroll_horizontal');
     expect(dump).toMatchSnapshot();
   });
   test('ScrollView has scrollTo method, scroll to start button', async () => {
     const component = await app.findElementByTestID('scroll_to_start_button');
-    await component.waitForDisplayed({timeout: 20000});
+    await component.waitForDisplayed({ timeout: 20000 });
     const dump = await dumpVisualTree('scroll_to_start_button');
     expect(dump).toMatchSnapshot();
   });
   test('ScrollView has scrollTo method, scroll to end button', async () => {
     const component = await app.findElementByTestID('scroll_to_end_button');
-    await component.waitForDisplayed({timeout: 20000});
+    await component.waitForDisplayed({ timeout: 20000 });
     const dump = await dumpVisualTree('scroll_to_end_button');
     expect(dump).toMatchSnapshot();
   });

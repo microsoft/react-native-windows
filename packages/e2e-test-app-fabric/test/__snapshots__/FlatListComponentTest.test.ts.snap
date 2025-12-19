@@ -12,6 +12,15 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Item 555 - Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, a",
+            "TextRangePattern.GetText": "Item 555 - Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, a",
+          },
+        ],
       },
     ],
   },
@@ -92,7 +101,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-basic",
     "Offset": "0, 0, 0",
-    "Size": "998, 891",
+    "Size": "998, 422",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -101,7 +110,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 891",
+        "Size": "998, 422",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -110,12 +119,12 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 891",
+            "Size": "998, 422",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "998, 891",
+                "Size": "998, 422",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
@@ -124,7 +133,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                       "Color": "rgba(255, 255, 255, 255)",
                     },
                     "Offset": "0, 0, 0",
-                    "Size": "998, 891",
+                    "Size": "998, 422",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -409,7 +418,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 885",
+            "Size": "12, 416",
             "Visual Type": "Visual",
           },
           {
@@ -426,7 +435,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 859",
+            "Size": "6, 390",
             "Visual Type": "Visual",
           },
         ],
@@ -478,66 +487,165 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pizza",
+            "TextRangePattern.GetText": "Pizza",
+          },
+        ],
       },
       {
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Burger",
+            "TextRangePattern.GetText": "Burger",
+          },
+        ],
       },
       {
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Risotto",
+            "TextRangePattern.GetText": "Risotto",
+          },
+        ],
       },
       {
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "French Fries",
+            "TextRangePattern.GetText": "French Fries",
+          },
+        ],
       },
       {
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Onion Rings",
+            "TextRangePattern.GetText": "Onion Rings",
+          },
+        ],
       },
       {
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Fried Shrimps",
+            "TextRangePattern.GetText": "Fried Shrimps",
+          },
+        ],
       },
       {
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Water",
+            "TextRangePattern.GetText": "Water",
+          },
+        ],
       },
       {
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Coke",
+            "TextRangePattern.GetText": "Coke",
+          },
+        ],
       },
       {
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Beer",
+            "TextRangePattern.GetText": "Beer",
+          },
+        ],
       },
       {
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Cheesecake",
+            "TextRangePattern.GetText": "Cheesecake",
+          },
+        ],
       },
       {
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Brownie",
+            "TextRangePattern.GetText": "Brownie",
+          },
+        ],
       },
     ],
   },
@@ -690,7 +798,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 1057",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -699,7 +807,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 1057",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -708,7 +816,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1057",
+            "Size": "998, 946",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1078,7 +1186,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 1051",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -1095,7 +1203,7 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 1025",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],
@@ -1147,66 +1255,165 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pizza",
+            "TextRangePattern.GetText": "Pizza",
+          },
+        ],
       },
       {
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Burger",
+            "TextRangePattern.GetText": "Burger",
+          },
+        ],
       },
       {
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Risotto",
+            "TextRangePattern.GetText": "Risotto",
+          },
+        ],
       },
       {
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "French Fries",
+            "TextRangePattern.GetText": "French Fries",
+          },
+        ],
       },
       {
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Onion Rings",
+            "TextRangePattern.GetText": "Onion Rings",
+          },
+        ],
       },
       {
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Fried Shrimps",
+            "TextRangePattern.GetText": "Fried Shrimps",
+          },
+        ],
       },
       {
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Water",
+            "TextRangePattern.GetText": "Water",
+          },
+        ],
       },
       {
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Coke",
+            "TextRangePattern.GetText": "Coke",
+          },
+        ],
       },
       {
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Beer",
+            "TextRangePattern.GetText": "Beer",
+          },
+        ],
       },
       {
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Cheesecake",
+            "TextRangePattern.GetText": "Cheesecake",
+          },
+        ],
       },
       {
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Brownie",
+            "TextRangePattern.GetText": "Brownie",
+          },
+        ],
       },
     ],
   },
@@ -1359,7 +1566,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 1057",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1368,7 +1575,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 1057",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -1377,7 +1584,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1057",
+            "Size": "998, 946",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1747,7 +1954,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 1051",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -1764,7 +1971,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 1025",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],
@@ -1816,66 +2023,235 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pizza",
+            "TextRangePattern.GetText": "Pizza",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Pizza and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Pizza and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Burger",
+            "TextRangePattern.GetText": "Burger",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Burger and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Burger and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Risotto",
+            "TextRangePattern.GetText": "Risotto",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Risotto and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Risotto and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "French Fries",
+            "TextRangePattern.GetText": "French Fries",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading French Fries and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading French Fries and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Onion Rings",
+            "TextRangePattern.GetText": "Onion Rings",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Onion Rings and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Onion Rings and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Fried Shrimps",
+            "TextRangePattern.GetText": "Fried Shrimps",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Fried Shrimps and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Fried Shrimps and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Water",
+            "TextRangePattern.GetText": "Water",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Water and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Water and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Coke",
+            "TextRangePattern.GetText": "Coke",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Coke and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Coke and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Beer",
+            "TextRangePattern.GetText": "Beer",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Beer and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Beer and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Cheesecake",
+            "TextRangePattern.GetText": "Cheesecake",
+          },
+        ],
+      },
+      {
+        "AutomationId": "flat_list_separator",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Separator for leading Cheesecake and trailing undefined has not been pressed",
+        "TextRangePattern.GetText": "Separator for leading Cheesecake and trailing undefined has not been pressed",
       },
       {
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Brownie",
+            "TextRangePattern.GetText": "Brownie",
+          },
+        ],
       },
     ],
   },
@@ -2128,7 +2504,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 1097",
+    "Size": "998, 628",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2137,7 +2513,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 1097",
+        "Size": "998, 628",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -2146,7 +2522,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1097",
+            "Size": "998, 1066",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2806,7 +3182,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 1091",
+            "Size": "12, 622",
             "Visual Type": "Visual",
           },
           {
@@ -2823,7 +3199,7 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 1065",
+            "Size": "6, 351",
             "Visual Type": "Visual",
           },
         ],
@@ -2869,6 +3245,85 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
     "AutomationId": "flatlist-sticky",
     "ControlType": 50033,
     "LocalizedControlType": "pane",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Burger",
+        "TextRangePattern.GetText": "Burger",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "French Fries",
+        "TextRangePattern.GetText": "French Fries",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Fried Shrimps",
+        "TextRangePattern.GetText": "Fried Shrimps",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Water",
+        "TextRangePattern.GetText": "Water",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Coke",
+        "TextRangePattern.GetText": "Coke",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Beer",
+        "TextRangePattern.GetText": "Beer",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Cheesecake",
+        "TextRangePattern.GetText": "Cheesecake",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Ice Cream",
+        "TextRangePattern.GetText": "Ice Cream",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sticky Pizza",
+        "TextRangePattern.GetText": "Sticky Pizza",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sticky Risotto",
+        "TextRangePattern.GetText": "Sticky Risotto",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sticky Onion Rings",
+        "TextRangePattern.GetText": "Sticky Onion Rings",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ScrollViewComponentView",
@@ -2993,7 +3448,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-sticky",
     "Offset": "0, 0, 0",
-    "Size": "998, 1097",
+    "Size": "998, 628",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3002,7 +3457,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 1097",
+        "Size": "998, 628",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -3011,7 +3466,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1097",
+            "Size": "998, 967",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3390,7 +3845,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 1091",
+            "Size": "12, 622",
             "Visual Type": "Visual",
           },
           {
@@ -3407,7 +3862,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 1065",
+            "Size": "6, 387",
             "Visual Type": "Visual",
           },
         ],
@@ -3456,9 +3911,123 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
     "__Children": [
       {
         "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Header",
+        "TextRangePattern.GetText": "Header",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "16",
+        "TextRangePattern.GetText": "16",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "17",
+        "TextRangePattern.GetText": "17",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "18",
+        "TextRangePattern.GetText": "18",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "19",
+        "TextRangePattern.GetText": "19",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "20",
+        "TextRangePattern.GetText": "20",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "21",
+        "TextRangePattern.GetText": "21",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "22",
+        "TextRangePattern.GetText": "22",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "23",
+        "TextRangePattern.GetText": "23",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "24",
+        "TextRangePattern.GetText": "24",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "25",
+        "TextRangePattern.GetText": "25",
+      },
+      {
+        "AutomationId": "",
         "ControlType": 50033,
         "LocalizedControlType": "pane",
         "ScrollPattern.HorizontallyScrollable": true,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "56",
+            "TextRangePattern.GetText": "56",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "57",
+            "TextRangePattern.GetText": "57",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "58",
+            "TextRangePattern.GetText": "58",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "59",
+            "TextRangePattern.GetText": "59",
+          },
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "60",
+            "TextRangePattern.GetText": "60",
+          },
+        ],
       },
     ],
   },
@@ -3628,94 +4197,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
             "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
             "_Props": {},
           },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-            "_Props": {},
-          },
-          {
-            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-            "_Props": {},
-          },
         ],
       },
     ],
@@ -3723,7 +4204,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-nested",
     "Offset": "0, 0, 0",
-    "Size": "998, 841",
+    "Size": "998, 372",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3772,7 +4253,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 841",
+        "Size": "998, 372",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -3781,17 +4262,17 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1237",
+            "Size": "998, 869",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "1, 1, 0",
-                "Size": "996, 1236",
+                "Size": "996, 868",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "996, 1236",
+                    "Size": "996, 868",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -5046,738 +5527,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                           },
                         ],
                       },
-                      {
-                        "Offset": "10, 766, 0",
-                        "Size": "478, 460",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "478, 460",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 776, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 802, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 868, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 894, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 960, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 986, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 1052, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 1078, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "20, 1144, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "241, 1170, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "508, 766, 0",
-                        "Size": "478, 460",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "478, 460",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 776, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 802, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 868, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 894, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 960, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 986, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 1052, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 1078, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "518, 1144, 0",
-                        "Size": "458, 72",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "458, 72",
-                            "Visual Type": "SpriteVisual",
-                            "__Children": [
-                              {
-                                "Offset": "0, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, 0, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 0, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "-1, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "1, -1, 0",
-                                "Size": "-2, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, -1, 0",
-                                "Size": "1, 1",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Offset": "0, 1, 0",
-                                "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "739, 1170, 0",
-                        "Size": "16, 19",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "16, 19",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
                     ],
                   },
                 ],
@@ -5794,7 +5543,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 835",
+            "Size": "12, 366",
             "Visual Type": "Visual",
           },
           {
@@ -5811,7 +5560,7 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 550",
+            "Size": "6, 146",
             "Visual Type": "Visual",
           },
         ],
@@ -5863,66 +5612,165 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pizza",
+            "TextRangePattern.GetText": "Pizza",
+          },
+        ],
       },
       {
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Burger",
+            "TextRangePattern.GetText": "Burger",
+          },
+        ],
       },
       {
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Risotto",
+            "TextRangePattern.GetText": "Risotto",
+          },
+        ],
       },
       {
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "French Fries",
+            "TextRangePattern.GetText": "French Fries",
+          },
+        ],
       },
       {
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Onion Rings",
+            "TextRangePattern.GetText": "Onion Rings",
+          },
+        ],
       },
       {
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Fried Shrimps",
+            "TextRangePattern.GetText": "Fried Shrimps",
+          },
+        ],
       },
       {
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Water",
+            "TextRangePattern.GetText": "Water",
+          },
+        ],
       },
       {
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Coke",
+            "TextRangePattern.GetText": "Coke",
+          },
+        ],
       },
       {
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Beer",
+            "TextRangePattern.GetText": "Beer",
+          },
+        ],
       },
       {
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Cheesecake",
+            "TextRangePattern.GetText": "Cheesecake",
+          },
+        ],
       },
       {
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Brownie",
+            "TextRangePattern.GetText": "Brownie",
+          },
+        ],
       },
     ],
   },
@@ -6075,7 +5923,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 1057",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6084,7 +5932,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 1057",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -6093,7 +5941,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1057",
+            "Size": "998, 946",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -6463,7 +6311,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 1051",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -6480,7 +6328,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 1025",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],
@@ -6532,66 +6380,165 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pizza",
+            "TextRangePattern.GetText": "Pizza",
+          },
+        ],
       },
       {
         "AutomationId": "Burger",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Burger",
+            "TextRangePattern.GetText": "Burger",
+          },
+        ],
       },
       {
         "AutomationId": "Risotto",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Risotto",
+            "TextRangePattern.GetText": "Risotto",
+          },
+        ],
       },
       {
         "AutomationId": "French Fries",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "French Fries",
+            "TextRangePattern.GetText": "French Fries",
+          },
+        ],
       },
       {
         "AutomationId": "Onion Rings",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Onion Rings",
+            "TextRangePattern.GetText": "Onion Rings",
+          },
+        ],
       },
       {
         "AutomationId": "Fried Shrimps",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Fried Shrimps",
+            "TextRangePattern.GetText": "Fried Shrimps",
+          },
+        ],
       },
       {
         "AutomationId": "Water",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Water",
+            "TextRangePattern.GetText": "Water",
+          },
+        ],
       },
       {
         "AutomationId": "Coke",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Coke",
+            "TextRangePattern.GetText": "Coke",
+          },
+        ],
       },
       {
         "AutomationId": "Beer",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Beer",
+            "TextRangePattern.GetText": "Beer",
+          },
+        ],
       },
       {
         "AutomationId": "Cheesecake",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Cheesecake",
+            "TextRangePattern.GetText": "Cheesecake",
+          },
+        ],
       },
       {
         "AutomationId": "Brownie",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Brownie",
+            "TextRangePattern.GetText": "Brownie",
+          },
+        ],
       },
     ],
   },
@@ -6744,7 +6691,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 1057",
+    "Size": "998, 588",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6753,7 +6700,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 1057",
+        "Size": "998, 588",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -6762,7 +6709,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 1057",
+            "Size": "998, 946",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -7132,7 +7079,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 1051",
+            "Size": "12, 582",
             "Visual Type": "Visual",
           },
           {
@@ -7148,8 +7095,8 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
             "Visual Type": "SpriteVisual",
           },
           {
-            "Offset": "-5, 16, 0",
-            "Size": "6, 1025",
+            "Offset": "-5, 226, 0",
+            "Size": "6, 346",
             "Visual Type": "Visual",
           },
         ],
