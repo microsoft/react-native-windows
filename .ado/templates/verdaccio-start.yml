@@ -24,10 +24,17 @@ steps:
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
-  - script: yarn build
-    displayName: Build packages before publish
+  - script: yarn build --no-cache
+    displayName: Build packages before publish (no cache)
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
+  # Verify the generated JSI source exists before publishing
+  - powershell: |
+      if (-not (Test-Path "$(Build.SourcesDirectory)\vnext\Microsoft.ReactNative.Cxx\jsi\jsi.cpp")) {
+        Write-Error "Missing generated jsi.cpp; layoutMSRNCxx did not run"
+      }
+    displayName: Validate generated JSI layout
 
   - ${{ if eq(parameters.beachballPublish, true) }}:
     - script: npx beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --verbose --access public --changehint "Run `yarn change` from root of repo to generate a change file."
