@@ -18,6 +18,7 @@ const { execSync } = require('child_process');
 
 /**
  * Find the enlistment root by going up two directories from script location
+ * @returns {string} Repository root path
  */
 function findEnlistmentRoot() {
   const scriptDir = __dirname;
@@ -34,6 +35,8 @@ function findEnlistmentRoot() {
 
 /**
  * Get workspace package paths from root package.json
+ * @param {string} repoRoot - Repository root directory
+ * @returns {string[]} Array of workspace patterns
  */
 function getWorkspacePackages(repoRoot) {
   const packageJsonPath = path.join(repoRoot, 'package.json');
@@ -48,6 +51,9 @@ function getWorkspacePackages(repoRoot) {
 
 /**
  * Recursively find all package.json files in a directory
+ * @param {string} dir - Directory to search
+ * @param {string[]} results - Accumulated results
+ * @returns {string[]} Array of package.json file paths
  */
 function findPackageJsonsRecursive(dir, results = []) {
   if (!fs.existsSync(dir)) {
@@ -76,6 +82,9 @@ function findPackageJsonsRecursive(dir, results = []) {
 /**
  * Match a pattern against a path
  * Supports patterns like "packages/*" or "packages/@react-native-windows/*"
+ * @param {string} pattern - Workspace pattern to match
+ * @param {string} basePath - Base path to resolve pattern from
+ * @returns {string[]} Array of matching package.json paths
  */
 function matchPattern(pattern, basePath) {
   // Remove trailing /* if present
@@ -111,6 +120,9 @@ function matchPattern(pattern, basePath) {
 
 /**
  * Find all package.json files matching workspace patterns
+ * @param {string} repoRoot - Repository root directory
+ * @param {string[]} workspacePatterns - Array of workspace patterns
+ * @returns {string[]} Array of package.json file paths
  */
 function findWorkspacePackageJsons(repoRoot, workspacePatterns) {
   const packageJsonPaths = [];
@@ -125,6 +137,8 @@ function findWorkspacePackageJsons(repoRoot, workspacePatterns) {
 
 /**
  * Check if a package is private
+ * @param {string} packageJsonPath - Path to package.json file
+ * @returns {boolean} True if package is private
  */
 function isPrivatePackage(packageJsonPath) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
@@ -133,6 +147,9 @@ function isPrivatePackage(packageJsonPath) {
 
 /**
  * Pack a package using npm pack
+ * @param {string} packageDir - Directory containing the package
+ * @param {string} targetDir - Directory to output .tgz file
+ * @returns {boolean} True if packing succeeded
  */
 function packPackage(packageDir, targetDir) {
   const packageJsonPath = path.join(packageDir, 'package.json');
@@ -153,7 +170,8 @@ function packPackage(packageDir, targetDir) {
     console.log(`  ✓ Created ${tgzFileName}`);
     return true;
   } catch (error) {
-    console.error(`  ✗ Failed to pack ${packageName}: ${error.message}`);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`  ✗ Failed to pack ${packageName}: ${message}`);
     return false;
   }
 }
@@ -239,7 +257,8 @@ function main() {
       process.exit(1);
     }
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`Error: ${message}`);
     process.exit(1);
   }
 }
