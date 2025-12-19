@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 19 Dec 2025 06:34:05 GMT",
+      "version": "0.0.0-canary.1022",
+      "tag": "react-native-windows_v0.0.0-canary.1022",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "387c058034948cd0613428c1fcf56440f97c257b",
+            "comment": "adding accessibility and UIA support for XAML fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Dec 2025 06:33:16 GMT",
       "version": "0.0.0-canary.1021",
       "tag": "react-native-windows_v0.0.0-canary.1021",
