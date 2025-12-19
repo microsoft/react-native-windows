@@ -7,15 +7,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Scroll to bottom",
-        "TextRangePattern.GetText": "Scroll to bottom",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -63,15 +54,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Scroll to end",
-        "TextRangePattern.GetText": "Scroll to end",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -119,15 +101,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Scroll to start",
-        "TextRangePattern.GetText": "Scroll to start",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -175,15 +148,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Scroll to top",
-        "TextRangePattern.GetText": "Scroll to top",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -231,92 +195,6 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
     "ControlType": 50033,
     "LocalizedControlType": "pane",
     "ScrollPattern.HorizontallyScrollable": true,
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 0",
-        "TextRangePattern.GetText": "Item 0",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 1",
-        "TextRangePattern.GetText": "Item 1",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 2",
-        "TextRangePattern.GetText": "Item 2",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 3",
-        "TextRangePattern.GetText": "Item 3",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 4",
-        "TextRangePattern.GetText": "Item 4",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 5",
-        "TextRangePattern.GetText": "Item 5",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 6",
-        "TextRangePattern.GetText": "Item 6",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 7",
-        "TextRangePattern.GetText": "Item 7",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 8",
-        "TextRangePattern.GetText": "Item 8",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 9",
-        "TextRangePattern.GetText": "Item 9",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 10",
-        "TextRangePattern.GetText": "Item 10",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Item 11",
-        "TextRangePattern.GetText": "Item 11",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ScrollViewComponentView",
@@ -878,15 +756,6 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Flash scroll indicators",
-        "TextRangePattern.GetText": "Flash scroll indicators",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",

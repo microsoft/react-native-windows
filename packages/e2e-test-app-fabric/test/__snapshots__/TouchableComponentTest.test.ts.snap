@@ -31,15 +31,6 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Tap Here For No Feedback!",
-        "TextRangePattern.GetText": "Tap Here For No Feedback!",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -90,15 +81,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 1,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Touchable Highlight (Control 1 in Set of 3)",
-            "TextRangePattern.GetText": "Touchable Highlight (Control 1 in Set of 3)",
-          },
-        ],
       },
       {
         "AutomationId": "",
@@ -108,24 +90,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 2,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Touchable Opacity (Control 2 in Set of 3)",
-            "TextRangePattern.GetText": "Touchable Opacity (Control 2 in Set of 3)",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "IsKeyboardFocusable": true,
-        "LiveSetting": "Assertive",
-        "LocalizedControlType": "text",
-        "Name": "TouchableWithoutFeedback (Control 3 in Set of 3)",
-        "TextRangePattern.GetText": "TouchableWithoutFeedback (Control 3 in Set of 3)",
       },
     ],
   },
@@ -243,15 +207,6 @@ exports[`Touchable Tests Touchables can be disabled 1`] = `
     "ControlType": 50026,
     "IsEnabled": false,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Disabled TouchableOpacity",
-        "TextRangePattern.GetText": "Disabled TouchableOpacity",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -302,15 +257,6 @@ exports[`Touchable Tests Touchables can be disabled 2`] = `
     "ControlType": 50026,
     "IsEnabled": false,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Disabled TouchableOpacity",
-        "TextRangePattern.GetText": "Disabled TouchableOpacity",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -361,15 +307,6 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Tap Here For Custom Highlight!",
-        "TextRangePattern.GetText": "Tap Here For Custom Highlight!",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -463,15 +400,6 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -515,15 +443,6 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Outside This View",
-        "TextRangePattern.GetText": "Press Outside This View",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -573,15 +492,6 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
     "LocalizedControlType": "button",
     "Name": "touchable feedback events",
     "ValuePattern.Value": "Press Me",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-        "TextRangePattern.GetText": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -625,22 +535,6 @@ exports[`Touchable Tests Touchables can register feedback events 2`] = `
     "AutomationId": "touchable_feedback_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "press",
-        "TextRangePattern.GetText": "press",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressIn",
-        "TextRangePattern.GetText": "pressIn",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",

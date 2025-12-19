@@ -20,7 +20,7 @@ exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "996, 56.000015",
+    "Size": "998, 38",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -50,7 +50,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "996, 111.999985",
+    "Size": "998, 75",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -162,7 +162,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "996, 1257",
+    "Size": "998, 838",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -212,7 +212,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "996, 392",
+    "Size": "998, 261",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -308,7 +308,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "996, 1034",
+    "Size": "998, 689",
     "Visual Type": "SpriteVisual",
   },
 }
