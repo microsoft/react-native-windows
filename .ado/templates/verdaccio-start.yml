@@ -16,6 +16,11 @@ steps:
 
   - template: compute-beachball-branch-name.yml
 
+  - script: yarn build
+    displayName: Build packages before publish
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
   - ${{ if eq(parameters.beachballPublish, true) }}:
     - script: npx beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --verbose --access public --changehint "Run `yarn change` from root of repo to generate a change file."
       displayName: Publish packages to verdaccio
