@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
-    "@react-native-windows/find-repo-root": "0.80.0",
-    "@react-native-windows/fs": "0.80.0",
+    "@react-native-windows/find-repo-root": "0.80.1",
+    "@react-native-windows/fs": "0.80.1",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "chalk": "^4.1.0",

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Tue, 28 Oct 2025 23:58:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 19 Dec 2025 14:58:52 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.1
+
+Fri, 19 Dec 2025 14:58:52 GMT
+
+### Patches
+
+- Promote 0.80 to legacy (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.80.0
 
