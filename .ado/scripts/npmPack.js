@@ -5,11 +5,13 @@
  * npmPack.js - Pack all non-private workspace packages to tgz files
  *
  * Usage:
- *   node npmPack.js [targetDir] [--clean]
+ *   node npmPack.js [targetDir] [--clean] [--check-npm] [--no-pack]
  *
  * Arguments:
- *   targetDir - Target directory for .tgz files (default: npm-pkgs in repo root)
- *   --clean   - Clean target directory if it's not empty
+ *   targetDir    - Target directory for .tgz files (default: npm-pkgs in repo root)
+ *   --clean      - Clean target directory if it's not empty
+ *   --check-npm  - Check each package against npmjs.com and remove already published ones
+ *   --no-pack    - Skip packing, only check and clean target folder
  */
 
 const fs = require('fs');
@@ -62,12 +64,16 @@ Arguments:
 
 Options:
   --clean             Clean target directory if it's not empty
+  --check-npm         Check each package against npmjs.com and remove already published ones
+  --no-pack           Skip packing, only check and clean target folder
   --no-color          Disable colored output
   --help, -h          Show this help message
 
 Examples:
   node npmPack.js
   node npmPack.js --clean
+  node npmPack.js --check-npm
+  node npmPack.js --no-pack --check-npm
   node npmPack.js path/to/output
   node npmPack.js --clean --no-color path/to/output
 `);
@@ -203,6 +209,97 @@ function isPrivatePackage(packageJsonPath) {
 }
 
 /**
+ * Check if a package version is published on npmjs.com
+ * @param {string} packageName - Name of the package
+ * @param {string} version - Version to check
+ * @returns {boolean} True if the package version is already published
+ */
+function isPublishedOnNpm(packageName, version) {
+  try {
+    // Use npm view to check if the specific version exists
+    execSync(`npm view ${packageName}@${version} version`, {
+      encoding: 'utf8',
+      stdio: ['pipe', 'pipe', 'pipe']
+    });
+    return true;
+  } catch (error) {
+    // If npm view fails, the version doesn't exist
+    return false;
+  }
+}
+
+/**
+ * Extract package name and version from a .tgz file by reading its package.json
+ * @param {string} tgzPath - Full path to the .tgz file
+ * @returns {{name: string, version: string} | null} Package info or null if extraction fails
+ */
+function getPackageInfoFromTgz(tgzPath) {
+  try {
+    // Convert Windows path to Unix-style path for tar command
+    // tar on Windows (via Git Bash) expects forward slashes
+    const unixPath = tgzPath.replace(/\\/g, '/');
+
+    // Use tar to extract package/package.json from the tarball
+    // The -O flag outputs to stdout, -xzf extracts from gzipped tar
+    const output = execSync(`tar -xzf "${unixPath}" package/package.json -O`, {
+      encoding: 'utf8',
+      stdio: ['pipe', 'pipe', 'pipe']
+    });
+
+    const packageJson = JSON.parse(output);
+    return {
+      name: packageJson.name,
+      version: packageJson.version
+    };
+  } catch (error) {
+    // If extraction fails, return null
+    return null;
+  }
+}
+
+/**
+ * Check and remove already published packages from target directory
+ * @param {string} targetDir - Directory containing .tgz files
+ * @returns {{checked: number, removed: number}} Statistics about checked and removed packages
+ */
+function checkAndRemovePublishedPackages(targetDir) {
+  let checkedCount = 0;
+  let removedCount = 0;
+
+  if (!fs.existsSync(targetDir)) {
+    return { checked: checkedCount, removed: removedCount };
+  }
+
+  const files = fs.readdirSync(targetDir);
+  const tgzFiles = files.filter(f => f.endsWith('.tgz'));
+
+  console.log(`\n${colorize('Checking packages against npmjs.com...', colors.bright)}`);
+
+  for (const tgzFile of tgzFiles) {
+    const tgzPath = path.join(targetDir, tgzFile);
+    const packageInfo = getPackageInfoFromTgz(tgzPath);
+
+    if (!packageInfo) {
+      console.log(`  ${colorize('⚠', colors.yellow)} Skipping ${tgzFile} (cannot extract package.json)`);
+      continue;
+    }
+
+    checkedCount++;
+    console.log(`  Checking ${colorize(packageInfo.name, colors.cyan)}@${colorize(packageInfo.version, colors.dim)}...`);
+
+    if (isPublishedOnNpm(packageInfo.name, packageInfo.version)) {
+      fs.rmSync(tgzPath);
+      console.log(`    ${colorize('✓', colors.green)} Already published - removed ${tgzFile}`);
+      removedCount++;
+    } else {
+      console.log(`    ${colorize('→', colors.blue)} Not published - keeping ${tgzFile}`);
+    }
+  }
+
+  return { checked: checkedCount, removed: removedCount };
+}
+
+/**
  * Pack a package using npm pack
  * @param {string} packageDir - Directory containing the package
  * @param {string} targetDir - Directory to output .tgz file
@@ -249,6 +346,14 @@ function main() {
       type: 'boolean',
       default: false,
     },
+    'check-npm': {
+      type: 'boolean',
+      default: false,
+    },
+    'no-pack': {
+      type: 'boolean',
+      default: false,
+    },
     'no-color': {
       type: 'boolean',
       default: false,
@@ -278,6 +383,8 @@ function main() {
   useColors = !args.values['no-color'];
 
   const cleanFlag = args.values.clean;
+  const checkNpmFlag = args.values['check-npm'];
+  const noPackFlag = args.values['no-pack'];
   const targetDirArg = args.positionals[0];
 
   try {
@@ -296,15 +403,18 @@ function main() {
     if (fs.existsSync(targetDir)) {
       const files = fs.readdirSync(targetDir);
       if (files.length > 0) {
-        if (!cleanFlag) {
+        // Only enforce clean directory requirement if we're packing
+        if (!noPackFlag && !cleanFlag) {
           console.error(`${colorize('Error:', colors.red)} Target directory is not empty: ${targetDir}`);
           console.error('Use --clean flag to clean the directory before packing');
           process.exit(1);
         }
 
-        console.log(`${colorize('Cleaning target directory...', colors.yellow)}`);
-        for (const file of files) {
-          fs.rmSync(path.join(targetDir, file), { recursive: true, force: true });
+        if (cleanFlag) {
+          console.log(`${colorize('Cleaning target directory...', colors.yellow)}`);
+          for (const file of files) {
+            fs.rmSync(path.join(targetDir, file), { recursive: true, force: true });
+          }
         }
       }
     } else {
@@ -312,42 +422,61 @@ function main() {
       fs.mkdirSync(targetDir, { recursive: true });
     }
 
-    // Get workspace packages
-    const workspacePatterns = getWorkspacePackages(repoRoot);
-    console.log(`${colorize('Workspace patterns:', colors.bright)} ${workspacePatterns.join(', ')}`);
-
-    // Find all package.json files
-    const packageJsonPaths = findWorkspacePackageJsons(repoRoot, workspacePatterns);
-    console.log(`${colorize('Found', colors.bright)} ${colorize(packageJsonPaths.length.toString(), colors.cyan)} ${colorize('workspace packages', colors.bright)}\n`);
-
-    // Pack non-private packages
+    // Pack non-private packages (unless --no-pack is specified)
     let packedCount = 0;
     let skippedCount = 0;
     let failedCount = 0;
 
-    for (const packageJsonPath of packageJsonPaths) {
-      const packageDir = path.dirname(packageJsonPath);
+    if (!noPackFlag) {
+      // Get workspace packages
+      const workspacePatterns = getWorkspacePackages(repoRoot);
+      console.log(`${colorize('Workspace patterns:', colors.bright)} ${workspacePatterns.join(', ')}`);
 
-      if (isPrivatePackage(packageJsonPath)) {
-        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-        console.log(`${colorize('Skipping private package:', colors.gray)} ${colorize(packageJson.name, colors.dim)}`);
-        skippedCount++;
-        continue;
+      // Find all package.json files
+      const packageJsonPaths = findWorkspacePackageJsons(repoRoot, workspacePatterns);
+      console.log(`${colorize('Found', colors.bright)} ${colorize(packageJsonPaths.length.toString(), colors.cyan)} ${colorize('workspace packages', colors.bright)}\n`);
+
+      for (const packageJsonPath of packageJsonPaths) {
+        const packageDir = path.dirname(packageJsonPath);
+
+        if (isPrivatePackage(packageJsonPath)) {
+          const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+          console.log(`${colorize('Skipping private package:', colors.gray)} ${colorize(packageJson.name, colors.dim)}`);
+          skippedCount++;
+          continue;
+        }
+
+        const success = packPackage(packageDir, targetDir);
+        if (success) {
+          packedCount++;
+        } else {
+          failedCount++;
+        }
       }
 
-      const success = packPackage(packageDir, targetDir);
-      if (success) {
-        packedCount++;
-      } else {
-        failedCount++;
-      }
+      console.log(`\n${colorize('✓', colors.green)} ${colorize('Packing complete:', colors.bright)}`);
+      console.log(`  ${colorize('Packed:', colors.bright)} ${colorize(packedCount.toString(), colors.green)}`);
+      console.log(`  ${colorize('Skipped (private):', colors.bright)} ${colorize(skippedCount.toString(), colors.gray)}`);
+      console.log(`  ${colorize('Failed:', colors.bright)} ${failedCount > 0 ? colorize(failedCount.toString(), colors.red) : colorize(failedCount.toString(), colors.green)}`);
+      console.log(`  ${colorize('Target:', colors.bright)} ${targetDir}`);
+    } else {
+      console.log(`\n${colorize('Skipping packing (--no-pack specified)', colors.yellow)}`);
     }
 
-    console.log(`\n${colorize('✓', colors.green)} ${colorize('Packing complete:', colors.bright)}`);
-    console.log(`  ${colorize('Packed:', colors.bright)} ${colorize(packedCount.toString(), colors.green)}`);
-    console.log(`  ${colorize('Skipped (private):', colors.bright)} ${colorize(skippedCount.toString(), colors.gray)}`);
-    console.log(`  ${colorize('Failed:', colors.bright)} ${failedCount > 0 ? colorize(failedCount.toString(), colors.red) : colorize(failedCount.toString(), colors.green)}`);
-    console.log(`  ${colorize('Target:', colors.bright)} ${targetDir}`);
+    // Check and remove already published packages if requested
+    let checkedCount = 0;
+    let removedCount = 0;
+
+    if (checkNpmFlag) {
+      const result = checkAndRemovePublishedPackages(targetDir);
+      checkedCount = result.checked;
+      removedCount = result.removed;
+
+      console.log(`\n${colorize('✓', colors.green)} ${colorize('NPM check complete:', colors.bright)}`);
+      console.log(`  ${colorize('Checked:', colors.bright)} ${colorize(checkedCount.toString(), colors.cyan)}`);
+      console.log(`  ${colorize('Removed (already published):', colors.bright)} ${colorize(removedCount.toString(), colors.green)}`);
+      console.log(`  ${colorize('Remaining:', colors.bright)} ${colorize((checkedCount - removedCount).toString(), colors.cyan)}`);
+    }
 
     if (failedCount > 0) {
       process.exit(1);
