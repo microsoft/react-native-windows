@@ -5,16 +5,15 @@
  * @format
  */
 
-import { app } from '@react-native-windows/automation';
-import { dumpVisualTree } from '@react-native-windows/automation-commands';
-import { goToComponentExample } from './RNTesterNavigation';
-import { verifyNoErrorLogs } from './Helpers';
+import {app} from '@react-native-windows/automation';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
   await app.setWindowPosition(0, 0);
   await app.setWindowSize(1000, 1250);
-  
   await goToComponentExample('LegacySelectableTextTest');
 });
 
