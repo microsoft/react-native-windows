@@ -29,6 +29,57 @@ extends:
     - stage: Release
       displayName: Publish artifacts
       jobs:
+      - job: PushNpm
+        displayName: npmjs.com - Publish npm packages
+        variables:
+        - group: RNW Secrets
+        timeoutInMinutes: 0
+        templateContext:
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'NpmPackedTarballs'
+            targetPath: '$(Pipeline.Workspace)/published-packages'
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'VersionEnvVars'
+            targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
+        steps:
+        - checkout: self
+          clean: false
+        - task: CmdLine@2
+          displayName: Apply version variables
+          inputs:
+            script: node $(Pipeline.Workspace)/VersionEnvVars/versionEnvVars.js
+        - script: dir /s "$(Pipeline.Workspace)\published-packages"
+          displayName: Show npm packages before cleanup
+        - script: node .ado/scripts/npmPack.js --no-pack --check-npm --no-color "$(Pipeline.Workspace)\published-packages"
+          displayName: Remove already published packages
+        - script: dir /s "$(Pipeline.Workspace)\published-packages"
+          displayName: Show npm packages after cleanup
+        - powershell: |
+            $tgzFiles = Get-ChildItem -Path "$(Pipeline.Workspace)\published-packages" -Filter "*.tgz" -Recurse
+            $tgzCount = $tgzFiles.Count
+            Write-Host "Found $tgzCount .tgz files"
+            Write-Host "##vso[task.setvariable variable=HasPackagesToPublish]$($tgzCount -gt 0)"
+          displayName: Check if there are packages to publish
+        - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
+          displayName: 'ESRP Release to npmjs.com'
+          condition: and(succeeded(), ne(variables['NpmDistTag'], ''), eq(variables['HasPackagesToPublish'], 'true'))
+          inputs:
+            connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+            usemanagedidentity: false
+            keyvaultname: 'OGX-JSHost-KV'
+            authcertname: 'OGX-JSHost-Auth4'
+            signcertname: 'OGX-JSHost-Sign3'
+            clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+            domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+            contenttype: npm
+            folderlocation: '$(Pipeline.Workspace)\published-packages'
+            productstate: '$(NpmDistTag)'
+            owners: 'vmorozov@microsoft.com'
+            approvers: 'khosany@microsoft.com'
+
       - job: PushPrivateAdo
         displayName: ADO - react-native
         timeoutInMinutes: 0
