@@ -53,7 +53,7 @@ extends:
             script: node $(Pipeline.Workspace)/VersionEnvVars/versionEnvVars.js
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages before cleanup
-        - script: node .ado/scripts/npmPack.js --no-pack --check-npm "$(Pipeline.Workspace)\published-packages"
+        - script: node .ado/scripts/npmPack.js --no-pack --check-npm --no-color "$(Pipeline.Workspace)\published-packages"
           displayName: Remove already published packages
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages after cleanup
