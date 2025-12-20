@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.81.0-preview.1",
+  "version": "0.81.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,7 +16,7 @@
     "directory": "packages/@react-native-windows/find-repo-root"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.81.0-preview.1",
+    "@react-native-windows/fs": "0.81.0",
     "find-up": "^4.1.0"
   },
   "devDependencies": {
