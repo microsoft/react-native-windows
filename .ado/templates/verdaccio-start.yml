@@ -16,26 +16,6 @@ steps:
 
   - template: compute-beachball-branch-name.yml
 
-  # Ensure native layout artifacts (e.g., JSI files) are copied before publishing
-  - script: |
-      cd vnext
-      npx just layoutMSRNCxx
-    displayName: Run layoutMSRNCxx (generate native headers/jsi)
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
-  - script: yarn build --no-cache
-    displayName: Build packages before publish (no cache)
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-
-  # Verify the generated JSI source exists before publishing
-  - powershell: |
-      if (-not (Test-Path "$(Build.SourcesDirectory)\vnext\Microsoft.ReactNative.Cxx\jsi\jsi.cpp")) {
-        Write-Error "Missing generated jsi.cpp; layoutMSRNCxx did not run"
-      }
-    displayName: Validate generated JSI layout
-
   - ${{ if eq(parameters.beachballPublish, true) }}:
     - script: npx beachball bump --branch origin/$(BeachBallBranchName) --no-push --yes --verbose --changehint "Run `yarn change` from root of repo to generate a change file."
       displayName: Beachball bump versions
