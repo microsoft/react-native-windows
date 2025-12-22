@@ -581,7 +581,7 @@ void ParagraphComponentView::OnPointerPressed(
     }
 
     if (auto root = rootComponentView()) {
-      root->SetCurrentlySelectedText(*get_strong());
+      root->SetViewWithTextSelection(*get_strong());
     }
 
     // Focuses so we receive onLostFocus when clicking elsewhere
@@ -801,7 +801,7 @@ void ParagraphComponentView::OnKeyDown(
       SetSelection(0, static_cast<int32_t>(fullText.length()));
 
       if (auto root = rootComponentView()) {
-        root->SetCurrentlySelectedText(*get_strong());
+        root->SetViewWithTextSelection(*get_strong());
       }
 
       DrawText();
