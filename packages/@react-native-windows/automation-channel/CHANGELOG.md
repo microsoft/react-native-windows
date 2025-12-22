@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 11 Dec 2025 15:30:44 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 19 Dec 2025 14:58:51 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.80.6
+
+Fri, 19 Dec 2025 14:58:51 GMT
+
+### Patches
+
+- Promote 0.80 to legacy (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.80.6
 
 ## 0.80.5
 

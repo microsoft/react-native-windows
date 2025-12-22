@@ -17,7 +17,17 @@ steps:
   - template: compute-beachball-branch-name.yml
 
   - ${{ if eq(parameters.beachballPublish, true) }}:
-    - script: npx beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --verbose --access public --changehint "Run `yarn change` from root of repo to generate a change file."
+    - script: npx beachball bump --branch origin/$(BeachBallBranchName) --no-push --yes --verbose --changehint "Run `yarn change` from root of repo to generate a change file."
+      displayName: Beachball bump versions
+
+    - script: node .ado/scripts/npmPack.js --clean
+      displayName: Pack all workspace packages
+
+    - script: |
+        for %%f in (npm-pkgs\*.tgz) do (
+          echo Publishing %%f to verdaccio...
+          npm publish "%%f" --registry http://localhost:4873 --access public
+        )
       displayName: Publish packages to verdaccio
     
   - script: | 

@@ -17,7 +17,7 @@
     "directory": "packages/@rnw-scripts/beachball-config"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "0.80.0",
+    "@react-native-windows/package-utils": "0.80.1",
     "@rnw-scripts/stamp-version": "0.0.0",
     "find-up": "^4.1.0",
     "parse-path": "^7.1.0"
