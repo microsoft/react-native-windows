@@ -5,10 +5,10 @@
  * @format
  */
 
-import {app} from '@react-native-windows/automation';
-import {dumpVisualTree} from '@react-native-windows/automation-commands';
-import {goToComponentExample} from './RNTesterNavigation';
-import {verifyNoErrorLogs} from './Helpers';
+import { app } from '@react-native-windows/automation';
+import { dumpVisualTree } from '@react-native-windows/automation-commands';
+import { goToComponentExample } from './RNTesterNavigation';
+import { verifyNoErrorLogs } from './Helpers';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -21,7 +21,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-// TODO: Re-enable once element accessibility issues are resolved
+// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
 describe.skip('LegacySelectableTextTest', () => {
   beforeEach(async () => {
     await clearState();
