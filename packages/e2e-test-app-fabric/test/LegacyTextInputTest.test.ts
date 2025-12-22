@@ -4,10 +4,10 @@
  *
  * @format
  */
-import { app } from '@react-native-windows/automation';
-import { goToComponentExample } from './RNTesterNavigation';
-import { verifyNoErrorLogs } from './Helpers';
-import { dumpVisualTree } from '@react-native-windows/automation-commands';
+import {app} from '@react-native-windows/automation';
+import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -103,7 +103,7 @@ describe.skip('LegacyTextInputTest', () => {
 
 async function textInputField() {
   const component = await app.findElementByTestID('textinput-field');
-  await component.waitForDisplayed({ timeout: 5000 });
+  await component.waitForDisplayed({timeout: 5000});
   return component;
 }
 
@@ -117,13 +117,13 @@ async function autoCapsTextInputField() {
 
 async function multiLineTextInputField() {
   const component = await app.findElementByTestID('multi-line-textinput-field');
-  await component.waitForDisplayed({ timeout: 5000 });
+  await component.waitForDisplayed({timeout: 5000});
   return component;
 }
 
 async function assertLogContains(_text: string) {
   const textLogComponent = await app.findElementByTestID('textinput-log');
-  await textLogComponent.waitForDisplayed({ timeout: 5000 });
+  await textLogComponent.waitForDisplayed({timeout: 5000});
 
   const dump = await dumpVisualTree('textinput-log');
   expect(dump).toMatchSnapshot();
