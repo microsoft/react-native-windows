@@ -16,7 +16,7 @@ namespace Microsoft::ReactNative {
  */
 struct ReactTaggedView {
   ReactTaggedView(const winrt::Microsoft::ReactNative::ComponentView &componentView)
-      : m_view(componentView), m_tag(componentView.Tag()) {}
+      : m_view(componentView), m_tag(componentView ? componentView.Tag() : -1) {}
 
   winrt::Microsoft::ReactNative::ComponentView view() noexcept {
     if (!m_view) {
