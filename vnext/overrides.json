@@ -154,6 +154,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/image/conversions.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/image/conversions.h",
+      "baseHash": "7fdf1967fa9c3421b11e841afcf207624df18706",
+      "issue": 15379
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/ParagraphShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/ParagraphShadowNode.cpp",
       "baseHash": "ca2837abba807293b91b6877b9287241c7a64e4d",

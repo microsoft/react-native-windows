@@ -124,6 +124,15 @@ inline std::string toString(AccessibilityState::CheckedState state) {
       return "Mixed";
     case AccessibilityState::None:
       return "None";
+//#[Windows
+#if defined(_MSC_VER)
+    default:
+        __assume(0);
+#elif defined(__GNUC__) || defined(__clang__)
+    default:
+        __builtin_unreachable();
+#endif
+// 15379 #Windows]
   }
 }
 
@@ -194,9 +203,16 @@ inline std::string toString(
       return "polite";
     case AccessibilityLiveRegion::Assertive:
       return "assertive";
+//#[Windows
+#if defined(_MSC_VER)
+    default:
+        __assume(0);
+#elif defined(__GNUC__) || defined(__clang__)
+    default:
+        __builtin_unreachable();
+#endif
+// 15379 #Windows]
   }
-  // [windows] Default return for unexpected enum values
-  return "none";
 }
 
 enum class AccessibilityRole {
