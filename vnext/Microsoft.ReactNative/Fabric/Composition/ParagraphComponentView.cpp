@@ -26,6 +26,60 @@
 namespace IcuUtils {
 #include <icu.h>
 
+class WordBreakIterator {
+ public:
+  WordBreakIterator(const wchar_t *text, int32_t length) noexcept : m_text(text), m_length(length) {
+    UErrorCode status = U_ZERO_ERROR;
+    m_breakIterator = ubrk_open(UBRK_WORD, nullptr, reinterpret_cast<const UChar *>(text), length, &status);
+    if (U_FAILURE(status)) {
+      m_breakIterator = nullptr;
+    }
+  }
+
+  ~WordBreakIterator() noexcept {
+    if (m_breakIterator) {
+      ubrk_close(m_breakIterator);
+    }
+  }
+
+  WordBreakIterator(const WordBreakIterator &) = delete;
+  WordBreakIterator &operator=(const WordBreakIterator &) = delete;
+
+  bool IsValid() const noexcept {
+    return m_breakIterator != nullptr;
+  }
+
+  bool GetWordBoundaries(int32_t position, int32_t &outStart, int32_t &outEnd) const noexcept {
+    if (!m_breakIterator || position < 0 || position >= m_length) {
+      return false;
+    }
+
+    int32_t start = ubrk_preceding(m_breakIterator, position + 1);
+    if (start == UBRK_DONE) {
+      start = 0;
+    }
+
+    int32_t end = ubrk_following(m_breakIterator, position);
+    if (end == UBRK_DONE) {
+      end = m_length;
+    }
+
+    int32_t ruleStatus = ubrk_getRuleStatus(m_breakIterator);
+    if (ruleStatus == UBRK_WORD_NONE) {
+      return false;
+    }
+
+    outStart = start;
+    outEnd = end;
+    return true;
+  }
+
+ private:
+  UBreakIterator *m_breakIterator = nullptr;
+  const wchar_t *m_text = nullptr;
+  int32_t m_length = 0;
+};
+
 inline bool IsAlphanumeric(UChar32 codePoint) noexcept {
   return u_isalnum(codePoint) != 0;
 }
@@ -758,21 +812,29 @@ void ParagraphComponentView::SelectWordAtPosition(int32_t charPosition) noexcept
   int32_t wordStart = charPosition;
   int32_t wordEnd = charPosition;
 
-  while (wordStart > 0) {
-    int32_t prevPos = IcuUtils::MoveToPreviousCodePoint(utf16Text.c_str(), wordStart);
-    IcuUtils::UChar32 prevCp = IcuUtils::GetCodePointAt(utf16Text.c_str(), textLength, prevPos);
-    if (!IcuUtils::IsAlphanumeric(prevCp)) {
-      break;
-    }
-    wordStart = prevPos;
-  }
+  IcuUtils::WordBreakIterator wordBreaker(utf16Text.c_str(), textLength);
+  const bool icuSuccess = wordBreaker.IsValid() && wordBreaker.GetWordBoundaries(charPosition, wordStart, wordEnd);
 
-  while (wordEnd < textLength) {
-    IcuUtils::UChar32 cp = IcuUtils::GetCodePointAt(utf16Text.c_str(), textLength, wordEnd);
-    if (!IcuUtils::IsAlphanumeric(cp)) {
-      break;
+  if (!icuSuccess) {
+    wordStart = charPosition;
+    wordEnd = charPosition;
+
+    while (wordStart > 0) {
+      int32_t prevPos = IcuUtils::MoveToPreviousCodePoint(utf16Text.c_str(), wordStart);
+      IcuUtils::UChar32 prevCp = IcuUtils::GetCodePointAt(utf16Text.c_str(), textLength, prevPos);
+      if (!IcuUtils::IsAlphanumeric(prevCp)) {
+        break;
+      }
+      wordStart = prevPos;
     }
-    wordEnd = IcuUtils::MoveToNextCodePoint(utf16Text.c_str(), textLength, wordEnd);
+
+    while (wordEnd < textLength) {
+      IcuUtils::UChar32 cp = IcuUtils::GetCodePointAt(utf16Text.c_str(), textLength, wordEnd);
+      if (!IcuUtils::IsAlphanumeric(cp)) {
+        break;
+      }
+      wordEnd = IcuUtils::MoveToNextCodePoint(utf16Text.c_str(), textLength, wordEnd);
+    }
   }
 
   if (wordEnd > wordStart) {
