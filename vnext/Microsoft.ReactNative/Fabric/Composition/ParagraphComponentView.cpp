@@ -21,6 +21,42 @@
 #include "RootComponentView.h"
 #include "TextDrawing.h"
 
+// ICU utilities wrapped in a namespace to avoid UChar naming conflicts with Folly's FBString.
+// Folly has a template parameter named 'UChar' which conflicts with ICU's global UChar typedef.
+namespace IcuUtils {
+#include <icu.h>
+
+inline bool IsAlphanumeric(UChar32 codePoint) noexcept {
+  return u_isalnum(codePoint) != 0;
+}
+
+inline UChar32 GetCodePointAt(const wchar_t *str, int32_t length, int32_t pos) noexcept {
+  if (pos < 0 || pos >= length) {
+    return 0;
+  }
+  UChar32 cp;
+  U16_GET(str, 0, pos, length, cp);
+  return cp;
+}
+
+inline int32_t MoveToPreviousCodePoint(const wchar_t *str, int32_t pos) noexcept {
+  if (pos <= 0) {
+    return 0;
+  }
+  U16_BACK_1(str, 0, pos);
+  return pos;
+}
+
+inline int32_t MoveToNextCodePoint(const wchar_t *str, int32_t length, int32_t pos) noexcept {
+  if (pos >= length) {
+    return length;
+  }
+  U16_FWD_1(str, pos, length);
+  return pos;
+}
+
+} // namespace IcuUtils
+
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 // Automatically restores the original DPI of a render target
@@ -223,8 +259,8 @@ std::optional<int32_t> ParagraphComponentView::GetClampedTextPosition(facebook::
     return std::nullopt;
   }
 
-  const std::string fullText = m_attributedStringBox.getValue().getString();
-  if (fullText.empty()) {
+  const std::wstring utf16Text{facebook::react::WindowsTextLayoutManager::GetTransformedText(m_attributedStringBox)};
+  if (utf16Text.empty()) {
     return std::nullopt;
   }
 
@@ -258,10 +294,9 @@ std::optional<int32_t> ParagraphComponentView::GetClampedTextPosition(facebook::
     result += 1;
   }
 
-  // Vertical clamping
   if (pt.y > textMetrics.height) {
     // Dragging below - select to end of text
-    result = static_cast<int32_t>(fullText.length());
+    result = static_cast<int32_t>(utf16Text.length());
   } else if (pt.y < 0) {
     // Dragging above - select to start of text
     result = 0;
@@ -686,14 +721,16 @@ std::string ParagraphComponentView::GetSelectedText() const noexcept {
     return "";
   }
 
-  const std::string fullText = m_attributedStringBox.getValue().getString();
+  const std::wstring utf16Text{facebook::react::WindowsTextLayoutManager::GetTransformedText(m_attributedStringBox)};
 
-  if (selStart >= static_cast<int32_t>(fullText.length())) {
+  if (selStart >= static_cast<int32_t>(utf16Text.length())) {
     return "";
   }
 
-  const int32_t clampedEnd = std::min(selEnd, static_cast<int32_t>(fullText.length()));
-  return fullText.substr(static_cast<size_t>(selStart), static_cast<size_t>(clampedEnd - selStart));
+  const int32_t clampedEnd = std::min(selEnd, static_cast<int32_t>(utf16Text.length()));
+  const std::wstring selectedUtf16 =
+      utf16Text.substr(static_cast<size_t>(selStart), static_cast<size_t>(clampedEnd - selStart));
+  return ::Microsoft::Common::Unicode::Utf16ToUtf8(selectedUtf16);
 }
 
 void ParagraphComponentView::CopySelectionToClipboard() noexcept {
@@ -711,22 +748,31 @@ void ParagraphComponentView::CopySelectionToClipboard() noexcept {
 }
 
 void ParagraphComponentView::SelectWordAtPosition(int32_t charPosition) noexcept {
-  const std::string fullText = m_attributedStringBox.getValue().getString();
-  if (fullText.empty() || charPosition < 0 || charPosition >= static_cast<int32_t>(fullText.length())) {
+  const std::wstring utf16Text{facebook::react::WindowsTextLayoutManager::GetTransformedText(m_attributedStringBox)};
+  const int32_t textLength = static_cast<int32_t>(utf16Text.length());
+
+  if (utf16Text.empty() || charPosition < 0 || charPosition >= textLength) {
     return;
   }
 
-  // Finds word boundaries
   int32_t wordStart = charPosition;
   int32_t wordEnd = charPosition;
 
-  while (wordStart > 0 && std::isalnum(static_cast<unsigned char>(fullText[wordStart - 1]))) {
-    wordStart--;
+  while (wordStart > 0) {
+    int32_t prevPos = IcuUtils::MoveToPreviousCodePoint(utf16Text.c_str(), wordStart);
+    IcuUtils::UChar32 prevCp = IcuUtils::GetCodePointAt(utf16Text.c_str(), textLength, prevPos);
+    if (!IcuUtils::IsAlphanumeric(prevCp)) {
+      break;
+    }
+    wordStart = prevPos;
   }
 
-  while (wordEnd < static_cast<int32_t>(fullText.length()) &&
-         std::isalnum(static_cast<unsigned char>(fullText[wordEnd]))) {
-    wordEnd++;
+  while (wordEnd < textLength) {
+    IcuUtils::UChar32 cp = IcuUtils::GetCodePointAt(utf16Text.c_str(), textLength, wordEnd);
+    if (!IcuUtils::IsAlphanumeric(cp)) {
+      break;
+    }
+    wordEnd = IcuUtils::MoveToNextCodePoint(utf16Text.c_str(), textLength, wordEnd);
   }
 
   if (wordEnd > wordStart) {
@@ -747,8 +793,8 @@ void ParagraphComponentView::ShowContextMenu() noexcept {
   }
 
   const bool hasSelection = (m_selectionStart && m_selectionEnd && *m_selectionStart != *m_selectionEnd);
-  const std::string fullText = m_attributedStringBox.getValue().getString();
-  const bool hasText = !fullText.empty();
+  const std::wstring utf16Text{facebook::react::WindowsTextLayoutManager::GetTransformedText(m_attributedStringBox)};
+  const bool hasText = !utf16Text.empty();
 
   // Add menu items (1 = Copy, 2 = Select All)
   AppendMenuW(menu, MF_STRING | (hasSelection ? 0 : MF_GRAYED), 1, L"Copy");
@@ -767,8 +813,7 @@ void ParagraphComponentView::ShowContextMenu() noexcept {
     // Copy
     CopySelectionToClipboard();
   } else if (cmd == 2) {
-    // Select All
-    SetSelection(0, static_cast<int32_t>(fullText.length()));
+    SetSelection(0, static_cast<int32_t>(utf16Text.length()));
     DrawText();
   }
 
@@ -792,13 +837,13 @@ void ParagraphComponentView::OnKeyDown(
 
   // Handle Ctrl+A for select all
   if (isCtrlDown && args.Key() == winrt::Windows::System::VirtualKey::A) {
-    const std::string fullText = m_attributedStringBox.getValue().getString();
-    if (!fullText.empty()) {
+    const std::wstring utf16Text{facebook::react::WindowsTextLayoutManager::GetTransformedText(m_attributedStringBox)};
+    if (!utf16Text.empty()) {
       if (auto root = rootComponentView()) {
         root->ClearCurrentTextSelection();
       }
 
-      SetSelection(0, static_cast<int32_t>(fullText.length()));
+      SetSelection(0, static_cast<int32_t>(utf16Text.length()));
 
       if (auto root = rootComponentView()) {
         root->SetViewWithTextSelection(*get_strong());
