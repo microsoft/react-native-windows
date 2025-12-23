@@ -81,6 +81,25 @@ struct EllipseImageHandler
   }
 };
 
+struct EllipseReactPackageProvider
+    : winrt::implements<EllipseReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+ public: // IReactPackageProvider
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
+    // Register ellipse: uri handler for images
+    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddUriImageProvider(
+        winrt::make<EllipseImageHandler>());
+  }
+};
+
+// A PackageProvider containing any turbo modules you define within this app project
+struct CompReactPackageProvider
+    : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+ public: // IReactPackageProvider
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
+    AddAttributedModules(packageBuilder, true);
+  }
+};
+
 constexpr auto WindowDataProperty = L"WindowData";
 
 void CreateNewWindow(int showCmd);
@@ -248,7 +267,7 @@ struct WindowData {
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
           winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-          viewOptions.ComponentName(appName);
+          viewOptions.ComponentName(m_appName);
 
           if (!m_compRootView) {
             m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(g_liftedCompositor);
