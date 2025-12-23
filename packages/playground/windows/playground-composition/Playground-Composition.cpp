@@ -228,7 +228,7 @@ struct WindowData {
   }
 
   void UpdateViewOptions() {
-    if (!m_appName)
+    if (!m_appName || !m_compRootView)
       return;
 
     winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
@@ -263,12 +263,12 @@ struct WindowData {
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
+          // Nudge the ReactNativeHost to create the instance and wrapping context
+          host.ReloadInstance();
+
           for (auto &window : g_windows) {
             window->UpdateViewOptions();
           }
-
-          // Nudge the ReactNativeHost to create the instance and wrapping context
-          host.ReloadInstance();
         }
 
         break;
