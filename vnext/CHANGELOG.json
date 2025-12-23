@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 19 Dec 2025 06:34:05 GMT",
+      "version": "0.0.0-canary.1022",
+      "tag": "react-native-windows_v0.0.0-canary.1022",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "387c058034948cd0613428c1fcf56440f97c257b",
+            "comment": "adding accessibility and UIA support for XAML fabric"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 17 Dec 2025 06:33:16 GMT",
+      "version": "0.0.0-canary.1021",
+      "tag": "react-native-windows_v0.0.0-canary.1021",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b39b43d25e148da8ea8248a567d9aa214b1f1086",
+            "comment": "Defer UIA accessibility provider initialization until requested"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Dec 2025 06:33:40 GMT",
+      "version": "0.0.0-canary.1020",
+      "tag": "react-native-windows_v0.0.0-canary.1020",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ankudutt101@gmail.com",
+            "package": "react-native-windows",
+            "commit": "615cf4b500d1b683aff01ccc7f3cc8c081540248",
+            "comment": "[Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Dec 2025 06:34:17 GMT",
       "version": "0.0.0-canary.1019",
       "tag": "react-native-windows_v0.0.0-canary.1019",
