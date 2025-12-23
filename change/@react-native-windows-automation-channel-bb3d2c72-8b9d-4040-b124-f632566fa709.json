@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update react to 19.1.2",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

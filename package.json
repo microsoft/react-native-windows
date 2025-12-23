@@ -50,7 +50,7 @@
     "lodash": "^4.17.15"
   },
   "resolutions": {
-    "react": "19.1.1",
+    "react": "19.1.2",
     "convert-source-map": "^2.0.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",

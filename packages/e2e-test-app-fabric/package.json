@@ -19,7 +19,7 @@
     "@types/react": "^19.1.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "react": "^19.1.0",
+    "react": "^19.1.2",
     "react-native": "0.82.0-nightly-20250806-5936f29d6",
     "react-native-windows": "^0.0.0-canary.1022"
   },
@@ -43,7 +43,7 @@
     "@rnx-kit/jest-preset": "^0.1.16",
     "@types/jest": "^29.2.2",
     "@types/node": "^22.14.0",
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.1.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
     "jest": "^29.7.0",
