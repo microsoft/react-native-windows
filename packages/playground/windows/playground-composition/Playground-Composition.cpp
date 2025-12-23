@@ -226,7 +226,7 @@ struct WindowData {
   }
 
   void UpdateViewOptions() {
-    if (!m_appName)
+    if (!m_appName || !m_compRootView)
       return;
 
     winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
@@ -326,9 +326,6 @@ struct WindowData {
 
             m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
           }
-
-          // Nudge the ReactNativeHost to create the instance and wrapping context
-          host.ReloadInstance();
         }
 
         break;
