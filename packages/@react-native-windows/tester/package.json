@@ -19,13 +19,13 @@
   "peerDependencies": {
     "@react-native-picker/picker": "2.11.0",
     "react": "19.1.0",
-    "react-native": "0.82.0-nightly-20250806-5936f29d6",
+    "react-native": "0.82.0-nightly-20250821-0ef21bf8a",
     "react-native-windows": "^0.0.0-canary.1022",
     "react-native-xaml": "^0.0.80"
   },
   "devDependencies": {
     "@react-native/tester": "0.82.0-main",
-    "@react-native/new-app-screen": "0.82.0-nightly-20250806-5936f29d6",
+    "@react-native/new-app-screen": "0.82.0-nightly-20250821-0ef21bf8a",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",
