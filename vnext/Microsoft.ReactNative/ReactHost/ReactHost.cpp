@@ -344,16 +344,20 @@ ReactHost::ReactHost(Mso::DispatchQueue const &queue) noexcept
     : Super{EnsureSerialQueue(queue)},
       m_options{Queue(), m_mutex},
       m_notifyWhenClosed{ReactHostRegistry::Register(*this), Queue(), m_mutex},
-      m_inspectorHostTargetDelegate{std::make_shared<ReactInspectorHostTargetDelegate>(this)},
-      m_inspectorHostTarget{
-          jsinspector_modern::HostTarget::create(*m_inspectorHostTargetDelegate, [](std::function<void()> &&callback) {
-            ::Microsoft::ReactNative::ReactInspectorThread::Instance().Post(
-                [callback = std::move(callback)]() { callback(); });
-          })} {
+      m_inspectorHostTargetDelegate{std::make_shared<ReactInspectorHostTargetDelegate>(this)} {
+  // Feature flags must be overridden before HostTarget::create() is called,
+  // because HostTarget::create() accesses InspectorFlags which reads feature flags.
   static std::once_flag initFeatureFlagsOnce;
   std::call_once(initFeatureFlagsOnce, []() noexcept {
     ReactNativeFeatureFlags::override(std::make_unique<ReactNativeWindowsFeatureFlags>());
   });
+
+  // Create HostTarget after feature flags are set up
+  m_inspectorHostTarget =
+      jsinspector_modern::HostTarget::create(*m_inspectorHostTargetDelegate, [](std::function<void()> &&callback) {
+        ::Microsoft::ReactNative::ReactInspectorThread::Instance().Post(
+            [callback = std::move(callback)]() { callback(); });
+      });
 }
 
 ReactHost::~ReactHost() noexcept {}
