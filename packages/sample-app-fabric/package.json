@@ -18,7 +18,7 @@
     "@react-native/new-app-screen": "0.82.0-nightly-20250819-25104de5c",
     "react": "^19.1.1",
     "react-native": "0.82.0-nightly-20250819-25104de5c",
-    "react-native-windows": "^0.0.0-canary.1022"
+    "react-native-windows": "^0.0.0-canary.10233"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
