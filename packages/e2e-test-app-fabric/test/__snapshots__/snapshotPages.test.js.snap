@@ -82084,6 +82084,57 @@ exports[`snapshotAllPages TextInput 41`] = `
 
 exports[`snapshotAllPages TextInput 42`] = `
 <View>
+  <Text>
+    accessibilityLabel prop
+  </Text>
+  <TextInput
+    accessibilityLabel="This is Accessibility Label"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <Text>
+    aria-label prop
+  </Text>
+  <TextInput
+    aria-label="This is Aria Label"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 43`] = `
+<View>
   <Text
     testID="textinput-state-display-in"
   >
@@ -82149,7 +82200,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -82285,7 +82336,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 [
   <View
     focusable={true}
@@ -82351,7 +82402,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -82400,7 +82451,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View>
   <Text>
     CaretHidden
@@ -82432,7 +82483,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View>
   <Text>
     Cursorcolor
@@ -82464,7 +82515,7 @@ exports[`snapshotAllPages TextInput 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 48`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View>
   <Text>
     Shadow
@@ -82502,7 +82553,7 @@ exports[`snapshotAllPages TextInput 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 49`] = `
+exports[`snapshotAllPages TextInput 50`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -82585,7 +82636,7 @@ exports[`snapshotAllPages TextInput 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 50`] = `
+exports[`snapshotAllPages TextInput 51`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
