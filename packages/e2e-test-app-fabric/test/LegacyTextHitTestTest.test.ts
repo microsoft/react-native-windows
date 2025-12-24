@@ -21,8 +21,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('LegacyTextHitTestTest', () => {
+describe('LegacyTextHitTestTest', () => {
   beforeEach(async () => {
     await clearState();
   });

@@ -60,8 +60,7 @@ const goToFlatListExample = async (input: string) => {
   await testPage.click();
 };
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('FlatList Tests', () => {
+describe('FlatList Tests', () => {
   test('A FlatList can be filtered by a key word', async () => {
     await searchBox('Basic');
     await goToFlatListExample('Basic');

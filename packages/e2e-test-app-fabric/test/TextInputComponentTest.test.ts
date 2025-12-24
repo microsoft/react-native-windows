@@ -36,8 +36,7 @@ const searchBox = async (input: string) => {
   );
 };
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('TextInput Tests', () => {
+describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
       'rewrite_sp_underscore_input',

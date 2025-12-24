@@ -21,8 +21,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('Text Tests', () => {
+describe('Text Tests', () => {
   test('Text can wrap', async () => {
     const component = await app.findElementByTestID('text-wrap');
     await component.waitForDisplayed({timeout: 5000});

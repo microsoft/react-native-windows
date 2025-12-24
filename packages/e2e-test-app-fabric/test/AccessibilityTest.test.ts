@@ -36,8 +36,7 @@ const searchBox = async (input: string) => {
   );
 };
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('Accessibility Tests', () => {
+describe('Accessibility Tests', () => {
   test('Elements can set accessibilityState:selected to false', async () => {
     await searchBox('Sta');
     const component = await app.findElementByTestID('Selectable item 1');

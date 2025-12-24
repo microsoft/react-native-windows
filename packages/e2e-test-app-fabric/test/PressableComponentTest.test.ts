@@ -21,10 +21,8 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('Pressable Tests', () => {
-  // TODO: Re-enable once element accessibility issues are resolved
-  test.skip('Pressables can change text on press/rest, state rest', async () => {
+describe('Pressable Tests', () => {
+  test('Pressables can change text on press/rest, state rest', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
@@ -62,8 +60,7 @@ describe.skip('Pressable Tests', () => {
     const dump = await dumpVisualTree('style-change-pressable');
     expect(dump).toMatchSnapshot();
   });
-  // TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-  test.skip('Text can have pressable behavior', async () => {
+  test('Text can have pressable behavior', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {

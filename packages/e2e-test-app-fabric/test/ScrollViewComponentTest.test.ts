@@ -21,8 +21,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('ScrollView Tests', () => {
+describe('ScrollView Tests', () => {
   // Disable tests where testID is not found.
   /*test('ScrollViews can scroll an item list vertically', async () => {
     const component = await app.findElementByTestID('scroll_vertical');

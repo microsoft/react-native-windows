@@ -41,8 +41,7 @@ const searchBox = async (input: string) => {
   );
 };
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('Button Tests', () => {
+describe('Button Tests', () => {
   test('Buttons have default styling', async () => {
     await searchBox('default');
     const component = await app.findElementByTestID('button_default_styling');

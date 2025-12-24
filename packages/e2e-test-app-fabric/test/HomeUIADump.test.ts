@@ -39,8 +39,7 @@ beforeAll(async () => {
   await app.setWindowSize(1000, 1250);
 });
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('Home UIA Tree Dump', () => {
+describe('Home UIA Tree Dump', () => {
   test('Components Tab', async () => {
     const componentsTabButton = await app.findElementByTestID('components-tab');
     await componentsTabButton.waitForDisplayed({timeout: 20000});

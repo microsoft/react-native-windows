@@ -39,8 +39,7 @@ const searchBox = async (input: string) => {
   );
 };
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('Touchable Tests', () => {
+describe('Touchable Tests', () => {
   test('Touchables can contain a Text component', async () => {
     const component = await app.findElementByTestID(
       'touchable_highlight_text_button',

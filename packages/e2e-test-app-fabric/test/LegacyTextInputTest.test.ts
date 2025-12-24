@@ -20,8 +20,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('LegacyTextInputTest', () => {
+describe('LegacyTextInputTest', () => {
   test('Click on TextInput to focus', async () => {
     const textInput = await textInputField();
     await textInput.click();

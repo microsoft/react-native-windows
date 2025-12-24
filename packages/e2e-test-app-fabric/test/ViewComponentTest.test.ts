@@ -36,8 +36,7 @@ const searchBox = async (input: string) => {
   );
 };
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('View Tests', () => {
+describe('View Tests', () => {
   test('Views can have shadows', async () => {
     await searchBox('sha');
     const component = await app.findElementByTestID('shadow');

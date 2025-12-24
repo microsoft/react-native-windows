@@ -21,8 +21,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-// TODO: Re-enable once https://github.com/microsoft/react-native-windows/issues/15497 is fixed
-describe.skip('Image Tests', () => {
+describe('Image Tests', () => {
   test('An Image component can render a blob image', async () => {
     const component = await app.findElementByTestID('image-blob');
     await component.waitForDisplayed({timeout: 5000});
