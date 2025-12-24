@@ -108,7 +108,7 @@ class ReactHost final : public Mso::ActiveObject<IReactHost> {
   const Mso::ActiveField<bool> m_isInstanceUnloading{false, Queue()};
 
   const std::shared_ptr<facebook::react::jsinspector_modern::HostTargetDelegate> m_inspectorHostTargetDelegate;
-  const std::shared_ptr<facebook::react::jsinspector_modern::HostTarget> m_inspectorHostTarget;
+  std::shared_ptr<facebook::react::jsinspector_modern::HostTarget> m_inspectorHostTarget;
   const Mso::ActiveField<std::optional<int32_t>> m_inspectorPageId{Queue()};
 };
 

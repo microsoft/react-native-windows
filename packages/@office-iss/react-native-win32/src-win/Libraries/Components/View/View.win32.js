@@ -194,7 +194,8 @@ const View: component(
         if (React.isValidElement(child)) {
           // $FlowFixMe[incompatible-use]
           if (child.props.children) {
-            // $FlowFixMe[incompatible-call]
+            // $FlowFixMe[incompatible-call] - React.Children.map types child as mixed
+            // $FlowFixMe[incompatible-type]
             return React.cloneElement(child, {
               accessible: false,
               children: childrenWithImportantForAccessibility(
@@ -203,6 +204,7 @@ const View: component(
             });
           } else {
             // $FlowFixMe[incompatible-call]
+            // $FlowFixMe[incompatible-type]
             return React.cloneElement(child, {accessible: false});
           }
         }

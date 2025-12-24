@@ -30,12 +30,14 @@ const childrenWithImportantForAccessibility = children => {
       // $FlowFixMe[incompatible-use]
       if (child.props.children) {
         // $FlowFixMe[incompatible-call]
+        // $FlowFixMe[incompatible-type]
         return React.cloneElement(child, {
           accessible: false,
           children: childrenWithImportantForAccessibility(child.props.children),
         });
       } else {
         // $FlowFixMe[incompatible-call]
+        // $FlowFixMe[incompatible-type]
         return React.cloneElement(child, {accessible: false});
       }
     }
