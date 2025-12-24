@@ -22,7 +22,7 @@
     "@babel/core": "^7.25.2",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "20.0.0",
-    "@react-native/metro-config": "0.82.0-nightly-20250806-5936f29d6",
+    "@react-native/metro-config": "0.82.0-nightly-20250819-25104de5c",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",
