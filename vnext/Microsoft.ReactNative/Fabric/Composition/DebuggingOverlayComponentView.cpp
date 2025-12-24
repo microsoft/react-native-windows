@@ -86,10 +86,11 @@ void DebuggingOverlayComponentView::HandleCommand(
     if (auto root = rootComponentView()) {
       auto rootVisual = root->OuterVisual();
       auto brush = m_compContext.CreateColorBrush({204, 200, 230, 255});
+      float scaleFactor = m_layoutMetrics.pointScaleFactor;
       for (auto &element : elements) {
         auto overlayVisual = m_compContext.CreateSpriteVisual();
-        overlayVisual.Size({element.width, element.height});
-        overlayVisual.Offset({element.x, element.y, 0.0f});
+        overlayVisual.Size({element.width * scaleFactor, element.height * scaleFactor});
+        overlayVisual.Offset({element.x * scaleFactor, element.y * scaleFactor, 0.0f});
         overlayVisual.Brush(brush);
 
         rootVisual.InsertAt(overlayVisual, root->overlayIndex() + m_activeOverlays);
