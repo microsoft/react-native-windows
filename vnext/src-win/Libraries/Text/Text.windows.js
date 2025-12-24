@@ -401,9 +401,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ...TextProps,
   }) => {
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
-    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
-    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
+    // [# Windows
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel;
+    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet;
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
+    // ]# Windows
 
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;

@@ -428,6 +428,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
       selection,
       text,
       // $FlowFixMe[incompatible-call]
+      // $FlowFixMe[incompatible-type]
       viewCommands,
     });
 
@@ -936,6 +937,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
          * up exactly with the props for TextInput. This will need to get fixed
          */
         /* $FlowFixMe[incompatible-type-arg] the types for WindowsTextInput
+         * don't match up exactly with the props for TextInput. This will need
+         * to get fixed */
+        /* $FlowFixMe[incompatible-type] the types for WindowsTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */
         onScroll={_onScroll}

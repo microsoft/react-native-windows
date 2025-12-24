@@ -44,29 +44,31 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
   ) = ({
     ref: forwardedRef,
     accessible,
-    accessibilityControls, // Win32
-    accessibilityDescribedBy, // Win32
-    accessibilityDescription, // Win32
     accessibilityLabel,
-    accessibilityLevel, // Win32
-    accessibilityPositionInSet, // Win32
-    accessibilitySetSize, // Win32
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
-    'aria-controls': ariaControls, // Win32
-    'aria-describedby': ariaDescribedBy, // Win32
-    'aria-description': ariaDescription, // Win32
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
-    'aria-level': ariaLevel, // Win32
-    'aria-multiselectable': ariaMultiselectable, // Win32
-    'aria-posinset': ariaPosinset, // Win32
-    'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
-    'aria-setsize': ariaSetsize, // Win32
+    // #[ Win32
+    'aria-level': ariaLevel,
+    'aria-multiselectable': ariaMultiselectable,
+    'aria-posinset': ariaPosinset,
+    'aria-required': ariaRequired,
+    'aria-setsize': ariaSetsize,
+    'aria-controls': ariaControls,
+    'aria-describedby': ariaDescribedBy,
+    'aria-description': ariaDescription,
+    accessibilityLevel,
+    accessibilityPositionInSet,
+    accessibilitySetSize,
+    accessibilityControls,
+    accessibilityDescribedBy,
+    accessibilityDescription,
+    // #] Win32
     children,
     ellipsizeMode,
     disabled,
@@ -97,15 +99,17 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       ...NativeTextProps,
     };
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
+    // #Win32 [
+    const _accessibilityControls = ariaControls ?? accessibilityControls;
     const _accessibilityDescribedBy =
-      ariaDescribedBy ?? accessibilityDescribedBy; // Win32
+      ariaDescribedBy ?? accessibilityDescribedBy;
     const _accessibilityDescription =
-      ariaDescription ?? accessibilityDescription; // Win32
-    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
+      ariaDescription ?? accessibilityDescription;
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel;
     const _accessibilityPositionInSet =
-      ariaPosinset ?? accessibilityPositionInSet; // Win32
-    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
+      ariaPosinset ?? accessibilityPositionInSet;
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
+    // ] #Win32
 
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
@@ -122,9 +126,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           checked: ariaChecked ?? _accessibilityState.checked,
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
+          // #Win32 [
           multiselectable:
-            ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
-          required: ariaRequired ?? accessibilityState?.required, // Win32
+            ariaMultiselectable ?? accessibilityState?.multiselectable,
+          required: ariaRequired ?? accessibilityState?.required,
+          // ] #Win32
           selected: ariaSelected ?? _accessibilityState.selected,
         };
       } else {
@@ -133,8 +139,10 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           checked: ariaChecked,
           disabled: ariaDisabled,
           expanded: ariaExpanded,
-          multiselectable: ariaMultiselectable, // Win32,
-          required: ariaRequired, // Win32
+          // #Win32 [
+          multiselectable: ariaMultiselectable,
+          required: ariaRequired,
+          // ] #Win32
           selected: ariaSelected,
         };
       }
@@ -263,7 +271,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       processedProps.accessibilityLevel = _accessibilityLevel;
     }
     if (_accessibilityPositionInSet !== undefined) {
-      processedProps.accessibilityPosInSet = _accessibilityPositionInSet;
+      processedProps.accessibilityPositionInSet = _accessibilityPositionInSet;
     }
     if (_accessibilitySetSize !== undefined) {
       processedProps.accessibilitySetSize = _accessibilitySetSize;
@@ -359,29 +367,31 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
   ) = ({
     ref: forwardedRef,
     accessible,
-    accessibilityControls, // Win32
-    accessibilityDescribedBy, // Win32
-    accessibilityDescription, // Win32
     accessibilityLabel,
-    accessibilityLevel, // Win32
-    accessibilityPositionInSet, // Win32
-    accessibilitySetSize, // Win32
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
-    'aria-controls': ariaControls, // Win32
-    'aria-describedby': ariaDescribedBy, // Win32
-    'aria-description': ariaDescription, // Win32
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
-    'aria-level': ariaLevel, // Win32
-    'aria-multiselectable': ariaMultiselectable, // Win32
-    'aria-posinset': ariaPosinset, // Win32
-    'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
-    'aria-setsize': ariaSetsize, // Win32
+    //#[ Win32
+    'aria-controls': ariaControls,
+    'aria-describedby': ariaDescribedBy,
+    'aria-description': ariaDescription,
+    'aria-level': ariaLevel,
+    'aria-multiselectable': ariaMultiselectable,
+    'aria-posinset': ariaPosinset,
+    'aria-required': ariaRequired,
+    'aria-setsize': ariaSetsize,
+    accessibilityLevel,
+    accessibilityPositionInSet,
+    accessibilitySetSize,
+    accessibilityControls,
+    accessibilityDescribedBy,
+    accessibilityDescription,
+    // #] Win32
     children,
     ellipsizeMode,
     disabled,
@@ -409,15 +419,17 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ...TextProps,
   }) => {
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
+    //#[ Win32
+    const _accessibilityControls = ariaControls ?? accessibilityControls;
     const _accessibilityDescribedBy =
-      ariaDescribedBy ?? accessibilityDescribedBy; // Win32
+      ariaDescribedBy ?? accessibilityDescribedBy;
     const _accessibilityDescription =
-      ariaDescription ?? accessibilityDescription; // Win32
-    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
+      ariaDescription ?? accessibilityDescription;
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel;
     const _accessibilityPositionInSet =
-      ariaPosinset ?? accessibilityPositionInSet; // Win32
-    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
+      ariaPosinset ?? accessibilityPositionInSet;
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
+    //#] Win32
 
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
@@ -434,9 +446,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           checked: ariaChecked ?? _accessibilityState.checked,
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
+          //#[Win32
           multiselectable:
-            ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
-          required: ariaRequired ?? accessibilityState?.required, // Win32
+            ariaMultiselectable ?? accessibilityState?.multiselectable,
+          required: ariaRequired ?? accessibilityState?.required,
+          // #] Win32
           selected: ariaSelected ?? _accessibilityState.selected,
         };
       } else {
@@ -445,8 +459,10 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           checked: ariaChecked,
           disabled: ariaDisabled,
           expanded: ariaExpanded,
-          multiselectable: ariaMultiselectable, // Win32,
-          required: ariaRequired, // Win32
+          // #[ Win32
+          multiselectable: ariaMultiselectable,
+          required: ariaRequired,
+          // #]win32
           selected: ariaSelected,
         };
       }
@@ -525,12 +541,14 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
               ...restProps,
               accessibilityLabel: _accessibilityLabel,
               accessibilityState: _accessibilityState,
-              accessibilityControls: _accessibilityControls, // Win32
-              accessibilityDescribedBy: _accessibilityDescribedBy, // Win32
-              accessibilityDescription: _accessibilityDescription, // Win32
-              accessibilityLevel: _accessibilityLevel, // Win32
-              accessibilityPositionInSet: _accessibilityPositionInSet, // Win32
-              accessibilitySetSize: _accessibilitySetSize, // Win32
+              // #[ Win32
+              accessibilityControls: _accessibilityControls,
+              accessibilityDescribedBy: _accessibilityDescribedBy,
+              accessibilityDescription: _accessibilityDescription,
+              accessibilityLevel: _accessibilityLevel,
+              accessibilityPositionInSet: _accessibilityPositionInSet,
+              accessibilitySetSize: _accessibilitySetSize,
+              // #] Win32
               nativeID: _nativeID,
               numberOfLines: _numberOfLines,
               selectable: _selectable,
@@ -562,12 +580,14 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           {...restProps}
           accessibilityLabel={_accessibilityLabel}
           accessibilityState={_accessibilityState}
-          accessibilityControls={_accessibilityControls} // Win32
-          accessibilityDescribedBy={_accessibilityDescribedBy} // Win32
-          accessibilityDescription={_accessibilityDescription} // Win32
-          accessibilityLevel={_accessibilityLevel} // Win32
-          accessibilityPositionInSet={_accessibilityPositionInSet} // Win32
-          accessibilitySetSize={_accessibilitySetSize} // Win32
+          // #[ Win32
+          accessibilityControls={_accessibilityControls}
+          accessibilityDescribedBy={_accessibilityDescribedBy}
+          accessibilityDescription={_accessibilityDescription}
+          accessibilityLevel={_accessibilityLevel}
+          accessibilityPositionInSet={_accessibilityPositionInSet}
+          accessibilitySetSize={_accessibilitySetSize}
+          // #] Win32
           nativeID={_nativeID}
           numberOfLines={_numberOfLines}
           ref={forwardedRef}
